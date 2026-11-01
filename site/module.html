@@ -265,8 +265,28 @@ function evalsDuModule(){
 /* =====================================================================
    VÉRIFICATIONS : exact · numerique · regex · sql · dom · auto
    ===================================================================== */
+/* fraction écrite x/y (ex. 1/200) : acceptée seulement si elle ne se simplifie pas en entier */
+function fraction(s){
+  const f = s.match(/^([-+−]?)\s*(\d+(?:[.,]\d+)?)\s*\/\s*(\d+(?:[.,]\d+)?)(?![\d.,]*\s*\/)/);
+  if(!f) return null;
+  const num = parseFloat(f[2].replace(",",".")), den = parseFloat(f[3].replace(",","."));
+  if(!isFinite(num) || !isFinite(den) || den === 0) return null;
+  const q = num/den;
+  return {x: f[1] === "-" || f[1] === "−" ? -q : q, entier: Math.abs(q - Math.round(q)) < 1e-9, fin: f[0].length};
+}
 function nombre(rep, v){
   const s = String(rep ?? "").replace(/ /g," ").trim();
+  const fr = fraction(s);
+  if(fr && !fr.entier){
+    let x = fr.x;
+    if(v && v.unite){
+      const apres = s.slice(fr.fin).trim(), p = apres.match(/^([pnµumkMG])/);
+      const PF = {p:1e-12, n:1e-9, "µ":1e-6, u:1e-6, m:1e-3, k:1e3, M:1e6, G:1e9};
+      if(p && !norm(apres).startsWith(norm(v.unite))) x *= PF[p[1]];
+    }
+    return x;
+  }
+  if(/^[-+−]?\s*\d+(?:[.,]\d+)?\s*\/\s*\d/.test(s)) return null; /* fraction entière ou /0 : pas de lecture partielle */
   const m = s.match(/[-+−]?\s*(\d+(?:[.,]\d+)?|[.,]\d+)(?:\s*[eE]\s*([-+]?\d+)|\s*[×x*]\s*10\s*\^\s*([-+−]?\d+))?/);
   if(!m) return null;
   let x = parseFloat(m[0].replace(/\s/g,"").replace("−","-").replace(",",".").replace(/[×x*]10\^/,"e"));
@@ -287,6 +307,8 @@ async function verifier(v, rep, ctx, champ){
       return {ok: att.some(a => norm(a) === norm(rep))};
     }
     case "numerique": {
+      const fr = fraction(String(rep ?? "").replace(/ /g," ").trim());
+      if(fr && fr.entier) return {ok:false, msg:"Simplifie la fraction : le résultat est un nombre entier."};
       const x = nombre(rep, v);
       if(x == null) return {ok:false, msg:"Je n'ai pas trouvé de nombre dans ta réponse."};
       const a = +v.attendu, tol = v.tol != null ? +v.tol : Math.abs(a)*0.01;
@@ -435,7 +457,7 @@ function creerChamp(cont, v, x){
   /* si l'élève a déjà écrit une unité lui-même (« 10 mA »), on ne rajoute rien */
   const lire = () => {
     const s = champ.value;
-    return bU && s.trim() && /^[\d\s.,+\-−eE×x*^]+$/.test(s) ? s.trim() + " " + PREF[ip] + unite : s;
+    return bU && s.trim() && /^[\d\s.,+\-−eE×x*^\/]+$/.test(s) ? s.trim() + " " + PREF[ip] + unite : s;
   };
   const o = {el:champ, multi, lire, focus:() => { if(!petitEcran()) champ.focus(); }, iframe:cont.querySelector("iframe")};
   if(mode === "dom"){
