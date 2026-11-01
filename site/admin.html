@@ -93,12 +93,25 @@
       </form>
     </section>
 
+    <!-- DEMANDES D'ACCÈS -->
+    <section class="vue" data-vue="demandes" hidden>
+      <div class="fenetre" data-titre="demandes.db — qui veut entrer">
+        <p class="vide-txt">À sa première connexion Google, chaque joueur donne un pseudo, son prénom et son nom. Tant que tu n'as pas validé, il ne voit rien (modules, classement, joueurs). Prénom et nom ne sont lisibles que par toi : la classe ne voit que le pseudo.</p>
+        <table class="tableau"><thead><tr><th>Pseudo</th><th>Prénom</th><th>Nom</th><th>Compte Google</th><th>Demandé</th><th></th></tr></thead><tbody id="t-demandes"></tbody></table>
+        <p class="vide-txt" id="demandes-vide">Aucune demande en attente ✓</p>
+      </div>
+      <div class="fenetre" data-titre="refusees.log — demandes refusées" id="f-refusees" hidden>
+        <p class="vide-txt">Le joueur voit « demande refusée » et peut en refaire une. Son pseudo est libéré.</p>
+        <table class="tableau"><thead><tr><th>Pseudo</th><th>Prénom</th><th>Nom</th><th>Compte Google</th><th>Refusée</th></tr></thead><tbody id="t-refusees"></tbody></table>
+      </div>
+    </section>
+
     <!-- JOUEURS -->
     <section class="vue" data-vue="joueurs" hidden>
       <div class="fenetre" data-titre="joueurs.db — qui joue">
-        <p class="vide-txt">Chaque joueur invité choisit son pseudo et apparaît directement au classement. Le journal de chacun reste privé : tu ne vois que le résumé par jour qu'ils publient. « XP vérifiée » = XP du classement : un jour qui dépasse ce qui est humainement possible compte 0, automatiquement et sans prévenir le joueur. ⚠ = jours annulés, pour info seulement : rien à valider.</p>
+        <p class="vide-txt">Chaque joueur validé (onglet Demandes) apparaît au classement sous son pseudo. « Compte » = prénom et nom donnés à la demande, visibles par toi seul. Le journal de chacun reste privé : tu ne vois que le résumé par jour qu'ils publient. « XP vérifiée » = XP du classement : un jour qui dépasse ce qui est humainement possible compte 0, automatiquement et sans prévenir le joueur. ⚠ = jours annulés, pour info seulement : rien à valider.</p>
         <table class="tableau"><thead><tr><th>Pseudo</th><th>Compte</th><th>Niveau</th><th>XP vérifiée</th><th>Série</th></tr></thead><tbody id="t-joueurs"></tbody></table>
-        <p class="vide-txt" id="joueurs-vide">Personne n'a encore choisi de pseudo.</p>
+        <p class="vide-txt" id="joueurs-vide">Personne n'a encore été validé.</p>
       </div>
     </section>
 
@@ -176,13 +189,14 @@ async function occupe(btn, msgEl, fn){
 const clone = o => JSON.parse(JSON.stringify(o || {}));
 
 /* ---------- onglets ---------- */
-const VUES = [["reglages","Réglages"],["calendrier","Calendrier"],["modules","Modules"],["annonce","Annonce"],["joueurs","Joueurs"],["saisons","Saisons"],["contestations","Contestations"],["signalements","Signalements"],["historique","Historique"]];
+const VUES = [["demandes","Demandes"],["reglages","Réglages"],["calendrier","Calendrier"],["modules","Modules"],["annonce","Annonce"],["joueurs","Joueurs"],["saisons","Saisons"],["contestations","Contestations"],["signalements","Signalements"],["historique","Historique"]];
 $("onglets").innerHTML = VUES.map(([id, nom], k) => `<button role="tab" data-v="${id}" aria-selected="${k === 0}">${nom}<span class="nb" data-nb="${id}" hidden></span></button>`).join("");
 function ouvrir(id){
   document.querySelectorAll("#onglets button").forEach(b => b.setAttribute("aria-selected", b.dataset.v === id));
   document.querySelectorAll(".vue").forEach(v => v.hidden = v.dataset.vue !== id);
   if(id === "historique") chargerHistorique();
 }
+ouvrir("reglages");
 $("onglets").addEventListener("click", e => { const b = e.target.closest("button"); if(b){ M.son("tap"); ouvrir(b.dataset.v); } });
 const badge = (id, n) => { const b = document.querySelector(`[data-nb="${id}"]`); b.hidden = !n; b.textContent = n; };
 
@@ -511,6 +525,46 @@ $("t-hist").addEventListener("click", e => {
     await db.doc("config/actuelle").set(cfg); E.config = cfg; remplirConfig(actuelles()); chargerHistorique(); toast("Réglages restaurés");
   });
 });
+
+/* =====================================================================
+   DEMANDES D'ACCÈS (firebase-adapter.js → window.BIC2.acces)
+   Prénom / nom / e-mail lus dans identites/<uid> : lisibles par Adam seul (règles).
+   ===================================================================== */
+const A = window.BIC2 && window.BIC2.acces;
+const IDS = {};   // uid → identité (cache de la page)
+let demandes = [];
+async function identites(uids){
+  await Promise.all(uids.filter(u => !(u in IDS)).map(async u => { try{ IDS[u] = (await A.identite(u)) || {}; }catch(e){ IDS[u] = {}; } }));
+}
+async function rendreDemandes(){
+  const att = demandes.filter(d => d.statut !== "refusee").sort((a, b) => (a.cree || 0) - (b.cree || 0));
+  const ref = demandes.filter(d => d.statut === "refusee").sort((a, b) => (b.traite || 0) - (a.traite || 0));
+  await identites(demandes.map(d => d.uid));
+  badge("demandes", att.length);
+  $("demandes-vide").hidden = !!att.length;
+  const ligne = (d, actions) => { const i = IDS[d.uid] || {};
+    return `<tr><td><b>${esc(String(d.pseudo || "").slice(0,16))}</b></td><td>${esc(i.prenom || "—")}</td><td>${esc(i.nom || "—")}</td><td class="mail">${esc(i.email || "—")}</td><td>${quand(actions ? d.cree : d.traite)}</td>${actions ? `<td><button class="btn plein" data-d="ok" data-uid="${esc(d.uid)}">Valider</button> <button class="btn danger" data-d="non" data-uid="${esc(d.uid)}">Refuser</button></td>` : ""}</tr>`; };
+  $("t-demandes").innerHTML = att.map(d => ligne(d, true)).join("");
+  $("f-refusees").hidden = !ref.length;
+  $("t-refusees").innerHTML = ref.slice(0, 20).map(d => ligne(d, false)).join("");
+}
+if(A){
+  let premiere = true;
+  A.ecouterDemandes(ds => {
+    demandes = ds; rendreDemandes();
+    /* à l'ouverture du panel : s'il y a des demandes en attente, on montre directement l'onglet */
+    if(premiere){ premiere = false; if(ds.some(d => d.statut !== "refusee")) ouvrir("demandes"); }
+  }, err => console.warn("demandes", err));
+  document.querySelector('[data-vue="demandes"]').addEventListener("click", e => {
+    const b = e.target.closest("[data-d]"); if(!b) return;
+    const d = demandes.find(x => x.uid === b.dataset.uid); if(!d) return;
+    const i = IDS[d.uid] || {}, qui = `${d.pseudo} (${[i.prenom, i.nom].filter(Boolean).join(" ") || i.email || "?"})`;
+    occupe(b, null, async () => {
+      if(b.dataset.d === "ok"){ await A.valider(d.uid); profils[d.uid] = [i.prenom, i.nom].filter(Boolean).join(" "); toast(`${d.pseudo} a maintenant accès`); }
+      else { if(!await confirmer(`Refuser la demande de ${qui} ? Son pseudo sera libéré et il pourra refaire une demande.`)) return; await A.refuser(d.uid); toast("Demande refusée"); }
+    });
+  });
+}
 
 /* ---------- libellés des cellules pour l'affichage en cartes sur téléphone ---------- */
 function etiqueter(){ document.querySelectorAll(".tableau").forEach(t => { const th = [...t.querySelectorAll("thead th")].map(x => x.textContent.trim());

@@ -989,3 +989,4 @@ html.acces-ouvert,html.acces-ouvert body{overflow:hidden}
 @keyframes acces-pouls{0%,100%{opacity:.25;transform:scale(.8)}50%{opacity:1;transform:scale(1)}}
 @media (max-width:480px){.acces{padding:12px;place-items:start center}.acces-fenetre{margin-top:6vh}.acces-duo{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){.acces-attente i{animation:none;opacity:.7}}
+.p-compte{margin:10px 0 0;font-size:12px;color:var(--gris-2)}

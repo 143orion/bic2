@@ -92,11 +92,31 @@ const SCENARIOS = {
     console.log("   XP", r.xp, "→", apres.xp, "| docs", apres.docs.length);
     return pg;
   },
+  /* parcours complet : Neo demande → Adam voit la demande, valide → Neo entre ; Omar refusé */
   async admin(app){
-    const pg = await page(app); await pg.goto(URL0 + "admin.html?mock=adam&reset");
-    await pg.waitForFunction(() => window.moteur && window.moteur.etat()); await attendre(1000);
-    await capture(pg, `admin-1-${app}`);
-    return pg;
+    const neo = await page(app); await neo.goto(URL0 + "index.html?mock=neo&reset");
+    await neo.waitForSelector("#a-pseudo"); await neo.fill("#a-pseudo", "Neo_42"); await neo.fill("#a-prenom", "Néo"); await neo.fill("#a-nom", "Anderson");
+    await neo.click("#acces [type=submit]"); await neo.waitForSelector("#acces .acces-ok");
+    const pg = await neo.context().newPage();
+    pg.on("pageerror", e => erreurs.push(`[${app}] admin: ${e.message}`));
+    await pg.goto(URL0 + "admin.html?mock=adam");
+    await pg.waitForSelector('#t-demandes tr'); await attendre(800);
+    if(await pg.$eval('[data-vue="demandes"]', e => e.hidden)) erreurs.push(`[${app}] l'onglet Demandes ne s'ouvre pas tout seul`);
+    await capture(pg, `admin-1-demandes-${app}`);
+    await pg.click('#t-demandes [data-d="ok"][data-uid="neo"]'); await attendre(600);
+    await pg.click('#t-demandes [data-d="non"][data-uid="omar"]'); await pg.waitForSelector("#confirm:not([hidden])");
+    await capture(pg, `admin-2-confirmer-refus-${app}`);
+    await pg.click("#confirm-oui"); await attendre(800);
+    await capture(pg, `admin-3-apres-${app}`);
+    const b = await pg.evaluate(() => { const x = window.__mock.base(); return {membre:!!x["membres/neo"], joueur:x["joueurs/neo"], demande:!!x["demandes/neo"], omar:x["demandes/omar"], pseudoOmar:!!x["pseudos/x.0r"]}; });
+    if(!b.membre || !b.joueur || b.joueur.pseudo !== "Neo_42" || b.demande) erreurs.push(`[${app}] validation incomplète ${JSON.stringify(b)}`);
+    if(!b.omar || b.omar.statut !== "refusee" || b.pseudoOmar) erreurs.push(`[${app}] refus incomplet ${JSON.stringify(b)}`);
+    await pg.click('#onglets [data-v="joueurs"]'); await attendre(500); await capture(pg, `admin-4-joueurs-${app}`);
+    await pg.close();
+    await neo.goto(URL0 + "index.html?mock=neo"); await neo.waitForFunction(() => window.moteur && window.moteur.etat()); await attendre(800);
+    if(await neo.$("#acces")) erreurs.push(`[${app}] Neo validé mais toujours bloqué`);
+    await capture(neo, `acces-6-neo-valide-${app}`);
+    return neo;
   }
 };
 

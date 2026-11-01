@@ -69,6 +69,7 @@
     <h2>Profil</h2>
     <div class="fenetre profil-page" data-titre="profil.exe — moi">
       <div class="p-tete"><div id="p-plaque"></div><p class="vide-txt" id="p-info"></p></div>
+      <p class="p-compte" id="p-compte" hidden><span id="p-mail"></span> · <button class="lien" type="button" id="b-sortie">se déconnecter</button></p>
     </div>
     <div class="fenetre profil-page p-stats" data-titre="stats.exe — ta progression (privée)">
       <div class="p-kpis" id="p-kpis"></div>
@@ -229,6 +230,14 @@ function rendreProfil(r, E){
   $("s-plaque").replaceChildren(plaqueEl(infosPlaque({jours:r.jours, modules:r.modules}, E.joueur && E.joueur.plaque), pseudo || (E.mode === "invite" ? "invité" : "toi"), `Niv ${r.niveau} · ${r.rang} · voir mon profil →`));
   $("s-serie").textContent = r.serie.jours ? `🔥 série de ${r.serie.jours} jour${r.serie.jours > 1 ? "s" : ""}` : "🔥 pas encore de série";
 }
+
+/* ---------- compte Google (firebase-adapter.js) ---------- */
+(function compte(){
+  const B = window.BIC2; if(!B || !B.deconnexion) return setTimeout(compte, 500);
+  const u = M.interne.user; $("p-mail").textContent = (u && u.email && u.email()) || "";
+  $("p-compte").hidden = false;
+  $("b-sortie").onclick = () => { M.son("tap"); B.deconnexion(); };
+})();
 
 /* ---------- pseudo ---------- */
 const mp = $("m-pseudo");
