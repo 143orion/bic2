@@ -482,6 +482,12 @@ body.hub:not(.dedans) .modules{display:none}
 .q-corps .entree{width:100%;font-size:15px}
 .code-entree{min-height:150px;resize:vertical;font-family:var(--police);line-height:1.5;tab-size:2;white-space:pre}
 .entree[readonly]{opacity:.75}
+.entree-unite{display:flex;gap:6px;align-items:stretch}
+.entree-unite .entree{flex:1 1 auto}
+.btn-unite{font:inherit;font-size:15px;min-width:56px;padding:0 12px;color:var(--blanc);background:#1b1b1b;border:1px solid var(--violet-clair);border-radius:6px;cursor:pointer;transition:background .15s,box-shadow .15s}
+.btn-unite:hover{background:#2a1c3a}
+.btn-unite:focus-visible{outline:none;box-shadow:0 0 0 3px rgba(127,73,180,.3)}
+.entree[readonly] + .btn-unite{opacity:.5;pointer-events:none}
 .secoue{animation:secoue .35s}
 @keyframes secoue{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
 .q-actions{margin-top:16px}

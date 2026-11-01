@@ -412,16 +412,32 @@ function teteItem(it, opts = {}, extra = ""){
 /* champ de réponse adapté au mode de vérification */
 function creerChamp(cont, v, x){
   const mode = (v && v.mode) || "auto", multi = mode === "sql" || mode === "dom" || mode === "auto" || x.multiligne;
-  const ph = mode === "sql" ? "SELECT …" : mode === "dom" ? "<h1>…</h1>" : mode === "numerique" ? (v.unite ? "valeur (en " + v.unite + ")" : "valeur") : "ta réponse";
+  const ph = mode === "sql" ? "SELECT …" : mode === "dom" ? "<h1>…</h1>" : mode === "numerique" ? "valeur" : "ta réponse";
+  /* réponse chiffrée avec unité : bouton qui fait défiler les préfixes (A → mA → µA → kA…) */
+  const unite = mode === "numerique" && !multi && v.unite ? String(v.unite) : "";
+  const PREF = unite === "Ω" ? ["", "k", "M", "m"] : ["", "m", "µ", "k", "M"];
+  let ip = 0;
+  const champHtml = `<input class="entree" spellcheck="false" autocapitalize="off" autocomplete="off" placeholder="${esc(ph)}" aria-label="Ta réponse"${mode === "numerique" ? ' inputmode="decimal"' : ""}>`;
   cont.innerHTML = (multi
       ? `<textarea class="entree code-entree" spellcheck="false" autocapitalize="off" autocomplete="off" placeholder="${esc(ph)}" aria-label="Ta réponse">${esc(x.depart || "")}</textarea>`
-      : `<input class="entree" spellcheck="false" autocapitalize="off" autocomplete="off" placeholder="${esc(ph)}" aria-label="Ta réponse"${mode === "numerique" ? ' inputmode="decimal"' : ""}>`)
+      : unite ? `<span class="entree-unite">${champHtml}<button type="button" class="btn-unite" title="Changer l'unité" aria-label="Unité de la réponse : ${esc(unite)}. Cliquer pour changer"></button></span>` : champHtml)
     + (mode === "auto" ? `<small class="aide">Brouillon libre : tu compareras avec la correction et tu t'auto-évalues.</small>` : "")
     + (mode === "sql" ? `<div class="actions mini"><button type="button" class="btn" data-a="executer">Exécuter</button><small class="aide">Ctrl + Entrée pour valider</small></div><div class="sql-zone"></div>` : "")
     + (mode === "dom" ? `<small class="aide">Aperçu en direct (scripts désactivés)</small><iframe class="dom-apercu" sandbox="allow-same-origin" title="Aperçu de ton code"></iframe>` : "")
     + (multi && mode !== "sql" ? `<small class="aide">Ctrl + Entrée pour valider</small>` : "");
   const champ = cont.querySelector(".entree");
-  const o = {el:champ, multi, lire:() => champ.value, focus:() => { if(!petitEcran()) champ.focus(); }, iframe:cont.querySelector("iframe")};
+  const bU = cont.querySelector(".btn-unite");
+  const majU = () => { bU.textContent = PREF[ip] + unite; bU.setAttribute("aria-label", "Unité de la réponse : " + PREF[ip] + unite + ". Cliquer pour changer"); };
+  if(bU){
+    majU();
+    bU.onclick = () => { if(champ.readOnly) return; ip = (ip + 1) % PREF.length; majU(); champ.focus(); };
+  }
+  /* si l'élève a déjà écrit une unité lui-même (« 10 mA »), on ne rajoute rien */
+  const lire = () => {
+    const s = champ.value;
+    return bU && s.trim() && /^[\d\s.,+\-−eE×x*^]+$/.test(s) ? s.trim() + " " + PREF[ip] + unite : s;
+  };
+  const o = {el:champ, multi, lire, focus:() => { if(!petitEcran()) champ.focus(); }, iframe:cont.querySelector("iframe")};
   if(mode === "dom"){
     let t = 0; const maj = () => majApercu(o.iframe, champ.value);
     champ.addEventListener("input", () => { clearTimeout(t); t = setTimeout(maj, 300); }); maj();
