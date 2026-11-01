@@ -1,0 +1,653 @@
+{
+ "id": "elec-3-associations",
+ "module": "complement-electronique",
+ "titre": "Associations & diviseurs",
+ "ordre": 3,
+ "sources": [
+  "CMO2",
+  "TD2 ex. 1-3"
+ ],
+ "tldr": [
+  "**Série** (même courant) : $R_{eq} = R_1 + R_2 + \\dots$",
+  "**Parallèle** (même tension) : $\\dfrac{1}{R_{eq}} = \\dfrac{1}{R_1} + \\dfrac{1}{R_2} + \\dots$ · pour deux : $\\dfrac{R_1 R_2}{R_1 + R_2}$.",
+  "En parallèle, $R_{eq}$ est **plus petite** que la plus petite résistance.",
+  "**Diviseur de tension** (sortie à vide) : $V_2 = E\\,\\dfrac{R_2}{R_1 + R_2}$.",
+  "**Diviseur de courant** : $I_1 = I_0\\,\\dfrac{R_2}{R_1 + R_2}$ → c'est l'**autre** résistance au numérateur.",
+  "Générateurs en série : on additionne les f.é.m. (avec leur signe) et les résistances internes."
+ ],
+ "fiche": [
+  {
+   "titre": "Résistances en série",
+   "contenu": "Même courant dans toutes : les tensions s'ajoutent, donc les résistances aussi.\n$$R_{eq} = R_1 + R_2 + \\dots + R_n$$"
+  },
+  {
+   "titre": "Résistances en parallèle",
+   "contenu": "Même tension aux bornes : ce sont les **conductances** qui s'ajoutent.\n$$\\frac{1}{R_{eq}} = \\frac{1}{R_1} + \\dots + \\frac{1}{R_n} \\qquad R_1 \\parallel R_2 = \\frac{R_1 R_2}{R_1 + R_2}$$\n**Piège** : $R_{eq}$ est toujours plus petite que la plus petite des résistances."
+  },
+  {
+   "titre": "Diviseur de tension",
+   "contenu": "$R_1$ et $R_2$ en série, parcourues par le même courant (rien de branché sur la sortie) :\n$$V_2 = E\\,\\frac{R_2}{R_1 + R_2}$$\n**Piège** : valable seulement à vide. Si on branche une charge sur la sortie, il faut Thévenin (chapitre 4).",
+   "schema": {
+    "modele": "diviseur",
+    "vals": {
+     "E": "",
+     "R1": "",
+     "R2": ""
+    },
+    "surligne": [
+     "R2"
+    ]
+   }
+  },
+  {
+   "titre": "Diviseur de courant",
+   "contenu": "$I_0$ se répartit entre deux branches en parallèle :\n$$I_1 = I_0\\,\\frac{R_2}{R_1 + R_2} \\qquad I_2 = I_0\\,\\frac{R_1}{R_1 + R_2}$$\n**Piège** : c'est l'**autre** résistance au numérateur (le courant préfère le chemin le moins résistant)."
+  },
+  {
+   "titre": "Association de générateurs",
+   "contenu": "En série, les f.é.m. s'ajoutent **algébriquement** : deux générateurs « tête-bêche » se retranchent. Les résistances internes, elles, s'additionnent toujours.\n\nExemple : $E_1 = 48\\ \\text{V}$ face à $E_2 = 24\\ \\text{V}$ → équivalent $24\\ \\text{V}$."
+  },
+  {
+   "titre": "Labo : diviseur de tension",
+   "labo": "diviseur",
+   "contenu": "Fais varier $E$, $R_1$ et $R_2$ : la formule se remplit avec tes valeurs."
+  }
+ ],
+ "parcours": [
+  {
+   "notion": "Diviseur de tension",
+   "schema": {
+    "modele": "diviseur",
+    "vals": {
+     "E": "",
+     "R1": "",
+     "R2": ""
+    }
+   },
+   "ecrans": [
+    {
+     "titre": "Le montage",
+     "texte": "Une source $E$ alimente $R_1$ et $R_2$ **en série**. On cherche $V_2$, la tension aux bornes de $R_2$, quand rien n'est branché sur la sortie."
+    },
+    {
+     "titre": "1 · Loi des mailles",
+     "texte": "Toute la tension $E$ se partage entre $R_1$ et $R_2$ : $$E = V_1 + V_2$$",
+     "schema": {
+      "surligne": [
+       "E",
+       "R1",
+       "R2"
+      ]
+     }
+    },
+    {
+     "titre": "2 · Loi d'Ohm",
+     "texte": "Un seul chemin, donc le **même courant** $I$ : $$V_1 = R_1 I \\qquad V_2 = R_2 I$$",
+     "schema": {
+      "surligne": [
+       "R1",
+       "R2"
+      ]
+     }
+    },
+    {
+     "titre": "3 · On isole I",
+     "texte": "$$E = R_1 I + R_2 I \\Rightarrow I = \\frac{E}{R_1 + R_2}$$",
+     "schema": {
+      "surligne": [
+       "E"
+      ]
+     }
+    },
+    {
+     "titre": "4 · Résultat",
+     "texte": "$$V_2 = R_2 I = E\\,\\frac{R_2}{R_1 + R_2}$$ $V_2$ est la part de $R_2$ dans la résistance totale.",
+     "schema": {
+      "surligne": [
+       "R2"
+      ]
+     }
+    }
+   ],
+   "controle": {
+    "enonce": "Si $R_1 = R_2$, que vaut $V_2$ ?",
+    "choix": [
+     "$E/2$",
+     "$E$",
+     "$2E$",
+     "$0$"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$\\frac{R}{R+R} = \\frac{1}{2}$."
+   }
+  },
+  {
+   "notion": "Diviseur de courant",
+   "ecrans": [
+    {
+     "titre": "Le montage",
+     "texte": "Un courant $I_0$ arrive sur deux résistances $R_1$ et $R_2$ **en parallèle**. Comment se partage-t-il ?"
+    },
+    {
+     "titre": "1 · Même tension",
+     "texte": "En parallèle, même tension : $$R_1 I_1 = R_2 I_2$$"
+    },
+    {
+     "titre": "2 · Loi des nœuds",
+     "texte": "$$I_0 = I_1 + I_2$$ et $I_2 = \\frac{R_1}{R_2} I_1$."
+    },
+    {
+     "titre": "3 · Résultat",
+     "texte": "$$I_1 = I_0\\,\\frac{R_2}{R_1 + R_2}$$ Le courant dans une branche dépend de l'**autre** résistance : plus $R_2$ est grande, plus $I_1$ est grand."
+    }
+   ],
+   "controle": {
+    "enonce": "$I_0 = 3\\ \\text{A}$, $R_1 = 1\\ \\Omega$, $R_2 = 2\\ \\Omega$. Que vaut $I_1$ ?",
+    "choix": [
+     "$2\\ \\text{A}$",
+     "$1\\ \\text{A}$",
+     "$1{,}5\\ \\text{A}$",
+     "$3\\ \\text{A}$"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$I_1 = 3 \\times \\frac{2}{3} = 2\\ \\text{A}$ : la plus petite résistance prend le plus de courant."
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "e3-001",
+   "type": "qcm",
+   "notion": "Série",
+   "origine": "cours",
+   "enonce": "Deux résistances en série ont…",
+   "choix": [
+    "le même courant",
+    "la même tension",
+    "la même puissance",
+    "une résistance équivalente plus petite"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Série = même courant ; parallèle = même tension."
+  },
+  {
+   "id": "e3-002",
+   "type": "saisie",
+   "notion": "Série",
+   "origine": "cours",
+   "enonce": "$R_1 = 220\\ \\Omega$, $R_2 = 330\\ \\Omega$ en série. $R_{eq}$ (Ω) ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 550,
+    "unite": "Ω"
+   },
+   "duree": 0.67,
+   "explication": "Les résistances s'ajoutent : $550\\ \\Omega$."
+  },
+  {
+   "id": "e3-003",
+   "type": "saisie",
+   "notion": "Parallèle",
+   "origine": "cours",
+   "enonce": "$R_1 = 1\\ \\text{k}\\Omega$ en parallèle avec $R_2 = 1\\ \\text{k}\\Omega$. $R_{eq}$ (Ω) ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 500,
+    "unite": "Ω"
+   },
+   "duree": 0.67,
+   "explication": "Deux valeurs égales : la moitié, $500\\ \\Omega$."
+  },
+  {
+   "id": "e3-004",
+   "type": "saisie",
+   "notion": "Parallèle",
+   "origine": "cours",
+   "enonce": "$R_1 = 3\\ \\Omega$ en parallèle avec $R_2 = 6\\ \\Omega$. $R_{eq}$ (Ω) ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 2,
+    "unite": "Ω"
+   },
+   "duree": 0.67,
+   "explication": "$\\frac{3 \\times 6}{9} = 2\\ \\Omega$."
+  },
+  {
+   "id": "e3-005",
+   "type": "qcm",
+   "notion": "Parallèle",
+   "origine": "cours",
+   "enonce": "$R_{eq}$ de $10\\ \\Omega$ en parallèle avec $1\\ \\text{k}\\Omega$ est…",
+   "choix": [
+    "un peu moins de $10\\ \\Omega$",
+    "environ $1\\ \\text{k}\\Omega$",
+    "$505\\ \\Omega$",
+    "$1010\\ \\Omega$"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Toujours plus petite que la plus petite : $\\approx 9{,}9\\ \\Omega$."
+  },
+  {
+   "id": "e3-006",
+   "type": "saisie",
+   "notion": "Diviseur de tension",
+   "origine": "cours",
+   "enonce": "$E = 12\\ \\text{V}$, $R_1 = 2\\ \\text{k}\\Omega$, $R_2 = 1\\ \\text{k}\\Omega$. $V_2$ à vide (V) ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 4,
+    "unite": "V"
+   },
+   "duree": 0.67,
+   "explication": "$12 \\times \\frac{1}{3} = 4\\ \\text{V}$."
+  },
+  {
+   "id": "e3-007",
+   "type": "saisie",
+   "notion": "Diviseur de courant",
+   "origine": "cours",
+   "enonce": "$I_0 = 30\\ \\text{mA}$ entre $R_1 = 100\\ \\Omega$ et $R_2 = 200\\ \\Omega$ en parallèle. $I_1$ (en mA) ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 20
+   },
+   "duree": 0.67,
+   "explication": "$I_1 = 30 \\times \\frac{200}{300} = 20\\ \\text{mA}$."
+  },
+  {
+   "id": "e3-008",
+   "type": "qcm",
+   "notion": "Diviseur de courant",
+   "origine": "cours",
+   "enonce": "Dans $I_1 = I_0 \\times \\dfrac{?}{R_1 + R_2}$, le numérateur est…",
+   "choix": [
+    "$R_2$",
+    "$R_1$",
+    "$R_1 R_2$",
+    "$1$"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "C'est l'autre résistance."
+  },
+  {
+   "id": "e3-009",
+   "type": "qcm",
+   "notion": "Diviseur de tension",
+   "origine": "cours",
+   "enonce": "La formule du diviseur de tension suppose que…",
+   "choix": [
+    "rien ne tire de courant sur la sortie",
+    "$R_1 = R_2$",
+    "la source est une source de courant",
+    "les résistances sont en parallèle"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Sinon le courant n'est plus le même dans $R_1$ et $R_2$."
+  },
+  {
+   "id": "e3-010",
+   "type": "qcm",
+   "notion": "Générateurs",
+   "origine": "cours",
+   "enonce": "Deux générateurs de $12\\ \\text{V}$ en série montés tête-bêche donnent une f.é.m. totale de…",
+   "choix": [
+    "$0\\ \\text{V}$",
+    "$24\\ \\text{V}$",
+    "$12\\ \\text{V}$",
+    "$6\\ \\text{V}$"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Ils se retranchent."
+  },
+  {
+   "id": "e3-101",
+   "type": "exo",
+   "titre": "TD2 · Exercice 1 — Tous les courants et tensions",
+   "notion": "Associations",
+   "origine": "td",
+   "enonce": "$E = 10\\ \\text{V}$, $R_1 = 250\\ \\Omega$, $R_2 = 2{,}5\\ \\text{k}\\Omega$, $R_3 = 1{,}5\\ \\text{k}\\Omega$, $R_4 = 1\\ \\text{k}\\Omega$ et $R_5 = 500\\ \\Omega$. Calcule tous les courants et toutes les tensions.",
+   "duree": 12,
+   "etapes": [
+    {
+     "consigne": "$R_3$ et $R_4$ sont en série, et ce bloc est en parallèle avec $R_2$. Calcule la résistance équivalente **totale** vue par $E$.",
+     "question": "$R_{eq} = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 2000,
+      "unite": "Ω"
+     },
+     "indices": [
+      "$R_3 + R_4 = 2{,}5\\ \\text{k}\\Omega$, en parallèle avec $R_2 = 2{,}5\\ \\text{k}\\Omega$.",
+      "$R_{eq} = R_1 + (R_2 \\parallel (R_3+R_4)) + R_5$."
+     ],
+     "corrige": "$R_2 \\parallel 2{,}5\\ \\text{k}\\Omega = 1{,}25\\ \\text{k}\\Omega$, $R_{eq} = 250 + 1250 + 500 = \\mathbf{2\\ \\text{k}\\Omega}$",
+     "schema": {
+      "surligne": [
+       "R1",
+       "R2",
+       "R3",
+       "R4",
+       "R5"
+      ]
+     }
+    },
+    {
+     "consigne": "Déduis-en le courant $I_1$ débité par le générateur.",
+     "question": "$I_1 = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 0.005,
+      "unite": "A"
+     },
+     "indices": [
+      "$I_1 = E / R_{eq}$."
+     ],
+     "corrige": "$I_1 = 10/2000 = \\mathbf{5\\ \\text{mA}}$ (c'est aussi $I_5$)",
+     "schema": {
+      "surligne": [
+       "E"
+      ]
+     }
+    },
+    {
+     "consigne": "Calcule la tension $V_2$ aux bornes du bloc parallèle (aux bornes de $R_2$).",
+     "question": "$V_2 = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 6.25,
+      "unite": "V"
+     },
+     "indices": [
+      "$V_2 = 1{,}25\\ \\text{k}\\Omega \\times I_1$."
+     ],
+     "corrige": "$V_2 = 1250 \\times 0{,}005 = \\mathbf{6{,}25\\ \\text{V}}$",
+     "schema": {
+      "surligne": [
+       "R2"
+      ]
+     }
+    },
+    {
+     "consigne": "Calcule le courant $I_2$ dans $R_2$.",
+     "question": "$I_2 = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 0.0025,
+      "unite": "A"
+     },
+     "indices": [
+      "$I_2 = V_2 / R_2$."
+     ],
+     "corrige": "$I_2 = 6{,}25/2500 = \\mathbf{2{,}5\\ \\text{mA}}$ (et $I_3 = I_1 - I_2 = 2{,}5\\ \\text{mA}$)",
+     "schema": {
+      "surligne": [
+       "R2"
+      ]
+     }
+    },
+    {
+     "consigne": "Calcule $V_3$ aux bornes de $R_3$.",
+     "question": "$V_3 = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 3.75,
+      "unite": "V"
+     },
+     "indices": [
+      "$I_3 = I_1 - I_2$.",
+      "$V_3 = R_3 I_3$."
+     ],
+     "corrige": "$V_3 = 1500 \\times 0{,}0025 = \\mathbf{3{,}75\\ \\text{V}}$ ($V_4 = 2{,}5\\ \\text{V}$, $V_1 = 1{,}25\\ \\text{V}$, $V_5 = 2{,}5\\ \\text{V}$)",
+     "schema": {
+      "surligne": [
+       "R3"
+      ]
+     }
+    }
+   ],
+   "schema": {
+    "modele": "td2-ex1",
+    "vals": {
+     "E": "10 V",
+     "R1": "250 Ω",
+     "R2": "2,5 kΩ",
+     "R3": "1,5 kΩ",
+     "R4": "1 kΩ",
+     "R5": "500 Ω"
+    }
+   },
+   "explication": "Vérification par la loi des mailles : $V_1 + V_2 + V_5 = 1{,}25 + 6{,}25 + 2{,}5 = 10\\ \\text{V} = E$."
+  },
+  {
+   "id": "e3-102",
+   "type": "exo",
+   "titre": "TD2 · Exercice 2 — Deux générateurs en opposition",
+   "notion": "Association de générateurs",
+   "origine": "td",
+   "enonce": "$D_1$ : $E_1 = 48\\ \\text{V}$, $r_1 = 1{,}5\\ \\Omega$ ; $D_2$ : $E_2 = 24\\ \\text{V}$, $r_2 = 0{,}5\\ \\Omega$, placés en série avec $R = 10\\ \\Omega$. D'après le fléchage, $D_2$ est monté **en opposition**.",
+   "duree": 8,
+   "etapes": [
+    {
+     "consigne": "Écris la loi des mailles et calcule l'intensité $I$ du courant.",
+     "question": "$I = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 2,
+      "unite": "A"
+     },
+     "indices": [
+      "Les f.é.m. se retranchent : $E_1 - E_2$.",
+      "$I = \\dfrac{E_1 - E_2}{r_1 + r_2 + R}$."
+     ],
+     "corrige": "$I = \\dfrac{48 - 24}{1{,}5 + 0{,}5 + 10} = \\mathbf{2\\ \\text{A}}$"
+    },
+    {
+     "consigne": "Tension $U_1$ aux bornes de $D_1$ (générateur).",
+     "question": "$U_1 = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 45,
+      "unite": "V"
+     },
+     "indices": [
+      "Générateur : $U_1 = E_1 - r_1 I$."
+     ],
+     "corrige": "$U_1 = 48 - 1{,}5 \\times 2 = \\mathbf{45\\ \\text{V}}$",
+     "schema": {
+      "surligne": [
+       "E1",
+       "r1"
+      ]
+     }
+    },
+    {
+     "consigne": "Tension $U_2$ aux bornes de $D_2$ (il reçoit le courant).",
+     "question": "$U_2 = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 25,
+      "unite": "V"
+     },
+     "indices": [
+      "En récepteur : $U_2 = E_2 + r_2 I$."
+     ],
+     "corrige": "$U_2 = 24 + 0{,}5 \\times 2 = \\mathbf{25\\ \\text{V}}$",
+     "schema": {
+      "surligne": [
+       "E2",
+       "r2"
+      ]
+     }
+    },
+    {
+     "consigne": "Tension $U$ aux bornes de $R$.",
+     "question": "$U = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 20,
+      "unite": "V"
+     },
+     "indices": [
+      "$U = RI$."
+     ],
+     "corrige": "$U = 10 \\times 2 = \\mathbf{20\\ \\text{V}}$ (et bien $U_1 = U_2 + U$)",
+     "schema": {
+      "surligne": [
+       "R"
+      ]
+     }
+    }
+   ],
+   "schema": {
+    "modele": "deux-gen",
+    "vals": {
+     "E1": "48 V",
+     "r1": "1,5 Ω",
+     "E2": "24 V",
+     "r2": "0,5 Ω",
+     "R": "10 Ω"
+    }
+   }
+  },
+  {
+   "id": "e3-103",
+   "type": "exo",
+   "titre": "TD2 · Exercice 3 — Générateur réel et résistances en parallèle",
+   "notion": "Associations",
+   "origine": "td",
+   "enonce": "Un générateur $E$ = [[E]], $r$ = [[r]] alimente $R_1$ = [[R1]] et $R_2$ = [[R2]] en parallèle.",
+   "duree": 7,
+   "etapes": [
+    {
+     "consigne": "Remplace $R_1 \\parallel R_2$ par une résistance équivalente, puis calcule le courant $I$ débité.",
+     "question": "$I = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 1.2857,
+      "unite": "A"
+     },
+     "indices": [
+      "$R_1 \\parallel R_2 = \\dfrac{R_1 R_2}{R_1 + R_2}$.",
+      "$I = \\dfrac{E}{r + R_1\\parallel R_2}$."
+     ],
+     "corrige": "$R_1\\parallel R_2 = 2\\ \\Omega$, $I = 4{,}5/3{,}5 = \\mathbf{1{,}29\\ \\text{A}}$",
+     "schema": {
+      "surligne": [
+       "E",
+       "r"
+      ]
+     }
+    },
+    {
+     "consigne": "Tension $U$ aux bornes de $R_1$ et $R_2$.",
+     "question": "$U = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 2.5714,
+      "unite": "V"
+     },
+     "indices": [
+      "$U = E - rI$."
+     ],
+     "corrige": "$U = 4{,}5 - 1{,}5 \\times 1{,}286 = \\mathbf{2{,}57\\ \\text{V}}$",
+     "schema": {
+      "surligne": [
+       "R1",
+       "R2"
+      ]
+     }
+    },
+    {
+     "consigne": "Courant $I_1$ dans $R_1$.",
+     "question": "$I_1 = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 0.85714,
+      "unite": "A"
+     },
+     "indices": [
+      "$I_1 = U/R_1$."
+     ],
+     "corrige": "$I_1 = 2{,}57/3 = \\mathbf{0{,}857\\ \\text{A}}$",
+     "schema": {
+      "surligne": [
+       "R1"
+      ]
+     }
+    },
+    {
+     "consigne": "Courant $I_2$ dans $R_2$.",
+     "question": "$I_2 = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 0.42857,
+      "unite": "A"
+     },
+     "indices": [
+      "$I_2 = U/R_2$, ou $I - I_1$."
+     ],
+     "corrige": "$I_2 = 2{,}57/6 = \\mathbf{0{,}429\\ \\text{A}}$",
+     "schema": {
+      "surligne": [
+       "R2"
+      ]
+     }
+    }
+   ],
+   "schema": {
+    "modele": "gen-par2",
+    "vals": {
+     "E": "[[E]]",
+     "r": "[[r]]",
+     "R1": "[[R1]]",
+     "R2": "[[R2]]"
+    }
+   },
+   "vals": {
+    "E": "4,5 V",
+    "r": "1,5 Ω",
+    "R1": "3 Ω",
+    "R2": "6 Ω"
+   },
+   "generateur": "gen-par2"
+  }
+ ]
+}

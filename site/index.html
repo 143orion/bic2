@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BIC2.exe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="theme.css">
+</head>
+<body class="hub">
+
+<section class="accueil" id="accueil">
+  <div class="tslot" id="slot"><h1 class="titre vivant" id="titre" aria-label="BIC2.exe"></h1></div>
+  <p class="signature">vibecodé par <b>Adam</b> :)</p>
+
+  <div class="fenetre stats" data-titre="profil.exe">
+    <a class="plaque-accueil" id="s-plaque" href="#profil" title="Voir mon profil : plaques et stats"></a>
+    <div class="stat"><span class="k">Pseudo</span><span class="v pseudo"><span id="s-pseudo">…</span><button class="lien" id="b-pseudo" type="button" hidden>modifier</button></span><span class="sub" id="s-verif">&nbsp;</span></div>
+    <div class="stat"><span class="k">Niveau</span><span class="v" id="s-niv">0</span><span class="sub" id="s-niv-sub">&nbsp;</span></div>
+    <div class="stat"><span class="k">XP</span><span class="v" id="s-xp">0</span><div class="barre"><i id="s-barre" style="width:0"></i></div></div>
+    <div class="stat"><span class="k">Rang</span><span class="v" id="s-rang">newgen</span><span class="sub" id="s-serie">&nbsp;</span></div>
+  </div>
+
+  <button class="charbon" id="charbon" type="button"><span class="cmd">Au charbon !</span></button>
+
+  <aside class="fenetre annonce" id="annonce" data-titre="✦ BIC2 Messenger" hidden>
+    <button class="fermer" id="annonce-x" type="button" aria-label="Fermer l'annonce">×</button>
+    <img id="annonce-img" alt="" hidden>
+    <small>Message de l'admin</small>
+    <p id="annonce-txt"></p>
+  </aside>
+</section>
+
+<main class="modules" id="modules">
+  <section class="vue-hub" data-vue="modules">
+    <section class="fenetre evals" id="evals" data-titre="evals.txt — comptes à rebours" hidden><ul id="evals-liste"></ul></section>
+    <h2>Modules</h2>
+    <div class="grille" id="grille"></div>
+  </section>
+
+  <section class="vue-hub" data-vue="classement" hidden>
+    <h2>Classement</h2>
+    <div class="fenetre classement" data-titre="classement.exe — high scores">
+      <div class="filtres">
+        <div class="seg" id="c-type"><button type="button" data-t="xp" aria-pressed="true">XP</button><button type="button" data-t="module" aria-pressed="false">Par module</button></div>
+        <div class="seg" id="c-mods" hidden></div>
+        <span class="espace"></span>
+        <div class="seg" id="c-periode"><button type="button" data-p="semaine" aria-pressed="true">Semaine</button><button type="button" data-p="saison" aria-pressed="false" id="c-saison">Saison</button><button type="button" data-p="tout" aria-pressed="false">All-time</button></div>
+      </div>
+      <div class="podium" id="podium"></div>
+      <ol class="scores" id="scores"></ol>
+      <p class="vide-txt" id="c-info"></p>
+    </div>
+  </section>
+
+  <section class="vue-hub" data-vue="archives" hidden>
+    <h2>Archives</h2>
+    <div class="fenetre classement" data-titre="saisons/ — podiums des saisons passées">
+      <div class="filtres"><div class="seg" id="a-saisons"></div></div>
+      <p class="vide-txt" id="a-dates"></p>
+      <div class="podium" id="a-podium"></div>
+      <ol class="scores" id="a-scores"></ol>
+      <p class="vide-txt" id="a-info"></p>
+    </div>
+  </section>
+
+  <section class="vue-hub" data-vue="profil" hidden>
+    <h2>Profil</h2>
+    <div class="fenetre profil-page" data-titre="profil.exe — moi">
+      <div class="p-tete"><div id="p-plaque"></div><p class="vide-txt" id="p-info"></p></div>
+    </div>
+    <div class="fenetre profil-page p-stats" data-titre="stats.exe — ta progression (privée)">
+      <div class="p-kpis" id="p-kpis"></div>
+      <div class="p-bloc">
+        <div class="p-bloc-tete"><h3>XP gagnée</h3><div class="seg" id="p-periode"><button type="button" data-g="jours" aria-pressed="true">30 jours</button><button type="button" data-g="semaines" aria-pressed="false">12 semaines</button></div></div>
+        <div class="p-graphe" id="p-graphe"></div>
+      </div>
+      <div class="p-bloc">
+        <div class="p-bloc-tete"><h3>Régularité</h3><small id="p-heat-info"></small></div>
+        <div class="p-heat-wrap"><div class="p-heat" id="p-heat"></div></div>
+        <div class="p-legende" aria-hidden="true">moins <i class="h0"></i><i class="h1"></i><i class="h2"></i><i class="h3"></i><i class="h4"></i><i class="h5"></i> plus <span>· minutes d'effort par jour (10 min = jour validé)</span></div>
+      </div>
+      <div class="p-bloc">
+        <div class="p-bloc-tete"><h3>Par module</h3></div>
+        <ul class="p-mods" id="p-mods"></ul>
+      </div>
+      <div class="p-tip" id="p-tip" role="tooltip" hidden></div>
+    </div>
+    <div class="fenetre profil-page" data-titre="nameplates/ — clique pour équiper">
+      <div class="p-choix" id="p-choix"></div>
+    </div>
+  </section>
+
+  <section class="vue-hub" data-vue="joueurs" hidden>
+    <h2>Joueurs</h2>
+    <div class="fenetre messenger" data-titre="✦ BIC2 Messenger — la classe">
+      <p class="groupe-titre" id="j-titre-on">En ligne aujourd'hui</p>
+      <ul class="contacts" id="j-on"></ul>
+      <p class="groupe-titre" id="j-titre-off">Hors ligne</p>
+      <ul class="contacts" id="j-off"></ul>
+      <p class="vide-txt" id="j-info"></p>
+    </div>
+  </section>
+</main>
+
+<div class="modale" id="m-pseudo" hidden>
+  <form class="fenetre" data-titre="pseudo.exe" id="f-pseudo">
+    <p>C'est le nom sous lequel la classe te verra au classement. 3 à 16 caractères : lettres, chiffres, _ . -</p>
+    <label class="champ">Pseudo<input id="i-pseudo" maxlength="16" autocomplete="off" required pattern="[A-Za-z0-9_.\-]{3,16}"></label>
+    <div class="actions"><button class="btn plein" type="submit">Valider</button><button class="btn" type="button" id="annuler-pseudo">Plus tard</button><span class="erreur-txt" id="e-pseudo"></span></div>
+  </form>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script src="xp.js"></script>
+<script>
+(() => {
+const M = window.moteur, {esc, nf, ecartJours, ymd} = M.outils;
+const $ = id => document.getElementById(id);
+const reduit = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const titre = $("titre"), slot = $("slot"), accueil = $("accueil");
+
+/* ---------- header commun (le titre animé viendra s'y loger) ---------- */
+const header = M.monterHeader({page:"hub", sansTitre:true});
+const brand = header.querySelector(".brand");
+
+/* ---------- titre : font-swap brouillé (preset C de proto-da.html) ---------- */
+titre.innerHTML = M.titreHTML();
+const FONTS = ["'JetBrains Mono'","'VT323'","'Silkscreen'","'Space Mono'"];
+const rnd = a => a[Math.floor(Math.random()*a.length)];
+const spans = () => [...titre.children];
+let timer = 0, tick = 0;
+function pas(){
+  tick++; const calme = tick % 50 > 30;
+  spans().forEach(s => {
+    if(calme || Math.random() > .35){ s.textContent = s.dataset.c; s.style.fontFamily = ""; }
+    else { s.textContent = rnd(M.GLYPHS); s.style.fontFamily = rnd(FONTS); }
+  });
+}
+function demarrer(){ arreter(); if(!reduit) timer = setInterval(pas, 60); }
+function arreter(){ clearInterval(timer); timer = 0; spans().forEach(s => { s.textContent = s.dataset.c; s.style.fontFamily = ""; }); }
+
+/* ---------- étoiles Y2K ---------- */
+const et = document.createElement("div"); et.className = "etoiles"; et.setAttribute("aria-hidden","true");
+for(let k = 0; k < 16; k++){ const i = document.createElement("i");
+  i.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*100}%;--s:${8+Math.random()*16}px;--d:${(Math.random()*2.6).toFixed(2)}s`; et.appendChild(i); }
+accueil.prepend(et);
+
+/* ---------- accueil ↔ modules ---------- */
+let modulesDepuis = Infinity;
+function entrer(anime = true){
+  arreter(); modulesDepuis = performance.now();
+  const a = titre.getBoundingClientRect();
+  document.body.classList.add("dedans");
+  titre.classList.remove("vivant");
+  brand.appendChild(titre);
+  if(!VUES.includes(location.hash.slice(1))) location.hash = "modules";
+  window.scrollTo(0, 0);
+  const b = titre.getBoundingClientRect();
+  if(!anime || reduit || !b.height || !a.height) return;
+  titre.style.transformOrigin = "0 0"; titre.style.transition = "none";
+  titre.style.transform = `translate(${a.left-b.left}px,${a.top-b.top}px) scale(${a.height/b.height})`;
+  titre.getBoundingClientRect();
+  titre.style.transition = "transform var(--t-flip) var(--ease)"; titre.style.transform = "none";
+}
+function sortir(){
+  document.body.classList.remove("dedans"); modulesDepuis = Infinity;
+  titre.style.transition = "none"; titre.style.transform = "none";
+  titre.classList.add("vivant"); slot.appendChild(titre); demarrer();
+}
+const VUES = ["modules","classement","joueurs","archives","profil"];
+function afficherVue(){
+  const v = VUES.includes(location.hash.slice(1)) ? location.hash.slice(1) : "modules";
+  document.querySelectorAll(".vue-hub").forEach(s => s.hidden = s.dataset.vue !== v);
+  header.querySelectorAll("[data-nav]").forEach(a => a.classList.toggle("on", a.dataset.nav === v));
+  if(v !== "modules") ecouterClasse();
+  rendreVue();
+}
+addEventListener("hashchange", () => {
+  if(VUES.includes(location.hash.slice(1))){ if(!document.body.classList.contains("dedans")) entrer(false); afficherVue(); window.scrollTo(0,0); }
+  else if(document.body.classList.contains("dedans")) sortir();
+});
+header.querySelectorAll("[data-nav]").forEach(a => a.addEventListener("click", () => M.son("tap")));
+brand.addEventListener("click", e => { e.preventDefault(); M.son("tap"); location.hash = ""; });
+
+/* ---------- bouton « Au charbon ! » : ligne de commande, variation V2 calée sur confirm.mp3 ---------- */
+const go = $("charbon"), gl = go.querySelector(".cmd");
+const ENV = [0,0,0,0,.21,.61,.53,.49,.42,.5,.78,.63,.68,.79,.8,.79,.85,1,.73,.61,.6,.63,.45,.37,.37,.42,.38,.31,.36,.28,.2,.25,.23,.13,.07,.12,.12,.12,.11,.06,.04,.07,.06,.08,.06,.05,.03,.03,.04,.04];
+let occupe = false, frappe = 0, raf = 0;
+go.addEventListener("pointerenter", e => {
+  if(occupe || e.pointerType !== "mouse") return;
+  const cible = "./au_charbon.exe"; let n = 0; clearInterval(frappe);
+  frappe = setInterval(() => { n++; gl.textContent = cible.slice(0, n); if(n >= cible.length) clearInterval(frappe); }, 45);
+});
+go.addEventListener("pointerleave", () => { if(occupe) return; clearInterval(frappe); gl.textContent = "Au charbon !"; });
+function suivre(fin, cb){
+  cancelAnimationFrame(raf); const t0 = performance.now();
+  const f = () => { const t = performance.now() - t0; cb(t, ENV[Math.min(ENV.length-1, Math.floor(t/20))] || 0); if(t < fin) raf = requestAnimationFrame(f); else cb(fin, 0); };
+  raf = requestAnimationFrame(f);
+}
+go.addEventListener("click", () => {
+  if(occupe) return; occupe = true; M.son("confirm"); clearInterval(frappe);
+  const fini = () => { entrer(); afficherVue(); occupe = false; cancelAnimationFrame(raf); go.classList.remove("press"); go.style.setProperty("--e", 0); gl.textContent = "Au charbon !"; };
+  if(reduit) return fini();
+  gl.textContent = "./au_charbon.exe";
+  const etapes = [[90, () => go.classList.add("press")], [200, () => gl.textContent = "./au_charbon.exe ↵"], [340, () => gl.textContent = "OK ✓ lancement…"]], faits = new Set();
+  suivre(680, (t, e) => { go.style.setProperty("--e", e); etapes.forEach(([ms, fn], k) => { if(t >= ms && !faits.has(k)){ faits.add(k); fn(); } }); });
+  setTimeout(fini, 680);
+});
+
+/* ---------- profil (stats de l'accueil) ---------- */
+function rendreProfil(r, E){
+  const pseudo = E.joueur && E.joueur.pseudo;
+  $("s-pseudo").textContent = pseudo || (E.mode === "invite" ? "invité" : "—");
+  $("b-pseudo").hidden = E.mode !== "synchro";
+  $("b-pseudo").textContent = pseudo ? "modifier" : "choisir";
+  const v = $("s-verif");
+  if(E.mode === "invite"){ v.textContent = "progression non sauvegardée"; v.className = "sub"; }
+  else if(!pseudo){ v.textContent = "choisis un pseudo"; v.className = "sub"; }
+  else { v.textContent = "✓ visible au classement"; v.className = "sub ok"; }
+  $("s-niv").textContent = r.niveau;
+  $("s-niv-sub").textContent = `niv ${r.niveau+1} dans ${nf(r.xpSuivant - r.total)} XP`;
+  $("s-xp").textContent = nf(r.total);
+  $("s-barre").style.width = Math.max(0, Math.min(100, r.pctNiveau)) + "%";
+  $("s-rang").textContent = r.rang;
+  $("s-plaque").replaceChildren(plaqueEl(infosPlaque({jours:r.jours, modules:r.modules}, E.joueur && E.joueur.plaque), pseudo || (E.mode === "invite" ? "invité" : "toi"), `Niv ${r.niveau} · ${r.rang} · voir mon profil →`));
+  $("s-serie").textContent = r.serie.jours ? `🔥 série de ${r.serie.jours} jour${r.serie.jours > 1 ? "s" : ""}` : "🔥 pas encore de série";
+}
+
+/* ---------- pseudo ---------- */
+const mp = $("m-pseudo");
+function ouvrirPseudo(){ const E = M.interne; $("i-pseudo").value = (E.joueur && E.joueur.pseudo) || ""; $("e-pseudo").textContent = ""; mp.hidden = false; $("i-pseudo").focus(); }
+$("b-pseudo").onclick = () => { M.son("tap"); ouvrirPseudo(); };
+$("annuler-pseudo").onclick = () => { mp.hidden = true; try{ sessionStorage.setItem("bic2.pseudoPlusTard", "1"); }catch(e){} };
+$("f-pseudo").addEventListener("submit", async e => {
+  e.preventDefault(); const p = $("i-pseudo").value.trim();
+  if(!/^[A-Za-z0-9_.\-]{3,16}$/.test(p)){ $("e-pseudo").textContent = "3 à 16 caractères : lettres, chiffres, _ . -"; return; }
+  const b = e.submitter; if(b) b.disabled = true;
+  try{ await M.definirPseudo(p); mp.hidden = true; M.son("tap"); toast("Pseudo enregistré"); }
+  catch(err){ $("e-pseudo").textContent = "Impossible d'enregistrer (accès en lecture seule ?)"; }
+  finally{ if(b) b.disabled = false; }
+});
+
+/* ---------- annonce admin (popup Messenger) ---------- */
+let annonceVue = ""; try{ annonceVue = localStorage.getItem("bic2.annonce") || ""; }catch(e){}
+function rendreAnnonce(E){
+  const a = E.annonce, box = $("annonce");
+  if(!a || !a.active || !a.texte || String(a.maj) === annonceVue){ box.hidden = true; return; }
+  $("annonce-txt").textContent = a.texte;
+  const img = $("annonce-img");
+  if(a.image && /^data:image\//.test(a.image)){ img.src = a.image; img.hidden = false; } else img.hidden = true;
+  box.hidden = false;
+}
+$("annonce-x").onclick = () => { const a = M.interne.annonce; annonceVue = String(a && a.maj); try{ localStorage.setItem("bic2.annonce", annonceVue); }catch(e){} $("annonce").hidden = true; M.son("tap"); };
+
+/* ---------- comptes à rebours des évals ---------- */
+let modulesListe = [];
+function rendreEvals(E){
+  const cal = E.calendrier || {}, auj = ymd(new Date()), fen = M.valeursPour(E.config, auj).evalFenetre;
+  const evs = (cal.evals || []).filter(e => e.date >= auj).sort((a,b) => a.date < b.date ? -1 : 1).slice(0, 6);
+  $("evals").hidden = !evs.length;
+  $("evals-liste").innerHTML = evs.map(e => {
+    const j = ecartJours(auj, e.date), mod = modulesListe.find(m => m.id === e.module);
+    const quand = j === 0 ? "J" : "J-" + j;
+    return `<li class="${j <= 3 ? "chaud" : ""}"><span class="j">${quand}</span><span>${esc(e.nom)} <small>· ${esc(mod ? mod.nom : e.module)} · ${new Date(e.date+"T12:00").toLocaleDateString("fr-FR",{weekday:"short", day:"numeric", month:"short"})}</small></span>${j <= fen ? '<span class="mode">mode éval</span>' : ""}</li>`;
+  }).join("");
+}
+
+/* ---------- cartes de modules ---------- */
+let lecteurDispo = null;
+fetch("module.html", {method:"HEAD"}).then(r => lecteurDispo = r.ok).catch(() => lecteurDispo = false);
+const policesChargees = new Set();
+function chargerPolice(gf){
+  if(!gf || policesChargees.has(gf)) return; policesChargees.add(gf);
+  const l = document.createElement("link"); l.rel = "stylesheet"; l.href = "https://fonts.googleapis.com/css2?family=" + gf + "&display=swap"; document.head.appendChild(l);
+}
+function rendreModules(r, E){
+  const mods = modulesVisibles();
+  const g = $("grille"); g.innerHTML = "";
+  mods.forEach((m, i) => {
+    const t = m.theme || {}, st = r.modules[m.id] || {xp:0, reussies:0, maitrisees:0, exos:0};
+    chargerPolice(t.googleFont);
+    const total = m.items || 0, pct = total ? Math.min(100, Math.round((st.reussies + st.exos)/total*100)) : 0;
+    const c = document.createElement("button"); c.type = "button"; c.className = "carte"; c.dataset.exe = m.id + ".exe";
+    c.style.cssText = `--i:${i};${t.bg ? "--m-bg:"+t.bg+";" : ""}${t.fg ? "--m-fg:"+t.fg+";" : ""}${t.ac ? "--m-ac:"+t.ac+";" : ""}${t.font ? "--m-font:"+t.font+";" : ""}`;
+    const nbCh = (m.chapitres || []).length;
+    c.innerHTML = `<span class="ic" aria-hidden="true">${esc(m.icone || "▣")}</span>
+      <span class="nom">${esc(m.nom)}</span>
+      <span class="info">${nbCh} chapitre${nbCh > 1 ? "s" : ""} · ${nf(st.xp)} XP${total ? " · " + pct + " %" : ""}${st.maitrisees ? " · " + st.maitrisees + " ✓" : ""}</span>
+      <span class="prog"><i style="width:${pct}%"></i></span>`;
+    c.addEventListener("pointerenter", e => { if(e.pointerType === "mouse" && performance.now() - modulesDepuis >= 1000) M.son("hover"); });
+    c.addEventListener("click", () => {
+      M.son("tap");
+      if(lecteurDispo === false) return toast("Le lecteur de modules (module.html) n'est pas encore construit");
+      location.href = "module.html#" + encodeURIComponent(m.id);
+    });
+    g.appendChild(c);
+  });
+  const v = document.createElement("div"); v.className = "carte vide"; v.style.setProperty("--i", mods.length); v.textContent = "+ module à venir"; g.appendChild(v);
+}
+
+let tt = 0; function toast(t){ const e = $("toast"); e.textContent = t; e.classList.add("on"); clearTimeout(tt); tt = setTimeout(() => e.classList.remove("on"), 2200); }
+
+/* =====================================================================
+   CLASSEMENT (podium) & JOUEURS (Messenger)
+   Données publiées par chaque joueur : joueurs/<id> (pseudo), classement/<id>
+   (résumé par jour). L'XP est TOUJOURS recalculée par moteur.xpClassement.
+   ===================================================================== */
+const C = {pseudos:{}, choix:{}, docs:{}, ecoute:false, type:"xp", periode:"semaine", module:null};
+function ecouterClasse(){
+  const E = M.interne; if(C.ecoute || !E.db) return; C.ecoute = true;
+  E.db.collection("joueurs").onSnapshot(s => { C.pseudos = {}; C.choix = {}; s.docs.forEach(d => { const x = d.data() || {}, p = x.pseudo; if(typeof p === "string" && p.trim()) C.pseudos[d.id] = p.trim().slice(0,16); if(typeof x.plaque === "string") C.choix[d.id] = x.plaque.slice(0,60); }); rendreVue(); }, () => {});
+  E.db.collection("classement").onSnapshot(s => { C.docs = {}; s.docs.forEach(d => C.docs[d.id] = d.data()); rendreVue(); }, () => {});
+}
+function joueursListe(){
+  const E = M.interne, r = M.etat(), ids = new Set(Object.keys(C.pseudos));
+  if(E.uid && E.joueur && E.joueur.pseudo) ids.add(E.uid);
+  return [...ids].map(id => {
+    const moi = id === E.uid;
+    const doc = moi && r ? {jours:r.jours, serie:r.serie.jours, modules:r.modules} : (C.docs[id] || {});
+    return {id, moi, pseudo:moi && E.joueur && E.joueur.pseudo ? String(E.joueur.pseudo).slice(0,16) : C.pseudos[id], doc, choix:moi ? E.joueur && E.joueur.plaque : C.choix[id]};
+  }).filter(j => j.pseudo);
+}
+const auj = () => M.outils.jourDe(Date.now(), M.valeursPour(M.interne.config, "9999-12-31").serieHeure);
+function lundi(){ const a = auj(), w = (new Date(a+"T12:00").getDay() + 6) % 7; return M.outils.plusJours(a, -w); }
+const seg = (id, attr, val) => document.querySelectorAll(`#${id} [${attr}]`).forEach(b => b.setAttribute("aria-pressed", b.getAttribute(attr) === val));
+$("c-type").onclick = e => { const b = e.target.closest("[data-t]"); if(!b) return; M.son("tap"); C.type = b.dataset.t; rendreVue(); };
+$("c-periode").onclick = e => { const b = e.target.closest("[data-p]"); if(!b) return; M.son("tap"); C.periode = b.dataset.p; rendreVue(); };
+$("c-mods").onclick = e => { const b = e.target.closest("[data-m]"); if(!b) return; M.son("tap"); C.module = b.dataset.m; rendreVue(); };
+const ordinal = n => n === 1 ? "1er" : n + "e";
+
+function afficherPodium(liste, fmtV, podium, scores, plaques){
+  const top = [liste[1], liste[0], liste[2]];
+  podium.replaceChildren(...top.map(j => {
+    const d = document.createElement("div");
+    if(!j){ d.className = "marche vide"; return d; }
+    d.className = `marche m${Math.min(j.rang, 3)}${j.moi ? " moi" : ""}`;
+    d.innerHTML = `<b class="p"></b><span class="v">${esc(fmtV(j.v))}</span><span class="socle">${j.rang}</span>`;
+    d.querySelector(".p").textContent = j.pseudo;
+    if(plaques){ const so = d.querySelector(".socle"); so.className = "socle a-plaque"; so.replaceChildren(plaqueEl(infosPlaque(j.doc, j.choix), j.pseudo, "", j.rang)); }
+    return d;
+  }));
+  scores.replaceChildren(...liste.slice(3).map(j => {
+    const li = document.createElement("li"); li.className = (j.moi ? "moi" : "") + (plaques ? " a-plaque" : "");
+    li.innerHTML = `<span class="r">${j.rang}</span><span class="n"></span><span class="s">${plaques ? "" : esc(j.sub || "")}</span><span class="v">${esc(fmtV(j.v))}</span>`;
+    if(plaques){ const inf = infosPlaque(j.doc, j.choix); li.querySelector(".n").replaceChildren(plaqueEl(inf, j.pseudo + (j.moi ? " · toi" : ""), j.sub || `niv ${inf.niveau} · ${inf.rang}`)); }
+    else li.querySelector(".n").textContent = j.pseudo + (j.moi ? " · toi" : "");
+    return li;
+  }));
+}
+const classer = liste => { liste.forEach((j, k) => j.rang = k > 0 && liste[k-1].v === j.v ? liste[k-1].rang : k + 1); return liste; };
+const nomSaison = () => (M.interne.config && typeof M.interne.config.saisonNom === "string" && M.interne.config.saisonNom.trim()) ? M.interne.config.saisonNom.trim().slice(0,30) : "";
+
+function rendreClassement(){
+  const E = M.interne;
+  seg("c-type", "data-t", C.type); seg("c-periode", "data-p", C.periode);
+  $("c-saison").textContent = nomSaison() || "Saison";
+  const mods = modulesVisibles();
+  if((!C.module || !mods.some(m => m.id === C.module)) && mods.length) C.module = mods[0].id;
+  $("c-mods").hidden = C.type !== "module" || !mods.length;
+  $("c-periode").hidden = C.type !== "xp";
+  $("c-mods").innerHTML = mods.map(m => `<button type="button" data-m="${esc(m.id)}" aria-pressed="${m.id === C.module}">${esc(m.icone || "")} ${esc(m.nom)}</button>`).join("");
+  const info = $("c-info"), podium = $("podium"), scores = $("scores");
+  if(!E.db){ podium.innerHTML = scores.innerHTML = ""; info.textContent = "Connecte-toi pour voir le classement de la classe."; return; }
+  if(C.type === "module" && !mods.length){ podium.innerHTML = scores.innerHTML = ""; info.textContent = "Aucun module pour l'instant."; return; }
+  const liste = joueursListe(); let pct = false;
+  if(C.type === "xp"){
+    const depuis = C.periode === "semaine" ? lundi() : null, tout = C.periode === "tout";
+    liste.forEach(j => { j.v = M.xpClassement(j.doc, E.config, depuis, null, tout).total; const k = M.xpClassement(j.doc, E.config, null, null, true); j.sub = `niv ${k.niveau} · ${k.rang}`; });
+  } else {
+    const m = mods.find(x => x.id === C.module); pct = !!(m && m.items);
+    liste.forEach(j => { const s = (j.doc.modules && j.doc.modules[C.module]) || {};
+      const plaus = Math.floor(M.xpClassement(j.doc, E.config).total / 1.5);   // une réussie distincte rapporte toujours ≥ ~1,75 XP
+      const tot = Math.min(plaus, Math.max(0, Math.floor(+s.reussies || 0)) + Math.max(0, Math.floor(+s.exos || 0))), n = pct ? Math.min(tot, m.items) : tot;
+      j.v = pct ? Math.round(n/m.items*100) : n; j.sub = `${n} réussie${n > 1 ? "s" : ""} · ${Math.max(0, Math.floor(+s.maitrisees || 0))} maîtrisée${+s.maitrisees > 1 ? "s" : ""}`; j.tri = Math.max(0, +s.xp || 0); });
+  }
+  const fmtV = v => C.type === "xp" ? nf(v) + " XP" : pct ? v + " %" : nf(v) + " réussies";
+  liste.sort((a,b) => b.v - a.v || (b.tri || 0) - (a.tri || 0) || (a.pseudo < b.pseudo ? -1 : 1));
+  classer(liste);
+  if(!liste.length){ podium.innerHTML = scores.innerHTML = ""; info.textContent = "Personne au classement pour l'instant : choisis ton pseudo et lance une session !"; return; }
+  afficherPodium(liste, fmtV, podium, scores, true);
+  const moi = liste.find(j => j.moi);
+  let t = "";
+  if(!moi) t = E.mode === "synchro" ? "Choisis un pseudo (accueil → profil) pour apparaître au classement." : "";
+  else if(moi.rang === 1) t = "👑 Tu es en tête" + (C.type === "module" ? " sur ce module" : C.periode === "semaine" ? " cette semaine" : C.periode === "tout" ? " de tous les temps" : " de la saison");
+  else { const devant = liste.filter(j => j.v > moi.v).pop(); const ecart = devant.v - moi.v + 1; t = `↑ ${C.type === "xp" ? nf(ecart) + " XP" : pct ? ecart + " %" : ecart + " réussie" + (ecart > 1 ? "s" : "")} pour passer ${ordinal(devant.rang)}`; }
+  if(C.type === "xp") t += (t ? " · " : "") + (C.periode === "semaine" ? "semaine depuis lundi" : C.periode === "tout" ? "depuis le tout début" : (nomSaison() || "saison en cours") + " · depuis le " + new Date(M.valeursPour(E.config, "9999-12-31").classementDebut + "T12:00").toLocaleDateString("fr-FR", {day:"numeric", month:"long"}));
+  info.textContent = t;
+}
+
+function rendreJoueurs(){
+  const E = M.interne, info = $("j-info");
+  if(!E.db){ $("j-on").innerHTML = $("j-off").innerHTML = ""; $("j-titre-on").hidden = $("j-titre-off").hidden = true; info.textContent = "Connecte-toi pour voir la classe."; return; }
+  const a = auj(), seuil = M.valeursPour(E.config, a).serieJourMin;
+  const liste = joueursListe().map(j => {
+    const jours = (j.doc && typeof j.doc.jours === "object" && j.doc.jours) || {};
+    const actifs = Object.keys(jours).filter(d => /^\d{4}-\d\d-\d\d$/.test(d) && d <= a && jours[d] && +jours[d].eff > 0).sort();
+    const k = M.xpClassement(j.doc, E.config);
+    const serie = Math.min(Math.max(0, Math.floor(+j.doc.serie || 0)), actifs.length);
+    const effAuj = actifs.includes(a) ? +jours[a].eff : 0;
+    const kt = M.xpClassement(j.doc, E.config, null, null, true);   // niveau & rang : XP vérifiée de tous les temps (les saisons n'y touchent pas)
+    return Object.assign(j, {xp:k.total, niveau:kt.niveau, rangNom:kt.rang, serie, dernier:actifs[actifs.length-1], effAuj, valide:effAuj >= seuil});
+  }).sort((x,y) => y.xp - x.xp);
+  const on = liste.filter(j => j.effAuj > 0), off = liste.filter(j => !j.effAuj);
+  const li = j => {
+    const el = document.createElement("li"); el.className = "contact" + (j.moi ? " moi" : "") + (j.effAuj ? " en-ligne" : "");
+    const vu = !j.dernier ? "pas encore joué" : (() => { const n = M.outils.ecartJours(j.dernier, a); return n === 1 ? "vu hier" : `vu il y a ${n} j`; })();
+    const etat = j.effAuj ? (j.valide ? `journée validée ✓ · ${Math.round(j.effAuj)} min` : `${Math.round(j.effAuj)} min aujourd'hui`) : vu;
+    el.className += " a-plaque";
+    el.innerHTML = `<span class="statut" aria-hidden="true"></span><span class="pl-slot"></span>
+      <span class="serie${j.serie ? "" : " zero"}" title="Série de ${j.serie} jour(s)"><span class="flamme" aria-hidden="true"><i></i><i></i><i></i></span><b>${j.serie}</b><small>j</small></span>
+      <span class="xp">${nf(j.xp)} <small>XP</small></span>`;
+    el.querySelector(".pl-slot").replaceWith(plaqueEl(infosPlaque(j.doc, j.choix), j.pseudo + (j.moi ? " (toi)" : ""), `Niv ${j.niveau} · ${j.rangNom} · ${etat}`));
+    return el;
+  };
+  $("j-on").replaceChildren(...on.map(li)); $("j-off").replaceChildren(...off.map(li));
+  $("j-titre-on").textContent = `En ligne aujourd'hui (${on.length})`; $("j-titre-off").textContent = `Hors ligne (${off.length})`;
+  $("j-titre-on").hidden = !on.length; $("j-titre-off").hidden = !off.length;
+  info.textContent = liste.length ? "« En ligne » = a révisé aujourd'hui · XP de la saison." : "Personne encore : les joueurs apparaissent dès qu'ils ont choisi un pseudo.";
+}
+const A = {choix:null};
+$("a-saisons").onclick = e => { const b = e.target.closest("[data-s]"); if(!b) return; M.son("tap"); A.choix = +b.dataset.s; rendreVue(); };
+function rendreArchives(){
+  const E = M.interne, saisons = (E.config && Array.isArray(E.config.saisons)) ? E.config.saisons : [];
+  const els = ["a-podium","a-scores"].map($);
+  if(!saisons.length){ els.forEach(e => e.innerHTML = ""); $("a-saisons").innerHTML = ""; $("a-dates").textContent = ""; $("a-info").textContent = "Pas encore de saison archivée."; return; }
+  if(A.choix == null || !saisons[A.choix]) A.choix = saisons.length - 1;
+  const fdate = d => d ? new Date(d + "T12:00").toLocaleDateString("fr-FR", {day:"numeric", month:"short", year:"numeric"}) : "?";
+  $("a-saisons").innerHTML = saisons.map((s, k) => ({s, k})).reverse().map(({s, k}) => `<button type="button" data-s="${k}" aria-pressed="${k === A.choix}">${esc(String(s.nom || "Saison " + (k + 1)).slice(0,30))}</button>`).join("");
+  const s = saisons[A.choix];
+  $("a-dates").textContent = `Du ${fdate(s.debut)} au ${fdate(s.fin)}`;
+  const liste = classer((Array.isArray(s.classement) ? s.classement : []).filter(j => j && typeof j.pseudo === "string")
+    .map(j => ({pseudo:j.pseudo.slice(0,16), v:Math.max(0, Math.round(+j.xp || 0)), moi:j.id === E.uid, sub:""})).sort((a,b) => b.v - a.v));
+  if(!liste.length){ els.forEach(e => e.innerHTML = ""); $("a-info").textContent = "Personne n'avait marqué de points cette saison-là."; return; }
+  afficherPodium(liste, v => nf(v) + " XP", ...els);
+  const moi = liste.find(j => j.moi);
+  $("a-info").textContent = moi ? (moi.rang === 1 ? "👑 Tu as gagné cette saison" : `Tu as fini ${ordinal(moi.rang)} sur ${liste.length}`) : `${liste.length} joueur${liste.length > 1 ? "s" : ""} classé${liste.length > 1 ? "s" : ""}`;
+}
+/* =====================================================================
+   NAMEPLATES : plaque équipée, vérifiée depuis les données publiées
+   (niveau = XP vérifiée all-time ; module complété = réussies + exos
+   bornés par l'XP vérifiée, comme le classement par module)
+   ===================================================================== */
+function infosPlaque(doc, choix){
+  const E = M.interne, k = M.xpClassement(doc || {}, E.config, null, null, true), plaus = Math.floor(k.total / 1.5), st = {};
+  for(const [id, x] of Object.entries((doc && typeof doc.modules === "object" && doc.modules) || {}))
+    if(x && typeof x === "object") st[id] = {reussies:Math.min(plaus, Math.max(0, Math.floor(+x.reussies || 0)) + Math.max(0, Math.floor(+x.exos || 0))), exos:0};
+  const deb = M.plaquesDebloquees(k.niveau, st, modulesListe);
+  return {id:M.plaqueEquipee(choix, deb, k.niveau), niveau:k.niveau, rang:k.rang, deb};
+}
+function plaqueEl(inf, pseudo, sous, socle){
+  const id = inf.id, mod = id.startsWith("m:") ? modulesListe.find(m => m.id === id.slice(2)) : null;
+  return M.plaque({id, pseudo, sous, niveau:inf.niveau, module:mod, socle});
+}
+
+/* =====================================================================
+   PROFIL : choix de la plaque + stats perso (graphe XP, heatmap, modules)
+   Tout vient du journal privé du joueur (M.etat()), rien n'est publié.
+   ===================================================================== */
+const P = {graphe:"jours"};
+$("p-periode").onclick = e => { const b = e.target.closest("[data-g]"); if(!b) return; M.son("tap"); P.graphe = b.dataset.g; rendreProfilPage(); };
+$("p-choix").onclick = async e => {
+  const b = e.target.closest("[data-id]"); if(!b) return; M.son("tap");
+  if(b.dataset.verrou){ toast(b.dataset.verrou); return; }
+  const E = M.interne;
+  if(E.mode !== "synchro"){ toast("Connecte-toi pour équiper une plaque"); return; }
+  try{ await M.definirPlaque(b.dataset.id); toast("Plaque équipée"); }catch(err){ toast("Impossible d'enregistrer (lecture seule ?)"); }
+};
+const RANGS = M.RANGS;
+const dureeTxt = min => { const m = Math.round(min); return m < 60 ? m + " min" : Math.floor(m/60) + " h" + (m % 60 ? " " + String(m % 60).padStart(2, "0") : ""); };
+const jourFr = (j, o = {weekday:"short", day:"numeric", month:"short"}) => new Date(j + "T12:00").toLocaleDateString("fr-FR", o);
+
+function rendreProfilPage(){
+  const E = M.interne, r = M.etat(); if(!r) return;
+  const pseudo = (E.joueur && E.joueur.pseudo) || (E.mode === "invite" ? "invité" : "toi");
+  const inf = infosPlaque({jours:r.jours, modules:r.modules}, E.joueur && E.joueur.plaque);
+  $("p-plaque").replaceChildren(plaqueEl(inf, pseudo, `Niv ${r.niveau} · ${r.rang} · ${nf(r.total)} XP`));
+  $("p-info").textContent = E.mode === "synchro" ? (E.joueur && E.joueur.pseudo ? "Ta plaque est visible dans Joueurs, au Classement et sur le podium." : "Choisis un pseudo (accueil) pour apparaître auprès de la classe.") : "Mode invité : rien n'est sauvegardé.";
+
+  /* choix des plaques */
+  const opts = RANGS.map((n, k) => ({id:"r" + k, nom:n, verrou:k*10 > inf.niveau ? `Débloquée au niveau ${k*10}` : "", sous:k*10 > inf.niveau ? `🔒 niveau ${k*10}` : `niveaux ${k*10}${k < 10 ? "–" + (k*10+9) : "+"}`}))
+    .concat(modulesListe.map(m => { const ok = inf.deb.includes("m:" + m.id); return {id:"m:" + m.id, nom:m.nom, verrou:ok ? "" : `Complète ${m.nom} (toutes les questions + tous les exos)`, sous:ok ? "module complété" : "🔒 module à compléter"}; }));
+  $("p-choix").replaceChildren(...opts.map(o => {
+    const b = document.createElement("button"); b.type = "button"; b.className = "p-opt" + (o.verrou ? " verrou" : "");
+    b.dataset.id = o.id; if(o.verrou) b.dataset.verrou = o.verrou;
+    b.setAttribute("aria-pressed", o.id === inf.id);
+    b.setAttribute("aria-label", `${o.nom}${o.verrou ? " (verrouillée)" : o.id === inf.id ? " (équipée)" : ""}`);
+    b.append(plaqueEl({id:o.id, niveau:inf.niveau}, pseudo, o.sous));
+    const l = document.createElement("small"); l.textContent = o.nom + (o.id === inf.id ? " · équipée" : ""); b.append(l);
+    return b;
+  }));
+
+  /* chiffres clés */
+  const det = Object.values(r.details || {}).filter(d => d.ty !== "controle");
+  const ok = det.filter(d => d.ok).length;
+  const jours = Object.entries(r.jours || {}).filter(([, x]) => x && x.eff > 0);
+  const best = jours.reduce((a, [j, x]) => x.xp > a.xp ? {j, xp:x.xp} : a, {j:null, xp:0});
+  const maitr = Object.values(r.modules || {}).reduce((a, m) => a + (m.maitrisees || 0), 0);
+  const kpis = [
+    ["XP totale", nf(r.total), `niv ${r.niveau+1} dans ${nf(r.xpSuivant - r.total)} XP`],
+    ["Temps d'effort", dureeTxt(r.effortTotal || 0), `${r.sessions} session${r.sessions > 1 ? "s" : ""}`],
+    ["Précision", det.length ? Math.round(ok/det.length*100) + " %" : "—", `${ok}/${det.length} bonnes réponses`],
+    ["Série", `${r.serie.jours} j`, `${r.serie.jokers} joker${r.serie.jokers > 1 ? "s" : ""} en réserve`],
+    ["Jours actifs", String(jours.length), r.serie.valideAujourdhui ? "aujourd'hui validé ✓" : `${dureeTxt(r.serie.effortAujourdhui)} aujourd'hui`],
+    ["Meilleur jour", best.j ? nf(best.xp) + " XP" : "—", best.j ? jourFr(best.j, {day:"numeric", month:"long"}) : "pas encore"],
+    ["Maîtrisées", String(maitr), "questions réussies 3 jours"],
+    ["Rang", r.rang, r.niveau >= 100 ? "tout en haut" : `${RANGS[Math.min(10, Math.floor(r.niveau/10)+1)]} au niv ${(Math.floor(r.niveau/10)+1)*10}`]
+  ];
+  $("p-kpis").innerHTML = kpis.map(([k, v, s]) => `<div class="stat"><span class="k">${esc(k)}</span><span class="v">${esc(v)}</span><span class="sub">${esc(s)}</span></div>`).join("");
+  seg("p-periode", "data-g", P.graphe);
+  rendreGraphe(r); rendreHeat(r); rendreModsProfil(r);
+}
+
+/* ---------- tooltip commun ---------- */
+const tip = $("p-tip");
+function montrerTip(cible, html){
+  const box = tip.parentNode.getBoundingClientRect(), c = cible.getBoundingClientRect();
+  tip.innerHTML = html; tip.hidden = false;
+  const w = tip.offsetWidth, x = Math.min(Math.max(8, c.left - box.left + c.width/2 - w/2), box.width - w - 8);
+  tip.style.left = x + "px"; tip.style.top = (c.top - box.top - tip.offsetHeight - 8) + "px";
+}
+const cacherTip = () => tip.hidden = true;
+function brancherTip(conteneur){
+  const voir = e => { const t = e.target.closest("[data-tip]"); if(t) montrerTip(t, t.dataset.tip); };
+  conteneur.addEventListener("pointerover", voir); conteneur.addEventListener("focusin", voir);
+  conteneur.addEventListener("pointerleave", cacherTip); conteneur.addEventListener("focusout", cacherTip);
+}
+
+/* ---------- graphe : XP par jour (30 j) ou par semaine (12 sem.) ---------- */
+function rendreGraphe(r){
+  const el = $("p-graphe"), a = auj(), J = r.jours || {}, plus = M.outils.plusJours;
+  let pts = [];
+  if(P.graphe === "jours"){
+    for(let k = 29; k >= 0; k--){ const j = plus(a, -k); pts.push({cle:j, xp:(J[j] && J[j].xp) || 0, eff:(J[j] && J[j].eff) || 0, lab:jourFr(j, {day:"numeric", month:"numeric"}), tipT:jourFr(j), auj:k === 0}); }
+  } else {
+    const l0 = lundi();
+    for(let k = 11; k >= 0; k--){ const d = plus(l0, -7*k); let xp = 0, eff = 0; for(let i = 0; i < 7; i++){ const x = J[plus(d, i)]; if(x){ xp += x.xp || 0; eff += x.eff || 0; } }
+      pts.push({cle:d, xp, eff, lab:jourFr(d, {day:"numeric", month:"numeric"}), tipT:"semaine du " + jourFr(d, {day:"numeric", month:"long"}), auj:k === 0}); }
+  }
+  const W = Math.max(280, el.clientWidth || 680), H = 200, g = 44, d = 8, h = 22, t = 10;
+  const max = Math.max(...pts.map(p => p.xp)), pas = (() => { const brut = Math.max(1, max)/3, p10 = 10 ** Math.floor(Math.log10(brut)); return [1,2,2.5,5,10].map(m => m*p10).find(m => m >= brut); })(), top = pas*3;
+  const iw = W - g - d, ih = H - h - t, bw = iw / pts.length, gap = Math.min(4, bw*.25);
+  const y = v => t + ih - v/top*ih;
+  let svg = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="XP gagnée ${P.graphe === "jours" ? "par jour sur 30 jours" : "par semaine sur 12 semaines"}">`;
+  for(let i = 0; i <= 3; i++){ const v = pas*i, yy = Math.round(y(v)) + .5; svg += `<line class="g-grille" x1="${g}" x2="${W-d}" y1="${yy}" y2="${yy}"/><text class="g-axe" x="${g-6}" y="${yy+4}" text-anchor="end">${nf(v)}</text>`; }
+  const tous = P.graphe === "jours" ? (W < 500 ? 10 : 5) : (W < 500 ? 4 : 2);
+  pts.forEach((p, i) => {
+    const x = g + i*bw + gap/2, w = Math.max(1, bw - gap), hh = p.xp > 0 ? Math.max(2, ih - (y(p.xp) - t)) : 0, yy = t + ih - hh, rr = Math.min(4, w/2, hh);
+    if(hh) svg += `<path class="g-barre${p.auj ? " auj" : ""}" d="M${x},${t+ih} V${yy+rr} Q${x},${yy} ${x+rr},${yy} H${x+w-rr} Q${x+w},${yy} ${x+w},${yy+rr} V${t+ih} Z"/>`;
+    if((pts.length - 1 - i) % tous === 0) svg += `<text class="g-axe" x="${x + w/2}" y="${H-6}" text-anchor="middle">${esc(p.lab)}</text>`;
+    svg += `<rect class="g-zone" x="${g + i*bw}" y="${t}" width="${bw}" height="${ih}" tabindex="0" data-tip="${esc(`<b>${esc(p.tipT)}</b><br>${nf(p.xp)} XP · ${dureeTxt(p.eff)} d'effort`)}"/>`;
+  });
+  svg += `<line class="g-base" x1="${g}" x2="${W-d}" y1="${t+ih+.5}" y2="${t+ih+.5}"/></svg>`;
+  el.innerHTML = svg;
+  const total = pts.reduce((a, p) => a + p.xp, 0);
+  el.insertAdjacentHTML("beforeend", `<p class="g-total">${nf(total)} XP sur ${P.graphe === "jours" ? "30 jours" : "12 semaines"}${max ? ` · max ${nf(max)} XP` : ""}</p>`);
+}
+
+/* ---------- heatmap : minutes d'effort par jour, 26 semaines ---------- */
+function rendreHeat(r){
+  const el = $("p-heat"), a = auj(), J = r.jours || {}, plus = M.outils.plusJours, N = 26;
+  const debut = plus(lundi(), -7*(N-1)), niv = m => !m ? 0 : m < 10 ? 1 : m < 30 ? 2 : m < 60 ? 3 : m < 120 ? 4 : 5;
+  let html = `<span></span>`, moisPrec = "";
+  for(let w = 0; w < N; w++){ const d = plus(debut, 7*w), mo = d.slice(0, 7); html += `<span class="h-mois">${mo !== moisPrec ? esc(jourFr(d, {month:"short"})) : ""}</span>`; moisPrec = mo; }
+  const JOURS = ["lun","","mer","","ven","","dim"];
+  let actifs = 0, valides = 0;
+  for(let i = 0; i < 7; i++){
+    html += `<span class="h-jour">${JOURS[i]}</span>`;
+    for(let w = 0; w < N; w++){
+      const j = plus(debut, 7*w + i);
+      if(j > a){ html += `<span class="h-c futur"></span>`; continue; }
+      const x = J[j] || {}, m = +x.eff || 0; if(m > 0) actifs++; if(m >= 10) valides++;
+      html += `<span class="h-c h${niv(m)}${j === a ? " auj" : ""}" tabindex="-1" data-tip="${esc(`<b>${esc(jourFr(j))}</b><br>${m ? dureeTxt(m) + " d'effort · " + nf(x.xp || 0) + " XP" : "rien ce jour-là"}`)}"></span>`;
+    }
+  }
+  el.innerHTML = html; el.parentNode.scrollLeft = el.parentNode.scrollWidth;
+  $("p-heat-info").textContent = `${actifs} jour${actifs > 1 ? "s" : ""} actif${actifs > 1 ? "s" : ""} · ${valides} validé${valides > 1 ? "s" : ""} sur 6 mois`;
+}
+
+/* ---------- progression par module ---------- */
+function rendreModsProfil(r){
+  const mods = modulesVisibles();
+  $("p-mods").replaceChildren(...mods.map(m => {
+    const st = r.modules[m.id] || {xp:0, reussies:0, exos:0, maitrisees:0}, tot = m.items || 0, n = st.reussies + st.exos, pct = tot ? Math.min(100, Math.round(n/tot*100)) : 0;
+    const li = document.createElement("li");
+    li.innerHTML = `<span class="pm-nom"><b></b><small>${nf(st.xp)} XP · ${st.maitrisees} maîtrisée${st.maitrisees > 1 ? "s" : ""}</small></span>
+      <span class="pm-barre" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100"><i style="width:${pct}%"></i></span>
+      <span class="pm-pct">${pct} %<small>${n}/${tot}</small></span>`;
+    li.querySelector("b").textContent = `${m.icone || ""} ${m.nom}`;
+    if(pct >= 100) li.classList.add("fini");
+    return li;
+  }));
+}
+brancherTip($("p-graphe")); brancherTip($("p-heat"));
+let tRedim = 0; addEventListener("resize", () => { clearTimeout(tRedim); tRedim = setTimeout(() => { if(location.hash === "#profil" && M.etat()) rendreGraphe(M.etat()); }, 150); });
+
+function modulesVisibles(){
+  const reg = (M.interne.config && M.interne.config.modules) || {};
+  return modulesListe.map((m, k) => Object.assign({}, m, {ordre:k}, reg[m.id] || {})).filter(m => m.visible !== false).sort((a,b) => a.ordre - b.ordre);
+}
+function rendreVue(){
+  if(!M.etat()) return;
+  const v = location.hash.slice(1);
+  if(v === "classement" || v === "joueurs") ecouterClasse();
+  if(v === "classement") rendreClassement(); else if(v === "joueurs") rendreJoueurs(); else if(v === "archives") rendreArchives(); else if(v === "profil") rendreProfilPage();
+}
+
+/* ---------- démarrage ---------- */
+function tout(r, E){ rendreProfil(r, E); rendreAnnonce(E); rendreEvals(E); rendreModules(r, E); rendreVue(); }
+if(VUES.includes(location.hash.slice(1))){ entrer(false); afficherVue(); } else demarrer();
+
+const pListe = fetch("modules/liste.json").then(r => r.ok ? r.json() : []).catch(() => []).then(l => { modulesListe = Array.isArray(l) ? l : []; });
+Promise.all([M.init(), pListe]).then(([E]) => {
+  M.on(tout);
+  let plusTard = false; try{ plusTard = !!sessionStorage.getItem("bic2.pseudoPlusTard"); }catch(e){}
+  if(E.mode === "synchro" && !(E.joueur && E.joueur.pseudo) && !plusTard) setTimeout(ouvrirPseudo, 900);
+});
+})();
+</script>
+</body>
+</html>

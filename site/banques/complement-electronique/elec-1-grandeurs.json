@@ -1,0 +1,480 @@
+{
+ "id": "elec-1-grandeurs",
+ "module": "complement-electronique",
+ "titre": "Grandeurs, Ohm, générateurs",
+ "ordre": 1,
+ "sources": [
+  "CMO1"
+ ],
+ "tldr": [
+  "Signal **analogique** = variation continue · **numérique** = niveaux discrets · **périodique** : $F = 1/T$.",
+  "Courant : $i = \\dfrac{dq}{dt}$ (A = C/s) · à l'échelle micro : $i = nqSv$.",
+  "Tension : $U_{AB} = V_A - V_B = \\dfrac{W}{q}$ (V = J/C).",
+  "Puissance reçue par un dipôle : $P = U \\times I$ (W).",
+  "**Loi d'Ohm** : $U = RI$ · $P = RI^2 = \\dfrac{U^2}{R}$ · conductance $G = 1/R$ (S).",
+  "Source de tension idéale : $U = E$ quel que soit $I$ · réelle : $U = E - R_G\\,I$.",
+  "Source de courant idéale : $I = I_0$ quel que soit $U$ · réelle : $R_G$ **en parallèle**."
+ ],
+ "fiche": [
+  {
+   "titre": "Signaux",
+   "contenu": "- **Analogique** : varie de façon continue dans le temps.\n- **Numérique** : prend des niveaux discrets (souvent codés en binaire).\n- **Périodique** : se répète toutes les $T$ secondes, fréquence $F = 1/T$ (Hz).\n\nUn signal peut transporter de l'information (électronique) ou juste de l'énergie (électrocinétique : alimentation)."
+  },
+  {
+   "titre": "Matériaux",
+   "contenu": "Trois familles : **conducteurs** (argent $1{,}6 \\times 10^{-8}\\ \\Omega\\cdot\\text{m}$, cuivre $1{,}7 \\times 10^{-8}$…), **isolants** (air, bois, verre) et **semi-conducteurs** (électronique).\n\nPlus la **résistivité** $\\rho$ est faible, mieux le matériau conduit."
+  },
+  {
+   "titre": "Courant électrique",
+   "contenu": "$$i = \\frac{dq}{dt}$$\nC'est la quantité de charge qui traverse une section par seconde : $1\\ \\text{A} = 1\\ \\text{C/s}$.\n\nÀ l'échelle microscopique : $i = n\\,q\\,S\\,v$ ($n$ porteurs par m³, charge $q$, section $S$, vitesse moyenne $v$)."
+  },
+  {
+   "titre": "Tension et puissance",
+   "contenu": "$$U_{AB} = V_A - V_B = \\frac{W}{q}$$\nC'est le travail par unité de charge pour aller de A à B (V = J/C).\n\nPuissance reçue par une branche : $$P = U_{AB} \\times I$$"
+  },
+  {
+   "titre": "Résistance et loi d'Ohm",
+   "contenu": "La résistance transforme toute l'énergie reçue en chaleur (**effet Joule**).\n$$U = R\\,I \\qquad P = R\\,I^2 = \\frac{U^2}{R} \\qquad G = \\frac{1}{R}$$\n**Piège** : $U = RI$ suppose la convention récepteur (flèches de $U$ et $I$ opposées)."
+  },
+  {
+   "titre": "Générateurs réels",
+   "contenu": "- **Source de tension réelle** = $E$ idéale **en série** avec $R_G$ : $U = E - R_G\\,I$ (la tension baisse quand on tire du courant).\n- **Source de courant réelle** = $I_0$ idéale **en parallèle** avec $R_G$.\n- Idéales : tension constante quel que soit $I$ / courant constant quel que soit $U$.",
+   "schema": {
+    "modele": "gen-reel",
+    "vals": {
+     "E": "",
+     "RG": "",
+     "R": "charge"
+    },
+    "surligne": [
+     "E",
+     "RG"
+    ]
+   }
+  }
+ ],
+ "parcours": [
+  {
+   "notion": "Générateur réel",
+   "schema": {
+    "modele": "gen-reel",
+    "vals": {
+     "E": "",
+     "RG": "",
+     "R": ""
+    }
+   },
+   "ecrans": [
+    {
+     "titre": "Le montage",
+     "texte": "Une source $E$ alimente une **charge** $R$. Dans la vraie vie, la source a des pertes : on les modélise par une **résistance interne** $R_G$."
+    },
+    {
+     "titre": "Le générateur réel",
+     "texte": "Générateur réel = source idéale $E$ **en série** avec $R_G$. Le bloc $E + R_G$ est ce qu'on branche à la charge.",
+     "schema": {
+      "surligne": [
+       "E",
+       "RG"
+      ]
+     }
+    },
+    {
+     "titre": "Une seule maille",
+     "texte": "Tout est en série : un seul courant $$I = \\frac{E}{R_G + R}$$",
+     "schema": {
+      "surligne": [
+       "E",
+       "RG",
+       "R"
+      ]
+     }
+    },
+    {
+     "titre": "La tension aux bornes",
+     "texte": "Aux bornes de la charge : $$U = E - R_G\\,I = R\\,I$$ Plus on tire de courant, plus la chute $R_G I$ est grande : la tension baisse.",
+     "schema": {
+      "surligne": [
+       "R"
+      ]
+     }
+    }
+   ],
+   "controle": {
+    "enonce": "Pour une source de tension réelle, quand le courant débité augmente, la tension à ses bornes…",
+    "choix": [
+     "diminue",
+     "augmente",
+     "reste égale à $E$",
+     "devient nulle"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$U = E - R_G I$ : la chute dans $R_G$ grandit avec $I$."
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "e1-001",
+   "type": "qcm",
+   "notion": "Signaux",
+   "origine": "cours",
+   "enonce": "Un signal qui ne prend que quelques niveaux discrets est…",
+   "choix": [
+    "numérique",
+    "analogique",
+    "sinusoïdal",
+    "continu"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Niveaux discrets = numérique ; variation continue = analogique."
+  },
+  {
+   "id": "e1-002",
+   "type": "saisie",
+   "notion": "Signaux",
+   "origine": "cours",
+   "enonce": "Un signal périodique a une période $T = 2\\ \\text{ms}$. Sa fréquence (en Hz) ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 500,
+    "unite": "Hz"
+   },
+   "duree": 0.67,
+   "explication": "$F = 1/T = 1/0{,}002 = 500\\ \\text{Hz}$."
+  },
+  {
+   "id": "e1-003",
+   "type": "qcm",
+   "notion": "Matériaux",
+   "origine": "cours",
+   "enonce": "Lequel est le meilleur conducteur ?",
+   "choix": [
+    "l'argent",
+    "le carbone",
+    "le fer",
+    "le verre"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Plus faible résistivité : argent ($1{,}6 \\times 10^{-8}\\ \\Omega\\cdot\\text{m}$)."
+  },
+  {
+   "id": "e1-004",
+   "type": "saisie",
+   "notion": "Courant",
+   "origine": "cours",
+   "enonce": "Une charge de $6\\ \\text{C}$ traverse un fil en $3\\ \\text{s}$. Courant (A) ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 2,
+    "unite": "A"
+   },
+   "duree": 0.67,
+   "explication": "$I = q/t = 6/3 = 2\\ \\text{A}$."
+  },
+  {
+   "id": "e1-005",
+   "type": "qcm",
+   "notion": "Tension",
+   "origine": "cours",
+   "enonce": "$U_{AB}$ vaut…",
+   "choix": [
+    "$V_A - V_B$",
+    "$V_B - V_A$",
+    "$V_A + V_B$",
+    "$V_A \\times V_B$"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Par définition $U_{AB} = V_A - V_B$."
+  },
+  {
+   "id": "e1-006",
+   "type": "saisie",
+   "notion": "Tension",
+   "origine": "cours",
+   "enonce": "Il faut $12\\ \\text{J}$ pour amener $3\\ \\text{C}$ de A à B. $U_{AB}$ (V) ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 4,
+    "unite": "V"
+   },
+   "duree": 0.67,
+   "explication": "$U = W/q = 12/3 = 4\\ \\text{V}$."
+  },
+  {
+   "id": "e1-007",
+   "type": "saisie",
+   "notion": "Puissance",
+   "origine": "cours",
+   "enonce": "Un dipôle reçoit $U = 12\\ \\text{V}$ et $I = 0{,}5\\ \\text{A}$. Puissance (W) ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 6,
+    "unite": "W"
+   },
+   "duree": 0.67,
+   "explication": "$P = UI = 6\\ \\text{W}$."
+  },
+  {
+   "id": "e1-008",
+   "type": "saisie",
+   "notion": "Loi d'Ohm",
+   "origine": "cours",
+   "enonce": "$R = 470\\ \\Omega$, $I = 10\\ \\text{mA}$. Tension $U$ (V) ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 4.7,
+    "unite": "V"
+   },
+   "duree": 0.67,
+   "explication": "$U = RI = 470 \\times 0{,}01 = 4{,}7\\ \\text{V}$."
+  },
+  {
+   "id": "e1-009",
+   "type": "saisie",
+   "notion": "Loi d'Ohm",
+   "origine": "cours",
+   "enonce": "$U = 9\\ \\text{V}$ aux bornes de $R = 3\\ \\text{k}\\Omega$. Courant (en mA) ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 3
+   },
+   "duree": 0.67,
+   "explication": "$I = U/R = 9/3000 = 3\\ \\text{mA}$ (ou $\\text{V}/\\text{k}\\Omega = \\text{mA}$)."
+  },
+  {
+   "id": "e1-010",
+   "type": "saisie",
+   "notion": "Loi d'Ohm",
+   "origine": "cours",
+   "enonce": "Puissance dissipée par $R = 100\\ \\Omega$ sous $U = 10\\ \\text{V}$ (W) ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 1,
+    "unite": "W"
+   },
+   "duree": 0.67,
+   "explication": "$P = U^2/R = 100/100 = 1\\ \\text{W}$."
+  },
+  {
+   "id": "e1-011",
+   "type": "saisie",
+   "notion": "Loi d'Ohm",
+   "origine": "cours",
+   "enonce": "Conductance d'une résistance de $50\\ \\Omega$ (en S) ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 0.02,
+    "unite": "S"
+   },
+   "duree": 0.67,
+   "explication": "$G = 1/R = 0{,}02\\ \\text{S}$."
+  },
+  {
+   "id": "e1-012",
+   "type": "qcm",
+   "notion": "Générateurs",
+   "origine": "cours",
+   "enonce": "Une source de tension **réelle** se modélise par…",
+   "choix": [
+    "$E$ en série avec $R_G$",
+    "$E$ en parallèle avec $R_G$",
+    "$I_0$ en série avec $R_G$",
+    "$E$ seule"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Tension réelle : série ; courant réel : parallèle."
+  },
+  {
+   "id": "e1-013",
+   "type": "qcm",
+   "notion": "Générateurs",
+   "origine": "cours",
+   "enonce": "Une source de courant **idéale** impose…",
+   "choix": [
+    "le courant, quelle que soit la tension",
+    "la tension, quel que soit le courant",
+    "une puissance constante",
+    "une résistance constante"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "$I = I_0$ quelle que soit la charge."
+  },
+  {
+   "id": "e1-014",
+   "type": "qcm-multi",
+   "notion": "Générateurs",
+   "origine": "cours",
+   "enonce": "Quelles affirmations sont vraies ?",
+   "choix": [
+    "Une résistance reçoit toujours de l'énergie",
+    "Un générateur est un dipôle actif",
+    "Une résistance est un dipôle actif",
+    "Un générateur réel a des pertes par effet Joule"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0,
+     1,
+     3
+    ]
+   },
+   "duree": 0.5,
+   "explication": "Résistance = dipôle passif ; générateurs = actifs, les réels perdent de l'énergie dans $R_G$."
+  },
+  {
+   "id": "e1-101",
+   "type": "exo",
+   "titre": "Générateur réel qui alimente une charge",
+   "notion": "Générateur réel",
+   "origine": "generee",
+   "enonce": "Un générateur de f.é.m. $E$ = [[E]] et de résistance interne $R_G$ = [[RG]] alimente une charge $R$ = [[R]].",
+   "duree": 5,
+   "etapes": [
+    {
+     "consigne": "Tout est en série : écris la loi des mailles et trouve le courant $I$.",
+     "question": "$I = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 2,
+      "unite": "A"
+     },
+     "indices": [
+      "Une seule maille : $E = R_G I + R I$.",
+      "$I = \\dfrac{E}{R_G + R}$."
+     ],
+     "corrige": "$I = \\dfrac{E}{R_G+R} = \\dfrac{12}{1+5} = \\mathbf{2\\ \\text{A}}$",
+     "schema": {
+      "surligne": [
+       "E",
+       "RG",
+       "R"
+      ]
+     }
+    },
+    {
+     "consigne": "Calcule la tension $U$ aux bornes de la charge.",
+     "question": "$U = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 10,
+      "unite": "V"
+     },
+     "indices": [
+      "$U = R I$, ou bien $U = E - R_G I$."
+     ],
+     "corrige": "$U = RI = 5 \\times 2 = \\mathbf{10\\ \\text{V}}$",
+     "schema": {
+      "surligne": [
+       "R"
+      ]
+     }
+    },
+    {
+     "consigne": "Calcule la puissance $P$ reçue par la charge.",
+     "question": "$P = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 20,
+      "unite": "W"
+     },
+     "indices": [
+      "$P = UI$."
+     ],
+     "corrige": "$P = UI = 10 \\times 2 = \\mathbf{20\\ \\text{W}}$",
+     "schema": {
+      "surligne": [
+       "R"
+      ]
+     }
+    }
+   ],
+   "schema": {
+    "modele": "gen-reel",
+    "vals": {
+     "E": "[[E]]",
+     "RG": "[[RG]]",
+     "R": "[[R]]"
+    }
+   },
+   "vals": {
+    "E": "12 V",
+    "RG": "1 Ω",
+    "R": "5 Ω"
+   },
+   "generateur": "gen-reel"
+  },
+  {
+   "id": "e1-102",
+   "type": "exo",
+   "titre": "Résistance chauffante",
+   "notion": "Loi d'Ohm et puissance",
+   "origine": "generee",
+   "enonce": "Une résistance $R = 220\\ \\Omega$ est parcourue par $I = 50\\ \\text{mA}$.",
+   "duree": 3,
+   "etapes": [
+    {
+     "consigne": "Calcule la tension à ses bornes.",
+     "question": "$U = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 11,
+      "unite": "V"
+     },
+     "indices": [
+      "$U = RI$ avec $I$ en ampères."
+     ],
+     "corrige": "$U = 220 \\times 0{,}05 = \\mathbf{11\\ \\text{V}}$"
+    },
+    {
+     "consigne": "Calcule la puissance dissipée par effet Joule.",
+     "question": "$P = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 0.55,
+      "unite": "W"
+     },
+     "indices": [
+      "$P = RI^2$ ou $P = UI$."
+     ],
+     "corrige": "$P = UI = 11 \\times 0{,}05 = \\mathbf{0{,}55\\ \\text{W}}$"
+    }
+   ]
+  }
+ ]
+}

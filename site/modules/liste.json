@@ -1,0 +1,23 @@
+[
+ {
+  "id": "complement-electronique",
+  "nom": "Complément électronique",
+  "icone": "Ω",
+  "theme": {
+   "bg": "#1b1b1e",
+   "fg": "#CFCFCF",
+   "ac": "#7F49B4",
+   "font": "'JetBrains Mono',ui-monospace,monospace"
+  },
+  "chapitres": [
+   "elec-0-prerequis",
+   "elec-1-grandeurs",
+   "elec-2-kirchhoff",
+   "elec-3-associations",
+   "elec-4-thevenin-norton",
+   "elec-5-superposition-millman"
+  ],
+  "items": 84,
+  "ext": true
+ }
+]

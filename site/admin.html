@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BIC2.exe — panel admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="theme.css">
+</head>
+<body>
+<main class="panel" id="panel">
+  <h2>panel admin <small class="sync" id="etat-admin">chargement…</small></h2>
+  <div id="refus" class="fenetre" data-titre="⚠ Message système" hidden>
+    <p>Accès réservé au propriétaire de BIC2.exe. (La base refuse de toute façon les écritures des autres comptes.)</p>
+    <div class="actions"><a class="btn" href="index.html#modules">Retour au hub</a></div>
+  </div>
+
+  <div id="admin" hidden>
+    <div class="onglets" role="tablist" id="onglets"></div>
+
+    <!-- RÉGLAGES -->
+    <section class="vue" data-vue="reglages">
+      <div class="duo">
+        <form class="fenetre" data-titre="config.ini — réglages du moteur" id="f-config">
+          <div id="champs-config"></div>
+          <div class="groupe">
+            <h3>Appliquer</h3>
+            <label><input type="radio" name="mode" value="aujourdhui" checked> à partir d'aujourd'hui (le passé garde les anciens chiffres)</label><br>
+            <label><input type="radio" name="mode" value="retro"> rétroactif (tout l'historique est recalculé avec ces chiffres)</label>
+            <label class="champ" style="margin-top:10px">Note pour l'historique<input id="note-config" maxlength="120" placeholder="ex. QCM un peu trop rentables"></label>
+          </div>
+          <div class="actions"><button class="btn plein" type="submit">Enregistrer les réglages</button><button class="btn" type="button" id="reset-config">Revenir aux valeurs de GAMIFICATION.md</button><span id="msg-config" class="erreur-txt"></span></div>
+        </form>
+        <aside class="fenetre sim colle" data-titre="simulateur.exe — en direct" id="sim"></aside>
+      </div>
+    </section>
+
+    <!-- CALENDRIER -->
+    <section class="vue" data-vue="calendrier" hidden>
+      <div class="fenetre" data-titre="evals.txt">
+        <table class="tableau"><thead><tr><th>Date</th><th>Module</th><th>Nom</th><th>Chapitres (vide = tout)</th><th></th></tr></thead><tbody id="t-evals"></tbody></table>
+        <form class="actions" id="f-eval">
+          <input class="entree" type="date" id="e-date" required>
+          <select class="entree" id="e-module" required></select>
+          <input class="entree" id="e-nom" placeholder="DS, CC2, partiel…" required>
+          <input class="entree" id="e-ch" placeholder="ids de chapitres, séparés par des virgules">
+          <button class="btn" type="submit">Ajouter l'éval</button>
+        </form>
+      </div>
+      <div class="fenetre" data-titre="vacances.txt — jours neutres pour la série">
+        <div class="cal" id="cal">
+          <div class="cal-tete"><button type="button" data-nav="-1" aria-label="Mois précédent">‹</button><span id="cal-aide" class="vide-txt">Touche le 1er jour des vacances, puis le dernier.</span><button type="button" data-nav="1" aria-label="Mois suivant">›</button></div>
+          <div class="cal-mois-wrap" id="cal-mois"></div>
+          <div class="cal-legende"><span><i style="background:var(--violet)"></i>sélection</span><span><i style="background:rgba(126,231,135,.35)"></i>vacances enregistrées</span><span><i style="background:rgba(207,207,207,.12)"></i>week-end (déjà neutre)</span><span><i style="background:var(--braise-3);border-radius:50%"></i>éval</span></div>
+        </div>
+        <table class="tableau"><thead><tr><th>Nom</th><th>Début</th><th>Fin</th><th></th></tr></thead><tbody id="t-vac"></tbody></table>
+        <form class="actions" id="f-vac">
+          <input class="entree" id="v-nom" placeholder="Toussaint" required>
+          <input class="entree" type="date" id="v-debut" required>
+          <input class="entree" type="date" id="v-fin">
+          <button class="btn" type="submit">Ajouter</button>
+        </form>
+      </div>
+      <div class="actions"><button class="btn plein" id="save-cal" type="button">Enregistrer le calendrier</button><span id="msg-cal" class="erreur-txt"></span></div>
+    </section>
+
+    <!-- MODULES -->
+    <section class="vue" data-vue="modules" hidden>
+      <div class="fenetre" data-titre="modules.ini — affichage dans le hub">
+        <table class="tableau"><thead><tr><th>Module</th><th>Visible</th><th>Ordre</th><th>Icône</th><th>Chapitres</th></tr></thead><tbody id="t-mods"></tbody></table>
+        <p class="vide-txt" id="mods-vide" hidden>Aucun module pour l'instant : ils apparaissent ici dès qu'un module est créé (fichier modules/liste.json).</p>
+      </div>
+      <div class="fenetre" data-titre="durees.ini — durée théorique des exos (minutes)">
+        <p class="vide-txt">La durée fixe l'XP de l'exo et le seuil anti-farm. Une durée modifiée s'applique à tout l'historique.</p>
+        <table class="tableau"><thead><tr><th>Exo</th><th>Module · chapitre</th><th>Étapes</th><th>Durée banque</th><th>Durée panel</th></tr></thead><tbody id="t-durees"></tbody></table>
+        <p class="vide-txt" id="durees-vide">Aucun exo long dans les banques pour l'instant.</p>
+      </div>
+      <div class="actions"><button class="btn plein" id="save-mods" type="button">Enregistrer modules et durées</button><span id="msg-mods" class="erreur-txt"></span></div>
+    </section>
+
+    <!-- ANNONCE -->
+    <section class="vue" data-vue="annonce" hidden>
+      <form class="fenetre" data-titre="annonce.txt — popup Messenger du hub" id="f-annonce">
+        <label class="champ">Message<textarea id="a-texte" maxlength="400" placeholder="DS de SQL jeudi 14h — révisez les jointures !"></textarea></label>
+        <div class="actions">
+          <label class="champ">Image (facultative, réduite automatiquement)<input type="file" id="a-image" accept="image/*"></label>
+          <img id="a-apercu" alt="" style="max-height:90px;border-radius:6px" hidden>
+          <button class="lien" type="button" id="a-sans-image" hidden>retirer l'image</button>
+        </div>
+        <label style="display:block;margin-top:12px"><input type="checkbox" id="a-active"> afficher l'annonce (chacun la revoit à chaque nouvelle version)</label>
+        <div class="actions"><button class="btn plein" type="submit">Publier l'annonce</button><span id="msg-annonce" class="erreur-txt"></span></div>
+      </form>
+    </section>
+
+    <!-- JOUEURS -->
+    <section class="vue" data-vue="joueurs" hidden>
+      <div class="fenetre" data-titre="joueurs.db — qui joue">
+        <p class="vide-txt">Chaque joueur invité choisit son pseudo et apparaît directement au classement. Le journal de chacun reste privé : tu ne vois que le résumé par jour qu'ils publient. « XP vérifiée » = XP du classement : un jour qui dépasse ce qui est humainement possible compte 0, automatiquement et sans prévenir le joueur. ⚠ = jours annulés, pour info seulement : rien à valider.</p>
+        <table class="tableau"><thead><tr><th>Pseudo</th><th>Compte</th><th>Niveau</th><th>XP vérifiée</th><th>Série</th></tr></thead><tbody id="t-joueurs"></tbody></table>
+        <p class="vide-txt" id="joueurs-vide">Personne n'a encore choisi de pseudo.</p>
+      </div>
+    </section>
+
+    <!-- CONTESTATIONS -->
+    <section class="vue" data-vue="contestations" hidden>
+      <div class="fenetre" data-titre="contestations — exos jugés trop rapides">
+        <table class="tableau"><thead><tr><th>Joueur</th><th>Exo · étape</th><th>Temps réel</th><th>Durée théorique</th><th>Le</th><th>Message</th><th></th></tr></thead><tbody id="t-contest"></tbody></table>
+        <p class="vide-txt" id="contest-vide">File vide ✓</p>
+      </div>
+    </section>
+
+    <!-- SIGNALEMENTS -->
+    <section class="vue" data-vue="signalements" hidden>
+      <div class="fenetre" data-titre="signalements — erreurs dans les banques">
+        <p class="vide-txt">« Item faux » rend l'XP à tous ceux qui l'avaient raté avant aujourd'hui. Pense ensuite à faire corriger l'énoncé dans sa banque (même id).</p>
+        <table class="tableau"><thead><tr><th>Joueur</th><th>Item</th><th>Module</th><th>Message</th><th>Le</th><th></th></tr></thead><tbody id="t-signal"></tbody></table>
+        <p class="vide-txt" id="signal-vide">File vide ✓</p>
+      </div>
+      <div class="fenetre" data-titre="corrections.log — items déjà corrigés">
+        <ul id="l-corr" class="vide-txt"></ul>
+      </div>
+    </section>
+
+    <!-- SAISONS -->
+    <section class="vue" data-vue="saisons" hidden>
+      <form class="fenetre" data-titre="saison.exe — saison en cours" id="f-saison">
+        <p class="vide-txt" id="s-courante"></p>
+        <div class="champs">
+          <label class="champ">Nom de la saison qui se termine<input id="s-nom-fin" maxlength="30" required></label>
+          <label class="champ">Nom de la nouvelle saison<input id="s-nom-new" maxlength="30" required></label>
+        </div>
+        <p class="vide-txt">Clore la saison fige son podium dans les archives (visible par tous dans le menu « Archives ») et remet le classement « Saison » à zéro à partir d'aujourd'hui. Niveaux, XP totale, séries et maîtrises ne bougent pas.</p>
+        <div class="actions"><button class="btn plein" type="submit">Clore et lancer la nouvelle saison</button><span id="msg-saison" class="erreur-txt"></span></div>
+      </form>
+      <div class="fenetre" data-titre="saisons/ — archives">
+        <table class="tableau"><thead><tr><th>Saison</th><th>Du</th><th>Au</th><th>Podium</th><th></th></tr></thead><tbody id="t-saisons"></tbody></table>
+        <p class="vide-txt" id="saisons-vide">Aucune saison archivée : le menu « Archives » du hub reste caché tant qu'il n'y en a pas.</p>
+      </div>
+    </section>
+
+    <!-- HISTORIQUE -->
+    <section class="vue" data-vue="historique" hidden>
+      <div class="fenetre" data-titre="config_historique — versions des réglages">
+        <table class="tableau"><thead><tr><th>Remplacée le</th><th>Note</th><th>Mode</th><th></th></tr></thead><tbody id="t-hist"></tbody></table>
+        <p class="vide-txt" id="hist-vide">Pas encore d'historique.</p>
+      </div>
+    </section>
+  </div>
+</main>
+<div class="modale" id="confirm" hidden><div class="fenetre" data-titre="⚠ Confirmation"><p id="confirm-txt"></p><div class="actions"><button class="btn plein" id="confirm-oui" type="button">Oui</button><button class="btn" id="confirm-non" type="button">Annuler</button></div></div></div>
+<div class="toast" id="toast" role="status"></div>
+
+<script src="xp.js"></script>
+<script>
+(async () => {
+const M = window.moteur, {esc, nf, fmt, ymd, plusJours, jourDe} = M.outils, D = M.DEFAUT;
+const $ = id => document.getElementById(id);
+M.monterHeader({page:"admin", cible:document.body});
+const E = await M.init();
+if(!E.isOwner || !E.db){ $("refus").hidden = false; $("etat-admin").textContent = E.db ? "accès refusé" : "non connecté"; return; }
+$("admin").hidden = false; $("etat-admin").textContent = "";
+const db = E.db;
+let tt = 0; const toast = t => { const e = $("toast"); e.textContent = t; e.classList.add("on"); clearTimeout(tt); tt = setTimeout(() => e.classList.remove("on"), 2400); };
+const quand = t => t ? new Date(t).toLocaleString("fr-FR", {day:"numeric", month:"short", hour:"2-digit", minute:"2-digit"}) : "—";
+function confirmer(txt){ return new Promise(res => { $("confirm-txt").textContent = txt; $("confirm").hidden = false;
+  $("confirm-oui").onclick = () => { $("confirm").hidden = true; res(true); }; $("confirm-non").onclick = () => { $("confirm").hidden = true; res(false); }; }); }
+async function occupe(btn, msgEl, fn){
+  btn.disabled = true; if(msgEl) msgEl.textContent = "";
+  try{ await fn(); M.son("tap"); }
+  catch(err){ console.error(err); if(msgEl) msgEl.textContent = "Échec : " + (err && (err.message || err.code) || "erreur"); }
+  finally{ btn.disabled = false; }
+}
+const clone = o => JSON.parse(JSON.stringify(o || {}));
+
+/* ---------- onglets ---------- */
+const VUES = [["reglages","Réglages"],["calendrier","Calendrier"],["modules","Modules"],["annonce","Annonce"],["joueurs","Joueurs"],["saisons","Saisons"],["contestations","Contestations"],["signalements","Signalements"],["historique","Historique"]];
+$("onglets").innerHTML = VUES.map(([id, nom], k) => `<button role="tab" data-v="${id}" aria-selected="${k === 0}">${nom}<span class="nb" data-nb="${id}" hidden></span></button>`).join("");
+function ouvrir(id){
+  document.querySelectorAll("#onglets button").forEach(b => b.setAttribute("aria-selected", b.dataset.v === id));
+  document.querySelectorAll(".vue").forEach(v => v.hidden = v.dataset.vue !== id);
+  if(id === "historique") chargerHistorique();
+}
+$("onglets").addEventListener("click", e => { const b = e.target.closest("button"); if(b){ M.son("tap"); ouvrir(b.dataset.v); } });
+const badge = (id, n) => { const b = document.querySelector(`[data-nb="${id}"]`); b.hidden = !n; b.textContent = n; };
+
+/* =====================================================================
+   RÉGLAGES + SIMULATEUR
+   ===================================================================== */
+const SCHEMA = [
+  ["XP par réponse", [["xpParMinute","XP par minute théorique"],["qcm","QCM simple (XP)"],["qcmMulti","QCM multi tout juste (XP)"],["controle","Contrôle du cours, 1re réussite (XP)"],["formatProduction","Format production ×"],["modeGuide","Exo en mode guidé ×"],["modeMock","Exo en mode classique / mock ×"],["concentrationDiv","Concentration : 1 + durée / …"],["concentrationMax","Concentration max ×"],["dureeSaisie","Durée d'une saisie par défaut (min)"],["revanche","Revanche (+XP)"]]],
+  ["Anti-farm & maîtrise", [["exoSeuil1","Exo trop rapide : seuil 1er passage"],["exoSeuilN","Exo trop rapide : seuil passages suivants"],["exoPenalite","Exo trop rapide ×"],["exoPassagesPleins","Passages d'exo à ×1"],["exoMultApres","Passages suivants ×"],["repetitionJour","Question refaite le même jour ×"],["maitriseJours","Maîtrise : jours de réussite"],["maitriseBonus","Bonus de maîtrise (+XP)"],["maitriseMult","Question maîtrisée ×"],["evalFenetre","Mode éval : jours avant l'éval"]]],
+  ["Précision (fin de session)", [["precisionMin","Réponses minimum"],["precision","Paliers % réussite : % bonus","p"]]],
+  ["Sessions & endurance", [["sessionInactivite","Fin de session après (min)"],["effortQcm","Effort d'un QCM (min)"],["effortQcmMulti","Effort d'un QCM multi (min)"],["effortSaisie","Effort d'une saisie (min)"],["endurance","Paliers minutes : % bonus","p"]]],
+  ["Séries", [["serieJourMin","Jour validé à (min d'effort)"],["serieHeure","Changement de jour (heure)"],["seriePas","Bonus par jour de série (%)"],["seriePlafond","Plafond de série (%)"],["jokerTous","1 joker tous les … jours"],["jokerMax","Jokers max"]]],
+  ["Plafond journalier (effort)", [["plafondSeuil1","Plein tarif jusqu'à (min)"],["plafondSeuil2","Demi-tarif jusqu'à (min)"],["plafondMult2","Au-delà du 1er seuil ×"],["plafondMult3","Au-delà du 2e seuil ×"],["plafondEvalBonus","Seuils relevés en mode éval (+min)"]]],
+  ["Indices & niveaux", [["indiceCout","Coût d'un indice (0,3 = −30 %)"],["indicesMax","Indices max"],["niveauCoef","XP du niveau n = coef × n²"]]],
+  ["Classement (anti-triche)", [["classementDebut","Début de la saison (jours d'avant ignorés)","d"],["classementEffortMax","Effort max crédible par jour (min)"],["classementTaux1","XP max par min d'effort (plein tarif)"],["classementTaux2","XP max par min (demi-tarif)"],["classementTaux3","XP max par min (au-delà)"]]]
+];
+const pTxt = l => (l || []).map(([a,b]) => a + ":" + b).join(", ");
+const pLire = s => s.split(/[,;]/).map(x => x.trim()).filter(Boolean).map(x => x.split(":").map(Number)).filter(p => p.length === 2 && p.every(isFinite)).sort((a,b) => a[0]-b[0]);
+const actuelles = () => Object.assign({}, D, E.config && E.config.valeurs);
+function remplirConfig(v){
+  $("champs-config").innerHTML = SCHEMA.map(([g, champs]) => `<div class="groupe"><h3>${g}</h3><div class="champs">${champs.map(([k, l, t]) =>
+    `<label class="champ">${l}<input data-k="${k}" ${t === "p" ? `data-p="1" value="${esc(pTxt(v[k]))}"` : t === "d" ? `data-d="1" type="date" value="${esc(v[k] || "")}"` : `type="number" step="any" value="${+(+v[k]).toFixed(4)}"`}></label>`).join("")}</div></div>`).join("");
+  simuler();
+}
+function lireConfig(){
+  const v = actuelles();
+  document.querySelectorAll("#champs-config [data-k]").forEach(i => { v[i.dataset.k] = i.dataset.p ? pLire(i.value) : i.dataset.d ? i.value : (i.value === "" ? D[i.dataset.k] : +i.value); });
+  return v;
+}
+$("f-config").addEventListener("input", simuler);
+function exemples(v){
+  const conc = d => Math.min(1 + d/v.concentrationDiv, v.concentrationMax), prod = d => v.xpParMinute*d*v.formatProduction*conc(d);
+  const pal = (l, x) => { let r = 0; for(const [s, b] of l) if(x >= s) r = b; return r; };
+  return [
+    ["Contrôle du cours (1 fois)", v.controle], ["QCM simple", v.qcm], ["QCM multi", v.qcmMulti], ["Tapée 40 s", prod(v.dureeSaisie)], ["Exo 10 min guidé", prod(10)*v.modeGuide], ["Exo 10 min mock", prod(10)*v.modeMock], ["Exo 45 min guidé", prod(45)*v.modeGuide], ["Exo 45 min mock", prod(45)*v.modeMock],
+    ["Bonus 1 h à 90 % au 10e jour", "+" + (pal(v.precision, 90) + pal(v.endurance, 60) + Math.min(10*v.seriePas, v.seriePlafond)) + " %"],
+    ["Niveau 10", v.niveauCoef*100], ["Niveau 50", v.niveauCoef*2500], ["Niveau 100", v.niveauCoef*10000]
+  ];
+}
+function simuler(){
+  const v = lireConfig(), a = actuelles(), ex = exemples(v), exA = exemples(a);
+  const mode = (document.querySelector('[name="mode"]:checked') || {}).value;
+  const brouillon = Object.assign(clone(E.config), {valeurs:v});
+  if(mode === "aujourdhui") brouillon.precedentes = precedentesPour(E.config); else brouillon.precedentes = [];
+  const mien = M.calculer(M.evenements(), M.contexte({config:brouillon})), auj = E.res || {total:0, niveau:0};
+  const cel = x => typeof x === "number" ? nf(x) + " XP" : x;
+  $("sim").innerHTML = `<dl>${ex.map(([l, x], k) => `<dt>${l}</dt><dd class="${cel(x) !== cel(exA[k][1]) ? "diff" : ""}">${cel(x)}</dd>`).join("")}
+    <dt>Ma progression recalculée</dt><dd class="${mien.total !== auj.total ? "diff" : ""}">${nf(mien.total)} XP · niv ${mien.niveau}</dd></dl>
+    <p class="vide-txt">En violet : ce qui change par rapport aux réglages en vigueur (${nf(auj.total)} XP aujourd'hui).</p>`;
+}
+document.querySelectorAll('[name="mode"]').forEach(r => r.addEventListener("change", simuler));
+function precedentesPour(cfg){
+  const prec = clone((cfg && cfg.precedentes) || []), hier = plusJours(jourDe(Date.now(), actuelles().serieHeure), -1);
+  if(!prec.some(p => p.jusqua === hier)) prec.push({jusqua:hier, valeurs:clone((cfg && cfg.valeurs) || D)});
+  return prec;
+}
+async function archiver(note, mode){
+  if(!E.config) return;
+  const t = Date.now();
+  await db.doc("config_historique/" + t).set({t, note:note || "", mode, config:clone(E.config)});
+}
+$("f-config").addEventListener("submit", e => {
+  e.preventDefault();
+  occupe(e.submitter, $("msg-config"), async () => {
+    const v = lireConfig(), mode = document.querySelector('[name="mode"]:checked').value, note = $("note-config").value.trim();
+    const nouveau = Object.assign(clone(E.config), {valeurs:v, precedentes:mode === "aujourdhui" ? precedentesPour(E.config) : [], maj:Date.now()});
+    await archiver(note, mode);
+    await db.doc("config/actuelle").set(nouveau);
+    E.config = nouveau; $("note-config").value = ""; toast("Réglages enregistrés (" + (mode === "retro" ? "rétroactif" : "à partir d'aujourd'hui") + ")");
+  });
+});
+$("reset-config").onclick = () => { remplirConfig(D); toast("Valeurs de GAMIFICATION.md chargées : enregistre pour appliquer"); };
+
+/* =====================================================================
+   CALENDRIER
+   ===================================================================== */
+let cal = clone(E.calendrier); cal.evals = cal.evals || []; cal.vacances = cal.vacances || [];
+let modulesListe = await fetch("modules/liste.json").then(r => r.ok ? r.json() : []).catch(() => []);
+if(!Array.isArray(modulesListe)) modulesListe = [];
+const nomModule = id => (modulesListe.find(m => m.id === id) || {}).nom || id;
+$("e-module").innerHTML = modulesListe.length ? modulesListe.map(m => `<option value="${esc(m.id)}">${esc(m.nom)}</option>`).join("") : `<option value="">(aucun module)</option>`;
+function rendreCal(){
+  cal.evals.sort((a,b) => a.date < b.date ? -1 : 1);
+  $("t-evals").innerHTML = cal.evals.map((e, k) => `<tr><td>${esc(e.date)}</td><td>${esc(nomModule(e.module))}</td><td>${esc(e.nom)}</td><td>${esc((e.chapitres || []).join(", ") || "tout")}</td><td><button class="lien" data-del-eval="${k}">supprimer</button></td></tr>`).join("") || `<tr><td colspan="5" class="vide-txt">Aucune éval.</td></tr>`;
+  rendreCalendrier();
+  $("t-vac").innerHTML = cal.vacances.map((p, k) => `<tr><td>${esc(p.nom)}</td><td>${esc(p.debut)}</td><td>${esc(p.fin)}</td><td><button class="lien" data-del-vac="${k}">supprimer</button></td></tr>`).join("") || `<tr><td colspan="4" class="vide-txt">Aucune période (samedi et dimanche sont déjà neutres).</td></tr>`;
+}
+$("f-eval").addEventListener("submit", e => { e.preventDefault(); if(!$("e-module").value) return toast("Crée d'abord un module");
+  cal.evals.push({id:Date.now().toString(36), date:$("e-date").value, module:$("e-module").value, nom:$("e-nom").value.trim(), chapitres:$("e-ch").value.split(",").map(s => s.trim()).filter(Boolean)});
+  e.target.reset(); rendreCal(); toast("Ajoutée, pense à enregistrer"); });
+/* ---------- calendrier interactif des vacances ---------- */
+const sel = {debut:"", fin:"", survol:""};
+let calDebut = (() => { const d = new Date(); d.setDate(1); return d; })();
+const MOIS = d => d.toLocaleDateString("fr-FR", {month:"long", year:"numeric"});
+function rendreCalendrier(){
+  const auj = ymd(new Date()), fin = sel.fin || (sel.debut && sel.survol >= sel.debut ? sel.survol : "");
+  const vacDe = j => cal.vacances.find(p => j >= p.debut && j <= p.fin);
+  const evalDe = j => cal.evals.filter(e => e.date === j);
+  let html = "";
+  for(let m = 0; m < 2; m++){
+    const d0 = new Date(calDebut.getFullYear(), calDebut.getMonth() + m, 1), nb = new Date(d0.getFullYear(), d0.getMonth() + 1, 0).getDate();
+    const decal = (d0.getDay() + 6) % 7;
+    html += `<div class="cal-m"><h4>${MOIS(d0)}</h4><div class="cal-jours">${["L","M","M","J","V","S","D"].map(x => `<span class="ent">${x}</span>`).join("")}${"<span></span>".repeat(decal)}`;
+    for(let k = 1; k <= nb; k++){
+      const j = ymd(new Date(d0.getFullYear(), d0.getMonth(), k)), w = new Date(j+"T12:00").getDay(), v = vacDe(j), ev = evalDe(j);
+      const c = ["cal-j"];
+      if(w === 0 || w === 6) c.push("we"); if(j < auj) c.push("passe"); if(j === auj) c.push("auj"); if(v) c.push("vac"); if(ev.length) c.push("eval");
+      if(sel.debut && j === sel.debut) c.push("debut");
+      if(fin && j === fin) c.push("fin");
+      if(sel.debut && fin && j > sel.debut && j < fin) c.push("plage");
+      const titre = [v && "Vacances : " + v.nom, ...ev.map(e => "Éval : " + e.nom + " (" + nomModule(e.module) + ")")].filter(Boolean).join(" · ");
+      html += `<button type="button" class="${c.join(" ")}" data-j="${j}"${titre ? ` title="${esc(titre)}"` : ""} aria-pressed="${c.includes("debut") || c.includes("fin")}">${k}</button>`;
+    }
+    html += `</div></div>`;
+  }
+  $("cal-mois").innerHTML = html;
+  $("cal-aide").textContent = !sel.debut ? "Touche le 1er jour des vacances, puis le dernier."
+    : !sel.fin ? "Du " + new Date(sel.debut+"T12:00").toLocaleDateString("fr-FR",{day:"numeric",month:"short"}) + "… touche le dernier jour."
+    : "Du " + new Date(sel.debut+"T12:00").toLocaleDateString("fr-FR",{day:"numeric",month:"short"}) + " au " + new Date(sel.fin+"T12:00").toLocaleDateString("fr-FR",{day:"numeric",month:"short"}) + " · donne-lui un nom ↓";
+}
+$("cal").addEventListener("click", e => {
+  const n = e.target.closest("[data-nav]");
+  if(n){ calDebut = new Date(calDebut.getFullYear(), calDebut.getMonth() + +n.dataset.nav, 1); M.son("tap"); return rendreCalendrier(); }
+  const b = e.target.closest("[data-j]"); if(!b) return;
+  const j = b.dataset.j; M.son("tap");
+  if(!sel.debut || sel.fin){ sel.debut = j; sel.fin = ""; }
+  else if(j < sel.debut){ sel.debut = j; }
+  else { sel.fin = j; $("v-nom").focus({preventScroll:true}); }
+  $("v-debut").value = sel.debut; $("v-fin").value = sel.fin || sel.debut;
+  rendreCalendrier();
+});
+$("cal").addEventListener("pointerover", e => { const b = e.target.closest("[data-j]"); if(b && sel.debut && !sel.fin && e.pointerType === "mouse" && sel.survol !== b.dataset.j){ sel.survol = b.dataset.j; rendreCalendrier(); } });
+["v-debut","v-fin"].forEach(id => $(id).addEventListener("change", () => { sel.debut = $("v-debut").value; sel.fin = $("v-fin").value; if(sel.debut){ const d = new Date(sel.debut+"T12:00"); calDebut = new Date(d.getFullYear(), d.getMonth(), 1); } rendreCalendrier(); }));
+$("f-vac").addEventListener("submit", e => { e.preventDefault();
+  const debut = $("v-debut").value, finV = $("v-fin").value || debut;
+  if(!debut) return toast("Choisis les dates dans le calendrier");
+  if(finV < debut) return toast("La fin est avant le début");
+  cal.vacances.push({nom:$("v-nom").value.trim(), debut, fin:finV}); cal.vacances.sort((a,b) => a.debut < b.debut ? -1 : 1);
+  e.target.reset(); sel.debut = sel.fin = sel.survol = ""; rendreCal(); M.son("tap"); toast("Ajoutée, pense à enregistrer"); });
+document.querySelector('[data-vue="calendrier"]').addEventListener("click", e => {
+  const a = e.target.dataset.delEval, b = e.target.dataset.delVac;
+  if(a != null){ cal.evals.splice(+a, 1); rendreCal(); } if(b != null){ cal.vacances.splice(+b, 1); rendreCal(); }
+});
+$("save-cal").onclick = e => occupe(e.currentTarget, $("msg-cal"), async () => { await db.doc("calendrier/principal").set({evals:cal.evals, vacances:cal.vacances, maj:Date.now()}); toast("Calendrier enregistré"); });
+
+/* =====================================================================
+   MODULES & DURÉES D'EXOS
+   ===================================================================== */
+async function rendreModules(){
+  const reg = (E.config && E.config.modules) || {};
+  $("mods-vide").hidden = !!modulesListe.length;
+  $("t-mods").innerHTML = modulesListe.map((m, k) => { const r = reg[m.id] || {};
+    return `<tr data-m="${esc(m.id)}"><td>${esc(m.nom)} <small class="vide-txt">${esc(m.id)}</small></td><td><input type="checkbox" data-f="visible" ${r.visible === false ? "" : "checked"}></td>
+      <td><input class="entree" type="number" data-f="ordre" value="${r.ordre ?? k}"></td><td><input class="entree" data-f="icone" value="${esc(r.icone ?? m.icone ?? "")}"></td><td>${(m.chapitres || []).length}</td></tr>`; }).join("");
+  const exos = [];
+  await Promise.all(modulesListe.flatMap(m => (m.chapitres || []).map(ch => fetch(`banques/${m.id}/${ch}.json`).then(r => r.ok ? r.json() : null).catch(() => null)
+    .then(j => { if(j && j.items) j.items.filter(it => it.type === "exo").forEach(it => exos.push({id:it.id, m:m.id, ch, d:it.duree, n:(it.etapes || []).length})); }))));
+  const dur = (E.config && E.config.durees) || {};
+  $("durees-vide").hidden = !!exos.length;
+  $("t-durees").innerHTML = exos.sort((a,b) => a.id < b.id ? -1 : 1).map(x => `<tr><td>${esc(x.id)}</td><td>${esc(x.m)} · ${esc(x.ch)}</td><td>${x.n}</td><td>${fmt(x.d || 0)}</td>
+    <td><input class="entree" type="number" step="any" min="0" data-duree="${esc(x.id)}" value="${dur[x.id] ?? ""}" placeholder="${fmt(x.d || 0)}"></td></tr>`).join("");
+}
+$("save-mods").onclick = e => occupe(e.currentTarget, $("msg-mods"), async () => {
+  const modules = {}, durees = {};
+  document.querySelectorAll("#t-mods tr[data-m]").forEach(tr => { modules[tr.dataset.m] = {visible:tr.querySelector('[data-f="visible"]').checked, ordre:+tr.querySelector('[data-f="ordre"]').value || 0, icone:tr.querySelector('[data-f="icone"]').value}; });
+  document.querySelectorAll("[data-duree]").forEach(i => { if(i.value !== "" && +i.value > 0) durees[i.dataset.duree] = +i.value; });
+  const nouveau = Object.assign(clone(E.config), {modules, durees, maj:Date.now()});
+  if(!nouveau.valeurs) nouveau.valeurs = clone(D);
+  await db.doc("config/actuelle").set(nouveau); E.config = nouveau; toast("Modules et durées enregistrés");
+});
+
+/* =====================================================================
+   ANNONCE
+   ===================================================================== */
+let imageAnnonce = (E.annonce && E.annonce.image) || "";
+function rendreAnnonce(){
+  const a = E.annonce || {};
+  $("a-texte").value = a.texte || ""; $("a-active").checked = !!a.active;
+  $("a-apercu").hidden = $("a-sans-image").hidden = !imageAnnonce; if(imageAnnonce) $("a-apercu").src = imageAnnonce;
+}
+$("a-image").addEventListener("change", e => {
+  const f = e.target.files[0]; if(!f) return;
+  const img = new Image(), url = URL.createObjectURL(f);
+  img.onload = () => { const max = 520, k = Math.min(1, max/Math.max(img.width, img.height)), c = document.createElement("canvas");
+    c.width = Math.round(img.width*k); c.height = Math.round(img.height*k); c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+    imageAnnonce = c.toDataURL("image/jpeg", .82); URL.revokeObjectURL(url); rendreAnnonceImg(); };
+  img.src = url;
+});
+const rendreAnnonceImg = () => { $("a-apercu").hidden = $("a-sans-image").hidden = !imageAnnonce; if(imageAnnonce) $("a-apercu").src = imageAnnonce; };
+$("a-sans-image").onclick = () => { imageAnnonce = ""; $("a-image").value = ""; rendreAnnonceImg(); };
+$("f-annonce").addEventListener("submit", e => { e.preventDefault();
+  occupe(e.submitter, $("msg-annonce"), async () => { await db.doc("config/annonce").set({texte:$("a-texte").value.trim(), image:imageAnnonce, active:$("a-active").checked, maj:Date.now()}); toast("Annonce publiée"); }); });
+
+/* =====================================================================
+   JOUEURS, CONTESTATIONS, SIGNALEMENTS (listes en direct)
+   ===================================================================== */
+const L = {joueurs:{}, classement:{}, contestations:{}, signalements:{}};
+const profils = {};
+async function noms(ids){
+  const manque = ids.filter(id => !(id in profils)); if(!manque.length || !E.user || !E.user.profiles) return;
+  try{ const ps = await E.user.profiles(manque); manque.forEach(id => profils[id] = (ps && ps[id] && ps[id].name) || ""); }catch(e){ manque.forEach(id => profils[id] = ""); }
+}
+const pseudo = uid => (L.joueurs[uid] && L.joueurs[uid].pseudo) || profils[uid] || uid.slice(0, 8) + "…";
+function ecouter(col){
+  db.collection(col).onSnapshot(s => { L[col] = {}; s.docs.forEach(d => L[col][d.id] = d.data()); rendreListes(); }, err => console.warn(col, err));
+}
+["joueurs","classement","contestations","signalements"].forEach(ecouter);
+M.on(() => rendreListes());
+
+async function rendreListes(){
+  const ids = [...new Set([...Object.keys(L.joueurs), ...Object.keys(L.contestations), ...Object.keys(L.signalements)])];
+  await noms(ids);
+  const js = Object.entries(L.joueurs).sort((a,b) => (b[1].maj || 0) - (a[1].maj || 0));
+  $("joueurs-vide").hidden = !!js.length;
+  $("t-joueurs").innerHTML = js.map(([uid, j]) => { const c = L.classement[uid], k = c ? M.xpClassement(c, E.config) : null;
+    const serie = c && isFinite(+c.serie) ? Math.max(0, Math.floor(+c.serie)) : "—";
+    const alerte = k && k.suspects.length ? ` <span class="pastille" style="color:var(--braise-3)" title="Jours annulés (rythme impossible) : ${esc(k.suspects.slice(0,10).join(", "))}">⚠ ${k.suspects.length} j</span>` : "";
+    return `<tr><td><b>${esc(String(j.pseudo || "").slice(0,24))}</b></td><td>${esc(profils[uid] || "—")}</td><td>${k ? k.niveau : "—"}</td><td>${k ? nf(k.total) : "—"}${alerte}</td><td>${serie}</td></tr>`; }).join("");
+
+  const cs = Object.entries(L.contestations).flatMap(([uid, d]) => (d.items || []).map(it => ({uid, it})));
+  $("contest-vide").hidden = !!cs.length; badge("contestations", cs.length);
+  $("t-contest").innerHTML = cs.map(({uid, it}) => { const th = (it.sd != null ? it.sd : (it.d || 0)/(it.ne || 1))*60;
+    return `<tr><td>${esc(pseudo(uid))}</td><td>${esc(it.q)}</td><td>${Math.round(+it.tm || 0)} s</td><td>${Math.round(+th || 0)} s</td><td>${quand(it.t)}</td><td>${esc(it.message || "")}</td>
+      <td><button class="btn" data-c="ok" data-uid="${esc(uid)}" data-ev="${esc(it.ev)}">Valider</button> <button class="btn danger" data-c="non" data-uid="${esc(uid)}" data-ev="${esc(it.ev)}">Refuser</button></td></tr>`; }).join("");
+
+  const ss = Object.entries(L.signalements).flatMap(([uid, d]) => (d.items || []).map(it => ({uid, it})));
+  $("signal-vide").hidden = !!ss.length; badge("signalements", ss.length);
+  $("t-signal").innerHTML = ss.map(({uid, it}) => `<tr><td>${esc(pseudo(uid))}</td><td>${esc(it.q)}</td><td>${esc(nomModule(it.m))}</td><td>${esc(it.message || "")}</td><td>${quand(it.envoye)}</td>
+    <td><button class="btn" data-s="faux" data-uid="${esc(uid)}" data-q="${esc(it.q)}" data-t="${esc(it.envoye)}">Item faux → XP rendue</button> <button class="btn danger" data-s="rejet" data-uid="${esc(uid)}" data-q="${esc(it.q)}" data-t="${esc(it.envoye)}">Rejeter</button></td></tr>`).join("");
+  const corr = (E.corrections && E.corrections.items) || {};
+  $("l-corr").innerHTML = Object.entries(corr).map(([q, t]) => `<li>${esc(q)} — corrigé le ${quand(t)}</li>`).join("") || "<li>Aucun.</li>";
+}
+
+async function retirer(col, uid, garde){
+  const ref = db.doc(col + "/" + uid), s = await ref.get();
+  const items = ((s.exists && s.data().items) || []).filter(garde);
+  await ref.set({items});
+}
+document.querySelector('[data-vue="contestations"]').addEventListener("click", e => {
+  const b = e.target.closest("[data-c]"); if(!b) return;
+  const {uid, ev, c} = b.dataset;
+  occupe(b, null, async () => {
+    const ref = db.doc("decisions/" + uid), s = await ref.get(), d = clone(s.exists ? s.data() : {});
+    d.contestations = Object.assign({}, d.contestations, {[ev]:c}); d.maj = Date.now();
+    await ref.set(d);
+    await retirer("contestations", uid, it => it.ev !== ev);
+    toast(c === "ok" ? "Validée : XP complète rendue" : "Refusée");
+  });
+});
+document.querySelector('[data-vue="signalements"]').addEventListener("click", e => {
+  const b = e.target.closest("[data-s]"); if(!b) return;
+  const {uid, q, s, t} = b.dataset;
+  occupe(b, null, async () => {
+    if(s === "faux"){
+      if(!await confirmer(`Marquer « ${q} » comme faux ? Tous ceux qui l'ont raté jusqu'à maintenant récupèrent l'XP.`)) return;
+      const items = Object.assign({}, E.corrections && E.corrections.items, {[q]:Date.now()});
+      await db.doc("config/corrections").set({items, maj:Date.now()}); E.corrections = {items};
+    }
+    await retirer("signalements", uid, it => !(it.q === q && String(it.envoye) === t));
+    toast(s === "faux" ? "Item corrigé, XP rendue. À corriger dans la banque !" : "Signalement rejeté");
+  });
+});
+
+/* =====================================================================
+   SAISONS : clôture = snapshot du classement « saison » dans config.saisons
+   ===================================================================== */
+const fdate = d => d ? new Date(d + "T12:00").toLocaleDateString("fr-FR", {day:"numeric", month:"short", year:"numeric"}) : "?";
+function rendreSaisons(){
+  const cfg = E.config || {}, v = actuelles(), saisons = Array.isArray(cfg.saisons) ? cfg.saisons : [];
+  const nom = (typeof cfg.saisonNom === "string" && cfg.saisonNom.trim()) || "Saison " + (saisons.length + 1);
+  $("s-courante").textContent = `En cours : ${nom}, depuis le ${fdate(v.classementDebut)}.`;
+  if(document.activeElement !== $("s-nom-fin") && !$("s-nom-fin").value) $("s-nom-fin").value = nom;
+  if(document.activeElement !== $("s-nom-new") && !$("s-nom-new").value) $("s-nom-new").value = "Saison " + (saisons.length + 2);
+  $("saisons-vide").hidden = !!saisons.length;
+  $("t-saisons").innerHTML = saisons.map((s, k) => ({s, k})).reverse().map(({s, k}) => {
+    const top = (Array.isArray(s.classement) ? s.classement : []).slice(0, 3).map((j, i) => ["🥇","🥈","🥉"][i] + " " + esc(String(j.pseudo || "").slice(0,16))).join("  ");
+    return `<tr><td><b>${esc(s.nom)}</b></td><td>${fdate(s.debut)}</td><td>${fdate(s.fin)}</td><td>${top || "—"}</td><td><button class="lien" data-del-saison="${k}">supprimer</button></td></tr>`; }).join("");
+}
+$("f-saison").addEventListener("submit", e => { e.preventDefault();
+  occupe(e.submitter, $("msg-saison"), async () => {
+    const nomFin = $("s-nom-fin").value.trim().slice(0,30), nomNew = $("s-nom-new").value.trim().slice(0,30);
+    if(!nomFin || !nomNew) throw new Error("donne un nom aux deux saisons");
+    const v = actuelles(), auj = jourDe(Date.now(), v.serieHeure), hier = plusJours(auj, -1);
+    if(v.classementDebut >= auj) throw new Error("la saison en cours a commencé aujourd'hui : rien à archiver");
+    if(!await confirmer(`Clore « ${nomFin} » (du ${fdate(v.classementDebut)} au ${fdate(hier)}) et lancer « ${nomNew} » aujourd'hui ?`)) return;
+    const classement = Object.entries(L.joueurs).filter(([, j]) => typeof j.pseudo === "string" && j.pseudo.trim())
+      .map(([uid, j]) => ({id:uid, pseudo:j.pseudo.trim().slice(0,16), xp:M.xpClassement(L.classement[uid] || {}, E.config, null, hier).total}))
+      .filter(j => j.xp > 0).sort((a,b) => b.xp - a.xp).slice(0, 100);
+    await archiver("clôture de " + nomFin, "saison");
+    const cfg = clone(E.config);
+    cfg.saisons = [...(Array.isArray(cfg.saisons) ? cfg.saisons : []), {nom:nomFin, debut:v.classementDebut, fin:hier, classement, close:Date.now()}];
+    cfg.saisonNom = nomNew; cfg.valeurs = Object.assign({}, cfg.valeurs || clone(D), {classementDebut:auj}); cfg.maj = Date.now();
+    await db.doc("config/actuelle").set(cfg); E.config = cfg;
+    $("s-nom-fin").value = $("s-nom-new").value = ""; rendreSaisons(); remplirConfig(actuelles());
+    toast(`« ${nomFin} » archivée, « ${nomNew} » lancée`);
+  });
+});
+$("t-saisons").addEventListener("click", e => {
+  const b = e.target.closest("[data-del-saison]"); if(!b) return;
+  const k = +b.dataset.delSaison, s = E.config.saisons[k];
+  occupe(b, null, async () => {
+    if(!await confirmer(`Supprimer l'archive « ${s.nom} » ? Son podium disparaîtra des archives.`)) return;
+    const cfg = clone(E.config); cfg.saisons.splice(k, 1); cfg.maj = Date.now();
+    await db.doc("config/actuelle").set(cfg); E.config = cfg; rendreSaisons(); toast("Archive supprimée");
+  });
+});
+M.on(() => rendreSaisons());
+
+/* =====================================================================
+   HISTORIQUE DES RÉGLAGES
+   ===================================================================== */
+let hist = [];
+async function chargerHistorique(){
+  try{ const s = await db.collection("config_historique").orderBy("t", "desc").limit(40).get(); hist = s.docs.map(d => d.data()); }catch(e){ hist = []; }
+  $("hist-vide").hidden = !!hist.length;
+  $("t-hist").innerHTML = hist.map((h, k) => `<tr><td>${quand(h.t)}</td><td>${esc(h.note || "—")}</td><td>${h.mode === "retro" ? "rétroactif" : h.mode === "retour" ? "retour arrière" : h.mode === "saison" ? "clôture de saison" : "à partir du jour"}</td>
+    <td><button class="btn" data-h="${k}">Revenir à cette version</button></td></tr>`).join("");
+}
+$("t-hist").addEventListener("click", e => {
+  const b = e.target.closest("[data-h]"); if(!b) return;
+  const h = hist[+b.dataset.h];
+  occupe(b, null, async () => {
+    if(!await confirmer("Remettre les réglages tels qu'ils étaient avant le " + quand(h.t) + " ? (La version actuelle est archivée.)")) return;
+    await archiver("avant retour à la version du " + quand(h.t), "retour");
+    const cfg = Object.assign(clone(h.config), {maj:Date.now()});
+    await db.doc("config/actuelle").set(cfg); E.config = cfg; remplirConfig(actuelles()); chargerHistorique(); toast("Réglages restaurés");
+  });
+});
+
+/* ---------- libellés des cellules pour l'affichage en cartes sur téléphone ---------- */
+function etiqueter(){ document.querySelectorAll(".tableau").forEach(t => { const th = [...t.querySelectorAll("thead th")].map(x => x.textContent.trim());
+  t.querySelectorAll("tbody tr").forEach(tr => [...tr.children].forEach((td, k) => { if(td.colSpan > 1) return; const l = th[k] || ""; if(td.dataset.l !== l) td.dataset.l = l; })); }); }
+new MutationObserver(etiqueter).observe(document.getElementById("admin"), {childList:true, subtree:true});
+
+/* ---------- premier rendu ---------- */
+remplirConfig(actuelles()); rendreCal(); rendreAnnonce(); rendreModules(); rendreListes();
+})();
+</script>
+</body>
+</html>

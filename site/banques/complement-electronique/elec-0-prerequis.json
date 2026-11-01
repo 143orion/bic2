@@ -1,0 +1,400 @@
+{
+ "id": "elec-0-prerequis",
+ "module": "complement-electronique",
+ "titre": "Prérequis",
+ "ordre": 0,
+ "sources": [
+  "Rappels utiles pour les CMO1-3"
+ ],
+ "tldr": [
+  "**Préfixes** : $\\text{p} = 10^{-12}$ · $\\text{n} = 10^{-9}$ · $\\mu = 10^{-6}$ · $\\text{m} = 10^{-3}$ · $\\text{k} = 10^{3}$ · $\\text{M} = 10^{6}$ · $\\text{G} = 10^{9}$",
+  "Toujours **convertir en unités de base** (V, A, Ω, W) avant de calculer : $4{,}7\\ \\text{k}\\Omega = 4700\\ \\Omega$, $20\\ \\text{mA} = 0{,}02\\ \\text{A}$.",
+  "$\\text{V} = \\Omega \\times \\text{A}$ ; $\\text{k}\\Omega \\times \\text{mA} = \\text{V}$ (raccourci pratique).",
+  "Inverse d'une somme d'inverses : $\\dfrac{1}{\\frac{1}{a}+\\frac{1}{b}} = \\dfrac{ab}{a+b}$ ; si $a = b$ : $a/2$.",
+  "**Nœud** = point où se rejoignent **au moins 3** branches · **branche** = tronçon entre deux nœuds · **maille** = contour fermé.",
+  "Flèche de tension $U_{AB}$ : elle **pointe vers A** et $U_{AB} = V_A - V_B$."
+ ],
+ "fiche": [
+  {
+   "titre": "Préfixes SI",
+   "contenu": "- $\\text{p}$ pico $= 10^{-12}$, $\\text{n}$ nano $= 10^{-9}$, $\\mu$ micro $= 10^{-6}$, $\\text{m}$ milli $= 10^{-3}$\n- $\\text{k}$ kilo $= 10^{3}$, $\\text{M}$ méga $= 10^{6}$, $\\text{G}$ giga $= 10^{9}$\n\nRéflexe : on convertit **tout** en unités de base avant de calculer, puis on remet un préfixe à la fin pour lire le résultat."
+  },
+  {
+   "titre": "Notation scientifique",
+   "contenu": "$0{,}0047 = 4{,}7 \\times 10^{-3}$ et $22\\,000 = 2{,}2 \\times 10^{4}$.\n\nProduit : on multiplie les mantisses et on **additionne** les exposants : $(2 \\times 10^{3}) \\times (5 \\times 10^{-3}) = 10 \\times 10^{0} = 10$.\n\nRaccourci utile : $\\text{k}\\Omega \\times \\text{mA} = \\text{V}$ (les $10^{3}$ et $10^{-3}$ s'annulent)."
+  },
+  {
+   "titre": "Fractions et inverses",
+   "contenu": "$$\\frac{1}{\\frac{1}{a}+\\frac{1}{b}} = \\frac{ab}{a+b}$$\nC'est la formule des résistances en parallèle (chapitre 3).\n\n**Pièges** : $\\frac{1}{a+b} \\neq \\frac{1}{a} + \\frac{1}{b}$ ; et pour diviser par une fraction, on multiplie par son inverse."
+  },
+  {
+   "titre": "Système de 2 équations",
+   "contenu": "Méthode par **substitution** : on isole une inconnue dans une équation et on la remplace dans l'autre.\n\nExemple : $I_1 + I_2 = 3$ et $2I_1 - I_2 = 0$ → $I_2 = 2I_1$ → $3I_1 = 3$ → $I_1 = 1$, $I_2 = 2$.\n\nC'est exactement ce qu'on fait avec les lois des nœuds et des mailles."
+  },
+  {
+   "titre": "Lire un schéma",
+   "contenu": "- **Fil** : même potentiel partout (pas de tension entre ses extrémités).\n- **Nœud** : point de jonction d'**au moins 3** branches (gros point noir).\n- **Branche** : tronçon de circuit entre deux nœuds ; tous ses éléments en série ont le même courant.\n- **Maille** : contour fermé qu'on peut parcourir sans repasser deux fois par le même point.",
+   "schema": {
+    "modele": "diviseur",
+    "vals": {
+     "E": "",
+     "R1": "",
+     "R2": ""
+    }
+   }
+  },
+  {
+   "titre": "Flèches de tension et de courant",
+   "contenu": "- La flèche de **courant** est posée **sur** le fil, dans le sens choisi pour $I$.\n- La flèche de **tension** $U_{AB}$ est à côté du dipôle et **pointe vers A** : $U_{AB} = V_A - V_B$.\n- Résultat négatif ? Pas d'erreur : la grandeur va simplement dans l'autre sens que la flèche.\n- **Convention récepteur** (résistance) : flèches de $U$ et $I$ en sens opposés → $U = RI$."
+  }
+ ],
+ "parcours": [
+  {
+   "notion": "Lire un schéma",
+   "schema": {
+    "modele": "diviseur",
+    "vals": {
+     "E": "",
+     "R1": "",
+     "R2": ""
+    }
+   },
+   "ecrans": [
+    {
+     "titre": "Le circuit",
+     "texte": "Une source $E$ alimente deux résistances $R_1$ et $R_2$. On va repérer le vocabulaire de base sur ce schéma."
+    },
+    {
+     "titre": "Les nœuds",
+     "texte": "Les **gros points** sont des nœuds : là où se rejoignent au moins **3 branches**. Ici, le haut et le bas de $R_2$ (la sortie part aussi de là).",
+     "schema": {
+      "surligne": [
+       "R2"
+      ]
+     }
+    },
+    {
+     "titre": "Une branche",
+     "texte": "Entre la source et le nœud du haut : $E$ puis $R_1$, sans aucune dérivation. Tout ce qui est dans une même branche est **en série** et traversé par le **même courant** $I$.",
+     "schema": {
+      "surligne": [
+       "E",
+       "R1"
+      ]
+     }
+    },
+    {
+     "titre": "Une maille",
+     "texte": "Le contour $E \\to R_1 \\to R_2 \\to E$ est une **maille** : un chemin fermé. La somme algébrique des tensions le long d'une maille est nulle (chapitre 2).",
+     "schema": {
+      "surligne": [
+       "E",
+       "R1",
+       "R2"
+      ]
+     }
+    },
+    {
+     "titre": "Les flèches",
+     "texte": "$I$ est fléché sur le fil. $V_1$ et $V_2$ sont fléchées **à côté** des résistances, **en sens opposé au courant** : c'est la convention récepteur, celle qui donne $V = RI$."
+    }
+   ],
+   "controle": {
+    "enonce": "Un nœud relie au minimum…",
+    "choix": [
+     "3 branches",
+     "2 branches",
+     "4 branches",
+     "1 branche"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "2 branches qui se touchent, c'est juste un fil qui continue : il faut au moins 3 branches pour parler de nœud."
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "e0-001",
+   "type": "saisie",
+   "notion": "Préfixes",
+   "origine": "cours",
+   "enonce": "Convertis $4{,}7\\ \\text{k}\\Omega$ en ohms.",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 4700,
+    "unite": "Ω"
+   },
+   "duree": 0.67,
+   "explication": "$4{,}7 \\times 10^{3} = 4700\\ \\Omega$."
+  },
+  {
+   "id": "e0-002",
+   "type": "saisie",
+   "notion": "Préfixes",
+   "origine": "cours",
+   "enonce": "Convertis $20\\ \\text{mA}$ en ampères (valeur en A).",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 0.02,
+    "unite": "A"
+   },
+   "duree": 0.67,
+   "explication": "$20 \\times 10^{-3} = 0{,}02\\ \\text{A}$."
+  },
+  {
+   "id": "e0-003",
+   "type": "saisie",
+   "notion": "Préfixes",
+   "origine": "cours",
+   "enonce": "Combien de milliampères dans $0{,}005\\ \\text{A}$ ? (nombre de mA)",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 5
+   },
+   "duree": 0.67,
+   "explication": "$0{,}005\\ \\text{A} = 5 \\times 10^{-3}\\ \\text{A} = 5\\ \\text{mA}$."
+  },
+  {
+   "id": "e0-004",
+   "type": "saisie",
+   "notion": "Préfixes",
+   "origine": "cours",
+   "enonce": "Calcule $U = R \\times I$ avec $R = 2\\ \\text{k}\\Omega$ et $I = 5\\ \\text{mA}$ (en V).",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 10,
+    "unite": "V"
+   },
+   "duree": 0.67,
+   "explication": "$\\text{k}\\Omega \\times \\text{mA} = \\text{V}$ : $2 \\times 5 = 10\\ \\text{V}$."
+  },
+  {
+   "id": "e0-005",
+   "type": "qcm",
+   "notion": "Préfixes",
+   "origine": "cours",
+   "enonce": "Le préfixe $\\text{M}$ (méga) vaut…",
+   "choix": [
+    "$10^{6}$",
+    "$10^{3}$",
+    "$10^{-6}$",
+    "$10^{9}$"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "$\\text{M} = 10^{6}$ ; attention à ne pas confondre avec $\\text{m} = 10^{-3}$."
+  },
+  {
+   "id": "e0-006",
+   "type": "qcm",
+   "notion": "Préfixes",
+   "origine": "cours",
+   "enonce": "$1\\ \\mu\\text{A}$ correspond à…",
+   "choix": [
+    "$10^{-6}\\ \\text{A}$",
+    "$10^{-3}\\ \\text{A}$",
+    "$10^{-9}\\ \\text{A}$",
+    "$10^{6}\\ \\text{A}$"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "$\\mu$ (micro) $= 10^{-6}$."
+  },
+  {
+   "id": "e0-007",
+   "type": "saisie",
+   "notion": "Fractions et inverses",
+   "origine": "cours",
+   "enonce": "Calcule $\\dfrac{1}{\\frac{1}{100} + \\frac{1}{100}}$.",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 50
+   },
+   "duree": 0.67,
+   "explication": "$\\frac{100 \\times 100}{100+100} = 50$ : deux valeurs égales donnent la moitié."
+  },
+  {
+   "id": "e0-008",
+   "type": "saisie",
+   "notion": "Fractions et inverses",
+   "origine": "cours",
+   "enonce": "Calcule $\\dfrac{ab}{a+b}$ pour $a = 300$ et $b = 600$.",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 200
+   },
+   "duree": 0.67,
+   "explication": "$\\frac{300 \\times 600}{900} = 200$."
+  },
+  {
+   "id": "e0-009",
+   "type": "qcm",
+   "notion": "Fractions et inverses",
+   "origine": "cours",
+   "enonce": "$\\dfrac{1}{a+b}$ est égal à…",
+   "choix": [
+    "aucune simplification simple",
+    "$\\frac{1}{a} + \\frac{1}{b}$",
+    "$\\frac{a+b}{ab}$",
+    "$\\frac{1}{a} \\times \\frac{1}{b}$"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Piège classique : l'inverse d'une somme n'est pas la somme des inverses."
+  },
+  {
+   "id": "e0-010",
+   "type": "saisie",
+   "notion": "Système de 2 équations",
+   "origine": "cours",
+   "enonce": "$x + y = 10$ et $x - y = 2$. Que vaut $x$ ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 6
+   },
+   "duree": 0.67,
+   "explication": "On additionne : $2x = 12$ donc $x = 6$ (et $y = 4$)."
+  },
+  {
+   "id": "e0-011",
+   "type": "qcm",
+   "notion": "Lire un schéma",
+   "origine": "cours",
+   "enonce": "Une **maille** est…",
+   "choix": [
+    "un contour fermé du circuit",
+    "un point où se rejoignent 3 fils",
+    "un tronçon entre deux nœuds",
+    "une résistance seule"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Maille = contour fermé ; branche = tronçon entre deux nœuds ; nœud = jonction d'au moins 3 branches."
+  },
+  {
+   "id": "e0-012",
+   "type": "qcm",
+   "notion": "Lire un schéma",
+   "origine": "cours",
+   "enonce": "Deux éléments placés dans la même branche, sans dérivation entre eux, sont…",
+   "choix": [
+    "en série (même courant)",
+    "en parallèle (même tension)",
+    "court-circuités",
+    "indépendants"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Même branche = même courant = série."
+  },
+  {
+   "id": "e0-013",
+   "type": "qcm",
+   "notion": "Flèches",
+   "origine": "cours",
+   "enonce": "La flèche de tension $U_{AB}$ pointe…",
+   "choix": [
+    "vers A",
+    "vers B",
+    "dans le sens du courant",
+    "toujours vers le haut"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Convention française : la flèche de $U_{AB}$ pointe vers le premier point, A, et $U_{AB} = V_A - V_B$."
+  },
+  {
+   "id": "e0-014",
+   "type": "qcm",
+   "notion": "Flèches",
+   "origine": "cours",
+   "enonce": "On trouve $I = -2\\ \\text{A}$ pour un courant fléché vers la droite. Cela signifie…",
+   "choix": [
+    "le courant circule vers la gauche avec 2 A",
+    "le calcul est forcément faux",
+    "il n'y a pas de courant",
+    "le courant vaut 2 A vers la droite"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Un signe négatif veut seulement dire : sens réel opposé à la flèche."
+  },
+  {
+   "id": "e0-101",
+   "type": "exo",
+   "titre": "Système d'équations façon circuit",
+   "notion": "Système de 2 équations",
+   "origine": "generee",
+   "enonce": "Deux courants vérifient la loi des nœuds $I_1 + I_2 = 3\\ \\text{A}$ et une loi des mailles qui donne $2I_1 - I_2 = 0$.",
+   "duree": 3,
+   "etapes": [
+    {
+     "consigne": "Isole $I_2$ dans la deuxième équation, remplace dans la première et trouve $I_1$.",
+     "question": "$I_1 = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 1,
+      "unite": "A"
+     },
+     "indices": [
+      "$2I_1 - I_2 = 0$ donne $I_2 = 2I_1$.",
+      "Remplace : $I_1 + 2I_1 = 3$."
+     ],
+     "corrige": "$I_2 = 2I_1$ donc $3I_1 = 3$ et $I_1 = \\mathbf{1\\ \\text{A}}$"
+    },
+    {
+     "consigne": "Déduis-en $I_2$.",
+     "question": "$I_2 = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 2,
+      "unite": "A"
+     },
+     "indices": [
+      "$I_2 = 2I_1$."
+     ],
+     "corrige": "$I_2 = 2 \\times 1 = \\mathbf{2\\ \\text{A}}$"
+    }
+   ]
+  }
+ ]
+}

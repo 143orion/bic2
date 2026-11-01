@@ -1,0 +1,784 @@
+{
+ "id": "elec-5-superposition-millman",
+ "module": "complement-electronique",
+ "titre": "Superposition & Millman",
+ "ordre": 5,
+ "sources": [
+  "CMO3",
+  "TD3"
+ ],
+ "tldr": [
+  "**Superposition** (réseau linéaire) : effet total = **somme** des effets de chaque source agissant **seule**.",
+  "Pour faire agir une source seule : on **éteint** les autres (tension → fil, courant → circuit ouvert).",
+  "On somme des **courants** ou des **tensions**, jamais des puissances.",
+  "**Millman** (branches en parallèle entre A et la référence) : $U_{AB} = \\dfrac{\\sum E_i/R_i}{\\sum 1/R_i}$.",
+  "Une branche sans source compte $0$ au numérateur mais $1/R$ au dénominateur ; une source de courant ajoute directement son $I$ au numérateur."
+ ],
+ "fiche": [
+  {
+   "titre": "Théorème de superposition",
+   "contenu": "Dans un réseau **linéaire** avec plusieurs sources indépendantes, le courant (ou la tension) dans une branche est la **somme algébrique** des contributions de chaque source agissant seule, les autres étant **neutralisées**.\n\n- Source de tension neutralisée → fil\n- Source de courant neutralisée → circuit ouvert",
+   "schema": {
+    "modele": "millman3",
+    "vals": {
+     "E1": "",
+     "E2": "",
+     "R1": "",
+     "R2": "",
+     "R3": ""
+    }
+   }
+  },
+  {
+   "titre": "Méthode en 3 temps",
+   "contenu": "1. Garder $E_1$, éteindre les autres → calculer $U_1$ (souvent un diviseur).\n2. Garder $E_2$, éteindre les autres → $U_2$.\n3. Sommer **avec les signes** : $U = U_1 + U_2$.\n\n**Piège** : la puissance n'est pas linéaire ($P = U^2/R$), on ne la superpose jamais."
+  },
+  {
+   "titre": "Théorème de Millman",
+   "contenu": "Pour $n$ branches $(E_i, R_i)$ en parallèle entre un nœud A et la référence B :\n$$U_{AB} = \\frac{\\sum_i \\frac{E_i}{R_i}}{\\sum_i \\frac{1}{R_i}}$$\nC'est la loi des nœuds écrite en A avec $V_B = 0$. Une source de courant $I_0$ arrivant en A ajoute $+I_0$ au numérateur."
+  }
+ ],
+ "parcours": [
+  {
+   "notion": "Superposition",
+   "schema": {
+    "modele": "millman3",
+    "vals": {
+     "E1": "10 V",
+     "E2": "5 V",
+     "R1": "100 Ω",
+     "R2": "100 Ω",
+     "R3": "100 Ω"
+    }
+   },
+   "ecrans": [
+    {
+     "titre": "Deux sources",
+     "texte": "$E_1 = 10\\ \\text{V}$ et $E_2 = 5\\ \\text{V}$ agissent ensemble sur $R_3$. On cherche $U_{AM}$ en faisant agir **une source à la fois**."
+    },
+    {
+     "titre": "1 · E1 seule",
+     "texte": "On éteint $E_2$ (fil) : $R_2 \\parallel R_3 = 50\\ \\Omega$. Diviseur : $$U_1 = 10 \\times \\frac{50}{100 + 50} \\approx 3{,}33\\ \\text{V}$$",
+     "schema": {
+      "surligne": [
+       "E1",
+       "R1",
+       "R2",
+       "R3"
+      ],
+      "court": [
+       "E2"
+      ]
+     }
+    },
+    {
+     "titre": "2 · E2 seule",
+     "texte": "On éteint $E_1$ (fil) : $R_1 \\parallel R_3 = 50\\ \\Omega$. $$U_2 = 5 \\times \\frac{50}{150} \\approx 1{,}67\\ \\text{V}$$",
+     "schema": {
+      "surligne": [
+       "E2",
+       "R1",
+       "R2",
+       "R3"
+      ],
+      "court": [
+       "E1"
+      ]
+     }
+    },
+    {
+     "titre": "3 · On additionne",
+     "texte": "$$U_{AM} = U_1 + U_2 = 5\\ \\text{V}$$ (en gardant les signes si une contribution est dans l'autre sens).",
+     "schema": {
+      "surligne": [
+       "R3"
+      ]
+     }
+    }
+   ],
+   "controle": {
+    "enonce": "Pour faire agir $E_1$ seule, la source de courant $I_2$ du circuit est remplacée par…",
+    "choix": [
+     "un circuit ouvert",
+     "un fil",
+     "une résistance",
+     "une source de tension"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "Source de courant éteinte = circuit ouvert."
+   }
+  },
+  {
+   "notion": "Millman",
+   "schema": {
+    "modele": "millman3",
+    "vals": {
+     "E1": "10 V",
+     "E2": "5 V",
+     "R1": "100 Ω",
+     "R2": "100 Ω",
+     "R3": "100 Ω"
+    }
+   },
+   "ecrans": [
+    {
+     "titre": "Trois branches en parallèle",
+     "texte": "Entre A et M : la branche $(E_1, R_1)$, la branche $R_3$ seule, et la branche $(E_2, R_2)$."
+    },
+    {
+     "titre": "La formule",
+     "texte": "$$U_{AM} = \\frac{\\frac{E_1}{R_1} + \\frac{0}{R_3} + \\frac{E_2}{R_2}}{\\frac{1}{R_1} + \\frac{1}{R_3} + \\frac{1}{R_2}}$$ La branche $R_3$ n'a pas de source : $0$ au numérateur, mais elle compte au dénominateur.",
+     "schema": {
+      "surligne": [
+       "E1",
+       "R1",
+       "R2",
+       "E2",
+       "R3"
+      ]
+     }
+    },
+    {
+     "titre": "Application",
+     "texte": "$$U_{AM} = \\frac{0{,}1 + 0{,}05}{0{,}03} = 5\\ \\text{V}$$ Même résultat que la superposition, en une ligne."
+    }
+   ],
+   "controle": {
+    "enonce": "Dans Millman, une branche sans source…",
+    "choix": [
+     "compte seulement au dénominateur",
+     "ne compte pas du tout",
+     "compte seulement au numérateur",
+     "rend la formule fausse"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$E = 0$ au numérateur, mais $1/R$ au dénominateur."
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "e5-001",
+   "type": "qcm",
+   "notion": "Superposition",
+   "origine": "cours",
+   "enonce": "Le théorème de superposition s'applique…",
+   "choix": [
+    "aux réseaux linéaires",
+    "à tous les circuits",
+    "seulement s'il y a une seule source",
+    "aux puissances"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Il faut un réseau linéaire."
+  },
+  {
+   "id": "e5-002",
+   "type": "qcm",
+   "notion": "Superposition",
+   "origine": "cours",
+   "enonce": "On ne peut **pas** superposer…",
+   "choix": [
+    "les puissances",
+    "les courants",
+    "les tensions",
+    "les contributions de deux sources de tension"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "$P = RI^2$ n'est pas linéaire."
+  },
+  {
+   "id": "e5-003",
+   "type": "qcm",
+   "notion": "Superposition",
+   "origine": "cours",
+   "enonce": "Pour faire agir une source seule, une autre source de **tension** est remplacée par…",
+   "choix": [
+    "un fil",
+    "un circuit ouvert",
+    "une résistance de 1 Ω",
+    "une source de courant"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Tension éteinte = court-circuit."
+  },
+  {
+   "id": "e5-004",
+   "type": "saisie",
+   "notion": "Superposition",
+   "origine": "cours",
+   "enonce": "Contribution de $E_1$ seule : $3\\ \\text{mA}$ ; de $E_2$ seule : $-1\\ \\text{mA}$. Courant total (en mA) ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 2
+   },
+   "duree": 0.67,
+   "explication": "On somme avec les signes : $3 - 1 = 2\\ \\text{mA}$."
+  },
+  {
+   "id": "e5-005",
+   "type": "saisie",
+   "notion": "Millman",
+   "origine": "cours",
+   "enonce": "Deux branches : $(E_1 = 12\\ \\text{V}, R_1 = 1\\ \\text{k}\\Omega)$ et $(E_2 = 6\\ \\text{V}, R_2 = 1\\ \\text{k}\\Omega)$ en parallèle. $U_{AB}$ (V) ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 9,
+    "unite": "V"
+   },
+   "duree": 0.67,
+   "explication": "$\\frac{12/1 + 6/1}{1/1 + 1/1} = 9\\ \\text{V}$."
+  },
+  {
+   "id": "e5-006",
+   "type": "saisie",
+   "notion": "Millman",
+   "origine": "cours",
+   "enonce": "Branches $(10\\ \\text{V}, 100\\ \\Omega)$, $(0, 100\\ \\Omega)$ et $(5\\ \\text{V}, 100\\ \\Omega)$. $U_{AB}$ (V) ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 5,
+    "unite": "V"
+   },
+   "duree": 0.67,
+   "explication": "$\\frac{0{,}1 + 0 + 0{,}05}{0{,}03} = 5\\ \\text{V}$."
+  },
+  {
+   "id": "e5-007",
+   "type": "qcm",
+   "notion": "Millman",
+   "origine": "cours",
+   "enonce": "Le théorème de Millman, c'est en fait…",
+   "choix": [
+    "la loi des nœuds écrite au nœud A",
+    "la loi des mailles",
+    "le diviseur de courant",
+    "le théorème de Thévenin"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Avec $V_B = 0$ : $\\sum (E_i - V_A)/R_i = 0$."
+  },
+  {
+   "id": "e5-008",
+   "type": "qcm",
+   "notion": "Millman",
+   "origine": "cours",
+   "enonce": "Une source de courant $I_0$ qui arrive au nœud A, dans Millman…",
+   "choix": [
+    "ajoute $+I_0$ au numérateur",
+    "ajoute $1/I_0$ au dénominateur",
+    "est ignorée",
+    "se remplace par un fil"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Le numérateur est une somme de courants."
+  },
+  {
+   "id": "e5-101",
+   "type": "exo",
+   "titre": "TD3 · Exercice 1 — Deux sources de courant",
+   "notion": "Superposition",
+   "origine": "td",
+   "enonce": "$I_1 = 8\\ \\text{A}$ avec $R_1 = 10\\ \\Omega$, $I_2 = 4\\ \\text{A}$ avec $R_2 = 30\\ \\Omega$, et $R = 60\\ \\Omega$. Calcule le courant $I$ dans $R$ (fléché de A vers B) par **superposition**.",
+   "duree": 12,
+   "etapes": [
+    {
+     "consigne": "$I_1$ seule ($I_2$ éteinte = circuit ouvert). Transforme le bloc $I_1 \\parallel R_1$ en Thévenin et calcule la contribution $I'$ dans $R$ (attention au sens).",
+     "question": "$I' = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": -0.8,
+      "unite": "A",
+      "tol": 0.01
+     },
+     "indices": [
+      "$I_1 \\parallel R_1$ ≡ source de tension $R_1 I_1 = 80\\ \\text{V}$ en série avec $10\\ \\Omega$.",
+      "Une seule maille : $80/(10 + 30 + 60)$ ; le courant traverse $R$ de B vers A, d'où le signe."
+     ],
+     "corrige": "$I' = -\\dfrac{80}{100} = \\mathbf{-0{,}8\\ \\text{A}}$",
+     "schema": {
+      "surligne": [
+       "I1",
+       "R1",
+       "R2",
+       "R"
+      ],
+      "eteint": [
+       "I2"
+      ]
+     }
+    },
+    {
+     "consigne": "$I_2$ seule ($I_1$ éteinte). Contribution $I''$ dans $R$ ?",
+     "question": "$I'' = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 1.2,
+      "unite": "A",
+      "tol": 0.01
+     },
+     "indices": [
+      "$I_2 \\parallel R_2$ ≡ $120\\ \\text{V}$ en série avec $30\\ \\Omega$.",
+      "$120/(10 + 30 + 60)$, cette fois de A vers B."
+     ],
+     "corrige": "$I'' = \\dfrac{120}{100} = \\mathbf{1{,}2\\ \\text{A}}$",
+     "schema": {
+      "surligne": [
+       "I2",
+       "R1",
+       "R2",
+       "R"
+      ],
+      "eteint": [
+       "I1"
+      ]
+     }
+    },
+    {
+     "consigne": "Additionne les contributions.",
+     "question": "$I = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 0.4,
+      "unite": "A",
+      "tol": 0.01
+     },
+     "indices": [
+      "$I = I' + I''$ avec les signes."
+     ],
+     "corrige": "$I = -0{,}8 + 1{,}2 = \\mathbf{0{,}4\\ \\text{A}}$",
+     "schema": {
+      "surligne": [
+       "R"
+      ]
+     }
+    }
+   ],
+   "schema": {
+    "modele": "td3-ex1",
+    "vals": {
+     "I1": "8 A",
+     "R1": "10 Ω",
+     "I2": "4 A",
+     "R2": "30 Ω",
+     "R": "60 Ω"
+    }
+   },
+   "explication": "Par Thévenin vu par $R$ : $E_{th} = 120 - 80 = 40\\ \\text{V}$, $R_{th} = 40\\ \\Omega$, $I = 40/(40 + 60) = 0{,}4\\ \\text{A}$ : même résultat."
+  },
+  {
+   "id": "e5-102",
+   "type": "exo",
+   "titre": "TD3 · Exercice 2 — Tension sur R3 par superposition",
+   "notion": "Superposition",
+   "origine": "td",
+   "enonce": "$E_1$ = [[E1]], $E_2$ = [[E2]], $R_1$ = [[R1]], $R_2$ = [[R2]], $R_3$ = [[R3]]. Trouve la tension aux bornes de $R_3$ par superposition.",
+   "duree": 9,
+   "etapes": [
+    {
+     "consigne": "$E_1$ seule ($E_2$ = fil) : calcule $U_1$ aux bornes de $R_3$.",
+     "question": "$U_1 = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 3.3333,
+      "unite": "V"
+     },
+     "indices": [
+      "$R_2$ et $R_3$ se retrouvent en parallèle.",
+      "Diviseur : $E_1\\,\\dfrac{R_2\\parallel R_3}{R_1 + R_2\\parallel R_3}$."
+     ],
+     "corrige": "$U_1 = 10 \\times \\dfrac{50}{150} = \\mathbf{3{,}33\\ \\text{V}}$",
+     "schema": {
+      "surligne": [
+       "E1",
+       "R1",
+       "R2",
+       "R3"
+      ],
+      "court": [
+       "E2"
+      ]
+     }
+    },
+    {
+     "consigne": "$E_2$ seule ($E_1$ = fil) : calcule $U_2$.",
+     "question": "$U_2 = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 1.6667,
+      "unite": "V"
+     },
+     "indices": [
+      "$R_1 \\parallel R_3$ cette fois."
+     ],
+     "corrige": "$U_2 = 5 \\times \\dfrac{50}{150} = \\mathbf{1{,}67\\ \\text{V}}$",
+     "schema": {
+      "surligne": [
+       "E2",
+       "R1",
+       "R2",
+       "R3"
+      ],
+      "court": [
+       "E1"
+      ]
+     }
+    },
+    {
+     "consigne": "Tension totale aux bornes de $R_3$.",
+     "question": "$U = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 5,
+      "unite": "V"
+     },
+     "indices": [
+      "$U = U_1 + U_2$."
+     ],
+     "corrige": "$U = \\mathbf{5\\ \\text{V}}$",
+     "schema": {
+      "surligne": [
+       "R3"
+      ]
+     }
+    }
+   ],
+   "schema": {
+    "modele": "millman3",
+    "vals": {
+     "E1": "[[E1]]",
+     "E2": "[[E2]]",
+     "R1": "[[R1]]",
+     "R2": "[[R2]]",
+     "R3": "[[R3]]"
+    }
+   },
+   "vals": {
+    "E1": "10 V",
+    "E2": "5 V",
+    "R1": "100 Ω",
+    "R2": "100 Ω",
+    "R3": "100 Ω"
+   },
+   "generateur": "millman3"
+  },
+  {
+   "id": "e5-103",
+   "type": "exo",
+   "titre": "TD3 · Exercice 2 bis — Même circuit par Norton",
+   "notion": "Norton",
+   "origine": "td",
+   "enonce": "Même circuit ($E_1 = 10\\ \\text{V}$, $E_2 = 5\\ \\text{V}$, $R_1 = R_2 = R_3 = 100\\ \\Omega$). Retrouve la tension aux bornes de $R_3$ avec le théorème de **Norton** vu par $R_3$.",
+   "duree": 8,
+   "etapes": [
+    {
+     "consigne": "Retire $R_3$ et court-circuite A-M : courant de court-circuit $I_N$ ?",
+     "question": "$I_N = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 0.15,
+      "unite": "A"
+     },
+     "indices": [
+      "Chaque branche débite $E_k / R_k$ dans le court-circuit.",
+      "$I_N = E_1/R_1 + E_2/R_2$."
+     ],
+     "corrige": "$I_N = 0{,}1 + 0{,}05 = \\mathbf{0{,}15\\ \\text{A}}$",
+     "schema": {
+      "surligne": [
+       "E1",
+       "R1",
+       "E2",
+       "R2"
+      ],
+      "eteint": [
+       "R3"
+      ]
+     }
+    },
+    {
+     "consigne": "Sources éteintes : $R_N$ ?",
+     "question": "$R_N = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 50,
+      "unite": "Ω"
+     },
+     "indices": [
+      "Les deux sources deviennent des fils : $R_1 \\parallel R_2$."
+     ],
+     "corrige": "$R_N = 100 \\parallel 100 = \\mathbf{50\\ \\Omega}$",
+     "schema": {
+      "surligne": [
+       "R1",
+       "R2"
+      ],
+      "court": [
+       "E1",
+       "E2"
+      ],
+      "eteint": [
+       "R3"
+      ]
+     }
+    },
+    {
+     "consigne": "Rebranche $R_3$ : tension à ses bornes ?",
+     "question": "$U = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 5,
+      "unite": "V"
+     },
+     "indices": [
+      "$U = I_N\\,(R_N \\parallel R_3)$."
+     ],
+     "corrige": "$U = 0{,}15 \\times 33{,}3 = \\mathbf{5\\ \\text{V}}$",
+     "schema": {
+      "surligne": [
+       "R3"
+      ]
+     }
+    }
+   ],
+   "schema": {
+    "modele": "millman3",
+    "vals": {
+     "E1": "10 V",
+     "E2": "5 V",
+     "R1": "100 Ω",
+     "R2": "100 Ω",
+     "R3": "100 Ω"
+    }
+   }
+  },
+  {
+   "id": "e5-104",
+   "type": "exo",
+   "titre": "TD3 · Exercice 3 — Source de tension et source de courant",
+   "notion": "Superposition",
+   "origine": "td",
+   "enonce": "$E_1 = 10\\ \\text{V}$, $R_1 = 1\\ \\text{k}\\Omega$, $I_2 = 10\\ \\text{mA}$, $R = 1\\ \\text{k}\\Omega$. Calcule le courant dans $R$ par superposition, puis vérifie avec Millman.",
+   "duree": 8,
+   "etapes": [
+    {
+     "consigne": "$E_1$ seule ($I_2$ = circuit ouvert) : courant $I'$ dans $R$ ?",
+     "question": "$I' = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 0.005,
+      "unite": "A"
+     },
+     "indices": [
+      "$R_1$ et $R$ en série.",
+      "$I' = E_1/(R_1 + R)$."
+     ],
+     "corrige": "$I' = 10/2000 = \\mathbf{5\\ \\text{mA}}$",
+     "schema": {
+      "surligne": [
+       "E1",
+       "R1",
+       "R"
+      ],
+      "eteint": [
+       "I2"
+      ]
+     }
+    },
+    {
+     "consigne": "$I_2$ seule ($E_1$ = fil) : courant $I''$ dans $R$ ?",
+     "question": "$I'' = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 0.005,
+      "unite": "A"
+     },
+     "indices": [
+      "$I_2$ se partage entre $R_1$ et $R$ (diviseur de courant)."
+     ],
+     "corrige": "$I'' = 10 \\times \\dfrac{1000}{2000} = \\mathbf{5\\ \\text{mA}}$",
+     "schema": {
+      "surligne": [
+       "I2",
+       "R1",
+       "R"
+      ],
+      "court": [
+       "E1"
+      ]
+     }
+    },
+    {
+     "consigne": "Courant total dans $R$.",
+     "question": "$I = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 0.01,
+      "unite": "A"
+     },
+     "indices": [
+      "$I = I' + I''$."
+     ],
+     "corrige": "$I = \\mathbf{10\\ \\text{mA}}$ ; Millman : $V_A = \\dfrac{E_1/R_1 + I_2}{1/R_1 + 1/R} = 10\\ \\text{V}$, donc $I = V_A/R = 10\\ \\text{mA}$",
+     "schema": {
+      "surligne": [
+       "R"
+      ]
+     }
+    }
+   ],
+   "schema": {
+    "modele": "td3-ex3",
+    "vals": {
+     "E1": "10 V",
+     "R1": "1 kΩ",
+     "I2": "10 mA",
+     "R": "1 kΩ"
+    }
+   }
+  },
+  {
+   "id": "e5-105",
+   "type": "exo",
+   "titre": "TD3 · Exercice 4 — Courant dans Rx",
+   "notion": "Superposition",
+   "origine": "td",
+   "enonce": "$I_1 = 20\\ \\text{mA}$, $R_1 = 500\\ \\Omega$, $E_2 = 10\\ \\text{V}$, $R_2 = 1\\ \\text{k}\\Omega$, $R_x = 500\\ \\Omega$. Calcule le courant dans $R_x$ (fléché vers le bas).",
+   "duree": 10,
+   "etapes": [
+    {
+     "consigne": "$I_1$ seule ($E_2$ = fil) : $I_1$ se partage entre $R_1$ et la branche $R_2 + R_x$. Contribution $I'$ dans $R_x$ ?",
+     "question": "$I' = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 0.005,
+      "unite": "A"
+     },
+     "indices": [
+      "Diviseur de courant : $I' = I_1\\,\\dfrac{R_1}{R_1 + R_2 + R_x}$."
+     ],
+     "corrige": "$I' = 20 \\times \\dfrac{500}{2000} = \\mathbf{5\\ \\text{mA}}$",
+     "schema": {
+      "surligne": [
+       "I1",
+       "R1",
+       "R2",
+       "Rx"
+      ],
+      "court": [
+       "E2"
+      ]
+     }
+    },
+    {
+     "consigne": "$E_2$ seule ($I_1$ = circuit ouvert) : contribution $I''$ ?",
+     "question": "$I'' = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 0.005,
+      "unite": "A"
+     },
+     "indices": [
+      "Une seule maille : $E_2$, $R_2$, $R_x$, $R_1$.",
+      "$I'' = E_2/(R_1 + R_2 + R_x)$."
+     ],
+     "corrige": "$I'' = 10/2000 = \\mathbf{5\\ \\text{mA}}$",
+     "schema": {
+      "surligne": [
+       "E2",
+       "R1",
+       "R2",
+       "Rx"
+      ],
+      "eteint": [
+       "I1"
+      ]
+     }
+    },
+    {
+     "consigne": "Courant total dans $R_x$.",
+     "question": "$I = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 0.01,
+      "unite": "A"
+     },
+     "indices": [
+      "Les deux contributions vont dans le même sens."
+     ],
+     "corrige": "$I = 5 + 5 = \\mathbf{10\\ \\text{mA}}$",
+     "schema": {
+      "surligne": [
+       "Rx"
+      ]
+     }
+    }
+   ],
+   "schema": {
+    "modele": "td3-ex4",
+    "vals": {
+     "I1": "20 mA",
+     "R1": "500 Ω",
+     "E2": "10 V",
+     "R2": "1 kΩ",
+     "Rx": "500 Ω"
+    }
+   }
+  },
+  {
+   "id": "e5-901",
+   "type": "examen",
+   "titre": "DS blanc · Électrocinétique (CMO1-3)",
+   "duree": 45,
+   "enonce": "4 exos de TD et 4 questions de cours, chrono de 45 min. Pas de correction avant la fin (sauf étapes d'exo).",
+   "items": [
+    "e2-103",
+    "e3-101",
+    "e4-101",
+    "e5-102",
+    "e1-008",
+    "e3-004",
+    "e4-001",
+    "e5-002"
+   ]
+  }
+ ]
+}

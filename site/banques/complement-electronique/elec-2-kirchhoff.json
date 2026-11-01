@@ -1,0 +1,722 @@
+{
+ "id": "elec-2-kirchhoff",
+ "module": "complement-electronique",
+ "titre": "Lois de Kirchhoff",
+ "ordre": 2,
+ "sources": [
+  "CMO1",
+  "TD1"
+ ],
+ "tldr": [
+  "**Loi des nœuds** : $\\sum I_{\\text{entrants}} = \\sum I_{\\text{sortants}}$ (pas d'accumulation de charges).",
+  "**Loi des mailles** : la somme algébrique des tensions le long d'une maille fermée est **nulle**.",
+  "Méthode 1 : $+$ si la flèche va dans le sens de parcours, $-$ sinon.",
+  "Méthode 2 : on affecte à chaque tension le signe du **premier potentiel croisé** en tournant.",
+  "Potentiels : on choisit un point de **référence** ($V = 0$), puis $V_A = U_{AB} + V_B$.",
+  "Un fil = même potentiel : une résistance entre deux points d'un même fil a $U = 0$ (court-circuitée)."
+ ],
+ "fiche": [
+  {
+   "titre": "Loi des nœuds",
+   "contenu": "Un nœud n'accumule pas de charges : tout ce qui entre ressort.\n$$\\sum I_{\\text{entrants}} = \\sum I_{\\text{sortants}}$$\nExemple : $I_1$ entre, $I_2$ et $I_3$ sortent → $I_1 = I_2 + I_3$.\n\nForme algébrique : $\\sum_k I_k = 0$ en comptant $+$ les entrants et $-$ les sortants.",
+   "schema": {
+    "modele": "par3",
+    "vals": {
+     "E": "",
+     "R1": "",
+     "R2": "",
+     "R3": ""
+    }
+   }
+  },
+  {
+   "titre": "Loi des mailles",
+   "contenu": "On choisit un sens de parcours, puis :\n$$\\sum_k V_k = 0$$\n- **Méthode 1** : $+$ pour une flèche dans le sens de parcours, $-$ sinon.\n- **Méthode 2** : on met le signe du premier potentiel rencontré.\n\nLes deux donnent la même équation à un signe près."
+  },
+  {
+   "titre": "Potentiels et référence",
+   "contenu": "On fixe un point de référence (souvent la masse, $V = 0$). Ensuite chaque tension donne une différence : $U_{AB} = V_A - V_B$, donc $V_A = V_B + U_{AB}$.\n\nTous les points reliés par un fil ont le **même potentiel**."
+  },
+  {
+   "titre": "Méthode de résolution",
+   "contenu": "1. Flécher les courants (sens arbitraire) et les tensions (convention récepteur pour les $R$).\n2. Écrire les lois des nœuds ($n-1$ nœuds utiles).\n3. Écrire les lois des mailles indépendantes.\n4. Remplacer les tensions par $RI$ et résoudre.\n\nUn résultat négatif = sens réel opposé à la flèche."
+  }
+ ],
+ "parcours": [
+  {
+   "notion": "Loi des nœuds",
+   "schema": {
+    "modele": "par3",
+    "vals": {
+     "E": "",
+     "R1": "",
+     "R2": "",
+     "R3": ""
+    }
+   },
+   "ecrans": [
+    {
+     "titre": "Trois résistances en parallèle",
+     "texte": "La source débite $I$, qui arrive au nœud du haut et se répartit dans $R_1$, $R_2$ et $R_3$."
+    },
+    {
+     "titre": "Ce qui entre…",
+     "texte": "Au nœud du haut, un seul courant **entre** : $I$, venu de la source.",
+     "schema": {
+      "surligne": [
+       "E"
+      ]
+     }
+    },
+    {
+     "titre": "…ressort",
+     "texte": "Trois courants **sortent** : $I_1$, $I_2$ et $I_3$. Pas d'accumulation possible : $$I = I_1 + I_2 + I_3$$",
+     "schema": {
+      "surligne": [
+       "R1",
+       "R2",
+       "R3"
+      ]
+     }
+    },
+    {
+     "titre": "Et chaque courant ?",
+     "texte": "En parallèle, chaque résistance a la **même tension** $E$ : $I_k = E/R_k$. La loi des nœuds donne ensuite $I$ sans effort."
+    }
+   ],
+   "controle": {
+    "enonce": "À un nœud entrent $3\\ \\text{A}$ et $2\\ \\text{A}$ ; un seul fil en sort. Son courant vaut…",
+    "choix": [
+     "$5\\ \\text{A}$",
+     "$1\\ \\text{A}$",
+     "$6\\ \\text{A}$",
+     "$0\\ \\text{A}$"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "Tout ce qui entre ressort : $3 + 2 = 5\\ \\text{A}$."
+   }
+  },
+  {
+   "notion": "Loi des mailles",
+   "schema": {
+    "modele": "serie-I",
+    "vals": {
+     "I": "",
+     "R1": "",
+     "R2": "",
+     "R3": ""
+    }
+   },
+   "ecrans": [
+    {
+     "titre": "Une maille",
+     "texte": "Une source de courant $I$ fait circuler le même courant dans $R_1$, $R_2$ et $R_3$ : une seule maille $A \\to B \\to C \\to M \\to A$."
+    },
+    {
+     "titre": "On tourne",
+     "texte": "On parcourt la maille de A vers B, C puis M. Les tensions $V_1$, $V_2$, $V_3$ sont fléchées en convention récepteur.",
+     "schema": {
+      "surligne": [
+       "R1",
+       "R2",
+       "R3"
+      ]
+     }
+    },
+    {
+     "titre": "On somme",
+     "texte": "Entre A et M, on cumule les chutes de tension : $$U_{AM} = V_1 + V_2 + V_3$$ c'est la loi des mailles écrite sur la maille complète (avec la source).",
+     "schema": {
+      "surligne": [
+       "I"
+      ]
+     }
+    },
+    {
+     "titre": "On remplace",
+     "texte": "Avec Ohm : $V_k = R_k I$, donc $U_{AM} = (R_1 + R_2 + R_3)\\,I$. On retrouve l'association série (chapitre 3)."
+    }
+   ],
+   "controle": {
+    "enonce": "Dans une maille, la somme algébrique des tensions vaut…",
+    "choix": [
+     "0",
+     "la tension du générateur",
+     "le courant total",
+     "la somme des résistances"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "Loi des mailles : $\\sum V_k = 0$ sur un contour fermé."
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "e2-001",
+   "type": "qcm",
+   "notion": "Loi des nœuds",
+   "origine": "cours",
+   "enonce": "Un nœud est un point où se rejoignent…",
+   "choix": [
+    "au moins 3 branches",
+    "exactement 2 fils",
+    "deux résistances",
+    "une source et une résistance"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Moins de 3 branches, c'est juste un fil."
+  },
+  {
+   "id": "e2-002",
+   "type": "saisie",
+   "notion": "Loi des nœuds",
+   "origine": "cours",
+   "enonce": "Entrent $I_1 = 4\\ \\text{A}$ et $I_2 = 1\\ \\text{A}$ ; sortent $I_3 = 2\\ \\text{A}$ et $I_4$. Que vaut $I_4$ (A) ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 3,
+    "unite": "A"
+   },
+   "duree": 0.67,
+   "explication": "$4 + 1 = 2 + I_4$ → $I_4 = 3\\ \\text{A}$."
+  },
+  {
+   "id": "e2-003",
+   "type": "saisie",
+   "notion": "Loi des nœuds",
+   "origine": "cours",
+   "enonce": "Entrent $I_1 = 2\\ \\text{A}$ ; sortent $I_2 = 5\\ \\text{A}$ et $I_3$. Que vaut $I_3$ (A) ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": -3,
+    "unite": "A",
+    "tol": 0.01
+   },
+   "duree": 0.67,
+   "explication": "$2 = 5 + I_3$ → $I_3 = -3\\ \\text{A}$ : il entre en réalité."
+  },
+  {
+   "id": "e2-004",
+   "type": "qcm",
+   "notion": "Loi des mailles",
+   "origine": "cours",
+   "enonce": "La loi des mailles traduit…",
+   "choix": [
+    "la somme algébrique des tensions sur un contour fermé est nulle",
+    "la somme des courants entrants est nulle",
+    "$U = RI$",
+    "la conservation de la puissance"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Mailles → tensions ; nœuds → courants."
+  },
+  {
+   "id": "e2-005",
+   "type": "saisie",
+   "notion": "Loi des mailles",
+   "origine": "cours",
+   "enonce": "Maille parcourue dans le sens horaire : $+V_1 - V_4 - V_3 + V_2 = 0$ avec $V_1 = 5$, $V_2 = 3$, $V_3 = 6$ (V). Que vaut $V_4$ (V) ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 2,
+    "unite": "V"
+   },
+   "duree": 0.67,
+   "explication": "$V_4 = V_1 + V_2 - V_3 = 2\\ \\text{V}$."
+  },
+  {
+   "id": "e2-006",
+   "type": "saisie",
+   "notion": "Potentiels",
+   "origine": "cours",
+   "enonce": "On prend $V_B = 0$ et on mesure $U_{AB} = 7\\ \\text{V}$. Que vaut $V_A$ (V) ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 7,
+    "unite": "V"
+   },
+   "duree": 0.67,
+   "explication": "$U_{AB} = V_A - V_B$ → $V_A = 7\\ \\text{V}$."
+  },
+  {
+   "id": "e2-007",
+   "type": "saisie",
+   "notion": "Potentiels",
+   "origine": "cours",
+   "enonce": "$V_D = 0$ et $U_{DA} = 10\\ \\text{V}$. Que vaut $V_A$ (V) ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": -10,
+    "unite": "V",
+    "tol": 0.01
+   },
+   "duree": 0.67,
+   "explication": "$U_{DA} = V_D - V_A = 10$ → $V_A = -10\\ \\text{V}$."
+  },
+  {
+   "id": "e2-008",
+   "type": "qcm",
+   "notion": "Potentiels",
+   "origine": "cours",
+   "enonce": "Une résistance dont les deux bornes sont reliées par un simple fil a une tension…",
+   "choix": [
+    "nulle",
+    "égale à celle du générateur",
+    "infinie",
+    "impossible à calculer"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Même fil = même potentiel : $U = 0$, elle est court-circuitée."
+  },
+  {
+   "id": "e2-009",
+   "type": "qcm",
+   "notion": "Méthode",
+   "origine": "cours",
+   "enonce": "Un courant calculé négatif signifie…",
+   "choix": [
+    "le sens réel est opposé à la flèche",
+    "une erreur de calcul",
+    "la résistance est négative",
+    "le circuit est ouvert"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Le sens des flèches est arbitraire ; le signe donne le sens réel."
+  },
+  {
+   "id": "e2-010",
+   "type": "qcm",
+   "notion": "Loi des mailles",
+   "origine": "cours",
+   "enonce": "En convention récepteur, pour une résistance…",
+   "choix": [
+    "$U$ et $I$ sont fléchés en sens opposés et $U = RI$",
+    "$U$ et $I$ sont dans le même sens et $U = RI$",
+    "$U = -RI$ toujours",
+    "$U = I/R$"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "C'est la convention utilisée pour toutes les résistances du cours."
+  },
+  {
+   "id": "e2-101",
+   "type": "exo",
+   "titre": "TD1 · Exercice 1 — Courants",
+   "notion": "Loi des nœuds",
+   "origine": "td",
+   "enonce": "Calcule $I_1$, $I_5$ et $I_6$ sachant que $I_2 = 2\\ \\text{A}$, $I_3 = 3\\ \\text{A}$ et $I_4 = 1\\ \\text{A}$ (sens des flèches du schéma).",
+   "duree": 6,
+   "etapes": [
+    {
+     "consigne": "Fais un bilan sur **tout le circuit** : ce qui entre ($I_1$) égale ce qui sort ($I_2$ et $I_3$).",
+     "question": "$I_1 = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 5,
+      "unite": "A"
+     },
+     "indices": [
+      "Le circuit entier se comporte comme un gros nœud.",
+      "$I_1 = I_2 + I_3$."
+     ],
+     "corrige": "$I_1 = I_2 + I_3 = 2 + 3 = \\mathbf{5\\ \\text{A}}$"
+    },
+    {
+     "consigne": "Au nœud de droite en haut, $I_4$ arrive, $I_3$ sort et le reste descend dans $R_2$. $I_5$ est fléché vers le **haut** dans $R_2$.",
+     "question": "$I_5 = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 2,
+      "unite": "A",
+      "tol": 0.01
+     },
+     "indices": [
+      "Courant qui descend dans $R_2$ : $I_4 - I_3$.",
+      "$I_5$ est fléché dans l'autre sens : $I_5 = I_3 - I_4$."
+     ],
+     "corrige": "$I_5 = I_3 - I_4 = 3 - 1 = \\mathbf{2\\ \\text{A}}$"
+    },
+    {
+     "consigne": "Au nœud de gauche en haut : $I_1$ et $I_6$ arrivent, $I_4$ repart.",
+     "question": "$I_6 = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": -4,
+      "unite": "A",
+      "tol": 0.01
+     },
+     "indices": [
+      "$I_1 + I_6 = I_4$."
+     ],
+     "corrige": "$I_6 = I_4 - I_1 = 1 - 5 = \\mathbf{-4\\ \\text{A}}$ : il descend en réalité"
+    }
+   ],
+   "schema": {
+    "modele": "td1-ex1"
+   }
+  },
+  {
+   "id": "e2-102",
+   "type": "exo",
+   "titre": "TD1 · Exercice 3 — Potentiels",
+   "notion": "Potentiels",
+   "origine": "td",
+   "enonce": "On a mesuré $U_{DA} = 10\\ \\text{V}$, $U_{AC} = 20\\ \\text{V}$ et $U_{BF} = 5\\ \\text{V}$. En prenant **D** comme référence des potentiels, calcule les potentiels des autres points.",
+   "duree": 6,
+   "etapes": [
+    {
+     "consigne": "Avec $U_{DA} = V_D - V_A$ et $V_D = 0$, trouve $V_A$.",
+     "question": "$V_A = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": -10,
+      "unite": "V",
+      "tol": 0.01
+     },
+     "indices": [
+      "$U_{DA} = V_D - V_A$."
+     ],
+     "corrige": "$V_A = V_D - U_{DA} = \\mathbf{-10\\ \\text{V}}$"
+    },
+    {
+     "consigne": "Avec $U_{AC}$, trouve $V_C$.",
+     "question": "$V_C = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": -30,
+      "unite": "V",
+      "tol": 0.01
+     },
+     "indices": [
+      "$U_{AC} = V_A - V_C$."
+     ],
+     "corrige": "$V_C = V_A - U_{AC} = -10 - 20 = \\mathbf{-30\\ \\text{V}}$"
+    },
+    {
+     "consigne": "E, C et F sont sur le même fil du bas. Que vaut $V_F$ ?",
+     "question": "$V_F = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": -30,
+      "unite": "V",
+      "tol": 0.01
+     },
+     "indices": [
+      "Un fil = même potentiel."
+     ],
+     "corrige": "$V_E = V_F = V_C = \\mathbf{-30\\ \\text{V}}$"
+    },
+    {
+     "consigne": "Avec $U_{BF}$, trouve $V_B$.",
+     "question": "$V_B = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": -25,
+      "unite": "V",
+      "tol": 0.01
+     },
+     "indices": [
+      "$U_{BF} = V_B - V_F$."
+     ],
+     "corrige": "$V_B = V_F + U_{BF} = -30 + 5 = \\mathbf{-25\\ \\text{V}}$"
+    }
+   ],
+   "schema": {
+    "modele": "td1-ex3"
+   }
+  },
+  {
+   "id": "e2-103",
+   "type": "exo",
+   "titre": "TD1 · Exercice 4 — Tensions",
+   "notion": "Loi des mailles",
+   "origine": "td",
+   "enonce": "On donne $U_1 = 20\\ \\text{V}$, $U_2 = 5\\ \\text{V}$ et $U_4 = -8\\ \\text{V}$. Calcule les autres tensions fléchées. (Prends le fil du bas comme référence : $V = 0$.)",
+   "duree": 8,
+   "etapes": [
+    {
+     "consigne": "$U_1$ donne le potentiel du nœud du milieu en haut, $U_2$ (fléchée vers la gauche) relie ce nœud au nœud de gauche. Trouve $U_3$.",
+     "question": "$U_3 = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 25,
+      "unite": "V"
+     },
+     "indices": [
+      "Nœud du milieu : $V = U_1 = 20\\ \\text{V}$.",
+      "$U_2 = V_{\\text{gauche}} - V_{\\text{milieu}}$ donc $V_{\\text{gauche}} = 25\\ \\text{V} = U_3$."
+     ],
+     "corrige": "$U_3 = U_1 + U_2 = \\mathbf{25\\ \\text{V}}$"
+    },
+    {
+     "consigne": "$U_4$ est fléchée vers le **bas** : $U_4 = V_{\\text{bas}} - V_{\\text{droite}}$. Trouve $U_5$.",
+     "question": "$U_5 = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 12,
+      "unite": "V"
+     },
+     "indices": [
+      "$V_{\\text{droite}} = -U_4 = 8\\ \\text{V}$.",
+      "$U_5 = V_{\\text{milieu}} - V_{\\text{droite}}$."
+     ],
+     "corrige": "$V_{\\text{droite}} = 8\\ \\text{V}$, $U_5 = 20 - 8 = \\mathbf{12\\ \\text{V}}$"
+    },
+    {
+     "consigne": "La résistance du bas relie deux points du **même fil**. Que vaut $U_6$ ?",
+     "question": "$U_6 = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 0,
+      "unite": "V",
+      "tol": 0.01
+     },
+     "indices": [
+      "Même fil = même potentiel."
+     ],
+     "corrige": "$U_6 = \\mathbf{0\\ \\text{V}}$ : elle est court-circuitée"
+    }
+   ],
+   "schema": {
+    "modele": "td1-ex4"
+   }
+  },
+  {
+   "id": "e2-104",
+   "type": "exo",
+   "titre": "TD1 · Exercice 5 — Trois résistances en parallèle",
+   "notion": "Loi des nœuds",
+   "origine": "td",
+   "enonce": "Le générateur délivre $E$ = [[E]] ; $R_1$ = [[R1]], $R_2$ = [[R2]], $R_3$ = [[R3]].",
+   "duree": 6,
+   "etapes": [
+    {
+     "consigne": "Chaque résistance a $E$ à ses bornes. Calcule $I_1$.",
+     "question": "$I_1 = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 0.005,
+      "unite": "A"
+     },
+     "indices": [
+      "En parallèle : même tension $E$.",
+      "$I_1 = E/R_1$."
+     ],
+     "corrige": "$I_1 = 10/2000 = \\mathbf{5\\ \\text{mA}}$",
+     "schema": {
+      "surligne": [
+       "R1"
+      ]
+     }
+    },
+    {
+     "consigne": "Calcule $I_2$.",
+     "question": "$I_2 = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 0.005,
+      "unite": "A"
+     },
+     "indices": [
+      "$I_2 = E/R_2$."
+     ],
+     "corrige": "$I_2 = \\mathbf{5\\ \\text{mA}}$",
+     "schema": {
+      "surligne": [
+       "R2"
+      ]
+     }
+    },
+    {
+     "consigne": "Calcule $I_3$.",
+     "question": "$I_3 = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 0.01,
+      "unite": "A"
+     },
+     "indices": [
+      "$I_3 = E/R_3$."
+     ],
+     "corrige": "$I_3 = 10/1000 = \\mathbf{10\\ \\text{mA}}$",
+     "schema": {
+      "surligne": [
+       "R3"
+      ]
+     }
+    },
+    {
+     "consigne": "Quel courant le générateur doit-il pouvoir délivrer ?",
+     "question": "$I = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 0.02,
+      "unite": "A"
+     },
+     "indices": [
+      "Loi des nœuds au nœud A."
+     ],
+     "corrige": "$I = I_1 + I_2 + I_3 = \\mathbf{20\\ \\text{mA}}$",
+     "schema": {
+      "surligne": [
+       "E"
+      ]
+     }
+    }
+   ],
+   "schema": {
+    "modele": "par3",
+    "vals": {
+     "E": "[[E]]",
+     "R1": "[[R1]]",
+     "R2": "[[R2]]",
+     "R3": "[[R3]]"
+    }
+   },
+   "vals": {
+    "E": "10 V",
+    "R1": "2 kΩ",
+    "R2": "2 kΩ",
+    "R3": "1 kΩ"
+   },
+   "generateur": "par3"
+  },
+  {
+   "id": "e2-105",
+   "type": "exo",
+   "titre": "TD1 · Exercice 6 — Source de courant et maille",
+   "notion": "Loi des mailles",
+   "origine": "td",
+   "enonce": "Le générateur délivre $I$ = [[I]] ; $R_1$ = [[R1]], $R_2$ = [[R2]], $R_3$ = [[R3]].",
+   "duree": 6,
+   "etapes": [
+    {
+     "consigne": "Une seule maille : même courant partout. Calcule $V_1$.",
+     "question": "$V_1 = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 40,
+      "unite": "V"
+     },
+     "indices": [
+      "$V_1 = R_1 I$."
+     ],
+     "corrige": "$V_1 = 2000 \\times 0{,}02 = \\mathbf{40\\ \\text{V}}$",
+     "schema": {
+      "surligne": [
+       "R1"
+      ]
+     }
+    },
+    {
+     "consigne": "Calcule $V_2$.",
+     "question": "$V_2 = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 40,
+      "unite": "V"
+     },
+     "indices": [
+      "$V_2 = R_2 I$."
+     ],
+     "corrige": "$V_2 = \\mathbf{40\\ \\text{V}}$",
+     "schema": {
+      "surligne": [
+       "R2"
+      ]
+     }
+    },
+    {
+     "consigne": "Calcule $V_3$.",
+     "question": "$V_3 = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 20,
+      "unite": "V"
+     },
+     "indices": [
+      "$V_3 = R_3 I$."
+     ],
+     "corrige": "$V_3 = 1000 \\times 0{,}02 = \\mathbf{20\\ \\text{V}}$",
+     "schema": {
+      "surligne": [
+       "R3"
+      ]
+     }
+    },
+    {
+     "consigne": "Déduis-en la tension $U_{AM}$ aux bornes du générateur.",
+     "question": "$U_{AM} = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 100,
+      "unite": "V"
+     },
+     "indices": [
+      "Loi des mailles de A à M en passant par B et C."
+     ],
+     "corrige": "$U_{AM} = V_1 + V_2 + V_3 = \\mathbf{100\\ \\text{V}}$",
+     "schema": {
+      "surligne": [
+       "I"
+      ]
+     }
+    }
+   ],
+   "schema": {
+    "modele": "serie-I",
+    "vals": {
+     "I": "[[I]]",
+     "R1": "[[R1]]",
+     "R2": "[[R2]]",
+     "R3": "[[R3]]"
+    }
+   },
+   "vals": {
+    "I": "20 mA",
+    "R1": "2 kΩ",
+    "R2": "2 kΩ",
+    "R3": "1 kΩ"
+   },
+   "generateur": "serie-I"
+  }
+ ]
+}

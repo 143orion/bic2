@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Module · BIC2.exe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="katex/katex.min.css">
+<link rel="stylesheet" href="theme.css">
+<script src="katex/katex.min.js"></script>
+<script src="katex/auto-render.min.js"></script>
+</head>
+<body class="page-module">
+
+<main class="lecteur" id="lecteur" aria-live="polite"><p class="vide-txt">Chargement du module…</p></main>
+
+<div class="modale" id="m-signal" hidden>
+  <form class="fenetre" data-titre="signaler.exe" id="f-signal">
+    <p>Une erreur dans cette question (énoncé, réponse, correction) ? Dis ce qui cloche, Adam corrigera la banque. Si l'item était faux, l'XP est rendue à ceux qui l'avaient raté.</p>
+    <label class="champ">Ce qui ne va pas<textarea id="i-signal" maxlength="600" required></textarea></label>
+    <div class="actions"><button class="btn plein" type="submit">Envoyer</button><button class="btn" type="button" id="annuler-signal">Annuler</button><span class="erreur-txt" id="e-signal"></span></div>
+  </form>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script src="xp.js"></script>
+<script>
+/* =====================================================================
+   BIC2.exe — module.html : LECTEUR UNIVERSEL (module.html#<module>)
+   Lit modules/liste.json + banques/<module>/<chapitre>.json (+ modules/<module>.js si ext).
+   Layout baseline : accueil → chapitre → cours (follow-along · classique · TL;DR)
+   / exos (compréhension · guidé · mock) + examen blanc. Maths en LaTeX (KaTeX).
+   Ne calcule jamais l'XP : tout passe par moteur.reponse() (xp.js).
+   Styles : section « LECTEUR » de theme.css (D.A. du module = --m-*).
+   ===================================================================== */
+(async () => {
+const M = window.moteur, {esc, nf, fmt, ecartJours} = M.outils;
+const $ = id => document.getElementById(id);
+const L = $("lecteur");
+const reduit = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const petitEcran = () => matchMedia("(max-width:760px)").matches;
+const V = () => M.valeursPour(M.interne.config, "9999-12-31");
+const S = {mod:null, chapitres:[], items:{}, chapDe:{}, vue:null, nettoyer:null, touches:null};
+const TYPES_Q = ["qcm","qcm-multi","saisie"];
+const LIB = {qcm:"QCM", "qcm-multi":"QCM multi", saisie:"Réponse tapée", exo:"Exo", examen:"Examen blanc"};
+const ORIG = {cours:"cours", td:"TD", annale:"annale", generee:"générée"};
+
+/* ---------- petits outils ---------- */
+const melanger = a => { a = a.slice(); for(let i = a.length-1; i > 0; i--){ const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]] = [a[j],a[i]]; } return a; };
+const norm = s => String(s ?? "").normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[’‘`]/g,"'").replace(/[“”«»]/g,'"')
+  .toLowerCase().replace(/\s+/g," ").trim().replace(/[\s;.]+$/,"");
+let tToast = 0;
+function toast(t){ const el = $("toast"); el.textContent = t; el.classList.add("on"); clearTimeout(tToast); tToast = setTimeout(() => el.classList.remove("on"), 2600); }
+document.addEventListener("click", e => { if(e.target.closest("button, .retour")) M.son("tap"); });
+addEventListener("keydown", e => { if(S.touches && $("m-signal").hidden && !e.target.closest("input, textarea")) S.touches(e); });
+
+/* mini-markdown sûr : ```blocs```, `code`, **gras**, listes « - », paragraphes */
+function mdInline(t){
+  const codes = [];
+  t = String(t ?? "").replace(/`([^`\n]+)`/g, (_, c) => (codes.push(c), `\u0001${codes.length-1}\u0001`));
+  t = esc(t).replace(/\*\*([^*\n]+)\*\*/g, "<b>$1</b>");
+  return t.replace(/\u0001(\d+)\u0001/g, (_, k) => `<code>${esc(codes[k])}</code>`);
+}
+function md(s){
+  if(Array.isArray(s)) s = s.join("\n");
+  const blocs = [];
+  const t = String(s ?? "").replace(/```[\w-]*\n?([\s\S]*?)```/g, (_, c) => (blocs.push(`<pre class="code"><code>${esc(c.replace(/\n$/,""))}</code></pre>`), `\n\u0002${blocs.length-1}\u0002\n`));
+  const out = [];
+  for(const para of t.split(/\n\s*\n/)){
+    const lignes = para.split("\n").filter(l => l.trim() !== "");
+    if(!lignes.length) continue;
+    let html = "", liste = false, texte = [];
+    const vider = () => { if(texte.length){ html += `<p>${texte.join("<br>")}</p>`; texte = []; } };
+    const fermer = () => { if(liste){ html += "</ul>"; liste = false; } };
+    for(const l of lignes){
+      const b = l.match(/^\u0002(\d+)\u0002$/);
+      const li = l.match(/^\s*[-•]\s+(.*)$/);
+      if(b){ vider(); fermer(); html += blocs[b[1]]; }
+      else if(li){ vider(); if(!liste){ html += "<ul>"; liste = true; } html += `<li>${mdInline(li[1])}</li>`; }
+      else { fermer(); texte.push(mdInline(l)); }
+    }
+    vider(); fermer();
+    out.push(html);
+  }
+  return out.join("");
+}
+
+/* ---------- D.A. du module : variables --m-* + police Google ---------- */
+function appliquerTheme(t = {}){
+  const r = document.documentElement.style;
+  if(t.bg) r.setProperty("--m-bg", t.bg);
+  if(t.fg) r.setProperty("--m-fg", t.fg);
+  if(t.ac) r.setProperty("--m-ac", t.ac);
+  if(t.font) r.setProperty("--m-font", t.font);
+  if(t.googleFont){
+    const l = document.createElement("link"); l.rel = "stylesheet";
+    l.href = "https://fonts.googleapis.com/css2?family=" + String(t.googleFont).trim().replace(/\s+/g,"+") + "&display=swap";
+    document.head.appendChild(l);
+  }
+}
+
+
+/* =====================================================================
+   SCHÉMAS SVG (circuits…) — format des banques : schema = {modele, vals, surligne, eteint, court}
+   ou {vb:"x y w h", el:[…]} ; les modèles viennent du fichier d'extension du module.
+   Éléments : ["w",[[x,y]…]] fil · ["n",x,y] nœud · ["t",x,y,"txt",{a,cls}] texte
+              ["R",x1,y1,x2,y2,{id,label,val,lp}] résistance · ["S",x1,y1,x2,y2,{id,kind:"E"|"I",label,val,lp}] source (flèche de 1 vers 2)
+              ["a",x1,y1,x2,y2,"label",lx,ly] flèche de tension/courant
+   ===================================================================== */
+const EXT = {schemas:{}, generateurs:{}, labos:{}};
+const SV = {
+  ml(s){ /* étiquette façon LaTeX : R1 → R₁ italique, Eth → E_th */
+    s = String(s ?? ""); const m = /^([A-Za-z])_?([A-Za-z0-9]{1,3})?$/.exec(s);
+    if(!m) return esc(s);
+    const sub = m[2] || "";
+    return `<tspan class="mi">${m[1]}</tspan>` + (sub ? `<tspan class="${/^\d+$/.test(sub) ? "sb" : "sbi"}" dy="4">${esc(sub)}</tspan>` : "");
+  },
+  line: pts => `<polyline class="w" points="${pts.map(p => p.join(",")).join(" ")}"/>`,
+  geo(x1, y1, x2, y2, L){
+    const dx = x2 - x1, dy = y2 - y1, l = Math.hypot(dx, dy) || 1, ux = dx/l, uy = dy/l, cx = (x1+x2)/2, cy = (y1+y2)/2;
+    return {cx, cy, ux, uy, h:Math.abs(dy) < Math.abs(dx), ang:Math.atan2(dy, dx)*180/Math.PI,
+      leads:SV.line([[x1,y1],[cx-ux*L, cy-uy*L]]) + SV.line([[cx+ux*L, cy+uy*L],[x2,y2]])};
+  },
+  labels(g, o, defLp){
+    const lp = o.lp || defLp, anc = lp === "right" ? "start" : lp === "left" ? "end" : "middle";
+    const src = !!o.kind, dh = src ? 17 : 0;   /* une source est un cercle de rayon 16 : on écarte les étiquettes */
+    const lx = g.h ? g.cx : g.cx + (lp === "left" ? -1 : 1) * (src ? 24 : 14), ly = g.h ? (lp === "bottom" ? g.cy + 24 + dh : g.cy - 13 - dh - (o.kind === "I" ? 8 : 0)) : g.cy - 3;
+    const vy = g.h ? (lp === "bottom" ? g.cy + 38 + dh : g.cy + 22 + dh) : g.cy + 13;
+    return (o.label ? `<text x="${lx}" y="${ly}" text-anchor="${anc}">${SV.ml(o.label)}</text>` : "")
+      + (o.val != null && o.val !== "" ? `<text class="val" x="${lx}" y="${vy}" text-anchor="${anc}">${esc(o.val)}</text>` : "");
+  },
+  R(x1, y1, x2, y2, o = {}){
+    const g = SV.geo(x1, y1, x2, y2, 20);
+    return `<g class="comp" data-id="${esc(o.id || "")}">${g.leads}<rect class="body" x="-20" y="-7" width="40" height="14" transform="translate(${g.cx} ${g.cy}) rotate(${g.ang})"/>${SV.labels(g, o, g.h ? "top" : "right")}</g>`;
+  },
+  S(x1, y1, x2, y2, o = {}){
+    const g = SV.geo(x1, y1, x2, y2, 16), T = `transform="translate(${g.cx} ${g.cy}) rotate(${g.ang})"`;
+    const inner = o.kind === "I"
+      ? `<g ${T}><line class="w" x1="0" y1="-16" x2="0" y2="16"/><line class="w" x1="-9" y1="-25" x2="8" y2="-25"/><path class="node" d="M13,-25 L6,-29 L6,-21Z"/></g>`
+      : `<g ${T}><line class="w" x1="-10" y1="0" x2="7" y2="0"/><path class="node" d="M13,0 L5,-4.5 L5,4.5Z"/></g>`;
+    return `<g class="comp src" data-id="${esc(o.id || "")}">${g.leads}<circle class="body" cx="${g.cx}" cy="${g.cy}" r="16"/>${inner}${SV.labels(g, Object.assign({kind:"E"}, o), g.h ? "top" : "left")}</g>`;
+  },
+  arrow(x1, y1, x2, y2, lab, lx, ly){
+    const a = Math.atan2(y2-y1, x2-x1), s = 7;
+    return `<g class="fl"><line class="arr" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"/><path class="arrh" d="M${x2},${y2} L${x2-s*Math.cos(a-.45)},${y2-s*Math.sin(a-.45)} L${x2-s*Math.cos(a+.45)},${y2-s*Math.sin(a+.45)}Z"/>`
+      + (lab ? `<text x="${lx ?? (x1+x2)/2}" y="${ly ?? (Math.min(y1,y2) - 8)}" text-anchor="middle">${SV.ml(lab)}</text>` : "") + `</g>`;
+  },
+  rendre(sc, etat = {}){
+    if(!sc) return "";
+    let base = sc;
+    if(sc.modele){
+      const f = EXT.schemas[sc.modele];
+      if(!f) return `<p class="vide-txt">(schéma « ${esc(sc.modele)} » indisponible)</p>`;
+      base = f(sc.vals || {});
+    }
+    const st = Object.assign({surligne:[], eteint:[], court:[]}, sc.modele ? {surligne:sc.surligne || [], eteint:sc.eteint || [], court:sc.court || []} : {}, etat);
+    const inL = (l, id) => id && (l || []).includes(id);
+    const parts = (base.el || []).map(e => {
+      const [t, ...a] = e, o = (t === "R" || t === "S") ? (a[4] || {}) : {};
+      if(t === "w") return SV.line(a[0]);
+      if(t === "n") return `<circle class="node" cx="${a[0]}" cy="${a[1]}" r="3.2"/>`;
+      if(t === "t") return `<text x="${a[0]}" y="${a[1]}" text-anchor="${(a[3] && a[3].a) || "middle"}" class="${(a[3] && a[3].cls) || ""}">${SV.ml(a[2])}</text>`;
+      if(t === "a") return SV.arrow(...a);
+      if(inL(st.court, o.id)){ const g = SV.geo(a[0], a[1], a[2], a[3], 0); return SV.line([[a[0],a[1]],[a[2],a[3]]]) + `<text class="val" x="${g.h ? g.cx : g.cx - 10}" y="${g.h ? g.cy - 8 : g.cy}" text-anchor="${g.h ? "middle" : "end"}">${esc((o.label || "").replace(/_/g, ""))} = 0</text>`; }
+      let s = t === "R" ? SV.R(...a) : t === "S" ? SV.S(...a) : "";
+      if(inL(st.surligne, o.id)) s = s.replace('class="comp', 'class="comp hl');
+      if(inL(st.eteint, o.id)) s = s.replace('class="comp', 'class="comp dim');
+      return s;
+    });
+    return `<div class="schema"><svg class="circ" viewBox="${esc(base.vb || "0 0 460 215")}" role="img" aria-label="Schéma du circuit">${parts.join("")}</svg></div>`;
+  }
+};
+
+/* ---------- icônes (style Lucide, SVG inline) ---------- */
+const ICONES = {
+  zap:'<path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/>',
+  timer:'<path d="M10 2h4"/><path d="M12 14l3-3"/><circle cx="12" cy="14" r="8"/>',
+  book:'<path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2z"/><path d="M22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7z"/>',
+  wrench:'<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.8-3.8a6 6 0 0 1-7.9 7.9l-6.9 6.9a2.1 2.1 0 0 1-3-3l6.9-6.9a6 6 0 0 1 7.9-7.9z"/>',
+  compass:'<circle cx="12" cy="12" r="10"/><path d="m16.2 7.8-2.1 6.3-6.3 2.1 2.1-6.3z"/>',
+  layers:'<path d="m12 2 10 5-10 5L2 7z"/><path d="m2 12 10 5 10-5"/><path d="m2 17 10 5 10-5"/>',
+  target:'<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>',
+  steps:'<path d="m3 7 2 2 4-4"/><path d="m3 17 2 2 4-4"/><path d="M13 6h8"/><path d="M13 12h8"/><path d="M13 18h8"/>',
+  pen:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',
+  alert:'<path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/>',
+  dice:'<rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 8h.01M16 16h.01M12 12h.01M16 8h.01M8 16h.01" stroke-width="3"/>',
+  check:'<path d="M22 11.1V12a10 10 0 1 1-5.9-9.1"/><path d="m22 4-10 10-3-3"/>',
+  bulb:'<path d="M15 14c.2-1 .7-1.7 1.5-2.5A5 5 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.8.8 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/>',
+  flask:'<path d="M9 3h6"/><path d="M10 3v6L4.5 19a1.5 1.5 0 0 0 1.3 2h12.4a1.5 1.5 0 0 0 1.3-2L14 9V3"/><path d="M7 15h10"/>'
+};
+const ic = n => ICONES[n] ? `<svg class="ico" viewBox="0 0 24 24" aria-hidden="true">${ICONES[n]}</svg>` : "";
+
+/* ---------- maths : rendu LaTeX (KaTeX embarqué) de tout ce qui s'affiche dans le lecteur ---------- */
+let tMaths = 0;
+function maths(){
+  if(!window.renderMathInElement) return;
+  renderMathInElement(L, {delimiters:[{left:"$$", right:"$$", display:true}, {left:"$", right:"$", display:false}], throwOnError:false,
+    ignoredTags:["script","noscript","style","textarea","pre","code","option","input"]});
+}
+new MutationObserver(() => { clearTimeout(tMaths); tMaths = setTimeout(maths, 30); }).observe(L, {childList:true, subtree:true});
+
+/* ---------- variantes (générateurs) : [[CLE]] remplacé par la valeur ; réponses/corrigés remplacés par étape ---------- */
+function variante(it, g){
+  const x = JSON.parse(JSON.stringify(it));
+  const vals = Object.assign({}, it.vals || {}, (g && g.vals) || {});
+  const sub = v => typeof v === "string" ? v.replace(/\[\[(\w+)\]\]/g, (m, k) => vals[k] != null ? vals[k] : m)
+    : Array.isArray(v) ? v.map(sub) : v && typeof v === "object" ? Object.fromEntries(Object.entries(v).map(([k, w]) => [k, sub(w)])) : v;
+  const y = sub(x);
+  if(g && Array.isArray(y.etapes)) y.etapes.forEach((e, k) => {
+    if(g.rep && g.rep[k] != null && e.verif) e.verif = Object.assign({}, e.verif, {attendu:g.rep[k]});
+    if(g.corr && g.corr[k] != null) e.corrige = g.corr[k];
+  });
+  y._variante = !!g;
+  return y;
+}
+const tirage = it => it.generateur && EXT.generateurs[it.generateur] ? EXT.generateurs[it.generateur]() : null;
+
+/* =====================================================================
+   ÉTAT DES ITEMS (affichage seulement : l'XP reste calculée par xp.js)
+   ===================================================================== */
+function etats(){
+  const res = M.etat(), det = (res && res.details) || {}, v = V(), st = {};
+  const evs = M.evenements().filter(e => det[e.i]).sort((a,b) => a.t - b.t);
+  for(const e of evs){
+    const d = det[e.i], it = S.items[e.q]; if(!it) continue;
+    const s = st[e.q] || (st[e.q] = {ok:false, erreur:false, jours:new Set(), maitrise:false, auj:false, valide:false, runs:{}});
+    if(it.type === "exo"){
+      if(d.ok){ const r = s.runs[e.r] || (s.runs[e.r] = new Set()); r.add(e.e || 0); if(r.size >= ((it.etapes && it.etapes.length) || 1)) s.valide = true; }
+    } else if(d.ok){
+      s.ok = true; s.erreur = false; s.jours.add(d.jour);
+      if(s.jours.size >= v.maitriseJours) s.maitrise = true;
+      if(res && d.jour === res.aujourdhui) s.auj = true;
+    } else { s.erreur = true; s.maitrise = false; s.jours.clear(); }
+  }
+  return st;
+}
+const itemsDe = (chIds, types) => S.chapitres.filter(c => chIds.includes(c.id)).flatMap(c => (c.items || []).filter(it => types.includes(it.type)));
+const dureeExo = it => { const d = M.interne.config && M.interne.config.durees; return d && d[it.id] != null ? +d[it.id] : (+it.duree || 0); };
+const minutes = m => m >= 1 ? `${fmt(Math.round(m*10)/10)} min` : `${Math.round(m*60)} s`;
+function evalsDuModule(){
+  const res = M.etat(), auj = res ? res.aujourdhui : null, fen = V().evalFenetre;
+  const ev = ((M.interne.calendrier && M.interne.calendrier.evals) || []).filter(e => e.module === S.mod.id && auj && e.date >= auj);
+  return ev.map(e => Object.assign({}, e, {j:ecartJours(auj, e.date), modeEval:ecartJours(auj, e.date) <= fen})).sort((a,b) => a.j - b.j);
+}
+
+/* =====================================================================
+   VÉRIFICATIONS : exact · numerique · regex · sql · dom · auto
+   ===================================================================== */
+function nombre(rep, v){
+  const s = String(rep ?? "").replace(/ /g," ").trim();
+  const m = s.match(/[-+−]?\s*(\d+(?:[.,]\d+)?|[.,]\d+)(?:\s*[eE]\s*([-+]?\d+)|\s*[×x*]\s*10\s*\^\s*([-+−]?\d+))?/);
+  if(!m) return null;
+  let x = parseFloat(m[0].replace(/\s/g,"").replace("−","-").replace(",",".").replace(/[×x*]10\^/,"e"));
+  if(!isFinite(x)) return null;
+  if(v && v.unite){ /* préfixes SI devant l'unité attendue : 4,7 kΩ → 4700 */
+    const apres = s.slice(m.index + m[0].length).trim();
+    const p = apres.match(/^([pnµumkMG])/);
+    const PF = {p:1e-12, n:1e-9, "µ":1e-6, u:1e-6, m:1e-3, k:1e3, M:1e6, G:1e9};
+    if(p && !norm(apres).startsWith(norm(v.unite)) ) x *= PF[p[1]];
+  }
+  return x;
+}
+async function verifier(v, rep, ctx, champ){
+  v = v || {mode:"auto"};
+  switch(v.mode){
+    case "exact": {
+      const att = [].concat(v.attendu ?? []);
+      return {ok: att.some(a => norm(a) === norm(rep))};
+    }
+    case "numerique": {
+      const x = nombre(rep, v);
+      if(x == null) return {ok:false, msg:"Je n'ai pas trouvé de nombre dans ta réponse."};
+      const a = +v.attendu, tol = v.tol != null ? +v.tol : Math.abs(a)*0.01;
+      return {ok: Math.abs(x - a) <= tol + 1e-12};
+    }
+    case "regex": {
+      const r = String(rep ?? "").trim().replace(/\s+/g," ");
+      const motifs = [].concat(v.motif ?? v.attendu ?? []);
+      return {ok: motifs.some(m => { try{ return new RegExp("^(?:" + m + ")$", v.flags ?? "i").test(r); }catch(e){ return false; } })};
+    }
+    case "sql": return verifSQL(v, rep, ctx);
+    case "dom": return verifDOM(v, rep, champ);
+    default: return {auto:true};
+  }
+}
+
+/* ---- SQL : sql.js (SQLite) chargé seulement au besoin, base neuve à chaque exécution ---- */
+let sqlP = null; const bases = {};
+function chargerSQL(){
+  return sqlP || (sqlP = new Promise((res, rej) => {
+    const s = document.createElement("script");
+    s.src = "https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.9.0/sql-asm.js";
+    s.onload = () => window.initSqlJs().then(res, rej);
+    s.onerror = () => { sqlP = null; rej(new Error("moteur SQL injoignable (réseau ?)")); };
+    document.head.appendChild(s);
+  }));
+}
+function scriptBase(v, ctx){
+  const ch = S.chapitres.find(c => c.id === ctx.chapitre) || {};
+  const b = v.base || ch.base;
+  if(!b) return Promise.resolve("");
+  if(/\b(create|insert)\b/i.test(b)) return Promise.resolve(b);
+  const k = ctx.module + "/" + b;
+  return bases[k] || (bases[k] = fetch(`banques/${ctx.module}/bases/${b}.sql`).then(r => r.ok ? r.text() : Promise.reject(new Error("base introuvable : " + b))));
+}
+async function executerSQL(v, req, ctx, controle){
+  const [SQL, script] = await Promise.all([chargerSQL(), scriptBase(v, ctx)]);
+  const db = new SQL.Database();
+  try{
+    if(script) db.run(script);
+    const r = db.exec(req);
+    const out = controle ? db.exec(controle) : r;
+    return out.length ? out[out.length-1] : {columns:[], values:[]};
+  } finally { db.close(); }
+}
+const cellule = x => x == null ? "NULL" : typeof x === "number" ? String(Math.round(x*1e6)/1e6) : String(x);
+function tableSQL(r, max = 15){
+  if(!r || !r.columns.length) return `<p class="vide-txt">Requête exécutée, aucune ligne renvoyée.</p>`;
+  const lignes = r.values.slice(0, max).map(l => `<tr>${l.map(x => `<td>${esc(cellule(x))}</td>`).join("")}</tr>`).join("");
+  return `<div class="sql-sortie"><table><thead><tr>${r.columns.map(c => `<th>${esc(c)}</th>`).join("")}</tr></thead><tbody>${lignes}</tbody></table>
+    <small>${r.values.length} ligne${r.values.length > 1 ? "s" : ""}${r.values.length > max ? ` (${max} affichées)` : ""}</small></div>`;
+}
+async function verifSQL(v, rep, ctx){
+  let mien;
+  try{ mien = await executerSQL(v, rep, ctx, v.controle); }
+  catch(e){ return {ok:false, msg:"Erreur SQL : " + (e.message || e)}; }
+  let ref;
+  try{ ref = await executerSQL(v, v.attendu, ctx, v.controle); }
+  catch(e){ return {ok:false, msg:"La requête de référence de la banque plante (" + (e.message || e) + ") : signale l'item."}; }
+  const sortie = (v.controle ? `<small class="vide-txt">Contrôle : <code>${esc(v.controle)}</code></small>` : "") + tableSQL(mien);
+  if(mien.columns.length !== ref.columns.length) return {ok:false, sortie, msg:`Ta requête renvoie ${mien.columns.length} colonne(s), il en faut ${ref.columns.length}.`};
+  const lig = r => r.values.map(l => l.map(cellule).join("\u0003"));
+  let a = lig(mien), b = lig(ref);
+  if(!v.ordre){ a = a.slice().sort(); b = b.slice().sort(); }
+  const ok = a.length === b.length && a.every((x, i) => x === b[i]);
+  return {ok, sortie, msg: ok ? "" : a.length !== b.length ? `${a.length} ligne(s) obtenue(s), ${b.length} attendue(s).` : v.ordre ? "Bonnes lignes ? Vérifie aussi l'ordre (ORDER BY)." : "Les lignes ne correspondent pas au résultat attendu."};
+}
+
+/* ---- DOM : rendu dans une iframe sans scripts, tests par sélecteurs ---- */
+function majApercu(iframe, html){
+  return new Promise(res => {
+    if(!iframe){ res(); return; }
+    const t = setTimeout(res, 800);
+    iframe.onload = () => { clearTimeout(t); res(); };
+    iframe.srcdoc = html;
+  });
+}
+async function verifDOM(v, rep, champ){
+  let doc = null, win = null;
+  if(champ && champ.iframe){
+    await majApercu(champ.iframe, rep);
+    try{ doc = champ.iframe.contentDocument; win = champ.iframe.contentWindow; }catch(e){}
+  }
+  if(!doc || !doc.body){ doc = new DOMParser().parseFromString(rep, "text/html"); win = null; }
+  const echecs = [];
+  for(const t of v.tests || []){
+    let els;
+    try{ els = [...doc.querySelectorAll(t.sel)]; }catch(e){ echecs.push(t.msg || "Sélecteur invalide dans la banque : " + t.sel); continue; }
+    const quoi = "« " + t.sel + " »";
+    if(t.nb != null){ if(els.length !== +t.nb){ echecs.push(t.msg || `Il faut ${t.nb} élément(s) ${quoi}, j'en trouve ${els.length}.`); continue; } }
+    else if(t.existe === false){ if(els.length){ echecs.push(t.msg || `Il ne devrait pas y avoir d'élément ${quoi}.`); } continue; }
+    else if(!els.length){ echecs.push(t.msg || `Aucun élément ${quoi}.`); continue; }
+    if(t.texte != null && !els.some(e => norm(e.textContent).includes(norm(t.texte)))){ echecs.push(t.msg || `${quoi} devrait contenir « ${t.texte} ».`); continue; }
+    if(t.attr && !Object.entries(t.attr).every(([k, val]) => els.some(e => e.hasAttribute(k) && (val === true || norm(e.getAttribute(k)) === norm(val))))){
+      echecs.push(t.msg || `${quoi} : attribut attendu ${Object.entries(t.attr).map(([k,v]) => v === true ? k : `${k}="${v}"`).join(", ")}.`); continue;
+    }
+    if(t.style && win){
+      const sonde = doc.createElement("span"); doc.body.appendChild(sonde);
+      const ok = Object.entries(t.style).every(([p, val]) => {
+        sonde.style.setProperty(p, val); const voulu = win.getComputedStyle(sonde).getPropertyValue(p); sonde.style.removeProperty(p);
+        return els.some(e => win.getComputedStyle(e).getPropertyValue(p) === voulu);
+      });
+      sonde.remove();
+      if(!ok){ echecs.push(t.msg || `${quoi} : style attendu ${Object.entries(t.style).map(([k,v]) => k+": "+v).join("; ")}.`); continue; }
+    }
+  }
+  const n = (v.tests || []).length;
+  return {ok:!echecs.length, msg: echecs.length ? `${n - echecs.length}/${n} tests OK. ` + echecs[0] : ""};
+}
+
+/* =====================================================================
+   BRIQUES D'AFFICHAGE COMMUNES
+   ===================================================================== */
+function teteItem(it, opts = {}, extra = ""){
+  return `<div class="q-tete">
+    <span class="q-type">${LIB[it.type] || it.type}</span>
+    ${it.notion ? `<span class="q-notion">${esc(it.notion)}</span>` : ""}
+    ${it.origine && it.origine !== "generee" ? `<span class="q-orig">${esc(ORIG[it.origine] || it.origine)}</span>` : ""}
+    ${extra}
+    <span class="q-pos">${opts.pos || ""}</span>
+  </div>`;
+}
+/* champ de réponse adapté au mode de vérification */
+function creerChamp(cont, v, x){
+  const mode = (v && v.mode) || "auto", multi = mode === "sql" || mode === "dom" || mode === "auto" || x.multiligne;
+  const ph = mode === "sql" ? "SELECT …" : mode === "dom" ? "<h1>…</h1>" : mode === "numerique" ? (v.unite ? "valeur (en " + v.unite + ")" : "valeur") : "ta réponse";
+  cont.innerHTML = (multi
+      ? `<textarea class="entree code-entree" spellcheck="false" autocapitalize="off" autocomplete="off" placeholder="${esc(ph)}" aria-label="Ta réponse">${esc(x.depart || "")}</textarea>`
+      : `<input class="entree" spellcheck="false" autocapitalize="off" autocomplete="off" placeholder="${esc(ph)}" aria-label="Ta réponse"${mode === "numerique" ? ' inputmode="decimal"' : ""}>`)
+    + (mode === "auto" ? `<small class="aide">Brouillon libre : tu compareras avec la correction et tu t'auto-évalues.</small>` : "")
+    + (mode === "sql" ? `<div class="actions mini"><button type="button" class="btn" data-a="executer">Exécuter</button><small class="aide">Ctrl + Entrée pour valider</small></div><div class="sql-zone"></div>` : "")
+    + (mode === "dom" ? `<small class="aide">Aperçu en direct (scripts désactivés)</small><iframe class="dom-apercu" sandbox="allow-same-origin" title="Aperçu de ton code"></iframe>` : "")
+    + (multi && mode !== "sql" ? `<small class="aide">Ctrl + Entrée pour valider</small>` : "");
+  const champ = cont.querySelector(".entree");
+  const o = {el:champ, multi, lire:() => champ.value, focus:() => { if(!petitEcran()) champ.focus(); }, iframe:cont.querySelector("iframe")};
+  if(mode === "dom"){
+    let t = 0; const maj = () => majApercu(o.iframe, champ.value);
+    champ.addEventListener("input", () => { clearTimeout(t); t = setTimeout(maj, 300); }); maj();
+  }
+  if(mode === "sql"){
+    const zone = cont.querySelector(".sql-zone");
+    cont.querySelector("[data-a=executer]").onclick = async () => {
+      zone.innerHTML = `<p class="vide-txt">exécution…</p>`;
+      try{ zone.innerHTML = tableSQL(await executerSQL(v, champ.value, x.ctx)); }
+      catch(e){ zone.innerHTML = `<p class="erreur-txt">Erreur SQL : ${esc(e.message || e)}</p>`; }
+    };
+  }
+  if(champ.tagName === "TEXTAREA") champ.addEventListener("keydown", e => {
+    if(e.key === "Tab" && !e.shiftKey && (mode === "sql" || mode === "dom")){ e.preventDefault(); const s = champ.selectionStart; champ.setRangeText("  ", s, champ.selectionEnd, "end"); }
+  });
+  return o;
+}
+/* indices : −30 % d'XP chacun, max réglable (2 par défaut) */
+function brancherIndices(cont, liste, onUse){
+  liste = (liste || []).filter(Boolean);
+  const max = Math.min(liste.length, V().indicesMax);
+  let n = 0;
+  if(!max){ cont.innerHTML = ""; return () => 0; }
+  const rendre = () => {
+    cont.innerHTML = liste.slice(0, n).map((h, k) => `<div class="indice"><small>Indice ${k+1}</small>${md(h)}</div>`).join("")
+      + (n < max ? `<button type="button" class="lien" data-a="indice">${ic("bulb")} ${n ? "Encore un indice" : "Un indice ?"} (−${Math.round(V().indiceCout*100)} % d'XP)</button>` : "");
+    const b = cont.querySelector("[data-a=indice]");
+    if(b) b.onclick = () => { n++; onUse && onUse(n); rendre(); };
+  };
+  rendre();
+  return () => n;
+}
+function corrigeDe(x, v){
+  v = v || {};
+  if(x.corrige) return md(x.corrige);
+  const att = [].concat(v.attendu ?? []);
+  switch(v.mode){
+    case "exact": return att.length ? `<code>${esc(att[0])}</code>` + (att.length > 1 ? ` <small>(aussi accepté : ${att.slice(1).map(a => `<code>${esc(a)}</code>`).join(", ")})</small>` : "") : "";
+    case "numerique": return `<code>${esc(fmt(+v.attendu))}${v.unite ? " " + esc(v.unite) : ""}</code>` + (v.tol ? ` <small>(± ${esc(fmt(+v.tol))})</small>` : "");
+    case "regex": return v.exemple ? `<code>${esc(v.exemple)}</code>` : "";
+    case "sql": return `<pre class="code"><code>${esc(v.attendu || "")}</code></pre>`;
+    default: return "";
+  }
+}
+function lienSignaler(id){ return `<button type="button" class="lien signaler" data-signaler="${esc(id)}">⚑ Signaler une erreur</button>`; }
+L.addEventListener("click", e => { const b = e.target.closest("[data-signaler]"); if(b) ouvrirSignal(b.dataset.signaler); });
+
+/* ---------- signalement ---------- */
+let signalId = null;
+function ouvrirSignal(id){
+  if(M.interne.mode !== "synchro") return toast(M.interne.mode === "lecture" ? "Lecture seule : impossible d'envoyer un signalement" : "Connecte-toi à Claude pour signaler une erreur");
+  signalId = id; $("i-signal").value = ""; $("e-signal").textContent = ""; $("m-signal").hidden = false; $("i-signal").focus();
+}
+$("annuler-signal").onclick = () => $("m-signal").hidden = true;
+$("m-signal").addEventListener("click", e => { if(e.target === $("m-signal")) $("m-signal").hidden = true; });
+$("f-signal").addEventListener("submit", async e => {
+  e.preventDefault();
+  const msg = $("i-signal").value.trim(); if(!msg) return;
+  const b = e.target.querySelector("[type=submit]"); b.disabled = true;
+  const ok = await M.signaler(signalId, msg).catch(() => false);
+  b.disabled = false;
+  if(ok){ $("m-signal").hidden = true; toast("Signalement envoyé ✓ merci !"); }
+  else $("e-signal").textContent = "Échec de l'envoi, réessaie.";
+});
+
+/* =====================================================================
+   JOUEURS D'ITEMS (renvoient une promesse résolue à la fin de l'item)
+   ===================================================================== */
+function jouerQuestion(it, zone, opts = {}){
+  return new Promise(resolve => {
+    const v = it.verif || {mode:"auto"};
+    const t0 = Date.now(); let fini = false, nIndices = () => 0;
+    zone.innerHTML = `<article class="q" data-type="${esc(it.type)}">
+      ${teteItem(it, opts)}
+      <div class="q-enonce">${md(it.enonce)}</div>
+      <div class="q-corps"></div>
+      <div class="q-indices"></div>
+      <div class="q-retour" hidden></div>
+      <div class="actions q-actions"></div>
+    </article>`;
+    const art = zone.firstElementChild, corps = art.querySelector(".q-corps"), act = art.querySelector(".q-actions"), ret = art.querySelector(".q-retour");
+
+    function terminer(ok, extra = {}){
+      if(fini) return; fini = true; S.touches = null;
+      const d = M.reponse(it.id, ok, (Date.now() - t0)/1000, {indices:nIndices(), bulle:!opts.examen});
+      art.classList.add(ok ? "juste" : "rate");
+      if(opts.examen){ resolve({ok, d}); return; }
+      ret.hidden = false; ret.className = "q-retour " + (ok ? "ok" : "ko");
+      const cor = !ok && it.type === "saisie" ? corrigeDe(it, v) : "";
+      ret.innerHTML = `<b class="verdict">${ok ? "✓ Juste" : "✗ Raté"}${d && ok ? ` <small>+${nf(d.xp + d.bonus)} XP</small>` : ""}</b>
+        ${extra.msg ? `<p>${esc(extra.msg)}</p>` : ""}
+        ${cor ? `<div class="corrige"><small>Réponse attendue</small>${cor}</div>` : ""}
+        ${extra.sortie || ""}
+        ${it.explication ? `<div class="explication">${md(it.explication)}</div>` : ""}`;
+      act.innerHTML = `<button type="button" class="btn plein" data-a="suivant">${opts.dernier ? "Terminer" : "Suivant"} ⏎</button>${lienSignaler(it.id)}`;
+      const suivant = () => { S.touches = null; resolve({ok, d}); };
+      const bs = act.querySelector("[data-a=suivant]");
+      bs.onclick = suivant;
+      setTimeout(() => { if(bs.isConnected) bs.focus({preventScroll:true}); }, 60);   /* Entrée = Suivant */
+      ret.scrollIntoView({block:"nearest", behavior:reduit ? "auto" : "smooth"});
+    }
+
+    if(it.type === "qcm" || it.type === "qcm-multi"){
+      const multi = it.type === "qcm-multi", choix = it.choix || [];
+      const att = [].concat((it.verif && it.verif.attendu) ?? it.bonnes ?? it.bonne ?? []);
+      const bonnes = new Set(att.map(a => typeof a === "number" ? a : choix.findIndex(c => norm(c) === norm(a))).filter(i => i >= 0));
+      const ordre = melanger(choix.map((_, i) => i));
+      corps.innerHTML = `<div class="attente-choix" aria-label="Les choix arrivent"><i></i><span>choix dans 2 s… lis bien la question</span></div>`;
+      act.innerHTML = lienSignaler(it.id);
+      setTimeout(() => {
+        if(fini || !art.isConnected) return;
+        corps.innerHTML = `<div class="choix${multi ? " multi" : ""}" role="group">${ordre.map((i, k) => `<button type="button" data-i="${i}" aria-pressed="false"><span class="k">${k < 9 ? k+1 : ""}</span><span class="t">${mdInline(choix[i])}</span></button>`).join("")}</div>
+          ${multi ? `<small class="aide">Plusieurs bonnes réponses : coche-les toutes (tout juste ou 0).</small>` : ""}`;
+        const btns = [...corps.querySelectorAll("[data-i]")];
+        const corriger = () => {
+          const pris = new Set(btns.filter(b => b.getAttribute("aria-pressed") === "true").map(b => +b.dataset.i));
+          const ok = pris.size === bonnes.size && [...pris].every(i => bonnes.has(i));
+          btns.forEach(b => { const i = +b.dataset.i; b.disabled = true; if(bonnes.has(i)) b.classList.add("bonne"); else if(pris.has(i)) b.classList.add("fausse"); });
+          terminer(ok);
+        };
+        const choisir = b => {
+          if(fini) return;
+          if(multi) b.setAttribute("aria-pressed", b.getAttribute("aria-pressed") === "true" ? "false" : "true");
+          else { b.setAttribute("aria-pressed", "true"); corriger(); }
+        };
+        btns.forEach(b => b.onclick = () => choisir(b));
+        if(multi){
+          act.innerHTML = `<button type="button" class="btn plein" data-a="valider">Valider ⏎</button>${lienSignaler(it.id)}`;
+          act.querySelector("[data-a=valider]").onclick = corriger;
+        }
+        S.touches = e => {
+          const n = +e.key; if(n >= 1 && n <= btns.length && n <= 9){ e.preventDefault(); choisir(btns[n-1]); }
+          else if(e.key === "Enter" && multi){ e.preventDefault(); corriger(); }
+        };
+      }, opts.sansAttente ? 0 : 2000);
+      return;
+    }
+
+    /* saisie */
+    const ctx = {module:S.mod.id, chapitre:S.chapDe[it.id]};
+    const champ = creerChamp(corps, v, Object.assign({}, it, {ctx}));
+    nIndices = brancherIndices(art.querySelector(".q-indices"), it.indices);
+    const valider = async () => {
+      if(fini) return;
+      const rep = champ.lire();
+      if(v.mode !== "auto" && !rep.trim()){ champ.el.classList.add("secoue"); setTimeout(() => champ.el.classList.remove("secoue"), 400); return; }
+      if(v.mode === "auto" || !v.mode){ autoEval(); return; }
+      act.querySelectorAll("button").forEach(b => b.disabled = true);
+      const r = await verifier(v, rep, ctx, champ);
+      champ.el.readOnly = true;
+      terminer(!!r.ok, r);
+    };
+    const autoEval = () => {
+      champ.el.readOnly = true; S.touches = null;
+      ret.hidden = false; ret.className = "q-retour auto";
+      ret.innerHTML = `<div class="corrige"><small>Correction</small>${corrigeDe(it, v) || md(it.explication || "")}</div><p>Honnêtement, tu avais juste ?</p>`;
+      act.innerHTML = `<button type="button" class="btn plein" data-a="oui">J'avais juste</button><button type="button" class="btn" data-a="non">J'avais faux</button>`;
+      act.querySelector("[data-a=oui]").onclick = () => terminer(true);
+      act.querySelector("[data-a=non]").onclick = () => terminer(false);
+    };
+    act.innerHTML = `<button type="button" class="btn plein" data-a="valider">${v.mode === "auto" ? "Voir la correction" : "Valider ⏎"}</button>
+      <button type="button" class="btn" data-a="passe">Je ne sais pas</button>${lienSignaler(it.id)}`;
+    act.querySelector("[data-a=valider]").onclick = valider;
+    act.querySelector("[data-a=passe]").onclick = () => { champ.el.readOnly = true; terminer(false); };
+    champ.el.addEventListener("keydown", e => {
+      if(e.key === "Enter" && (!champ.multi || e.ctrlKey || e.metaKey)){ e.preventDefault(); valider(); }
+    });
+    champ.focus();
+  });
+}
+
+/* exo long : une réponse au moteur par étape, chrono par étape */
+function jouerExo(it, zone, opts = {}){
+  return new Promise(resolve => {
+    const run = M.debutExo(it.id);
+    S.nettoyer = () => M.finExo(it.id);
+    const etapes = (it.etapes && it.etapes.length) ? it.etapes : [{consigne:"", verif:it.verif, indices:it.indices, corrige:it.corrige}];
+    const n = etapes.length, ctx = {module:S.mod.id, chapitre:S.chapDe[it.id]};
+    const dTot = dureeExo(it);
+    let k = 0, nOk = 0, xp = 0;
+    zone.innerHTML = `<article class="q exo">
+      ${teteItem(it, opts, `<span class="q-duree" title="Durée théorique">${ic("timer")} ${minutes(dTot)} · ${n} étape${n > 1 ? "s" : ""}</span>`)}
+      ${it.titre ? `<h3 class="exo-titre">${mdInline(it.titre)}</h3>` : ""}
+      ${petitEcran() ? `<p class="bandeau-mobile">Exo long : plus confortable sur ordi, mais jouable ici.</p>` : ""}
+      <div class="${it.schema ? "exo-grille" : ""}"><div class="exo-gauche"><div class="q-enonce">${md(it.enonce)}</div>${it.schema ? `<div class="exo-schema"></div>` : ""}</div>
+      <div><ol class="etapes"></ol>
+      <div class="q-retour" hidden></div></div></div>
+      <div class="actions q-actions">${opts.relancer ? `<button type="button" class="btn" data-a="de">${ic("dice")} Autres valeurs</button>` : ""}${lienSignaler(it.id)}</div>
+    </article>`;
+    const art = zone.firstElementChild, ol = art.querySelector(".etapes"), actFin = art.querySelector(".q-actions"), ret = art.querySelector(".q-retour");
+    const somme = d => { if(d && d.ok) xp += d.xp + d.bonus; };
+    const bDe = actFin.querySelector("[data-a=de]"); if(bDe) bDe.onclick = () => { M.finExo(it.id); S.nettoyer = null; resolve({relance:true}); opts.relancer(); };
+    const zSch = art.querySelector(".exo-schema");
+    const majSchema = e => { if(!zSch) return; const es = e && e.schema; zSch.innerHTML = es && (es.modele || es.el) ? SV.rendre(es) : SV.rendre(it.schema, es || {}); };
+
+    function etape(){
+      if(k >= n) return finir();
+      const e = etapes[k], v = e.verif || {mode:"auto"}, t0 = Date.now();
+      majSchema(e);
+      let koLogue = false, close = false;
+      const li = document.createElement("li"); li.className = "etape courante";
+      const dEt = e.duree != null ? +e.duree * (dTot / ((+it.duree) || dTot || 1)) : dTot / n;
+      li.innerHTML = `<div class="etape-tete"><span class="num">Étape ${k+1}/${n}</span><small>≈ ${minutes(dEt)}</small></div>
+        ${e.consigne ? `<div class="q-enonce">${md(e.consigne)}</div>` : ""}
+        <div class="q-corps"></div><div class="q-indices"></div><div class="etape-msg" role="status"></div><div class="actions"></div>`;
+      ol.appendChild(li);
+      const corps = li.querySelector(".q-corps"), msg = li.querySelector(".etape-msg"), act = li.querySelector(".actions");
+      const champ = creerChamp(corps, v, Object.assign({}, e, {ctx}));
+      const nIndices = brancherIndices(li.querySelector(".q-indices"), e.indices);
+      const secs = () => (Date.now() - t0)/1000;
+      const rep = ok => M.reponse(it.id, ok, secs(), {etape:k, indices:ok ? nIndices() : 0, run, mode:opts.mode || "guide"});
+      const fermer = (ok, contenu = "") => {
+        if(close) return; close = true;
+        li.className = "etape " + (ok ? "faite" : "ratee"); champ.el.readOnly = true;
+        li.querySelectorAll("[data-a=indice], [data-a=executer]").forEach(b => b.disabled = true);
+        act.innerHTML = "";
+        msg.innerHTML = contenu; k++; etape();
+      };
+      const bilanEtape = (ok, extra = {}) => `<b class="verdict">${ok ? "✓ Étape validée" : "✗ Étape ratée"}</b>${extra.msg ? `<p>${esc(extra.msg)}</p>` : ""}
+        ${!ok && corrigeDe(e, v) ? `<div class="corrige"><small>Correction</small>${corrigeDe(e, v)}</div>` : ""}${extra.sortie || ""}${e.explication ? `<div class="explication">${md(e.explication)}</div>` : ""}`;
+      const valider = async () => {
+        if(close) return;
+        if(v.mode === "auto" || !v.mode) return montrerCorrection(true);
+        if(!champ.lire().trim()){ champ.el.classList.add("secoue"); setTimeout(() => champ.el.classList.remove("secoue"), 400); return; }
+        const bv = act.querySelector("[data-a=valider]"); bv.disabled = true;
+        const r = await verifier(v, champ.lire(), ctx, champ);
+        bv.disabled = false;
+        if(r.ok){ const d = rep(true); somme(d); nOk++; fermer(true, bilanEtape(true, r)); }
+        else {
+          if(!koLogue){ koLogue = true; rep(false); }   /* seul le 1er essai raté compte pour la précision */
+          msg.innerHTML = `<p class="erreur-txt">✗ Pas encore. ${esc(r.msg || "")}</p>${r.sortie || ""}<small class="aide">Tu peux corriger et revalider, ou voir la correction.</small>`;
+        }
+      };
+      const montrerCorrection = auto => {
+        act.innerHTML = "";
+        msg.innerHTML = `<div class="corrige"><small>Correction</small>${corrigeDe(e, v) || md(e.explication || "") || "<p>(pas de corrigé dans la banque)</p>"}</div>`
+          + (auto ? `<p>Honnêtement, tu avais juste ?</p>` : "");
+        if(auto){
+          act.innerHTML = `<button type="button" class="btn plein" data-a="oui">J'avais juste</button><button type="button" class="btn" data-a="non">J'avais faux</button>`;
+          act.querySelector("[data-a=oui]").onclick = () => { const d = rep(true); somme(d); nOk++; fermer(true, msg.innerHTML.replace(/<p>Honnêtement.*<\/p>/, "") + `<b class="verdict">✓ Auto-évaluée juste</b>`); };
+          act.querySelector("[data-a=non]").onclick = () => { if(!koLogue) rep(false); fermer(false, msg.innerHTML.replace(/<p>Honnêtement.*<\/p>/, "")); };
+        } else {
+          if(!koLogue){ koLogue = true; rep(false); }
+          act.innerHTML = `<button type="button" class="btn plein" data-a="suite">Étape suivante</button>`;
+          act.querySelector("[data-a=suite]").onclick = () => fermer(false, bilanEtape(false));
+        }
+      };
+      act.innerHTML = `<button type="button" class="btn plein" data-a="valider">${v.mode === "auto" || !v.mode ? "Voir la correction" : "Valider l'étape"}</button>`
+        + (v.mode && v.mode !== "auto" ? `<button type="button" class="btn" data-a="secher">Je sèche : correction</button>` : "");
+      act.querySelector("[data-a=valider]").onclick = valider;
+      const bs = act.querySelector("[data-a=secher]"); if(bs) bs.onclick = () => montrerCorrection(false);
+      champ.el.addEventListener("keydown", ev => { if(ev.key === "Enter" && (!champ.multi || ev.ctrlKey || ev.metaKey)){ ev.preventDefault(); valider(); } });
+      if(k > 0) li.scrollIntoView({block:"start", behavior:reduit ? "auto" : "smooth"});
+      champ.focus();
+    }
+    function finir(){
+      M.finExo(it.id); S.nettoyer = null; majSchema(null);
+      ret.hidden = false; ret.className = "q-retour " + (nOk === n ? "ok" : "ko");
+      ret.innerHTML = `<b class="verdict">${nOk === n ? "✓ Exo validé" : `Exo terminé : ${nOk}/${n} étape${n > 1 ? "s" : ""} réussie${nOk > 1 ? "s" : ""}`} <small>+${nf(xp)} XP</small></b>
+        ${it.explication ? `<div class="explication">${md(it.explication)}</div>` : ""}
+        ${nOk < n ? `<small class="aide">Refais-le plus tard : les 3 premiers passages comptent plein pot.</small>` : ""}`;
+      actFin.innerHTML = `<button type="button" class="btn plein" data-a="fin">${opts.dernier || !opts.examen ? "Terminer" : "Suivant"}</button>${opts.relancer ? `<button type="button" class="btn" data-a="de2">${ic("dice")} Même exo, autres valeurs</button>` : ""}${lienSignaler(it.id)}`;
+      const bDe2 = actFin.querySelector("[data-a=de2]"); if(bDe2) bDe2.onclick = () => { resolve({relance:true}); opts.relancer(); };
+      const bf = actFin.querySelector("[data-a=fin]");
+      bf.onclick = () => resolve({ok:nOk === n, partiel:nOk, n, xp});
+      setTimeout(() => bf.isConnected && bf.focus({preventScroll:true}), 60);
+      ret.scrollIntoView({block:"nearest", behavior:reduit ? "auto" : "smooth"});
+    }
+    etape();
+  });
+}
+const jouer = (it, zone, opts) => it.type === "exo" ? jouerExo(it, zone, opts) : jouerQuestion(it, zone, opts);
+
+/* =====================================================================
+   VUES
+   ===================================================================== */
+function vue(nom, rendu){
+  if(S.nettoyer){ try{ S.nettoyer(); }catch(e){} S.nettoyer = null; }
+  if(S.chrono){ clearInterval(S.chrono); S.chrono = 0; }
+  S.touches = null; S.vue = nom; L.innerHTML = "";
+  rendu(); scrollTo(0, 0);
+}
+const fil = (txt, retour = vueAccueil) => {
+  const nav = document.createElement("nav"); nav.className = "l-fil";
+  nav.innerHTML = `<button type="button" class="retour">← ${esc(S.mod.nom)}</button><span>${txt}</span>`;
+  nav.querySelector(".retour").onclick = () => retour();
+  return nav;
+};
+
+/* ---------- accueil du module ---------- */
+const estCourt = it => it.type === "qcm" || it.type === "qcm-multi" || (it.type === "saisie" && (it.duree == null || +it.duree <= 1));
+function vueAccueil(){ vue("accueil", rendreAccueil); }
+function rendreAccueil(){
+  const res = M.etat(), st = etats(), ms = (res && res.modules[S.mod.id]) || {xp:0};
+  const tousQ = S.chapitres.flatMap(c => (c.items || []).filter(it => TYPES_Q.includes(it.type)));
+  const tousE = S.chapitres.flatMap(c => (c.items || []).filter(it => it.type === "exo"));
+  const examens = S.chapitres.flatMap(c => (c.items || []).filter(it => it.type === "examen"));
+  const nb = (l, f) => l.filter(it => st[it.id] && f(st[it.id])).length;
+  const evs = evalsDuModule();
+  L.innerHTML = `
+    <nav class="l-fil"><a class="retour" href="index.html#modules">← hub</a><span>${esc(S.mod.id)}.exe</span></nav>
+    <header class="l-entete"><span class="l-ic" aria-hidden="true">${esc(S.mod.icone || "")}</span><h1 class="l-titre">${esc(S.mod.nom)}</h1></header>
+    <section class="fenetre l-stats" data-titre="${esc(S.mod.id)}.exe — progression">
+      <div class="stat"><span class="k">XP module</span><span class="v">${nf(ms.xp || 0)}</span></div>
+      <div class="stat"><span class="k">Questions réussies</span><span class="v">${nb(tousQ, s => s.ok)}<small>/${tousQ.length}</small></span></div>
+      <div class="stat"><span class="k">Maîtrisées</span><span class="v">${nb(tousQ, s => s.maitrise)}</span></div>
+      <div class="stat"><span class="k">Exos validés</span><span class="v">${nb(tousE, s => s.valide)}<small>/${tousE.length}</small></span></div>
+    </section>
+    ${evs.length ? `<section class="fenetre l-evals" data-titre="evals.txt"><ul>${evs.map(e => `<li class="${e.j <= 3 ? "chaud" : ""}"><span class="j">${e.j === 0 ? "auj." : "J-" + e.j}</span><span>${esc(e.nom)}${e.chapitres && e.chapitres.length ? ` <small>· ${e.chapitres.map(c => esc((S.chapitres.find(x => x.id === c) || {}).titre || c)).join(", ")}</small>` : ""}</span>${e.modeEval ? `<span class="mode" title="Les questions maîtrisées des chapitres concernés repassent à ×1 (une fois par jour)">mode éval</span>` : ""}</li>`).join("")}</ul></section>` : ""}
+    <div class="l-actions">
+      ${tousQ.length ? `<button type="button" class="btn plein" data-a="tout">${ic("target")} Compréhension : tout le module</button>` : ""}
+      ${examens.map(x => `<button type="button" class="btn" data-a="examen" data-id="${esc(x.id)}">${ic("timer")} ${esc(x.titre || "Examen blanc")}</button>`).join("")}
+    </div>
+    <h2 class="l-h2">Chapitres</h2>
+    <div class="chapitres">${S.chapitres.length ? S.chapitres.map((c, k) => {
+      const q = (c.items || []).filter(it => TYPES_Q.includes(it.type)), ex = (c.items || []).filter(it => it.type === "exo");
+      const ok = nb(q, s => s.ok), ma = nb(q, s => s.maitrise), exOk = nb(ex, s => s.valide), aRevoir = nb(q, s => s.erreur);
+      const total = q.length + ex.length, pct = total ? (ok + exOk)/total*100 : 0;
+      return `<button type="button" class="fenetre chap chap-btn" data-ch="${esc(c.id)}" data-titre="ch${c.ordre ?? k} — ${esc(c.id)}" style="--i:${k}">
+        <small class="chap-num">Chapitre ${esc(String(c.ordre ?? k))}</small>
+        <h3>${esc(c.titre || c.id)}</h3>
+        ${c.sources && c.sources.length ? `<small class="info">${c.sources.map(esc).join(" · ")}</small>` : ""}
+        <div class="prog" title="${Math.round(pct)} %"><i style="width:${pct}%"></i></div>
+        <p class="info">${ok}/${q.length} questions · ${ma} maîtrisée${ma > 1 ? "s" : ""}${ex.length ? ` · ${exOk}/${ex.length} exos` : ""}${aRevoir ? ` · <span class="a-revoir">${aRevoir} à revoir</span>` : ""}</p>
+      </button>`; }).join("") : `<p class="vide-txt">Aucun chapitre dans ce module pour l'instant.</p>`}</div>`;
+  L.querySelectorAll("[data-ch]").forEach(b => b.onclick = () => vueChapitre(b.dataset.ch));
+  L.querySelectorAll("[data-a]").forEach(b => b.onclick = () => {
+    if(b.dataset.a === "tout") vueEntrainement(S.chapitres.map(c => c.id), "Tout le module");
+    else if(b.dataset.a === "examen") vueExamen(b.dataset.id);
+  });
+}
+const titreCh = id => (S.chapitres.find(c => c.id === id) || {}).titre || id;
+const chap = id => S.chapitres.find(c => c.id === id) || {};
+const filCh = (ch, txt) => fil(`<span class="lien-ch">${esc(titreCh(ch))}</span> · ${txt}`, () => vueChapitre(ch));
+
+/* ---------- page chapitre : 3 modes cours (0 XP) + 3 modes exos ---------- */
+function vueChapitre(ch){
+  vue("chapitre", () => {
+    const c = chap(ch), st = etats();
+    const courts = (c.items || []).filter(estCourt), exos = (c.items || []).filter(it => it.type === "exo");
+    const vNorm = V(), dmoy = exos.length ? exos.reduce((a, it) => a + dureeExo(it)/((it.etapes && it.etapes.length) || 1), 0)/exos.length : 0;
+    const xpEt = m => Math.round(vNorm.xpParMinute * dmoy * vNorm.formatProduction * (1 + Math.min(dmoy*3/vNorm.concentrationDiv, vNorm.concentrationMax - 1)) * m);
+    const tuile = (a, icone, nom, desc, xp, dispo) => `<button type="button" class="mode-tuile" data-a="${a}" ${dispo ? "" : "disabled"}>
+      <span class="mt-ic">${ic(icone)}</span><span class="mt-txt"><b>${nom}</b><small>${dispo ? desc : "Pas encore de contenu pour ce mode"}</small></span>${xp && dispo ? `<span class="mt-xp">${xp}</span>` : ""}</button>`;
+    L.appendChild(fil(esc(c.titre || ch)));
+    const w = document.createElement("div");
+    w.innerHTML = `<h1 class="l-titre petit">${esc(c.titre || ch)}</h1>
+      ${c.sources && c.sources.length ? `<p class="vide-txt">Sources : ${c.sources.map(esc).join(" · ")}</p>` : ""}
+      <div class="ch-parties">
+        <section class="fenetre" data-titre="cours/">
+          <h2 class="ch-h2">${ic("book")} Cours</h2>
+          ${tuile("fa", "compass", "Follow-along", "Choisis une notion : explication écran par écran.", "", (c.parcours || []).length)}
+          ${tuile("cl", "layers", "Classique", "Fiche à cartes + éléments interactifs.", "", (c.fiche || []).length)}
+          ${tuile("tl", "zap", "TL;DR", "Un écran pour se rafraîchir la mémoire.", "", c.tldr && (c.tldr.length || c.tldr.lignes))}
+        </section>
+        <section class="fenetre" data-titre="exos/">
+          <h2 class="ch-h2">${ic("wrench")} Exos</h2>
+          ${tuile("qc", "target", "Compréhension", `QCM et saisies de moins d'une minute · ${courts.length} items.`, `${vNorm.qcm}-${Math.round(vNorm.xpParMinute*vNorm.dureeSaisie*vNorm.formatProduction)} XP<br>/question`, courts.length)}
+          ${tuile("gu", "steps", "Guidé", `On te dit quoi faire, tu fais, étape par étape · ${exos.length} exo${exos.length > 1 ? "s" : ""}.`, `×${fmt(vNorm.modeGuide)}<br>~${nf(xpEt(vNorm.modeGuide))} XP/étape`, exos.length)}
+          ${tuile("mk", "pen", "Classique / mock", "Toi et l'exo : pas d'indice, chrono, conditions réelles.", `×${fmt(vNorm.modeMock)}<br>~${nf(xpEt(vNorm.modeMock))} XP/étape`, exos.length)}
+        </section>
+      </div>`;
+    L.appendChild(w);
+    w.querySelectorAll("[data-a]").forEach(b => b.onclick = () => {
+      const a = b.dataset.a;
+      if(a === "fa") vueFollow(ch); else if(a === "cl") vueFiche(ch); else if(a === "tl") vueTldr(ch);
+      else if(a === "qc") vueEntrainement([ch], titreCh(ch)); else if(a === "gu") vueExos(ch, "guide"); else if(a === "mk") vueExos(ch, "mock");
+    });
+  });
+}
+
+/* ---------- cours : follow-along (0 XP, sauf la question de contrôle : moteur.reponse) ---------- */
+function vueFollow(ch, iNotion = 0){
+  vue("follow", () => {
+    const c = chap(ch), P = c.parcours || [], p = P[iNotion] || P[0];
+    L.appendChild(filCh(ch, "Follow-along"));
+    const w = document.createElement("div");
+    w.innerHTML = `<div class="notions" role="tablist">${P.map((x, k) => `<button type="button" role="tab" aria-selected="${k === iNotion}" class="${k === iNotion ? "on" : ""}" data-n="${k}">${mdInline(x.notion)}</button>`).join("")}</div>
+      <div class="fa"><section class="fenetre" data-titre="schema.cir"><div class="fa-schema"></div></section>
+      <section class="fenetre" data-titre="follow_along.exe"><div class="stepper"></div><div class="fa-corps"></div>
+      <div class="actions"><button type="button" class="btn" data-a="prec">← Retour</button><button type="button" class="btn plein" data-a="suiv">Suivant →</button></div></section></div>`;
+    L.appendChild(w);
+    w.querySelectorAll("[data-n]").forEach(b => b.onclick = () => vueFollow(ch, +b.dataset.n));
+    const ecrans = (p.ecrans || []).concat(p.controle ? [{titre:"Vérifie", controle:p.controle}] : []);
+    let i = 0;
+    const rendre = () => {
+      const e = ecrans[i], base = e.schema && (e.schema.modele || e.schema.el) ? e.schema : p.schema;
+      const etat = e.schema && !(e.schema.modele || e.schema.el) ? e.schema : (e.surligne ? {surligne:e.surligne} : {});
+      w.querySelector(".fa-schema").innerHTML = base ? SV.rendre(base, etat) : `<p class="vide-txt">(pas de schéma)</p>`;
+      w.querySelector(".fa-schema").closest(".fenetre").hidden = !base && !p.schema;
+      w.querySelector(".stepper").innerHTML = ecrans.map((_, k) => `<span class="${k <= i ? "on" : ""}"></span>`).join("");
+      const corps = w.querySelector(".fa-corps");
+      if(e.controle){
+        const q = e.controle, ch2 = q.choix || [], ordre = melanger(ch2.map((_, k) => k));
+        const bon = [].concat(q.verif ? q.verif.attendu : q.attendu).map(a => typeof a === "number" ? a : ch2.findIndex(x => norm(x) === norm(a)));
+        const idc = M.idControle(c, iNotion), dejaVu = ((M.etat() || {}).controles || []).includes(idc);
+        const gain = dejaVu ? "✓ déjà validé" : `+${M.valeursPour(M.interne.config, "9999-12-31").controle} XP à la 1re réussite`;
+        corps.innerHTML = `<h3>${ic("check")} Vérifie <small class="vide-txt">${gain}</small></h3><div class="q-enonce">${md(q.enonce)}</div>
+          <div class="choix">${ordre.map(k => `<button type="button" data-i="${k}"><span class="t">${mdInline(ch2[k])}</span></button>`).join("")}</div><div class="fa-retour"></div>`;
+        corps.querySelectorAll("[data-i]").forEach(b => b.onclick = () => {
+          const ok = bon.includes(+b.dataset.i);
+          corps.querySelectorAll("[data-i]").forEach(x => { x.disabled = true; if(bon.includes(+x.dataset.i)) x.classList.add("bonne"); });
+          if(!ok) b.classList.add("fausse");
+          M.reponse(idc, ok, null, {bulle: ok && !dejaVu});   // bulle seulement quand de l'XP tombe
+          corps.querySelector(".fa-retour").innerHTML = `<div class="q-retour ${ok ? "ok" : "ko"}"><b class="verdict">${ok ? "✓ Exact" : "✗ Pas tout à fait"}</b>${q.explication ? `<div class="explication">${md(q.explication)}</div>` : ""}</div>`;
+        });
+      } else corps.innerHTML = `<h3>${mdInline(e.titre || "")}</h3><div class="q-enonce">${md(e.texte)}</div>`;
+      w.querySelector("[data-a=prec]").disabled = i === 0;
+      const bs = w.querySelector("[data-a=suiv]");
+      bs.textContent = i === ecrans.length - 1 ? (iNotion < P.length - 1 ? "Notion suivante →" : "Retour au chapitre") : "Suivant →";
+    };
+    w.querySelector("[data-a=prec]").onclick = () => { if(i > 0){ i--; rendre(); } };
+    w.querySelector("[data-a=suiv]").onclick = () => { if(i < ecrans.length - 1){ i++; rendre(); } else if(iNotion < P.length - 1) vueFollow(ch, iNotion + 1); else vueChapitre(ch); };
+    S.touches = ev => { if(ev.key === "ArrowRight") w.querySelector("[data-a=suiv]").click(); else if(ev.key === "ArrowLeft") w.querySelector("[data-a=prec]").click(); };
+    rendre();
+  });
+}
+
+/* ---------- cours : classique = fiche à cartes + schémas + labos (0 XP) ---------- */
+function vueFiche(ch){
+  vue("fiche", () => {
+    const c = chap(ch);
+    L.appendChild(filCh(ch, "Cours classique"));
+    const w = document.createElement("div");
+    w.innerHTML = `<h1 class="l-titre petit">${esc(c.titre || ch)}</h1>
+      <div class="fiche-cartes">${(c.fiche || []).map((f, k) => `<section class="fenetre fiche-carte${f.schema || f.labo ? " large" : ""}" data-titre="${f.labo ? "labo" : String(k+1).padStart(2,"0")}.txt" style="--i:${k}">
+        <h3>${f.labo ? ic("flask") + " " : ""}${mdInline(f.titre || "")}</h3>
+        <div class="${f.schema ? "fc-2col" : ""}"><div>${md(f.contenu)}</div>${f.schema ? SV.rendre(f.schema) : ""}</div>
+        ${f.labo ? `<div class="labo" data-labo="${esc(f.labo)}"></div>` : ""}</section>`).join("")}</div>
+      <div class="l-actions"><button type="button" class="btn" data-a="ch">← Retour au chapitre</button></div>`;
+    L.appendChild(w);
+    w.querySelectorAll("[data-labo]").forEach(el => { const f = EXT.labos[el.dataset.labo]; if(f) try{ f(el, {SV, esc, fmt, ic}); }catch(e){ el.textContent = "(labo indisponible)"; } });
+    w.querySelector("[data-a=ch]").onclick = () => vueChapitre(ch);
+  });
+}
+
+/* ---------- cours : TL;DR (liste, ou tableau comparatif {titres, schemas, lignes, pieges}) ---------- */
+function vueTldr(ch){
+  vue("tldr", () => {
+    const c = chap(ch), t = c.tldr;
+    L.appendChild(filCh(ch, "TL;DR"));
+    const w = document.createElement("section"); w.className = "fenetre tldr"; w.dataset.titre = "tldr.txt";
+    let h = `<h1 class="l-titre petit">${ic("zap")} ${esc(c.titre || ch)} en 30 secondes</h1>`;
+    if(Array.isArray(t)) h += `<ul class="tldr-liste">${t.map(x => `<li>${mdInline(x)}</li>`).join("")}</ul>`;
+    else if(t && t.lignes){
+      const n = (t.titres || []).length;
+      h += (t.intro ? `<p class="vide-txt">${mdInline(t.intro)}</p>` : "") + `<table class="tlt"><thead><tr><th></th>${(t.titres || []).map((x, k) => `<th class="c${k}">${mdInline(x)}</th>`).join("")}</tr></thead><tbody>
+        ${t.schemas ? `<tr class="sch"><td></td>${t.schemas.map(s => `<td>${SV.rendre(s)}</td>`).join("")}</tr>` : ""}
+        ${t.lignes.map(l => `<tr><td class="k">${mdInline(l.k)}</td>${Array.isArray(l.v) ? l.v.map(x => `<td>${md(x)}</td>`).join("") : `<td colspan="${n}" class="tous">${md(l.v)}</td>`}</tr>`).join("")}
+      </tbody></table>`;
+    }
+    if(t && t.pieges) h += `<div class="piege">${ic("alert")} ${mdInline(t.pieges)}</div>`;
+    w.innerHTML = h; L.appendChild(w);
+    const a = document.createElement("div"); a.className = "l-actions";
+    a.innerHTML = `<button type="button" class="btn" data-a="ch">← Retour au chapitre</button>${(c.fiche || []).length ? `<button type="button" class="btn" data-a="cl">Cours complet</button>` : ""}`;
+    L.appendChild(a);
+    a.querySelector("[data-a=ch]").onclick = () => vueChapitre(ch);
+    const bc = a.querySelector("[data-a=cl]"); if(bc) bc.onclick = () => vueFiche(ch);
+  });
+}
+
+/* ---------- exos : compréhension = série de questions courtes ---------- */
+function piocher(chIds, n = 10){
+  const st = etats();
+  const prio = it => { const s = st[it.id]; return !s ? 1 : s.erreur ? 0 : s.auj ? 4 : s.maitrise ? 3 : 2; };
+  return melanger(itemsDe(chIds, TYPES_Q).filter(estCourt)).map(it => [prio(it), it]).sort((a,b) => a[0] - b[0]).slice(0, n).map(x => x[1]);
+}
+function vueEntrainement(chIds, nom){
+  vue("entrainement", async () => {
+    const unSeul = chIds.length === 1;
+    L.appendChild(unSeul ? filCh(chIds[0], "Compréhension") : fil("Compréhension · " + esc(nom)));
+    const serie = piocher(chIds);
+    const barre = document.createElement("div"); barre.className = "progression"; barre.innerHTML = `<i></i><span></span>`;
+    const zone = document.createElement("div"); zone.className = "zone-q";
+    L.append(barre, zone);
+    if(!serie.length){ zone.innerHTML = `<p class="vide-txt">Pas de question courte ici.</p>`; return; }
+    const moi = S.vue; let nOk = 0, xp = 0; const bilan = [];
+    for(let k = 0; k < serie.length; k++){
+      barre.querySelector("i").style.width = (k/serie.length*100) + "%";
+      barre.querySelector("span").textContent = `${k+1}/${serie.length}`;
+      const r = await jouerQuestion(serie[k], zone, {pos:`${k+1}/${serie.length}`, dernier:k === serie.length-1});
+      if(S.vue !== moi || !zone.isConnected) return;
+      if(r.ok) nOk++; if(r.d && r.d.ok) xp += r.d.xp + r.d.bonus; bilan.push([serie[k], r.ok]);
+    }
+    barre.querySelector("i").style.width = "100%";
+    zone.innerHTML = `<section class="fenetre bilan" data-titre="bilan.log">
+      <p class="gros">${nOk}/${serie.length} <small>justes</small></p>
+      <p>+${nf(xp)} XP sur cette série. <span class="vide-txt">Le bonus de session (précision, endurance, série) est crédité à la fin de la session : voir ⏳ en haut.</span></p>
+      <ul class="bilan-liste">${bilan.map(([it, ok]) => `<li class="${ok ? "ok" : "ko"}">${ok ? "✓" : "✗"} <span>${mdInline(String(it.enonce || "").split("\n")[0].slice(0, 110))}</span></li>`).join("")}</ul>
+      <div class="actions"><button type="button" class="btn plein" data-a="encore">Encore une série</button><button type="button" class="btn" data-a="retour">${unSeul ? "Retour au chapitre" : "Retour au module"}</button></div>
+    </section>`;
+    zone.querySelector("[data-a=encore]").onclick = () => vueEntrainement(chIds, nom);
+    zone.querySelector("[data-a=retour]").onclick = () => unSeul ? vueChapitre(chIds[0]) : vueAccueil();
+    S.touches = e => { if(e.key === "Enter"){ e.preventDefault(); vueEntrainement(chIds, nom); } };
+  });
+}
+
+/* ---------- exos longs : liste puis guidé / mock ---------- */
+const NOM_MODE = {guide:"Exos guidés", mock:"Exos classiques / mock"};
+function vueExos(ch, mode = "guide"){
+  vue("exos", () => {
+    L.appendChild(filCh(ch, NOM_MODE[mode]));
+    const st = etats(), ex = itemsDe([ch], ["exo"]);
+    const w = document.createElement("div");
+    w.innerHTML = `<h1 class="l-titre petit">${ic(mode === "mock" ? "pen" : "steps")} ${NOM_MODE[mode]}</h1>
+      <p class="vide-txt">${mode === "mock" ? `Énoncé seul, toutes les questions d'un coup, chrono, aucun indice. XP ×${fmt(V().modeMock)}.` : `Consignes étape par étape, indices possibles (−${Math.round(V().indiceCout*100)} % d'XP chacun). XP ×${fmt(V().modeGuide)}.`}</p>
+      ${petitEcran() ? `<p class="bandeau-mobile">Les exos longs sont plus confortables sur ordi, mais jouables ici.</p>` : ""}
+      <ul class="exos-liste">${ex.map(it => { const s = st[it.id] || {}, passages = s.runs ? Object.keys(s.runs).length : 0, ne = (it.etapes && it.etapes.length) || 1;
+        return `<li><button type="button" data-id="${esc(it.id)}" class="${s.valide ? "valide" : ""}">
+          <span class="etat">${s.valide ? "✓" : "○"}</span>
+          <span class="quoi"><b>${mdInline(it.titre || it.notion || it.id)}</b><small>${esc(ORIG[it.origine] || it.origine || "")}${it.notion && it.titre ? " · " + mdInline(it.notion) : ""}${it.generateur ? " · variantes" : ""}</small></span>
+          <span class="meta">${ic("timer")} ${minutes(dureeExo(it))} · ${ne} étape${ne > 1 ? "s" : ""}${passages ? ` · ${passages} passage${passages > 1 ? "s" : ""}` : ""}</span>
+        </button></li>`; }).join("")}</ul>
+      <div class="l-actions"><button type="button" class="btn" data-a="autre">${mode === "mock" ? "Passer en guidé" : "Passer en mock"}</button></div>`;
+    L.appendChild(w);
+    w.querySelectorAll("[data-id]").forEach(b => b.onclick = () => vueExo(b.dataset.id, ch, mode));
+    w.querySelector("[data-a=autre]").onclick = () => vueExos(ch, mode === "mock" ? "guide" : "mock");
+  });
+}
+function vueExo(id, ch, mode = "guide", g = null){
+  vue("exo", async () => {
+    L.appendChild(filCh(ch, mode === "mock" ? "Mock" : "Guidé"));
+    const zone = document.createElement("div"); zone.className = "zone-q"; L.appendChild(zone);
+    const moi = S.vue, it = variante(S.items[id], g);
+    const relancer = S.items[id].generateur && EXT.generateurs[S.items[id].generateur] ? () => vueExo(id, ch, mode, tirage(S.items[id])) : null;
+    const r = await (mode === "mock" ? jouerMock(it, zone, {relancer}) : jouerExo(it, zone, {mode:"guide", relancer}));
+    if(S.vue === moi) { if(r && r.relance) return; vueExos(ch, mode); }
+  });
+}
+
+/* mock : énoncé + schéma + toutes les questions courtes, chrono, pas d'indice ; une réponse au moteur par étape */
+function jouerMock(it, zone, opts = {}){
+  return new Promise(resolve => {
+    const run = M.debutExo(it.id);
+    S.nettoyer = () => M.finExo(it.id);
+    const etapes = (it.etapes && it.etapes.length) ? it.etapes : [{question:"Réponse", verif:it.verif, corrige:it.corrige}];
+    const n = etapes.length, ctx = {module:S.mod.id, chapitre:S.chapDe[it.id]}, dTot = dureeExo(it), t0 = Date.now();
+    zone.innerHTML = `<article class="q exo mock">
+      ${teteItem(it, opts, `<span class="q-duree">${ic("timer")} ${minutes(dTot)} · ${n} question${n > 1 ? "s" : ""}</span>`)}
+      ${it.titre ? `<h3 class="exo-titre">${mdInline(it.titre)}</h3>` : ""}
+      <div class="mock-grille"><div><div class="q-enonce">${md(it.enonce)}</div>${it.schema ? SV.rendre(it.schema) : ""}</div>
+      <div class="mock-copie"><div class="chrono-mock" role="timer"></div><ol class="mock-qs"></ol>
+      <div class="actions"><button type="button" class="btn plein" data-a="rendre">Rendre la copie</button>${opts.relancer ? `<button type="button" class="btn" data-a="de">${ic("dice")} Autres valeurs</button>` : ""}</div>
+      <div class="q-retour" hidden></div></div></div>
+      <div class="actions q-actions">${lienSignaler(it.id)}</div></article>`;
+    const art = zone.firstElementChild, ol = art.querySelector(".mock-qs"), ret = art.querySelector(".q-retour"), chrono = art.querySelector(".chrono-mock");
+    const champs = etapes.map((e, k) => {
+      const li = document.createElement("li"); li.innerHTML = `<div class="mq-lib">${md(e.question || e.consigne || `Question ${k+1}`)}</div><div class="q-corps"></div><div class="mq-ret"></div>`;
+      ol.appendChild(li);
+      return creerChamp(li.querySelector(".q-corps"), e.verif || {mode:"auto"}, Object.assign({}, e, {ctx}));
+    });
+    const tic = () => { const s = Math.round((Date.now() - t0)/1000), r = dTot*60 - s; chrono.textContent = `${r >= 0 ? "" : "+"}${Math.floor(Math.abs(r)/60)}:${String(Math.abs(r) % 60).padStart(2, "0")}`; chrono.classList.toggle("urgent", r < 60); };
+    tic(); S.chrono = setInterval(tic, 1000);
+    let rendu = false;
+    const rendre = async () => {
+      if(rendu) return; rendu = true; clearInterval(S.chrono); S.chrono = 0;
+      art.querySelectorAll("[data-a]").forEach(b => b.disabled = true);
+      const secs = (Date.now() - t0)/1000/n; let nOk = 0, xp = 0;
+      for(let k = 0; k < n; k++){
+        const e = etapes[k], v = e.verif || {mode:"auto"}, ch = champs[k];
+        const r = v.mode && v.mode !== "auto" ? await verifier(v, ch.lire(), ctx, ch) : {ok:false};
+        const d = M.reponse(it.id, !!r.ok, secs, {etape:k, indices:0, run, mode:"mock"});
+        if(r.ok){ nOk++; if(d && d.ok) xp += d.xp + d.bonus; }
+        ch.el.readOnly = true; ch.el.classList.add(r.ok ? "juste" : "faux");
+        ol.children[k].querySelector(".mq-ret").innerHTML = r.ok ? `<b class="ok-txt">✓</b>` : `<div class="corrige"><small>Correction</small>${corrigeDe(e, v) || md(e.explication || "")}</div>${r.msg ? `<small class="aide">${esc(r.msg)}</small>` : ""}`;
+      }
+      M.finExo(it.id); S.nettoyer = null;
+      ret.hidden = false; ret.className = "q-retour " + (nOk === n ? "ok" : "ko");
+      ret.innerHTML = `<b class="verdict">${nOk === n ? "✓ Copie parfaite" : `${nOk}/${n} juste${nOk > 1 ? "s" : ""}`} <small>+${nf(xp)} XP</small></b>${it.explication ? `<div class="explication">${md(it.explication)}</div>` : ""}`;
+      const act = art.querySelector(".mock-copie .actions");
+      act.innerHTML = `<button type="button" class="btn plein" data-a="fin">Terminer</button>${opts.relancer ? `<button type="button" class="btn" data-a="de">${ic("dice")} Même exo, autres valeurs</button>` : ""}`;
+      act.querySelector("[data-a=fin]").onclick = () => resolve({ok:nOk === n, partiel:nOk, n, xp});
+      const bd = act.querySelector("[data-a=de]"); if(bd) bd.onclick = () => { resolve({relance:true}); opts.relancer(); };
+    };
+    art.querySelector("[data-a=rendre]").onclick = rendre;
+    const bd = art.querySelector("[data-a=de]"); if(bd) bd.onclick = () => { M.finExo(it.id); S.nettoyer = null; resolve({relance:true}); opts.relancer(); };
+    if(champs[0]) champs[0].focus();
+  });
+}
+
+/* ---------- examen blanc chronométré ---------- */
+function vueExamen(id){
+  const ex = S.items[id]; if(!ex) return;
+  const liste = (ex.items || []).map(i => S.items[i]).filter(it => it && it.type !== "examen");
+  const duree = +ex.duree || liste.reduce((a, it) => a + (it.type === "exo" ? dureeExo(it) : it.type === "saisie" ? (+it.duree || .67) : .33), 0);
+  vue("examen", () => {
+    L.appendChild(fil("Examen · " + esc(ex.titre || "Examen blanc")));
+    const w = document.createElement("div");
+    w.innerHTML = `<section class="fenetre exam-intro" data-titre="examen.exe">
+      <h1 class="l-titre petit">${esc(ex.titre || "Examen blanc")}</h1>
+      ${ex.enonce ? `<div class="q-enonce">${md(ex.enonce)}</div>` : ""}
+      <ul class="exam-infos"><li>${ic("timer")} <b>${minutes(duree)}</b> chrono</li><li>${liste.length} item${liste.length > 1 ? "s" : ""}</li><li>Pas de correction avant la fin (sauf étapes d'exo)</li><li>Chaque item rapporte son XP normale</li></ul>
+      <div class="actions"><button type="button" class="btn plein" data-a="go">Lancer le chrono</button></div>
+    </section>`;
+    L.appendChild(w);
+    w.querySelector("[data-a=go]").onclick = () => lancerExamen(ex, liste, duree);
+  });
+}
+function lancerExamen(ex, liste, duree){
+  vue("examen-en-cours", async () => {
+    const moi = S.vue, fin = Date.now() + duree*6e4;
+    const chrono = document.createElement("div"); chrono.className = "chrono"; chrono.setAttribute("role", "timer");
+    const zone = document.createElement("div"); zone.className = "zone-q";
+    L.append(fil("Examen en cours · " + esc(ex.titre || "")), chrono, zone);
+    const res = []; let fini = false;
+    const conclure = (temps) => {
+      if(fini || S.vue !== moi) return; fini = true;
+      clearInterval(S.chrono); S.chrono = 0;
+      if(S.nettoyer){ S.nettoyer(); S.nettoyer = null; }
+      S.touches = null;
+      const nOk = res.filter(r => r.ok).length, xp = res.reduce((a, r) => a + (r.xp || 0), 0);
+      if(temps) toast("⏱ Temps écoulé ! Copie ramassée."); chrono.remove();
+      zone.innerHTML = `<section class="fenetre bilan" data-titre="copie_corrigee.txt">
+        <p class="gros">${nOk}/${liste.length} <small>réussis</small></p>
+        <p>+${nf(xp)} XP${temps ? ` · ${liste.length - res.length} item(s) non traité(s)` : ""}</p>
+        <ol class="correction">${liste.map((it, k) => { const r = res[k];
+          const etat = !r ? "nt" : r.ok ? "ok" : "ko";
+          return `<li class="${etat}"><details><summary>${etat === "ok" ? "✓" : etat === "ko" ? (r.partiel ? `◐ ${r.partiel}/${r.n}` : "✗") : "—"} <span>${mdInline(String(it.titre || it.enonce || "").split("\n")[0].slice(0, 100))}</span></summary>
+            ${it.type === "qcm" || it.type === "qcm-multi" ? `<p>Bonne(s) réponse(s) : ${[].concat((it.verif && it.verif.attendu) ?? it.bonnes ?? it.bonne ?? []).map(a => typeof a === "number" ? mdInline((it.choix || [])[a]) : mdInline(a)).join(" · ")}</p>` : ""}
+            ${it.type === "saisie" && corrigeDe(it, it.verif) ? `<div class="corrige"><small>Réponse attendue</small>${corrigeDe(it, it.verif)}</div>` : ""}
+            ${it.explication ? `<div class="explication">${md(it.explication)}</div>` : ""}
+            ${lienSignaler(it.id)}</details></li>`; }).join("")}</ol>
+        <div class="actions"><button type="button" class="btn plein" data-a="retour">Retour au module</button></div>
+      </section>`;
+      zone.querySelector("[data-a=retour]").onclick = vueAccueil;
+      scrollTo(0, 0);
+    };
+    const tic = () => {
+      const r = Math.max(0, fin - Date.now()), m = Math.floor(r/6e4), s = Math.floor(r/1000) % 60;
+      chrono.textContent = `⏱ ${m}:${String(s).padStart(2, "0")} · item ${Math.min(res.length+1, liste.length)}/${liste.length}`;
+      chrono.classList.toggle("urgent", r < 6e4 * Math.min(5, duree/5));
+      if(r <= 0) conclure(true);
+    };
+    tic(); S.chrono = setInterval(tic, 1000);
+    for(let k = 0; k < liste.length; k++){
+      const r = await jouer(liste[k], zone, {examen:true, sansAttente:false, pos:`${k+1}/${liste.length}`, dernier:k === liste.length-1});
+      if(fini || S.vue !== moi) return;
+      res.push({ok:r.ok, partiel:r.partiel, n:r.n, xp:r.xp != null ? r.xp : (r.d && r.d.ok ? r.d.xp + r.d.bonus : 0)});
+      tic();
+    }
+    conclure(false);
+  });
+}
+
+/* =====================================================================
+   DÉMARRAGE
+   ===================================================================== */
+const idMod = decodeURIComponent(location.hash.slice(1));
+addEventListener("hashchange", () => location.reload());
+const liste = await fetch("modules/liste.json").then(r => r.ok ? r.json() : []).catch(() => []);
+const mod = Array.isArray(liste) && liste.find(m => m.id === idMod);
+S.mod = mod ? Object.assign({}, mod) : {id:idMod || "?", nom:"Module introuvable"};
+document.title = S.mod.nom + " · BIC2.exe";
+if(mod) appliquerTheme(mod.theme);
+M.monterHeader({page:"module", module:{id:S.mod.id, nom:((S.mod.icone ? S.mod.icone + " " : "") + S.mod.nom)}});
+const pInit = M.init({module:S.mod.id});
+
+if(!mod){
+  await pInit;
+  L.innerHTML = `<section class="fenetre l-vide" data-titre="erreur.log"><p><b>Module « ${esc(idMod || "(aucun)")} » introuvable.</b></p>
+    <p class="vide-txt">Il n'est pas (encore) dans modules/liste.json.</p><div class="actions"><a class="btn" href="index.html#modules">Retour au hub</a></div></section>`;
+  return;
+}
+if(mod.ext){   /* extension du module : modèles de schémas, générateurs de variantes, labos */
+  await new Promise(res => { const sc = document.createElement("script"); sc.src = `modules/${mod.id}.js`; sc.onload = sc.onerror = res; document.head.appendChild(sc); });
+  const x = window.EXT_MODULE || {}; ["schemas","generateurs","labos"].forEach(k => Object.assign(EXT[k], x[k] || {}));
+}
+const chs = await Promise.all((mod.chapitres || []).map(ch => fetch(`banques/${mod.id}/${ch}.json`).then(r => r.ok ? r.json() : null).catch(() => null)));
+S.chapitres = chs.filter(Boolean).sort((a, b) => (a.ordre ?? 0) - (b.ordre ?? 0));
+for(const c of S.chapitres){
+  c.module = c.module || mod.id;
+  M.charger(c);
+  for(const it of c.items || []){ S.items[it.id] = it; S.chapDe[it.id] = c.id; }
+}
+const manquants = (mod.chapitres || []).length - S.chapitres.length;
+await pInit;
+const reg = M.interne.config && M.interne.config.modules && M.interne.config.modules[mod.id];   /* icône réglée dans le panel */
+if(reg && reg.icone) S.mod.icone = reg.icone;
+vueAccueil();
+if(manquants > 0) toast(`${manquants} chapitre(s) n'ont pas pu être chargés`);
+let tMaj = 0;
+M.on(() => { if(S.vue === "accueil"){ clearTimeout(tMaj); tMaj = setTimeout(rendreAccueil, 120); } });
+})();
+</script>
+</body>
+</html>

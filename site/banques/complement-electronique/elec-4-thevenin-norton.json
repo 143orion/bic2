@@ -1,0 +1,718 @@
+{
+ "id": "elec-4-thevenin-norton",
+ "module": "complement-electronique",
+ "titre": "Thévenin & Norton",
+ "ordre": 4,
+ "sources": [
+  "CMO2",
+  "TD2 ex. 4-5"
+ ],
+ "tldr": {
+  "intro": "Deux façons de remplacer tout un circuit vu entre deux bornes A et B par un modèle simple.",
+  "titres": [
+   "Thévenin",
+   "Norton"
+  ],
+  "schemas": [
+   {
+    "modele": "thev-eq",
+    "vals": {
+     "Eth": "",
+     "Rth": ""
+    },
+    "surligne": [
+     "Eth",
+     "Rth"
+    ]
+   },
+   {
+    "modele": "norton-eq",
+    "vals": {
+     "IN": "",
+     "RN": ""
+    },
+    "surligne": [
+     "IN",
+     "RN"
+    ]
+   }
+  ],
+  "lignes": [
+   {
+    "k": "Modèle",
+    "v": [
+     "Source de **tension** $E_{th}$ **en série** avec $R_{th}$",
+     "Source de **courant** $I_N$ **en parallèle** avec $R_N$"
+    ]
+   },
+   {
+    "k": "La source",
+    "v": [
+     "$E_{th} = U_{AB}$ **à vide**\n\ncharge débranchée",
+     "$I_N$ = courant **de court-circuit**\n\ncharge remplacée par un fil"
+    ]
+   },
+   {
+    "k": "La résistance",
+    "v": "$R_{th} = R_N$ : résistance vue de A-B, **sources éteintes**\n\ntension → fil · courant → circuit ouvert"
+   },
+   {
+    "k": "Passer de l'un à l'autre",
+    "v": "$$I_N = \\frac{E_{th}}{R_{th}} \\qquad E_{th} = R_N\\,I_N$$"
+   }
+  ],
+  "pieges": "On débranche la charge avant tout · on n'éteint que les sources **indépendantes**."
+ },
+ "fiche": [
+  {
+   "titre": "Le modèle de Thévenin",
+   "contenu": "Tout dipôle actif linéaire vu entre deux bornes A et B se remplace par **une source $E_{th}$ en série avec une résistance $R_{th}$**.\n$$U_{AB} = E_{th} - R_{th}\\,I$$",
+   "schema": {
+    "modele": "thev-eq",
+    "vals": {
+     "Eth": "",
+     "Rth": ""
+    },
+    "surligne": [
+     "Eth",
+     "Rth"
+    ]
+   }
+  },
+  {
+   "titre": "Trouver $E_{th}$ et $R_{th}$",
+   "contenu": "- $E_{th}$ = tension $U_{AB}$ **à vide** (charge débranchée).\n- $R_{th}$ = résistance vue entre A et B, **sources indépendantes éteintes**.\n\nSource de tension éteinte → **fil** · source de courant éteinte → **circuit ouvert**.\n\n**Piège classique** : oublier de débrancher la charge avant de calculer $E_{th}$."
+  },
+  {
+   "titre": "Norton et l'équivalence",
+   "contenu": "Norton = **source de courant $I_N$ en parallèle avec $R_N$**. $I_N$ = courant de court-circuit entre A et B ; $R_N = R_{th}$.\n$$I_N = \\frac{E_{th}}{R_{th}} \\qquad E_{th} = R_N\\,I_N$$",
+   "schema": {
+    "modele": "norton-eq",
+    "vals": {
+     "IN": "",
+     "RN": ""
+    },
+    "surligne": [
+     "IN",
+     "RN"
+    ]
+   }
+  },
+  {
+   "titre": "Labo : branche une charge sur le modèle",
+   "labo": "thev-charge",
+   "contenu": "Fais varier $E_{th}$, $R_{th}$ et la charge $R$ : courant et tension se mettent à jour."
+  }
+ ],
+ "parcours": [
+  {
+   "notion": "Thévenin",
+   "schema": {
+    "modele": "thev-L",
+    "vals": {
+     "E": "10 V",
+     "R1": "500 Ω",
+     "R2": "500 Ω",
+     "R3": "250 Ω",
+     "R": "1 kΩ"
+    }
+   },
+   "ecrans": [
+    {
+     "titre": "Le problème",
+     "texte": "On veut la tension aux bornes de $R$. Plutôt que de résoudre tout le circuit, on remplace tout ce qui est **à gauche de B-M** par un modèle simple.",
+     "schema": {
+      "surligne": [
+       "R"
+      ]
+     }
+    },
+    {
+     "titre": "1 · Débrancher la charge",
+     "texte": "On retire $R$. À vide, **aucun courant** ne passe dans $R_3$ : $U_{BM}$ est la tension aux bornes de $R_2$. C'est un diviseur de tension. $$E_{th} = E\\,\\frac{R_2}{R_1+R_2} = 10 \\times \\frac{500}{1000} = 5\\ \\text{V}$$",
+     "schema": {
+      "surligne": [
+       "R1",
+       "R2"
+      ],
+      "eteint": [
+       "R"
+      ]
+     }
+    },
+    {
+     "titre": "2 · Éteindre les sources",
+     "texte": "Source de tension éteinte = **fil**. Vues depuis B-M, $R_1$ et $R_2$ sont en parallèle, puis en série avec $R_3$. $$R_{th} = (R_1 \\parallel R_2) + R_3 = 250 + 250 = 500\\ \\Omega$$",
+     "schema": {
+      "surligne": [
+       "R1",
+       "R2",
+       "R3"
+      ],
+      "eteint": [
+       "R"
+      ],
+      "court": [
+       "E"
+      ]
+     }
+    },
+    {
+     "titre": "3 · Le modèle équivalent",
+     "texte": "On rebranche $R$ sur $E_{th}$ + $R_{th}$ : c'est un simple diviseur de tension. $$U = E_{th}\\,\\frac{R}{R_{th}+R} = 5 \\times \\frac{1000}{1500} \\approx 3{,}33\\ \\text{V}$$",
+     "schema": {
+      "modele": "thev-eq",
+      "vals": {
+       "Eth": "5 V",
+       "Rth": "500 Ω",
+       "R": "1 kΩ",
+       "A": "B",
+       "B": "M"
+      },
+      "surligne": [
+       "Eth",
+       "Rth"
+      ]
+     }
+    }
+   ],
+   "controle": {
+    "enonce": "$E_{th}$ se calcule…",
+    "choix": [
+     "charge débranchée (à vide)",
+     "charge en court-circuit",
+     "avec la charge branchée",
+     "sources éteintes"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$E_{th}$ = tension à vide. Les sources éteintes, c'est pour $R_{th}$."
+   }
+  },
+  {
+   "notion": "Norton",
+   "schema": {
+    "modele": "thev-L",
+    "vals": {
+     "E": "20 mA",
+     "src": "I",
+     "R1": "1 kΩ",
+     "R2": "500 Ω",
+     "R3": "500 Ω",
+     "R": "1 kΩ"
+    }
+   },
+   "ecrans": [
+    {
+     "titre": "Le montage",
+     "texte": "Une source de **courant** $I = 20\\ \\text{mA}$ alimente le réseau. On cherche le modèle de Norton vu par $R$ (entre B et M)."
+    },
+    {
+     "titre": "1 · Court-circuiter la charge",
+     "texte": "On remplace $R$ par un **fil**. Le courant de la source se partage entre $R_2$ et $R_3$ (diviseur de courant). $R_1$, en série avec la source de courant, ne change rien. $$I_N = I\\,\\frac{R_2}{R_2+R_3} = 20 \\times \\frac{500}{1000} = 10\\ \\text{mA}$$",
+     "schema": {
+      "surligne": [
+       "R2",
+       "R3"
+      ],
+      "eteint": [
+       "R"
+      ]
+     }
+    },
+    {
+     "titre": "2 · Éteindre la source",
+     "texte": "Source de **courant** éteinte = **circuit ouvert** : $R_1$ ne sert plus à rien. Vue de B-M : $$R_N = R_2 + R_3 = 1\\ \\text{k}\\Omega$$",
+     "schema": {
+      "surligne": [
+       "R2",
+       "R3"
+      ],
+      "eteint": [
+       "E",
+       "R1",
+       "R"
+      ]
+     }
+    },
+    {
+     "titre": "3 · Le modèle équivalent",
+     "texte": "$I_N$ en parallèle avec $R_N$, puis on rebranche $R$ : $$U_{BM} = I_N\\,(R_N \\parallel R) = 10\\ \\text{mA} \\times 500\\ \\Omega = 5\\ \\text{V}$$",
+     "schema": {
+      "modele": "norton-eq",
+      "vals": {
+       "IN": "10 mA",
+       "RN": "1 kΩ",
+       "R": "1 kΩ",
+       "A": "B",
+       "B": "M"
+      },
+      "surligne": [
+       "IN",
+       "RN"
+      ]
+     }
+    }
+   ],
+   "controle": {
+    "enonce": "Pour trouver $I_N$, on remplace la charge par…",
+    "choix": [
+     "un fil (court-circuit)",
+     "un circuit ouvert",
+     "une source de tension",
+     "rien, on la garde"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$I_N$ = courant de court-circuit entre les bornes."
+   }
+  },
+  {
+   "notion": "Passer de l'un à l'autre",
+   "schema": {
+    "modele": "thev-eq",
+    "vals": {
+     "Eth": "5 V",
+     "Rth": "500 Ω"
+    }
+   },
+   "ecrans": [
+    {
+     "titre": "Même dipôle, deux modèles",
+     "texte": "Thévenin et Norton décrivent **le même** dipôle : ils doivent donner la même tension à vide et le même courant de court-circuit."
+    },
+    {
+     "titre": "Court-circuit du modèle de Thévenin",
+     "texte": "En reliant A et B par un fil : $I_{cc} = E_{th}/R_{th}$. C'est par définition $I_N$. $$I_N = \\frac{E_{th}}{R_{th}} = \\frac{5}{500} = 10\\ \\text{mA}$$",
+     "schema": {
+      "surligne": [
+       "Eth",
+       "Rth"
+      ]
+     }
+    },
+    {
+     "titre": "Même résistance",
+     "texte": "Sources éteintes, les deux modèles se réduisent à la même résistance : $R_N = R_{th}$.",
+     "schema": {
+      "modele": "norton-eq",
+      "vals": {
+       "IN": "10 mA",
+       "RN": "500 Ω"
+      },
+      "surligne": [
+       "RN"
+      ]
+     }
+    }
+   ],
+   "controle": {
+    "enonce": "$E_{th} = 12\\ \\text{V}$ et $R_{th} = 4\\ \\text{k}\\Omega$. Que vaut $I_N$ ?",
+    "choix": [
+     "$3\\ \\text{mA}$",
+     "$48\\ \\text{mA}$",
+     "$0{,}33\\ \\text{mA}$",
+     "$12\\ \\text{mA}$"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$I_N = E_{th}/R_{th} = 12/4000 = 3\\ \\text{mA}$."
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "e4-001",
+   "type": "qcm",
+   "notion": "Éteindre les sources",
+   "origine": "cours",
+   "enonce": "Une source de **courant** idéale éteinte devient…",
+   "choix": [
+    "un circuit ouvert",
+    "un fil",
+    "une résistance de 1 Ω",
+    "elle reste branchée"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Courant nul imposé : plus rien ne passe."
+  },
+  {
+   "id": "e4-002",
+   "type": "qcm",
+   "notion": "Éteindre les sources",
+   "origine": "cours",
+   "enonce": "Une source de **tension** idéale éteinte devient…",
+   "choix": [
+    "un fil (court-circuit)",
+    "un circuit ouvert",
+    "une source de courant",
+    "une résistance infinie"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Tension nulle imposée entre ses bornes : c'est un fil."
+  },
+  {
+   "id": "e4-003",
+   "type": "saisie",
+   "notion": "Équivalence",
+   "origine": "cours",
+   "enonce": "$E_{th} = 12\\ \\text{V}$ et $R_{th} = 4\\ \\text{k}\\Omega$. Que vaut $I_N$ (A) ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 0.003,
+    "unite": "A"
+   },
+   "duree": 0.67,
+   "explication": "$I_N = E_{th}/R_{th} = 3\\ \\text{mA}$."
+  },
+  {
+   "id": "e4-004",
+   "type": "qcm",
+   "notion": "Équivalence",
+   "origine": "cours",
+   "enonce": "Par rapport à $R_{th}$, la résistance de Norton $R_N$ est…",
+   "choix": [
+    "égale",
+    "deux fois plus grande",
+    "son inverse",
+    "sans rapport"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Même calcul, sources éteintes."
+  },
+  {
+   "id": "e4-005",
+   "type": "saisie",
+   "notion": "Équivalence",
+   "origine": "cours",
+   "enonce": "$I_N = 2\\ \\text{mA}$ et $R_N = 5\\ \\text{k}\\Omega$. Que vaut $E_{th}$ (V) ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 10,
+    "unite": "V"
+   },
+   "duree": 0.67,
+   "explication": "$E_{th} = R_N I_N = 10\\ \\text{V}$."
+  },
+  {
+   "id": "e4-006",
+   "type": "qcm",
+   "notion": "Norton",
+   "origine": "cours",
+   "enonce": "Pour obtenir $I_N$, on remplace la charge par…",
+   "choix": [
+    "un fil (court-circuit)",
+    "un circuit ouvert",
+    "une source de tension",
+    "rien, on la garde"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "$I_N$ = courant de court-circuit."
+  },
+  {
+   "id": "e4-007",
+   "type": "qcm",
+   "notion": "Thévenin",
+   "origine": "cours",
+   "enonce": "$E_{th}$ se mesure…",
+   "choix": [
+    "à vide, charge débranchée",
+    "en court-circuit",
+    "avec la charge",
+    "sources éteintes"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Tension à vide entre A et B."
+  },
+  {
+   "id": "e4-008",
+   "type": "saisie",
+   "notion": "Thévenin",
+   "origine": "cours",
+   "enonce": "Modèle $E_{th} = 6\\ \\text{V}$, $R_{th} = 1\\ \\text{k}\\Omega$ branché sur $R = 2\\ \\text{k}\\Omega$. Tension aux bornes de $R$ (V) ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 4,
+    "unite": "V"
+   },
+   "duree": 0.67,
+   "explication": "Diviseur : $6 \\times \\frac{2}{3} = 4\\ \\text{V}$."
+  },
+  {
+   "id": "e4-009",
+   "type": "qcm",
+   "notion": "Thévenin",
+   "origine": "cours",
+   "enonce": "Avec une charge $R = R_{th}$, la tension aux bornes de la charge vaut…",
+   "choix": [
+    "$E_{th}/2$",
+    "$E_{th}$",
+    "$0$",
+    "$2E_{th}$"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Diviseur avec deux résistances égales."
+  },
+  {
+   "id": "e4-010",
+   "type": "qcm",
+   "notion": "Éteindre les sources",
+   "origine": "cours",
+   "enonce": "Quand on éteint les sources pour calculer $R_{th}$, on éteint…",
+   "choix": [
+    "seulement les sources indépendantes",
+    "toutes les sources, même commandées",
+    "seulement les sources de tension",
+    "seulement les sources de courant"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Les sources commandées restent en place."
+  },
+  {
+   "id": "e4-101",
+   "type": "exo",
+   "titre": "TD2 · Exercice 4 — Modèle de Thévenin",
+   "notion": "Thévenin",
+   "origine": "td",
+   "enonce": "Détermine le modèle équivalent de Thévenin qui alimente $R$, puis la tension aux bornes de $R$. $E$ = [[E]], $R_1$ = [[R1]], $R_2$ = [[R2]], $R_3$ = [[R3]], $R$ = [[R]].",
+   "duree": 9,
+   "etapes": [
+    {
+     "consigne": "Débranche $R$. Que vaut $E_{th} = U_{BM}$ à vide ?",
+     "question": "$E_{th} = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 5,
+      "unite": "V"
+     },
+     "indices": [
+      "À vide, aucun courant dans $R_3$ : $U_{BM}$ = tension aux bornes de $R_2$.",
+      "Diviseur de tension : $E\\,\\dfrac{R_2}{R_1+R_2}$."
+     ],
+     "corrige": "$E_{th} = 10 \\times \\dfrac{500}{1000} = \\mathbf{5\\ \\text{V}}$",
+     "schema": {
+      "surligne": [
+       "R1",
+       "R2"
+      ],
+      "eteint": [
+       "R"
+      ]
+     }
+    },
+    {
+     "consigne": "Éteins $E$ (court-circuit). Que vaut $R_{th}$ vue depuis B et M ?",
+     "question": "$R_{th} = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 500,
+      "unite": "Ω"
+     },
+     "indices": [
+      "$E$ éteinte = fil : $R_1$ et $R_2$ se retrouvent en parallèle.",
+      "$R_{th} = (R_1 \\parallel R_2) + R_3$."
+     ],
+     "corrige": "$R_1 \\parallel R_2 = 250\\ \\Omega$, $+ R_3$ : $\\mathbf{500\\ \\Omega}$",
+     "schema": {
+      "surligne": [
+       "R1",
+       "R2",
+       "R3"
+      ],
+      "eteint": [
+       "R"
+      ],
+      "court": [
+       "E"
+      ]
+     }
+    },
+    {
+     "consigne": "Rebranche $R$ sur le modèle équivalent. Tension $U_R$ aux bornes de $R$ ?",
+     "question": "$U_R = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 3.3333,
+      "unite": "V"
+     },
+     "indices": [
+      "Le modèle équivalent est un simple diviseur de tension.",
+      "$U_R = E_{th}\\,\\dfrac{R}{R_{th}+R}$."
+     ],
+     "corrige": "$U_R = 5 \\times \\dfrac{1000}{1500} = \\mathbf{3{,}33\\ \\text{V}}$",
+     "schema": {
+      "surligne": [
+       "R"
+      ]
+     }
+    }
+   ],
+   "schema": {
+    "modele": "thev-L",
+    "vals": {
+     "E": "[[E]]",
+     "R1": "[[R1]]",
+     "R2": "[[R2]]",
+     "R3": "[[R3]]",
+     "R": "[[R]]"
+    }
+   },
+   "vals": {
+    "E": "10 V",
+    "R1": "500 Ω",
+    "R2": "500 Ω",
+    "R3": "250 Ω",
+    "R": "1 kΩ"
+   },
+   "generateur": "thev-L"
+  },
+  {
+   "id": "e4-102",
+   "type": "exo",
+   "titre": "TD2 · Exercice 5 — Modèle de Norton",
+   "notion": "Norton",
+   "origine": "td",
+   "enonce": "Détermine le modèle équivalent de Norton qui alimente $R$, puis la tension $U_{BM}$ (en valeur absolue). $I$ = [[E]], $R_1$ = [[R1]], $R_2$ = [[R2]], $R_3$ = [[R3]], $R$ = [[R]].",
+   "duree": 9,
+   "etapes": [
+    {
+     "consigne": "Court-circuite B et M. Que vaut $I_N$ ?",
+     "question": "$I_N = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 0.01,
+      "unite": "A"
+     },
+     "indices": [
+      "$R_1$ est en série avec la source de courant : elle ne change pas le courant.",
+      "Diviseur de courant entre $R_2$ et $R_3$ : $I_N = I\\,\\dfrac{R_2}{R_2+R_3}$."
+     ],
+     "corrige": "$I_N = 20 \\times \\dfrac{500}{1000} = \\mathbf{10\\ \\text{mA}}$",
+     "schema": {
+      "surligne": [
+       "R2",
+       "R3"
+      ],
+      "eteint": [
+       "R"
+      ]
+     }
+    },
+    {
+     "consigne": "Éteins la source de courant (circuit ouvert). Que vaut $R_N$ ?",
+     "question": "$R_N = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 1000,
+      "unite": "Ω"
+     },
+     "indices": [
+      "Circuit ouvert : $R_1$ ne mène plus nulle part.",
+      "$R_N = R_2 + R_3$."
+     ],
+     "corrige": "$R_N = 500 + 500 = \\mathbf{1\\ \\text{k}\\Omega}$",
+     "schema": {
+      "surligne": [
+       "R2",
+       "R3"
+      ],
+      "eteint": [
+       "E",
+       "R1",
+       "R"
+      ]
+     }
+    },
+    {
+     "consigne": "Rebranche $R$. Que vaut $U_{BM}$ ?",
+     "question": "$U_{BM} = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 5,
+      "unite": "V"
+     },
+     "indices": [
+      "$I_N$ traverse $R_N \\parallel R$.",
+      "$U = I_N\\,(R_N \\parallel R)$."
+     ],
+     "corrige": "$U_{BM} = 0{,}01 \\times 500 = \\mathbf{5\\ \\text{V}}$",
+     "schema": {
+      "surligne": [
+       "R"
+      ]
+     }
+    }
+   ],
+   "schema": {
+    "modele": "thev-L",
+    "vals": {
+     "E": "[[E]]",
+     "src": "I",
+     "R1": "[[R1]]",
+     "R2": "[[R2]]",
+     "R3": "[[R3]]",
+     "R": "[[R]]"
+    }
+   },
+   "vals": {
+    "E": "20 mA",
+    "R1": "1 kΩ",
+    "R2": "500 Ω",
+    "R3": "500 Ω",
+    "R": "1 kΩ"
+   },
+   "generateur": "norton-L"
+  }
+ ]
+}
