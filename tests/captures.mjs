@@ -96,6 +96,23 @@ const SCENARIOS = {
     }
     return pg;
   },
+  /* demandes en attente sur l'accueil (Adam) : validation directe + compteur sur « Admin » ; rien pour un joueur */
+  async accueilAdmin(app){
+    const pg = await page(app); await pg.goto(URL0 + "index.html?mock=adam&reset");
+    await pg.waitForSelector("#dem-accueil:not([hidden]) .da-ligne"); await attendre(400);
+    await capture(pg, `accueil-admin-1-${app}`);
+    const nb = await pg.$eval('[data-h="admin"]', a => a.dataset.nb);
+    if(nb !== "2") erreurs.push(`[${app}] compteur Admin = ${nb} au lieu de 2`);
+    await pg.click("#da-liste .da-ligne:first-child .btn.plein"); await attendre(700);
+    const r = await pg.evaluate(() => ({lignes:document.querySelectorAll("#da-liste .da-ligne").length, membre:"membres/lea" in window.__mock.base()}));
+    if(r.lignes !== 1 || !r.membre) erreurs.push(`[${app}] validation depuis l'accueil : ${JSON.stringify(r)}`);
+    await pg.click("#da-liste .da-ligne .btn.danger"); await pg.click("#da-liste .da-ligne .btn.danger"); await attendre(700);
+    if(!(await pg.$eval("#dem-accueil", e => e.hidden))) erreurs.push(`[${app}] la fenêtre des demandes reste affichée après traitement`);
+    const j = await page(app); await j.goto(URL0 + "index.html?mock=mia&reset"); await j.waitForFunction(() => window.moteur && window.moteur.etat()); await attendre(800);
+    if(!(await j.$eval("#dem-accueil", e => e.hidden))) erreurs.push(`[${app}] un joueur voit les demandes`);
+    await j.context().close();
+    return pg;
+  },
   /* écritures groupées : rien n'est écrit tout de suite, tout part en quittant la page */
   async ecriture(app){
     const pg = await page(app); await pg.goto(URL0 + "module.html?mock=mia&reset#complement-electronique");

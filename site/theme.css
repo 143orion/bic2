@@ -997,3 +997,17 @@ html.acces-ouvert,html.acces-ouvert body{overflow:hidden}
 .acces-pourquoi p{margin:0 0 6px!important;font-weight:700;color:var(--blanc)!important}
 .acces-pourquoi ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px;font-size:12.5px;line-height:1.5;color:var(--gris)}
 .acces-pourquoi[hidden]{display:none}
+
+/* demandes d'accès en attente sur l'accueil (Adam seul) + compteur sur le lien Admin */
+.demandes-accueil{width:min(760px,100%);margin-top:18px;text-align:left}
+.da-intro{margin:0 0 10px;font-size:13px;color:var(--gris)}
+.da-liste{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.da-ligne{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px;border:1px solid rgba(201,166,240,.25);border-radius:8px;background:rgba(127,73,180,.08)}
+.da-qui{display:flex;flex-direction:column;gap:2px;min-width:0}
+.da-qui b{color:var(--blanc);font-size:14px}
+.da-qui span{font-size:12px;color:var(--gris-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.da-act{display:flex;gap:8px;flex:none}
+.da-btn{padding:6px 12px;font-size:12px}
+.da-panel{display:inline-block;margin-top:10px;font-size:12px}
+[data-h="admin"][data-nb]::after{content:attr(data-nb);display:inline-grid;place-items:center;min-width:16px;height:16px;margin-left:6px;padding:0 4px;border-radius:999px;background:var(--braise-2);color:#fff;font-size:10px;font-weight:800;vertical-align:1px;box-sizing:border-box}
+@media (max-width:480px){.da-ligne{flex-direction:column;align-items:stretch}.da-act{justify-content:flex-end}}

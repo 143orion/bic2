@@ -38,6 +38,12 @@
     <div class="stat"><span class="k">Rang</span><span class="v" id="s-rang">newgen</span><span class="sub" id="s-serie">&nbsp;</span></div>
   </div>
 
+  <aside class="fenetre demandes-accueil" id="dem-accueil" data-titre="demandes.exe — accès en attente" hidden aria-live="polite">
+    <p class="da-intro" id="da-intro"></p>
+    <ul class="da-liste" id="da-liste"></ul>
+    <a class="lien da-panel" href="admin.html">ouvrir le panel admin →</a>
+  </aside>
+
   <button class="charbon" id="charbon" type="button"><span class="cmd">Au charbon !</span></button>
 
   <aside class="fenetre annonce" id="annonce" data-titre="✦ BIC2 Messenger" hidden>
@@ -254,6 +260,42 @@ function rendreProfil(r, E){
   $("p-compte").hidden = false;
   $("b-sortie").onclick = () => { M.son("tap"); B.deconnexion(); };
 })();
+
+/* ---------- demandes d'accès en attente : visibles par Adam seul, sur l'accueil + compteur sur « Admin » ----------
+   Les règles Firestore refusent la lecture de demandes/ à tout autre compte. */
+M.init().then(E => {
+  const B = window.BIC2; if(!E.isOwner || !B || !B.acces) return;
+  const A = B.acces, noms = {}, boite = $("dem-accueil");
+  const depuis = t => { const m = Math.max(0, Math.round((Date.now() - t)/60000)); return m < 1 ? "à l'instant" : m < 60 ? `il y a ${m} min` : m < 1440 ? `il y a ${Math.round(m/60)} h` : `il y a ${Math.round(m/1440)} j`; };
+  const el = (tag, cls, txt) => { const e = document.createElement(tag); if(cls) e.className = cls; if(txt != null) e.textContent = txt; return e; };
+  function badge(n){ document.querySelectorAll('[data-h="admin"]').forEach(a => { if(n) a.dataset.nb = n; else delete a.dataset.nb; }); }
+  async function rendre(ds){
+    const att = ds.filter(d => d.statut !== "refusee").sort((a, b) => (a.cree || 0) - (b.cree || 0));
+    badge(att.length);
+    boite.hidden = !att.length; if(!att.length) return;
+    await Promise.all(att.filter(d => !(d.uid in noms)).map(async d => { try{ const i = await A.identite(d.uid); noms[d.uid] = i ? [i.prenom, i.nom].filter(Boolean).join(" ") : ""; }catch(e){ noms[d.uid] = ""; } }));
+    $("da-intro").textContent = att.length > 1 ? `${att.length} demandes attendent ta validation :` : "1 demande attend ta validation :";
+    $("da-liste").replaceChildren(...att.map(d => {
+      const li = el("li", "da-ligne");
+      const qui = el("div", "da-qui"); qui.append(el("b", "", String(d.pseudo || "?").slice(0, 16)), el("span", "", (noms[d.uid] || "—") + " · " + depuis(d.cree || Date.now())));
+      const ok = el("button", "btn plein da-btn", "Valider"), non = el("button", "btn danger da-btn", "Refuser");
+      ok.type = non.type = "button";
+      ok.onclick = async () => { M.son("tap"); ok.disabled = non.disabled = true; try{ await A.valider(d.uid); toast(`${d.pseudo} a maintenant accès`); }catch(e){ ok.disabled = non.disabled = false; toast("Échec de la validation"); } };
+      let arme = 0;
+      non.onclick = async () => {   /* double clic de confirmation : 1er clic arme, 2e refuse */
+        M.son("tap");
+        if(!arme){ non.textContent = "Sûr ?"; arme = setTimeout(() => { arme = 0; non.textContent = "Refuser"; }, 3000); return; }
+        clearTimeout(arme); ok.disabled = non.disabled = true;
+        try{ await A.refuser(d.uid); toast("Demande refusée"); }catch(e){ ok.disabled = non.disabled = false; toast("Échec du refus"); }
+      };
+      const act = el("div", "da-act"); act.append(ok, non);
+      li.append(qui, act); return li;
+    }));
+  }
+  A.ecouterDemandes(rendre, err => console.warn("demandes", err));
+  /* la barre de navigation peut être redessinée : on remet le compteur */
+  new MutationObserver(() => { const n = boite.hidden ? 0 : $("da-liste").children.length; document.querySelectorAll('[data-h="admin"]:not([data-nb])').forEach(a => { if(n) a.dataset.nb = n; }); }).observe(document.body, {childList:true, subtree:true});
+});
 
 /* ---------- pseudo ---------- */
 const mp = $("m-pseudo");
