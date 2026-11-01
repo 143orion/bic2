@@ -131,6 +131,7 @@
     <section class="vue" data-vue="signalements" hidden>
       <div class="fenetre" data-titre="signalements — erreurs dans les banques">
         <p class="vide-txt">« Item faux » rend l'XP à tous ceux qui l'avaient raté avant aujourd'hui. Pense ensuite à faire corriger l'énoncé dans sa banque (même id).</p>
+        <p><button class="btn" id="b-signal-tout" type="button">Copier tout pour Claude</button></p>
         <table class="tableau"><thead><tr><th>Joueur</th><th>Item</th><th>Module</th><th>Message</th><th>Le</th><th></th></tr></thead><tbody id="t-signal"></tbody></table>
         <p class="vide-txt" id="signal-vide">File vide ✓</p>
       </div>
@@ -437,7 +438,7 @@ async function rendreListes(){
   const ss = Object.entries(L.signalements).flatMap(([uid, d]) => (d.items || []).map(it => ({uid, it})));
   $("signal-vide").hidden = !!ss.length; badge("signalements", ss.length);
   $("t-signal").innerHTML = ss.map(({uid, it}) => `<tr><td>${esc(pseudo(uid))}</td><td>${esc(it.q)}</td><td>${esc(nomModule(it.m))}</td><td>${esc(it.message || "")}</td><td>${quand(it.envoye)}</td>
-    <td><button class="btn" data-s="faux" data-uid="${esc(uid)}" data-q="${esc(it.q)}" data-t="${esc(it.envoye)}">Item faux → XP rendue</button> <button class="btn danger" data-s="rejet" data-uid="${esc(uid)}" data-q="${esc(it.q)}" data-t="${esc(it.envoye)}">Rejeter</button></td></tr>`).join("");
+    <td><button class="btn" data-claude="1" data-uid="${esc(uid)}" data-q="${esc(it.q)}" data-t="${esc(it.envoye)}">Envoyer à Claude</button> <button class="btn" data-s="faux" data-uid="${esc(uid)}" data-q="${esc(it.q)}" data-t="${esc(it.envoye)}">Item faux → XP rendue</button> <button class="btn danger" data-s="rejet" data-uid="${esc(uid)}" data-q="${esc(it.q)}" data-t="${esc(it.envoye)}">Rejeter</button></td></tr>`).join("");
   const corr = (E.corrections && E.corrections.items) || {};
   $("l-corr").innerHTML = Object.entries(corr).map(([q, t]) => `<li>${esc(q)} — corrigé le ${quand(t)}</li>`).join("") || "<li>Aucun.</li>";
 }
@@ -457,6 +458,27 @@ document.querySelector('[data-vue="contestations"]').addEventListener("click", e
     await retirer("contestations", uid, it => it.ev !== ev);
     toast(c === "ok" ? "Validée : XP complète rendue" : "Refusée");
   });
+});
+/* « Envoyer à Claude » : copie un message prêt à coller dans une conversation du projet BIC2.exe */
+const rapportClaude = lst => {
+  const lignes = lst.map(({uid, it}, i) => `${i + 1}. item \`${it.q}\` (module \`${it.m}\`), signalé par ${pseudo(uid)} le ${quand(it.envoye)} : « ${String(it.message || "(pas de message)").replace(/\s+/g, " ")} »`).join("\n");
+  return `Tweak/fix : corriger ${lst.length > 1 ? "ces " + lst.length + " items signalés" : "un item signalé"} dans les banques.\n\n${lignes}\n\n`
+    + "Pour chaque item : retrouve-le avec grep sur son id dans site/banques/<module>/ (ne lis pas les fichiers en entier), vérifie l'énoncé, le verif et l'explication, explique-moi ce qui était faux, puis corrige-le en gardant le même id (ne supprime jamais un item). Montre-moi le avant/après, puis commit + push. Si le signalement est infondé, dis-le sans modifier la banque.";
+};
+const copier = async txt => {
+  try{ await navigator.clipboard.writeText(txt); }
+  catch(e){ const a = document.createElement("textarea"); a.value = txt; document.body.appendChild(a); a.select(); document.execCommand("copy"); a.remove(); }
+};
+const listeSignalements = () => Object.entries(L.signalements).flatMap(([uid, d]) => (d.items || []).map(it => ({uid, it})));
+$("b-signal-tout").addEventListener("click", async () => {
+  const l = listeSignalements(); if(!l.length) return toast("Aucun signalement");
+  await copier(rapportClaude(l)); toast("Copié : colle-le dans une conversation du projet");
+});
+document.querySelector('[data-vue="signalements"]').addEventListener("click", async e => {
+  const c = e.target.closest("[data-claude]"); if(!c) return;
+  const {uid, q, t} = c.dataset, l = listeSignalements().filter(x => x.uid === uid && x.it.q === q && String(x.it.envoye) === t);
+  if(!l.length) return;
+  await copier(rapportClaude(l)); toast("Copié : colle-le dans une conversation du projet");
 });
 document.querySelector('[data-vue="signalements"]').addEventListener("click", e => {
   const b = e.target.closest("[data-s]"); if(!b) return;
