@@ -249,6 +249,7 @@ function ecranConnexion(auth){
       h("ul", {},
         h("li", {texte:"Google sert à te reconnaître : ta progression est enregistrée sur ton compte, et tu la retrouves sur tous tes appareils."}),
         h("li", {texte:"Adam valide chaque demande pour que seule la classe soit dans le classement (pas d'inconnus ni de faux comptes)."}),
+        h("li", {texte:"Si le site était ouvert à tout le monde, n'importe qui pourrait remplir la base de données (elle est gratuite, donc limitée) et la faire saturer : plus personne ne pourrait enregistrer sa progression."}),
         h("li", {texte:"Seul Adam peut modifier le site : tu joues, sans risque de casser quoi que ce soit."}),
         h("li", {texte:"Ce que les autres voient : ton pseudo, ton niveau et ton XP, rien d'autre. Ton prénom et ton nom ne sont visibles que par Adam. Le détail de tes réponses reste privé, même pour lui."})));
     const q = h("button", {class:"acces-q", type:"button", "aria-expanded":"false", "aria-controls":"acces-pourquoi", title:"Pourquoi ce processus ?", texte:"?"});
