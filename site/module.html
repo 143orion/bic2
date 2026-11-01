@@ -645,7 +645,7 @@ function jouerExo(it, zone, opts = {}){
       ${it.titre ? `<h3 class="exo-titre">${mdInline(it.titre)}</h3>` : ""}
       ${petitEcran() ? `<p class="bandeau-mobile">Exo long : plus confortable sur ordi, mais jouable ici.</p>` : ""}
       <div class="${it.schema ? "exo-grille" : ""}"><div class="exo-gauche"><div class="q-enonce">${md(it.enonce)}</div>${it.schema ? `<div class="exo-schema"></div>` : ""}</div>
-      <div><ol class="etapes"></ol>
+      <div>${it.guidage ? `<details class="exo-guidage" open><summary>${ic("compass")} Plan d'attaque</summary><div class="q-enonce">${md(it.guidage)}</div></details>` : ""}<ol class="etapes"></ol>
       <div class="q-retour" hidden></div></div></div>
       <div class="actions q-actions">${opts.relancer ? `<button type="button" class="btn" data-a="de">${ic("dice")} Autres valeurs</button>` : ""}${lienSignaler(it.id)}</div>
     </article>`;
@@ -983,6 +983,7 @@ function vueExo(id, ch, mode = "guide", g = null){
   vue("exo", async () => {
     L.appendChild(filCh(ch, mode === "mock" ? "Mock" : "Guidé"));
     const zone = document.createElement("div"); zone.className = "zone-q"; L.appendChild(zone);
+    if(!g && mode === "guide") g = tirage(S.items[id]);   /* guidé : nouvelles valeurs à chaque ouverture */
     const moi = S.vue, it = variante(S.items[id], g);
     const relancer = S.items[id].generateur && EXT.generateurs[S.items[id].generateur] ? () => vueExo(id, ch, mode, tirage(S.items[id])) : null;
     const r = await (mode === "mock" ? jouerMock(it, zone, {relancer}) : jouerExo(it, zone, {mode:"guide", relancer}));

@@ -364,10 +364,11 @@
    "notion": "Générateur réel",
    "origine": "generee",
    "enonce": "Un générateur de f.é.m. $E$ = [[E]] et de résistance interne $R_G$ = [[RG]] alimente une charge $R$ = [[R]].",
+   "guidage": "**Montage** : un générateur réel = une source idéale $E$ en série avec sa résistance interne $R_G$. Ici tout est en série : **une seule maille**, donc un seul courant $I$ partout.\n\n**Plan** :\n- loi des mailles → $I$ ;\n- loi d'Ohm sur la charge → $U$ ;\n- $P = UI$ → puissance reçue par la charge.\n\n**Piège** : $U$ n'est pas égale à $E$ : une partie de $E$ « se perd » dans $R_G$.",
    "duree": 5,
    "etapes": [
     {
-     "consigne": "Tout est en série : écris la loi des mailles et trouve le courant $I$.",
+     "consigne": "Parcours la maille : la f.é.m. $E$ fournit la tension, qui se répartit entre $R_G$ et $R$. Écris la loi des mailles et isole $I$.",
      "question": "$I = ?$",
      "verif": {
       "mode": "numerique",
@@ -375,8 +376,8 @@
       "unite": "A"
      },
      "indices": [
-      "Une seule maille : $E = R_G I + R I$.",
-      "$I = \\dfrac{E}{R_G + R}$."
+      "Loi des mailles : la f.é.m. est égale à la somme des tensions des résistances. Comme il n'y a qu'une maille, $R_G$ et $R$ sont traversées par le même $I$ : $E = R_G I + R I = (R_G + R)\\,I$.",
+      "Des résistances en série s'additionnent : $R_G + R$ = [[RT]]. Donc $I = \\dfrac{E}{R_G + R}$, soit [[E]] divisé par [[RT]]."
      ],
      "corrige": "$I = \\dfrac{E}{R_G+R} = \\dfrac{12}{1+5} = \\mathbf{2\\ \\text{A}}$",
      "schema": {
@@ -388,7 +389,7 @@
      }
     },
     {
-     "consigne": "Calcule la tension $U$ aux bornes de la charge.",
+     "consigne": "Applique la loi d'Ohm à la charge seule : tu connais sa résistance et le courant qui la traverse (le même que dans toute la maille).",
      "question": "$U = ?$",
      "verif": {
       "mode": "numerique",
@@ -396,7 +397,8 @@
       "unite": "V"
      },
      "indices": [
-      "$U = R I$, ou bien $U = E - R_G I$."
+      "Loi d'Ohm aux bornes de $R$ : $U = R\\,I$, avec le $I$ de l'étape 1.",
+      "Autre chemin pour vérifier : $U = E - R_G I$. La tension perdue dans le générateur vaut $R_G I$ = [[UG]]."
      ],
      "corrige": "$U = RI = 5 \\times 2 = \\mathbf{10\\ \\text{V}}$",
      "schema": {
@@ -406,7 +408,7 @@
      }
     },
     {
-     "consigne": "Calcule la puissance $P$ reçue par la charge.",
+     "consigne": "La puissance reçue par un dipôle est le produit de la tension à ses bornes par le courant qui le traverse.",
      "question": "$P = ?$",
      "verif": {
       "mode": "numerique",
@@ -414,7 +416,8 @@
       "unite": "W"
      },
      "indices": [
-      "$P = UI$."
+      "$P = U\\,I$ (W = V × A) : prends $U$ de l'étape 2 et $I$ de l'étape 1.",
+      "Variante : $P = R\\,I^2$, qui donne la même chose puisque $U = RI$."
      ],
      "corrige": "$P = UI = 10 \\times 2 = \\mathbf{20\\ \\text{W}}$",
      "schema": {
@@ -435,7 +438,9 @@
    "vals": {
     "E": "12 V",
     "RG": "1 Ω",
-    "R": "5 Ω"
+    "R": "5 Ω",
+    "RT": "6 Ω",
+    "UG": "2 V"
    },
    "generateur": "gen-reel"
   },
@@ -445,11 +450,12 @@
    "titre": "Résistance chauffante",
    "notion": "Loi d'Ohm et puissance",
    "origine": "generee",
-   "enonce": "Une résistance $R = 220\\ \\Omega$ est parcourue par $I = 50\\ \\text{mA}$.",
+   "enonce": "Une résistance $R$ = [[R]] est parcourue par $I$ = [[I]].",
+   "guidage": "**Outils** : loi d'Ohm $U = RI$ et puissance $P = UI$.\n\n**Unités** : les formules marchent en unités de base (Ω, A, V, W). Convertis les mA en A avant de calculer (ou associe kΩ avec mA, qui donnent directement des V).\n\n**Plan** : $U$ par la loi d'Ohm, puis la puissance dissipée par effet Joule.",
    "duree": 3,
    "etapes": [
     {
-     "consigne": "Calcule la tension à ses bornes.",
+     "consigne": "Utilise la loi d'Ohm. Attention à l'unité du courant.",
      "question": "$U = ?$",
      "verif": {
       "mode": "numerique",
@@ -457,12 +463,13 @@
       "unite": "V"
      },
      "indices": [
-      "$U = RI$ avec $I$ en ampères."
+      "La loi d'Ohm relie la tension aux bornes d'une résistance au courant qui la traverse : $U = R\\,I$. Elle demande des unités cohérentes (Ω × A = V).",
+      "Conversion : $1\\ \\text{mA} = 10^{-3}\\ \\text{A}$, donc $I$ = [[I]] = [[IA]] A. Puis $U$ = [[R]] × [[IA]] A."
      ],
      "corrige": "$U = 220 \\times 0{,}05 = \\mathbf{11\\ \\text{V}}$"
     },
     {
-     "consigne": "Calcule la puissance dissipée par effet Joule.",
+     "consigne": "Toute l'énergie reçue par une résistance est transformée en chaleur (effet Joule). Calcule cette puissance.",
      "question": "$P = ?$",
      "verif": {
       "mode": "numerique",
@@ -470,11 +477,18 @@
       "unite": "W"
      },
      "indices": [
-      "$P = RI^2$ ou $P = UI$."
+      "Puissance reçue par un dipôle : $P = U\\,I$. Pour une résistance, en remplaçant $U$ par $RI$, on obtient aussi $P = R\\,I^2$.",
+      "Avec ton $U$ de l'étape 1 : $P = U \\times$ [[IA]] A."
      ],
      "corrige": "$P = UI = 11 \\times 0{,}05 = \\mathbf{0{,}55\\ \\text{W}}$"
     }
-   ]
+   ],
+   "generateur": "ohm-P",
+   "vals": {
+    "R": "220 Ω",
+    "I": "50 mA",
+    "IA": "0,05"
+   }
   }
  ]
 }

@@ -679,6 +679,11 @@ svg.circ g.dim{opacity:.2}
 .exo-grille{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}
 .exo-grille .exo-gauche{position:sticky;top:96px}
 .exo-grille .etapes{margin-top:0}
+.exo-guidage{margin:0 0 14px;padding:10px 14px;border:1px solid color-mix(in srgb,var(--m-ac) 45%,transparent);border-radius:10px;background:color-mix(in srgb,var(--m-ac) 9%,transparent)}
+.exo-guidage summary{cursor:pointer;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--violet-clair,#b98ee6);display:flex;align-items:center;gap:6px}
+.exo-guidage summary svg{width:15px;height:15px}
+.exo-guidage[open] summary{margin-bottom:8px}
+.exo-guidage .q-enonce{font-size:14.5px}
 /* exo mock */
 .mock-grille{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}
 .mock-grille>div:first-child{position:sticky;top:96px}

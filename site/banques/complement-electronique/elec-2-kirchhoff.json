@@ -342,11 +342,12 @@
    "titre": "TD1 · Exercice 1 — Courants",
    "notion": "Loi des nœuds",
    "origine": "td",
-   "enonce": "Calcule $I_1$, $I_5$ et $I_6$ sachant que $I_2 = 2\\ \\text{A}$, $I_3 = 3\\ \\text{A}$ et $I_4 = 1\\ \\text{A}$ (sens des flèches du schéma).",
+   "enonce": "Calcule $I_1$, $I_5$ et $I_6$ sachant que $I_2$ = [[I2]], $I_3$ = [[I3]] et $I_4$ = [[I4]] (sens des flèches du schéma).",
+   "guidage": "**Loi des nœuds** : en un nœud, la somme des courants qui **arrivent** est égale à la somme des courants qui **repartent** (les charges ne s'accumulent nulle part).\n\n**Lire le schéma** : chaque flèche donne le sens *choisi* pour le courant. Si le calcul donne une valeur négative, le courant circule en réalité dans l'autre sens : le résultat reste juste, garde le signe.\n\n**Plan** :\n- bilan sur tout le circuit → $I_1$ ;\n- nœud en haut à droite → $I_5$ ;\n- nœud en haut à gauche → $I_6$.",
    "duree": 6,
    "etapes": [
     {
-     "consigne": "Fais un bilan sur **tout le circuit** : ce qui entre ($I_1$) égale ce qui sort ($I_2$ et $I_3$).",
+     "consigne": "Entoure mentalement **tout le circuit** : seul $I_1$ y entre, $I_2$ et $I_3$ en sortent. Applique la loi des nœuds à cette grande « boîte ».",
      "question": "$I_1 = ?$",
      "verif": {
       "mode": "numerique",
@@ -354,13 +355,13 @@
       "unite": "A"
      },
      "indices": [
-      "Le circuit entier se comporte comme un gros nœud.",
-      "$I_1 = I_2 + I_3$."
+      "Pourquoi on a le droit : la loi des nœuds vient de la conservation de la charge, elle marche pour n'importe quelle zone fermée, pas seulement un point. Les courants internes ($I_4$, $I_5$, $I_6$) entrent et ressortent de la boîte : ils ne comptent pas.",
+      "Ce qui entre = ce qui sort : $I_1 = I_2 + I_3$, soit [[I2]] + [[I3]]."
      ],
      "corrige": "$I_1 = I_2 + I_3 = 2 + 3 = \\mathbf{5\\ \\text{A}}$"
     },
     {
-     "consigne": "Au nœud de droite en haut, $I_4$ arrive, $I_3$ sort et le reste descend dans $R_2$. $I_5$ est fléché vers le **haut** dans $R_2$.",
+     "consigne": "Regarde le nœud en haut à droite, au-dessus de $R_2$ : $I_4$ y arrive (par $R_1$), $I_3$ repart vers la droite, et le reste descend dans $R_2$. Attention : $I_5$ est fléché vers le **haut** dans $R_2$.",
      "question": "$I_5 = ?$",
      "verif": {
       "mode": "numerique",
@@ -369,13 +370,13 @@
       "tol": 0.01
      },
      "indices": [
-      "Courant qui descend dans $R_2$ : $I_4 - I_3$.",
-      "$I_5$ est fléché dans l'autre sens : $I_5 = I_3 - I_4$."
+      "Au nœud, arrivées = départs. Si on note $I_{\\downarrow}$ le courant qui descend dans $R_2$ : $I_4 = I_3 + I_{\\downarrow}$, donc $I_{\\downarrow} = I_4 - I_3$.",
+      "$I_5$ est fléché vers le haut, l'inverse de $I_{\\downarrow}$ : $I_5 = -I_{\\downarrow} = I_3 - I_4$, soit [[I3]] − [[I4]]. Négatif = le courant descend vraiment."
      ],
      "corrige": "$I_5 = I_3 - I_4 = 3 - 1 = \\mathbf{2\\ \\text{A}}$"
     },
     {
-     "consigne": "Au nœud de gauche en haut : $I_1$ et $I_6$ arrivent, $I_4$ repart.",
+     "consigne": "Nœud en haut à gauche : $I_1$ arrive par la gauche, $I_6$ arrive par le bas (fléché vers le haut), et $I_4$ repart vers $R_1$.",
      "question": "$I_6 = ?$",
      "verif": {
       "mode": "numerique",
@@ -384,13 +385,21 @@
       "tol": 0.01
      },
      "indices": [
-      "$I_1 + I_6 = I_4$."
+      "Arrivées = départs au nœud : $I_1 + I_6 = I_4$, avec $I_1$ trouvé à l'étape 1.",
+      "Donc $I_6 = I_4 - I_1$, soit [[I4]] − [[I1]]. Négatif = le courant descend en réalité dans ce fil."
      ],
      "corrige": "$I_6 = I_4 - I_1 = 1 - 5 = \\mathbf{-4\\ \\text{A}}$ : il descend en réalité"
     }
    ],
    "schema": {
     "modele": "td1-ex1"
+   },
+   "generateur": "td1-ex1",
+   "vals": {
+    "I1": "5 A",
+    "I2": "2 A",
+    "I3": "3 A",
+    "I4": "1 A"
    }
   },
   {
@@ -399,11 +408,12 @@
    "titre": "TD1 · Exercice 3 — Potentiels",
    "notion": "Potentiels",
    "origine": "td",
-   "enonce": "On a mesuré $U_{DA} = 10\\ \\text{V}$, $U_{AC} = 20\\ \\text{V}$ et $U_{BF} = 5\\ \\text{V}$. En prenant **D** comme référence des potentiels, calcule les potentiels des autres points.",
+   "enonce": "On a mesuré $U_{DA}$ = [[UDA]], $U_{AC}$ = [[UAC]] et $U_{BF}$ = [[UBF]]. En prenant **D** comme référence des potentiels, calcule les potentiels des autres points.",
+   "guidage": "**Tension = différence de potentiels** : $U_{XY} = V_X - V_Y$. L'ordre des lettres compte : le 1er point moins le 2e.\n\n**Méthode** : on fixe une référence ($V_D = 0$), puis on avance de point en point avec les tensions connues.\n\n**Fil** : deux points reliés par un simple fil ont le même potentiel.\n\n**Plan** : D → A → C → F (même fil) → B.",
    "duree": 6,
    "etapes": [
     {
-     "consigne": "Avec $U_{DA} = V_D - V_A$ et $V_D = 0$, trouve $V_A$.",
+     "consigne": "Écris $U_{DA}$ comme une différence de potentiels, remplace $V_D$ par 0 et isole $V_A$.",
      "question": "$V_A = ?$",
      "verif": {
       "mode": "numerique",
@@ -412,12 +422,13 @@
       "tol": 0.01
      },
      "indices": [
-      "$U_{DA} = V_D - V_A$."
+      "Par définition $U_{DA} = V_D - V_A$ : D est écrit en premier, donc $V_D$ vient en premier. Avec la référence $V_D = 0$ : $U_{DA} = 0 - V_A$.",
+      "Donc $V_A = -U_{DA}$ : A est en dessous de D en potentiel."
      ],
      "corrige": "$V_A = V_D - U_{DA} = \\mathbf{-10\\ \\text{V}}$"
     },
     {
-     "consigne": "Avec $U_{AC}$, trouve $V_C$.",
+     "consigne": "Même méthode avec $U_{AC}$ : tu connais maintenant $V_A$.",
      "question": "$V_C = ?$",
      "verif": {
       "mode": "numerique",
@@ -426,12 +437,13 @@
       "tol": 0.01
      },
      "indices": [
-      "$U_{AC} = V_A - V_C$."
+      "$U_{AC} = V_A - V_C$ : on connaît $U_{AC}$ et $V_A$, il ne reste qu'à isoler $V_C$.",
+      "$V_C = V_A - U_{AC}$, soit [[VA]] − [[UAC]]."
      ],
      "corrige": "$V_C = V_A - U_{AC} = -10 - 20 = \\mathbf{-30\\ \\text{V}}$"
     },
     {
-     "consigne": "E, C et F sont sur le même fil du bas. Que vaut $V_F$ ?",
+     "consigne": "E, C et F sont sur le même fil du bas. Quel est le potentiel de F ?",
      "question": "$V_F = ?$",
      "verif": {
       "mode": "numerique",
@@ -440,12 +452,13 @@
       "tol": 0.01
      },
      "indices": [
-      "Un fil = même potentiel."
+      "Un fil idéal n'a pas de résistance : le courant n'y crée aucune tension ($U = 0 \\times I = 0$). Deux points d'un même fil ont donc le même potentiel.",
+      "$V_F = V_C$ (et aussi $V_E$)."
      ],
      "corrige": "$V_E = V_F = V_C = \\mathbf{-30\\ \\text{V}}$"
     },
     {
-     "consigne": "Avec $U_{BF}$, trouve $V_B$.",
+     "consigne": "Termine avec $U_{BF}$.",
      "question": "$V_B = ?$",
      "verif": {
       "mode": "numerique",
@@ -454,13 +467,22 @@
       "tol": 0.01
      },
      "indices": [
-      "$U_{BF} = V_B - V_F$."
+      "$U_{BF} = V_B - V_F$, et $V_F$ est connu grâce au fil.",
+      "$V_B = V_F + U_{BF}$, soit [[VF]] + [[UBF]]."
      ],
      "corrige": "$V_B = V_F + U_{BF} = -30 + 5 = \\mathbf{-25\\ \\text{V}}$"
     }
    ],
    "schema": {
     "modele": "td1-ex3"
+   },
+   "generateur": "td1-ex3",
+   "vals": {
+    "UDA": "10 V",
+    "UAC": "20 V",
+    "UBF": "5 V",
+    "VA": "-10 V",
+    "VF": "-30 V"
    }
   },
   {
@@ -469,11 +491,12 @@
    "titre": "TD1 · Exercice 4 — Tensions",
    "notion": "Loi des mailles",
    "origine": "td",
-   "enonce": "On donne $U_1 = 20\\ \\text{V}$, $U_2 = 5\\ \\text{V}$ et $U_4 = -8\\ \\text{V}$. Calcule les autres tensions fléchées. (Prends le fil du bas comme référence : $V = 0$.)",
+   "enonce": "On donne $U_1$ = [[U1]], $U_2$ = [[U2]] et $U_4$ = [[U4]]. Calcule les autres tensions fléchées. (Prends le fil du bas comme référence : $V = 0$.)",
+   "guidage": "**Idée** : le fil du bas sert de référence ($V = 0$). Chaque tension fléchée est une différence de potentiels : **la flèche pointe vers le point écrit en premier** ($U = V_{\\text{pointe}} - V_{\\text{queue}}$).\n\n**Méthode** : on trouve les potentiels des 3 nœuds du haut (gauche, milieu, droite), puis chaque tension cherchée est la différence de deux potentiels.\n\nC'est la **loi des mailles** vue autrement : en faisant le tour d'une maille, la somme des tensions est nulle.",
    "duree": 8,
    "etapes": [
     {
-     "consigne": "$U_1$ donne le potentiel du nœud du milieu en haut, $U_2$ (fléchée vers la gauche) relie ce nœud au nœud de gauche. Trouve $U_3$.",
+     "consigne": "Le nœud du milieu en haut est relié au fil du bas par la résistance de $U_1$ : son potentiel vaut $U_1$. $U_2$ (fléchée vers la **gauche**) relie le nœud du milieu au nœud de gauche, et $U_3$ est la tension du nœud de gauche par rapport au fil du bas. Trouve $U_3$.",
      "question": "$U_3 = ?$",
      "verif": {
       "mode": "numerique",
@@ -481,22 +504,23 @@
       "unite": "V"
      },
      "indices": [
-      "Nœud du milieu : $V = U_1 = 20\\ \\text{V}$.",
-      "$U_2 = V_{\\text{gauche}} - V_{\\text{milieu}}$ donc $V_{\\text{gauche}} = 25\\ \\text{V} = U_3$."
+      "$U_1$ pointe vers le nœud du milieu depuis le fil du bas : $U_1 = V_{\\text{milieu}} - 0$, donc $V_{\\text{milieu}}$ = [[U1]].",
+      "$U_2$ pointe vers la gauche : $U_2 = V_{\\text{gauche}} - V_{\\text{milieu}}$, donc $V_{\\text{gauche}} = V_{\\text{milieu}} + U_2$. Et $U_3$ (flèche vers le haut) vaut justement $V_{\\text{gauche}} - 0$."
      ],
      "corrige": "$U_3 = U_1 + U_2 = \\mathbf{25\\ \\text{V}}$"
     },
     {
-     "consigne": "$U_4$ est fléchée vers le **bas** : $U_4 = V_{\\text{bas}} - V_{\\text{droite}}$. Trouve $U_5$.",
+     "consigne": "Passe au nœud de droite. $U_4$ est fléchée vers le **bas** : $U_4 = V_{\\text{bas}} - V_{\\text{droite}}$. Déduis $V_{\\text{droite}}$, puis $U_5$ (fléchée vers la gauche, entre le milieu et la droite).",
      "question": "$U_5 = ?$",
      "verif": {
       "mode": "numerique",
       "attendu": 12,
-      "unite": "V"
+      "unite": "V",
+      "tol": 0.01
      },
      "indices": [
-      "$V_{\\text{droite}} = -U_4 = 8\\ \\text{V}$.",
-      "$U_5 = V_{\\text{milieu}} - V_{\\text{droite}}$."
+      "$V_{\\text{bas}} = 0$, donc $U_4 = -V_{\\text{droite}}$ et $V_{\\text{droite}} = -U_4$ = [[VD]].",
+      "$U_5$ pointe vers le nœud du milieu : $U_5 = V_{\\text{milieu}} - V_{\\text{droite}}$, soit [[U1]] − [[VD]]."
      ],
      "corrige": "$V_{\\text{droite}} = 8\\ \\text{V}$, $U_5 = 20 - 8 = \\mathbf{12\\ \\text{V}}$"
     },
@@ -510,13 +534,21 @@
       "tol": 0.01
      },
      "indices": [
-      "Même fil = même potentiel."
+      "Ses deux bornes sont reliées au fil du bas par de simples fils : elles sont au même potentiel.",
+      "$U_6 = V - V = 0$ : la résistance est court-circuitée, aucun courant ne la traverse."
      ],
      "corrige": "$U_6 = \\mathbf{0\\ \\text{V}}$ : elle est court-circuitée"
     }
    ],
    "schema": {
     "modele": "td1-ex4"
+   },
+   "generateur": "td1-ex4",
+   "vals": {
+    "U1": "20 V",
+    "U2": "5 V",
+    "U4": "-8 V",
+    "VD": "8 V"
    }
   },
   {
@@ -526,10 +558,11 @@
    "notion": "Loi des nœuds",
    "origine": "td",
    "enonce": "Le générateur délivre $E$ = [[E]] ; $R_1$ = [[R1]], $R_2$ = [[R2]], $R_3$ = [[R3]].",
+   "guidage": "**Montage** : les trois résistances sont branchées entre les deux mêmes fils (A en haut, M en bas). Elles sont donc **en parallèle** et ont toutes la même tension $E$ à leurs bornes.\n\n**Plan** :\n- loi d'Ohm dans chaque branche : $I_k = E / R_k$ ;\n- loi des nœuds en A pour le courant total du générateur.",
    "duree": 6,
    "etapes": [
     {
-     "consigne": "Chaque résistance a $E$ à ses bornes. Calcule $I_1$.",
+     "consigne": "Repère les bornes de $R_1$ : l'une est sur le fil du haut (relié au + de $E$), l'autre sur le fil du bas. Quelle tension a-t-elle à ses bornes ? Déduis $I_1$ par la loi d'Ohm.",
      "question": "$I_1 = ?$",
      "verif": {
       "mode": "numerique",
@@ -537,8 +570,8 @@
       "unite": "A"
      },
      "indices": [
-      "En parallèle : même tension $E$.",
-      "$I_1 = E/R_1$."
+      "Deux points d'un même fil ont le même potentiel : les bornes de $R_1$ sont aux potentiels de A et M, comme celles du générateur. D'où $U_{R_1} = E$ = [[E]].",
+      "Loi d'Ohm : $I_1 = E / R_1$, soit [[E]] / [[R1]] (convertis les kΩ en Ω, ou lis V/kΩ = mA)."
      ],
      "corrige": "$I_1 = 10/2000 = \\mathbf{5\\ \\text{mA}}$",
      "schema": {
@@ -548,7 +581,7 @@
      }
     },
     {
-     "consigne": "Calcule $I_2$.",
+     "consigne": "Même raisonnement pour $R_2$.",
      "question": "$I_2 = ?$",
      "verif": {
       "mode": "numerique",
@@ -556,7 +589,8 @@
       "unite": "A"
      },
      "indices": [
-      "$I_2 = E/R_2$."
+      "$R_2$ est aussi entre les fils A et M : sa tension est encore $E$, c'est le propre du parallèle.",
+      "$I_2 = E / R_2$, soit [[E]] / [[R2]]."
      ],
      "corrige": "$I_2 = \\mathbf{5\\ \\text{mA}}$",
      "schema": {
@@ -566,7 +600,7 @@
      }
     },
     {
-     "consigne": "Calcule $I_3$.",
+     "consigne": "Et pour $R_3$.",
      "question": "$I_3 = ?$",
      "verif": {
       "mode": "numerique",
@@ -574,7 +608,8 @@
       "unite": "A"
      },
      "indices": [
-      "$I_3 = E/R_3$."
+      "Même tension $E$ pour la troisième branche : seule la résistance change, donc le courant aussi.",
+      "$I_3 = E / R_3$, soit [[E]] / [[R3]]."
      ],
      "corrige": "$I_3 = 10/1000 = \\mathbf{10\\ \\text{mA}}$",
      "schema": {
@@ -584,7 +619,7 @@
      }
     },
     {
-     "consigne": "Quel courant le générateur doit-il pouvoir délivrer ?",
+     "consigne": "Le générateur doit fournir tout ce que consomment les trois branches. Applique la loi des nœuds en A.",
      "question": "$I = ?$",
      "verif": {
       "mode": "numerique",
@@ -592,7 +627,8 @@
       "unite": "A"
      },
      "indices": [
-      "Loi des nœuds au nœud A."
+      "En A, le courant $I$ du générateur arrive et se partage entre les trois branches : arrivées = départs, donc $I = I_1 + I_2 + I_3$.",
+      "Additionne les trois courants trouvés, dans la même unité."
      ],
      "corrige": "$I = I_1 + I_2 + I_3 = \\mathbf{20\\ \\text{mA}}$",
      "schema": {
@@ -626,10 +662,11 @@
    "notion": "Loi des mailles",
    "origine": "td",
    "enonce": "Le générateur délivre $I$ = [[I]] ; $R_1$ = [[R1]], $R_2$ = [[R2]], $R_3$ = [[R3]].",
+   "guidage": "**Montage** : une source de courant impose $I$ dans le circuit. Tout est **en série** sur une seule maille, donc ce même $I$ traverse $R_1$, $R_2$ et $R_3$.\n\n**Plan** :\n- loi d'Ohm sur chaque résistance : $V_k = R_k I$ ;\n- loi des mailles pour la tension aux bornes de la source.\n\n**À retenir** : une source de courant impose le courant, pas la tension. Sa tension dépend de ce qu'on branche dessus.",
    "duree": 6,
    "etapes": [
     {
-     "consigne": "Une seule maille : même courant partout. Calcule $V_1$.",
+     "consigne": "Une seule maille : le courant dans $R_1$ est celui imposé par la source. Calcule $V_1$.",
      "question": "$V_1 = ?$",
      "verif": {
       "mode": "numerique",
@@ -637,7 +674,8 @@
       "unite": "V"
      },
      "indices": [
-      "$V_1 = R_1 I$."
+      "Il n'y a aucun nœud où le courant pourrait se partager : un seul chemin, donc le courant dans $R_1$ est $I$ = [[I]].",
+      "Loi d'Ohm : $V_1 = R_1 I$, soit [[R1]] × [[I]] (kΩ × mA donne directement des V)."
      ],
      "corrige": "$V_1 = 2000 \\times 0{,}02 = \\mathbf{40\\ \\text{V}}$",
      "schema": {
@@ -647,7 +685,7 @@
      }
     },
     {
-     "consigne": "Calcule $V_2$.",
+     "consigne": "Même courant dans $R_2$. Calcule $V_2$.",
      "question": "$V_2 = ?$",
      "verif": {
       "mode": "numerique",
@@ -655,7 +693,8 @@
       "unite": "V"
      },
      "indices": [
-      "$V_2 = R_2 I$."
+      "Toujours la même maille, donc toujours le même $I$.",
+      "$V_2 = R_2 I$, soit [[R2]] × [[I]]."
      ],
      "corrige": "$V_2 = \\mathbf{40\\ \\text{V}}$",
      "schema": {
@@ -665,7 +704,7 @@
      }
     },
     {
-     "consigne": "Calcule $V_3$.",
+     "consigne": "Et $V_3$ aux bornes de $R_3$.",
      "question": "$V_3 = ?$",
      "verif": {
       "mode": "numerique",
@@ -673,7 +712,8 @@
       "unite": "V"
      },
      "indices": [
-      "$V_3 = R_3 I$."
+      "$R_3$ est sur la même maille : elle est aussi traversée par $I$.",
+      "$V_3 = R_3 I$, soit [[R3]] × [[I]]."
      ],
      "corrige": "$V_3 = 1000 \\times 0{,}02 = \\mathbf{20\\ \\text{V}}$",
      "schema": {
@@ -683,7 +723,7 @@
      }
     },
     {
-     "consigne": "Déduis-en la tension $U_{AM}$ aux bornes du générateur.",
+     "consigne": "Fais le tour de la maille de A à M en passant par B et C : la tension de la source compense la somme des chutes de tension.",
      "question": "$U_{AM} = ?$",
      "verif": {
       "mode": "numerique",
@@ -691,7 +731,8 @@
       "unite": "V"
      },
      "indices": [
-      "Loi des mailles de A à M en passant par B et C."
+      "Loi des mailles : sur un tour complet, la somme des tensions comptées dans le même sens est nulle. Ici, la tension de la source est donc égale à la somme des trois chutes de tension.",
+      "$U_{AM} = V_1 + V_2 + V_3$ : additionne tes trois résultats."
      ],
      "corrige": "$U_{AM} = V_1 + V_2 + V_3 = \\mathbf{100\\ \\text{V}}$",
      "schema": {

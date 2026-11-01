@@ -364,11 +364,12 @@
    "titre": "Système d'équations façon circuit",
    "notion": "Système de 2 équations",
    "origine": "generee",
-   "enonce": "Deux courants vérifient la loi des nœuds $I_1 + I_2 = 3\\ \\text{A}$ et une loi des mailles qui donne $2I_1 - I_2 = 0$.",
+   "enonce": "Deux courants vérifient la loi des nœuds $I_1 + I_2$ = [[S]] et une loi des mailles qui donne [[EQ2]].",
+   "guidage": "**Ce qu'on cherche** : deux inconnues ($I_1$ et $I_2$) et deux équations → un système de 2 équations à 2 inconnues.\n\n**Méthode par substitution** :\n- dans l'équation la plus simple, exprime une inconnue en fonction de l'autre ;\n- remplace-la dans l'autre équation : il ne reste qu'une inconnue, que tu trouves ;\n- reviens à l'expression du début pour la deuxième.\n\nC'est exactement ce que tu feras avec les lois de Kirchhoff : chaque loi (nœud ou maille) donne une équation.",
    "duree": 3,
    "etapes": [
     {
-     "consigne": "Isole $I_2$ dans la deuxième équation, remplace dans la première et trouve $I_1$.",
+     "consigne": "La 2e équation n'a pas de nombre seul : c'est la plus facile pour isoler $I_2$. Exprime $I_2$ en fonction de $I_1$, remplace-le dans la 1re équation, puis résous en $I_1$.",
      "question": "$I_1 = ?$",
      "verif": {
       "mode": "numerique",
@@ -376,13 +377,13 @@
       "unite": "A"
      },
      "indices": [
-      "$2I_1 - I_2 = 0$ donne $I_2 = 2I_1$.",
-      "Remplace : $I_1 + 2I_1 = 3$."
+      "Pourquoi partir de la 2e équation : en faisant passer $-I_2$ de l'autre côté du signe =, on obtient directement $I_2 = [[K]]\\,I_1$, sans fraction.",
+      "On remplace $I_2$ dans la loi des nœuds : $I_1 + [[K]]\\,I_1 = [[K1]]\\,I_1$, et ça vaut [[S]]. Il reste à diviser par [[K1]]."
      ],
      "corrige": "$I_2 = 2I_1$ donc $3I_1 = 3$ et $I_1 = \\mathbf{1\\ \\text{A}}$"
     },
     {
-     "consigne": "Déduis-en $I_2$.",
+     "consigne": "Tu connais $I_1$ : reviens à la relation trouvée à l'étape 1 pour obtenir $I_2$.",
      "question": "$I_2 = ?$",
      "verif": {
       "mode": "numerique",
@@ -390,11 +391,19 @@
       "unite": "A"
      },
      "indices": [
-      "$I_2 = 2I_1$."
+      "L'étape 1 a établi $I_2 = [[K]]\\,I_1$ : c'est la relation à réutiliser, inutile de repartir du système.",
+      "Vérifie avec la loi des nœuds : $I_1 + I_2$ doit redonner [[S]]."
      ],
      "corrige": "$I_2 = 2 \\times 1 = \\mathbf{2\\ \\text{A}}$"
     }
-   ]
+   ],
+   "generateur": "sys2",
+   "vals": {
+    "S": "3 A",
+    "K": "2",
+    "K1": "3",
+    "EQ2": "$2I_1 - I_2 = 0$"
+   }
   }
  ]
 }

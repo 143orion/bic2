@@ -103,7 +103,7 @@ const generateurs = {
   "thev-L"(){
     const E = rnd([5,6,9,10,12,15,24]), R1 = rR(), R2 = rR(), R3 = rR(), R = rR();
     const Eth = E*R2/(R1+R2), p = par(R1,R2), Rth = p + R3, U = Eth*R/(Rth+R);
-    return {vals:{E:f(E,"V"),R1:f(R1,"Ω"),R2:f(R2,"Ω"),R3:f(R3,"Ω"),R:f(R,"Ω")}, rep:[Eth, Rth, U], corr:[
+    return {vals:{E:f(E,"V"),R1:f(R1,"Ω"),R2:f(R2,"Ω"),R3:f(R3,"Ω"),R:f(R,"Ω"),R12:f(R1+R2,"Ω"),RP:f(p,"Ω"),ETH:f(Eth,"V"),RTR:f(Rth+R,"Ω")}, rep:[Eth, Rth, U], corr:[
       `$E_{th} = E\\,\\dfrac{R_2}{R_1+R_2} = ${t(E,"V")} \\times \\dfrac{${t(R2,"Ω")}}{${t(R1+R2,"Ω")}} = \\mathbf{${t(Eth,"V")}}$`,
       `$R_{th} = (R_1 \\parallel R_2) + R_3 = ${t(p,"Ω")} + ${t(R3,"Ω")} = \\mathbf{${t(Rth,"Ω")}}$`,
       `$U_R = E_{th}\\,\\dfrac{R}{R_{th}+R} = ${t(Eth,"V")} \\times \\dfrac{${t(R,"Ω")}}{${t(Rth+R,"Ω")}} = \\mathbf{${t(U,"V")}}$`]};
@@ -111,7 +111,7 @@ const generateurs = {
   "norton-L"(){
     const I = rnd([5,10,20,30,50])*1e-3, R1 = rR(), R2 = rR(), R3 = rR(), R = rR();
     const IN = I*R2/(R2+R3), RN = R2+R3, U = IN*par(RN,R);
-    return {vals:{E:f(I,"A"),R1:f(R1,"Ω"),R2:f(R2,"Ω"),R3:f(R3,"Ω"),R:f(R,"Ω")}, rep:[IN, RN, U], corr:[
+    return {vals:{E:f(I,"A"),R1:f(R1,"Ω"),R2:f(R2,"Ω"),R3:f(R3,"Ω"),R:f(R,"Ω"),R23:f(RN,"Ω"),RNR:f(par(RN,R),"Ω")}, rep:[IN, RN, U], corr:[
       `B et M en court-circuit : $R_2$ et $R_3$ en parallèle se partagent $I$ (diviseur de courant) : $I_N = I\\,\\dfrac{R_2}{R_2+R_3} = \\mathbf{${t(IN,"A")}}$ ($R_1$, en série avec la source de courant, ne change rien)`,
       `Source de courant éteinte = circuit ouvert : $R_1$ ne compte plus, $R_N = R_2 + R_3 = \\mathbf{${t(RN,"Ω")}}$`,
       `$U_{BM} = I_N\\,(R_N \\parallel R) = ${t(IN,"A")} \\times ${t(par(RN,R),"Ω")} = \\mathbf{${t(U,"V")}}$`]};
@@ -132,23 +132,98 @@ const generateurs = {
   "gen-par2"(){
     const E = rnd([4.5,6,9,12]), r = rnd([0.5,1,1.5,2]), R1 = rnd(E12)*rnd([1,10]), R2 = rnd(E12)*rnd([1,10]);
     const Rp = par(R1,R2), I = E/(r+Rp), U = E - r*I;
-    return {vals:{E:f(E,"V"),r:f(r,"Ω"),R1:f(R1,"Ω"),R2:f(R2,"Ω")}, rep:[I, U, U/R1, U/R2], corr:[
+    return {vals:{E:f(E,"V"),r:f(r,"Ω"),R1:f(R1,"Ω"),R2:f(R2,"Ω"),RP:f(Rp,"Ω"),RT:f(r+Rp,"Ω"),UR:f(r*I,"V")}, rep:[I, U, U/R1, U/R2], corr:[
       `$R_1 \\parallel R_2 = ${t(Rp,"Ω")}$ puis $I = \\dfrac{E}{r + R_1\\parallel R_2} = \\mathbf{${t(I,"A")}}$`, `$U = E - rI = \\mathbf{${t(U,"V")}}$`,
       `$I_1 = U/R_1 = \\mathbf{${t(U/R1,"A")}}$`, `$I_2 = U/R_2 = \\mathbf{${t(U/R2,"A")}}$`]};
   },
   "gen-reel"(){
     const E = rnd([4.5,6,9,12,24]), RG = rnd([0.2,0.5,1,1.5,2]), R = rnd([2.2,3.3,4.7,5.6,8.2,10,22]);
     const I = E/(RG+R), U = R*I;
-    return {vals:{E:f(E,"V"),RG:f(RG,"Ω"),R:f(R,"Ω")}, rep:[I, U, U*I], corr:[
+    return {vals:{E:f(E,"V"),RG:f(RG,"Ω"),R:f(R,"Ω"),RT:f(RG+R,"Ω"),UG:f(RG*I,"V")}, rep:[I, U, U*I], corr:[
       `Une seule maille : $I = \\dfrac{E}{R_G + R} = \\mathbf{${t(I,"A")}}$`, `$U = E - R_G I = R\\,I = \\mathbf{${t(U,"V")}}$`, `$P = U\\,I = \\mathbf{${t(U*I,"W")}}$`]};
   },
   "millman3"(){
     const E1 = rnd([5,6,9,10,12,15]), E2 = rnd([3,5,6,9,12]), R1 = rR([10,100]), R2 = rR([10,100]), R3 = rR([10,100]);
     const U1 = E1*par(R2,R3)/(R1+par(R2,R3)), U2 = E2*par(R1,R3)/(R2+par(R1,R3)), U = U1 + U2;
-    return {vals:{E1:f(E1,"V"),E2:f(E2,"V"),R1:f(R1,"Ω"),R2:f(R2,"Ω"),R3:f(R3,"Ω")}, rep:[U1, U2, U], corr:[
+    return {vals:{E1:f(E1,"V"),E2:f(E2,"V"),R1:f(R1,"Ω"),R2:f(R2,"Ω"),R3:f(R3,"Ω"),P23:f(par(R2,R3),"Ω"),P13:f(par(R1,R3),"Ω")}, rep:[U1, U2, U], corr:[
       `$E_2$ éteinte (fil) : $R_2 \\parallel R_3 = ${t(par(R2,R3),"Ω")}$, diviseur : $U_1 = E_1\\,\\dfrac{R_2\\parallel R_3}{R_1 + R_2\\parallel R_3} = \\mathbf{${t(U1,"V")}}$`,
       `$E_1$ éteinte : $U_2 = E_2\\,\\dfrac{R_1\\parallel R_3}{R_2 + R_1\\parallel R_3} = \\mathbf{${t(U2,"V")}}$`,
       `$U_{AM} = U_1 + U_2 = \\mathbf{${t(U,"V")}}$ (Millman donne pareil : $\\dfrac{E_1/R_1 + E_2/R_2}{1/R_1+1/R_2+1/R_3}$)`]};
+  },
+  /* ---- variantes ajoutées le 01/11/2026 (exos guidés : nouvelles valeurs à chaque ouverture) ---- */
+  "sys2"(){
+    const I1 = rnd([1,1.5,2,2.5,3,4,5]), k = rnd([2,3,4]), S = I1*(1+k);
+    return {vals:{S:f(S,"A"),K:String(k),K1:String(k+1),EQ2:`$${k}I_1 - I_2 = 0$`}, rep:[I1, k*I1], corr:[
+      `$I_2 = ${k}\\,I_1$ donc $${k+1}\\,I_1 = ${t(S,"A")}$ et $I_1 = \\mathbf{${t(I1,"A")}}$`, `$I_2 = ${k} \\times ${t(I1,"A")} = \\mathbf{${t(k*I1,"A")}}$`]};
+  },
+  "ohm-P"(){
+    const R = rnd([47,68,100,150,220,330,470,680,1000]), I = rnd([10,20,30,50,100])*1e-3, U = R*I;
+    return {vals:{R:f(R,"Ω"),I:f(I,"A"),IA:String(I).replace(".",",")}, rep:[U, U*I], corr:[
+      `$U = R\\,I = ${t(R,"Ω")} \\times ${t(I,"A")} = \\mathbf{${t(U,"V")}}$`, `$P = U\\,I = ${t(U,"V")} \\times ${t(I,"A")} = \\mathbf{${t(U*I,"W")}}$`]};
+  },
+  "td1-ex1"(){
+    const I2 = rnd([1,2,3,4,5]), I3 = rnd([1,2,3,4,5,6]), I4 = rnd([1,2,3,4,5,6,7].filter(x => x !== I3)), I1 = I2+I3, I5 = I3-I4, I6 = I4-I1;
+    return {vals:{I1:f(I1,"A"),I2:f(I2,"A"),I3:f(I3,"A"),I4:f(I4,"A")}, rep:[I1, I5, I6], corr:[
+      `$I_1 = I_2 + I_3 = \\mathbf{${t(I1,"A")}}$`, `$I_5 = I_3 - I_4 = \\mathbf{${t(I5,"A")}}$${I5 < 0 ? " : il descend en réalité" : " : il monte bien"}`,
+      `$I_6 = I_4 - I_1 = \\mathbf{${t(I6,"A")}}$${I6 < 0 ? " : il descend en réalité" : ""}`]};
+  },
+  "td1-ex3"(){
+    const UDA = rnd([4,5,6,8,10,12,15]), UAC = rnd([5,8,10,12,15,20,25]), UBF = rnd([2,3,5,7,9,12]);
+    const VA = -UDA, VC = VA-UAC, VB = VC+UBF;
+    return {vals:{UDA:f(UDA,"V"),UAC:f(UAC,"V"),UBF:f(UBF,"V"),VA:f(VA,"V"),VF:f(VC,"V")}, rep:[VA, VC, VC, VB], corr:[
+      `$V_A = V_D - U_{DA} = \\mathbf{${t(VA,"V")}}$`, `$V_C = V_A - U_{AC} = \\mathbf{${t(VC,"V")}}$`, `$V_E = V_F = V_C = \\mathbf{${t(VC,"V")}}$ (même fil)`,
+      `$V_B = V_F + U_{BF} = \\mathbf{${t(VB,"V")}}$`]};
+  },
+  "td1-ex4"(){
+    const U1 = rnd([10,12,15,18,20,24,30]), U2 = rnd([2,3,4,5,6,8]), U4 = -rnd([3,5,6,8,10,12]), VD = -U4;
+    return {vals:{U1:f(U1,"V"),U2:f(U2,"V"),U4:f(U4,"V"),VD:f(VD,"V")}, rep:[U1+U2, U1-VD, 0], corr:[
+      `$V_{\\text{milieu}} = U_1$ et $U_3 = U_1 + U_2 = \\mathbf{${t(U1+U2,"V")}}$`, `$V_{\\text{droite}} = -U_4 = ${t(VD,"V")}$, $U_5 = U_1 - V_{\\text{droite}} = \\mathbf{${t(U1-VD,"V")}}$`,
+      `$U_6 = \\mathbf{0\\ \\text{V}}$ : ses deux bornes sont sur le fil du bas, elle est court-circuitée`]};
+  },
+  "td2-ex1"(){
+    const E = rnd([5,6,9,10,12,15,24]), R1 = rR(), R2 = rR(), R3 = rR(), R4 = rR(), R5 = rR();
+    const R34 = R3+R4, Rp = par(R2,R34), Req = R1+Rp+R5, I1 = E/Req, V2 = Rp*I1, I2 = V2/R2, I3 = I1-I2;
+    return {vals:{E:f(E,"V"),R1:f(R1,"Ω"),R2:f(R2,"Ω"),R3:f(R3,"Ω"),R4:f(R4,"Ω"),R5:f(R5,"Ω"),R34:f(R34,"Ω"),RP:f(Rp,"Ω"),REQ:f(Req,"Ω"),I3:f(I3,"A"),V1:f(R1*I1,"V"),V5:f(R5*I1,"V")},
+      rep:[Req, I1, V2, I2, R3*I3], corr:[
+      `$R_3 + R_4 = ${t(R34,"Ω")}$, $R_2 \\parallel (R_3+R_4) = ${t(Rp,"Ω")}$, $R_{eq} = R_1 + ${t(Rp,"Ω")} + R_5 = \\mathbf{${t(Req,"Ω")}}$`,
+      `$I_1 = E/R_{eq} = \\mathbf{${t(I1,"A")}}$ (c'est aussi $I_5$)`, `$V_2 = ${t(Rp,"Ω")} \\times I_1 = \\mathbf{${t(V2,"V")}}$`,
+      `$I_2 = V_2/R_2 = \\mathbf{${t(I2,"A")}}$ (et $I_3 = I_1 - I_2 = ${t(I3,"A")}$)`,
+      `$V_3 = R_3 I_3 = \\mathbf{${t(R3*I3,"V")}}$ ($V_4 = ${t(R4*I3,"V")}$, $V_1 = ${t(R1*I1,"V")}$, $V_5 = ${t(R5*I1,"V")}$)`]};
+  },
+  "deux-gen"(){
+    const E1 = rnd([24,30,36,48]), E2 = rnd([6,9,12,18,24].filter(x => x <= E1-6)), r1 = rnd([0.5,1,1.5,2]), r2 = rnd([0.5,1,1.5]), R = rnd([4.7,5.6,6.8,8.2,10,12,15,22]);
+    const I = (E1-E2)/(r1+r2+R);
+    return {vals:{E1:f(E1,"V"),E2:f(E2,"V"),r1:f(r1,"Ω"),r2:f(r2,"Ω"),R:f(R,"Ω"),DE:f(E1-E2,"V"),RT:f(r1+r2+R,"Ω"),UR1:f(r1*I,"V"),UR2:f(r2*I,"V")},
+      rep:[I, E1-r1*I, E2+r2*I, R*I], corr:[
+      `$I = \\dfrac{E_1 - E_2}{r_1 + r_2 + R} = \\dfrac{${t(E1-E2,"V")}}{${t(r1+r2+R,"Ω")}} = \\mathbf{${t(I,"A")}}$`, `$U_1 = E_1 - r_1 I = \\mathbf{${t(E1-r1*I,"V")}}$`,
+      `$U_2 = E_2 + r_2 I = \\mathbf{${t(E2+r2*I,"V")}}$`, `$U = R\\,I = \\mathbf{${t(R*I,"V")}}$ (et bien $U_1 = U_2 + U$)`]};
+  },
+  "td3-ex1"(){
+    let I1, I2, R1, R2;
+    do { I1 = rnd([2,4,5,6,8,10]); I2 = rnd([1,2,3,4,5,6]); R1 = rnd([10,20,30,40,50]); R2 = rnd([10,20,30,40,50]); } while(Math.abs(R1*I1 - R2*I2) < 5);
+    const R = rnd([20,40,50,60,80,100]), RT = R1+R2+R, Ip = -R1*I1/RT, Ipp = R2*I2/RT;
+    return {vals:{I1:f(I1,"A"),I2:f(I2,"A"),R1:f(R1,"Ω"),R2:f(R2,"Ω"),R:f(R,"Ω"),E1V:f(R1*I1,"V"),E2V:f(R2*I2,"V"),RT:f(RT,"Ω")}, rep:[Ip, Ipp, Ip+Ipp], corr:[
+      `$I' = -\\dfrac{R_1 I_1}{R_1+R_2+R} = -\\dfrac{${t(R1*I1,"V")}}{${t(RT,"Ω")}} = \\mathbf{${t(Ip,"A")}}$`,
+      `$I'' = \\dfrac{R_2 I_2}{R_1+R_2+R} = \\dfrac{${t(R2*I2,"V")}}{${t(RT,"Ω")}} = \\mathbf{${t(Ipp,"A")}}$`, `$I = I' + I'' = \\mathbf{${t(Ip+Ipp,"A")}}$`]};
+  },
+  "norton-millman"(){
+    const E1 = rnd([5,6,9,10,12,15]), E2 = rnd([3,5,6,9,12]), R1 = rR([10,100]), R2 = rR([10,100]), R3 = rR([10,100]);
+    const IN = E1/R1 + E2/R2, RN = par(R1,R2), U = IN*par(RN,R3);
+    return {vals:{E1:f(E1,"V"),E2:f(E2,"V"),R1:f(R1,"Ω"),R2:f(R2,"Ω"),R3:f(R3,"Ω"),J1:f(E1/R1,"A"),J2:f(E2/R2,"A"),PN3:f(par(RN,R3),"Ω")}, rep:[IN, RN, U], corr:[
+      `$I_N = E_1/R_1 + E_2/R_2 = ${t(E1/R1,"A")} + ${t(E2/R2,"A")} = \\mathbf{${t(IN,"A")}}$`, `$R_N = R_1 \\parallel R_2 = \\mathbf{${t(RN,"Ω")}}$`,
+      `$U = I_N\\,(R_N \\parallel R_3) = ${t(IN,"A")} \\times ${t(par(RN,R3),"Ω")} = \\mathbf{${t(U,"V")}}$`]};
+  },
+  "td3-ex3"(){
+    const E1 = rnd([5,6,9,10,12,15]), R1 = rR(), I2 = rnd([2,5,10,20])*1e-3, R = rR();
+    const Ip = E1/(R1+R), Ipp = I2*R1/(R1+R), VA = (E1/R1 + I2)/(1/R1 + 1/R);
+    return {vals:{E1:f(E1,"V"),R1:f(R1,"Ω"),I2:f(I2,"A"),R:f(R,"Ω"),R1R:f(R1+R,"Ω")}, rep:[Ip, Ipp, Ip+Ipp], corr:[
+      `$I' = \\dfrac{E_1}{R_1 + R} = \\mathbf{${t(Ip,"A")}}$`, `$I'' = I_2\\,\\dfrac{R_1}{R_1 + R} = \\mathbf{${t(Ipp,"A")}}$`,
+      `$I = I' + I'' = \\mathbf{${t(Ip+Ipp,"A")}}$ ; Millman : $V_A = \\dfrac{E_1/R_1 + I_2}{1/R_1 + 1/R} = ${t(VA,"V")}$, donc $I = V_A/R$, pareil`]};
+  },
+  "td3-ex4"(){
+    const I1 = rnd([5,10,20,30])*1e-3, R1 = rR(), E2 = rnd([5,6,9,10,12]), R2 = rR(), Rx = rR(), RT = R1+R2+Rx, Ip = I1*R1/RT, Ipp = E2/RT;
+    return {vals:{I1:f(I1,"A"),R1:f(R1,"Ω"),E2:f(E2,"V"),R2:f(R2,"Ω"),Rx:f(Rx,"Ω"),R2X:f(R2+Rx,"Ω"),RT:f(RT,"Ω")}, rep:[Ip, Ipp, Ip+Ipp], corr:[
+      `$I' = I_1\\,\\dfrac{R_1}{R_1 + R_2 + R_x} = \\mathbf{${t(Ip,"A")}}$`, `$I'' = \\dfrac{E_2}{R_1 + R_2 + R_x} = \\mathbf{${t(Ipp,"A")}}$`, `$I = I' + I'' = \\mathbf{${t(Ip+Ipp,"A")}}$`]};
   }
 };
 

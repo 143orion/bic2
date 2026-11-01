@@ -22,7 +22,12 @@ Ids des items : `e<chapitre>-0xx` (questions courtes), `e<chapitre>-1xx` (exos),
 
 ## Extension `modules/complement-electronique.js` (`ext: true` dans liste.json)
 - **schemas** (modèles de circuits) : `diviseur`, `thev-L` (`src:"I"` pour la version source de courant), `thev-eq`, `norton-eq`, `par3`, `serie-I`, `td2-ex1`, `gen-reel`, `deux-gen`, `gen-par2`, `td3-ex1`, `millman3`, `td3-ex3`, `td3-ex4`, `td1-ex1`, `td1-ex3`, `td1-ex4`.
-- **generateurs** (bouton 🎲, valeurs E12) : `thev-L`, `norton-L`, `par3`, `serie-I`, `gen-par2`, `gen-reel`, `millman3`. Renvoient `{vals, rep[], corr[]}` ; les textes de l'item utilisent `[[CLE]]`.
+- **generateurs** (bouton 🎲, valeurs E12) : `thev-L`, `norton-L`, `par3`, `serie-I`, `gen-par2`, `gen-reel`, `millman3`, `sys2`, `ohm-P`, `td1-ex1`, `td1-ex3`, `td1-ex4`, `td2-ex1`, `deux-gen`, `td3-ex1`, `norton-millman`, `td3-ex3`, `td3-ex4` → **tous les exos en ont un**. Renvoient `{vals, rep[], corr[]}` ; les textes de l'item (énoncé, consignes, **indices**) utilisent `[[CLE]]`, y compris des valeurs intermédiaires (ex. `[[RP]]` = $R_1 \parallel R_2$). Les `vals` par défaut de l'item (valeurs du TD, utilisées en mock) doivent contenir toutes les clés.
+
+## Exos guidés (01/11/2026)
+- Nouvelles valeurs tirées **à chaque ouverture** en mode guidé (le mock garde les valeurs du TD).
+- `guidage` sur chaque exo : « Plan d'attaque » affiché en haut (montage, loi utilisée, plan des étapes, pièges).
+- Consignes détaillées ; **indices = d'où ça vient** : indice 1 = le raisonnement (quelle loi, pourquoi elle s'applique ici), indice 2 = la formule appliquée avec les valeurs du tirage.
 - **labos** (mode Classique) : `diviseur` (ch. 3), `thev-charge` (ch. 4).
 - États de schéma par étape / écran : `surligne`, `eteint` (grisé = débranché ou source de courant éteinte), `court` (source de tension éteinte dessinée comme un fil « = 0 »).
 

@@ -526,10 +526,11 @@
    "notion": "Thévenin",
    "origine": "td",
    "enonce": "Détermine le modèle équivalent de Thévenin qui alimente $R$, puis la tension aux bornes de $R$. $E$ = [[E]], $R_1$ = [[R1]], $R_2$ = [[R2]], $R_3$ = [[R3]], $R$ = [[R]].",
+   "guidage": "**Théorème de Thévenin** : vu depuis B et M, tout le circuit à gauche de $R$ se remplace par **une source $E_{th}$ en série avec $R_{th}$**.\n\n**Plan** :\n- $E_{th}$ = tension **à vide** entre B et M ($R$ débranchée) ;\n- $R_{th}$ = résistance vue entre B et M **sources éteintes** (source de tension éteinte = un fil) ;\n- on rebranche $R$ sur ce modèle simple et on calcule $U_R$.\n\n**Intérêt** : si on change $R$, seule la dernière étape est à refaire.",
    "duree": 9,
    "etapes": [
     {
-     "consigne": "Débranche $R$. Que vaut $E_{th} = U_{BM}$ à vide ?",
+     "consigne": "Débranche $R$ (grisée). Plus rien ne sort par B : calcule la tension à vide $E_{th} = U_{BM}$.",
      "question": "$E_{th} = ?$",
      "verif": {
       "mode": "numerique",
@@ -537,8 +538,8 @@
       "unite": "V"
      },
      "indices": [
-      "À vide, aucun courant dans $R_3$ : $U_{BM}$ = tension aux bornes de $R_2$.",
-      "Diviseur de tension : $E\\,\\dfrac{R_2}{R_1+R_2}$."
+      "À vide, B n'est relié à rien : aucun courant ne traverse $R_3$, donc sa tension vaut $R_3 \\times 0 = 0$. $U_{BM}$ est alors égale à la tension aux bornes de $R_2$.",
+      "$R_1$ et $R_2$ sont parcourues par le même courant (rien ne part par $R_3$) : c'est un diviseur de tension, $U_{R_2} = E\\,\\dfrac{R_2}{R_1 + R_2}$, soit [[E]] × [[R2]] / [[R12]]."
      ],
      "corrige": "$E_{th} = 10 \\times \\dfrac{500}{1000} = \\mathbf{5\\ \\text{V}}$",
      "schema": {
@@ -552,7 +553,7 @@
      }
     },
     {
-     "consigne": "Éteins $E$ (court-circuit). Que vaut $R_{th}$ vue depuis B et M ?",
+     "consigne": "Éteins $E$ : une source de tension éteinte impose 0 V, elle devient un **fil**. Calcule la résistance vue depuis B et M.",
      "question": "$R_{th} = ?$",
      "verif": {
       "mode": "numerique",
@@ -560,8 +561,8 @@
       "unite": "Ω"
      },
      "indices": [
-      "$E$ éteinte = fil : $R_1$ et $R_2$ se retrouvent en parallèle.",
-      "$R_{th} = (R_1 \\parallel R_2) + R_3$."
+      "Avec $E$ remplacée par un fil, $R_1$ va du nœud du haut jusqu'au fil du bas, exactement comme $R_2$ : mêmes deux nœuds, donc parallèle. $R_1 \\parallel R_2$ = [[RP]].",
+      "Depuis B, on traverse d'abord $R_3$ puis ce bloc : un seul chemin, donc série. $R_{th} = R_3 + R_1 \\parallel R_2$."
      ],
      "corrige": "$R_1 \\parallel R_2 = 250\\ \\Omega$, $+ R_3$ : $\\mathbf{500\\ \\Omega}$",
      "schema": {
@@ -579,7 +580,7 @@
      }
     },
     {
-     "consigne": "Rebranche $R$ sur le modèle équivalent. Tension $U_R$ aux bornes de $R$ ?",
+     "consigne": "Rebranche $R$ sur le modèle équivalent ($E_{th}$ en série avec $R_{th}$) et calcule la tension à ses bornes.",
      "question": "$U_R = ?$",
      "verif": {
       "mode": "numerique",
@@ -587,8 +588,8 @@
       "unite": "V"
      },
      "indices": [
-      "Le modèle équivalent est un simple diviseur de tension.",
-      "$U_R = E_{th}\\,\\dfrac{R}{R_{th}+R}$."
+      "Le modèle équivalent est une seule maille : $E_{th}$, $R_{th}$ et $R$ en série. C'est donc un diviseur de tension.",
+      "$U_R = E_{th}\\,\\dfrac{R}{R_{th} + R}$, soit [[ETH]] × [[R]] / [[RTR]]."
      ],
      "corrige": "$U_R = 5 \\times \\dfrac{1000}{1500} = \\mathbf{3{,}33\\ \\text{V}}$",
      "schema": {
@@ -613,7 +614,11 @@
     "R1": "500 Ω",
     "R2": "500 Ω",
     "R3": "250 Ω",
-    "R": "1 kΩ"
+    "R": "1 kΩ",
+    "R12": "1 kΩ",
+    "RP": "250 Ω",
+    "ETH": "5 V",
+    "RTR": "1,5 kΩ"
    },
    "generateur": "thev-L"
   },
@@ -624,10 +629,11 @@
    "notion": "Norton",
    "origine": "td",
    "enonce": "Détermine le modèle équivalent de Norton qui alimente $R$, puis la tension $U_{BM}$ (en valeur absolue). $I$ = [[E]], $R_1$ = [[R1]], $R_2$ = [[R2]], $R_3$ = [[R3]], $R$ = [[R]].",
+   "guidage": "**Théorème de Norton** : vu depuis B et M, le circuit se remplace par une **source de courant $I_N$ en parallèle avec $R_N$**.\n\n**Plan** :\n- $I_N$ = courant de **court-circuit** entre B et M ;\n- $R_N$ = résistance vue entre B et M sources éteintes (source de **courant** éteinte = **circuit ouvert** : on l'enlève) ;\n- on rebranche $R$ : $I_N$ se partage entre $R_N$ et $R$.\n\n$R_N$ se calcule exactement comme $R_{th}$ : c'est la même résistance.",
    "duree": 9,
    "etapes": [
     {
-     "consigne": "Court-circuite B et M. Que vaut $I_N$ ?",
+     "consigne": "Remplace $R$ par un fil entre B et M. Le courant de la source peut passer par $R_2$ ou par $R_3$ (puis le court-circuit) : calcule le courant de court-circuit $I_N$.",
      "question": "$I_N = ?$",
      "verif": {
       "mode": "numerique",
@@ -635,8 +641,8 @@
       "unite": "A"
      },
      "indices": [
-      "$R_1$ est en série avec la source de courant : elle ne change pas le courant.",
-      "Diviseur de courant entre $R_2$ et $R_3$ : $I_N = I\\,\\dfrac{R_2}{R_2+R_3}$."
+      "$R_1$ est en série avec la source de courant : celle-ci impose $I$ quoi qu'il y ait sur sa branche, donc $R_1$ ne change rien. Au nœud du haut, $I$ arrive et se partage entre $R_2$ et la branche $R_3$ + court-circuit.",
+      "Ces deux branches relient les mêmes nœuds : diviseur de courant, chacune prend une part proportionnelle à la résistance de l'**autre**. $I_N = I\\,\\dfrac{R_2}{R_2 + R_3}$, soit [[E]] × [[R2]] / [[R23]]."
      ],
      "corrige": "$I_N = 20 \\times \\dfrac{500}{1000} = \\mathbf{10\\ \\text{mA}}$",
      "schema": {
@@ -650,7 +656,7 @@
      }
     },
     {
-     "consigne": "Éteins la source de courant (circuit ouvert). Que vaut $R_N$ ?",
+     "consigne": "Éteins la source de courant : elle impose 0 A, c'est donc un **circuit ouvert**. Calcule la résistance vue depuis B et M.",
      "question": "$R_N = ?$",
      "verif": {
       "mode": "numerique",
@@ -658,8 +664,8 @@
       "unite": "Ω"
      },
      "indices": [
-      "Circuit ouvert : $R_1$ ne mène plus nulle part.",
-      "$R_N = R_2 + R_3$."
+      "Source ouverte : la branche de $R_1$ ne mène plus nulle part, aucun courant ne peut la traverser. Elle disparaît du calcul.",
+      "Depuis B : on traverse $R_3$, puis $R_2$ pour revenir à M. Un seul chemin, donc série : $R_N = R_2 + R_3$."
      ],
      "corrige": "$R_N = 500 + 500 = \\mathbf{1\\ \\text{k}\\Omega}$",
      "schema": {
@@ -675,7 +681,7 @@
      }
     },
     {
-     "consigne": "Rebranche $R$. Que vaut $U_{BM}$ ?",
+     "consigne": "Rebranche $R$ entre B et M : $I_N$ se partage entre $R_N$ et $R$, qui sont en parallèle. Calcule $U_{BM}$.",
      "question": "$U_{BM} = ?$",
      "verif": {
       "mode": "numerique",
@@ -683,8 +689,8 @@
       "unite": "V"
      },
      "indices": [
-      "$I_N$ traverse $R_N \\parallel R$.",
-      "$U = I_N\\,(R_N \\parallel R)$."
+      "Dans le modèle de Norton, la source $I_N$, $R_N$ et $R$ sont tous branchés entre B et M : $R_N \\parallel R$ = [[RNR]].",
+      "Tout $I_N$ traverse ce bloc : loi d'Ohm, $U_{BM} = I_N\\,(R_N \\parallel R)$."
      ],
      "corrige": "$U_{BM} = 0{,}01 \\times 500 = \\mathbf{5\\ \\text{V}}$",
      "schema": {
@@ -710,7 +716,9 @@
     "R1": "1 kΩ",
     "R2": "500 Ω",
     "R3": "500 Ω",
-    "R": "1 kΩ"
+    "R": "1 kΩ",
+    "R23": "1 kΩ",
+    "RNR": "500 Ω"
    },
    "generateur": "norton-L"
   }

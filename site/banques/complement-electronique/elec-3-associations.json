@@ -343,11 +343,12 @@
    "titre": "TD2 · Exercice 1 — Tous les courants et tensions",
    "notion": "Associations",
    "origine": "td",
-   "enonce": "$E = 10\\ \\text{V}$, $R_1 = 250\\ \\Omega$, $R_2 = 2{,}5\\ \\text{k}\\Omega$, $R_3 = 1{,}5\\ \\text{k}\\Omega$, $R_4 = 1\\ \\text{k}\\Omega$ et $R_5 = 500\\ \\Omega$. Calcule tous les courants et toutes les tensions.",
+   "enonce": "$E$ = [[E]], $R_1$ = [[R1]], $R_2$ = [[R2]], $R_3$ = [[R3]], $R_4$ = [[R4]] et $R_5$ = [[R5]]. Calcule tous les courants et toutes les tensions.",
+   "guidage": "**Stratégie « réduire puis redéplier »** :\n- on simplifie le circuit en une seule résistance équivalente $R_{eq}$ vue par $E$ ;\n- il ne reste qu'une maille → $I_1$ ;\n- on « redéplie » le circuit pour retrouver les tensions et courants de chaque branche.\n\n**Règles** : en **série** (même courant, l'une après l'autre) les résistances s'additionnent ; en **parallèle** (mêmes deux nœuds) $R_a \\parallel R_b = \\dfrac{R_a R_b}{R_a + R_b}$.\n\n$R_1$ et $R_5$ sont sur le chemin principal : elles sont traversées par $I_1$ ($I_5 = I_1$).",
    "duree": 12,
    "etapes": [
     {
-     "consigne": "$R_3$ et $R_4$ sont en série, et ce bloc est en parallèle avec $R_2$. Calcule la résistance équivalente **totale** vue par $E$.",
+     "consigne": "$R_3$ et $R_4$ se suivent sans dérivation : elles sont en série. Ce bloc relie les mêmes deux nœuds que $R_2$ : il est en parallèle avec elle. Le tout est en série avec $R_1$ et $R_5$. Calcule $R_{eq}$.",
      "question": "$R_{eq} = ?$",
      "verif": {
       "mode": "numerique",
@@ -355,8 +356,8 @@
       "unite": "Ω"
      },
      "indices": [
-      "$R_3 + R_4 = 2{,}5\\ \\text{k}\\Omega$, en parallèle avec $R_2 = 2{,}5\\ \\text{k}\\Omega$.",
-      "$R_{eq} = R_1 + (R_2 \\parallel (R_3+R_4)) + R_5$."
+      "Série d'abord : $R_3$ et $R_4$ sont traversées par le même courant, elles s'ajoutent : $R_3 + R_4$ = [[R34]].",
+      "Ce bloc et $R_2$ partagent les mêmes nœuds : $R_2 \\parallel (R_3 + R_4)$ = [[RP]]. Puis on ajoute $R_1$ et $R_5$, en série avec lui : $R_{eq} = R_1 + R_2 \\parallel (R_3+R_4) + R_5$."
      ],
      "corrige": "$R_2 \\parallel 2{,}5\\ \\text{k}\\Omega = 1{,}25\\ \\text{k}\\Omega$, $R_{eq} = 250 + 1250 + 500 = \\mathbf{2\\ \\text{k}\\Omega}$",
      "schema": {
@@ -370,7 +371,7 @@
      }
     },
     {
-     "consigne": "Déduis-en le courant $I_1$ débité par le générateur.",
+     "consigne": "Le circuit réduit n'a plus qu'une maille : $E$ et $R_{eq}$. Calcule le courant $I_1$ débité.",
      "question": "$I_1 = ?$",
      "verif": {
       "mode": "numerique",
@@ -378,7 +379,8 @@
       "unite": "A"
      },
      "indices": [
-      "$I_1 = E / R_{eq}$."
+      "Le générateur « voit » une seule résistance $R_{eq}$ : la loi d'Ohm s'applique directement, $E = R_{eq}\\,I_1$.",
+      "$I_1 = E / R_{eq}$, soit [[E]] / [[REQ]]."
      ],
      "corrige": "$I_1 = 10/2000 = \\mathbf{5\\ \\text{mA}}$ (c'est aussi $I_5$)",
      "schema": {
@@ -388,7 +390,7 @@
      }
     },
     {
-     "consigne": "Calcule la tension $V_2$ aux bornes du bloc parallèle (aux bornes de $R_2$).",
+     "consigne": "Le bloc parallèle ($R_2$ avec $R_3 + R_4$) est traversé en tout par $I_1$. Sa tension est $V_2$.",
      "question": "$V_2 = ?$",
      "verif": {
       "mode": "numerique",
@@ -396,7 +398,8 @@
       "unite": "V"
      },
      "indices": [
-      "$V_2 = 1{,}25\\ \\text{k}\\Omega \\times I_1$."
+      "Vu de l'extérieur, le bloc parallèle se comporte comme une seule résistance de [[RP]], traversée par tout $I_1$.",
+      "Loi d'Ohm sur ce bloc : $V_2 = R_2 \\parallel (R_3+R_4) \\times I_1$."
      ],
      "corrige": "$V_2 = 1250 \\times 0{,}005 = \\mathbf{6{,}25\\ \\text{V}}$",
      "schema": {
@@ -406,7 +409,7 @@
      }
     },
     {
-     "consigne": "Calcule le courant $I_2$ dans $R_2$.",
+     "consigne": "$R_2$ a $V_2$ à ses bornes : déduis le courant qui la traverse.",
      "question": "$I_2 = ?$",
      "verif": {
       "mode": "numerique",
@@ -414,7 +417,8 @@
       "unite": "A"
      },
      "indices": [
-      "$I_2 = V_2 / R_2$."
+      "Loi d'Ohm sur $R_2$ seule : $I_2 = V_2 / R_2$.",
+      "Le reste de $I_1$ passe par la branche $R_3 + R_4$ : $I_3 = I_1 - I_2$ (loi des nœuds). Tu en auras besoin juste après."
      ],
      "corrige": "$I_2 = 6{,}25/2500 = \\mathbf{2{,}5\\ \\text{mA}}$ (et $I_3 = I_1 - I_2 = 2{,}5\\ \\text{mA}$)",
      "schema": {
@@ -424,7 +428,7 @@
      }
     },
     {
-     "consigne": "Calcule $V_3$ aux bornes de $R_3$.",
+     "consigne": "Le courant dans $R_3$ est ce qui reste de $I_1$ après $R_2$. Calcule $V_3$.",
      "question": "$V_3 = ?$",
      "verif": {
       "mode": "numerique",
@@ -432,8 +436,8 @@
       "unite": "V"
      },
      "indices": [
-      "$I_3 = I_1 - I_2$.",
-      "$V_3 = R_3 I_3$."
+      "Loi des nœuds à l'entrée du bloc : $I_1 = I_2 + I_3$, donc $I_3 = I_1 - I_2$. Autre chemin : $I_3 = V_2 / (R_3 + R_4)$, car la branche a aussi $V_2$ à ses bornes.",
+      "Loi d'Ohm : $V_3 = R_3\\,I_3$, avec $I_3$ = [[I3]]."
      ],
      "corrige": "$V_3 = 1500 \\times 0{,}0025 = \\mathbf{3{,}75\\ \\text{V}}$ ($V_4 = 2{,}5\\ \\text{V}$, $V_1 = 1{,}25\\ \\text{V}$, $V_5 = 2{,}5\\ \\text{V}$)",
      "schema": {
@@ -446,15 +450,30 @@
    "schema": {
     "modele": "td2-ex1",
     "vals": {
-     "E": "10 V",
-     "R1": "250 Ω",
-     "R2": "2,5 kΩ",
-     "R3": "1,5 kΩ",
-     "R4": "1 kΩ",
-     "R5": "500 Ω"
+     "E": "[[E]]",
+     "R1": "[[R1]]",
+     "R2": "[[R2]]",
+     "R3": "[[R3]]",
+     "R4": "[[R4]]",
+     "R5": "[[R5]]"
     }
    },
-   "explication": "Vérification par la loi des mailles : $V_1 + V_2 + V_5 = 1{,}25 + 6{,}25 + 2{,}5 = 10\\ \\text{V} = E$."
+   "explication": "Vérification par la loi des mailles : $V_1 + V_2 + V_5 = E$, avec $V_1 = R_1 I_1$ = [[V1]] et $V_5 = R_5 I_1$ = [[V5]].",
+   "generateur": "td2-ex1",
+   "vals": {
+    "E": "10 V",
+    "R1": "250 Ω",
+    "R2": "2,5 kΩ",
+    "R3": "1,5 kΩ",
+    "R4": "1 kΩ",
+    "R5": "500 Ω",
+    "R34": "2,5 kΩ",
+    "RP": "1,25 kΩ",
+    "REQ": "2 kΩ",
+    "I3": "2,5 mA",
+    "V1": "1,25 V",
+    "V5": "2,5 V"
+   }
   },
   {
    "id": "e3-102",
@@ -462,11 +481,12 @@
    "titre": "TD2 · Exercice 2 — Deux générateurs en opposition",
    "notion": "Association de générateurs",
    "origine": "td",
-   "enonce": "$D_1$ : $E_1 = 48\\ \\text{V}$, $r_1 = 1{,}5\\ \\Omega$ ; $D_2$ : $E_2 = 24\\ \\text{V}$, $r_2 = 0{,}5\\ \\Omega$, placés en série avec $R = 10\\ \\Omega$. D'après le fléchage, $D_2$ est monté **en opposition**.",
+   "enonce": "$D_1$ : $E_1$ = [[E1]], $r_1$ = [[r1]] ; $D_2$ : $E_2$ = [[E2]], $r_2$ = [[r2]], placés en série avec $R$ = [[R]]. D'après le fléchage, $D_2$ est monté **en opposition**.",
+   "guidage": "**Montage** : une seule maille avec deux générateurs réels (chacun = $E_k$ en série avec $r_k$) et $R$.\n\n$D_2$ est **en opposition** : sa f.é.m. pousse le courant dans le sens inverse de $E_1$. Comme $E_1 > E_2$, $D_1$ l'emporte : il fonctionne en **générateur**, et $D_2$ en **récepteur** (il reçoit de l'énergie, comme une batterie qu'on recharge).\n\n**Plan** : loi des mailles → $I$, puis la tension aux bornes de chaque dipôle.",
    "duree": 8,
    "etapes": [
     {
-     "consigne": "Écris la loi des mailles et calcule l'intensité $I$ du courant.",
+     "consigne": "Fais le tour de la maille dans le sens de $I$ : $E_1$ compte en +, $E_2$ (en opposition) en −, et chaque résistance consomme $rI$ ou $RI$.",
      "question": "$I = ?$",
      "verif": {
       "mode": "numerique",
@@ -474,13 +494,13 @@
       "unite": "A"
      },
      "indices": [
-      "Les f.é.m. se retranchent : $E_1 - E_2$.",
-      "$I = \\dfrac{E_1 - E_2}{r_1 + r_2 + R}$."
+      "Loi des mailles : f.é.m. nette = somme des chutes de tension. Des f.é.m. opposées se retranchent : $E_1 - E_2$ = [[DE]].",
+      "Les trois résistances sont en série (même $I$) : $r_1 + r_2 + R$ = [[RT]]. Donc $I = \\dfrac{E_1 - E_2}{r_1 + r_2 + R}$."
      ],
      "corrige": "$I = \\dfrac{48 - 24}{1{,}5 + 0{,}5 + 10} = \\mathbf{2\\ \\text{A}}$"
     },
     {
-     "consigne": "Tension $U_1$ aux bornes de $D_1$ (générateur).",
+     "consigne": "$D_1$ fournit le courant : sa tension de sortie est sa f.é.m. moins ce qu'il perd dans sa résistance interne.",
      "question": "$U_1 = ?$",
      "verif": {
       "mode": "numerique",
@@ -488,7 +508,8 @@
       "unite": "V"
      },
      "indices": [
-      "Générateur : $U_1 = E_1 - r_1 I$."
+      "Modèle du générateur réel : source idéale $E_1$ en série avec $r_1$. Le courant crée dans $r_1$ une chute $r_1 I$ = [[UR1]], qui ne sort pas du générateur.",
+      "$U_1 = E_1 - r_1 I$."
      ],
      "corrige": "$U_1 = 48 - 1{,}5 \\times 2 = \\mathbf{45\\ \\text{V}}$",
      "schema": {
@@ -499,7 +520,7 @@
      }
     },
     {
-     "consigne": "Tension $U_2$ aux bornes de $D_2$ (il reçoit le courant).",
+     "consigne": "$D_2$ est traversé à contre-sens de sa f.é.m. : il reçoit de l'énergie. Sa tension est sa f.é.m. **plus** la chute dans $r_2$.",
      "question": "$U_2 = ?$",
      "verif": {
       "mode": "numerique",
@@ -507,7 +528,8 @@
       "unite": "V"
      },
      "indices": [
-      "En récepteur : $U_2 = E_2 + r_2 I$."
+      "En récepteur, il faut vaincre la f.é.m. $E_2$ et en plus faire passer $I$ dans $r_2$ : les deux tensions s'ajoutent.",
+      "$U_2 = E_2 + r_2 I$, avec $r_2 I$ = [[UR2]]."
      ],
      "corrige": "$U_2 = 24 + 0{,}5 \\times 2 = \\mathbf{25\\ \\text{V}}$",
      "schema": {
@@ -518,7 +540,7 @@
      }
     },
     {
-     "consigne": "Tension $U$ aux bornes de $R$.",
+     "consigne": "Tension aux bornes de la résistance $R$.",
      "question": "$U = ?$",
      "verif": {
       "mode": "numerique",
@@ -526,7 +548,8 @@
       "unite": "V"
      },
      "indices": [
-      "$U = RI$."
+      "Loi d'Ohm : $U = R\\,I$, avec le même $I$ (une seule maille).",
+      "Vérification par la loi des mailles : $U_1 = U_2 + U$."
      ],
      "corrige": "$U = 10 \\times 2 = \\mathbf{20\\ \\text{V}}$ (et bien $U_1 = U_2 + U$)",
      "schema": {
@@ -539,12 +562,24 @@
    "schema": {
     "modele": "deux-gen",
     "vals": {
-     "E1": "48 V",
-     "r1": "1,5 Ω",
-     "E2": "24 V",
-     "r2": "0,5 Ω",
-     "R": "10 Ω"
+     "E1": "[[E1]]",
+     "r1": "[[r1]]",
+     "E2": "[[E2]]",
+     "r2": "[[r2]]",
+     "R": "[[R]]"
     }
+   },
+   "generateur": "deux-gen",
+   "vals": {
+    "E1": "48 V",
+    "r1": "1,5 Ω",
+    "E2": "24 V",
+    "r2": "0,5 Ω",
+    "R": "10 Ω",
+    "DE": "24 V",
+    "RT": "12 Ω",
+    "UR1": "3 V",
+    "UR2": "1 V"
    }
   },
   {
@@ -554,10 +589,11 @@
    "notion": "Associations",
    "origine": "td",
    "enonce": "Un générateur $E$ = [[E]], $r$ = [[r]] alimente $R_1$ = [[R1]] et $R_2$ = [[R2]] en parallèle.",
+   "guidage": "**Montage** : le générateur réel ($E$, $r$) alimente deux résistances branchées entre les mêmes points P et N : $R_1 \\parallel R_2$.\n\n**Plan** :\n- remplacer $R_1 \\parallel R_2$ par une seule résistance : il reste une maille simple → $I$ ;\n- tension $U$ entre P et N ;\n- loi d'Ohm dans chaque branche → $I_1$, $I_2$.",
    "duree": 7,
    "etapes": [
     {
-     "consigne": "Remplace $R_1 \\parallel R_2$ par une résistance équivalente, puis calcule le courant $I$ débité.",
+     "consigne": "$R_1$ et $R_2$ ont les mêmes bornes P et N : remplace-les par une résistance équivalente. Il reste une maille : $E$, $r$ et cette résistance en série. Calcule $I$.",
      "question": "$I = ?$",
      "verif": {
       "mode": "numerique",
@@ -565,8 +601,8 @@
       "unite": "A"
      },
      "indices": [
-      "$R_1 \\parallel R_2 = \\dfrac{R_1 R_2}{R_1 + R_2}$.",
-      "$I = \\dfrac{E}{r + R_1\\parallel R_2}$."
+      "En parallèle, les conductances s'ajoutent : $\\dfrac{1}{R_p} = \\dfrac{1}{R_1} + \\dfrac{1}{R_2}$, d'où $R_p = \\dfrac{R_1 R_2}{R_1 + R_2}$ = [[RP]].",
+      "Une seule maille : $E = (r + R_p)\\,I$, donc $I = \\dfrac{E}{r + R_p}$, soit [[E]] / [[RT]]."
      ],
      "corrige": "$R_1\\parallel R_2 = 2\\ \\Omega$, $I = 4{,}5/3{,}5 = \\mathbf{1{,}29\\ \\text{A}}$",
      "schema": {
@@ -577,7 +613,7 @@
      }
     },
     {
-     "consigne": "Tension $U$ aux bornes de $R_1$ et $R_2$.",
+     "consigne": "$U$ est la tension entre P et N : c'est aussi la tension de sortie du générateur.",
      "question": "$U = ?$",
      "verif": {
       "mode": "numerique",
@@ -585,7 +621,8 @@
       "unite": "V"
      },
      "indices": [
-      "$U = E - rI$."
+      "Générateur réel : $U = E - rI$. La chute $rI$ = [[UR]] reste à l'intérieur du générateur.",
+      "Ou loi d'Ohm sur la résistance équivalente : $U = R_p\\,I$, même résultat."
      ],
      "corrige": "$U = 4{,}5 - 1{,}5 \\times 1{,}286 = \\mathbf{2{,}57\\ \\text{V}}$",
      "schema": {
@@ -596,7 +633,7 @@
      }
     },
     {
-     "consigne": "Courant $I_1$ dans $R_1$.",
+     "consigne": "$R_1$ a $U$ à ses bornes : calcule le courant qui la traverse.",
      "question": "$I_1 = ?$",
      "verif": {
       "mode": "numerique",
@@ -604,7 +641,8 @@
       "unite": "A"
      },
      "indices": [
-      "$I_1 = U/R_1$."
+      "Une branche en parallèle a la même tension $U$ que le bloc. Loi d'Ohm : $I_1 = U / R_1$.",
+      "Plus une branche est résistante, moins elle prend de courant : le courant se partage à l'inverse des résistances."
      ],
      "corrige": "$I_1 = 2{,}57/3 = \\mathbf{0{,}857\\ \\text{A}}$",
      "schema": {
@@ -614,7 +652,7 @@
      }
     },
     {
-     "consigne": "Courant $I_2$ dans $R_2$.",
+     "consigne": "Calcule le courant dans $R_2$.",
      "question": "$I_2 = ?$",
      "verif": {
       "mode": "numerique",
@@ -622,7 +660,8 @@
       "unite": "A"
      },
      "indices": [
-      "$I_2 = U/R_2$, ou $I - I_1$."
+      "Même tension $U$ : $I_2 = U / R_2$.",
+      "Vérification par la loi des nœuds en P : $I_1 + I_2 = I$, donc aussi $I_2 = I - I_1$."
      ],
      "corrige": "$I_2 = 2{,}57/6 = \\mathbf{0{,}429\\ \\text{A}}$",
      "schema": {
@@ -645,7 +684,10 @@
     "E": "4,5 V",
     "r": "1,5 Ω",
     "R1": "3 Ω",
-    "R2": "6 Ω"
+    "R2": "6 Ω",
+    "RP": "2 Ω",
+    "RT": "3,5 Ω",
+    "UR": "1,93 V"
    },
    "generateur": "gen-par2"
   }

@@ -317,21 +317,21 @@
    "titre": "TD3 · Exercice 1 — Deux sources de courant",
    "notion": "Superposition",
    "origine": "td",
-   "enonce": "$I_1 = 8\\ \\text{A}$ avec $R_1 = 10\\ \\Omega$, $I_2 = 4\\ \\text{A}$ avec $R_2 = 30\\ \\Omega$, et $R = 60\\ \\Omega$. Calcule le courant $I$ dans $R$ (fléché de A vers B) par **superposition**.",
+   "enonce": "$I_1$ = [[I1]] avec $R_1$ = [[R1]], $I_2$ = [[I2]] avec $R_2$ = [[R2]], et $R$ = [[R]]. Calcule le courant $I$ dans $R$ (fléché de A vers B) par **superposition**.",
+   "guidage": "**Superposition** : dans un circuit linéaire à plusieurs sources, l'effet total est la **somme des effets de chaque source prise seule**, les autres étant éteintes. Une source de **courant** éteinte = **circuit ouvert** (on l'enlève).\n\n**Astuce** : une source de courant $I_k$ en parallèle avec $R_k$ équivaut à une source de tension $R_k I_k$ en série avec $R_k$ (passage Norton → Thévenin).\n\n**Plan** : $I_1$ seule → $I'$ ; $I_2$ seule → $I''$ ; puis $I = I' + I''$ avec les signes (sens de la flèche A → B).",
    "duree": 12,
    "etapes": [
     {
-     "consigne": "$I_1$ seule ($I_2$ éteinte = circuit ouvert). Transforme le bloc $I_1 \\parallel R_1$ en Thévenin et calcule la contribution $I'$ dans $R$ (attention au sens).",
+     "consigne": "Éteins $I_2$ (circuit ouvert : elle disparaît, $R_2$ reste). Transforme le bloc $I_1 \\parallel R_1$ en source de tension, puis calcule la contribution $I'$ dans $R$. Attention au sens.",
      "question": "$I' = ?$",
      "verif": {
       "mode": "numerique",
       "attendu": -0.8,
-      "unite": "A",
-      "tol": 0.01
+      "unite": "A"
      },
      "indices": [
-      "$I_1 \\parallel R_1$ ≡ source de tension $R_1 I_1 = 80\\ \\text{V}$ en série avec $10\\ \\Omega$.",
-      "Une seule maille : $80/(10 + 30 + 60)$ ; le courant traverse $R$ de B vers A, d'où le signe."
+      "Norton → Thévenin : $I_1$ en parallèle avec $R_1$ équivaut à $R_1 I_1$ = [[E1V]] en série avec $R_1$ (même tension à vide, même courant de court-circuit).",
+      "Il reste une seule maille : cette source, $R_1$, $R_2$ et $R$ en série. $|I'| = \\dfrac{R_1 I_1}{R_1 + R_2 + R}$, soit [[E1V]] / [[RT]]. Ce courant traverse $R$ de B vers A, contre la flèche : $I'$ est **négatif**."
      ],
      "corrige": "$I' = -\\dfrac{80}{100} = \\mathbf{-0{,}8\\ \\text{A}}$",
      "schema": {
@@ -347,17 +347,16 @@
      }
     },
     {
-     "consigne": "$I_2$ seule ($I_1$ éteinte). Contribution $I''$ dans $R$ ?",
+     "consigne": "Éteins $I_1$ à son tour ($I_2$ seule). Même méthode : contribution $I''$ dans $R$ ?",
      "question": "$I'' = ?$",
      "verif": {
       "mode": "numerique",
       "attendu": 1.2,
-      "unite": "A",
-      "tol": 0.01
+      "unite": "A"
      },
      "indices": [
-      "$I_2 \\parallel R_2$ ≡ $120\\ \\text{V}$ en série avec $30\\ \\Omega$.",
-      "$120/(10 + 30 + 60)$, cette fois de A vers B."
+      "$I_2 \\parallel R_2$ équivaut à $R_2 I_2$ = [[E2V]] en série avec $R_2$.",
+      "Même maille, même résistance totale [[RT]] : $|I''| = \\dfrac{R_2 I_2}{R_1 + R_2 + R}$. Cette fois le courant va de A vers B, dans le sens de la flèche : $I''$ est positif."
      ],
      "corrige": "$I'' = \\dfrac{120}{100} = \\mathbf{1{,}2\\ \\text{A}}$",
      "schema": {
@@ -373,16 +372,16 @@
      }
     },
     {
-     "consigne": "Additionne les contributions.",
+     "consigne": "Additionne les deux contributions, avec leurs signes.",
      "question": "$I = ?$",
      "verif": {
       "mode": "numerique",
       "attendu": 0.4,
-      "unite": "A",
-      "tol": 0.01
+      "unite": "A"
      },
      "indices": [
-      "$I = I' + I''$ avec les signes."
+      "Superposition : $I = I' + I''$, chaque contribution avec le signe trouvé par rapport à la flèche A → B.",
+      "Le signe du résultat dit quelle source l'emporte : positif si $R_2 I_2 > R_1 I_1$."
      ],
      "corrige": "$I = -0{,}8 + 1{,}2 = \\mathbf{0{,}4\\ \\text{A}}$",
      "schema": {
@@ -395,14 +394,25 @@
    "schema": {
     "modele": "td3-ex1",
     "vals": {
-     "I1": "8 A",
-     "R1": "10 Ω",
-     "I2": "4 A",
-     "R2": "30 Ω",
-     "R": "60 Ω"
+     "I1": "[[I1]]",
+     "R1": "[[R1]]",
+     "I2": "[[I2]]",
+     "R2": "[[R2]]",
+     "R": "[[R]]"
     }
    },
-   "explication": "Par Thévenin vu par $R$ : $E_{th} = 120 - 80 = 40\\ \\text{V}$, $R_{th} = 40\\ \\Omega$, $I = 40/(40 + 60) = 0{,}4\\ \\text{A}$ : même résultat."
+   "explication": "Par Thévenin vu par $R$ : $E_{th} = R_2 I_2 - R_1 I_1$ et $R_{th} = R_1 + R_2$, puis $I = E_{th} / (R_{th} + R)$ : même résultat.",
+   "generateur": "td3-ex1",
+   "vals": {
+    "I1": "8 A",
+    "I2": "4 A",
+    "R1": "10 Ω",
+    "R2": "30 Ω",
+    "R": "60 Ω",
+    "E1V": "80 V",
+    "E2V": "120 V",
+    "RT": "100 Ω"
+   }
   },
   {
    "id": "e5-102",
@@ -411,10 +421,11 @@
    "notion": "Superposition",
    "origine": "td",
    "enonce": "$E_1$ = [[E1]], $E_2$ = [[E2]], $R_1$ = [[R1]], $R_2$ = [[R2]], $R_3$ = [[R3]]. Trouve la tension aux bornes de $R_3$ par superposition.",
+   "guidage": "**Superposition** : la tension aux bornes de $R_3$ est la somme des tensions créées par chaque source **seule**. Une source de **tension** éteinte = **fil** (0 V).\n\n**Plan** : $E_1$ seule → $U_1$ ; $E_2$ seule → $U_2$ ; puis $U = U_1 + U_2$.\n\nChaque cas se ramène à un **diviseur de tension** avec une association parallèle.",
    "duree": 9,
    "etapes": [
     {
-     "consigne": "$E_1$ seule ($E_2$ = fil) : calcule $U_1$ aux bornes de $R_3$.",
+     "consigne": "Remplace $E_2$ par un fil. Regarde comment sont alors branchées $R_2$ et $R_3$, puis calcule $U_1$ aux bornes de $R_3$.",
      "question": "$U_1 = ?$",
      "verif": {
       "mode": "numerique",
@@ -422,8 +433,8 @@
       "unite": "V"
      },
      "indices": [
-      "$R_2$ et $R_3$ se retrouvent en parallèle.",
-      "Diviseur : $E_1\\,\\dfrac{R_2\\parallel R_3}{R_1 + R_2\\parallel R_3}$."
+      "$E_2$ devenue un fil, $R_2$ va de A jusqu'au fil du bas, comme $R_3$ : mêmes deux nœuds (A et M), donc parallèle. $R_2 \\parallel R_3$ = [[P23]].",
+      "Il reste $E_1$, $R_1$ et ce bloc en série : diviseur de tension, $U_1 = E_1\\,\\dfrac{R_2 \\parallel R_3}{R_1 + R_2 \\parallel R_3}$."
      ],
      "corrige": "$U_1 = 10 \\times \\dfrac{50}{150} = \\mathbf{3{,}33\\ \\text{V}}$",
      "schema": {
@@ -439,7 +450,7 @@
      }
     },
     {
-     "consigne": "$E_2$ seule ($E_1$ = fil) : calcule $U_2$.",
+     "consigne": "Maintenant $E_1$ devient un fil et $E_2$ agit seule. Même raisonnement pour $U_2$.",
      "question": "$U_2 = ?$",
      "verif": {
       "mode": "numerique",
@@ -447,7 +458,8 @@
       "unite": "V"
      },
      "indices": [
-      "$R_1 \\parallel R_3$ cette fois."
+      "Cette fois c'est $R_1$ qui relie A au fil du bas : $R_1 \\parallel R_3$ = [[P13]].",
+      "Diviseur : $U_2 = E_2\\,\\dfrac{R_1 \\parallel R_3}{R_2 + R_1 \\parallel R_3}$."
      ],
      "corrige": "$U_2 = 5 \\times \\dfrac{50}{150} = \\mathbf{1{,}67\\ \\text{V}}$",
      "schema": {
@@ -463,7 +475,7 @@
      }
     },
     {
-     "consigne": "Tension totale aux bornes de $R_3$.",
+     "consigne": "Additionne les deux contributions.",
      "question": "$U = ?$",
      "verif": {
       "mode": "numerique",
@@ -471,7 +483,8 @@
       "unite": "V"
      },
      "indices": [
-      "$U = U_1 + U_2$."
+      "Les deux contributions sont mesurées dans le même sens (A par rapport à M) : $U = U_1 + U_2$.",
+      "Vérification par Millman : $U = \\dfrac{E_1/R_1 + E_2/R_2}{1/R_1 + 1/R_2 + 1/R_3}$."
      ],
      "corrige": "$U = \\mathbf{5\\ \\text{V}}$",
      "schema": {
@@ -496,7 +509,9 @@
     "E2": "5 V",
     "R1": "100 Ω",
     "R2": "100 Ω",
-    "R3": "100 Ω"
+    "R3": "100 Ω",
+    "P23": "50 Ω",
+    "P13": "50 Ω"
    },
    "generateur": "millman3"
   },
@@ -506,11 +521,12 @@
    "titre": "TD3 · Exercice 2 bis — Même circuit par Norton",
    "notion": "Norton",
    "origine": "td",
-   "enonce": "Même circuit ($E_1 = 10\\ \\text{V}$, $E_2 = 5\\ \\text{V}$, $R_1 = R_2 = R_3 = 100\\ \\Omega$). Retrouve la tension aux bornes de $R_3$ avec le théorème de **Norton** vu par $R_3$.",
+   "enonce": "Même circuit qu'à l'exercice 2 : $E_1$ = [[E1]], $E_2$ = [[E2]], $R_1$ = [[R1]], $R_2$ = [[R2]], $R_3$ = [[R3]]. Retrouve la tension aux bornes de $R_3$ avec le théorème de **Norton** vu par $R_3$.",
+   "guidage": "**Norton vu par $R_3$** : on retire $R_3$ et on remplace tout le reste par une source $I_N$ en parallèle avec $R_N$.\n\n**Plan** :\n- $I_N$ = courant quand on court-circuite A et M ;\n- $R_N$ = résistance vue entre A et M, sources de tension éteintes (= fils) ;\n- on rebranche $R_3$ : $U = I_N\\,(R_N \\parallel R_3)$.\n\nC'est exactement la logique du **théorème de Millman**.",
    "duree": 8,
    "etapes": [
     {
-     "consigne": "Retire $R_3$ et court-circuite A-M : courant de court-circuit $I_N$ ?",
+     "consigne": "Retire $R_3$ et relie A à M par un fil. Chaque branche ($E_1$, $R_1$) et ($E_2$, $R_2$) se retrouve directement entre A et M. Calcule le courant total dans le court-circuit.",
      "question": "$I_N = ?$",
      "verif": {
       "mode": "numerique",
@@ -518,8 +534,8 @@
       "unite": "A"
      },
      "indices": [
-      "Chaque branche débite $E_k / R_k$ dans le court-circuit.",
-      "$I_N = E_1/R_1 + E_2/R_2$."
+      "A relié à M : la branche $E_1$–$R_1$ forme une maille à elle seule, toute la tension $E_1$ tombe sur $R_1$. Loi d'Ohm : elle débite $E_1/R_1$ = [[J1]]. Pareil pour l'autre : $E_2/R_2$ = [[J2]].",
+      "Les deux courants arrivent dans le fil A–M : loi des nœuds, $I_N = E_1/R_1 + E_2/R_2$."
      ],
      "corrige": "$I_N = 0{,}1 + 0{,}05 = \\mathbf{0{,}15\\ \\text{A}}$",
      "schema": {
@@ -535,7 +551,7 @@
      }
     },
     {
-     "consigne": "Sources éteintes : $R_N$ ?",
+     "consigne": "Éteins les deux sources (sources de tension → fils). Quelle résistance vois-tu entre A et M ?",
      "question": "$R_N = ?$",
      "verif": {
       "mode": "numerique",
@@ -543,7 +559,8 @@
       "unite": "Ω"
      },
      "indices": [
-      "Les deux sources deviennent des fils : $R_1 \\parallel R_2$."
+      "$E_1$ et $E_2$ devenues des fils, $R_1$ et $R_2$ vont chacune de A au fil du bas : mêmes deux nœuds, donc parallèle.",
+      "$R_N = R_1 \\parallel R_2 = \\dfrac{R_1 R_2}{R_1 + R_2}$."
      ],
      "corrige": "$R_N = 100 \\parallel 100 = \\mathbf{50\\ \\Omega}$",
      "schema": {
@@ -561,7 +578,7 @@
      }
     },
     {
-     "consigne": "Rebranche $R_3$ : tension à ses bornes ?",
+     "consigne": "Rebranche $R_3$ : elle est en parallèle avec $R_N$ et reçoit une partie de $I_N$. Tension à ses bornes ?",
      "question": "$U = ?$",
      "verif": {
       "mode": "numerique",
@@ -569,7 +586,8 @@
       "unite": "V"
      },
      "indices": [
-      "$U = I_N\\,(R_N \\parallel R_3)$."
+      "Modèle de Norton : $I_N$ alimente $R_N$ et $R_3$ en parallèle, $R_N \\parallel R_3$ = [[PN3]].",
+      "Loi d'Ohm sur ce bloc : $U = I_N\\,(R_N \\parallel R_3)$."
      ],
      "corrige": "$U = 0{,}15 \\times 33{,}3 = \\mathbf{5\\ \\text{V}}$",
      "schema": {
@@ -582,12 +600,23 @@
    "schema": {
     "modele": "millman3",
     "vals": {
-     "E1": "10 V",
-     "E2": "5 V",
-     "R1": "100 Ω",
-     "R2": "100 Ω",
-     "R3": "100 Ω"
+     "E1": "[[E1]]",
+     "E2": "[[E2]]",
+     "R1": "[[R1]]",
+     "R2": "[[R2]]",
+     "R3": "[[R3]]"
     }
+   },
+   "generateur": "norton-millman",
+   "vals": {
+    "E1": "10 V",
+    "E2": "5 V",
+    "R1": "100 Ω",
+    "R2": "100 Ω",
+    "R3": "100 Ω",
+    "J1": "100 mA",
+    "J2": "50 mA",
+    "PN3": "33,3 Ω"
    }
   },
   {
@@ -596,11 +625,12 @@
    "titre": "TD3 · Exercice 3 — Source de tension et source de courant",
    "notion": "Superposition",
    "origine": "td",
-   "enonce": "$E_1 = 10\\ \\text{V}$, $R_1 = 1\\ \\text{k}\\Omega$, $I_2 = 10\\ \\text{mA}$, $R = 1\\ \\text{k}\\Omega$. Calcule le courant dans $R$ par superposition, puis vérifie avec Millman.",
+   "enonce": "$E_1$ = [[E1]], $R_1$ = [[R1]], $I_2$ = [[I2]], $R$ = [[R]]. Calcule le courant dans $R$ par superposition, puis vérifie avec Millman.",
+   "guidage": "**Superposition avec deux types de sources** : on garde une source, on éteint l'autre. Source de **tension** éteinte → **fil** ; source de **courant** éteinte → **circuit ouvert**.\n\n**Plan** : $E_1$ seule → $I'$ ; $I_2$ seule → $I''$ ; puis $I = I' + I''$.\n\n**Vérification par Millman** : $V_A = \\dfrac{\\sum E_k/R_k + \\sum I_k}{\\sum 1/R_k}$.",
    "duree": 8,
    "etapes": [
     {
-     "consigne": "$E_1$ seule ($I_2$ = circuit ouvert) : courant $I'$ dans $R$ ?",
+     "consigne": "Éteins $I_2$ : circuit ouvert, sa branche disparaît. Que reste-t-il ? Calcule $I'$ dans $R$.",
      "question": "$I' = ?$",
      "verif": {
       "mode": "numerique",
@@ -608,8 +638,8 @@
       "unite": "A"
      },
      "indices": [
-      "$R_1$ et $R$ en série.",
-      "$I' = E_1/(R_1 + R)$."
+      "Sans la branche de $I_2$, il ne reste qu'une maille : $E_1$, $R_1$ et $R$, parcourues par le même courant (série).",
+      "Loi des mailles : $E_1 = (R_1 + R)\\,I'$, donc $I' = \\dfrac{E_1}{R_1 + R}$, soit [[E1]] / [[R1R]]."
      ],
      "corrige": "$I' = 10/2000 = \\mathbf{5\\ \\text{mA}}$",
      "schema": {
@@ -624,7 +654,7 @@
      }
     },
     {
-     "consigne": "$I_2$ seule ($E_1$ = fil) : courant $I''$ dans $R$ ?",
+     "consigne": "Éteins $E_1$ (fil) et rallume $I_2$. Le courant $I_2$ arrive en A : par où peut-il repartir ? Calcule $I''$ dans $R$.",
      "question": "$I'' = ?$",
      "verif": {
       "mode": "numerique",
@@ -632,7 +662,8 @@
       "unite": "A"
      },
      "indices": [
-      "$I_2$ se partage entre $R_1$ et $R$ (diviseur de courant)."
+      "$E_1$ devenue un fil, $R_1$ va de A au fil du bas, comme $R$ : elles sont en parallèle et se partagent $I_2$.",
+      "Diviseur de courant : la part qui passe dans $R$ est proportionnelle à l'**autre** résistance, $I'' = I_2\\,\\dfrac{R_1}{R_1 + R}$."
      ],
      "corrige": "$I'' = 10 \\times \\dfrac{1000}{2000} = \\mathbf{5\\ \\text{mA}}$",
      "schema": {
@@ -647,7 +678,7 @@
      }
     },
     {
-     "consigne": "Courant total dans $R$.",
+     "consigne": "Additionne les deux contributions (elles traversent $R$ dans le même sens).",
      "question": "$I = ?$",
      "verif": {
       "mode": "numerique",
@@ -655,7 +686,8 @@
       "unite": "A"
      },
      "indices": [
-      "$I = I' + I''$."
+      "$I = I' + I''$ : les deux sources font descendre du courant dans $R$.",
+      "Vérification par Millman : $V_A = \\dfrac{E_1/R_1 + I_2}{1/R_1 + 1/R}$, puis $I = V_A / R$."
      ],
      "corrige": "$I = \\mathbf{10\\ \\text{mA}}$ ; Millman : $V_A = \\dfrac{E_1/R_1 + I_2}{1/R_1 + 1/R} = 10\\ \\text{V}$, donc $I = V_A/R = 10\\ \\text{mA}$",
      "schema": {
@@ -668,11 +700,19 @@
    "schema": {
     "modele": "td3-ex3",
     "vals": {
-     "E1": "10 V",
-     "R1": "1 kΩ",
-     "I2": "10 mA",
-     "R": "1 kΩ"
+     "E1": "[[E1]]",
+     "R1": "[[R1]]",
+     "I2": "[[I2]]",
+     "R": "[[R]]"
     }
+   },
+   "generateur": "td3-ex3",
+   "vals": {
+    "E1": "10 V",
+    "R1": "1 kΩ",
+    "I2": "10 mA",
+    "R": "1 kΩ",
+    "R1R": "2 kΩ"
    }
   },
   {
@@ -681,11 +721,12 @@
    "titre": "TD3 · Exercice 4 — Courant dans Rx",
    "notion": "Superposition",
    "origine": "td",
-   "enonce": "$I_1 = 20\\ \\text{mA}$, $R_1 = 500\\ \\Omega$, $E_2 = 10\\ \\text{V}$, $R_2 = 1\\ \\text{k}\\Omega$, $R_x = 500\\ \\Omega$. Calcule le courant dans $R_x$ (fléché vers le bas).",
+   "enonce": "$I_1$ = [[I1]], $R_1$ = [[R1]], $E_2$ = [[E2]], $R_2$ = [[R2]], $R_x$ = [[Rx]]. Calcule le courant dans $R_x$ (fléché vers le bas).",
+   "guidage": "**Superposition** : on calcule l'effet de $I_1$ seule, puis de $E_2$ seule, et on additionne. Source de tension éteinte = **fil**, source de courant éteinte = **circuit ouvert**.\n\n**Plan** :\n- $I_1$ seule → diviseur de courant ;\n- $E_2$ seule → une seule maille ;\n- somme des deux (le courant dans $R_x$ est fléché vers le bas).",
    "duree": 10,
    "etapes": [
     {
-     "consigne": "$I_1$ seule ($E_2$ = fil) : $I_1$ se partage entre $R_1$ et la branche $R_2 + R_x$. Contribution $I'$ dans $R_x$ ?",
+     "consigne": "Remplace $E_2$ par un fil. $I_1$ arrive au nœud du haut et a deux chemins pour redescendre : $R_1$, ou la branche $R_2$ + $R_x$. Calcule la contribution $I'$ dans $R_x$.",
      "question": "$I' = ?$",
      "verif": {
       "mode": "numerique",
@@ -693,7 +734,8 @@
       "unite": "A"
      },
      "indices": [
-      "Diviseur de courant : $I' = I_1\\,\\dfrac{R_1}{R_1 + R_2 + R_x}$."
+      "$R_2$ et $R_x$ sont sur le même chemin (série) : cette branche vaut $R_2 + R_x$ = [[R2X]]. Elle relie les mêmes nœuds que $R_1$ : les deux branches sont en parallèle.",
+      "Diviseur de courant : une branche reçoit une part proportionnelle à la résistance de l'**autre** branche, $I' = I_1\\,\\dfrac{R_1}{R_1 + R_2 + R_x}$."
      ],
      "corrige": "$I' = 20 \\times \\dfrac{500}{2000} = \\mathbf{5\\ \\text{mA}}$",
      "schema": {
@@ -709,7 +751,7 @@
      }
     },
     {
-     "consigne": "$E_2$ seule ($I_1$ = circuit ouvert) : contribution $I''$ ?",
+     "consigne": "Éteins $I_1$ (circuit ouvert) et garde $E_2$. Combien de mailles reste-t-il ? Calcule $I''$ dans $R_x$.",
      "question": "$I'' = ?$",
      "verif": {
       "mode": "numerique",
@@ -717,8 +759,8 @@
       "unite": "A"
      },
      "indices": [
-      "Une seule maille : $E_2$, $R_2$, $R_x$, $R_1$.",
-      "$I'' = E_2/(R_1 + R_2 + R_x)$."
+      "Sans la branche de $I_1$, il reste une seule boucle : $E_2$, $R_2$, $R_x$ et $R_1$ (qui referme le circuit), toutes en série.",
+      "Loi des mailles : $I'' = \\dfrac{E_2}{R_1 + R_2 + R_x}$, soit [[E2]] / [[RT]]."
      ],
      "corrige": "$I'' = 10/2000 = \\mathbf{5\\ \\text{mA}}$",
      "schema": {
@@ -734,7 +776,7 @@
      }
     },
     {
-     "consigne": "Courant total dans $R_x$.",
+     "consigne": "Additionne les contributions (vérifie leur sens par rapport à la flèche vers le bas).",
      "question": "$I = ?$",
      "verif": {
       "mode": "numerique",
@@ -742,7 +784,8 @@
       "unite": "A"
      },
      "indices": [
-      "Les deux contributions vont dans le même sens."
+      "Les deux sources font descendre le courant dans $R_x$ : les contributions s'ajoutent, $I = I' + I''$.",
+      "Si une des sources était branchée à l'envers, sa contribution serait négative."
      ],
      "corrige": "$I = 5 + 5 = \\mathbf{10\\ \\text{mA}}$",
      "schema": {
@@ -755,12 +798,22 @@
    "schema": {
     "modele": "td3-ex4",
     "vals": {
-     "I1": "20 mA",
-     "R1": "500 Ω",
-     "E2": "10 V",
-     "R2": "1 kΩ",
-     "Rx": "500 Ω"
+     "I1": "[[I1]]",
+     "R1": "[[R1]]",
+     "E2": "[[E2]]",
+     "R2": "[[R2]]",
+     "Rx": "[[Rx]]"
     }
+   },
+   "generateur": "td3-ex4",
+   "vals": {
+    "I1": "20 mA",
+    "R1": "500 Ω",
+    "E2": "10 V",
+    "R2": "1 kΩ",
+    "Rx": "500 Ω",
+    "R2X": "1,5 kΩ",
+    "RT": "2 kΩ"
    }
   },
   {
