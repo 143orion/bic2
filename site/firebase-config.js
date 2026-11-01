@@ -18,6 +18,6 @@ window.BIC2_FIREBASE = {
     messagingSenderId: "108336614973",
     appId: "1:108336614973:web:a92286906eebc21d372454"
   },
-  adminUid: "A_REMPLIR",
+  adminUid: "twND4HNNzZTEiCWdL3WQDUDBM6g2",
   sdk: "13.1.0"   // version du SDK Firebase chargée depuis le CDN gstatic
 };

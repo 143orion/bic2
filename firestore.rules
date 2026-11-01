@@ -5,7 +5,7 @@ rules_version = '2';
 // Le site est public : seules ces règles protègent les données.
 //
 // Rôles :
-//   admin  = Adam, repéré par son UID Google (remplacer A_REMPLIR après sa
+//   admin  = Adam, repéré par son UID Google (renseigné après sa
 //            première connexion, voir GUIDE.md). Pas d'e-mail dans le dépôt.
 //   membre = compte validé par Adam : le document membres/<uid> existe.
 //   connecté non validé = peut seulement déposer sa demande et la suivre.
@@ -16,7 +16,7 @@ service cloud.firestore {
     // ---------- fonctions ----------
     function connecte() { return request.auth != null; }
     function moi(uid) { return connecte() && request.auth.uid == uid; }
-    function admin() { return connecte() && request.auth.uid == "A_REMPLIR"; }
+    function admin() { return connecte() && request.auth.uid == "twND4HNNzZTEiCWdL3WQDUDBM6g2"; }
     // 1 lecture facturée par requête qui l'évalue (mise en cache dans la requête)
     function membre() {
       return admin() || (connecte() && exists(/databases/$(database)/documents/membres/$(request.auth.uid)));
