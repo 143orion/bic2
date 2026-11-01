@@ -293,50 +293,90 @@ setInterval(() => { if(E.res && E.res.session) recalculer(); }, 60000); // ferme
 
 function setSync(s){ E.sync = s; rendreSync(); }
 
+/* Budget Firestore (plan gratuit) : les réponses sont regroupées et écrites au plus
+   toutes les ~50 s (le minuteur n'est PAS relancé à chaque réponse), et tout de suite
+   quand la page passe en arrière-plan ou se ferme. */
+const DELAI_ECRITURE = 50000, DELAI_CLASSEMENT = 180000;
 let tEcr = 0;
-function planifier(id){ E.sales.add(id); clearTimeout(tEcr); tEcr = setTimeout(vider, 800); if(E.mode === "synchro") setSync("envoi"); }
+function planifier(id){ E.sales.add(id); if(!tEcr) tEcr = setTimeout(() => { tEcr = 0; vider(); }, DELAI_ECRITURE); if(E.mode === "synchro") setSync("envoi"); }
+function toutEnvoyer(){ clearTimeout(tEcr); tEcr = 0; if(E.sales.size) vider(); if(tClass){ clearTimeout(tClass); tClass = 0; envoyerClassement(); } }
 async function vider(){
   if(E.ecriture || E.mode !== "synchro" || !E.charge || !E.sales.size) return;
   E.ecriture = true;
   try{
     for(const id of [...E.sales]){
       E.sales.delete(id);
-      await E.db.doc(`data/users/${E.uid}/${id}`).set({ev:E.miens[id], appareil:dev, v:1});
+      const envoi = E.miens[id].slice();
+      await E.db.doc(`data/users/${E.uid}/${id}`).set({ev:envoi, appareil:dev, v:1});
+      fileConfirmer(id, envoi);
     }
     setSync("ok");
   }catch(err){
     const code = err && err.code;
     if(code === "invalid_argument" || code === "not_granted" || code === "revoked" || code === "capability_disabled"){
       E.mode = "lecture"; setSync("lecture"); rendreHUD();
-    } else if(code === "quota_exceeded"){ setSync("plein"); }
-    else { Object.keys(E.miens).forEach(id => E.sales.add(id)); setSync("erreur"); setTimeout(vider, 4000); }
+    } else if(code === "quota_exceeded"){ Object.keys(E.miens).forEach(id => E.sales.add(id)); setSync("plein"); setTimeout(vider, 10*60e3); /* quota gratuit du jour atteint : on garde tout et on réessaie */ }
+    else { Object.keys(E.miens).forEach(id => E.sales.add(id)); setSync("erreur"); setTimeout(vider, 15000); }
   }finally{
     E.ecriture = false;
     if(E.sales.size && E.mode === "synchro") planifier([...E.sales][0]);
   }
 }
-addEventListener("pagehide", () => { if(E.sales.size) vider(); });
-addEventListener("beforeunload", e => { if(E.sales.size && E.mode === "synchro"){ vider(); e.preventDefault(); e.returnValue = ""; } });
+/* FILE D'ENVOI : une écriture lancée au moment où l'on quitte la page est perdue par le navigateur.
+   Les réponses pas encore confirmées par le serveur sont donc gardées dans une petite file locale
+   (bic2.envoi.<uid>), renvoyée au chargement suivant puis VIDÉE dès que le serveur confirme.
+   Ce n'est pas un stockage de progression : rien n'est calculé à partir d'elle seule,
+   le journal sur le serveur reste la seule source de vérité. */
+const cleFile = () => "bic2.envoi." + E.uid;
+let fileOk = false;
+function lireFile(){ try{ return JSON.parse(localStorage.getItem(cleFile()) || "{}") || {}; }catch(e){ return {}; } }
+function ecrireFile(f){ try{ if(Object.keys(f).length) localStorage.setItem(cleFile(), JSON.stringify(f)); else localStorage.removeItem(cleFile()); fileOk = true; }catch(e){ fileOk = false; } }
+function fileAjouter(id, ev){ if(!E.uid) return; const f = lireFile(); (f[id] || (f[id] = [])).push(ev); ecrireFile(f); }
+function fileConfirmer(id, envoyes){ if(!E.uid) return; const f = lireFile(); if(!f[id]) return; const ok = new Set(envoyes.map(e => e.i)); f[id] = f[id].filter(e => !ok.has(e.i)); if(!f[id].length) delete f[id]; ecrireFile(f); }
+function fileReprendre(){
+  const f = lireFile();
+  for(const [id, evs] of Object.entries(f)){
+    if(!/^j_/.test(id) || !Array.isArray(evs)) continue;
+    const loc = E.miens[id] || [], ids = new Set(loc.map(e => e.i));
+    E.miens[id] = loc.concat(evs.filter(e => e && e.i && !ids.has(e.i))).sort((a,b) => a.t - b.t);
+    E.sales.add(id);
+  }
+  ecrireFile(f);
+}
+addEventListener("visibilitychange", () => { if(document.visibilityState === "hidden") toutEnvoyer(); });
+addEventListener("pagehide", toutEnvoyer);
+/* alerte « quitter la page ? » seulement si la file locale est indisponible (navigation privée stricte…) */
+addEventListener("beforeunload", e => { if(E.sales.size && E.mode === "synchro"){ toutEnvoyer(); if(!fileOk){ e.preventDefault(); e.returnValue = ""; } } });
 
 function ajouter(ev){
   const id = "j_" + jourDe(ev.t, valeursPour(E.config, "9999-12-31").serieHeure) + "_" + dev;
   (E.miens[id] || (E.miens[id] = [])).push(ev);
+  if(E.mode === "synchro") fileAjouter(id, ev);
   E.res = calculer(tousLesEvenements(), contexte());
   if(E.mode === "synchro") planifier(id);
   E.ecouteurs.forEach(fn => { try{ fn(E.res, E); }catch(err){ console.error(err); } });
   rendreHUD(); publierClassement();
 }
 
+/* résumé du classement : au plus une écriture toutes les 3 min (+ à la fermeture / mise en arrière-plan) */
 let tClass = 0;
+function donneesClassement(){ const r = E.res; return {jours:r.jours, serie:r.serie.jours, modules:r.modules}; }
+/* signature stable (clés triées) : Firestore ne rend pas les champs dans l'ordre d'écriture */
+const signature = o => JSON.stringify(o, (k, v) => v && typeof v === "object" && !Array.isArray(v) ? Object.keys(v).sort().reduce((a, c) => (a[c] = v[c], a), {}) : v);
 function publierClassement(){
   if(E.mode !== "synchro" || !E.charge || !E.res) return;
-  const r = E.res, data = {jours:r.jours, serie:r.serie.jours, modules:r.modules};
-  const sig = JSON.stringify(data);
+  if(signature(donneesClassement()) === E.dernierClassement || tClass) return;
+  /* 1re publication de la page : rapide (une écriture lancée en quittant la page serait perdue),
+     les suivantes au plus toutes les 3 min */
+  const delai = E.classementPublie ? DELAI_CLASSEMENT : 8000;
+  tClass = setTimeout(() => { tClass = 0; E.classementPublie = true; envoyerClassement(); }, delai);
+}
+async function envoyerClassement(){
+  if(E.mode !== "synchro" || !E.charge || !E.res) return;
+  const data = donneesClassement(), sig = signature(data);
   if(sig === E.dernierClassement) return;
-  clearTimeout(tClass);
-  tClass = setTimeout(async () => {
-    try{ await E.db.doc("classement/" + E.uid).set(Object.assign({maj:Date.now()}, data)); E.dernierClassement = sig; }catch(e){}
-  }, 15000);
+  E.dernierClassement = sig;
+  try{ await E.db.doc("classement/" + E.uid).set(Object.assign({maj:Date.now()}, data)); }catch(e){ E.dernierClassement = ""; }
 }
 
 function ecouterDoc(chemin, cle){
@@ -411,7 +451,10 @@ async function init(opts = {}){
     ];
     if(E.uid){
       E.mode = "synchro";
-      attente.push(ecouterDoc("decisions/" + E.uid, "decisions"), ecouterDoc("joueurs/" + E.uid, "joueur"), ecouterJournal());
+      fileReprendre();
+      attente.push(ecouterDoc("decisions/" + E.uid, "decisions"), ecouterDoc("joueurs/" + E.uid, "joueur"), ecouterJournal(),
+        /* dernier résumé publié : évite de republier le même classement à chaque changement de page */
+        E.db.doc("classement/" + E.uid).get().then(s => { if(s.exists){ const c = s.data(); E.dernierClassement = signature({jours:c.jours, serie:c.serie, modules:c.modules}); } }).catch(() => {}));
     } else { E.mode = "invite"; setSync("invite"); }
     await Promise.all(attente);
     E.charge = E.charge || E.mode !== "synchro";
@@ -521,7 +564,7 @@ function monterHeader(opts = {}){
   return el;
 }
 
-const SYNC_TXT = {"…":"…", ok:"☁️ synchronisé", envoi:"☁️ envoi…", erreur:"⚠ synchro en pause", lent:"☁️ réseau lent", invite:"👤 mode invité", lecture:"🔒 lecture seule", plein:"⚠ base pleine"};
+const SYNC_TXT = {"…":"…", ok:"☁️ synchronisé", envoi:"☁️ envoi…", erreur:"⚠ synchro en pause", lent:"☁️ réseau lent", invite:"👤 mode invité", lecture:"🔒 lecture seule", plein:"⚠ quota du jour atteint"};
 function rendreSync(){ if(H && H.sync){ H.sync.textContent = SYNC_TXT[E.sync] || E.sync; H.sync.title = H.sync.textContent; H.sync.dataset.etat = E.sync; } }
 
 function pseudoAffiche(){ return (E.joueur && E.joueur.pseudo) || (E.mode === "invite" ? "invité" : "joueur"); }
@@ -555,7 +598,7 @@ function rendreHUD(){
   }
   const b = H.bandeau;
   if(E.mode === "invite"){ b.hidden = false; b.textContent = "Mode invité : tout est jouable, mais l'XP n'est pas sauvegardée. Connecte-toi à Claude pour garder ta progression."; }
-  else if(E.mode === "lecture"){ b.hidden = false; b.textContent = "Lecture seule : ton accès à BIC2.exe ne permet pas d'enregistrer. Demande à Adam d'ajouter ton e-mail à la liste des personnes ayant accès."; }
+  else if(E.mode === "lecture"){ b.hidden = false; b.textContent = "Lecture seule : ton compte n'a plus le droit d'enregistrer (accès retiré ?). Recharge la page ou écris à Adam."; }
   else b.hidden = true;
 }
 

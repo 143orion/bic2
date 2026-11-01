@@ -1,0 +1,5 @@
+node_modules/
+tests/captures/
+*.log
+.firebase/
+tools/seed.js

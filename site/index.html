@@ -113,6 +113,8 @@
 </div>
 <div class="toast" id="toast" role="status"></div>
 
+<script src="firebase-config.js"></script>
+<script src="firebase-adapter.js"></script>
 <script src="xp.js"></script>
 <script>
 (() => {
@@ -174,7 +176,7 @@ function afficherVue(){
   const v = VUES.includes(location.hash.slice(1)) ? location.hash.slice(1) : "modules";
   document.querySelectorAll(".vue-hub").forEach(s => s.hidden = s.dataset.vue !== v);
   header.querySelectorAll("[data-nav]").forEach(a => a.classList.toggle("on", a.dataset.nav === v));
-  if(v !== "modules") ecouterClasse();
+  if(v === "classement" || v === "joueurs") ecouterClasse();
   rendreVue();
 }
 addEventListener("hashchange", () => {
@@ -238,7 +240,7 @@ $("f-pseudo").addEventListener("submit", async e => {
   if(!/^[A-Za-z0-9_.\-]{3,16}$/.test(p)){ $("e-pseudo").textContent = "3 à 16 caractères : lettres, chiffres, _ . -"; return; }
   const b = e.submitter; if(b) b.disabled = true;
   try{ await M.definirPseudo(p); mp.hidden = true; M.son("tap"); toast("Pseudo enregistré"); }
-  catch(err){ $("e-pseudo").textContent = "Impossible d'enregistrer (accès en lecture seule ?)"; }
+  catch(err){ $("e-pseudo").textContent = err && /^pseudo_/.test(err.code) ? err.message : "Impossible d'enregistrer (accès en lecture seule ?)"; }
   finally{ if(b) b.disabled = false; }
 });
 
@@ -307,12 +309,27 @@ let tt = 0; function toast(t){ const e = $("toast"); e.textContent = t; e.classL
    Données publiées par chaque joueur : joueurs/<id> (pseudo), classement/<id>
    (résumé par jour). L'XP est TOUJOURS recalculée par moteur.xpClassement.
    ===================================================================== */
-const C = {pseudos:{}, choix:{}, docs:{}, ecoute:false, type:"xp", periode:"semaine", module:null};
-function ecouterClasse(){
-  const E = M.interne; if(C.ecoute || !E.db) return; C.ecoute = true;
-  E.db.collection("joueurs").onSnapshot(s => { C.pseudos = {}; C.choix = {}; s.docs.forEach(d => { const x = d.data() || {}, p = x.pseudo; if(typeof p === "string" && p.trim()) C.pseudos[d.id] = p.trim().slice(0,16); if(typeof x.plaque === "string") C.choix[d.id] = x.plaque.slice(0,60); }); rendreVue(); }, () => {});
-  E.db.collection("classement").onSnapshot(s => { C.docs = {}; s.docs.forEach(d => C.docs[d.id] = d.data()); rendreVue(); }, () => {});
+/* Budget Firestore : pas d'écoute permanente. Lecture à l'ouverture de Classement / Joueurs
+   (si la dernière date de plus de 2 min), puis toutes les 5 min tant que la vue est affichée
+   et l'onglet visible. lireUneFois() ne facture que les documents modifiés depuis la dernière lecture. */
+const C = {pseudos:{}, choix:{}, docs:{}, lu:0, enCours:false, type:"xp", periode:"semaine", module:null};
+const CLASSE_FRAIS = 2*60e3, CLASSE_RAFRAICHIR = 5*60e3;
+const lire = col => { const c = M.interne.db.collection(col);
+  return c.lireUneFois ? c.lireUneFois() : new Promise((ok, ko) => { const stop = c.onSnapshot(s => { ok(s); if(typeof stop === "function") stop(); }, ko); }); };
+async function ecouterClasse(force){
+  const E = M.interne; if(!E.db || C.enCours) return;
+  if(!force && Date.now() - C.lu < CLASSE_FRAIS) return;
+  C.enCours = true;
+  try{
+    const [j, c] = await Promise.all([lire("joueurs"), lire("classement")]);
+    C.pseudos = {}; C.choix = {}; j.docs.forEach(d => { const x = d.data() || {}, p = x.pseudo; if(typeof p === "string" && p.trim()) C.pseudos[d.id] = p.trim().slice(0,16); if(typeof x.plaque === "string") C.choix[d.id] = x.plaque.slice(0,60); });
+    C.docs = {}; c.docs.forEach(d => C.docs[d.id] = d.data());
+    C.lu = Date.now();
+  }catch(e){ console.warn("[classement]", e); C.lu = Date.now() - CLASSE_FRAIS + 30e3; /* nouvel essai dans 30 s */ }
+  finally{ C.enCours = false; }
+  rendreVue();
 }
+setInterval(() => { const v = location.hash.slice(1); if((v === "classement" || v === "joueurs") && document.visibilityState === "visible") ecouterClasse(true); }, CLASSE_RAFRAICHIR);
 function joueursListe(){
   const E = M.interne, r = M.etat(), ids = new Set(Object.keys(C.pseudos));
   if(E.uid && E.joueur && E.joueur.pseudo) ids.add(E.uid);

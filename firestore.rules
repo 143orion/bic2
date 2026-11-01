@@ -1,0 +1,134 @@
+rules_version = '2';
+// =====================================================================
+// BIC2.exe — règles de sécurité Firestore
+// Tout ce qui n'est pas explicitement autorisé ici est REFUSÉ.
+// Le site est public : seules ces règles protègent les données.
+//
+// Rôles :
+//   admin  = Adam, repéré par son UID Google (remplacer A_REMPLIR après sa
+//            première connexion, voir GUIDE.md). Pas d'e-mail dans le dépôt.
+//   membre = compte validé par Adam : le document membres/<uid> existe.
+//   connecté non validé = peut seulement déposer sa demande et la suivre.
+// =====================================================================
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ---------- fonctions ----------
+    function connecte() { return request.auth != null; }
+    function moi(uid) { return connecte() && request.auth.uid == uid; }
+    function admin() { return connecte() && request.auth.uid == "A_REMPLIR"; }
+    // 1 lecture facturée par requête qui l'évalue (mise en cache dans la requête)
+    function membre() {
+      return admin() || (connecte() && exists(/databases/$(database)/documents/membres/$(request.auth.uid)));
+    }
+    function nouveau() { return request.resource.data; }
+    function seulement(champs) { return nouveau().keys().hasOnly(champs); }
+    function pseudoValide(p) { return p is string && p.matches('^[A-Za-z0-9_.-]{3,16}$'); }
+    function texte(v, max) { return v is string && v.size() > 0 && v.size() <= max; }
+    // le pseudo écrit doit être réservé au nom de ce joueur dans pseudos/<minuscules>,
+    // au plus tard dans la même écriture groupée (getAfter = état après l'écriture)
+    function pseudoAMoi(p, uid) {
+      return pseudoValide(p)
+        && getAfter(/databases/$(database)/documents/pseudos/$(p.lower())).data.uid == uid;
+    }
+
+    // ---------- journal privé : le joueur seul, même pas l'admin ----------
+    // Pas de contrôle « membre » ici : le journal ne sert qu'à son auteur, et
+    // cela évite une lecture facturée à chaque écriture (budget gratuit).
+    match /data/users/{uid}/{jour} {
+      allow read: if moi(uid);
+      allow write: if moi(uid) && jour.matches('^j_[0-9-]+_[A-Za-z0-9]+$')
+                   && seulement(['ev', 'appareil', 'v']) && nouveau().ev is list;
+    }
+
+    // ---------- réglages, calendrier, annonce : lus par les membres, écrits par l'admin ----------
+    match /config/{doc} {
+      allow read: if membre();
+      allow write: if admin();
+    }
+    match /calendrier/{doc} {
+      allow read: if membre();
+      allow write: if admin();
+    }
+    match /config_historique/{doc} {
+      allow read, write: if admin();
+    }
+    match /banques_edit/{doc=**} {
+      allow read: if membre();
+      allow write: if admin();
+    }
+
+    // ---------- profil public : pseudo + plaque équipée ----------
+    match /joueurs/{uid} {
+      allow read: if membre();
+      allow write: if admin()
+        || (moi(uid) && membre()
+            && seulement(['pseudo', 'plaque', 'maj', 'cree'])
+            && pseudoAMoi(nouveau().pseudo, uid)
+            && (!('plaque' in nouveau()) || texte(nouveau().plaque, 60)));
+    }
+
+    // ---------- résumé publié pour le classement (recalculé par chaque lecteur) ----------
+    match /classement/{uid} {
+      allow read: if membre();
+      allow write: if moi(uid) && membre() && seulement(['maj', 'jours', 'serie', 'modules']);
+    }
+
+    // ---------- contestations / signalements : le joueur et l'admin seulement ----------
+    match /contestations/{uid} {
+      allow read: if moi(uid) || admin();
+      allow write: if admin() || (moi(uid) && membre() && seulement(['items']) && nouveau().items is list && nouveau().items.size() <= 300);
+    }
+    match /signalements/{uid} {
+      allow read: if moi(uid) || admin();
+      allow write: if admin() || (moi(uid) && membre() && seulement(['items']) && nouveau().items is list && nouveau().items.size() <= 300);
+    }
+    match /decisions/{uid} {
+      allow read: if moi(uid) || admin();
+      allow write: if admin();
+    }
+
+    // =================================================================
+    // ENTRÉE DES NOUVEAUX JOUEURS
+    // =================================================================
+
+    // Réservation des pseudos (unicité, insensible à la casse) : un document par
+    // pseudo en minuscules. Création seulement s'il n'existe pas (create ≠ update).
+    match /pseudos/{p} {
+      allow read: if connecte();
+      allow create: if connecte() && p.matches('^[a-z0-9_.-]{3,16}$')
+                    && seulement(['uid']) && nouveau().uid == request.auth.uid;
+      allow delete: if connecte() && (resource.data.uid == request.auth.uid || admin());
+      allow update: if false;
+    }
+
+    // Demande d'accès : pseudo + date, suivie par le joueur, traitée par l'admin.
+    match /demandes/{uid} {
+      allow read: if moi(uid) || admin();
+      allow create: if moi(uid)
+                    && seulement(['pseudo', 'cree', 'statut'])
+                    && nouveau().statut == 'attente' && nouveau().cree is int
+                    && pseudoAMoi(nouveau().pseudo, uid);
+      allow update: if admin();
+      // le joueur peut effacer une demande refusée pour en refaire une
+      allow delete: if admin() || (moi(uid) && resource.data.statut == 'refusee');
+    }
+
+    // Identité réelle (prénom, nom, e-mail du compte) : le joueur lui-même et l'admin,
+    // PERSONNE d'autre. Séparée de joueurs/ pour que la classe ne voie que le pseudo.
+    match /identites/{uid} {
+      allow read: if moi(uid) || admin();
+      allow create, update: if moi(uid)
+                    && seulement(['prenom', 'nom', 'email'])
+                    && texte(nouveau().prenom, 40) && texte(nouveau().nom, 40)
+                    && nouveau().email == request.auth.token.get('email', '');
+      allow delete: if moi(uid) || admin();
+    }
+
+    // Liste des comptes validés : écrite par l'admin seul.
+    match /membres/{uid} {
+      allow read: if moi(uid) || admin();
+      allow write: if admin();
+    }
+  }
+}

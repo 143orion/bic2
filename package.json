@@ -1,0 +1,15 @@
+{
+  "name": "bic2",
+  "private": true,
+  "description": "BIC2.exe — hub de révision gamifié (GitHub Pages + Firebase)",
+  "scripts": {
+    "emu": "firebase emulators:start --only auth,firestore --project demo-bic2",
+    "test:regles": "firebase emulators:exec --only firestore --project demo-bic2 \"node --test tests/regles.test.mjs\""
+  },
+  "devDependencies": {
+    "@firebase/rules-unit-testing": "^6.0.0",
+    "firebase": "13.1.0",
+    "firebase-tools": "^15.34.2",
+    "katex": "0.16.47"
+  }
+}
