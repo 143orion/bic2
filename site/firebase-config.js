@@ -11,10 +11,12 @@
    ===================================================================== */
 window.BIC2_FIREBASE = {
   config: {
-    apiKey: "A_REMPLIR",
-    authDomain: "A_REMPLIR.firebaseapp.com",
-    projectId: "A_REMPLIR",
-    appId: "A_REMPLIR"
+    apiKey: "AIzaSyBAjUfjdpAyaVNjarM3PKpDgErYiWluCQo",
+    authDomain: "bic2-exe.firebaseapp.com",
+    projectId: "bic2-exe",
+    storageBucket: "bic2-exe.firebasestorage.app",
+    messagingSenderId: "108336614973",
+    appId: "1:108336614973:web:a92286906eebc21d372454"
   },
   adminUid: "A_REMPLIR",
   sdk: "13.1.0"   // version du SDK Firebase chargée depuis le CDN gstatic
