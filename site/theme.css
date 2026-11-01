@@ -990,3 +990,10 @@ html.acces-ouvert,html.acces-ouvert body{overflow:hidden}
 @media (max-width:480px){.acces{padding:12px;place-items:start center}.acces-fenetre{margin-top:6vh}.acces-duo{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){.acces-attente i{animation:none;opacity:.7}}
 .p-compte{margin:10px 0 0;font-size:12px;color:var(--gris-2)}
+.acces-q{display:inline-grid;place-items:center;width:20px;height:20px;padding:0;margin-left:2px;vertical-align:-3px;border-radius:50%;border:1px solid var(--violet-clair);background:transparent;color:var(--violet-clair);font:700 12px var(--police);cursor:pointer}
+.acces-q:hover,.acces-q[aria-expanded="true"]{background:var(--violet);border-color:var(--violet);color:#fff}
+.acces-q:focus-visible{outline:2px solid var(--violet-pale);outline-offset:2px}
+.acces-pourquoi{margin:0 0 12px;padding:10px 12px;border:1px dashed rgba(201,166,240,.45);border-radius:6px;background:rgba(127,73,180,.08)}
+.acces-pourquoi p{margin:0 0 6px!important;font-weight:700;color:var(--blanc)!important}
+.acces-pourquoi ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px;font-size:12.5px;line-height:1.5;color:var(--gris)}
+.acces-pourquoi[hidden]{display:none}

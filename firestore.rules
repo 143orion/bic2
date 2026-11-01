@@ -71,7 +71,7 @@ service cloud.firestore {
     // ---------- résumé publié pour le classement (recalculé par chaque lecteur) ----------
     match /classement/{uid} {
       allow read: if membre();
-      allow write: if moi(uid) && membre() && seulement(['maj', 'jours', 'serie', 'modules']);
+      allow write: if admin() || (moi(uid) && membre() && seulement(['maj', 'jours', 'serie', 'modules']));
     }
 
     // ---------- contestations / signalements : le joueur et l'admin seulement ----------

@@ -168,6 +168,17 @@ function outilsAcces(fs, adminUid){
       if(typeof p === "string" && p) b.delete(fs.doc("pseudos/" + p.toLowerCase()));
       await b.commit();
     },
+    /* retire l'accès d'un joueur validé : il disparaît du classement, son pseudo est libéré ;
+       son journal privé reste (personne d'autre n'y a accès). S'il revient, il refait une demande. */
+    async retirer(uid){
+      if(uid === adminUid) throw new Error("Impossible de retirer ton propre accès");
+      const j = await fs.doc("joueurs/" + uid).get(), p = j.exists ? j.data().pseudo : "";
+      const b = fs.batch();
+      b.delete(fs.doc("membres/" + uid)); b.delete(fs.doc("joueurs/" + uid)); b.delete(fs.doc("classement/" + uid));
+      b.delete(fs.doc("identites/" + uid));
+      if(typeof p === "string" && p) b.delete(fs.doc("pseudos/" + p.toLowerCase()));
+      await b.commit();
+    },
     estAdmin: uid => !!adminUid && uid === adminUid
   };
 }
@@ -233,8 +244,18 @@ function ecranConnexion(auth){
         btn.disabled = false;
       }
     });
+    const aide = h("div", {class:"acces-pourquoi", id:"acces-pourquoi", hidden:true},
+      h("p", {texte:"Pourquoi tout ça ?"}),
+      h("ul", {},
+        h("li", {texte:"Google sert à te reconnaître : ta progression est enregistrée sur ton compte, et tu la retrouves sur tous tes appareils."}),
+        h("li", {texte:"Adam valide chaque demande pour que seule la classe soit dans le classement (pas d'inconnus ni de faux comptes)."}),
+        h("li", {texte:"Seul Adam peut modifier le site : tu joues, sans risque de casser quoi que ce soit."}),
+        h("li", {texte:"Ce que les autres voient : ton pseudo, ton niveau et ton XP, rien d'autre. Ton prénom et ton nom ne sont visibles que par Adam. Le détail de tes réponses reste privé, même pour lui."})));
+    const q = h("button", {class:"acces-q", type:"button", "aria-expanded":"false", "aria-controls":"acces-pourquoi", title:"Pourquoi ce processus ?", texte:"?"});
+    q.addEventListener("click", () => { const o = aide.hidden; aide.hidden = !o; q.setAttribute("aria-expanded", String(o)); });
     fenetre("connexion.exe", "Connexion",
-      h("p", {texte:"Le hub de révision de la classe. Connecte-toi avec ton compte Google : à ta première visite, tu demandes l'accès, et Adam le valide."}),
+      h("p", {}, "Le hub de révision de la classe. Connecte-toi avec ton compte Google : à ta première visite, tu demandes l'accès, et Adam le valide. ", q),
+      aide,
       h("div", {class:"actions"}, btn, err));
   });
 }
@@ -282,7 +303,12 @@ function porte(fs, auth, acces, u){
   return new Promise(resolve => {
     if(acces.estAdmin(u.uid)){ resolve(); return; }
     const cle = "bic2.membre." + u.uid;
-    try{ if(sessionStorage.getItem(cle) === "1"){ resolve(); return; } }catch(e){}
+    try{ if(sessionStorage.getItem(cle) === "1"){
+      resolve();
+      /* vérification discrète : si l'accès a été retiré, on revient à l'écran d'accès */
+      fs.doc("membres/" + u.uid).get().then(s => { if(!s.exists){ sessionStorage.removeItem(cle); location.reload(); } }).catch(() => {});
+      return;
+    } }catch(e){}
     let membre = false, demande, vu = {m:false, d:false};
     const decider = () => {
       if(membre){ stopM(); stopD(); try{ sessionStorage.setItem(cle, "1"); }catch(e){} fermerEcran(); resolve(); return; }

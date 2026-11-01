@@ -75,7 +75,7 @@ function autorise(op, chemin, uid, apres, avant){
     const r = apres["pseudos/" + String(apres["joueurs/"+id] && apres["joueurs/"+id].pseudo || "").toLowerCase()];
     return !!r && r.uid === uid;
   }
-  if(col === "classement") return op === "read" ? estMembre(uid) : moi && estMembre(uid);
+  if(col === "classement") return op === "read" ? estMembre(uid) : admin || (moi && estMembre(uid));
   if(col === "contestations" || col === "signalements") return op === "read" ? (moi || admin) : (admin || (moi && estMembre(uid)));
   if(col === "decisions") return op === "read" ? (moi || admin) : admin;
   if(col === "pseudos"){

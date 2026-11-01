@@ -40,7 +40,8 @@ const capture = (pg, nom) => pg.screenshot({path:join(RACINE, `tests/captures/${
 const attendre = ms => new Promise(r => setTimeout(r, ms));
 
 const SCENARIOS = {
-  async connexion(app){ const pg = await page(app); await pg.goto(URL0 + "index.html?mock=off&reset"); await pg.waitForSelector("#acces .acces-google"); await attendre(400); await capture(pg, `acces-1-connexion-${app}`); return pg; },
+  async connexion(app){ const pg = await page(app); await pg.goto(URL0 + "index.html?mock=off&reset"); await pg.waitForSelector("#acces .acces-google"); await attendre(400); await capture(pg, `acces-1-connexion-${app}`);
+    await pg.click("#acces .acces-q"); await pg.waitForSelector("#acces-pourquoi:not([hidden])"); await attendre(200); await capture(pg, `acces-1b-pourquoi-${app}`); return pg; },
   async demande(app){
     const pg = await page(app); await pg.goto(URL0 + "index.html?mock=off&reset");
     await pg.evaluate(() => window.__mock.connexionSuivante("neo"));
@@ -112,6 +113,11 @@ const SCENARIOS = {
     if(!b.membre || !b.joueur || b.joueur.pseudo !== "Neo_42" || b.demande) erreurs.push(`[${app}] validation incomplète ${JSON.stringify(b)}`);
     if(!b.omar || b.omar.statut !== "refusee" || b.pseudoOmar) erreurs.push(`[${app}] refus incomplet ${JSON.stringify(b)}`);
     await pg.click('#onglets [data-v="joueurs"]'); await attendre(500); await capture(pg, `admin-4-joueurs-${app}`);
+    await pg.click('[data-retirer="lucas"]'); await pg.waitForSelector("#confirm:not([hidden])"); await capture(pg, `admin-5-retirer-${app}`);
+    await pg.click("#confirm-oui"); await attendre(600);
+    const r = await pg.evaluate(() => { const x = window.__mock.base(); return ["membres/lucas","joueurs/lucas","classement/lucas","identites/lucas","pseudos/lucas"].filter(k => k in x); });
+    if(r.length) erreurs.push(`[${app}] retrait incomplet : ${r.join(", ")}`);
+    if(await pg.$('[data-retirer="lucas"]')) erreurs.push(`[${app}] Lucas encore listé après retrait`);
     await pg.close();
     await neo.goto(URL0 + "index.html?mock=neo"); await neo.waitForFunction(() => window.moteur && window.moteur.etat()); await attendre(800);
     if(await neo.$("#acces")) erreurs.push(`[${app}] Neo validé mais toujours bloqué`);

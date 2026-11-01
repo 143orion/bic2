@@ -110,7 +110,7 @@
     <section class="vue" data-vue="joueurs" hidden>
       <div class="fenetre" data-titre="joueurs.db — qui joue">
         <p class="vide-txt">Chaque joueur validé (onglet Demandes) apparaît au classement sous son pseudo. « Compte » = prénom et nom donnés à la demande, visibles par toi seul. Le journal de chacun reste privé : tu ne vois que le résumé par jour qu'ils publient. « XP vérifiée » = XP du classement : un jour qui dépasse ce qui est humainement possible compte 0, automatiquement et sans prévenir le joueur. ⚠ = jours annulés, pour info seulement : rien à valider.</p>
-        <table class="tableau"><thead><tr><th>Pseudo</th><th>Compte</th><th>Niveau</th><th>XP vérifiée</th><th>Série</th></tr></thead><tbody id="t-joueurs"></tbody></table>
+        <table class="tableau"><thead><tr><th>Pseudo</th><th>Compte</th><th>Niveau</th><th>XP vérifiée</th><th>Série</th><th></th></tr></thead><tbody id="t-joueurs"></tbody></table>
         <p class="vide-txt" id="joueurs-vide">Personne n'a encore été validé.</p>
       </div>
     </section>
@@ -414,7 +414,7 @@ async function rendreListes(){
   $("t-joueurs").innerHTML = js.map(([uid, j]) => { const c = L.classement[uid], k = c ? M.xpClassement(c, E.config) : null;
     const serie = c && isFinite(+c.serie) ? Math.max(0, Math.floor(+c.serie)) : "—";
     const alerte = k && k.suspects.length ? ` <span class="pastille" style="color:var(--braise-3)" title="Jours annulés (rythme impossible) : ${esc(k.suspects.slice(0,10).join(", "))}">⚠ ${k.suspects.length} j</span>` : "";
-    return `<tr><td><b>${esc(String(j.pseudo || "").slice(0,24))}</b></td><td>${esc(profils[uid] || "—")}</td><td>${k ? k.niveau : "—"}</td><td>${k ? nf(k.total) : "—"}${alerte}</td><td>${serie}</td></tr>`; }).join("");
+    return `<tr><td><b>${esc(String(j.pseudo || "").slice(0,24))}</b></td><td>${esc(profils[uid] || "—")}</td><td>${k ? k.niveau : "—"}</td><td>${k ? nf(k.total) : "—"}${alerte}</td><td>${serie}</td><td>${uid === E.uid ? "" : `<button class="btn danger" data-retirer="${esc(uid)}">Retirer l'accès</button>`}</td></tr>`; }).join("");
 
   const cs = Object.entries(L.contestations).flatMap(([uid, d]) => (d.items || []).map(it => ({uid, it})));
   $("contest-vide").hidden = !!cs.length; badge("contestations", cs.length);
@@ -552,7 +552,17 @@ if(A){
   let premiere = true;
   A.ecouterDemandes(ds => {
     demandes = ds; rendreDemandes();
-    /* à l'ouverture du panel : s'il y a des demandes en attente, on montre directement l'onglet */
+    document.querySelector('[data-vue="joueurs"]').addEventListener("click", e => {
+    const b = e.target.closest("[data-retirer]"); if(!b) return;
+    const uid = b.dataset.retirer, qui = `${pseudo(uid)}${profils[uid] ? " (" + profils[uid] + ")" : ""}`;
+    occupe(b, null, async () => {
+      if(!await confirmer(`Retirer l'accès de ${qui} ? Il disparaît du classement et des joueurs, son pseudo est libéré. Son journal privé n'est pas effacé : s'il refait une demande et que tu la valides, il retrouve sa progression.`)) return;
+      await A.retirer(uid);
+      delete L.joueurs[uid]; delete L.classement[uid]; rendreListes();
+      toast("Accès retiré");
+    });
+  });
+  /* à l'ouverture du panel : s'il y a des demandes en attente, on montre directement l'onglet */
     if(premiere){ premiere = false; if(ds.some(d => d.statut !== "refusee")) ouvrir("demandes"); }
   }, err => console.warn("demandes", err));
   document.querySelector('[data-vue="demandes"]').addEventListener("click", e => {

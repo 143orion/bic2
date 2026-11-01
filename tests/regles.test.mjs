@@ -142,6 +142,18 @@ test("admin : écrit config, calendrier, décisions ; un membre non", async () =
   await assertFails(getDocs(collection(membre(), "config_historique")));
 });
 
+test("admin : retire l'accès (membre, joueur, classement, identité, pseudo) ; le joueur perd tout accès", async () => {
+  const db = admin(), b = writeBatch(db);
+  for(const c of ["membres/mia", "joueurs/mia", "classement/mia", "identites/mia", "pseudos/mia"]) b.delete(doc(db, c));
+  await assertSucceeds(b.commit());
+  await assertFails(getDoc(doc(membre(), "config/actuelle")));
+  await assertFails(getDocs(collection(membre(), "classement")));
+  await assertSucceeds(getDocs(collection(membre(), "data/users/mia")));   // son journal privé reste à lui
+  // un membre ne peut pas retirer quelqu'un d'autre
+  await assertFails(deleteDoc(doc(autre(), "classement/mia")));
+  await assertFails(deleteDoc(doc(autre(), "membres/tom")));
+});
+
 /* ---------- membre ---------- */
 test("membre : lit config, calendrier, joueurs, classement", async () => {
   const db = membre();
