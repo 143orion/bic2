@@ -72,6 +72,30 @@ const SCENARIOS = {
     if(ch){ await ch.click(); await attendre(900); await capture(pg, `module-2-chapitre-${app}`); }
     return pg;
   },
+  /* schémas de circuit + LaTeX (KaTeX via le CDN) dans les 3 vues de cours et un exo guidé */
+  async schemas(app){
+    const pg = await page(app); await pg.goto(URL0 + "module.html?mock=mia&reset#complement-electronique");
+    await pg.waitForFunction(() => window.moteur && window.moteur.etat()); await attendre(800);
+    const ouvrirCh = async () => { await pg.click('[data-ch="elec-4-thevenin-norton"]'); await pg.waitForSelector('.mode-tuile[data-a="fa"]'); await attendre(300); };
+    const verifier = async nom => {
+      const v = await pg.evaluate(() => ({katex:document.querySelectorAll(".katex").length, brut:/\$[^$\s][^$]*\$/.test(document.querySelector("#lecteur").innerText), svg:document.querySelectorAll("#lecteur svg").length}));
+      if(!v.katex) erreurs.push(`[${app}] ${nom} : aucune formule KaTeX rendue`);
+      if(v.brut) erreurs.push(`[${app}] ${nom} : du LaTeX brut ($…$) reste affiché`);
+      console.log(`   ${nom} : ${v.katex} formules, ${v.svg} svg`);
+      await capture(pg, `schema-${nom}-${app}`);
+      return v;
+    };
+    for(const [a, nom] of [["fa", "follow"], ["cl", "fiche"], ["tl", "tldr"], ["gu", "guide"]]){
+      await ouvrirCh();
+      if(await pg.$eval(`.mode-tuile[data-a="${a}"]`, b => b.disabled)){ console.log(`   ${nom} : pas de contenu dans ce chapitre`); await pg.goto(URL0 + "module.html?v=x" + a + "#complement-electronique"); await attendre(800); continue; }
+      await pg.click(`.mode-tuile[data-a="${a}"]`); await attendre(900);
+      if(a === "gu"){ const exo = await pg.$("#lecteur .exos-liste button, #lecteur [data-exo], #lecteur .exo-carte"); if(exo){ await exo.click(); await attendre(900); } }
+      const v = await verifier(nom);
+      if((a === "fa" || a === "gu") && !v.svg) erreurs.push(`[${app}] ${nom} : pas de schéma de circuit`);
+      await pg.goto(URL0 + "module.html?v=" + a + "#complement-electronique"); await pg.waitForFunction(() => window.moteur && window.moteur.etat()); await attendre(500);
+    }
+    return pg;
+  },
   /* écritures groupées : rien n'est écrit tout de suite, tout part en quittant la page */
   async ecriture(app){
     const pg = await page(app); await pg.goto(URL0 + "module.html?mock=mia&reset#complement-electronique");
