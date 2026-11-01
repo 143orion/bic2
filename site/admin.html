@@ -135,7 +135,7 @@
         <table class="tableau"><thead><tr><th>Joueur</th><th>Item</th><th>Module</th><th>Message</th><th>Le</th><th></th></tr></thead><tbody id="t-signal"></tbody></table>
         <p class="vide-txt" id="signal-vide">File vide ✓</p>
       </div>
-      <div class="fenetre" data-titre="corrections.log — items déjà corrigés">
+      <div class="fenetre" data-titre="corrections.log — items corrigés et signalements rejetés">
         <ul id="l-corr" class="vide-txt"></ul>
       </div>
     </section>
@@ -350,6 +350,14 @@ $("save-cal").onclick = e => occupe(e.currentTarget, $("msg-cal"), async () => {
 /* =====================================================================
    MODULES & DURÉES D'EXOS
    ===================================================================== */
+const ITEMS = {};
+/* XP rendue par joueur ayant raté l'item (valeur de base, avant bonus) ; null si l'item est inconnu */
+function xpRendue(q){
+  const it = ITEMS[q]; if(!it) return null;
+  const v = actuelles(), d0 = (E.config && E.config.durees || {})[q] ?? it.duree, conc = d => Math.min(1 + d/v.concentrationDiv, v.concentrationMax), prod = d => v.xpParMinute*d*v.formatProduction*conc(d);
+  const x = it.type === "qcm" ? v.qcm : it.type === "qcm-multi" ? v.qcmMulti : it.type === "saisie" ? prod(d0 || v.dureeSaisie) : it.type === "exo" ? prod(d0 || 1)*v.modeGuide : null;
+  return x == null ? null : Math.round(x);
+}
 async function rendreModules(){
   const reg = (E.config && E.config.modules) || {};
   $("mods-vide").hidden = !!modulesListe.length;
@@ -358,7 +366,8 @@ async function rendreModules(){
       <td><input class="entree" type="number" data-f="ordre" value="${r.ordre ?? k}"></td><td><input class="entree" data-f="icone" value="${esc(r.icone ?? m.icone ?? "")}"></td><td>${(m.chapitres || []).length}</td></tr>`; }).join("");
   const exos = [];
   await Promise.all(modulesListe.flatMap(m => (m.chapitres || []).map(ch => fetch(`banques/${m.id}/${ch}.json`).then(r => r.ok ? r.json() : null).catch(() => null)
-    .then(j => { if(j && j.items) j.items.filter(it => it.type === "exo").forEach(it => exos.push({id:it.id, m:m.id, ch, d:it.duree, n:(it.etapes || []).length})); }))));
+    .then(j => { if(j && j.items) j.items.forEach(it => { ITEMS[it.id] = it; if(it.type === "exo") exos.push({id:it.id, m:m.id, ch, d:it.duree, n:(it.etapes || []).length}); }); }))));
+  rendreListes();
   const dur = (E.config && E.config.durees) || {};
   $("durees-vide").hidden = !!exos.length;
   $("t-durees").innerHTML = exos.sort((a,b) => a.id < b.id ? -1 : 1).map(x => `<tr><td>${esc(x.id)}</td><td>${esc(x.m)} · ${esc(x.ch)}</td><td>${x.n}</td><td>${fmt(x.d || 0)}</td>
@@ -437,10 +446,19 @@ async function rendreListes(){
 
   const ss = Object.entries(L.signalements).flatMap(([uid, d]) => (d.items || []).map(it => ({uid, it})));
   $("signal-vide").hidden = !!ss.length; badge("signalements", ss.length);
-  $("t-signal").innerHTML = ss.map(({uid, it}) => `<tr><td>${esc(pseudo(uid))}</td><td>${esc(it.q)}</td><td>${esc(nomModule(it.m))}</td><td>${esc(it.message || "")}</td><td>${quand(it.envoye)}</td>
-    <td><button class="btn" data-claude="1" data-uid="${esc(uid)}" data-q="${esc(it.q)}" data-t="${esc(it.envoye)}">Envoyer à Claude</button> <button class="btn" data-s="faux" data-uid="${esc(uid)}" data-q="${esc(it.q)}" data-t="${esc(it.envoye)}">Item faux → XP rendue</button> <button class="btn danger" data-s="rejet" data-uid="${esc(uid)}" data-q="${esc(it.q)}" data-t="${esc(it.envoye)}">Rejeter</button></td></tr>`).join("");
+  const gardees = {}; document.querySelectorAll("#t-signal .raison").forEach(i => { gardees[i.dataset.k] = i.value; });
+  $("t-signal").innerHTML = ss.map(({uid, it}) => { const k = uid + "|" + it.q + "|" + it.envoye, xp = xpRendue(it.q), lib = xp == null ? "XP rendue" : `XP rendue (+${xp} XP)`,
+    da = `data-uid="${esc(uid)}" data-q="${esc(it.q)}" data-t="${esc(it.envoye)}"`;
+    return `<tr><td>${esc(pseudo(uid))}</td><td>${esc(it.q)}</td><td>${esc(nomModule(it.m))}</td><td>${esc(it.message || "")}</td><td>${quand(it.envoye)}</td>
+    <td class="sig-actions"><input class="entree raison" data-k="${esc(k)}" maxlength="300" placeholder="Raison écrite (visible par le joueur)" value="${esc(gardees[k] || "")}">
+      <button class="btn" data-claude="1" ${da}>Envoyer à Claude</button>
+      <button class="btn" data-s="faux" data-r="1" ${da}>Item faux → ${lib} + raison</button>
+      <button class="btn" data-s="faux" ${da}>Item faux → ${lib}</button>
+      <button class="btn danger" data-s="rejet" data-r="1" ${da}>Rejeter + raison</button></td></tr>`; }).join("");
   const corr = (E.corrections && E.corrections.items) || {};
-  $("l-corr").innerHTML = Object.entries(corr).map(([q, t]) => `<li>${esc(q)} — corrigé le ${quand(t)}</li>`).join("") || "<li>Aucun.</li>";
+  const rai = (E.corrections && E.corrections.raisons) || {}, rej = (E.corrections && E.corrections.rejets) || [];
+  $("l-corr").innerHTML = Object.entries(corr).map(([q, t]) => `<li>${esc(q)} — corrigé le ${quand(t)}${rai[q] ? " · « " + esc(rai[q]) + " »" : ""}</li>`)
+    .concat(rej.slice().reverse().map(r => `<li>${esc(r.q)} — signalement de ${esc(r.pseudo)} rejeté le ${quand(r.t)} · « ${esc(r.raison)} »</li>`)).join("") || "<li>Aucun.</li>";
 }
 
 async function retirer(col, uid, garde){
@@ -482,13 +500,18 @@ document.querySelector('[data-vue="signalements"]').addEventListener("click", as
 });
 document.querySelector('[data-vue="signalements"]').addEventListener("click", e => {
   const b = e.target.closest("[data-s]"); if(!b) return;
-  const {uid, q, s, t} = b.dataset;
+  const {uid, q, s, t} = b.dataset, champ = b.closest("tr").querySelector(".raison"), raison = champ.value.trim().slice(0, 300);
+  if(b.dataset.r && !raison){ toast("Écris une raison (le joueur la verra)"); champ.focus(); return; }
   occupe(b, null, async () => {
-    if(s === "faux"){
-      if(!await confirmer(`Marquer « ${q} » comme faux ? Tous ceux qui l'ont raté jusqu'à maintenant récupèrent l'XP.`)) return;
-      const items = Object.assign({}, E.corrections && E.corrections.items, {[q]:Date.now()});
-      await db.doc("config/corrections").set({items, maj:Date.now()}); E.corrections = {items};
-    }
+    if(s === "faux" && !await confirmer(`Marquer « ${q} » comme faux ? Tous ceux qui l'ont raté jusqu'à maintenant récupèrent l'XP.`)) return;
+    const now = Date.now(), ref = db.doc("decisions/" + uid), snap = await ref.get(), d = clone(snap.exists ? snap.data() : {});
+    d.signalements = Object.assign({}, d.signalements, {[q]:{statut:s === "faux" ? "faux" : "rejete", raison, t:now}}); d.maj = now;
+    await ref.set(d);
+    const cur = clone(E.corrections), items = Object.assign({}, cur.items), raisons = Object.assign({}, cur.raisons), rejets = (cur.rejets || []).slice();
+    if(s === "faux"){ items[q] = now; if(raison) raisons[q] = raison; else delete raisons[q]; }
+    else rejets.push({q, pseudo:pseudo(uid), raison, t:now});
+    const doc = {items, raisons, rejets:rejets.slice(-100), maj:now};
+    await db.doc("config/corrections").set(doc); E.corrections = doc;
     await retirer("signalements", uid, it => !(it.q === q && String(it.envoye) === t));
     toast(s === "faux" ? "Item corrigé, XP rendue. À corriger dans la banque !" : "Signalement rejeté");
   });

@@ -110,6 +110,9 @@
       </div>
       <div class="p-tip" id="p-tip" role="tooltip" hidden></div>
     </div>
+    <div class="fenetre profil-page" data-titre="signalements.log — réponses à tes signalements" id="f-signal" hidden>
+      <ul class="vide-txt" id="p-signal"></ul>
+    </div>
     <div class="fenetre profil-page" data-titre="nameplates/ — clique pour équiper">
       <div class="p-choix" id="p-choix"></div>
     </div>
@@ -561,6 +564,12 @@ function rendreProfilPage(){
   const inf = infosPlaque({jours:r.jours, modules:r.modules}, E.joueur && E.joueur.plaque);
   $("p-plaque").replaceChildren(plaqueEl(inf, pseudo, `Niv ${r.niveau} · ${r.rang} · ${nf(r.total)} XP`));
   $("p-info").textContent = E.mode === "synchro" ? (E.joueur && E.joueur.pseudo ? "Ta plaque est visible dans Joueurs, au Classement et sur le podium." : "Choisis un pseudo (accueil) pour apparaître auprès de la classe.") : "Mode invité : rien n'est sauvegardé.";
+
+  /* réponses de l'admin à mes signalements */
+  const sg = Object.entries((E.decisions && E.decisions.signalements) || {}).sort((a, b) => (b[1].t || 0) - (a[1].t || 0));
+  $("f-signal").hidden = !sg.length;
+  $("p-signal").replaceChildren(...sg.map(([q, x]) => { const li = document.createElement("li");
+    li.textContent = `${q} — ${x.statut === "faux" ? "item faux, XP rendue" : "signalement rejeté"} le ${new Date(x.t || 0).toLocaleDateString("fr-FR", {day:"numeric", month:"short"})}${x.raison ? " · « " + x.raison + " »" : ""}`; return li; }));
 
   /* choix des plaques */
   const opts = RANGS.map((n, k) => ({id:"r" + k, nom:n, verrou:k*10 > inf.niveau ? `Débloquée au niveau ${k*10}` : "", sous:k*10 > inf.niveau ? `🔒 niveau ${k*10}` : `niveaux ${k*10}${k < 10 ? "–" + (k*10+9) : "+"}`}))

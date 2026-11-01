@@ -172,7 +172,7 @@ function calculer(evenements, ctx = {}){
         m.reussies.add(e.q);
       } else { it.erreur = true; it.maitrise = false; it.jours.clear(); }
     }
-    if(corrige) f.push("item corrigé : XP rendue");
+    if(corrige){ const rs = ctx.corrections && ctx.corrections.raisons, r = rs && rs[e.q]; f.push("item corrigé : XP rendue" + (r ? " — " + r : "")); }
     if(ok && e.h){ const h = Math.min(e.h, v.indicesMax); xp *= Math.max(0, 1 - v.indiceCout*h); f.push(h+" indice"+(h>1?"s":"")+" −"+Math.round(v.indiceCout*h*100)+" %"); }
     const cum = effortJour[jour] || 0, plus = evl ? v.plafondEvalBonus : 0;
     const pm = cum < v.plafondSeuil1 + plus ? 1 : cum < v.plafondSeuil2 + plus ? v.plafondMult2 : v.plafondMult3;
