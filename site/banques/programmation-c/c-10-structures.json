@@ -1,0 +1,1044 @@
+{
+ "id": "c-10-structures",
+ "module": "programmation-c",
+ "titre": "Types et structures",
+ "ordre": 10,
+ "sources": [
+  "Types et Structures en langage C"
+ ],
+ "tldr": [
+  "`typedef type nom;` = alias · `typedef struct { … } Point;` puis `Point p;`.",
+  "`enum Color { RED, GREEN, BLUE };` → 0, 1, 2 · `ERROR = -1` choisit une valeur · `typedef enum { … } Jour;`.",
+  "Champ : `p.x` · chaîne : `strcpy(p.nom, …)` · init : `Point p = {10, 20};` (ordre des champs) · `b = a;` copie tout.",
+  "Composition : `employe.date_naissance.annee` · pointeur : `ptr->age` ⇔ `(*ptr).age`.",
+  "Tableau : `classe[i].note` · dynamique : `malloc(n * sizeof(Etudiant))` + `free`.",
+  "En paramètre : par valeur (copie) · `Type *p` (modifier) · `const Type *p` (lire sans copier, recommandé)."
+ ],
+ "notions": [
+  {
+   "id": "10.1",
+   "titre": "Créer un alias de type : typedef",
+   "corps": "`typedef` donne un **nouveau nom** (un alias) à un type existant : `typedef type_existant nouveau_nom;`\n\n```c\ntypedef unsigned int uint;\ntypedef unsigned char byte;\ntypedef long long int64;\ntypedef char *string;\n\nuint compteur = 0;\nbyte data = 255;\nstring nom = \"Programmation C\";\n```\n\n| Avantage | Exemple |\n|---|---|\n| Lisibilité | `byte` dit mieux « un octet » que `unsigned char` |\n| Portabilité | changer `int64` à un seul endroit pour une autre machine |\n| Simplicité | `Point p;` au lieu de `struct Point p;` (voir {{10.3}}) |\n\n> **À retenir** : `typedef` ne crée **pas** de nouveau type : c'est le même, sous un autre nom.\n\n> **Astuce** : c'est avec les structures et les énumérations que `typedef` devient vraiment utile.",
+   "rec": "Après `typedef unsigned int uint;`, écrire `uint x;` revient exactement à écrire `unsigned int x;`.",
+   "alt": "`typedef`, c'est un surnom : « Bob » et « Robert » désignent la même personne.",
+   "pre": [
+    "2.3"
+   ],
+   "ecrans": [
+    {
+     "titre": "La syntaxe",
+     "texte": "`typedef type_existant nouveau_nom;`"
+    },
+    {
+     "titre": "Des exemples",
+     "texte": "```c\ntypedef unsigned int uint;\ntypedef unsigned char byte;\n```"
+    },
+    {
+     "titre": "Même type",
+     "texte": "L'alias est interchangeable avec le type d'origine."
+    }
+   ],
+   "check": {
+    "id": "c-10-structures-ctl-0",
+    "enonce": "Que fait `typedef unsigned char byte;` ?",
+    "choix": [
+     "donne le nom byte au type unsigned char",
+     "crée une variable byte",
+     "crée un nouveau type différent",
+     "déclare une constante"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "typedef crée un alias de type."
+   }
+  },
+  {
+   "id": "10.2",
+   "titre": "Les énumérations : enum",
+   "corps": "Une **énumération** est un ensemble de **constantes entières nommées**. Elle remplace les « nombres magiques » par des noms.\n\n```c\nenum Color { RED, GREEN, BLUE, YELLOW };      // 0, 1, 2, 3\n\nenum Status {\n    ERROR = -1,                                // valeurs choisies\n    SUCCESS = 0,\n    PENDING = 1,\n    COMPLETED = 100\n};\n\ntypedef enum { LUNDI, MARDI, MERCREDI, JEUDI, VENDREDI, SAMEDI, DIMANCHE } Jour;\n\nJour aujourd_hui = LUNDI;                      // avec typedef : pas besoin du mot enum\nenum Color couleur = RED;                      // sans typedef : enum obligatoire\n```\n\n| Sans `typedef` | Avec `typedef` |\n|---|---|\n| `enum Color couleur;` | `typedef enum {RED, GREEN, BLUE} Color;` puis `Color couleur;` |\n\n> **À retenir** : par défaut, la première valeur vaut **0** et chaque suivante **+1**. Une valeur choisie (`PENDING = 1`) fait repartir le comptage de là.\n\n> **Astuce** : une `enum` se prête bien à un `switch` : `case SAMEDI: case DIMANCHE: …`. Les valeurs s'écrivent en `UPPER_SNAKE_CASE`.",
+   "rec": "Une enum est un int : `MERCREDI` vaut 2 et peut se comparer, s'afficher avec `%d`, servir d'indice.",
+   "alt": "C'est un jeu d'étiquettes collées sur des numéros : on écrit `MERCREDI` au lieu de retenir que « mercredi, c'est 2 ».",
+   "pre": [
+    "10.1",
+    "2.2"
+   ],
+   "ecrans": [
+    {
+     "titre": "Les valeurs",
+     "texte": "`enum Color { RED, GREEN, BLUE };` : 0, 1, 2."
+    },
+    {
+     "titre": "Valeurs choisies",
+     "texte": "`ERROR = -1, SUCCESS = 0`."
+    },
+    {
+     "titre": "Avec typedef",
+     "texte": "`typedef enum { LUNDI, MARDI } Jour;` puis `Jour j = LUNDI;`."
+    }
+   ],
+   "check": {
+    "id": "c-10-structures-ctl-1",
+    "enonce": "Dans `enum Color { RED, GREEN, BLUE, YELLOW };`, que vaut `BLUE` ?",
+    "choix": [
+     "2",
+     "3",
+     "1",
+     "0"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "On commence à 0 : RED = 0, GREEN = 1, BLUE = 2."
+   }
+  },
+  {
+   "id": "10.3",
+   "titre": "Les structures : struct",
+   "corps": "Une **structure** regroupe **plusieurs variables de types différents** sous un même nom : c'est un « enregistrement ». Chaque élément est un **membre** (ou champ).\n\n| Déclaration classique | Avec `typedef` (recommandé) |\n|---|---|\n| `struct Point { int x; int y; };` | `typedef struct { int x; int y; } Point;` |\n| `struct Point p1;` | `Point p1;` |\n\n```c\ntypedef struct {\n    char nom[50];\n    char prenom[50];\n    int age;\n    float taille;\n} Personne;\n\nPersonne etudiant = {\"Dupont\", \"Marie\", 22, 1.68};   // dans l'ordre des champs\nprintf(\"%s %s, %d ans\\n\", etudiant.prenom, etudiant.nom, etudiant.age);\netudiant.age = 23;                                     // accès avec le point\n```\n\n> **À retenir** : on accède à un membre avec le **point** : `variable.membre`. Une structure s'affecte d'un bloc : `Personne b = a;` copie tous les champs.\n\n> **Piège** : un champ `char nom[50]` ne s'affecte pas avec `=` : `strcpy(etudiant.nom, \"Martin\");`.",
+   "rec": "Une structure est un nouveau type composé : une variable `Personne` contient un nom, un prénom, un âge et une taille, rangés ensemble.",
+   "alt": "Une structure, c'est une fiche d'inscription : plusieurs cases (nom, âge…) de natures différentes, réunies sur une seule feuille.",
+   "pre": [
+    "10.1",
+    "6.5"
+   ],
+   "ecrans": [
+    {
+     "titre": "Déclarer le type",
+     "texte": "```c\ntypedef struct {\n    int x;\n    int y;\n} Point;\n```"
+    },
+    {
+     "titre": "Créer et remplir",
+     "texte": "`Point p = {10, 20};` ou `p.x = 10; p.y = 20;`"
+    },
+    {
+     "titre": "Accéder",
+     "texte": "Le point : `p.x`."
+    },
+    {
+     "titre": "Les chaînes",
+     "texte": "`strcpy(e.nom, \"Martin\");`, pas `e.nom = …`."
+    }
+   ],
+   "check": {
+    "id": "c-10-structures-ctl-2",
+    "enonce": "Comment accède-t-on au champ `age` de la variable `e` (de type Personne) ?",
+    "choix": [
+     "e.age",
+     "e->age",
+     "age(e)",
+     "e[age]"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "Pour une variable structure, on utilise le point."
+   }
+  },
+  {
+   "id": "10.4",
+   "titre": "Composer des structures",
+   "corps": "Une structure peut **contenir d'autres structures** : c'est la **composition**. Elle permet de modéliser des données hiérarchiques et de réutiliser des types existants.\n\n```c\ntypedef struct { int jour; int mois; int annee; } Date;\ntypedef struct { char rue[100]; char ville[50]; char code_postal[10]; } Adresse;\n\ntypedef struct {\n    char nom[50];\n    char prenom[50];\n    Date date_naissance;         // une structure dans une structure\n    Adresse domicile;\n} Personne;\n\nPersonne employe = {\n    \"Martin\", \"Jean\",\n    {12, 5, 1985},                                   // la Date, entre accolades\n    {\"123 Rue de la Paix\", \"Paris\", \"75001\"}         // l'Adresse\n};\n\nprintf(\"Né le %d/%d/%d\\n\", employe.date_naissance.jour,\n       employe.date_naissance.mois, employe.date_naissance.annee);\nprintf(\"Ville : %s\\n\", employe.domicile.ville);\n```\n\n> **À retenir** : on enchaîne les points pour descendre : `employe.date_naissance.annee`.\n\n> **Astuce** : définis d'abord les petites structures (`Date`, `Adresse`), puis celles qui les utilisent.",
+   "rec": "Un champ de type structure se manipule comme n'importe quelle structure : `employe.date_naissance` est une `Date`, donc `employe.date_naissance.jour` est un int.",
+   "alt": "Des poupées russes : la fiche Personne contient une fiche Date et une fiche Adresse.",
+   "pre": [
+    "10.3"
+   ],
+   "ecrans": [
+    {
+     "titre": "Imbriquer",
+     "texte": "`Date date_naissance;` comme champ de `Personne`."
+    },
+    {
+     "titre": "Initialiser",
+     "texte": "Des accolades imbriquées : `{\"Martin\", \"Jean\", {12, 5, 1985}}`."
+    },
+    {
+     "titre": "Descendre",
+     "texte": "`employe.date_naissance.annee`."
+    }
+   ],
+   "check": {
+    "id": "c-10-structures-ctl-3",
+    "enonce": "Comment lit-on le mois de naissance de `employe` ?",
+    "choix": [
+     "employe.date_naissance.mois",
+     "employe.mois",
+     "employe->date_naissance->mois",
+     "date_naissance.employe.mois"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "On descend de structure en structure avec des points."
+   }
+  },
+  {
+   "id": "10.5",
+   "titre": "Pointeurs de structures : l'opérateur ->",
+   "corps": "On peut prendre l'adresse d'une structure (`&p1`) et la ranger dans un pointeur. Pour accéder à un membre **à travers un pointeur**, deux écritures :\n\n| Écriture | Exemple |\n|---|---|\n| déréférencement puis point | `(*ptr).age = 25;` |\n| flèche (**recommandée**) | `ptr->age = 25;` |\n\n```c\ntypedef struct { char nom[50]; int age; float salaire; } Employe;\n\nvoid afficher_employe(Employe *e) {\n    printf(\"%s, %d ans, %.2f\\n\", e->nom, e->age, e->salaire);\n}\n\nvoid augmenter_salaire(Employe *e, float pourcentage) {\n    e->salaire += e->salaire * (pourcentage / 100.0);   // modifie l'original\n}\n\nint main(void) {\n    Employe emp = {\"Dubois\", 30, 35000.0};\n    afficher_employe(&emp);\n    augmenter_salaire(&emp, 10.0);\n    afficher_employe(&emp);                              // salaire : 38500.00\n    return 0;\n}\n```\n\n| Avantage | Pourquoi |\n|---|---|\n| Efficacité | on passe 8 octets (une adresse) au lieu de copier toute la structure |\n| Modification directe | la fonction modifie la structure d'origine |\n\n> **À retenir** : `p.champ` pour une **variable** structure, `ptr->champ` pour un **pointeur** de structure.\n\n> **Piège** : `*ptr.age` se lit `*(ptr.age)` : il faut les parenthèses `(*ptr).age`, d'où l'intérêt de `->`.",
+   "rec": "`ptr->age` est un raccourci pour `(*ptr).age` : « va à l'adresse contenue dans ptr, et prends le champ age ».",
+   "alt": "La flèche, c'est suivre l'adresse écrite sur le papier jusqu'à la fiche, puis lire une de ses cases.",
+   "pre": [
+    "10.3",
+    "8.2"
+   ],
+   "ecrans": [
+    {
+     "titre": "L'adresse d'une structure",
+     "texte": "`Employe *ptr = &emp;`"
+    },
+    {
+     "titre": "La flèche",
+     "texte": "`ptr->age = 25;` ⇔ `(*ptr).age = 25;`"
+    },
+    {
+     "titre": "En paramètre",
+     "texte": "`void augmenter_salaire(Employe *e, float pct)` modifie l'original : appel `augmenter_salaire(&emp, 10.0);`."
+    }
+   ],
+   "check": {
+    "id": "c-10-structures-ctl-4",
+    "enonce": "Avec `Employe *ptr = &emp;`, quelle écriture modifie l'âge de emp ?",
+    "choix": [
+     "ptr->age = 25;",
+     "ptr.age = 25;",
+     "*ptr.age = 25;",
+     "emp->age = 25;"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "Pour un pointeur de structure, on utilise la flèche."
+   }
+  },
+  {
+   "id": "10.6",
+   "titre": "Tableaux de structures",
+   "corps": "Un tableau de structures gère une **collection** : une classe, un catalogue, un annuaire.\n\n```c\ntypedef struct { char nom[30]; int note; } Etudiant;\n\nEtudiant classe[3] = {\n    {\"Alice\", 18},\n    {\"Bob\", 15},\n    {\"Charlie\", 17}\n};\nprintf(\"%s a eu %d/20\\n\", classe[0].nom, classe[0].note);   // Alice a eu 18/20\n\nfloat calculer_moyenne(Etudiant etudiants[], int taille) {\n    float somme = 0;\n    for (int i = 0; i < taille; i++) {\n        somme += etudiants[i].note;                         // indice, puis point\n    }\n    return somme / taille;\n}\n```\n\n### Version dynamique\nQuand le nombre d'éléments n'est connu qu'à l'exécution :\n```c\nint n = 5;\nEtudiant *etudiants = malloc(n * sizeof(Etudiant));\nif (etudiants == NULL) return 1;\nfor (int i = 0; i < n; i++) {\n    sprintf(etudiants[i].nom, \"Etudiant %d\", i + 1);\n    etudiants[i].note = 10 + i;\n}\nfree(etudiants);\netudiants = NULL;\n```\n\n> **À retenir** : `classe[i].note` : d'abord l'indice (quel élève), puis le point (quel champ).",
+   "rec": "`classe[1]` est une structure `Etudiant` ; `classe[1].nom` est son champ nom. Avec `malloc(n * sizeof(Etudiant))`, on réserve n fiches d'un coup.",
+   "alt": "Un classeur de fiches toutes identiques : `classe[2].nom`, c'est le nom écrit sur la 3e fiche.",
+   "pre": [
+    "10.3",
+    "5.4",
+    "9.5"
+   ],
+   "ecrans": [
+    {
+     "titre": "Déclarer",
+     "texte": "`Etudiant classe[3] = {{\"Alice\", 18}, {\"Bob\", 15}, {\"Charlie\", 17}};`"
+    },
+    {
+     "titre": "Accéder",
+     "texte": "`classe[i].note` : indice puis champ."
+    },
+    {
+     "titre": "Parcourir",
+     "texte": "Une boucle `for` sur les indices, comme pour un tableau d'entiers."
+    },
+    {
+     "titre": "Dynamique",
+     "texte": "`malloc(n * sizeof(Etudiant))`, puis `free`."
+    }
+   ],
+   "check": {
+    "id": "c-10-structures-ctl-5",
+    "enonce": "Comment lit-on la note du deuxième étudiant de `classe` ?",
+    "choix": [
+     "classe[1].note",
+     "classe.note[1]",
+     "classe[2].note",
+     "classe->note"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "Indice 1 pour le deuxième élément, puis le champ."
+   }
+  },
+  {
+   "id": "10.7",
+   "titre": "Passer une structure à une fonction",
+   "corps": "| Mode | Prototype | Modification de l'original | Coût |\n|---|---|---|---|\n| Par **valeur** | `void afficher(Personne p)` | non (copie) | copie de toute la structure |\n| Par **pointeur** | `void modifier(Personne *p)` | **oui** | une adresse |\n| Par **pointeur constant** | `void consulter(const Personne *p)` | non, et le compilateur le garantit | une adresse — **recommandé pour lire** |\n\n```c\nvoid afficher_valeur(Employe e) {        // copie complète\n    printf(\"%s %d\\n\", e.nom, e.age);\n    e.age = 100;                         // ne modifie PAS l'original\n}\n\nvoid vieillir(Employe *e) {              // modification possible\n    e->age++;\n}\n\nvoid afficher_const(const Employe *e) {  // lecture seule, sans copie\n    printf(\"%s %d\\n\", e->nom, e->age);\n}\n```\n\n> **À retenir** : pour **modifier** → pointeur ; pour **lire** une grosse structure → pointeur `const` ; par valeur seulement pour les petites structures qu'on ne modifie pas.",
+   "rec": "Par valeur, la fonction reçoit une copie de tous les champs ; par pointeur, elle reçoit l'adresse et agit sur la vraie structure.",
+   "alt": "Par valeur : tu prêtes une photocopie de ta fiche. Par pointeur : tu prêtes la fiche elle-même. Par pointeur const : tu la montres sous une vitre.",
+   "pre": [
+    "10.5",
+    "7.4",
+    "8.6"
+   ],
+   "ecrans": [
+    {
+     "titre": "Par valeur",
+     "texte": "`void afficher(Employe e)` : copie, original intact."
+    },
+    {
+     "titre": "Par pointeur",
+     "texte": "`void vieillir(Employe *e) { e->age++; }` : appel `vieillir(&emp);`."
+    },
+    {
+     "titre": "Par pointeur const",
+     "texte": "`void consulter(const Employe *e)` : lecture seule, sans copie."
+    }
+   ],
+   "check": {
+    "id": "c-10-structures-ctl-6",
+    "enonce": "Quelle signature permet à une fonction de modifier l'âge d'un Employe de main ?",
+    "choix": [
+     "void vieillir(Employe *e)",
+     "void vieillir(Employe e)",
+     "void vieillir(const Employe *e)",
+     "Employe vieillir(void)"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "Il faut l'adresse de la structure, sans const."
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "c10-001",
+   "type": "qcm",
+   "notion": "10.1",
+   "origine": "cours",
+   "enonce": "Après `typedef unsigned int uint;`, quelle déclaration est équivalente à `uint x;` ?",
+   "choix": [
+    "unsigned int x;",
+    "int x;",
+    "typedef x;",
+    "uint int x;"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "uint est un alias de unsigned int."
+  },
+  {
+   "id": "c10-002",
+   "type": "qcm",
+   "notion": "10.1",
+   "origine": "cours",
+   "enonce": "`typedef` crée-t-il un nouveau type ?",
+   "choix": [
+    "non, un nouveau nom pour un type existant",
+    "oui, incompatible avec l'ancien",
+    "oui, uniquement pour les struct",
+    "non, il crée une variable"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "C'est un alias."
+  },
+  {
+   "id": "c10-003",
+   "type": "saisie",
+   "notion": "10.2",
+   "origine": "cours",
+   "enonce": "Dans `enum Status { ERROR = -1, SUCCESS = 0, PENDING, COMPLETED = 100 };`, que vaut `PENDING` ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 1
+   },
+   "duree": 0.67,
+   "explication": "Après SUCCESS = 0, la valeur suivante vaut 1."
+  },
+  {
+   "id": "c10-004",
+   "type": "saisie",
+   "notion": "10.2",
+   "origine": "cours",
+   "enonce": "Dans `typedef enum { LUNDI, MARDI, MERCREDI, JEUDI, VENDREDI, SAMEDI, DIMANCHE } Jour;`, que vaut `SAMEDI` ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 5
+   },
+   "duree": 0.67,
+   "explication": "LUNDI = 0, … SAMEDI = 5."
+  },
+  {
+   "id": "c10-005",
+   "type": "qcm",
+   "notion": "10.2",
+   "origine": "cours",
+   "enonce": "Quelle déclaration est correcte **sans** typedef ?",
+   "choix": [
+    "enum Color c = RED;",
+    "Color c = RED;",
+    "c = enum RED;",
+    "enum c = Color;"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Sans typedef, le mot enum est obligatoire devant le nom."
+  },
+  {
+   "id": "c10-006",
+   "type": "qcm",
+   "notion": "10.3",
+   "origine": "cours",
+   "enonce": "Que manque-t-il ?\n```c\ntypedef struct {\n    int x;\n    int y;\n} Point\n```",
+   "choix": [
+    "un ; après Point",
+    "le mot struct avant Point",
+    "des parenthèses",
+    "rien"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "La déclaration se termine par `;`."
+  },
+  {
+   "id": "c10-007",
+   "type": "trous",
+   "notion": "10.3",
+   "origine": "cours",
+   "enonce": "[_] struct {\n    char nom[30];\n    int note;\n} Etudiant;\n\nEtudiant e;\n[_](e.nom, \"Alice\");\ne[_]note = 18;",
+   "fragments": [
+    "typedef",
+    "strcpy",
+    ".",
+    "->",
+    "="
+   ],
+   "verif": {
+    "mode": "trous",
+    "attendu": [
+     "typedef",
+     "strcpy",
+     "."
+    ]
+   },
+   "duree": 0.5,
+   "explication": "typedef pour l'alias, strcpy pour une chaîne, le point pour accéder au champ."
+  },
+  {
+   "id": "c10-008",
+   "type": "qcm",
+   "notion": "10.3",
+   "origine": "cours",
+   "enonce": "Pourquoi `e.nom = \"Alice\";` est-il refusé si `nom` est un `char nom[30]` ?",
+   "choix": [
+    "on ne peut pas affecter un tableau avec = : il faut strcpy",
+    "nom est un entier",
+    "il faut ->",
+    "la structure est constante"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Comme toute chaîne en tableau : strcpy."
+  },
+  {
+   "id": "c10-009",
+   "type": "saisie",
+   "notion": "10.3",
+   "origine": "cours",
+   "enonce": "Que vaut `b.x` ?\n```c\nPoint a = {3, 4};\nPoint b = a;\na.x = 10;\n```",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 3
+   },
+   "duree": 0.67,
+   "explication": "b est une copie de a, faite avant la modification."
+  },
+  {
+   "id": "c10-010",
+   "type": "qcm",
+   "notion": "10.4",
+   "origine": "cours",
+   "enonce": "Avec la structure `Personne` contenant `Adresse domicile;`, comment lit-on la ville ?",
+   "choix": [
+    "employe.domicile.ville",
+    "employe.ville",
+    "employe->domicile.ville",
+    "domicile.ville"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "On descend de structure en structure."
+  },
+  {
+   "id": "c10-011",
+   "type": "qcm",
+   "notion": "10.5",
+   "origine": "cours",
+   "enonce": "Que signifie `ptr->age` ?",
+   "choix": [
+    "(*ptr).age",
+    "*ptr.age",
+    "&ptr.age",
+    "ptr.age"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "La flèche déréférence puis accède au champ."
+  },
+  {
+   "id": "c10-012",
+   "type": "trous",
+   "notion": "10.5",
+   "origine": "cours",
+   "enonce": "void vieillir(Personne [_]p) {\n    p[_]age++;\n}\n\nvieillir([_]moi);",
+   "fragments": [
+    "*",
+    "->",
+    "&",
+    "."
+   ],
+   "verif": {
+    "mode": "trous",
+    "attendu": [
+     "*",
+     "->",
+     "&"
+    ]
+   },
+   "duree": 0.5,
+   "explication": "Paramètre pointeur, accès par ->, appel avec l'adresse."
+  },
+  {
+   "id": "c10-013",
+   "type": "saisie",
+   "notion": "10.5",
+   "origine": "cours",
+   "enonce": "Que vaut `emp.salaire` après `augmenter_salaire(&emp, 10.0);` si le salaire valait 35000 ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 38500
+   },
+   "duree": 0.67,
+   "explication": "35000 + 10 % = 38500."
+  },
+  {
+   "id": "c10-014",
+   "type": "saisie",
+   "notion": "10.6",
+   "origine": "cours",
+   "enonce": "Que vaut `classe[2].note` dans `Etudiant classe[3] = {{\"Alice\", 18}, {\"Bob\", 15}, {\"Charlie\", 17}};` ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 17
+   },
+   "duree": 0.67,
+   "explication": "Indice 2 = troisième élément : Charlie, 17."
+  },
+  {
+   "id": "c10-015",
+   "type": "qcm",
+   "notion": "10.6",
+   "origine": "cours",
+   "enonce": "Quelle allocation réserve un tableau de `n` Etudiant ?",
+   "choix": [
+    "malloc(n * sizeof(Etudiant))",
+    "malloc(n)",
+    "malloc(sizeof(n))",
+    "malloc(Etudiant * n)"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "n éléments de sizeof(Etudiant) octets."
+  },
+  {
+   "id": "c10-016",
+   "type": "qcm",
+   "notion": "10.7",
+   "origine": "cours",
+   "enonce": "Quelle signature recommande le cours pour **lire** une grosse structure sans la copier ?",
+   "choix": [
+    "void consulter(const Personne *p)",
+    "void consulter(Personne p)",
+    "void consulter(Personne *p)",
+    "Personne consulter(void)"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Pointeur const : pas de copie, pas de modification possible."
+  },
+  {
+   "id": "c10-017",
+   "type": "saisie",
+   "notion": "10.7",
+   "origine": "cours",
+   "enonce": "Qu'affiche ce code ?\n```c\nvoid f(Employe e) { e.age = 100; }\nint main(void) {\n    Employe emp = {\"Dubois\", 30, 35000.0};\n    f(emp);\n    printf(\"%d\", emp.age);\n    return 0;\n}\n```",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 30
+   },
+   "duree": 0.67,
+   "explication": "Passage par valeur : f modifie une copie."
+  },
+  {
+   "id": "c10-101",
+   "type": "exo",
+   "notion": "10.3",
+   "origine": "generee",
+   "titre": "Distance d'un point à l'origine",
+   "enonce": "Définis `typedef struct { double x; double y; } Point;`. Écris un programme qui lit les coordonnées d'un point dans une variable `Point`, puis affiche sa distance à l'origine, $\\sqrt{x^2 + y^2}$, avec 2 décimales.",
+   "guidage": "`scanf(\"%lf %lf\", &p.x, &p.y);` : l'adresse d'un champ s'écrit `&p.x`.",
+   "duree": 5,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "3 4",
+        "sortie": "5.00"
+       },
+       {
+        "entree": "1 1",
+        "sortie": "1.41"
+       },
+       {
+        "entree": "-6 8",
+        "sortie": "10.00"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n#include <math.h>\n\ntypedef struct {\n    double x;\n    double y;\n} Point;\n\nint main(void) {\n    Point p;\n    scanf(\"%lf %lf\", &p.x, &p.y);\n    printf(\"%.2f\\n\", sqrt(p.x * p.x + p.y * p.y));\n    return 0;\n}",
+      "nombres": true,
+      "exige": [
+       {
+        "motif": "typedef\\s+struct",
+        "msg": "Définis le type Point avec typedef struct."
+       },
+       {
+        "motif": "\\bp\\s*\\.\\s*x",
+        "msg": "Utilise les champs p.x et p.y."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n#include <math.h>\n\ntypedef struct {\n    double x;\n    double y;\n} Point;\n\nint main(void) {\n    Point p;\n    scanf(\"%lf %lf\", &p.x, &p.y);\n    printf(\"%.2f\\n\", sqrt(p.x * p.x + p.y * p.y));\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 5
+    }
+   ]
+  },
+  {
+   "id": "c10-102",
+   "type": "exo",
+   "notion": "10.2",
+   "origine": "generee",
+   "titre": "Week-end ou pas",
+   "enonce": "Définis `typedef enum { LUNDI, MARDI, MERCREDI, JEUDI, VENDREDI, SAMEDI, DIMANCHE } Jour;`. Le programme lit un numéro de jour (0 à 6) dans une variable `Jour` et affiche `week-end` pour `SAMEDI` et `DIMANCHE`, `semaine` sinon, avec un `switch` sur les constantes de l'énumération.",
+   "guidage": "`case SAMEDI: case DIMANCHE:` partagent le même bloc ; `default:` pour les autres jours.",
+   "duree": 5,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "5",
+        "sortie": "week-end"
+       },
+       {
+        "entree": "6",
+        "sortie": "week-end"
+       },
+       {
+        "entree": "0",
+        "sortie": "semaine"
+       },
+       {
+        "entree": "3",
+        "sortie": "semaine"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\ntypedef enum { LUNDI, MARDI, MERCREDI, JEUDI, VENDREDI, SAMEDI, DIMANCHE } Jour;\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    Jour j = n;\n    switch (j) {\n        case SAMEDI:\n        case DIMANCHE:\n            printf(\"week-end\\n\");\n            break;\n        default:\n            printf(\"semaine\\n\");\n    }\n    return 0;\n}",
+      "exige": [
+       {
+        "motif": "typedef\\s+enum",
+        "msg": "Définis le type Jour avec typedef enum."
+       },
+       {
+        "motif": "case\\s+SAMEDI",
+        "msg": "Utilise les constantes de l'énumération dans le switch."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\ntypedef enum { LUNDI, MARDI, MERCREDI, JEUDI, VENDREDI, SAMEDI, DIMANCHE } Jour;\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    Jour j = n;\n    switch (j) {\n        case SAMEDI:\n        case DIMANCHE:\n            printf(\"week-end\\n\");\n            break;\n        default:\n            printf(\"semaine\\n\");\n    }\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 5
+    }
+   ]
+  },
+  {
+   "id": "c10-103",
+   "type": "exo",
+   "notion": "10.4",
+   "origine": "generee",
+   "titre": "Fiche avec date de naissance",
+   "enonce": "Définis `Date` (jour, mois, annee) puis `Personne` (nom de 30 caractères et un champ `Date naissance`). Le programme lit un nom puis une date (`jour mois annee`) et affiche `nom jj/mm/aaaa age`, où `age` est l'âge atteint en 2026 (2026 − année).",
+   "guidage": "Lecture : `scanf(\"%29s %d %d %d\", p.nom, &p.naissance.jour, &p.naissance.mois, &p.naissance.annee);`.",
+   "duree": 6,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "Martin 12 5 1985",
+        "sortie": "Martin 12/5/1985 41"
+       },
+       {
+        "entree": "Lea 1 1 2006",
+        "sortie": "Lea 1/1/2006 20"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\ntypedef struct {\n    int jour;\n    int mois;\n    int annee;\n} Date;\n\ntypedef struct {\n    char nom[30];\n    Date naissance;\n} Personne;\n\nint main(void) {\n    Personne p;\n    scanf(\"%29s %d %d %d\", p.nom, &p.naissance.jour, &p.naissance.mois, &p.naissance.annee);\n    printf(\"%s %d/%d/%d %d\\n\", p.nom, p.naissance.jour, p.naissance.mois,\n           p.naissance.annee, 2026 - p.naissance.annee);\n    return 0;\n}",
+      "exige": [
+       {
+        "motif": "Date\\s+naissance\\s*;",
+        "msg": "Personne doit contenir un champ Date naissance."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\ntypedef struct {\n    int jour;\n    int mois;\n    int annee;\n} Date;\n\ntypedef struct {\n    char nom[30];\n    Date naissance;\n} Personne;\n\nint main(void) {\n    Personne p;\n    scanf(\"%29s %d %d %d\", p.nom, &p.naissance.jour, &p.naissance.mois, &p.naissance.annee);\n    printf(\"%s %d/%d/%d %d\\n\", p.nom, p.naissance.jour, p.naissance.mois,\n           p.naissance.annee, 2026 - p.naissance.annee);\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 6
+    }
+   ]
+  },
+  {
+   "id": "c10-104",
+   "type": "exo",
+   "notion": "10.5",
+   "origine": "generee",
+   "titre": "Augmenter un salaire",
+   "enonce": "Reprends l'exemple du cours : `typedef struct { char nom[50]; int age; double salaire; } Employe;` et `void augmenter_salaire(Employe *e, double pourcentage)`. `main` lit un nom, un âge, un salaire et un pourcentage, appelle la fonction **avec l'adresse** de l'employé, puis affiche le nouveau salaire avec 2 décimales.",
+   "guidage": "Dans la fonction : `e->salaire += e->salaire * (pourcentage / 100.0);`.",
+   "duree": 6,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "Dubois 30 35000 10",
+        "sortie": "38500.00"
+       },
+       {
+        "entree": "Lea 25 2000 2.5",
+        "sortie": "2050.00"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\ntypedef struct {\n    char nom[50];\n    int age;\n    double salaire;\n} Employe;\n\nvoid augmenter_salaire(Employe *e, double pourcentage) {\n    e->salaire += e->salaire * (pourcentage / 100.0);\n}\n\nint main(void) {\n    Employe emp;\n    double pct;\n    scanf(\"%49s %d %lf %lf\", emp.nom, &emp.age, &emp.salaire, &pct);\n    augmenter_salaire(&emp, pct);\n    printf(\"%.2f\\n\", emp.salaire);\n    return 0;\n}",
+      "nombres": true,
+      "exige": [
+       {
+        "motif": "->\\s*salaire",
+        "msg": "Dans la fonction, accède au salaire avec e->salaire."
+       },
+       {
+        "motif": "augmenter_salaire\\s*\\(\\s*&",
+        "msg": "Appelle la fonction avec l'adresse : augmenter_salaire(&emp, …)."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\ntypedef struct {\n    char nom[50];\n    int age;\n    double salaire;\n} Employe;\n\nvoid augmenter_salaire(Employe *e, double pourcentage) {\n    e->salaire += e->salaire * (pourcentage / 100.0);\n}\n\nint main(void) {\n    Employe emp;\n    double pct;\n    scanf(\"%49s %d %lf %lf\", emp.nom, &emp.age, &emp.salaire, &pct);\n    augmenter_salaire(&emp, pct);\n    printf(\"%.2f\\n\", emp.salaire);\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 6
+    }
+   ]
+  },
+  {
+   "id": "c10-105",
+   "type": "exo",
+   "notion": "10.6",
+   "origine": "generee",
+   "titre": "La classe",
+   "enonce": "Définis `typedef struct { char nom[30]; int note; } Etudiant;`. Le programme lit `n` (≤ 50), puis `n` lignes `nom note`, dans un **tableau d'Etudiant**. Il affiche la moyenne (2 décimales) puis le nom du meilleur étudiant (le premier en cas d'égalité).",
+   "guidage": "Le meilleur : garde l'**indice** du meilleur (`best`), et compare `classe[i].note > classe[best].note`.",
+   "duree": 7,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "3\nAlice 18\nBob 15\nCharlie 17",
+        "sortie": "16.67 Alice"
+       },
+       {
+        "entree": "2\nZoe 9\nYann 12",
+        "sortie": "10.50 Yann"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\ntypedef struct {\n    char nom[30];\n    int note;\n} Etudiant;\n\nint main(void) {\n    Etudiant classe[50];\n    int n, s = 0, best = 0;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        scanf(\"%29s %d\", classe[i].nom, &classe[i].note);\n        s += classe[i].note;\n        if (classe[i].note > classe[best].note) best = i;\n    }\n    printf(\"%.2f %s\\n\", (double)s / n, classe[best].nom);\n    return 0;\n}",
+      "exige": [
+       {
+        "motif": "Etudiant\\s+\\w+\\s*\\[",
+        "msg": "Range les étudiants dans un tableau d'Etudiant."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\ntypedef struct {\n    char nom[30];\n    int note;\n} Etudiant;\n\nint main(void) {\n    Etudiant classe[50];\n    int n, s = 0, best = 0;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        scanf(\"%29s %d\", classe[i].nom, &classe[i].note);\n        s += classe[i].note;\n        if (classe[i].note > classe[best].note) best = i;\n    }\n    printf(\"%.2f %s\\n\", (double)s / n, classe[best].nom);\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 7
+    }
+   ]
+  },
+  {
+   "id": "c10-106",
+   "type": "exo",
+   "notion": "10.6",
+   "origine": "generee",
+   "titre": "Annuaire dynamique",
+   "enonce": "Définis `typedef struct { char nom[30]; char tel[15]; } Contact;`. Le programme lit `n`, alloue un annuaire de `n` contacts avec `calloc`, lit les `n` lignes `nom tel`, puis lit un nom à chercher et affiche son téléphone, ou `inconnu`. Libère l'annuaire à la fin.",
+   "guidage": "Comparaison de chaînes avec `strcmp(annuaire[i].nom, cherche) == 0` (string.h).",
+   "duree": 8,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "3\nMartin 0601020304\nDurand 0605060708\nBernard 0609101112\nDurand",
+        "sortie": "0605060708"
+       },
+       {
+        "entree": "1\nLea 0700000000\nZoe",
+        "sortie": "inconnu"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\n\ntypedef struct {\n    char nom[30];\n    char tel[15];\n} Contact;\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    Contact *annuaire = calloc(n, sizeof(Contact));\n    if (annuaire == NULL) return 1;\n    for (int i = 0; i < n; i++) {\n        scanf(\"%29s %14s\", annuaire[i].nom, annuaire[i].tel);\n    }\n    char cherche[30];\n    scanf(\"%29s\", cherche);\n    int trouve = 0;\n    for (int i = 0; i < n; i++) {\n        if (strcmp(annuaire[i].nom, cherche) == 0) {\n            printf(\"%s\\n\", annuaire[i].tel);\n            trouve = 1;\n            break;\n        }\n    }\n    if (!trouve) printf(\"inconnu\\n\");\n    free(annuaire);\n    return 0;\n}",
+      "exige": [
+       {
+        "motif": "\\bcalloc\\s*\\(",
+        "msg": "Alloue l'annuaire avec calloc."
+       },
+       {
+        "motif": "\\bfree\\s*\\(",
+        "msg": "Libère l'annuaire avec free."
+       },
+       {
+        "motif": "strcmp",
+        "msg": "Compare les noms avec strcmp."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\n\ntypedef struct {\n    char nom[30];\n    char tel[15];\n} Contact;\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    Contact *annuaire = calloc(n, sizeof(Contact));\n    if (annuaire == NULL) return 1;\n    for (int i = 0; i < n; i++) {\n        scanf(\"%29s %14s\", annuaire[i].nom, annuaire[i].tel);\n    }\n    char cherche[30];\n    scanf(\"%29s\", cherche);\n    int trouve = 0;\n    for (int i = 0; i < n; i++) {\n        if (strcmp(annuaire[i].nom, cherche) == 0) {\n            printf(\"%s\\n\", annuaire[i].tel);\n            trouve = 1;\n            break;\n        }\n    }\n    if (!trouve) printf(\"inconnu\\n\");\n    free(annuaire);\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 8
+    }
+   ]
+  },
+  {
+   "id": "c10-107",
+   "type": "exo",
+   "notion": "10.7",
+   "origine": "generee",
+   "titre": "L'anniversaire qui ne compte pas",
+   "enonce": "La fonction `vieillir` doit ajouter un an à la personne. Avec `Lea 19`, le programme doit afficher `20`, mais il affiche `19`. Corrige la fonction (et son appel).",
+   "guidage": "Passage par valeur ou par adresse ?",
+   "duree": 4,
+   "etapes": [
+    {
+     "consigne": "Corrige le programme ci-dessous pour qu'il fasse ce que dit l'énoncé, puis valide.",
+     "question": "Corrige le programme.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "Lea 19",
+        "sortie": "20"
+       },
+       {
+        "entree": "Bob 45",
+        "sortie": "46"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\ntypedef struct {\n    char nom[30];\n    int age;\n} Personne;\n\nvoid vieillir(Personne *p) {\n    p->age++;\n}\n\nint main(void) {\n    Personne moi;\n    scanf(\"%29s %d\", moi.nom, &moi.age);\n    vieillir(&moi);\n    printf(\"%d\\n\", moi.age);\n    return 0;\n}",
+      "exige": [
+       {
+        "motif": "void\\s+vieillir\\s*\\(\\s*Personne\\s*\\*",
+        "msg": "Passe la personne par adresse : void vieillir(Personne *p)."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\ntypedef struct {\n    char nom[30];\n    int age;\n} Personne;\n\nvoid vieillir(Personne *p) {\n    p->age++;\n}\n\nint main(void) {\n    Personne moi;\n    scanf(\"%29s %d\", moi.nom, &moi.age);\n    vieillir(&moi);\n    printf(\"%d\\n\", moi.age);\n    return 0;\n}\n```",
+     "indices": [
+      "`vieillir` reçoit une copie de `moi`.",
+      "`void vieillir(Personne *p) { p->age++; }` et l'appel `vieillir(&moi);`."
+     ],
+     "duree": 4,
+     "depart": "#include <stdio.h>\n\ntypedef struct {\n    char nom[30];\n    int age;\n} Personne;\n\nvoid vieillir(Personne p) {\n    p.age++;\n}\n\nint main(void) {\n    Personne moi;\n    scanf(\"%29s %d\", moi.nom, &moi.age);\n    vieillir(moi);\n    printf(\"%d\\n\", moi.age);\n    return 0;\n}"
+    }
+   ]
+  },
+  {
+   "id": "c10-108",
+   "type": "exo",
+   "notion": "10.7",
+   "origine": "generee",
+   "titre": "Vendre un produit",
+   "enonce": "Définis `typedef struct { char nom[30]; double prix; int stock; } Produit;` et `int vendre(Produit *p, int quantite)` : si le stock suffit, il le diminue et renvoie 1, sinon il ne change rien et renvoie 0. Écris aussi `void afficher(const Produit *p)` qui affiche `nom stock`. `main` lit un nom, un prix, un stock, puis une quantité : il affiche `vendu` ou `stock insuffisant`, puis appelle `afficher`.",
+   "guidage": "Modifier → `Produit *` ; lire → `const Produit *`.",
+   "duree": 7,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "Stylo 1.5 10 3",
+        "sortie": "vendu\nStylo 7"
+       },
+       {
+        "entree": "Cahier 3 2 5",
+        "sortie": "stock insuffisant\nCahier 2"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\ntypedef struct {\n    char nom[30];\n    double prix;\n    int stock;\n} Produit;\n\nint vendre(Produit *p, int quantite) {\n    if (p->stock < quantite) return 0;\n    p->stock -= quantite;\n    return 1;\n}\n\nvoid afficher(const Produit *p) {\n    printf(\"%s %d\\n\", p->nom, p->stock);\n}\n\nint main(void) {\n    Produit prod;\n    int q;\n    scanf(\"%29s %lf %d %d\", prod.nom, &prod.prix, &prod.stock, &q);\n    if (vendre(&prod, q)) printf(\"vendu\\n\");\n    else printf(\"stock insuffisant\\n\");\n    afficher(&prod);\n    return 0;\n}",
+      "exige": [
+       {
+        "motif": "int\\s+vendre\\s*\\(\\s*Produit\\s*\\*",
+        "msg": "Écris int vendre(Produit *p, int quantite)."
+       },
+       {
+        "motif": "void\\s+afficher\\s*\\(\\s*const\\s+Produit\\s*\\*",
+        "brut": true,
+        "msg": "afficher ne fait que lire : void afficher(const Produit *p)."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\ntypedef struct {\n    char nom[30];\n    double prix;\n    int stock;\n} Produit;\n\nint vendre(Produit *p, int quantite) {\n    if (p->stock < quantite) return 0;\n    p->stock -= quantite;\n    return 1;\n}\n\nvoid afficher(const Produit *p) {\n    printf(\"%s %d\\n\", p->nom, p->stock);\n}\n\nint main(void) {\n    Produit prod;\n    int q;\n    scanf(\"%29s %lf %d %d\", prod.nom, &prod.prix, &prod.stock, &q);\n    if (vendre(&prod, q)) printf(\"vendu\\n\");\n    else printf(\"stock insuffisant\\n\");\n    afficher(&prod);\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 7
+    }
+   ]
+  },
+  {
+   "id": "c10-109",
+   "type": "exo",
+   "notion": "10.6",
+   "origine": "generee",
+   "titre": "Classe initialisée",
+   "enonce": "Recopie la classe du cours, **initialisée à la déclaration** :\n```c\nEtudiant classe[3] = {\n    {\"Alice\", 18},\n    {\"Bob\", 15},\n    {\"Charlie\", 17}\n};\n```\npuis écris `void afficher_classe(Etudiant etudiants[], int taille)` qui affiche `i. nom - Note : note/20` (numéros à partir de 1), et affiche ensuite la moyenne avec 2 décimales.",
+   "guidage": "Exemple de ligne : `1. Alice - Note : 18/20`.",
+   "duree": 6,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "",
+        "sortie": "1. Alice - Note : 18/20\n2. Bob - Note : 15/20\n3. Charlie - Note : 17/20\n16.67"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\ntypedef struct {\n    char nom[30];\n    int note;\n} Etudiant;\n\nvoid afficher_classe(Etudiant etudiants[], int taille) {\n    for (int i = 0; i < taille; i++) {\n        printf(\"%d. %s - Note : %d/20\\n\", i + 1, etudiants[i].nom, etudiants[i].note);\n    }\n}\n\nint main(void) {\n    Etudiant classe[3] = {\n        {\"Alice\", 18},\n        {\"Bob\", 15},\n        {\"Charlie\", 17}\n    };\n    afficher_classe(classe, 3);\n    int s = 0;\n    for (int i = 0; i < 3; i++) s += classe[i].note;\n    printf(\"%.2f\\n\", s / 3.0);\n    return 0;\n}",
+      "exige": [
+       {
+        "motif": "void\\s+afficher_classe\\s*\\(",
+        "msg": "Écris la fonction afficher_classe."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\ntypedef struct {\n    char nom[30];\n    int note;\n} Etudiant;\n\nvoid afficher_classe(Etudiant etudiants[], int taille) {\n    for (int i = 0; i < taille; i++) {\n        printf(\"%d. %s - Note : %d/20\\n\", i + 1, etudiants[i].nom, etudiants[i].note);\n    }\n}\n\nint main(void) {\n    Etudiant classe[3] = {\n        {\"Alice\", 18},\n        {\"Bob\", 15},\n        {\"Charlie\", 17}\n    };\n    afficher_classe(classe, 3);\n    int s = 0;\n    for (int i = 0; i < 3; i++) s += classe[i].note;\n    printf(\"%.2f\\n\", s / 3.0);\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 6
+    }
+   ]
+  }
+ ]
+}

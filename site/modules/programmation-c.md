@@ -9,19 +9,19 @@ Cours ESILV Programmation C (BIC) : langage C de base jusqu'aux structures et à
 | 2 | `c-2-variables-types` | Variables, types et opérateurs (41 items) | ✅ en ligne | CM1 · Types · TD ex. 3, 5, 6 |
 | 3 | `c-3-entrees-sorties` | Entrées / sorties (26 items) | ✅ en ligne | CM1 · TD ex. 2, 3 |
 | 4 | `c-4-controle` | Structures de contrôle (67 items) | ✅ en ligne | CM1 · TD Premiers pas · TD Boucles (débutant) |
-| 5 | `c-5-tableaux` | Tableaux 1D | à faire | Tableaux1D · TD Boucles (intermédiaire) |
-| 6 | `c-6-chaines` | Chaînes de caractères | à faire | Chaînes · Fonctions (`string.h`) |
-| 7 | `c-7-fonctions` | Fonctions | à faire | Fonctions |
-| 8 | `c-8-pointeurs` | Pointeurs | à faire | Pointeurs |
-| 9 | `c-9-allocation` | Allocation dynamique | à faire | Pointeurs · Types |
-| 10 | `c-10-structures` | Types et structures | à faire | Types et Structures |
+| 5 | `c-5-tableaux` | Tableaux (30 items) | ✅ en ligne | Tableaux1D · TD Boucles (intermédiaire ex. 1-11) |
+| 6 | `c-6-chaines` | Chaînes de caractères (31 items) | ✅ en ligne | Chaînes · Fonctions (`string.h`) · TD ex. 12 |
+| 7 | `c-7-fonctions` | Fonctions (31 items) | ✅ en ligne | Fonctions (exercice tableaux, module calculatrice) |
+| 8 | `c-8-pointeurs` | Pointeurs (28 items) | ✅ en ligne | Pointeurs |
+| 9 | `c-9-allocation` | Allocation dynamique (23 items) | ✅ en ligne | Pointeurs · Types |
+| 10 | `c-10-structures` | Types et structures (26 items) | ✅ en ligne | Types et Structures (annuaire, employé, classe) |
 
 Ids des items : `c<chapitre>-0xx` (questions courtes), `c<chapitre>-1xx` (exos). Ne jamais réutiliser un id. Ids des checks : `<chapitre>-ctl-<n°>`.
 
-## Notions des chapitres en ligne (ids figés)
+## Notions (ids figés)
 1.1 langage et jargon · 1.2 structure d'un programme · 1.3 commentaires et conventions · 2.1 variables · 2.2 `#define` · 2.3 types et modificateurs · 2.4 opérateurs · 2.5 conversions · 2.6 booléen · 3.1 `printf` · 3.2 formats · 3.3 `scanf` · 4.1 `if / else` · 4.2 `switch` · 4.3 `for` · 4.4 `while` · 4.5 `do-while` · 4.6 `break` / `continue`.
 
-Prévu pour la suite : 5.1 déclarer/accéder · 5.2 taille physique vs logique · 5.3 erreurs fréquentes · 5.4 algorithmes · 6.1 `'\0'` · 6.2 déclarer/initialiser · 6.3 `scanf` vs `fgets` · 6.4 parcours · 6.5 `string.h` · 7.1 prototype · 7.2 `void`/retour · 7.3 portée · 7.4 passage par valeur · 7.5 passage par adresse · 7.6 tableaux en paramètre · 7.7 bibliothèque standard · 7.8 modules `.h`/`.c` · 8.1 mémoire et adresses · 8.2 `&` et `*` · 8.3 déclarer, `NULL` · 8.4 arithmétique · 8.5 tableaux et pointeurs · 8.6 `const` · 9.1 statique vs dynamique · 9.2 `malloc`/`calloc` · 9.3 `realloc` · 9.4 `free`, fuites · 9.5 tableaux dynamiques · 10.1 `typedef` · 10.2 `enum` · 10.3 `struct` · 10.4 composition · 10.5 pointeur de struct · 10.6 tableaux de struct · 10.7 struct en paramètre.
+5.1 déclarer, initialiser, parcourir · 5.2 taille physique et logique · 5.3 erreurs fréquentes · 5.4 algorithmes · 6.1 chaîne et `'\0'` · 6.2 déclarer, initialiser · 6.3 `scanf` / `fgets` · 6.4 parcourir · 6.5 `string.h` · 7.1 prototype et définition · 7.2 `void` / retour · 7.3 portée · 7.4 par valeur · 7.5 par adresse · 7.6 tableau en paramètre · 7.7 bibliothèque standard · 7.8 modules `.h` / `.c` · 8.1 mémoire et adresses · 8.2 `&` et `*` · 8.3 déclarer, `NULL` · 8.4 arithmétique · 8.5 pointeurs et tableaux · 8.6 `const` · 9.1 statique / dynamique · 9.2 `malloc` / `calloc` · 9.3 `realloc` · 9.4 `free`, fuites, valgrind · 9.5 tableaux dynamiques · 10.1 `typedef` · 10.2 `enum` · 10.3 `struct` · 10.4 composition · 10.5 pointeur de struct `->` · 10.6 tableaux de struct · 10.7 struct en paramètre.
 
 ## D.A. retenue : « Plan de masse » (palette Midnight Indigo / Vanilla Cream)
 - Gabarit : celui de tous les modules (voir `GAMIFICATION.md` § D.A. « Gabarit de module »). Fond de page, header et header du lecteur = hub ; la D.A. du module ne concerne que sa carte du hub et les fenêtres du lecteur.
@@ -42,7 +42,7 @@ Prévu pour la suite : 5.1 déclarer/accéder · 5.2 taille physique vs logique 
 - **Cours** : chaque notion combine texte court, blocs ```` ```c ```` (colorés façon VS Code, bouton copier), **tableaux** markdown (`| a | b |`, `\|` pour une barre dans une cellule), **encadrés** `> **Piège** : …`, `> **À retenir** : …`, `> **Astuce** : …`, `> **Exemple** : …`, intertitres `### …`. Follow-along : un écran = une idée, avec un petit bloc de code.
 - **Exos de code = cœur du module** : chaque notion a au moins un exo « écris le programme » (`code_exo`) ou « corrige le programme » (`bug_exo`, code de départ `depart` qui doit **échouer** à ses tests). Chaque exo de TD « écrire un programme » finit par une étape « programme complet ». Les contraintes de l'énoncé (« sans * », « avec un switch », « avec #define ») passent par `verif.exige` / `verif.interdit` (`{motif, msg, brut?}` ; motif testé sur le code sans commentaires ni chaînes, sauf `brut:true`).
 - Express : questions « qu'affiche ce code ? » avec le code dans l'énoncé.
-- Compte au 03/11 : 155 items, dont 56 étapes de code exécutées (toutes les solutions passent leurs tests ; les 6 codes de départ des exos « corrige » échouent).
+- Compte au 03/11 : **10 chapitres, 53 notions, 324 items, 121 exos**, chacun avec une étape de code exécutée (toutes les solutions passent leurs tests ; les codes de départ des exos « corrige » échouent).
 
 ## Règles de correction propres au module
 - Réponses de code en `regex` (toute la réponse, insensible à la casse, espaces libres via `\s*`) ; l'`exemple` affiché en correction est la forme canonique.

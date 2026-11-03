@@ -12,6 +12,8 @@ const RE_JETONS = /(\/\/[^\n]*|\/\*[\s\S]*?\*\/|"(?:\\.|[^"\\\n])*"|'(?:\\.|[^'\
 function pretraiter(code){
   code = String(code || "").replace(/\r/g, "");
   code = code.replace(RE_JETONS, (x, garde) => garde ? x : "");
+  /* paramètre « int t[] » → « int *t » (équivalent en C) : PicoC copierait le tableau et plante au-delà de 256 octets */
+  code = code.replace(/([(,]\s*(?:unsigned\s+|signed\s+|struct\s+)?[A-Za-z_]\w*\s*\**\s*)\b([A-Za-z_]\w*)\s*\[\s*\d*\s*\](?=\s*[,)])/g, "$1*$2");
   return initStructures(code);
 }
 

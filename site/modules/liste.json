@@ -36,8 +36,14 @@
    "c-1-prise-en-main",
    "c-2-variables-types",
    "c-3-entrees-sorties",
-   "c-4-controle"
+   "c-4-controle",
+   "c-5-tableaux",
+   "c-6-chaines",
+   "c-7-fonctions",
+   "c-8-pointeurs",
+   "c-9-allocation",
+   "c-10-structures"
   ],
-  "items": 155
+  "items": 324
  }
 ]

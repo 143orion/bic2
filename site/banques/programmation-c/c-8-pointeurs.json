@@ -1,0 +1,1052 @@
+{
+ "id": "c-8-pointeurs",
+ "module": "programmation-c",
+ "titre": "Pointeurs",
+ "ordre": 8,
+ "sources": [
+  "Les pointeurs et l'allocation dynamique en langage C"
+ ],
+ "tldr": [
+  "`&x` = adresse de x · `int *p = &x;` · `*p` = valeur pointée · `*p = 5;` modifie x.",
+  "Initialiser : une adresse ou `NULL` · tester `if (p != NULL)` avant `*p` · `int *p;` seul = danger.",
+  "`p++`, `p + n` avancent d'**éléments** (taille du type) · `p2 - p1` = nombre d'éléments entre eux.",
+  "`tab` = `&tab[0]` · `tab[i]` ⇔ `*(tab + i)` · paramètres `int t[]` ⇔ `int *t`.",
+  "`const int *p` : valeur pointée protégée · `int *const p` : pointeur fixe · paramètre en lecture : `const int *t`."
+ ],
+ "notions": [
+  {
+   "id": "8.1",
+   "titre": "La mémoire et les adresses",
+   "corps": "La mémoire est une **suite d'octets**, chacun repéré par une **adresse** unique (écrite en hexadécimal : `0x1000`, `0x1001`…). Une variable occupe un ou plusieurs octets **contigus** selon son type ; son adresse est celle de son **premier octet**.\n\n| Adresse | Contenu | Variable |\n|---|---|---|\n| `0x1000` … `0x1003` | 4 octets | `int nombre = 42;` |\n| `0x1004` | 1 octet | `char lettre = 'A';` |\n| `0x1008` … `0x100F` | 8 octets | `double prix = 19.99;` |\n\n```c\nint nombre = 42;\nprintf(\"%d octets\\n\", (int)sizeof(nombre));   // 4\nprintf(\"adresse : %p\\n\", (void *)&nombre);    // par ex. 0x7ffd5fbff5bc\n```\n\n> **À retenir** : `&variable` donne l'**adresse** de la variable ; `%p` l'affiche. `sizeof` donne sa taille en octets.\n\n> **Astuce** : l'adresse change à chaque exécution ; ce qui compte, c'est qu'elle désigne **où** est rangée la valeur.",
+   "rec": "Chaque octet de la mémoire a un numéro (son adresse). Une variable est une case qui commence à une certaine adresse et s'étend sur `sizeof(type)` octets.",
+   "alt": "La mémoire est une rue très longue : chaque maison (octet) a un numéro. Une variable `int` occupe 4 maisons voisines ; son adresse est le numéro de la première.",
+   "pre": [
+    "2.3"
+   ],
+   "ecrans": [
+    {
+     "titre": "Des octets numérotés",
+     "texte": "Chaque octet a une adresse unique, écrite en hexadécimal."
+    },
+    {
+     "titre": "Une variable, une adresse",
+     "texte": "L'adresse d'une variable est celle de son premier octet : `&nombre`."
+    },
+    {
+     "titre": "Afficher",
+     "texte": "```c\nprintf(\"%p\\n\", (void *)&nombre);\n```"
+    }
+   ],
+   "check": {
+    "id": "c-8-pointeurs-ctl-0",
+    "enonce": "Que donne `&x` ?",
+    "choix": [
+     "l'adresse de x",
+     "la valeur de x",
+     "la taille de x",
+     "x multiplié par 2"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "L'opérateur & donne l'adresse mémoire de la variable."
+   }
+  },
+  {
+   "id": "8.2",
+   "titre": "Les opérateurs & et *",
+   "corps": "| Opérateur | Nom | Sur | Donne |\n|---|---|---|---|\n| `&x` | « adresse de » | une variable | son adresse |\n| `*p` | déréférencement | un pointeur | la valeur **rangée à l'adresse** contenue dans `p` |\n\n```c\nint nombre = 42;\nint *pointeur = &nombre;            // pointeur contient l'adresse de nombre\n\nprintf(\"%d\\n\", *pointeur);          // 42 : la valeur pointée\n*pointeur = 100;                    // on écrit À L'ADRESSE pointée…\nprintf(\"%d\\n\", nombre);             // 100 : … donc dans nombre\n```\n\n| Expression | Vaut |\n|---|---|\n| `nombre` | `100` |\n| `&nombre` | `0x7fff5fbff5bc` (l'adresse) |\n| `pointeur` | `0x7fff5fbff5bc` (la même adresse) |\n| `*pointeur` | `100` |\n\n> **À retenir** : `*` et `&` sont **inverses** : `*&nombre` est `nombre`.\n\n> **Piège** : l'étoile n'a pas le même sens partout. Dans une **déclaration** (`int *p`), elle dit « p est un pointeur » ; dans une **expression** (`*p = 5`), elle veut dire « la case pointée ».",
+   "rec": "Un pointeur est une variable qui contient une adresse. `*p` permet de lire ou d'écrire la case qui se trouve à cette adresse, comme si on utilisait directement la variable pointée.",
+   "alt": "`&maison` = noter l'adresse d'une maison sur un papier ; `*papier` = aller à l'adresse écrite et regarder (ou changer) ce qu'il y a dedans.",
+   "pre": [
+    "8.1"
+   ],
+   "ecrans": [
+    {
+     "titre": "L'adresse",
+     "texte": "`int *p = &nombre;` : p contient l'adresse de nombre."
+    },
+    {
+     "titre": "La valeur pointée",
+     "texte": "`*p` vaut 42 : la valeur rangée à cette adresse."
+    },
+    {
+     "titre": "Écrire à travers",
+     "texte": "`*p = 100;` modifie `nombre`."
+    },
+    {
+     "titre": "Deux sens de *",
+     "texte": "Déclaration : « est un pointeur ». Expression : « case pointée »."
+    }
+   ],
+   "check": {
+    "id": "c-8-pointeurs-ctl-1",
+    "enonce": "Après `int x = 5; int *p = &x; *p = 8;`, que vaut `x` ?",
+    "choix": [
+     "8",
+     "5",
+     "l'adresse de x",
+     "13"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "`*p = 8` écrit dans la case pointée, c'est-à-dire x."
+   }
+  },
+  {
+   "id": "8.3",
+   "titre": "Déclarer et initialiser un pointeur, NULL",
+   "corps": "Un pointeur est **typé** : il indique le type de ce qu'il pointe. Sa taille est fixe (4 ou 8 octets selon la machine), quel que soit ce type.\n\n```c\nint valeur = 50;\nint *p1 = &valeur;     // initialisé avec une adresse\nint *p2 = NULL;        // initialisé à NULL : « ne pointe sur rien »\nfloat *p_reel;\ndouble *p_double;\nvoid *p_generique;     // pointeur générique (malloc en renvoie un)\n\nif (p2 != NULL) {      // toujours vérifier avant de déréférencer\n    *p2 = 10;\n}\n```\n\n| Initialisation | Exemple | Sûr ? |\n|---|---|---|\n| avec une adresse | `int *p = &x;` | oui |\n| à `NULL` | `int *p = NULL;` | oui, à condition de tester avant `*p` |\n| pas d'initialisation | `int *p;` | **non** : il pointe n'importe où |\n\n> **Piège** : `int *p; *p = 5;` écrit à une adresse au hasard : comportement indéfini (plantage). **Initialise toujours** un pointeur, au pire à `NULL`.\n\n> **Piège** : dans `int *a, b;`, seul `a` est un pointeur ; `b` est un `int`. Écris plutôt une déclaration par ligne.",
+   "rec": "`NULL` est une adresse spéciale qui signifie « aucune ». Déréférencer `NULL` est une erreur (dans l'éditeur : « Accès à un pointeur NULL »).",
+   "alt": "Un pointeur non initialisé, c'est un papier avec une adresse au hasard : y aller peut te mener n'importe où. `NULL`, c'est un papier sur lequel on a écrit « aucune adresse ».",
+   "pre": [
+    "8.2"
+   ],
+   "ecrans": [
+    {
+     "titre": "Typé",
+     "texte": "`int *` pointe sur un int, `char *` sur un char…"
+    },
+    {
+     "titre": "NULL",
+     "texte": "`int *p = NULL;` : ne pointe sur rien ; on teste `if (p != NULL)` avant `*p`."
+    },
+    {
+     "titre": "Jamais au hasard",
+     "texte": "`int *p; *p = 5;` : comportement indéfini."
+    }
+   ],
+   "check": {
+    "id": "c-8-pointeurs-ctl-2",
+    "enonce": "Quelle déclaration est la plus sûre pour un pointeur qu'on n'utilise pas encore ?",
+    "choix": [
+     "int *p = NULL;",
+     "int *p;",
+     "int p = 0;",
+     "int *p = 0x1000;"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "NULL indique explicitement que le pointeur ne pointe sur rien."
+   }
+  },
+  {
+   "id": "8.4",
+   "titre": "L'arithmétique des pointeurs",
+   "corps": "On peut **additionner** un entier à un pointeur : il avance d'autant d'**éléments** (pas d'octets) ; le C tient compte de la taille du type pointé.\n\n| Opération | Effet |\n|---|---|\n| `p++` | avance d'un élément |\n| `p--` | recule d'un élément |\n| `p + n` | adresse n éléments plus loin |\n| `p - n` | adresse n éléments plus tôt |\n| `p2 - p1` | nombre d'éléments entre deux pointeurs |\n| `p1 < p2` | comparaison de positions (dans un même tableau) |\n\n```c\nint tableau[5] = {10, 20, 30, 40, 50};\nint *ptr = tableau;           // ptr → 10\nptr++;                        // ptr → 20 (avance de 4 octets : un int)\nptr = ptr + 2;                // ptr → 40\nprintf(\"%d\\n\", *ptr);         // 40\n```\n\n| `tableau` | 10 | 20 | 30 | 40 | 50 |\n|---|---|---|---|---|---|\n| Adresse (exemple) | 1000 | 1004 | 1008 | 1012 | 1016 |\n| | `ptr` | `ptr + 1` | `ptr + 2` | `ptr + 3` | `ptr + 4` |\n\n> **À retenir** : `ptr + 1` sur un `int *` avance de `sizeof(int)` = 4 octets ; sur un `char *`, d'un seul octet.\n\n> **Attention** : l'exécuteur du site accepte `p++` et `p + n` sur une **variable pointeur**, mais ni la comparaison (`p < fin`) ni la soustraction de pointeurs. Dans les exos exécutés, parcours avec un compteur.",
+   "rec": "Le pointeur se déplace d'élément en élément : `p + 2` désigne l'élément situé deux cases plus loin, quel que soit le nombre d'octets qu'occupe chaque case.",
+   "alt": "Avancer un pointeur, c'est avancer d'une maison dans une rue où toutes les maisons ont la même largeur (le type) : on compte en maisons, pas en mètres.",
+   "pre": [
+    "8.2",
+    "5.1"
+   ],
+   "ecrans": [
+    {
+     "titre": "Avancer",
+     "texte": "`p++` passe à l'élément suivant ; `p + n` saute n éléments."
+    },
+    {
+     "titre": "En éléments",
+     "texte": "Pour un `int *`, +1 avance de 4 octets ; pour un `char *`, d'un octet."
+    },
+    {
+     "titre": "Comparer, soustraire",
+     "texte": "`p2 - p1` = nombre d'éléments entre les deux ; `p1 < p2` compare leurs positions."
+    }
+   ],
+   "check": {
+    "id": "c-8-pointeurs-ctl-3",
+    "enonce": "Si `int *p` vaut l'adresse 1000 et qu'un int occupe 4 octets, que vaut `p + 2` ?",
+    "choix": [
+     "1008",
+     "1002",
+     "1004",
+     "2000"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "On avance de 2 éléments de 4 octets : 1000 + 8 = 1008."
+   }
+  },
+  {
+   "id": "8.5",
+   "titre": "Pointeurs et tableaux",
+   "corps": "Le **nom d'un tableau** est (presque) un pointeur constant vers son **premier élément** : `tab` vaut `&tab[0]`. D'où quatre écritures équivalentes :\n\n| Notation | Sens |\n|---|---|\n| `tab[2]` | notation tableau |\n| `*(tab + 2)` | notation pointeur |\n| `ptr[2]` | notation tableau, sur un pointeur |\n| `*(ptr + 2)` | notation pointeur |\n\n```c\nint tab[5] = {10, 20, 30, 40, 50};\nint *ptr = tab;               // ptr = &tab[0]\nprintf(\"%d %d\\n\", tab[2], *(ptr + 2));   // 30 30\n```\n\n### Passer un tableau à une fonction\nCes trois prototypes sont **équivalents** : la fonction reçoit l'adresse du premier élément.\n```c\nvoid afficher1(int tab[], int taille);\nvoid afficher2(int *tab, int taille);\nvoid afficher3(int tab[10], int taille);\n\nvoid modifier(int *tab, int taille) {\n    for (int i = 0; i < taille; i++) {\n        tab[i] *= 2;          // modifie le tableau d'origine\n    }\n}\n```\n\n### Tableaux de pointeurs\n```c\nchar *jours[] = {\"Lundi\", \"Mardi\", \"Mercredi\", \"Jeudi\", \"Vendredi\"};\nprintf(\"%s\\n\", jours[2]);     // Mercredi\n```\n\n> **À retenir** : c'est pour ça qu'une fonction peut modifier un tableau reçu en paramètre (voir {{7.6}}).",
+   "rec": "`tab[i]` est défini comme `*(tab + i)` : l'indice est un décalage depuis l'adresse de départ.",
+   "alt": "Le nom du tableau est l'adresse de la première maison de la rangée ; `tab[3]`, c'est « trois maisons plus loin ».",
+   "pre": [
+    "8.4",
+    "7.6"
+   ],
+   "ecrans": [
+    {
+     "titre": "Le nom = l'adresse",
+     "texte": "`tab` vaut `&tab[0]`."
+    },
+    {
+     "titre": "Équivalence",
+     "texte": "`tab[i]` ⇔ `*(tab + i)` ⇔ `ptr[i]` ⇔ `*(ptr + i)`."
+    },
+    {
+     "titre": "Dans une fonction",
+     "texte": "`int tab[]` et `int *tab` sont la même chose en paramètre."
+    },
+    {
+     "titre": "Tableau de chaînes",
+     "texte": "`char *jours[] = {\"Lundi\", \"Mardi\"};` : un tableau de pointeurs."
+    }
+   ],
+   "check": {
+    "id": "c-8-pointeurs-ctl-4",
+    "enonce": "Pour `int *p = tab;`, quelle expression vaut `tab[3]` ?",
+    "choix": [
+     "*(p + 3)",
+     "*p + 3",
+     "&p[3]",
+     "p + 3"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "`*(p + 3)` est la valeur 3 éléments après le début ; `*p + 3` ajoute 3 à la première valeur."
+   }
+  },
+  {
+   "id": "8.6",
+   "titre": "Pointeurs et const",
+   "corps": "`const` protège contre les modifications accidentelles. Sa place change tout :\n\n| Déclaration | La valeur pointée | Le pointeur lui-même |\n|---|---|---|\n| `const int *p` | **non modifiable** (`*p = 3;` refusé) | modifiable (`p = &y;` OK) |\n| `int *const p = &x` | modifiable | **non modifiable** |\n| `const int *const p = &x` | non modifiable | non modifiable |\n\nL'usage le plus courant : un paramètre qu'on veut **lire sans le modifier**, sans payer la copie :\n```c\nint somme(const int *t, int n) {   // « je lis t, je promets de ne pas l'écrire »\n    int s = 0;\n    for (int i = 0; i < n; i++) {\n        s += t[i];                 // lecture : OK\n        // t[i] = 0;               // refusé par le compilateur\n    }\n    return s;\n}\n```\n\n> **Astuce** : lis la déclaration de droite à gauche : `const int *p` = « p est un pointeur vers un int constant ».\n\n> **Remarque** : l'exécuteur du site ignore `const` (il exécute sans vérifier). Un vrai compilateur, lui, refuse d'écrire à travers un `const int *`.",
+   "rec": "`const` avant l'étoile protège la valeur pointée ; après l'étoile, il protège l'adresse contenue dans le pointeur.",
+   "alt": "`const int *p` : une visite en lecture seule, tu peux changer de musée mais pas toucher aux œuvres. `int *const p` : tu es attaché à un seul musée, mais tu peux repeindre.",
+   "pre": [
+    "8.3",
+    "7.5"
+   ],
+   "ecrans": [
+    {
+     "titre": "const avant *",
+     "texte": "`const int *p` : on ne modifie pas `*p`."
+    },
+    {
+     "titre": "const après *",
+     "texte": "`int *const p` : on ne fait pas pointer `p` ailleurs."
+    },
+    {
+     "titre": "Paramètre en lecture",
+     "texte": "`int somme(const int *t, int n)` : la fonction promet de ne pas modifier le tableau."
+    }
+   ],
+   "check": {
+    "id": "c-8-pointeurs-ctl-5",
+    "enonce": "Avec `const int *p = &x;`, quelle instruction est refusée ?",
+    "choix": [
+     "*p = 5;",
+     "p = &y;",
+     "printf(\"%d\", *p);",
+     "int z = *p;"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "La valeur pointée est constante : on ne peut pas écrire `*p = 5`."
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "c8-001",
+   "type": "qcm",
+   "notion": "8.1",
+   "origine": "cours",
+   "enonce": "Combien d'octets occupe en général un `int` ?",
+   "choix": [
+    "4",
+    "1",
+    "8",
+    "2"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Un int fait en général 4 octets (32 bits)."
+  },
+  {
+   "id": "c8-002",
+   "type": "qcm",
+   "notion": "8.1",
+   "origine": "cours",
+   "enonce": "Avec quel format affiche-t-on une adresse dans `printf` ?",
+   "choix": [
+    "%p",
+    "%d",
+    "%a",
+    "%x uniquement"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "%p est le format des pointeurs (adresses)."
+  },
+  {
+   "id": "c8-003",
+   "type": "qcm",
+   "notion": "8.1",
+   "origine": "cours",
+   "enonce": "L'adresse d'une variable `int` correspond à…",
+   "choix": [
+    "l'adresse de son premier octet",
+    "l'adresse de son dernier octet",
+    "sa valeur",
+    "un nombre au hasard"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Une variable occupe des octets contigus ; son adresse est celle du premier."
+  },
+  {
+   "id": "c8-004",
+   "type": "saisie",
+   "notion": "8.2",
+   "origine": "cours",
+   "enonce": "Que vaut `x` ?\n```c\nint x = 3;\nint *p = &x;\n*p = *p + 4;\n```",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 7
+   },
+   "duree": 0.67,
+   "explication": "*p désigne x : 3 + 4 = 7."
+  },
+  {
+   "id": "c8-005",
+   "type": "saisie",
+   "notion": "8.2",
+   "origine": "cours",
+   "enonce": "Qu'affiche ce code ?\n```c\nint a = 2, b = 9;\nint *p = &a;\np = &b;\n*p = 1;\nprintf(\"%d %d\", a, b);\n```\n(réponds par la valeur de b)",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 1
+   },
+   "duree": 0.67,
+   "explication": "p pointe sur b au moment de `*p = 1` : b vaut 1, a reste 2."
+  },
+  {
+   "id": "c8-006",
+   "type": "qcm",
+   "notion": "8.2",
+   "origine": "cours",
+   "enonce": "Que vaut `*&x` ?",
+   "choix": [
+    "x",
+    "l'adresse de x",
+    "0",
+    "une erreur"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "* et & sont inverses."
+  },
+  {
+   "id": "c8-007",
+   "type": "trous",
+   "notion": "8.2",
+   "origine": "cours",
+   "enonce": "int nombre = 42;\nint [_]p = [_]nombre;\n[_]p = 100;   // nombre vaut 100",
+   "fragments": [
+    "*",
+    "&",
+    "%",
+    "#"
+   ],
+   "verif": {
+    "mode": "trous",
+    "attendu": [
+     "*",
+     "&",
+     "*"
+    ]
+   },
+   "duree": 0.5,
+   "explication": "Déclaration `int *p`, adresse `&nombre`, écriture à travers `*p`."
+  },
+  {
+   "id": "c8-008",
+   "type": "qcm",
+   "notion": "8.3",
+   "origine": "cours",
+   "enonce": "Pourquoi `int *p; *p = 5;` est-il dangereux ?",
+   "choix": [
+    "p n'est pas initialisé : il pointe n'importe où",
+    "5 n'est pas une adresse",
+    "il manque un &",
+    "il faut un double"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Un pointeur non initialisé contient une adresse au hasard."
+  },
+  {
+   "id": "c8-009",
+   "type": "qcm",
+   "notion": "8.3",
+   "origine": "cours",
+   "enonce": "Dans `int *a, b;`, quel est le type de `b` ?",
+   "choix": [
+    "int",
+    "int *",
+    "pointeur générique",
+    "erreur"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "L'étoile ne s'applique qu'à a."
+  },
+  {
+   "id": "c8-010",
+   "type": "qcm",
+   "notion": "8.3",
+   "origine": "cours",
+   "enonce": "Que faut-il faire avant de déréférencer un pointeur qui peut valoir NULL ?",
+   "choix": [
+    "tester if (p != NULL)",
+    "rien",
+    "faire p++",
+    "écrire *p = 0"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Déréférencer NULL fait planter le programme."
+  },
+  {
+   "id": "c8-011",
+   "type": "saisie",
+   "notion": "8.4",
+   "origine": "cours",
+   "enonce": "Qu'affiche ce code ?\n```c\nint t[5] = {10, 20, 30, 40, 50};\nint *p = t;\np++;\np = p + 2;\nprintf(\"%d\", *p);\n```",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 40
+   },
+   "duree": 0.67,
+   "explication": "p avance d'un élément (20), puis de deux (40)."
+  },
+  {
+   "id": "c8-012",
+   "type": "saisie",
+   "notion": "8.4",
+   "origine": "cours",
+   "enonce": "Un `double *p` vaut 2000. Quelle adresse vaut `p + 1` ? (un double = 8 octets)",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 2008
+   },
+   "duree": 0.67,
+   "explication": "On avance d'un élément de 8 octets."
+  },
+  {
+   "id": "c8-013",
+   "type": "saisie",
+   "notion": "8.4",
+   "origine": "cours",
+   "enonce": "Pour `int t[10]`, `int *a = &t[2]` et `int *b = &t[7]`, que vaut `b - a` ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 5
+   },
+   "duree": 0.67,
+   "explication": "La différence de deux pointeurs compte les éléments : 7 − 2 = 5."
+  },
+  {
+   "id": "c8-014",
+   "type": "saisie",
+   "notion": "8.5",
+   "origine": "cours",
+   "enonce": "Qu'affiche `printf(\"%d\", *(tab + 1));` avec `int tab[3] = {7, 8, 9};` ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 8
+   },
+   "duree": 0.67,
+   "explication": "*(tab + 1) est tab[1]."
+  },
+  {
+   "id": "c8-015",
+   "type": "qcm",
+   "notion": "8.5",
+   "origine": "cours",
+   "enonce": "Quelle déclaration de paramètre n'est **pas** équivalente aux autres ?",
+   "choix": [
+    "int tab",
+    "int tab[]",
+    "int *tab",
+    "int tab[10]"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "`int tab` est un simple entier ; les trois autres reçoivent l'adresse d'un tableau."
+  },
+  {
+   "id": "c8-016",
+   "type": "saisie",
+   "notion": "8.5",
+   "origine": "cours",
+   "enonce": "Qu'affiche `printf(\"%s\", jours[1]);` avec `char *jours[] = {\"Lundi\", \"Mardi\", \"Mercredi\"};` ?",
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     "Mardi"
+    ]
+   },
+   "duree": 0.67,
+   "explication": "Les indices commencent à 0."
+  },
+  {
+   "id": "c8-017",
+   "type": "qcm",
+   "notion": "8.6",
+   "origine": "cours",
+   "enonce": "Que garantit `int somme(const int *t, int n)` ?",
+   "choix": [
+    "la fonction ne modifie pas le tableau",
+    "le tableau est copié",
+    "n ne change pas",
+    "t vaut NULL"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "const devant le type pointé interdit d'écrire à travers t."
+  },
+  {
+   "id": "c8-018",
+   "type": "qcm",
+   "notion": "8.6",
+   "origine": "cours",
+   "enonce": "Avec `int *const p = &x;`, quelle instruction est refusée ?",
+   "choix": [
+    "p = &y;",
+    "*p = 5;",
+    "int z = *p;",
+    "printf(\"%d\", *p);"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Le pointeur lui-même est constant : il ne peut pas pointer ailleurs."
+  },
+  {
+   "id": "c8-101",
+   "type": "exo",
+   "notion": "8.2",
+   "origine": "generee",
+   "titre": "Modifier à travers un pointeur",
+   "enonce": "Écris un programme qui lit un entier `x`, déclare un pointeur `p` vers `x`, **double `x` en passant uniquement par `p`**, puis affiche `x`.",
+   "guidage": "`int *p = &x;` puis `*p = *p * 2;` (ou `*p *= 2;`). N'écris pas `x = x * 2`.",
+   "duree": 3,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "21",
+        "sortie": "42"
+       },
+       {
+        "entree": "-5",
+        "sortie": "-10"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int x;\n    scanf(\"%d\", &x);\n    int *p = &x;\n    *p = *p * 2;\n    printf(\"%d\\n\", x);\n    return 0;\n}",
+      "nombres": true,
+      "exige": [
+       {
+        "motif": "int\\s*\\*\\s*p\\s*=\\s*&\\s*x",
+        "msg": "Déclare int *p = &x;."
+       },
+       {
+        "motif": "\\*\\s*p\\s*(\\*=|=)",
+        "msg": "Modifie x en écrivant à travers *p."
+       }
+      ],
+      "interdit": [
+       {
+        "motif": "\\bx\\s*(\\*=|=\\s*x)",
+        "msg": "Passe par le pointeur p, pas directement par x."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int x;\n    scanf(\"%d\", &x);\n    int *p = &x;\n    *p = *p * 2;\n    printf(\"%d\\n\", x);\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 3
+    }
+   ]
+  },
+  {
+   "id": "c8-102",
+   "type": "exo",
+   "notion": "8.2",
+   "origine": "generee",
+   "titre": "Le pointeur mal initialisé",
+   "enonce": "Ce programme doit afficher la valeur de `x` en passant par un pointeur. Il ne compile pas : le pointeur reçoit une valeur au lieu d'une adresse.",
+   "guidage": "Que doit contenir un pointeur ?",
+   "duree": 2,
+   "etapes": [
+    {
+     "consigne": "Corrige le programme ci-dessous pour qu'il fasse ce que dit l'énoncé, puis valide.",
+     "question": "Corrige le programme.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "",
+        "sortie": "7"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int x = 7;\n    int *p = &x;\n    printf(\"%d\\n\", *p);\n    return 0;\n}",
+      "nombres": true,
+      "exige": [
+       {
+        "motif": "int\\s*\\*\\s*p\\s*=\\s*&\\s*x",
+        "msg": "Un pointeur reçoit une adresse : int *p = &x;"
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int x = 7;\n    int *p = &x;\n    printf(\"%d\\n\", *p);\n    return 0;\n}\n```",
+     "indices": [
+      "`p` doit contenir l'adresse de x.",
+      "`int *p = &x;`"
+     ],
+     "duree": 2,
+     "depart": "#include <stdio.h>\n\nint main(void) {\n    int x = 7;\n    int *p = x;\n    printf(\"%d\\n\", *p);\n    return 0;\n}"
+    }
+   ]
+  },
+  {
+   "id": "c8-103",
+   "type": "exo",
+   "notion": "8.3",
+   "origine": "generee",
+   "titre": "Chercher et renvoyer un pointeur",
+   "enonce": "Écris `int *chercher(int *t, int n, int v)` qui renvoie l'**adresse** de la première case qui vaut `v`, ou `NULL` si `v` est absente. `main` lit `N`, `N` entiers, puis `v` : si le résultat n'est pas `NULL`, il **met la case trouvée à 0 en passant par le pointeur** et affiche le tableau ; sinon il affiche `absent`.",
+   "guidage": "`return &t[i];` dans la boucle, `return NULL;` après. Dans `main` : `int *r = chercher(t, n, v); if (r != NULL) { *r = 0; … }`.",
+   "duree": 7,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "4\n5 7 9 7\n7",
+        "sortie": "5 0 9 7"
+       },
+       {
+        "entree": "3\n1 2 3\n8",
+        "sortie": "absent"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint *chercher(int *t, int n, int v) {\n    for (int i = 0; i < n; i++) {\n        if (t[i] == v) return &t[i];\n    }\n    return NULL;\n}\n\nint main(void) {\n    int t[100], n, v;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    scanf(\"%d\", &v);\n    int *r = chercher(t, n, v);\n    if (r != NULL) {\n        *r = 0;\n        for (int i = 0; i < n; i++) printf(\"%d \", t[i]);\n        printf(\"\\n\");\n    } else {\n        printf(\"absent\\n\");\n    }\n    return 0;\n}",
+      "exige": [
+       {
+        "motif": "int\\s*\\*\\s*chercher\\s*\\(",
+        "msg": "Écris int *chercher(int *t, int n, int v)."
+       },
+       {
+        "motif": "NULL",
+        "msg": "Renvoie NULL quand la valeur est absente, et teste-le."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint *chercher(int *t, int n, int v) {\n    for (int i = 0; i < n; i++) {\n        if (t[i] == v) return &t[i];\n    }\n    return NULL;\n}\n\nint main(void) {\n    int t[100], n, v;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    scanf(\"%d\", &v);\n    int *r = chercher(t, n, v);\n    if (r != NULL) {\n        *r = 0;\n        for (int i = 0; i < n; i++) printf(\"%d \", t[i]);\n        printf(\"\\n\");\n    } else {\n        printf(\"absent\\n\");\n    }\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 7
+    }
+   ]
+  },
+  {
+   "id": "c8-104",
+   "type": "exo",
+   "notion": "8.4",
+   "origine": "generee",
+   "titre": "Parcourir avec p++",
+   "enonce": "Écris un programme qui lit `N` puis `N` entiers dans un tableau, puis affiche les éléments **en parcourant le tableau avec un pointeur** qui avance avec `p++` (utilise un compteur pour t'arrêter, sans comparer de pointeurs).",
+   "guidage": "`int *p = t;` puis, `n` fois : `printf(\"%d \", *p); p++;`.",
+   "duree": 4,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "4\n3 1 4 1",
+        "sortie": "3 1 4 1"
+       },
+       {
+        "entree": "1\n9",
+        "sortie": "9"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    int *p = t;\n    for (int k = 0; k < n; k++) {\n        printf(\"%d \", *p);\n        p++;\n    }\n    printf(\"\\n\");\n    return 0;\n}",
+      "nombres": true,
+      "exige": [
+       {
+        "motif": "\\bp\\s*\\+\\+|\\+\\+\\s*p\\b",
+        "msg": "Fais avancer le pointeur avec p++."
+       },
+       {
+        "motif": "\\*\\s*p\\b",
+        "msg": "Affiche la valeur pointée *p."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    int *p = t;\n    for (int k = 0; k < n; k++) {\n        printf(\"%d \", *p);\n        p++;\n    }\n    printf(\"\\n\");\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 4
+    }
+   ]
+  },
+  {
+   "id": "c8-105",
+   "type": "exo",
+   "notion": "8.5",
+   "origine": "generee",
+   "titre": "Somme en notation pointeur",
+   "enonce": "Écris `int somme(int *t, int n)` qui calcule la somme **en notation pointeur** (`*(t + i)`, sans crochets). `main` lit `N` puis `N` entiers et affiche la somme.",
+   "guidage": "Dans la fonction, `t` est une variable pointeur : `s += *(t + i);`.",
+   "duree": 5,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "4\n1 2 3 4",
+        "sortie": "10"
+       },
+       {
+        "entree": "2\n-5 5",
+        "sortie": "0"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint somme(int *t, int n) {\n    int s = 0;\n    for (int i = 0; i < n; i++) {\n        s += *(t + i);\n    }\n    return s;\n}\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    printf(\"%d\\n\", somme(t, n));\n    return 0;\n}",
+      "nombres": true,
+      "exige": [
+       {
+        "motif": "\\*\\s*\\(\\s*t\\s*\\+\\s*i\\s*\\)",
+        "msg": "Utilise la notation pointeur *(t + i) dans somme."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint somme(int *t, int n) {\n    int s = 0;\n    for (int i = 0; i < n; i++) {\n        s += *(t + i);\n    }\n    return s;\n}\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    printf(\"%d\\n\", somme(t, n));\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 5
+    }
+   ]
+  },
+  {
+   "id": "c8-106",
+   "type": "exo",
+   "notion": "8.5",
+   "origine": "generee",
+   "titre": "Doubler chaque élément",
+   "enonce": "Écris `void modifier(int *tab, int taille)` (exemple du cours) qui **double** chaque élément du tableau. `main` lit `N` puis `N` entiers, appelle `modifier`, puis affiche le tableau.",
+   "guidage": "La fonction reçoit l'adresse du tableau : elle modifie l'original.",
+   "duree": 4,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "5\n10 20 30 40 50",
+        "sortie": "20 40 60 80 100"
+       },
+       {
+        "entree": "2\n-1 0",
+        "sortie": "-2 0"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nvoid modifier(int *tab, int taille) {\n    for (int i = 0; i < taille; i++) {\n        tab[i] *= 2;\n    }\n}\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    modifier(t, n);\n    for (int i = 0; i < n; i++) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    return 0;\n}",
+      "nombres": true,
+      "exige": [
+       {
+        "motif": "void\\s+modifier\\s*\\(\\s*int\\s*\\*",
+        "msg": "Écris void modifier(int *tab, int taille)."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nvoid modifier(int *tab, int taille) {\n    for (int i = 0; i < taille; i++) {\n        tab[i] *= 2;\n    }\n}\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    modifier(t, n);\n    for (int i = 0; i < n; i++) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 4
+    }
+   ]
+  },
+  {
+   "id": "c8-107",
+   "type": "exo",
+   "notion": "8.5",
+   "origine": "generee",
+   "titre": "Minimum et maximum par pointeurs",
+   "enonce": "Écris `void min_max(int *t, int n, int *min, int *max)` qui range le minimum et le maximum du tableau dans les variables pointées par `min` et `max`. `main` lit `N` puis `N` entiers et affiche le minimum puis le maximum.",
+   "guidage": "Deux résultats : deux paramètres pointeurs (voir {{7.5}}). Initialise `*min` et `*max` avec `t[0]`.",
+   "duree": 6,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "5\n4 -2 9 0 3",
+        "sortie": "-2 9"
+       },
+       {
+        "entree": "1\n7",
+        "sortie": "7 7"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nvoid min_max(int *t, int n, int *min, int *max) {\n    *min = t[0];\n    *max = t[0];\n    for (int i = 1; i < n; i++) {\n        if (t[i] < *min) *min = t[i];\n        if (t[i] > *max) *max = t[i];\n    }\n}\n\nint main(void) {\n    int t[100], n, mi, ma;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    min_max(t, n, &mi, &ma);\n    printf(\"%d %d\\n\", mi, ma);\n    return 0;\n}",
+      "nombres": true,
+      "exige": [
+       {
+        "motif": "void\\s+min_max\\s*\\(",
+        "msg": "Écris void min_max(int *t, int n, int *min, int *max)."
+       },
+       {
+        "motif": "min_max\\s*\\([^;]*&\\w+\\s*,\\s*&\\w+\\s*\\)",
+        "msg": "Passe les adresses des deux résultats à min_max."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nvoid min_max(int *t, int n, int *min, int *max) {\n    *min = t[0];\n    *max = t[0];\n    for (int i = 1; i < n; i++) {\n        if (t[i] < *min) *min = t[i];\n        if (t[i] > *max) *max = t[i];\n    }\n}\n\nint main(void) {\n    int t[100], n, mi, ma;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    min_max(t, n, &mi, &ma);\n    printf(\"%d %d\\n\", mi, ma);\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 6
+    }
+   ]
+  },
+  {
+   "id": "c8-108",
+   "type": "exo",
+   "notion": "8.5",
+   "origine": "generee",
+   "titre": "Longueur d'une chaîne avec un pointeur",
+   "enonce": "Écris `int longueur(char *s)` qui compte les caractères **en faisant avancer le pointeur** `s` jusqu'au `'\\0'`. `main` lit un mot et affiche sa longueur.",
+   "guidage": "`while (*s != '\\0') { n++; s++; }`.",
+   "duree": 4,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "Bonjour",
+        "sortie": "7"
+       },
+       {
+        "entree": "C",
+        "sortie": "1"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint longueur(char *s) {\n    int n = 0;\n    while (*s != '\\0') {\n        n++;\n        s++;\n    }\n    return n;\n}\n\nint main(void) {\n    char mot[100];\n    scanf(\"%99s\", mot);\n    printf(\"%d\\n\", longueur(mot));\n    return 0;\n}",
+      "nombres": true,
+      "exige": [
+       {
+        "motif": "\\bs\\s*\\+\\+",
+        "msg": "Fais avancer le pointeur s avec s++."
+       }
+      ],
+      "interdit": [
+       {
+        "motif": "\\bstrlen\\b",
+        "msg": "N'utilise pas strlen ici."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint longueur(char *s) {\n    int n = 0;\n    while (*s != '\\0') {\n        n++;\n        s++;\n    }\n    return n;\n}\n\nint main(void) {\n    char mot[100];\n    scanf(\"%99s\", mot);\n    printf(\"%d\\n\", longueur(mot));\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 4
+    }
+   ]
+  },
+  {
+   "id": "c8-109",
+   "type": "exo",
+   "notion": "8.6",
+   "origine": "generee",
+   "titre": "Moyenne en lecture seule",
+   "enonce": "Écris `double moyenne(const int *t, int n)` : le paramètre est déclaré `const`, car la fonction ne fait que **lire** le tableau. `main` lit `N` puis `N` entiers et affiche la moyenne avec 2 décimales.",
+   "guidage": "`const int *t` : promesse de ne pas modifier le tableau. Divise en réel.",
+   "duree": 4,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "3\n10 11 12",
+        "sortie": "11.00"
+       },
+       {
+        "entree": "4\n1 2 2 2",
+        "sortie": "1.75"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\ndouble moyenne(const int *t, int n) {\n    int s = 0;\n    for (int i = 0; i < n; i++) s += t[i];\n    return (double)s / n;\n}\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    printf(\"%.2f\\n\", moyenne(t, n));\n    return 0;\n}",
+      "nombres": true,
+      "exige": [
+       {
+        "motif": "double\\s+moyenne\\s*\\(\\s*const\\s+int\\s*\\*",
+        "brut": true,
+        "msg": "Déclare le paramètre en lecture seule : double moyenne(const int *t, int n)."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\ndouble moyenne(const int *t, int n) {\n    int s = 0;\n    for (int i = 0; i < n; i++) s += t[i];\n    return (double)s / n;\n}\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    printf(\"%.2f\\n\", moyenne(t, n));\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 4
+    }
+   ]
+  },
+  {
+   "id": "c8-110",
+   "type": "exo",
+   "notion": "8.1",
+   "origine": "generee",
+   "titre": "Deux pointeurs, une variable",
+   "enonce": "Écris un programme qui lit un entier `x`, déclare **deux** pointeurs `p` et `q` vers `x`, ajoute 1 à `x` par `p`, multiplie `x` par 3 par `q`, puis affiche `x`, puis `1` si `p == q` (ils contiennent la même adresse), `0` sinon.",
+   "guidage": "Les deux pointeurs contiennent la même adresse : chaque modification touche la même case.",
+   "duree": 4,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "4",
+        "sortie": "15 1"
+       },
+       {
+        "entree": "0",
+        "sortie": "3 1"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int x;\n    scanf(\"%d\", &x);\n    int *p = &x;\n    int *q = &x;\n    *p = *p + 1;\n    *q = *q * 3;\n    printf(\"%d %d\\n\", x, p == q);\n    return 0;\n}",
+      "nombres": true,
+      "exige": [
+       {
+        "motif": "\\*\\s*q\\b",
+        "msg": "Utilise le second pointeur q."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int x;\n    scanf(\"%d\", &x);\n    int *p = &x;\n    int *q = &x;\n    *p = *p + 1;\n    *q = *q * 3;\n    printf(\"%d %d\\n\", x, p == q);\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 4
+    }
+   ]
+  }
+ ]
+}

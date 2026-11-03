@@ -1,0 +1,1315 @@
+{
+ "id": "c-7-fonctions",
+ "module": "programmation-c",
+ "titre": "Fonctions",
+ "ordre": 7,
+ "sources": [
+  "Les fonctions en langage C"
+ ],
+ "tldr": [
+  "Prototype `int f(int x);` (avant main, avec ;) · définition `int f(int x) { … }` · appel `y = f(3);`.",
+  "`void` = ne renvoie rien · sinon `return valeur;` obligatoire, et il termine la fonction.",
+  "Locale : visible dans sa fonction, détruite à la sortie · globale : partout, à éviter.",
+  "Par valeur = copie (l'original ne change pas) · par adresse : `void f(int *x)`, appel `f(&n)`, modification `*x = …`.",
+  "Tableau en paramètre : `void f(int t[], int n)` · appel `f(t, n)` · la fonction modifie l'original.",
+  "Module : `.h` = prototypes + gardes `#ifndef / #define / #endif` · `.c` = corps · `#include \"module.h\"`."
+ ],
+ "notions": [
+  {
+   "id": "7.1",
+   "titre": "Anatomie d'une fonction : prototype et définition",
+   "corps": "Une **fonction** est un bloc de code **nommé et réutilisable** qui accomplit une tâche. Elle permet de découper un programme en sous-problèmes plus simples.\n\n| Avantage | Concrètement |\n|---|---|\n| Réutilisabilité | écrite une fois, appelée partout |\n| Lisibilité | `moyenne(notes, n)` se lit comme une phrase |\n| Maintenance | une correction à un seul endroit |\n| Abstraction | on utilise `sqrt` sans savoir comment elle calcule |\n\n### Les trois morceaux\n```c\n#include <stdio.h>\n\nint multiplier(int x, int y);          // 1. PROTOTYPE (avant main), avec ;\n\nint main(void) {\n    int produit = multiplier(5, 7);    // 3. APPEL : arguments 5 et 7\n    printf(\"%d\\n\", produit);           // 35\n    return 0;\n}\n\nint multiplier(int x, int y) {         // 2. DÉFINITION : le corps\n    return x * y;\n}\n```\n\n| Partie | Exemple | Rôle |\n|---|---|---|\n| Type de retour | `int` | type de la valeur renvoyée (`void` : rien) |\n| Nom | `multiplier` | `lower_snake_case`, parlant |\n| Paramètres | `(int x, int y)` | les données reçues, chacune avec son type |\n| Corps | `{ return x * y; }` | les instructions |\n\n> **À retenir** : le **prototype** se termine par `;` et annonce la fonction au compilateur ; la **définition** contient le corps entre accolades. Lors de l'appel, les **arguments** (`5`, `7`) sont copiés dans les **paramètres** (`x`, `y`).\n\n> **Piège** : sans prototype, une fonction définie **après** `main` est inconnue au moment où `main` l'appelle.",
+   "rec": "Un appel `f(a, b)` exécute le corps de `f` avec ses paramètres initialisés aux valeurs de `a` et `b`, puis revient là où on en était, avec la valeur renvoyée par `return`.",
+   "alt": "Une fonction est une recette rangée dans un classeur : le prototype est l'entrée du sommaire, la définition est la page de la recette, l'appel c'est « fais-moi la recette 12 avec ces ingrédients ».",
+   "pre": [
+    "1.2",
+    "2.1"
+   ],
+   "ecrans": [
+    {
+     "titre": "Prototype",
+     "texte": "```c\nint multiplier(int x, int y);\n```\nannonce la fonction, avec `;`."
+    },
+    {
+     "titre": "Définition",
+     "texte": "```c\nint multiplier(int x, int y) {\n    return x * y;\n}\n```"
+    },
+    {
+     "titre": "Appel",
+     "texte": "`int p = multiplier(5, 7);` : 5 va dans `x`, 7 dans `y`, `p` reçoit 35."
+    }
+   ],
+   "check": {
+    "id": "c-7-fonctions-ctl-0",
+    "enonce": "Qu'est-ce qui distingue un prototype d'une définition ?",
+    "choix": [
+     "le prototype se termine par ; et n'a pas de corps",
+     "le prototype a un corps entre accolades",
+     "aucune différence",
+     "le prototype n'a pas de type de retour"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "Le prototype annonce la signature (avec ;) ; la définition contient le corps."
+   }
+  },
+  {
+   "id": "7.2",
+   "titre": "Fonctions avec ou sans valeur de retour",
+   "corps": "| | Fonction **sans sortie** (`void`) | Fonction **avec sortie** |\n|---|---|---|\n| Type de retour | `void` | `int`, `float`, `double`, `char`… |\n| Sert à | **faire** quelque chose (afficher, remplir…) | **calculer** une valeur |\n| `return` | facultatif (`return;` sans valeur) | **obligatoire**, avec une valeur du bon type |\n| Appel | `afficher_bienvenue(\"Marie\");` | `int m = maximum(15, 23);` |\n\n```c\nvoid afficher_ligne(int n) {          // ne renvoie rien\n    for (int i = 0; i < n; i++) printf(\"-\");\n    printf(\"\\n\");\n}\n\nint maximum(int a, int b) {           // renvoie un int\n    if (a > b) return a;\n    return b;\n}\n\nint main(void) {\n    afficher_ligne(10);               // ----------\n    printf(\"%d\\n\", maximum(15, 23));  // 23 : l'appel est utilisable dans une expression\n    return 0;\n}\n```\n\n> **À retenir** : `return` **termine immédiatement** la fonction. Dans `maximum`, si `a > b`, la ligne `return b;` n'est jamais atteinte.\n\n> **Piège** : une fonction `int` qui n'atteint aucun `return` renvoie n'importe quoi (dans l'éditeur : « Il manque un return »).",
+   "rec": "Une fonction avec sortie s'utilise comme une valeur : dans un `printf`, un calcul, une condition (`if (est_pair(n))`). Une fonction `void` s'appelle seule, comme une instruction.",
+   "alt": "Une fonction `void` est un employé à qui on confie une tâche (« range le bureau ») ; une fonction avec retour est un employé à qui on pose une question (« combien de dossiers ? ») et qui te rend une réponse.",
+   "pre": [
+    "7.1"
+   ],
+   "ecrans": [
+    {
+     "titre": "void",
+     "texte": "Ne renvoie rien : on l'appelle pour son effet (afficher, remplir)."
+    },
+    {
+     "titre": "Avec retour",
+     "texte": "```c\nint maximum(int a, int b) {\n    if (a > b) return a;\n    return b;\n}\n```"
+    },
+    {
+     "titre": "return arrête tout",
+     "texte": "Dès qu'un `return` s'exécute, la fonction est terminée."
+    }
+   ],
+   "check": {
+    "id": "c-7-fonctions-ctl-1",
+    "enonce": "Quel type de retour donne-t-on à une fonction qui affiche un message sans rien renvoyer ?",
+    "choix": [
+     "void",
+     "int",
+     "char",
+     "aucun"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "`void` signifie « ne renvoie rien »."
+   }
+  },
+  {
+   "id": "7.3",
+   "titre": "Variables locales et globales",
+   "corps": "La **portée** d'une variable, c'est l'endroit du programme où on peut l'utiliser.\n\n| | Variable **locale** | Variable **globale** |\n|---|---|---|\n| Déclarée | dans une fonction (ou un bloc `{ }`) | en dehors de toute fonction, en haut du fichier |\n| Visible | uniquement dans sa fonction / son bloc | dans tout le fichier |\n| Durée de vie | créée à l'entrée, **détruite à la sortie** | toute l'exécution |\n| Sans initialisation | valeur quelconque | 0 |\n| Conseil | **à privilégier** | à éviter : dépendances cachées |\n\n```c\nint compteur = 0;                  // GLOBALE\n\nvoid incrementer(void) {\n    int valeur = 5;                // LOCALE à incrementer\n    compteur++;                    // OK : la globale est visible\n    valeur++;                      // OK\n}\n\nint main(void) {\n    incrementer();\n    incrementer();\n    printf(\"%d\\n\", compteur);      // 2\n    // printf(\"%d\", valeur);       // ERREUR : valeur n'existe pas ici\n    return 0;\n}\n```\n\n> **À retenir** : deux fonctions peuvent avoir chacune une variable `i` : ce sont **deux variables différentes**.\n\n> **Astuce** : plutôt qu'une globale, passe les données en **paramètres** et récupère le résultat avec `return`.",
+   "rec": "Une variable locale naît quand la fonction démarre et disparaît quand elle se termine : sa valeur n'est pas conservée d'un appel à l'autre.",
+   "alt": "Une variable locale est un brouillon qu'on jette à la fin de l'exercice ; une globale est le tableau de la salle, que tout le monde voit et peut effacer.",
+   "pre": [
+    "7.1"
+   ],
+   "ecrans": [
+    {
+     "titre": "Locale",
+     "texte": "Déclarée dans une fonction, détruite à la sortie : invisible ailleurs."
+    },
+    {
+     "titre": "Globale",
+     "texte": "Déclarée hors de toute fonction : visible partout, mais à éviter."
+    },
+    {
+     "titre": "Même nom, autre variable",
+     "texte": "Le `i` de `main` et le `i` d'une autre fonction n'ont rien à voir."
+    }
+   ],
+   "check": {
+    "id": "c-7-fonctions-ctl-2",
+    "enonce": "Que devient une variable locale quand la fonction se termine ?",
+    "choix": [
+     "elle est détruite",
+     "elle garde sa valeur pour l'appel suivant",
+     "elle devient globale",
+     "elle vaut 0"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "Sa durée de vie est celle de l'exécution de la fonction."
+   }
+  },
+  {
+   "id": "7.4",
+   "titre": "Le passage par valeur",
+   "corps": "Par défaut, une fonction reçoit une **copie** de chaque argument. Modifier le paramètre ne change **pas** la variable d'origine.\n\n```c\nvoid doubler(int x) {\n    x = x * 2;                         // modifie la COPIE\n    printf(\"Dans la fonction : %d\\n\", x);\n}\n\nint main(void) {\n    int nombre = 5;\n    doubler(nombre);\n    printf(\"Après l'appel : %d\\n\", nombre);\n    return 0;\n}\n```\n```text\nDans la fonction : 10\nAprès l'appel : 5\n```\n\n| Avantage | Inconvénient |\n|---|---|\n| les données d'origine sont protégées, pas d'effet de bord | impossible de modifier la variable d'origine |\n\n> **À retenir** : pour qu'une fonction **renvoie un résultat** avec le passage par valeur, elle utilise `return` : `nombre = doubler(nombre);` avec `int doubler(int x) { return x * 2; }`.",
+   "rec": "Au moment de l'appel, la valeur de `nombre` (5) est recopiée dans le paramètre `x`. Ensuite, `x` et `nombre` sont deux cases mémoire indépendantes.",
+   "alt": "Tu donnes une **photocopie** de ton document : la personne peut gribouiller dessus, ton original ne change pas.",
+   "pre": [
+    "7.1",
+    "7.3"
+   ],
+   "ecrans": [
+    {
+     "titre": "Une copie",
+     "texte": "Le paramètre reçoit la valeur de l'argument, dans une autre case mémoire."
+    },
+    {
+     "titre": "Pas d'effet sur l'original",
+     "texte": "`doubler(nombre)` laisse `nombre` à 5."
+    },
+    {
+     "titre": "Récupérer le résultat",
+     "texte": "```c\nint doubler(int x) { return x * 2; }\nnombre = doubler(nombre);\n```"
+    }
+   ],
+   "check": {
+    "id": "c-7-fonctions-ctl-3",
+    "enonce": "Avec `void doubler(int x) { x = x * 2; }` et `int n = 5; doubler(n);`, que vaut `n` ?",
+    "choix": [
+     "5",
+     "10",
+     "0",
+     "on ne peut pas savoir"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "La fonction a modifié une copie : `n` vaut toujours 5."
+   }
+  },
+  {
+   "id": "7.5",
+   "titre": "Le passage par adresse",
+   "corps": "Pour qu'une fonction **modifie la variable d'origine**, on lui passe son **adresse** :\n\n| Étape | Syntaxe |\n|---|---|\n| 1. Le paramètre est un pointeur | `void incrementer(int *x)` |\n| 2. On passe l'adresse à l'appel | `incrementer(&n);` |\n| 3. On modifie la valeur pointée | `(*x)++;` ou `*x = …;` |\n\n```c\nvoid echanger(int *a, int *b) {\n    int temp = *a;    // sauvegarde de la valeur pointée par a\n    *a = *b;          // a reçoit la valeur de b\n    *b = temp;        // b reçoit l'ancienne valeur de a\n}\n\nvoid diviser(int dividende, int diviseur, int *quotient, int *reste) {\n    *quotient = dividende / diviseur;\n    *reste = dividende % diviseur;\n}\n\nint main(void) {\n    int x = 10, y = 20;\n    echanger(&x, &y);              // x = 20, y = 10\n    int q, r;\n    diviser(17, 5, &q, &r);        // q = 3, r = 2 : deux « résultats »\n    printf(\"%d %d %d %d\\n\", x, y, q, r);\n    return 0;\n}\n```\n\n> **À retenir** : le passage par adresse sert à **modifier** des variables, à **renvoyer plusieurs résultats**, et à éviter de copier de grosses données (tableaux, structures).\n\n> **Piège** : `(*x)++` et `*x++` ne font pas la même chose : mets les parenthèses.",
+   "rec": "`&n` donne l'adresse de `n` ; dans la fonction, `*x` désigne « la case à l'adresse x », donc `n` lui-même (voir le chapitre 8 sur les pointeurs).",
+   "alt": "Au lieu d'une photocopie, tu donnes **l'adresse de ta maison** : la personne y va et peut repeindre la vraie porte.",
+   "pre": [
+    "7.4",
+    "3.3"
+   ],
+   "ecrans": [
+    {
+     "titre": "Le paramètre pointeur",
+     "texte": "`void echanger(int *a, int *b)` reçoit deux adresses."
+    },
+    {
+     "titre": "L'appel avec &",
+     "texte": "`echanger(&x, &y);` : on donne les adresses de `x` et `y`."
+    },
+    {
+     "titre": "Modifier avec *",
+     "texte": "`*a = *b;` écrit dans la variable d'origine."
+    },
+    {
+     "titre": "Plusieurs résultats",
+     "texte": "`diviser(17, 5, &q, &r);` remplit `q` et `r`."
+    }
+   ],
+   "check": {
+    "id": "c-7-fonctions-ctl-4",
+    "enonce": "Pour qu'une fonction puisse modifier la variable `n` de `main`, que lui passe-t-on ?",
+    "choix": [
+     "&n",
+     "n",
+     "*n",
+     "n++"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "On passe l'adresse de `n` ; la fonction écrit à cette adresse avec `*`."
+   }
+  },
+  {
+   "id": "7.6",
+   "titre": "Passer un tableau à une fonction",
+   "corps": "Quand on passe un tableau à une fonction, ce n'est **pas une copie** : la fonction reçoit l'**adresse de la première case**. Elle peut donc **modifier le tableau d'origine**. Comme elle ne connaît pas sa taille, on la passe **en plus**.\n\n```c\nvoid remplir_tableau(int arr[], int taille) {\n    for (int i = 0; i < taille; i++) {\n        scanf(\"%d\", &arr[i]);\n    }\n}\n\nvoid afficher_tableau(int arr[], int taille) {\n    printf(\"[\");\n    for (int i = 0; i < taille; i++) {\n        printf(\"%d\", arr[i]);\n        if (i < taille - 1) printf(\", \");\n    }\n    printf(\"]\\n\");\n}\n\nint somme_tableau(int arr[], int taille) {\n    int somme = 0;\n    for (int i = 0; i < taille; i++) somme += arr[i];\n    return somme;\n}\n\nint main(void) {\n    int t[5];\n    remplir_tableau(t, 5);        // on passe le nom du tableau, sans []\n    afficher_tableau(t, 5);\n    printf(\"%d\\n\", somme_tableau(t, 5));\n    return 0;\n}\n```\n\n> **À retenir** : à l'appel, on écrit juste le **nom** du tableau (`t`), sans crochets ni `&`. `int arr[]` et `int *arr` sont deux écritures équivalentes pour le paramètre.",
+   "rec": "Le nom d'un tableau est l'adresse de sa première case : passer `t`, c'est déjà un passage par adresse, d'où la possibilité de modifier les cases.",
+   "alt": "Tu ne photocopies pas le classeur entier : tu donnes l'emplacement de l'étagère, et le nombre de classeurs à traiter.",
+   "pre": [
+    "7.5",
+    "5.1"
+   ],
+   "ecrans": [
+    {
+     "titre": "Pas de copie",
+     "texte": "La fonction reçoit l'adresse du tableau : elle peut le modifier."
+    },
+    {
+     "titre": "La taille en plus",
+     "texte": "`void afficher(int arr[], int taille)` : la fonction ne connaît pas la taille toute seule."
+    },
+    {
+     "titre": "L'appel",
+     "texte": "`afficher(t, 5);` : le nom, sans crochets."
+    }
+   ],
+   "check": {
+    "id": "c-7-fonctions-ctl-5",
+    "enonce": "Une fonction `void mettre_a_zero(int t[], int n)` met toutes les cases à 0. Après l'appel, le tableau de `main`…",
+    "choix": [
+     "contient des 0",
+     "est inchangé",
+     "est détruit",
+     "a changé de taille"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "La fonction travaille directement sur le tableau d'origine (passage de son adresse)."
+   }
+  },
+  {
+   "id": "7.7",
+   "titre": "Les fonctions de la bibliothèque standard",
+   "corps": "Le C fournit des fonctions prêtes à l'emploi, déclarées dans des **fichiers d'en-tête** :\n\n| En-tête | Fonctions | Rôle |\n|---|---|---|\n| `stdio.h` | `printf`, `scanf`, `getchar`, `puts` | entrées / sorties |\n| `math.h` | `sqrt`, `pow`, `sin`, `cos`, `fabs` | mathématiques (réels `double`) |\n| `string.h` | `strlen`, `strcpy`, `strcmp`, `strcat` | chaînes |\n| `stdlib.h` | `abs`, `rand`, `malloc`, `free`, `exit` | utilitaires généraux |\n\n```c\n#include <stdio.h>\n#include <math.h>\n\nint main(void) {\n    double nombre = 16.0;\n    printf(\"%.2f\\n\", sqrt(nombre));     // 4.00\n    printf(\"%.0f\\n\", pow(2, 10));       // 1024\n    return 0;\n}\n```\n\n> **À retenir** : `sqrt` et `pow` travaillent sur des `double` et renvoient un `double` : affiche-les avec `%f`, pas `%d`.\n\n> **Piège** : oublier le `#include` correspondant donne une fonction « inconnue » (ou un résultat faux).",
+   "rec": "Un fichier d'en-tête contient les **prototypes** des fonctions de la bibliothèque : l'inclure, c'est permettre au compilateur de vérifier tes appels.",
+   "alt": "La bibliothèque standard est une boîte à outils fournie avec le langage ; `#include` ouvre le bon tiroir.",
+   "pre": [
+    "7.1"
+   ],
+   "ecrans": [
+    {
+     "titre": "math.h",
+     "texte": "`sqrt(x)`, `pow(x, y)` : des `double`."
+    },
+    {
+     "titre": "string.h et stdlib.h",
+     "texte": "Chaînes (`strlen`…) et utilitaires (`abs`, `malloc`…)."
+    },
+    {
+     "titre": "Le bon #include",
+     "texte": "Sans lui, la fonction est inconnue."
+    }
+   ],
+   "check": {
+    "id": "c-7-fonctions-ctl-6",
+    "enonce": "Quel en-tête faut-il inclure pour utiliser `sqrt` ?",
+    "choix": [
+     "math.h",
+     "stdio.h",
+     "string.h",
+     "stdlib.h"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "Les fonctions mathématiques sont déclarées dans math.h."
+   }
+  },
+  {
+   "id": "7.8",
+   "titre": "Les modules : fichiers .h et .c",
+   "corps": "Pour un projet plus gros, on regroupe des fonctions liées dans un **module** réparti sur deux fichiers :\n\n| Fichier | Contient | Rôle |\n|---|---|---|\n| `calculatrice.h` (en-tête) | les **prototypes**, constantes, types | l'interface publique : le « contrat » |\n| `calculatrice.c` (source) | les **définitions** (corps des fonctions) | l'implémentation : la « boîte noire » |\n| `main.c` | `#include \"calculatrice.h\"` puis les appels | utilise le module |\n\n```c\n// calculatrice.h\n#ifndef CALCULATRICE_H        // gardes d'en-tête : le contenu\n#define CALCULATRICE_H        // n'est traité qu'une seule fois\n\nint addition(int a, int b);\nint soustraction(int a, int b);\n\n#endif // CALCULATRICE_H\n```\n```c\n// calculatrice.c\n#include \"calculatrice.h\"\n\nint addition(int a, int b) { return a + b; }\nint soustraction(int a, int b) { return a - b; }\n```\n```c\n// main.c\n#include <stdio.h>\n#include \"calculatrice.h\"   // guillemets : un fichier du projet\n\nint main(void) {\n    printf(\"%d\\n\", addition(10, 5));   // 15\n    return 0;\n}\n```\n\n> **À retenir** : `<stdio.h>` (chevrons) = en-tête du système ; `\"calculatrice.h\"` (guillemets) = en-tête de ton projet. Les **gardes** `#ifndef / #define / #endif` évitent les définitions multiples quand un en-tête est inclus deux fois.\n\n> **Astuce** : chaque `.c` se compile séparément, puis on les lie : `gcc main.c calculatrice.c -o calc`.",
+   "rec": "Le `.h` dit **ce que** le module sait faire (prototypes) ; le `.c` dit **comment** il le fait (corps). Les autres fichiers n'ont besoin que du `.h`.",
+   "alt": "Le `.h` est la carte du restaurant, le `.c` est la cuisine : le client (`main.c`) commande avec la carte sans entrer en cuisine.",
+   "pre": [
+    "7.1"
+   ],
+   "ecrans": [
+    {
+     "titre": "L'en-tête .h",
+     "texte": "Prototypes et constantes, entourés des gardes `#ifndef NOM_H / #define NOM_H / #endif`."
+    },
+    {
+     "titre": "Le source .c",
+     "texte": "Les corps des fonctions ; il inclut son propre `.h`."
+    },
+    {
+     "titre": "L'utilisation",
+     "texte": "`#include \"calculatrice.h\"` dans `main.c`, puis `gcc main.c calculatrice.c -o calc`."
+    }
+   ],
+   "check": {
+    "id": "c-7-fonctions-ctl-7",
+    "enonce": "À quoi servent les lignes `#ifndef CALCULATRICE_H` / `#define CALCULATRICE_H` / `#endif` ?",
+    "choix": [
+     "à n'inclure le contenu de l'en-tête qu'une seule fois",
+     "à définir la fonction main",
+     "à compiler plus vite",
+     "à déclarer une variable globale"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "Ce sont les gardes d'en-tête : elles évitent les définitions multiples."
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "c7-001",
+   "type": "qcm",
+   "notion": "7.1",
+   "origine": "cours",
+   "enonce": "Que manque-t-il à ce prototype ?\n```c\nint carre(int x)\n```",
+   "choix": [
+    "un ; à la fin",
+    "un corps entre accolades",
+    "le mot-clé void",
+    "rien"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Un prototype se termine par `;`."
+  },
+  {
+   "id": "c7-002",
+   "type": "saisie",
+   "notion": "7.1",
+   "origine": "cours",
+   "enonce": "Qu'affiche `printf(\"%d\", multiplier(4, multiplier(2, 3)));` avec `multiplier(x, y)` qui renvoie `x * y` ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 24
+   },
+   "duree": 0.67,
+   "explication": "multiplier(2, 3) = 6, puis multiplier(4, 6) = 24."
+  },
+  {
+   "id": "c7-003",
+   "type": "trous",
+   "notion": "7.1",
+   "origine": "cours",
+   "enonce": "[_] addition(int a, int b)[_]\n\nint main(void) {\n    int s = addition(3, 4);\n    return 0;\n}\n\nint addition(int a, int b) {\n    [_] a + b;\n}",
+   "fragments": [
+    "int",
+    "void",
+    ";",
+    "{",
+    "return",
+    "printf"
+   ],
+   "verif": {
+    "mode": "trous",
+    "attendu": [
+     "int",
+     ";",
+     "return"
+    ]
+   },
+   "duree": 0.5,
+   "explication": "Prototype `int addition(int a, int b);`, puis `return a + b;` dans la définition."
+  },
+  {
+   "id": "c7-004",
+   "type": "qcm",
+   "notion": "7.2",
+   "origine": "cours",
+   "enonce": "Quelle fonction doit obligatoirement contenir un `return valeur;` ?",
+   "choix": [
+    "int maximum(int a, int b)",
+    "void afficher(int n)",
+    "void initialiser(int t[], int n)",
+    "aucune"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Une fonction qui renvoie un `int` doit renvoyer une valeur."
+  },
+  {
+   "id": "c7-005",
+   "type": "saisie",
+   "notion": "7.2",
+   "origine": "cours",
+   "enonce": "Que renvoie `f(7)` ?\n```c\nint f(int n) {\n    if (n > 5) return 1;\n    return 2;\n    return 3;\n}\n```",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 1
+   },
+   "duree": 0.67,
+   "explication": "7 > 5 : `return 1;` termine immédiatement la fonction."
+  },
+  {
+   "id": "c7-006",
+   "type": "qcm",
+   "notion": "7.2",
+   "origine": "cours",
+   "enonce": "Laquelle de ces lignes est incorrecte si `void afficher(int n)` ne renvoie rien ?",
+   "choix": [
+    "int x = afficher(3);",
+    "afficher(3);",
+    "afficher(2 + 1);",
+    "afficher(x);"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Une fonction void ne renvoie aucune valeur à ranger."
+  },
+  {
+   "id": "c7-007",
+   "type": "saisie",
+   "notion": "7.3",
+   "origine": "cours",
+   "enonce": "Qu'affiche ce programme ?\n```c\nint total = 0;\nvoid ajouter(int x) { total += x; }\nint main(void) {\n    ajouter(3); ajouter(4);\n    printf(\"%d\", total);\n    return 0;\n}\n```",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 7
+   },
+   "duree": 0.67,
+   "explication": "`total` est globale : les deux appels la modifient : 0 + 3 + 4."
+  },
+  {
+   "id": "c7-008",
+   "type": "qcm",
+   "notion": "7.3",
+   "origine": "cours",
+   "enonce": "Une variable déclarée dans `main` peut-elle être utilisée dans une autre fonction ?",
+   "choix": [
+    "non, elle est locale à main",
+    "oui, toujours",
+    "oui si elle porte le même nom",
+    "oui si elle est initialisée"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Elle est locale : il faut la passer en paramètre."
+  },
+  {
+   "id": "c7-009",
+   "type": "saisie",
+   "notion": "7.4",
+   "origine": "cours",
+   "enonce": "Qu'affiche ce code ?\n```c\nvoid f(int x) { x = 100; }\nint main(void) {\n    int a = 1;\n    f(a);\n    printf(\"%d\", a);\n    return 0;\n}\n```",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 1
+   },
+   "duree": 0.67,
+   "explication": "f a modifié une copie : `a` vaut toujours 1."
+  },
+  {
+   "id": "c7-010",
+   "type": "saisie",
+   "notion": "7.5",
+   "origine": "cours",
+   "enonce": "Qu'affiche ce code ?\n```c\nvoid f(int *x) { *x = 100; }\nint main(void) {\n    int a = 1;\n    f(&a);\n    printf(\"%d\", a);\n    return 0;\n}\n```",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 100
+   },
+   "duree": 0.67,
+   "explication": "f reçoit l'adresse de `a` et écrit 100 dans la variable d'origine."
+  },
+  {
+   "id": "c7-011",
+   "type": "trous",
+   "notion": "7.5",
+   "origine": "cours",
+   "enonce": "void incrementer(int [_]x) {\n    ([_]x)++;\n}\n\nint main(void) {\n    int n = 5;\n    incrementer([_]n);\n    return 0;\n}",
+   "fragments": [
+    "*",
+    "&",
+    "%"
+   ],
+   "verif": {
+    "mode": "trous",
+    "attendu": [
+     "*",
+     "*",
+     "&"
+    ]
+   },
+   "duree": 0.5,
+   "explication": "Paramètre pointeur `int *x`, modification `(*x)++`, appel avec l'adresse `&n`."
+  },
+  {
+   "id": "c7-012",
+   "type": "qcm",
+   "notion": "7.5",
+   "origine": "cours",
+   "enonce": "Pourquoi `void echanger(int a, int b)` ne peut-elle pas échanger deux variables de main ?",
+   "choix": [
+    "elle reçoit des copies",
+    "il manque un return",
+    "void interdit les modifications",
+    "il faut des double"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Par valeur, elle n'échange que ses copies."
+  },
+  {
+   "id": "c7-013",
+   "type": "qcm",
+   "notion": "7.6",
+   "origine": "cours",
+   "enonce": "Comment appelle-t-on `void afficher(int t[], int n)` avec le tableau `notes` de 5 cases ?",
+   "choix": [
+    "afficher(notes, 5);",
+    "afficher(notes[], 5);",
+    "afficher(&notes[5], 5);",
+    "afficher(notes[5]);"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "On passe le nom du tableau (son adresse) et sa taille."
+  },
+  {
+   "id": "c7-014",
+   "type": "qcm",
+   "notion": "7.6",
+   "origine": "cours",
+   "enonce": "Pourquoi passe-t-on la taille d'un tableau en paramètre ?",
+   "choix": [
+    "la fonction ne reçoit que l'adresse et ne connaît pas la taille",
+    "c'est obligatoire pour compiler",
+    "pour copier le tableau",
+    "pour le trier"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Avec l'adresse seule, impossible de savoir où le tableau s'arrête."
+  },
+  {
+   "id": "c7-015",
+   "type": "qcm",
+   "notion": "7.7",
+   "origine": "cours",
+   "enonce": "Avec quel format affiche-t-on `sqrt(2.0)` ?",
+   "choix": [
+    "%f",
+    "%d",
+    "%s",
+    "%c"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "sqrt renvoie un double."
+  },
+  {
+   "id": "c7-016",
+   "type": "qcm",
+   "notion": "7.8",
+   "origine": "cours",
+   "enonce": "Que contient en général un fichier d'en-tête `.h` d'un module ?",
+   "choix": [
+    "les prototypes des fonctions",
+    "la fonction main",
+    "le corps des fonctions",
+    "les données saisies"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Le .h est l'interface ; les corps sont dans le .c."
+  },
+  {
+   "id": "c7-017",
+   "type": "qcm",
+   "notion": "7.8",
+   "origine": "cours",
+   "enonce": "Quelle ligne inclut l'en-tête `outils.h` de ton projet ?",
+   "choix": [
+    "#include \"outils.h\"",
+    "#include <outils.h>",
+    "#import outils.h",
+    "include outils"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Guillemets pour un fichier du projet, chevrons pour le système."
+  },
+  {
+   "id": "c7-018",
+   "type": "trous",
+   "notion": "7.8",
+   "origine": "cours",
+   "enonce": "[_] OUTILS_H\n[_] OUTILS_H\n\nint carre(int x);\n\n[_]",
+   "fragments": [
+    "#ifndef",
+    "#define",
+    "#endif",
+    "#include"
+   ],
+   "verif": {
+    "mode": "trous",
+    "attendu": [
+     "#ifndef",
+     "#define",
+     "#endif"
+    ]
+   },
+   "duree": 0.5,
+   "explication": "Les gardes d'en-tête : #ifndef, #define, puis #endif."
+  },
+  {
+   "id": "c7-101",
+   "type": "exo",
+   "notion": "7.1",
+   "origine": "generee",
+   "titre": "Fonction carré",
+   "enonce": "Écris une fonction `int carre(int x)` qui renvoie le carré de `x`, avec son **prototype avant `main`** et sa **définition après**. Dans `main`, lis `n` et affiche `carre(n)`.",
+   "guidage": "Prototype : `int carre(int x);` (avec `;`). Définition : même ligne, sans `;`, suivie du corps.",
+   "duree": 4,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "4",
+        "sortie": "16"
+       },
+       {
+        "entree": "-3",
+        "sortie": "9"
+       },
+       {
+        "entree": "0",
+        "sortie": "0"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint carre(int x);\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    printf(\"%d\\n\", carre(n));\n    return 0;\n}\n\nint carre(int x) {\n    return x * x;\n}",
+      "nombres": true,
+      "exige": [
+       {
+        "motif": "int\\s+carre\\s*\\([^)]*\\)\\s*;",
+        "msg": "Écris le prototype int carre(int x); avant main."
+       },
+       {
+        "motif": "int\\s+carre\\s*\\([^)]*\\)\\s*\\{",
+        "msg": "Définis la fonction carre."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint carre(int x);\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    printf(\"%d\\n\", carre(n));\n    return 0;\n}\n\nint carre(int x) {\n    return x * x;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 4
+    }
+   ]
+  },
+  {
+   "id": "c7-102",
+   "type": "exo",
+   "notion": "7.2",
+   "origine": "generee",
+   "titre": "Maximum et ligne de tirets",
+   "enonce": "Écris :\n- une fonction `int maximum(int a, int b)` qui renvoie le plus grand des deux ;\n- une fonction `void afficher_ligne(int n)` qui affiche `n` tirets puis un retour à la ligne.\n\n`main` lit deux entiers, affiche une ligne de tirets de la longueur du maximum, puis le maximum.\n\nExemple : `3 5` → `-----` puis `5`.",
+   "guidage": "Le maximum se calcule une fois, puis sert deux fois.",
+   "duree": 6,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "3 5",
+        "sortie": "-----\n5"
+       },
+       {
+        "entree": "4 2",
+        "sortie": "----\n4"
+       },
+       {
+        "entree": "1 1",
+        "sortie": "-\n1"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint maximum(int a, int b) {\n    if (a > b) return a;\n    return b;\n}\n\nvoid afficher_ligne(int n) {\n    for (int i = 0; i < n; i++) printf(\"-\");\n    printf(\"\\n\");\n}\n\nint main(void) {\n    int a, b;\n    scanf(\"%d %d\", &a, &b);\n    int m = maximum(a, b);\n    afficher_ligne(m);\n    printf(\"%d\\n\", m);\n    return 0;\n}",
+      "exige": [
+       {
+        "motif": "int\\s+maximum\\s*\\(",
+        "msg": "Écris la fonction int maximum(int a, int b)."
+       },
+       {
+        "motif": "void\\s+afficher_ligne\\s*\\(",
+        "msg": "Écris la fonction void afficher_ligne(int n)."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint maximum(int a, int b) {\n    if (a > b) return a;\n    return b;\n}\n\nvoid afficher_ligne(int n) {\n    for (int i = 0; i < n; i++) printf(\"-\");\n    printf(\"\\n\");\n}\n\nint main(void) {\n    int a, b;\n    scanf(\"%d %d\", &a, &b);\n    int m = maximum(a, b);\n    afficher_ligne(m);\n    printf(\"%d\\n\", m);\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 6
+    }
+   ]
+  },
+  {
+   "id": "c7-103",
+   "type": "exo",
+   "notion": "7.2",
+   "origine": "generee",
+   "titre": "est_pair",
+   "enonce": "Écris une fonction `int est_pair(int n)` qui renvoie 1 si `n` est pair, 0 sinon. `main` lit `N` puis `N` entiers et affiche **combien sont pairs**, en appelant `est_pair`.",
+   "guidage": "`return n % 2 == 0;` suffit : la comparaison vaut déjà 1 ou 0.",
+   "duree": 5,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "5\n1 2 3 4 6",
+        "sortie": "3"
+       },
+       {
+        "entree": "2\n7 9",
+        "sortie": "0"
+       },
+       {
+        "entree": "3\n0 -2 8",
+        "sortie": "3"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint est_pair(int n) {\n    return n % 2 == 0;\n}\n\nint main(void) {\n    int n, x, nb = 0;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        scanf(\"%d\", &x);\n        if (est_pair(x)) nb++;\n    }\n    printf(\"%d\\n\", nb);\n    return 0;\n}",
+      "nombres": true,
+      "exige": [
+       {
+        "motif": "int\\s+est_pair\\s*\\(",
+        "msg": "Écris la fonction int est_pair(int n)."
+       },
+       {
+        "motif": "est_pair\\s*\\(\\s*\\w+\\s*\\)\\s*\\)",
+        "msg": "Appelle est_pair dans main."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint est_pair(int n) {\n    return n % 2 == 0;\n}\n\nint main(void) {\n    int n, x, nb = 0;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        scanf(\"%d\", &x);\n        if (est_pair(x)) nb++;\n    }\n    printf(\"%d\\n\", nb);\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 5
+    }
+   ]
+  },
+  {
+   "id": "c7-104",
+   "type": "exo",
+   "notion": "7.3",
+   "origine": "generee",
+   "titre": "Compteur d'appels",
+   "enonce": "Écris une variable **globale** `appels` (initialisée à 0) et une fonction `void saluer(void)` qui affiche `Bonjour` et augmente `appels`. `main` lit `n`, appelle `saluer` `n` fois, puis affiche `appels`.",
+   "guidage": "La globale est déclarée en haut du fichier, hors de toute fonction.",
+   "duree": 4,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "3",
+        "sortie": "Bonjour\nBonjour\nBonjour\n3"
+       },
+       {
+        "entree": "1",
+        "sortie": "Bonjour\n1"
+       },
+       {
+        "entree": "0",
+        "sortie": "0"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint appels = 0;\n\nvoid saluer(void) {\n    printf(\"Bonjour\\n\");\n    appels++;\n}\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        saluer();\n    }\n    printf(\"%d\\n\", appels);\n    return 0;\n}",
+      "exige": [
+       {
+        "motif": "int\\s+appels\\s*=\\s*0\\s*;",
+        "msg": "Déclare la globale int appels = 0; en haut du fichier."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint appels = 0;\n\nvoid saluer(void) {\n    printf(\"Bonjour\\n\");\n    appels++;\n}\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        saluer();\n    }\n    printf(\"%d\\n\", appels);\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 4
+    }
+   ]
+  },
+  {
+   "id": "c7-105",
+   "type": "exo",
+   "notion": "7.4",
+   "origine": "generee",
+   "titre": "La fonction qui ne double rien",
+   "enonce": "Ce programme doit doubler `n` grâce à la fonction `doubler`, puis l'afficher : avec `5`, il doit afficher `10`. Il affiche `5`. Corrige `doubler` (et son appel) en passant **par adresse**.",
+   "guidage": "La fonction reçoit une copie de `n`.",
+   "duree": 4,
+   "etapes": [
+    {
+     "consigne": "Corrige le programme ci-dessous pour qu'il fasse ce que dit l'énoncé, puis valide.",
+     "question": "Corrige le programme.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "5",
+        "sortie": "10"
+       },
+       {
+        "entree": "-4",
+        "sortie": "-8"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nvoid doubler(int *x) {\n    *x = *x * 2;\n}\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    doubler(&n);\n    printf(\"%d\\n\", n);\n    return 0;\n}",
+      "exige": [
+       {
+        "motif": "void\\s+doubler\\s*\\(\\s*int\\s*\\*",
+        "msg": "Passe n par adresse : void doubler(int *x)."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nvoid doubler(int *x) {\n    *x = *x * 2;\n}\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    doubler(&n);\n    printf(\"%d\\n\", n);\n    return 0;\n}\n```",
+     "indices": [
+      "Le paramètre doit être un pointeur : `int *x`.",
+      "Dans la fonction `*x = *x * 2;`, et l'appel `doubler(&n);`."
+     ],
+     "duree": 4,
+     "depart": "#include <stdio.h>\n\nvoid doubler(int x) {\n    x = x * 2;\n}\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    doubler(n);\n    printf(\"%d\\n\", n);\n    return 0;\n}"
+    }
+   ]
+  },
+  {
+   "id": "c7-106",
+   "type": "exo",
+   "notion": "7.5",
+   "origine": "generee",
+   "titre": "Échanger avec une fonction",
+   "enonce": "Écris `void echanger(int *a, int *b)` qui échange les valeurs pointées. `main` lit deux entiers, appelle `echanger`, puis les affiche.\n\nExemple : `10 20` → `20 10`.",
+   "guidage": "Une variable `temp` pour mettre `*a` de côté ; l'appel passe les adresses : `echanger(&x, &y);`.",
+   "duree": 5,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "10 20",
+        "sortie": "20 10"
+       },
+       {
+        "entree": "-1 3",
+        "sortie": "3 -1"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nvoid echanger(int *a, int *b) {\n    int temp = *a;\n    *a = *b;\n    *b = temp;\n}\n\nint main(void) {\n    int x, y;\n    scanf(\"%d %d\", &x, &y);\n    echanger(&x, &y);\n    printf(\"%d %d\\n\", x, y);\n    return 0;\n}",
+      "nombres": true,
+      "exige": [
+       {
+        "motif": "void\\s+echanger\\s*\\(\\s*int\\s*\\*\\s*\\w+\\s*,\\s*int\\s*\\*",
+        "msg": "Écris void echanger(int *a, int *b)."
+       },
+       {
+        "motif": "echanger\\s*\\(\\s*&",
+        "msg": "Appelle echanger avec les adresses : echanger(&x, &y)."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nvoid echanger(int *a, int *b) {\n    int temp = *a;\n    *a = *b;\n    *b = temp;\n}\n\nint main(void) {\n    int x, y;\n    scanf(\"%d %d\", &x, &y);\n    echanger(&x, &y);\n    printf(\"%d %d\\n\", x, y);\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 5
+    }
+   ]
+  },
+  {
+   "id": "c7-107",
+   "type": "exo",
+   "notion": "7.5",
+   "origine": "generee",
+   "titre": "Quotient et reste",
+   "enonce": "Écris `void diviser(int dividende, int diviseur, int *quotient, int *reste)` (exemple du cours). `main` lit deux entiers et affiche le quotient puis le reste, calculés par `diviser`.",
+   "guidage": "Deux résultats : deux paramètres pointeurs, qu'on remplit avec `*quotient = …` et `*reste = …`.",
+   "duree": 5,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "17 5",
+        "sortie": "3 2"
+       },
+       {
+        "entree": "20 4",
+        "sortie": "5 0"
+       },
+       {
+        "entree": "3 7",
+        "sortie": "0 3"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nvoid diviser(int dividende, int diviseur, int *quotient, int *reste) {\n    *quotient = dividende / diviseur;\n    *reste = dividende % diviseur;\n}\n\nint main(void) {\n    int a, b, q, r;\n    scanf(\"%d %d\", &a, &b);\n    diviser(a, b, &q, &r);\n    printf(\"%d %d\\n\", q, r);\n    return 0;\n}",
+      "nombres": true,
+      "exige": [
+       {
+        "motif": "void\\s+diviser\\s*\\(",
+        "msg": "Écris la fonction diviser."
+       },
+       {
+        "motif": "diviser\\s*\\([^;]*&\\w+\\s*,\\s*&\\w+\\s*\\)",
+        "msg": "Passe les adresses de q et r à diviser."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nvoid diviser(int dividende, int diviseur, int *quotient, int *reste) {\n    *quotient = dividende / diviseur;\n    *reste = dividende % diviseur;\n}\n\nint main(void) {\n    int a, b, q, r;\n    scanf(\"%d %d\", &a, &b);\n    diviser(a, b, &q, &r);\n    printf(\"%d %d\\n\", q, r);\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 5
+    }
+   ]
+  },
+  {
+   "id": "c7-108",
+   "type": "exo",
+   "notion": "7.6",
+   "origine": "td",
+   "titre": "Remplir, afficher, sommer",
+   "enonce": "Reprends l'exercice du cours : écris `void remplir_tableau(int arr[], int taille)`, `void afficher_tableau(int arr[], int taille)` (format `[10, 20, 30]`) et `int somme_tableau(int arr[], int taille)`. `main` lit `N` (≤ 100), remplit, affiche, puis affiche la somme.",
+   "guidage": "Chaque fonction reçoit le tableau **et** sa taille. Pour les virgules : `if (i < taille - 1) printf(\", \");`.",
+   "duree": 8,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "3\n10 20 30",
+        "sortie": "[10, 20, 30]\n60"
+       },
+       {
+        "entree": "1\n7",
+        "sortie": "[7]\n7"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nvoid remplir_tableau(int arr[], int taille) {\n    for (int i = 0; i < taille; i++) scanf(\"%d\", &arr[i]);\n}\n\nvoid afficher_tableau(int arr[], int taille) {\n    printf(\"[\");\n    for (int i = 0; i < taille; i++) {\n        printf(\"%d\", arr[i]);\n        if (i < taille - 1) printf(\", \");\n    }\n    printf(\"]\\n\");\n}\n\nint somme_tableau(int arr[], int taille) {\n    int s = 0;\n    for (int i = 0; i < taille; i++) s += arr[i];\n    return s;\n}\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    remplir_tableau(t, n);\n    afficher_tableau(t, n);\n    printf(\"%d\\n\", somme_tableau(t, n));\n    return 0;\n}",
+      "exige": [
+       {
+        "motif": "void\\s+remplir_tableau",
+        "msg": "Écris remplir_tableau."
+       },
+       {
+        "motif": "void\\s+afficher_tableau",
+        "msg": "Écris afficher_tableau."
+       },
+       {
+        "motif": "int\\s+somme_tableau",
+        "msg": "Écris somme_tableau."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nvoid remplir_tableau(int arr[], int taille) {\n    for (int i = 0; i < taille; i++) scanf(\"%d\", &arr[i]);\n}\n\nvoid afficher_tableau(int arr[], int taille) {\n    printf(\"[\");\n    for (int i = 0; i < taille; i++) {\n        printf(\"%d\", arr[i]);\n        if (i < taille - 1) printf(\", \");\n    }\n    printf(\"]\\n\");\n}\n\nint somme_tableau(int arr[], int taille) {\n    int s = 0;\n    for (int i = 0; i < taille; i++) s += arr[i];\n    return s;\n}\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    remplir_tableau(t, n);\n    afficher_tableau(t, n);\n    printf(\"%d\\n\", somme_tableau(t, n));\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 8
+    }
+   ]
+  },
+  {
+   "id": "c7-109",
+   "type": "exo",
+   "notion": "7.6",
+   "origine": "td",
+   "titre": "Tableau trié ?",
+   "enonce": "Écris `int est_trie(int t[], int n)` qui renvoie 1 si le tableau est trié par ordre croissant (au sens large), 0 sinon (le cours propose `is_sorted`). `main` lit `N` puis `N` entiers et affiche le résultat.",
+   "guidage": "Dès que `t[i] > t[i + 1]`, le tableau n'est pas trié : `return 0;`. Si la boucle finit, `return 1;`.",
+   "duree": 5,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "4\n1 2 2 5",
+        "sortie": "1"
+       },
+       {
+        "entree": "3\n3 1 2",
+        "sortie": "0"
+       },
+       {
+        "entree": "1\n9",
+        "sortie": "1"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint est_trie(int t[], int n) {\n    for (int i = 0; i < n - 1; i++) {\n        if (t[i] > t[i + 1]) return 0;\n    }\n    return 1;\n}\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    printf(\"%d\\n\", est_trie(t, n));\n    return 0;\n}",
+      "nombres": true,
+      "exige": [
+       {
+        "motif": "int\\s+est_trie\\s*\\(",
+        "msg": "Écris la fonction int est_trie(int t[], int n)."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint est_trie(int t[], int n) {\n    for (int i = 0; i < n - 1; i++) {\n        if (t[i] > t[i + 1]) return 0;\n    }\n    return 1;\n}\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    printf(\"%d\\n\", est_trie(t, n));\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 5
+    }
+   ]
+  },
+  {
+   "id": "c7-110",
+   "type": "exo",
+   "notion": "7.6",
+   "origine": "td",
+   "titre": "Position d'une valeur",
+   "enonce": "Écris `int recherche_position(int t[], int n, int val)` qui renvoie l'indice de la première occurrence de `val`, ou -1. `main` lit `N`, `N` entiers, puis `val`, et affiche le résultat.",
+   "guidage": "Un `return i;` dans la boucle dès que `t[i] == val` ; `return -1;` après la boucle.",
+   "duree": 5,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "5\n4 9 1 9 3\n9",
+        "sortie": "1"
+       },
+       {
+        "entree": "3\n1 2 3\n7",
+        "sortie": "-1"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint recherche_position(int t[], int n, int val) {\n    for (int i = 0; i < n; i++) {\n        if (t[i] == val) return i;\n    }\n    return -1;\n}\n\nint main(void) {\n    int t[100], n, val;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    scanf(\"%d\", &val);\n    printf(\"%d\\n\", recherche_position(t, n, val));\n    return 0;\n}",
+      "nombres": true,
+      "exige": [
+       {
+        "motif": "int\\s+recherche_position\\s*\\(",
+        "msg": "Écris la fonction recherche_position."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint recherche_position(int t[], int n, int val) {\n    for (int i = 0; i < n; i++) {\n        if (t[i] == val) return i;\n    }\n    return -1;\n}\n\nint main(void) {\n    int t[100], n, val;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    scanf(\"%d\", &val);\n    printf(\"%d\\n\", recherche_position(t, n, val));\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 5
+    }
+   ]
+  },
+  {
+   "id": "c7-111",
+   "type": "exo",
+   "notion": "7.6",
+   "origine": "generee",
+   "titre": "Mettre à zéro les négatifs",
+   "enonce": "Écris `void sans_negatifs(int t[], int n)` qui remplace chaque valeur négative par 0 **dans le tableau d'origine**. `main` lit `N` puis `N` entiers, appelle la fonction, puis affiche le tableau.",
+   "guidage": "La fonction modifie directement le tableau : pas de `return` nécessaire.",
+   "duree": 5,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "5\n3 -1 4 -5 0",
+        "sortie": "3 0 4 0 0"
+       },
+       {
+        "entree": "2\n-7 -8",
+        "sortie": "0 0"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nvoid sans_negatifs(int t[], int n) {\n    for (int i = 0; i < n; i++) {\n        if (t[i] < 0) t[i] = 0;\n    }\n}\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    sans_negatifs(t, n);\n    for (int i = 0; i < n; i++) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    return 0;\n}",
+      "nombres": true,
+      "exige": [
+       {
+        "motif": "void\\s+sans_negatifs\\s*\\(",
+        "msg": "Écris la fonction void sans_negatifs(int t[], int n)."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nvoid sans_negatifs(int t[], int n) {\n    for (int i = 0; i < n; i++) {\n        if (t[i] < 0) t[i] = 0;\n    }\n}\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    sans_negatifs(t, n);\n    for (int i = 0; i < n; i++) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 5
+    }
+   ]
+  },
+  {
+   "id": "c7-112",
+   "type": "exo",
+   "notion": "7.7",
+   "origine": "generee",
+   "titre": "Hypoténuse",
+   "enonce": "Écris une fonction `double hypotenuse(double a, double b)` qui renvoie $\\sqrt{a^2 + b^2}$ en utilisant `sqrt` et `pow` de `math.h`. `main` lit deux réels et affiche le résultat avec 2 décimales.",
+   "guidage": "`#include <math.h>` ; `pow(a, 2)` vaut $a^2$.",
+   "duree": 4,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "3 4",
+        "sortie": "5.00"
+       },
+       {
+        "entree": "1 1",
+        "sortie": "1.41"
+       },
+       {
+        "entree": "5 12",
+        "sortie": "13.00"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n#include <math.h>\n\ndouble hypotenuse(double a, double b) {\n    return sqrt(pow(a, 2) + pow(b, 2));\n}\n\nint main(void) {\n    double a, b;\n    scanf(\"%lf %lf\", &a, &b);\n    printf(\"%.2f\\n\", hypotenuse(a, b));\n    return 0;\n}",
+      "nombres": true,
+      "exige": [
+       {
+        "motif": "sqrt",
+        "msg": "Utilise sqrt de math.h."
+       },
+       {
+        "motif": "#\\s*include\\s*<math\\.h>",
+        "brut": true,
+        "msg": "Inclus math.h."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n#include <math.h>\n\ndouble hypotenuse(double a, double b) {\n    return sqrt(pow(a, 2) + pow(b, 2));\n}\n\nint main(void) {\n    double a, b;\n    scanf(\"%lf %lf\", &a, &b);\n    printf(\"%.2f\\n\", hypotenuse(a, b));\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 4
+    }
+   ]
+  },
+  {
+   "id": "c7-113",
+   "type": "exo",
+   "notion": "7.8",
+   "origine": "generee",
+   "titre": "Le module calculatrice, en un seul fichier",
+   "enonce": "Dans l'éditeur, un seul fichier : reproduis l'organisation du module calculatrice. En haut, les **prototypes** de `addition` et `soustraction` (ce qui irait dans `calculatrice.h`) ; puis `main`, qui lit deux entiers et affiche leur somme puis leur différence ; puis les **définitions** (ce qui irait dans `calculatrice.c`).",
+   "guidage": "Prototypes terminés par `;` avant `main`, définitions après `main`.",
+   "duree": 5,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "10 5",
+        "sortie": "15 5"
+       },
+       {
+        "entree": "-2 8",
+        "sortie": "6 -10"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\n/* --- ce qui irait dans calculatrice.h --- */\nint addition(int a, int b);\nint soustraction(int a, int b);\n\nint main(void) {\n    int a, b;\n    scanf(\"%d %d\", &a, &b);\n    printf(\"%d %d\\n\", addition(a, b), soustraction(a, b));\n    return 0;\n}\n\n/* --- ce qui irait dans calculatrice.c --- */\nint addition(int a, int b) {\n    return a + b;\n}\n\nint soustraction(int a, int b) {\n    return a - b;\n}",
+      "nombres": true,
+      "exige": [
+       {
+        "motif": "int\\s+addition\\s*\\([^)]*\\)\\s*;",
+        "msg": "Écris le prototype de addition avant main."
+       },
+       {
+        "motif": "int\\s+soustraction\\s*\\([^)]*\\)\\s*;",
+        "msg": "Écris le prototype de soustraction avant main."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\n/* --- ce qui irait dans calculatrice.h --- */\nint addition(int a, int b);\nint soustraction(int a, int b);\n\nint main(void) {\n    int a, b;\n    scanf(\"%d %d\", &a, &b);\n    printf(\"%d %d\\n\", addition(a, b), soustraction(a, b));\n    return 0;\n}\n\n/* --- ce qui irait dans calculatrice.c --- */\nint addition(int a, int b) {\n    return a + b;\n}\n\nint soustraction(int a, int b) {\n    return a - b;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 5
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,1070 @@
+{
+ "id": "c-6-chaines",
+ "module": "programmation-c",
+ "titre": "Chaînes de caractères",
+ "ordre": 6,
+ "sources": [
+  "Les chaînes de caractères en langage C",
+  "Les fonctions en langage C (string.h)",
+  "TD Boucles, chaînes et tableaux (ex. 12)"
+ ],
+ "tldr": [
+  "Chaîne = tableau de `char` terminé par `'\\0'` : `\"toto\"` occupe 5 cases. Prévoir une case de plus.",
+  "`char ch[] = \"toto\";` (recommandé) · `char *s = \"hello\";` = lecture seule · pas de `=` après la déclaration : `strcpy`.",
+  "Un mot : `scanf(\"%19s\", s)` · une ligne : `fgets(s, sizeof(s), stdin)` puis `s[strcspn(s, \"\\n\")] = '\\0';` · jamais `gets`.",
+  "Parcours : `for (i = 0; s[i] != '\\0'; i++)` · `'A'` = 65, `'a'` = 97, `'0'` = 48 · `c - 'a' + 'A'` met en majuscule.",
+  "`strlen` (sans le '\\0') · `strcpy`, `strcat` (destination assez grande) · `strcmp(a, b) == 0` pour l'égalité, jamais `==`."
+ ],
+ "notions": [
+  {
+   "id": "6.1",
+   "titre": "Une chaîne = un tableau de char terminé par '\\0'",
+   "corps": "En C, il n'y a **pas de type « chaîne »**. Une chaîne est un **tableau de `char`** qui se termine **toujours** par le caractère nul `'\\0'` (code ASCII 0).\n\n```c\nchar mot[] = \"toto\";   // le compilateur range : 't' 'o' 't' 'o' '\\0'\n```\n\n| Indice | 0 | 1 | 2 | 3 | 4 |\n|---|---|---|---|---|---|\n| `mot[i]` | `'t'` | `'o'` | `'t'` | `'o'` | `'\\0'` |\n\nLa chaîne visible a **4** caractères, mais elle occupe **5** cases.\n\n### Pourquoi le '\\0' est essentiel\n| Rôle | Explication |\n|---|---|\n| Marqueur de fin | c'est la seule façon de savoir où s'arrête le texte |\n| Gestion de la taille | un tableau de 100 cases peut contenir une chaîne de 10 caractères |\n| Sécurité | sans lui, `printf`, `strlen`, `strcpy` lisent la mémoire au-delà du tableau |\n\n> **À retenir** : prévois **toujours une case de plus** que le nombre de caractères : `char prenom[20]` contient au plus 19 lettres.\n\n> **Piège** : l'oubli du `'\\0'` est l'une des erreurs les plus courantes et les plus dangereuses en C : elle mène aux **débordements de tampon** (buffer overflow en anglais), une faille de sécurité classique.",
+   "rec": "`'A'` (apostrophes) est **un** caractère ; `\"A\"` (guillemets) est une **chaîne** de deux cases : `'A'` puis `'\\0'`.",
+   "alt": "Le `'\\0'` est le point final de la phrase : sans lui, le lecteur continue à lire tout ce qui traîne derrière.",
+   "pre": [
+    "5.1",
+    "3.2"
+   ],
+   "ecrans": [
+    {
+     "titre": "Un tableau de char",
+     "texte": "`char mot[] = \"toto\";` range 't' 'o' 't' 'o' puis '\\0'."
+    },
+    {
+     "titre": "4 lettres, 5 cases",
+     "texte": "La dernière case contient toujours le caractère nul `'\\0'`."
+    },
+    {
+     "titre": "Prévoir la place",
+     "texte": "`char prenom[20]` : 19 lettres au plus."
+    }
+   ],
+   "check": {
+    "id": "c-6-chaines-ctl-0",
+    "enonce": "Combien de cases occupe `char s[] = \"Bonjour\";` ?",
+    "choix": [
+     "8",
+     "7",
+     "6",
+     "9"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "7 lettres + le '\\0' final = 8 cases."
+   }
+  },
+  {
+   "id": "6.2",
+   "titre": "Déclarer et initialiser une chaîne",
+   "corps": "| Forme | Exemple | Remarque |\n|---|---|---|\n| Taille fixe | `char ch[50];` | à remplir plus tard (49 caractères au plus) |\n| Initialisation automatique | `char ch[] = \"toto\";` | **recommandée** : le compilateur calcule la taille (5) et ajoute `'\\0'` |\n| Caractère par caractère | `char ch[5] = {'t','o','t','o','\\0'};` | possible mais fastidieux et risqué |\n| Pointeur sur une constante | `char *str = \"hello\";` | **lecture seule** : `str[0] = 'H';` plante |\n\n```c\nchar ville[30] = \"Paris\";   // 30 cases réservées, \"Paris\" + '\\0' au début\nchar vide[10] = \"\";         // chaîne vide : vide[0] vaut '\\0'\n```\n\n> **Piège** : on ne peut pas **affecter** une chaîne avec `=` après la déclaration : `ville = \"Lyon\";` est refusé. On copie avec `strcpy(ville, \"Lyon\");` (voir `string.h`).\n\n> **Astuce** : pour un texte saisi dont la taille varie, réserve large : `char buffer[100];`.",
+   "rec": "À la déclaration, `= \"…\"` est une **initialisation** (autorisée). Plus tard, un tableau ne peut plus recevoir `=` : il faut copier son contenu.",
+   "alt": "Déclarer `char ch[50]`, c'est acheter un carnet de 50 lignes ; `\"toto\"` n'en remplit que 5 (avec le point final).",
+   "pre": [
+    "6.1"
+   ],
+   "ecrans": [
+    {
+     "titre": "La forme recommandée",
+     "texte": "`char ch[] = \"toto\";` : taille calculée, '\\0' ajouté."
+    },
+    {
+     "titre": "Lecture seule",
+     "texte": "`char *str = \"hello\";` pointe sur une constante : on ne la modifie pas."
+    },
+    {
+     "titre": "Pas de = après coup",
+     "texte": "`ville = \"Lyon\";` est refusé : `strcpy(ville, \"Lyon\");`."
+    }
+   ],
+   "check": {
+    "id": "c-6-chaines-ctl-1",
+    "enonce": "Quelle déclaration le cours recommande-t-il pour initialiser une chaîne ?",
+    "choix": [
+     "char ch[] = \"toto\";",
+     "char ch[4] = \"toto\";",
+     "char ch = \"toto\";",
+     "char ch[5] = {'t','o','t','o'};"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "Le compilateur calcule la taille (5) et ajoute lui-même le '\\0'."
+   }
+  },
+  {
+   "id": "6.3",
+   "titre": "Saisir une chaîne : scanf ou fgets",
+   "corps": "| | `scanf(\"%s\", …)` | `fgets(…, taille, stdin)` |\n|---|---|---|\n| S'arrête | au premier **espace**, tabulation ou retour à la ligne | à la **fin de la ligne** (ou quand le tableau est plein) |\n| Espaces | non (un seul mot) | oui (toute la ligne) |\n| Taille | non vérifiée (sauf `%19s`) | toujours vérifiée : **sûr** |\n| Le `\\n` final | reste dans le tampon d'entrée | **est stocké** dans la chaîne |\n\n```c\nchar nom[20];\nscanf(\"%19s\", nom);                    // un mot, 19 caractères max\n\nchar phrase[100];\nfgets(phrase, sizeof(phrase), stdin);  // une ligne entière, espaces compris\n```\n\n### Retirer le '\\n' laissé par fgets\nSi l'utilisateur tape `Salut le monde` puis Entrée, `phrase` contient `\"Salut le monde\\n\"`. On remplace le `'\\n'` par `'\\0'` :\n```c\n#include <string.h>\nphrase[strcspn(phrase, \"\\n\")] = '\\0';  // strcspn donne la position du '\\n'\n```\n\n> **Piège** : `gets()` est **à proscrire** : elle ne vérifie pas la taille du tableau et provoque des débordements.",
+   "rec": "`strcspn(s, \"\\n\")` renvoie l'indice du premier `'\\n'` de `s` (ou la longueur s'il n'y en a pas) : on y écrit `'\\0'` pour couper la chaîne.",
+   "alt": "`scanf(\"%s\")` est un serveur qui ne note que le premier mot de ta commande ; `fgets` note toute la phrase, y compris le « Entrée » final, qu'il faut ensuite effacer.",
+   "pre": [
+    "6.2",
+    "3.3"
+   ],
+   "ecrans": [
+    {
+     "titre": "Un mot",
+     "texte": "`scanf(\"%19s\", nom);` s'arrête au premier espace."
+    },
+    {
+     "titre": "Une ligne",
+     "texte": "`fgets(phrase, sizeof(phrase), stdin);` lit toute la ligne, sans déborder."
+    },
+    {
+     "titre": "Le \\n de fgets",
+     "texte": "```c\nphrase[strcspn(phrase, \"\\n\")] = '\\0';\n```"
+    },
+    {
+     "titre": "gets",
+     "texte": "Jamais : aucune vérification de taille."
+    }
+   ],
+   "check": {
+    "id": "c-6-chaines-ctl-2",
+    "enonce": "L'utilisateur tape « Jean Luc ». Que contient `nom` après `scanf(\"%19s\", nom);` ?",
+    "choix": [
+     "Jean",
+     "Jean Luc",
+     "Luc",
+     "Jean Luc\\n"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "`%s` s'arrête au premier espace."
+   }
+  },
+  {
+   "id": "6.4",
+   "titre": "Parcourir une chaîne",
+   "corps": "On parcourt une chaîne **jusqu'au `'\\0'`**, sans avoir besoin de sa longueur :\n\n```c\nchar mot[] = \"Bonjour\";\nfor (int i = 0; mot[i] != '\\0'; i++) {   // avec un indice\n    printf(\"%c \", mot[i]);\n}\n\nchar *p = mot;\nwhile (*p != '\\0') {                     // avec un pointeur (voir ch. 8)\n    printf(\"%c\", *p);\n    p++;\n}\n```\n\n### Un caractère est un petit entier\n| Caractère | Code ASCII |\n|---|---|\n| `'0'` … `'9'` | 48 … 57 |\n| `'A'` … `'Z'` | 65 … 90 |\n| `'a'` … `'z'` | 97 … 122 |\n\nOn peut donc **comparer** et **calculer** :\n```c\nif (c >= 'a' && c <= 'z') { /* minuscule */ }\nchar maj = c - 'a' + 'A';    // 'b' → 'B'\nint chiffre = c - '0';       // '7' → 7\n```\n\n> **Astuce** : la longueur d'une chaîne est l'indice de son `'\\0'` : on la trouve en comptant les tours d'une boucle `while (s[n] != '\\0') n++;`.",
+   "rec": "Comme les lettres ont des codes consécutifs, `c - 'a'` donne le rang de la lettre dans l'alphabet (0 pour 'a', 1 pour 'b'…).",
+   "alt": "On lit un mot lettre par lettre jusqu'au point final `'\\0'`, comme on suit une ligne du doigt jusqu'au bout.",
+   "pre": [
+    "6.1",
+    "4.4"
+   ],
+   "ecrans": [
+    {
+     "titre": "Jusqu'au \\0",
+     "texte": "```c\nfor (int i = 0; s[i] != '\\0'; i++)\n```"
+    },
+    {
+     "titre": "Les codes",
+     "texte": "'A' = 65, 'a' = 97, '0' = 48 : les lettres et les chiffres se suivent."
+    },
+    {
+     "titre": "Calculer",
+     "texte": "`c - 'a' + 'A'` met une minuscule en majuscule ; `c - '0'` donne la valeur d'un chiffre."
+    }
+   ],
+   "check": {
+    "id": "c-6-chaines-ctl-3",
+    "enonce": "Quelle condition arrête le parcours de la chaîne `s` ?",
+    "choix": [
+     "s[i] != '\\0'",
+     "i < 100",
+     "s[i] != ' '",
+     "s[i] != '\\n'"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "On s'arrête au caractère nul qui termine toute chaîne."
+   }
+  },
+  {
+   "id": "6.5",
+   "titre": "Les fonctions de string.h",
+   "corps": "`#include <string.h>` fournit les opérations courantes :\n\n| Fonction | Rôle | Exemple |\n|---|---|---|\n| `strlen(s)` | longueur, **sans** le `'\\0'` | `strlen(\"Bonjour\")` → 7 |\n| `strcpy(dest, src)` | copie `src` dans `dest` | `strcpy(d, \"Bonjour\");` |\n| `strncpy(dest, src, n)` | copie au plus `n` caractères | plus sûr que `strcpy` |\n| `strcat(dest, src)` | ajoute `src` à la fin de `dest` | `\"Bonjour\"` + `\" le monde!\"` |\n| `strcmp(a, b)` | compare : **0** si égales, < 0 si `a` avant `b`, > 0 sinon | `strcmp(s, \"oui\") == 0` |\n| `strchr(s, c)` | première occurrence du caractère `c` | |\n| `strstr(s, sous)` | première occurrence de la sous-chaîne | |\n\n```c\n#include <string.h>\nchar source[] = \"Bonjour\";\nchar destination[20];                    // assez grand !\nstrcpy(destination, source);             // \"Bonjour\"\nstrcat(destination, \" le monde!\");       // \"Bonjour le monde!\"\nprintf(\"%d\\n\", (int)strlen(destination)); // 17\nif (strcmp(source, \"Bonjour\") == 0) {\n    printf(\"identiques\\n\");\n}\n```\n\n> **Piège** : on ne compare **jamais** deux chaînes avec `==` (ça compare les adresses) : c'est `strcmp(a, b) == 0`.\n\n> **Piège** : `strcpy` et `strcat` ne vérifient pas la place : la destination doit être assez grande, `'\\0'` compris.",
+   "rec": "`strcmp` compare lettre par lettre selon les codes ASCII : `strcmp(\"abc\", \"abd\")` est négatif car 'c' < 'd'.",
+   "alt": "`string.h` est la boîte à outils du texte : mesurer (`strlen`), recopier (`strcpy`), coller bout à bout (`strcat`), comparer (`strcmp`).",
+   "pre": [
+    "6.4"
+   ],
+   "ecrans": [
+    {
+     "titre": "Mesurer",
+     "texte": "`strlen(s)` : nombre de caractères, sans le '\\0'."
+    },
+    {
+     "titre": "Copier, coller",
+     "texte": "`strcpy(dest, src)` puis `strcat(dest, \" fin\")` : la destination doit être assez grande."
+    },
+    {
+     "titre": "Comparer",
+     "texte": "`strcmp(a, b) == 0` si les chaînes sont égales. Jamais `a == b`."
+    }
+   ],
+   "check": {
+    "id": "c-6-chaines-ctl-4",
+    "enonce": "Comment teste-t-on si deux chaînes `a` et `b` sont égales ?",
+    "choix": [
+     "strcmp(a, b) == 0",
+     "a == b",
+     "strcmp(a, b) == 1",
+     "strlen(a) == strlen(b)"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "`strcmp` renvoie 0 quand les chaînes sont identiques ; `==` comparerait des adresses."
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "c6-001",
+   "type": "saisie",
+   "notion": "6.1",
+   "origine": "cours",
+   "enonce": "Combien de cases occupe la chaîne `\"ESILV\"` en mémoire ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 6
+   },
+   "duree": 0.67,
+   "explication": "5 lettres + '\\0'."
+  },
+  {
+   "id": "c6-002",
+   "type": "qcm",
+   "notion": "6.1",
+   "origine": "cours",
+   "enonce": "Quel caractère termine toute chaîne en C ?",
+   "choix": [
+    "'\\0'",
+    "'\\n'",
+    "' '",
+    "'0'"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Le caractère nul '\\0' (code 0), à ne pas confondre avec le chiffre '0' (code 48)."
+  },
+  {
+   "id": "c6-003",
+   "type": "qcm",
+   "notion": "6.1",
+   "origine": "cours",
+   "enonce": "Quelle est la différence entre `'A'` et `\"A\"` ?",
+   "choix": [
+    "'A' est un caractère, \"A\" une chaîne de 2 cases ('A' et '\\0')",
+    "aucune",
+    "\"A\" est un entier",
+    "'A' est une chaîne"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Apostrophes = un caractère ; guillemets = une chaîne terminée par '\\0'."
+  },
+  {
+   "id": "c6-004",
+   "type": "saisie",
+   "notion": "6.1",
+   "origine": "cours",
+   "enonce": "Combien de lettres au plus peut contenir `char prenom[20];` ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 19
+   },
+   "duree": 0.67,
+   "explication": "Une case est réservée au '\\0'."
+  },
+  {
+   "id": "c6-005",
+   "type": "qcm",
+   "notion": "6.2",
+   "origine": "cours",
+   "enonce": "Que se passe-t-il avec `char *s = \"hello\"; s[0] = 'H';` ?",
+   "choix": [
+    "erreur à l'exécution : la chaîne est en lecture seule",
+    "s devient \"Hello\"",
+    "erreur de compilation sur la déclaration",
+    "rien"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Un pointeur vers une chaîne littérale pointe sur une zone en lecture seule."
+  },
+  {
+   "id": "c6-006",
+   "type": "qcm",
+   "notion": "6.2",
+   "origine": "cours",
+   "enonce": "Comment mettre « Lyon » dans `char ville[30];` déjà déclaré ?",
+   "choix": [
+    "strcpy(ville, \"Lyon\");",
+    "ville = \"Lyon\";",
+    "ville == \"Lyon\";",
+    "ville[30] = \"Lyon\";"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Un tableau ne s'affecte pas avec = après sa déclaration : on copie avec strcpy."
+  },
+  {
+   "id": "c6-007",
+   "type": "trous",
+   "notion": "6.2",
+   "origine": "cours",
+   "enonce": "char ch[[_]] = {'t', 'o', 't', 'o', [_]};",
+   "fragments": [
+    "5",
+    "4",
+    "'\\0'",
+    "'0'"
+   ],
+   "verif": {
+    "mode": "trous",
+    "attendu": [
+     "5",
+     "'\\0'"
+    ]
+   },
+   "duree": 0.5,
+   "explication": "4 lettres + le caractère nul : 5 cases, et la dernière vaut '\\0'."
+  },
+  {
+   "id": "c6-008",
+   "type": "qcm",
+   "notion": "6.3",
+   "origine": "cours",
+   "enonce": "Quelle fonction lit une ligne entière, espaces compris, sans déborder ?",
+   "choix": [
+    "fgets",
+    "scanf(\"%s\")",
+    "gets",
+    "getchar"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "`fgets(buf, taille, stdin)` lit toute la ligne et respecte la taille."
+  },
+  {
+   "id": "c6-009",
+   "type": "qcm",
+   "notion": "6.3",
+   "origine": "cours",
+   "enonce": "Après `fgets(t, sizeof(t), stdin);` avec la saisie « Salut » + Entrée, que contient `t` ?",
+   "choix": [
+    "\"Salut\\n\"",
+    "\"Salut\"",
+    "\"Salut \"",
+    "\"\\nSalut\""
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "fgets garde le '\\n' quand il y a la place."
+  },
+  {
+   "id": "c6-010",
+   "type": "trous",
+   "notion": "6.3",
+   "origine": "cours",
+   "enonce": "char phrase[100];\nfgets(phrase, [_], stdin);\nphrase[[_](phrase, \"\\n\")] = [_];",
+   "fragments": [
+    "sizeof(phrase)",
+    "100 + 1",
+    "strcspn",
+    "strlen",
+    "'\\0'",
+    "'\\n'"
+   ],
+   "verif": {
+    "mode": "trous",
+    "attendu": [
+     "sizeof(phrase)",
+     "strcspn",
+     "'\\0'"
+    ]
+   },
+   "duree": 0.5,
+   "explication": "On lit au plus sizeof(phrase), puis on remplace le '\\n' trouvé par strcspn par '\\0'."
+  },
+  {
+   "id": "c6-011",
+   "type": "qcm",
+   "notion": "6.3",
+   "origine": "cours",
+   "enonce": "Pourquoi `gets()` est-elle à éviter ?",
+   "choix": [
+    "elle ne vérifie pas la taille du tableau",
+    "elle ne lit qu'un mot",
+    "elle n'existe pas en C",
+    "elle est trop lente"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "gets() peut écrire au-delà du tableau : débordement de tampon."
+  },
+  {
+   "id": "c6-012",
+   "type": "saisie",
+   "notion": "6.4",
+   "origine": "cours",
+   "enonce": "Que vaut `'D' - 'A'` ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 3
+   },
+   "duree": 0.67,
+   "explication": "Les lettres se suivent : D est 3 places après A."
+  },
+  {
+   "id": "c6-013",
+   "type": "saisie",
+   "notion": "6.4",
+   "origine": "cours",
+   "enonce": "Que vaut `'7' - '0'` ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 7
+   },
+   "duree": 0.67,
+   "explication": "Les chiffres se suivent à partir de '0' (code 48)."
+  },
+  {
+   "id": "c6-014",
+   "type": "saisie",
+   "notion": "6.4",
+   "origine": "cours",
+   "enonce": "Quel caractère vaut `'c' - 'a' + 'A'` ? (une lettre)",
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     "C"
+    ]
+   },
+   "duree": 0.67,
+   "explication": "c est 2 places après a, donc 2 places après A : C."
+  },
+  {
+   "id": "c6-015",
+   "type": "saisie",
+   "notion": "6.4",
+   "origine": "cours",
+   "enonce": "Que vaut `n` ?\n```c\nchar s[] = \"ESILV\";\nint n = 0;\nwhile (s[n] != '\\0') n++;\n```",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 5
+   },
+   "duree": 0.67,
+   "explication": "La boucle compte les caractères jusqu'au '\\0' : 5."
+  },
+  {
+   "id": "c6-016",
+   "type": "saisie",
+   "notion": "6.5",
+   "origine": "cours",
+   "enonce": "Que vaut `strlen(\"Bonjour le monde\")` ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 16
+   },
+   "duree": 0.67,
+   "explication": "7 + 1 + 2 + 1 + 5 = 16 caractères (espaces compris, '\\0' exclu)."
+  },
+  {
+   "id": "c6-017",
+   "type": "qcm",
+   "notion": "6.5",
+   "origine": "cours",
+   "enonce": "Que renvoie `strcmp(\"abc\", \"abc\")` ?",
+   "choix": [
+    "0",
+    "1",
+    "-1",
+    "3"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "0 signifie « chaînes identiques »."
+  },
+  {
+   "id": "c6-018",
+   "type": "qcm",
+   "notion": "6.5",
+   "origine": "cours",
+   "enonce": "`strcmp(\"chat\", \"chien\")` est…",
+   "choix": [
+    "négatif",
+    "nul",
+    "positif",
+    "impossible à prévoir"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Premières lettres différentes : 'a' < 'i', donc \"chat\" vient avant : résultat négatif."
+  },
+  {
+   "id": "c6-019",
+   "type": "saisie",
+   "notion": "6.5",
+   "origine": "cours",
+   "enonce": "Que contient `d` ?\n```c\nchar d[30];\nstrcpy(d, \"BIC\");\nstrcat(d, \"2.exe\");\n```",
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     "BIC2.exe"
+    ]
+   },
+   "duree": 0.67,
+   "explication": "strcpy copie \"BIC\", strcat ajoute \"2.exe\" à la suite."
+  },
+  {
+   "id": "c6-020",
+   "type": "trous",
+   "notion": "6.5",
+   "origine": "cours",
+   "enonce": "if ([_](mot, \"secret\") [_] 0) {\n    printf(\"accès autorisé\\n\");\n}",
+   "fragments": [
+    "strcmp",
+    "strlen",
+    "==",
+    "!="
+   ],
+   "verif": {
+    "mode": "trous",
+    "attendu": [
+     "strcmp",
+     "=="
+    ]
+   },
+   "duree": 0.5,
+   "explication": "Deux chaînes sont égales quand strcmp renvoie 0."
+  },
+  {
+   "id": "c6-101",
+   "type": "exo",
+   "notion": "6.4",
+   "origine": "td",
+   "titre": "Minuscules et majuscules",
+   "enonce": "**Il est interdit d'utiliser les fonctions prédéfinies** (`islower`, `isupper`, `ctype.h`…). Écris un programme qui lit une ligne de texte et affiche le nombre de **lettres minuscules** puis le nombre de **lettres majuscules** (Tableaux_chainex, intermédiaire ex. 12).\n\nExemple : `Bonjour ESILV` → `6 6`.",
+   "guidage": "Lis avec `fgets`. Une minuscule vérifie `c >= 'a' && c <= 'z'` ; une majuscule `c >= 'A' && c <= 'Z'`.",
+   "duree": 6,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "Bonjour ESILV\n",
+        "sortie": "6 6"
+       },
+       {
+        "entree": "abc\n",
+        "sortie": "3 0"
+       },
+       {
+        "entree": "Le C, C'EST BIEN !\n",
+        "sortie": "1 10"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char s[100];\n    fgets(s, sizeof(s), stdin);\n    s[strcspn(s, \"\\n\")] = '\\0';\n    int min = 0, maj = 0;\n    for (int i = 0; s[i] != '\\0'; i++) {\n        if (s[i] >= 'a' && s[i] <= 'z') min++;\n        else if (s[i] >= 'A' && s[i] <= 'Z') maj++;\n    }\n    printf(\"%d %d\\n\", min, maj);\n    return 0;\n}",
+      "nombres": true,
+      "interdit": [
+       {
+        "motif": "\\b(islower|isupper|tolower|toupper)\\b|ctype",
+        "msg": "Les fonctions prédéfinies (ctype.h) sont interdites ici : compare avec 'a', 'z', 'A', 'Z'."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char s[100];\n    fgets(s, sizeof(s), stdin);\n    s[strcspn(s, \"\\n\")] = '\\0';\n    int min = 0, maj = 0;\n    for (int i = 0; s[i] != '\\0'; i++) {\n        if (s[i] >= 'a' && s[i] <= 'z') min++;\n        else if (s[i] >= 'A' && s[i] <= 'Z') maj++;\n    }\n    printf(\"%d %d\\n\", min, maj);\n    return 0;\n}\n```",
+     "indices": [
+      "Lis toute la ligne avec fgets.",
+      "Compare chaque caractère aux bornes 'a'…'z' et 'A'…'Z'."
+     ],
+     "duree": 6
+    }
+   ]
+  },
+  {
+   "id": "c6-102",
+   "type": "exo",
+   "notion": "6.4",
+   "origine": "generee",
+   "titre": "Longueur sans strlen",
+   "enonce": "Écris un programme qui lit une ligne (avec `fgets`) et affiche sa longueur, **sans utiliser `strlen`** (le `'\\n'` final ne compte pas).",
+   "guidage": "Compte les caractères jusqu'au `'\\0'` ou au `'\\n'`.",
+   "duree": 4,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "Bonjour\n",
+        "sortie": "7"
+       },
+       {
+        "entree": "Le langage C\n",
+        "sortie": "12"
+       },
+       {
+        "entree": "\n",
+        "sortie": "0"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    char s[100];\n    fgets(s, sizeof(s), stdin);\n    int n = 0;\n    while (s[n] != '\\0' && s[n] != '\\n') {\n        n++;\n    }\n    printf(\"%d\\n\", n);\n    return 0;\n}",
+      "nombres": true,
+      "interdit": [
+       {
+        "motif": "\\bstrlen\\b",
+        "msg": "strlen est interdit ici : compte toi-même jusqu'au '\\0'."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    char s[100];\n    fgets(s, sizeof(s), stdin);\n    int n = 0;\n    while (s[n] != '\\0' && s[n] != '\\n') {\n        n++;\n    }\n    printf(\"%d\\n\", n);\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 4
+    }
+   ]
+  },
+  {
+   "id": "c6-103",
+   "type": "exo",
+   "notion": "6.3",
+   "origine": "generee",
+   "titre": "Lire une ligne proprement",
+   "enonce": "Écris un programme qui lit une ligne avec `fgets`, **retire le `'\\n'` final**, puis l'affiche entre crochets.\n\nExemple : `Salut le monde` → `[Salut le monde]`.",
+   "guidage": "Sans retirer le `'\\n'`, le crochet fermant passerait à la ligne. Utilise `strcspn` (string.h).",
+   "duree": 4,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "Salut le monde\n",
+        "sortie": "[Salut le monde]"
+       },
+       {
+        "entree": "C\n",
+        "sortie": "[C]"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char s[100];\n    fgets(s, sizeof(s), stdin);\n    s[strcspn(s, \"\\n\")] = '\\0';\n    printf(\"[%s]\\n\", s);\n    return 0;\n}",
+      "exige": [
+       {
+        "motif": "fgets",
+        "msg": "Lis la ligne avec fgets."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char s[100];\n    fgets(s, sizeof(s), stdin);\n    s[strcspn(s, \"\\n\")] = '\\0';\n    printf(\"[%s]\\n\", s);\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 4
+    }
+   ]
+  },
+  {
+   "id": "c6-104",
+   "type": "exo",
+   "notion": "6.5",
+   "origine": "generee",
+   "titre": "Nom complet",
+   "enonce": "Écris un programme qui lit un prénom puis un nom (deux mots), construit dans un tableau `complet` la chaîne `Prénom Nom` avec `strcpy` et `strcat`, puis affiche `complet` et sa longueur.\n\nExemple : `Ada Lovelace` → `Ada Lovelace 12`.",
+   "guidage": "**Plan** : `strcpy(complet, prenom); strcat(complet, \" \"); strcat(complet, nom);` puis `strlen(complet)`.",
+   "duree": 5,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "Ada Lovelace",
+        "sortie": "Ada Lovelace 12"
+       },
+       {
+        "entree": "Dennis Ritchie",
+        "sortie": "Dennis Ritchie 14"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char prenom[30], nom[30], complet[70];\n    scanf(\"%29s %29s\", prenom, nom);\n    strcpy(complet, prenom);\n    strcat(complet, \" \");\n    strcat(complet, nom);\n    printf(\"%s %d\\n\", complet, (int)strlen(complet));\n    return 0;\n}",
+      "exige": [
+       {
+        "motif": "strcat",
+        "msg": "Construis la chaîne avec strcpy et strcat."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char prenom[30], nom[30], complet[70];\n    scanf(\"%29s %29s\", prenom, nom);\n    strcpy(complet, prenom);\n    strcat(complet, \" \");\n    strcat(complet, nom);\n    printf(\"%s %d\\n\", complet, (int)strlen(complet));\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 5
+    }
+   ]
+  },
+  {
+   "id": "c6-105",
+   "type": "exo",
+   "notion": "6.5",
+   "origine": "generee",
+   "titre": "Ordre alphabétique",
+   "enonce": "Écris un programme qui lit deux mots et affiche `avant` si le premier vient avant le second dans l'ordre alphabétique (au sens de `strcmp`), `apres` s'il vient après, `egal` s'ils sont identiques.",
+   "guidage": "`strcmp(a, b)` est négatif, nul ou positif.",
+   "duree": 4,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "chat chien",
+        "sortie": "avant"
+       },
+       {
+        "entree": "zebre ane",
+        "sortie": "apres"
+       },
+       {
+        "entree": "c c",
+        "sortie": "egal"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char a[50], b[50];\n    scanf(\"%49s %49s\", a, b);\n    int r = strcmp(a, b);\n    if (r < 0) printf(\"avant\\n\");\n    else if (r > 0) printf(\"apres\\n\");\n    else printf(\"egal\\n\");\n    return 0;\n}",
+      "exige": [
+       {
+        "motif": "strcmp",
+        "msg": "Compare les mots avec strcmp."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char a[50], b[50];\n    scanf(\"%49s %49s\", a, b);\n    int r = strcmp(a, b);\n    if (r < 0) printf(\"avant\\n\");\n    else if (r > 0) printf(\"apres\\n\");\n    else printf(\"egal\\n\");\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 4
+    }
+   ]
+  },
+  {
+   "id": "c6-106",
+   "type": "exo",
+   "notion": "6.4",
+   "origine": "generee",
+   "titre": "Inverser un mot",
+   "enonce": "Écris un programme qui lit un mot et l'affiche à l'envers.\n\nExemple : `Bonjour` → `ruojnoB`.",
+   "guidage": "Calcule la longueur `n`, puis affiche de `s[n - 1]` jusqu'à `s[0]`.",
+   "duree": 4,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "Bonjour",
+        "sortie": "ruojnoB"
+       },
+       {
+        "entree": "a",
+        "sortie": "a"
+       },
+       {
+        "entree": "ESILV",
+        "sortie": "VLISE"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char s[100];\n    scanf(\"%99s\", s);\n    int n = strlen(s);\n    for (int i = n - 1; i >= 0; i--) {\n        printf(\"%c\", s[i]);\n    }\n    printf(\"\\n\");\n    return 0;\n}"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char s[100];\n    scanf(\"%99s\", s);\n    int n = strlen(s);\n    for (int i = n - 1; i >= 0; i--) {\n        printf(\"%c\", s[i]);\n    }\n    printf(\"\\n\");\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 4
+    }
+   ]
+  },
+  {
+   "id": "c6-107",
+   "type": "exo",
+   "notion": "6.4",
+   "origine": "generee",
+   "titre": "Palindrome",
+   "enonce": "Écris un programme qui lit un mot et affiche `oui` s'il se lit pareil dans les deux sens (palindrome), `non` sinon.\n\nExemple : `radar` → `oui`.",
+   "guidage": "Compare `s[i]` et `s[n - 1 - i]` pour `i` allant jusqu'au milieu.",
+   "duree": 5,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "radar",
+        "sortie": "oui"
+       },
+       {
+        "entree": "bonjour",
+        "sortie": "non"
+       },
+       {
+        "entree": "ete",
+        "sortie": "oui"
+       },
+       {
+        "entree": "ab",
+        "sortie": "non"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char s[100];\n    scanf(\"%99s\", s);\n    int n = strlen(s), ok = 1;\n    for (int i = 0; i < n / 2; i++) {\n        if (s[i] != s[n - 1 - i]) {\n            ok = 0;\n            break;\n        }\n    }\n    if (ok) printf(\"oui\\n\");\n    else printf(\"non\\n\");\n    return 0;\n}"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char s[100];\n    scanf(\"%99s\", s);\n    int n = strlen(s), ok = 1;\n    for (int i = 0; i < n / 2; i++) {\n        if (s[i] != s[n - 1 - i]) {\n            ok = 0;\n            break;\n        }\n    }\n    if (ok) printf(\"oui\\n\");\n    else printf(\"non\\n\");\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 5
+    }
+   ]
+  },
+  {
+   "id": "c6-108",
+   "type": "exo",
+   "notion": "6.4",
+   "origine": "generee",
+   "titre": "Compter les voyelles",
+   "enonce": "Écris un programme qui lit une ligne et affiche le nombre de **voyelles minuscules** (`a e i o u y`).",
+   "guidage": "Pour chaque caractère, teste s'il est l'une des six voyelles (un `switch` ou des `||`).",
+   "duree": 4,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "bonjour le monde\n",
+        "sortie": "6"
+       },
+       {
+        "entree": "rythme\n",
+        "sortie": "2"
+       },
+       {
+        "entree": "xyz\n",
+        "sortie": "1"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char s[100];\n    fgets(s, sizeof(s), stdin);\n    s[strcspn(s, \"\\n\")] = '\\0';\n    int nb = 0;\n    for (int i = 0; s[i] != '\\0'; i++) {\n        char c = s[i];\n        if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u' || c == 'y') nb++;\n    }\n    printf(\"%d\\n\", nb);\n    return 0;\n}",
+      "nombres": true
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char s[100];\n    fgets(s, sizeof(s), stdin);\n    s[strcspn(s, \"\\n\")] = '\\0';\n    int nb = 0;\n    for (int i = 0; s[i] != '\\0'; i++) {\n        char c = s[i];\n        if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u' || c == 'y') nb++;\n    }\n    printf(\"%d\\n\", nb);\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 4
+    }
+   ]
+  },
+  {
+   "id": "c6-109",
+   "type": "exo",
+   "notion": "6.4",
+   "origine": "generee",
+   "titre": "Tout en majuscules",
+   "enonce": "Sans `toupper` : écris un programme qui lit une ligne et l'affiche **en majuscules** (seules les lettres minuscules changent).\n\nExemple : `Bonjour, C !` → `BONJOUR, C !`.",
+   "guidage": "Une minuscule `c` devient `c - 'a' + 'A'`.",
+   "duree": 5,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "Bonjour, C !\n",
+        "sortie": "BONJOUR, C !"
+       },
+       {
+        "entree": "esilv 2026\n",
+        "sortie": "ESILV 2026"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char s[100];\n    fgets(s, sizeof(s), stdin);\n    s[strcspn(s, \"\\n\")] = '\\0';\n    for (int i = 0; s[i] != '\\0'; i++) {\n        if (s[i] >= 'a' && s[i] <= 'z') {\n            s[i] = s[i] - 'a' + 'A';\n        }\n    }\n    printf(\"%s\\n\", s);\n    return 0;\n}",
+      "interdit": [
+       {
+        "motif": "\\btoupper\\b",
+        "msg": "toupper est interdit ici : utilise c - 'a' + 'A'."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char s[100];\n    fgets(s, sizeof(s), stdin);\n    s[strcspn(s, \"\\n\")] = '\\0';\n    for (int i = 0; s[i] != '\\0'; i++) {\n        if (s[i] >= 'a' && s[i] <= 'z') {\n            s[i] = s[i] - 'a' + 'A';\n        }\n    }\n    printf(\"%s\\n\", s);\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 5
+    }
+   ]
+  },
+  {
+   "id": "c6-110",
+   "type": "exo",
+   "notion": "6.5",
+   "origine": "generee",
+   "titre": "Le mot de passe jamais accepté",
+   "enonce": "Ce programme lit un mot et doit afficher `ok` si c'est `secret`, `refuse` sinon. Il refuse toujours, même avec `secret`.",
+   "guidage": "Comment compare-t-on deux chaînes en C ?",
+   "duree": 3,
+   "etapes": [
+    {
+     "consigne": "Corrige le programme ci-dessous pour qu'il fasse ce que dit l'énoncé, puis valide.",
+     "question": "Corrige le programme.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "secret",
+        "sortie": "ok"
+       },
+       {
+        "entree": "Secret",
+        "sortie": "refuse"
+       },
+       {
+        "entree": "1234",
+        "sortie": "refuse"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char mot[50];\n    scanf(\"%49s\", mot);\n    if (strcmp(mot, \"secret\") == 0) {\n        printf(\"ok\\n\");\n    } else {\n        printf(\"refuse\\n\");\n    }\n    return 0;\n}",
+      "interdit": [
+       {
+        "motif": "mot\\s*==",
+        "msg": "== compare des adresses : utilise strcmp."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char mot[50];\n    scanf(\"%49s\", mot);\n    if (strcmp(mot, \"secret\") == 0) {\n        printf(\"ok\\n\");\n    } else {\n        printf(\"refuse\\n\");\n    }\n    return 0;\n}\n```",
+     "indices": [
+      "`==` compare l'adresse de `mot` et celle de la constante \"secret\".",
+      "`strcmp(mot, \"secret\") == 0`."
+     ],
+     "duree": 3,
+     "depart": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char mot[50];\n    scanf(\"%49s\", mot);\n    if (mot == \"secret\") {\n        printf(\"ok\\n\");\n    } else {\n        printf(\"refuse\\n\");\n    }\n    return 0;\n}"
+    }
+   ]
+  },
+  {
+   "id": "c6-111",
+   "type": "exo",
+   "notion": "6.4",
+   "origine": "generee",
+   "titre": "Compter un caractère",
+   "enonce": "Écris un programme qui lit un caractère `c`, puis une ligne de texte (ligne suivante), et affiche le nombre d'occurrences de `c` dans la ligne.\n\nExemple : `o` puis `bonjour tout le monde` → `4`.",
+   "guidage": "Lis `c` avec `scanf(\" %c\", &c);`, puis le reste de la ligne : un `getchar()` pour consommer le `'\\n'`, puis `fgets`.",
+   "duree": 5,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "o\nbonjour tout le monde\n",
+        "sortie": "4"
+       },
+       {
+        "entree": "z\nabc\n",
+        "sortie": "0"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    char c, s[200];\n    scanf(\" %c\", &c);\n    getchar();\n    fgets(s, sizeof(s), stdin);\n    int nb = 0;\n    for (int i = 0; s[i] != '\\0'; i++) {\n        if (s[i] == c) nb++;\n    }\n    printf(\"%d\\n\", nb);\n    return 0;\n}",
+      "nombres": true
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    char c, s[200];\n    scanf(\" %c\", &c);\n    getchar();\n    fgets(s, sizeof(s), stdin);\n    int nb = 0;\n    for (int i = 0; s[i] != '\\0'; i++) {\n        if (s[i] == c) nb++;\n    }\n    printf(\"%d\\n\", nb);\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 5
+    }
+   ]
+  }
+ ]
+}
