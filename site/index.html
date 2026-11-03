@@ -355,7 +355,7 @@ function rendreModules(r, E){
     chargerPolice(t.googleFont);
     const total = m.items || 0, pct = total ? Math.min(100, Math.round((st.reussies + st.exos)/total*100)) : 0;
     const c = document.createElement("button"); c.type = "button"; c.className = "carte"; c.dataset.exe = m.id + ".exe";
-    c.style.cssText = `--i:${i};${t.bg ? "--m-bg:"+t.bg+";" : ""}${t.fg ? "--m-fg:"+t.fg+";" : ""}${t.ac ? "--m-ac:"+t.ac+";" : ""}${t.font ? "--m-font:"+t.font+";" : ""}`;
+    c.style.cssText = `--i:${i};${t.bg ? "--m-bg:"+t.bg+";" : ""}${t.fg ? "--m-fg:"+t.fg+";" : ""}${t.ac ? "--m-ac:"+t.ac+";" : ""}${t.onAc ? "--m-on-ac:"+t.onAc+";" : ""}${t.font ? "--m-font:"+t.font+";" : ""}`;
     const nbCh = (m.chapitres || []).length;
     c.innerHTML = `<span class="ic" aria-hidden="true">${esc(m.icone || "▣")}</span>
       <span class="nom">${esc(m.nom)}</span>

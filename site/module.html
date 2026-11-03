@@ -110,6 +110,7 @@ function appliquerTheme(t = {}){
   if(t.bg) r.setProperty("--m-bg", t.bg);
   if(t.fg) r.setProperty("--m-fg", t.fg);
   if(t.ac) r.setProperty("--m-ac", t.ac);
+  if(t.onAc) r.setProperty("--m-on-ac", t.onAc);
   if(t.font) r.setProperty("--m-font", t.font);
   if(t.googleFont){
     const l = document.createElement("link"); l.rel = "stylesheet";
