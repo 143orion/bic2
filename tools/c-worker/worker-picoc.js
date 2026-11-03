@@ -111,7 +111,11 @@ onmessage = async e => {
     if(m2){
       let k = lignes.length - 1;
       if(k > 0 && /^\s*\^\s*$/.test(lignes[k - 1])) k -= 2;
-      envoyer({ok:false, out:lignes.slice(0, Math.max(k, 0)).join("\n"), err:`${m2[1]}:${m2[2]} ${m2[3]}`, ligne:+m2[1]});
+      let msg = m2[3];
+      /* tableau à taille variable (int t[n];) : PicoC ne le gère pas et dit « n is undefined » */
+      const v = msg.match(/VariableGet Ident: '(\w+)' is undefined/);
+      if(v && new RegExp(`\\b(?:int|char|double|float|long|short|unsigned)\\s+\\w+\\s*\\[\\s*${v[1]}\\b[^\\]]*\\]`).test(code)) msg = "variable length array";
+      envoyer({ok:false, out:lignes.slice(0, Math.max(k, 0)).join("\n"), err:`${m2[1]}:${m2[2]} ${msg}`, ligne:+m2[1]});
       return;
     }
     if(/(^|\n)main\(\) is not defined\n?$/.test(out)){ envoyer({ok:false, out:out.replace(/main\(\) is not defined\n?$/, ""), err:"method main is not defined"}); return; }

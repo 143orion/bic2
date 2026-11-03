@@ -486,6 +486,7 @@ function messageC(err){
   if(/non-pointer argument to scanf/.test(msg)) return `scanf a besoin de l'adresse de la variable${ou} : il manque le &.`;
   if(/NULL pointer dereference/.test(msg)) return `Accès à un pointeur NULL${ou} : le pointeur ne pointe sur rien.`;
   if(/no value returned/.test(msg)) return `Il manque un return${ou} : la fonction doit renvoyer une valeur.`;
+  if(/variable length array/.test(msg)) return `Tableau de taille variable${ou} : l'éditeur du site ne gère pas int t[n] avec n lu au clavier. Utilise une taille fixe (int t[100];) ou malloc (chapitre 9).`;
   if(/invalid operation/.test(msg)) return `Opération impossible${ou} : vérifie les types des deux côtés (on ne peut pas additionner deux pointeurs, ni comparer une structure entière).`;
   if(/memory access out of bounds|accès mémoire invalide/.test(msg)) return `Accès mémoire hors limites${ou} : indice de tableau ou pointeur qui sort de la zone réservée.`;
   if(/pile d'appels saturée|out of memory/i.test(msg)) return `Mémoire de pile saturée${ou} : récursion sans cas d'arrêt ?`;
