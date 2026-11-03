@@ -1073,7 +1073,17 @@ function ouvrirSession(libelle, rendu){
     rendu($("s-zone"));
   });
 }
-const libSel = () => [...S2.fl.pick].sort().join(" · ");
+/* libellé court de la sélection : « tout le module », « Ch. 3 » si un chapitre est coché en entier, sinon les ids (4 max, puis +N) */
+function libSel(){
+  const p = S2.fl.pick, parts = [];
+  if(S.notions.length && S.notions.every(n => p.has(n.id))) return "tout le module";
+  for(const c of S.chapitres){
+    const pris = c.notions.filter(n => p.has(n.id));
+    if(!pris.length) continue;
+    if(pris.length === c.notions.length) parts.push(`Ch. ${c.ordre ?? 0}`); else parts.push(...pris.map(n => n.id));
+  }
+  return parts.length > 4 ? parts.slice(0, 4).join(" · ") + ` +${parts.length - 4}` : parts.join(" · ");
+}
 const MODES = {express:"Express", classique:"Classique", mock:"Mock"};
 
 async function sessionExpress(){
