@@ -47,8 +47,8 @@
 /* =====================================================================
    BIC2.exe — module.html : LECTEUR UNIVERSEL (module.html#<module>)
    Lit modules/liste.json + banques/<module>/<chapitre>.json (+ modules/<module>.js si ext).
-   Layout baseline : accueil → chapitre → cours (follow-along · classique · TL;DR)
-   / exos (compréhension · guidé · mock) + examen blanc. Maths en LaTeX (KaTeX).
+   Layout baseline : 2 onglets Cours (explicatif · follow-along · TL;DR) / Exos
+   (menu des notions → mode express · classique · mock → écran de session → écran de fin). Maths en LaTeX (KaTeX).
    Ne calcule jamais l'XP : tout passe par moteur.reponse() (xp.js).
    Styles : section « LECTEUR » de theme.css (D.A. du module = --m-*).
    ===================================================================== */
@@ -59,9 +59,9 @@ const L = $("lecteur");
 const reduit = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const petitEcran = () => matchMedia("(max-width:760px)").matches;
 const V = () => M.valeursPour(M.interne.config, "9999-12-31");
-const S = {mod:null, chapitres:[], items:{}, chapDe:{}, vue:null, nettoyer:null, touches:null};
-const TYPES_Q = ["qcm","qcm-multi","saisie"];
-const LIB = {qcm:"QCM", "qcm-multi":"QCM multi", saisie:"Réponse tapée", exo:"Exo", examen:"Examen blanc"};
+const S = {mod:null, chapitres:[], items:{}, chapDe:{}, notions:[], notionParId:{}, vue:null, nettoyer:null, touches:null};
+const TYPES_Q = ["qcm","qcm-multi","saisie","trous"];
+const LIB = {qcm:"QCM", "qcm-multi":"QCM multi", saisie:"Réponse tapée", trous:"Code à trous", exo:"Exo", examen:"Examen blanc"};
 const ORIG = {cours:"cours", td:"TD", annale:"annale", generee:"générée"};
 
 /* ---------- petits outils ---------- */
@@ -425,7 +425,7 @@ async function verifDOM(v, rep, champ){
 function teteItem(it, opts = {}, extra = ""){
   return `<div class="q-tete">
     <span class="q-type">${LIB[it.type] || it.type}</span>
-    ${it.notion ? `<span class="q-notion">${esc(it.notion)}</span>` : ""}
+    ${it._n ? `<span class="q-notion" title="${esc(titreNotion(it._n))}">${esc(it._n)}</span>` : ""}
     ${it.origine && it.origine !== "generee" ? `<span class="q-orig">${esc(ORIG[it.origine] || it.origine)}</span>` : ""}
     ${extra}
     <span class="q-pos">${opts.pos || ""}</span>
@@ -531,7 +531,7 @@ $("f-signal").addEventListener("submit", async e => {
 function jouerQuestion(it, zone, opts = {}){
   return new Promise(resolve => {
     const v = it.verif || {mode:"auto"};
-    const t0 = Date.now(); let fini = false, nIndices = () => 0;
+    const t0 = Date.now(); let fini = false, nIndices = () => 0, donnee = "";
     zone.innerHTML = `<article class="q" data-type="${esc(it.type)}">
       ${teteItem(it, opts)}
       <div class="q-enonce">${md(it.enonce)}</div>
@@ -544,6 +544,7 @@ function jouerQuestion(it, zone, opts = {}){
 
     function terminer(ok, extra = {}){
       if(fini) return; fini = true; S.touches = null;
+      if(opts.log) opts.log.push({it, etape:null, donnee, ok});
       const d = M.reponse(it.id, ok, (Date.now() - t0)/1000, {indices:nIndices(), bulle:!opts.examen});
       art.classList.add(ok ? "juste" : "rate");
       if(opts.examen){ resolve({ok, d}); return; }
@@ -577,6 +578,7 @@ function jouerQuestion(it, zone, opts = {}){
         const corriger = () => {
           const pris = new Set(btns.filter(b => b.getAttribute("aria-pressed") === "true").map(b => +b.dataset.i));
           const ok = pris.size === bonnes.size && [...pris].every(i => bonnes.has(i));
+          donnee = [...pris].map(i => choix[i]).join(" · ");
           btns.forEach(b => { const i = +b.dataset.i; b.disabled = true; if(bonnes.has(i)) b.classList.add("bonne"); else if(pris.has(i)) b.classList.add("fausse"); });
           terminer(ok);
         };
@@ -598,13 +600,53 @@ function jouerQuestion(it, zone, opts = {}){
       return;
     }
 
+    if(it.type === "trous"){
+      const att = [].concat((it.verif && it.verif.attendu) ?? []), nb = (String(it.enonce).match(/\[_\]/g) || []).length, vals = Array(nb).fill(null);
+      let sel = null;
+      const rendreT = fb => {
+        let k = 0;
+        art.querySelector(".q-enonce").innerHTML = md(it.enonce).replace(/\[_\]/g, () => { const i = k++, v = vals[i]; return `<span class="trou${fb ? (norm(v) === norm(att[i]) ? " ok" : " ko") : ""}" data-t="${i}">${v ? mdInline(v) : "&nbsp;&nbsp;&nbsp;&nbsp;"}</span>`; });
+        corps.innerHTML = `<div class="banque">${(it.fragments || []).map((f2, j) => `<button type="button" class="frag${sel === f2 ? " sel" : ""}" ${fb ? "disabled" : ""} data-f="${j}">${mdInline(f2)}</button>`).join("")}</div>${fb ? "" : `<small class="aide">Glisse un fragment dans un trou (ou touche le fragment, puis le trou).</small>`}`;
+        if(fb) return;
+        act.innerHTML = `<button type="button" class="btn plein" data-a="valider" ${vals.every(Boolean) ? "" : "disabled"}>Valider ⏎</button>${lienSignaler(it.id)}`;
+        act.querySelector("[data-a=valider]").onclick = valider;
+        corps.querySelectorAll("[data-f]").forEach(b => {
+          const texte = (it.fragments || [])[+b.dataset.f];
+          b.addEventListener("pointerdown", e => {
+            if(fini) return; e.preventDefault();
+            const x0 = e.clientX, y0 = e.clientY; let fantome = null;
+            const move = ev => {
+              if(!fantome && Math.hypot(ev.clientX - x0, ev.clientY - y0) > 6){ fantome = b.cloneNode(true); fantome.classList.add("frag-fantome"); document.body.appendChild(fantome); }
+              if(fantome){ fantome.style.left = ev.clientX + "px"; fantome.style.top = ev.clientY + "px"; }
+            };
+            const up = ev => {
+              removeEventListener("pointermove", move); removeEventListener("pointerup", up);
+              if(fantome){ fantome.remove(); const t = document.elementFromPoint(ev.clientX, ev.clientY), tr = t && t.closest(".trou"); if(tr){ vals[+tr.dataset.t] = texte; sel = null; rendreT(false); } }
+              else { sel = sel === texte ? null : texte; rendreT(false); }
+            };
+            addEventListener("pointermove", move); addEventListener("pointerup", up);
+          });
+        });
+        art.querySelectorAll(".trou").forEach(tr => tr.addEventListener("click", () => { if(fini) return; const i = +tr.dataset.t; if(sel){ vals[i] = sel; sel = null; } else vals[i] = null; rendreT(false); }));
+      };
+      const valider = () => {
+        if(fini || !vals.every(Boolean)) return;
+        donnee = vals.join(" · ");
+        const ok = vals.every((v, i) => norm(v) === norm(att[i]));
+        rendreT(true); terminer(ok);
+      };
+      S.touches = e => { if(e.key === "Enter"){ e.preventDefault(); valider(); } };
+      rendreT(false);
+      return;
+    }
+
     /* saisie */
     const ctx = {module:S.mod.id, chapitre:S.chapDe[it.id]};
     const champ = creerChamp(corps, v, Object.assign({}, it, {ctx}));
     nIndices = brancherIndices(art.querySelector(".q-indices"), it.indices);
     const valider = async () => {
       if(fini) return;
-      const rep = champ.lire();
+      const rep = champ.lire(); donnee = rep;
       if(v.mode !== "auto" && !rep.trim()){ champ.el.classList.add("secoue"); setTimeout(() => champ.el.classList.remove("secoue"), 400); return; }
       if(v.mode === "auto" || !v.mode){ autoEval(); return; }
       act.querySelectorAll("button").forEach(b => b.disabled = true);
@@ -613,7 +655,7 @@ function jouerQuestion(it, zone, opts = {}){
       terminer(!!r.ok, r);
     };
     const autoEval = () => {
-      champ.el.readOnly = true; S.touches = null;
+      champ.el.readOnly = true; S.touches = null; donnee = "(auto-évalué)";
       ret.hidden = false; ret.className = "q-retour auto";
       ret.innerHTML = `<div class="corrige"><small>Correction</small>${corrigeDe(it, v) || md(it.explication || "")}</div><p>Honnêtement, tu avais juste ?</p>`;
       act.innerHTML = `<button type="button" class="btn plein" data-a="oui">J'avais juste</button><button type="button" class="btn" data-a="non">J'avais faux</button>`;
@@ -659,10 +701,11 @@ function jouerExo(it, zone, opts = {}){
       if(k >= n) return finir();
       const e = etapes[k], v = e.verif || {mode:"auto"}, t0 = Date.now();
       majSchema(e);
+      const rat = opts.aRattraper && opts.aRattraper.includes(k);
       let koLogue = false, close = false;
       const li = document.createElement("li"); li.className = "etape courante";
       const dEt = e.duree != null ? +e.duree * (dTot / ((+it.duree) || dTot || 1)) : dTot / n;
-      li.innerHTML = `<div class="etape-tete"><span class="num">Étape ${k+1}/${n}</span><small>≈ ${minutes(dEt)}</small></div>
+      li.innerHTML = `<div class="etape-tete"><span class="num">Étape ${k+1}/${n}</span><small>≈ ${minutes(dEt)}</small>${rat ? `<span class="pastille todo">À rattraper · ×${fmt(V().rattrapage)}</span>` : ""}</div>
         ${e.consigne ? `<div class="q-enonce">${md(e.consigne)}</div>` : ""}
         <div class="q-corps"></div><div class="q-indices"></div><div class="etape-msg" role="status"></div><div class="actions"></div>`;
       ol.appendChild(li);
@@ -673,6 +716,7 @@ function jouerExo(it, zone, opts = {}){
       const rep = ok => M.reponse(it.id, ok, secs(), {etape:k, indices:ok ? nIndices() : 0, run, mode:opts.mode || "guide"});
       const fermer = (ok, contenu = "") => {
         if(close) return; close = true;
+        if(opts.log) opts.log.push({it, etape:k, donnee:champ.lire(), ok});
         li.className = "etape " + (ok ? "faite" : "ratee"); champ.el.readOnly = true;
         li.querySelectorAll("[data-a=indice], [data-a=executer]").forEach(b => b.disabled = true);
         act.innerHTML = "";
@@ -734,300 +778,497 @@ function jouerExo(it, zone, opts = {}){
 const jouer = (it, zone, opts) => it.type === "exo" ? jouerExo(it, zone, opts) : jouerQuestion(it, zone, opts);
 
 /* =====================================================================
+   NOTIONS : parcours continu (format baseline `notions[]`)
+   + compatibilité des anciens chapitres (fiche / parcours) pendant la migration
+   ===================================================================== */
+const normT = s => norm(String(s ?? "").replace(/\$/g, ""));
+function normaliser(c){
+  const ord = c.ordre ?? 0;
+  if(!Array.isArray(c.notions)){
+    const F = c.fiche || [], P = c.parcours || [], ns = [];
+    F.forEach((f, k) => ns.push({id:`${ord}.${k+1}`, titre:f.titre, corps:f.contenu, schema:f.schema, labo:f.labo, pre:[], ecrans:[], check:null}));
+    P.forEach((p, k) => {
+      const t = normT(p.notion);
+      let n = ns.find(x => !x.check && x.titre && (normT(x.titre).includes(t) || t.includes(normT(x.titre))));
+      if(!n){ n = {id:`${ord}.${ns.length+1}`, titre:p.notion, corps:"", pre:[], ecrans:[]}; ns.push(n); }
+      n.schemaFa = p.schema; n.ecrans = p.ecrans || [];
+      n.check = p.controle ? Object.assign({}, p.controle, {id:p.controle.id || `${c.id}-ctl-${k}`}) : null;
+    });
+    c.notions = ns;
+  }
+  c.notions.forEach((n, k) => { n.ch = c.id; n.k = k; n.pre = n.pre || []; n.ecrans = n.ecrans || []; if(!n.schemaFa) n.schemaFa = n.schema; });
+}
+function indexerNotions(){
+  S.notions = S.chapitres.flatMap(c => c.notions);
+  S.notionParId = Object.fromEntries(S.notions.map(n => [n.id, n]));
+  for(const c of S.chapitres) for(const it of c.items || []){
+    let n = S.notionParId[it.notion];
+    if(!n || n.ch !== c.id){
+      const t = normT(it.notion);
+      n = t ? (c.notions.find(x => normT(x.titre) === t) || c.notions.find(x => { const u = normT(x.titre); return u && (u.includes(t) || t.includes(u)); })) : null;
+      n = n || c.notions[0];
+    }
+    it._n = n ? n.id : null;
+  }
+}
+const ckId = n => n.check ? (n.check.id || `${n.ch}-ctl-${n.k}`) : null;
+const controles = () => new Set((M.etat() || {}).controles || []);
+const lue = (n, ctl = controles()) => !!n.check && ctl.has(ckId(n));
+const titreNotion = id => { const n = S.notionParId[id]; return n ? `${id} ${n.titre}` : id; };
+
+/* erreurs : questions dont la dernière réponse est fausse + étapes d'exo dont la dernière réponse est fausse */
+function erreursExos(){
+  const res = M.etat(), det = (res && res.details) || {}, last = {}, out = {};
+  const evs = M.evenements().filter(e => det[e.i] && S.items[e.q] && S.items[e.q].type === "exo").sort((a, b) => a.t - b.t);
+  for(const e of evs) (last[e.q] = last[e.q] || {})[e.e || 0] = det[e.i].ok;
+  for(const [q, m] of Object.entries(last)){ const bad = Object.entries(m).filter(([, ok]) => !ok).map(([k]) => +k); if(bad.length) out[q] = bad; }
+  return out;
+}
+const itemsNotions = (ids, pred = () => true) => S.chapitres.flatMap(c => (c.items || []).filter(it => it.type !== "examen" && ids.has(it._n) && pred(it)));
+const tousIds = () => new Set(S.notions.map(n => n.id));
+function statNotion(n, st, ee){
+  const its = itemsNotions(new Set([n.id]));
+  const faits = its.filter(it => it.type === "exo" ? (st[it.id] && st[it.id].valide) : (st[it.id] && st[it.id].ok)).length;
+  const err = its.filter(it => it.type === "exo" ? ee[it.id] : (st[it.id] && st[it.id].erreur)).length;
+  return {tot:its.length, faits, err};
+}
+function nbErreurs(){ const st = etats(), ee = erreursExos(); return S.notions.reduce((a, n) => a + statNotion(n, st, ee).err, 0); }
+function progression(){
+  const ctl = controles(), avecCheck = S.notions.filter(n => n.check), lues = avecCheck.filter(n => lue(n, ctl));
+  return {lues:lues.length, total:avecCheck.length, pct:avecCheck.length ? Math.round(lues.length/avecCheck.length*100) : 0, suivante:avecCheck.find(n => !lue(n, ctl)) || S.notions[0]};
+}
+
+/* références « cf. 2.1 » / « cf. ch. 3 » : {{2.1}} et {{ch3}} dans le texte riche */
+function cf(id){ const n = S.notionParId[id]; return `<button type="button" class="cf" data-m="cf" data-id="${esc(id)}" title="${esc(n ? n.id + " " + String(n.titre).replace(/\$/g, "") : id)}">cf. ${esc(id)}</button>`; }
+function xref(html){
+  return html.replace(/\{\{(ch)?(\d+(?:\.\d+)?)\}\}/g, (m, c, id) => {
+    if(c){ const ch = S.chapitres.find(x => String(x.ordre ?? 0) === id), n = ch && ch.notions[0]; return n ? `<button type="button" class="cf" data-m="cf" data-id="${esc(n.id)}" title="Chapitre ${esc(id)}">cf. ch. ${esc(id)}</button>` : m; }
+    return S.notionParId[id] ? cf(id) : m;
+  });
+}
+const riche = s => xref(md(s));
+
+/* =====================================================================
    VUES
    ===================================================================== */
 function vue(nom, rendu){
   if(S.nettoyer){ try{ S.nettoyer(); }catch(e){} S.nettoyer = null; }
   if(S.chrono){ clearInterval(S.chrono); S.chrono = 0; }
+  document.body.classList.remove("en-session", "voile-on");
   S.touches = null; S.vue = nom; L.innerHTML = "";
   rendu(); scrollTo(0, 0);
 }
-const fil = (txt, retour = vueAccueil) => {
-  const nav = document.createElement("nav"); nav.className = "l-fil";
-  nav.innerHTML = `<button type="button" class="retour">← ${esc(S.mod.nom)}</button><span>${txt}</span>`;
-  nav.querySelector(".retour").onclick = () => retour();
-  return nav;
-};
+const estCourt = it => it.type === "qcm" || it.type === "qcm-multi" || it.type === "trous" || (it.type === "saisie" && (it.duree == null || +it.duree <= 1));
+const S2 = {tab:"cours", sub:"expl", cur:0, eng:null, chkV:{}, ord:{}, fa:null, fs:0,
+  fl:{etape:1, pick:new Set(), mode:"express", guide:false, annale:null}, sess:null};
 
-/* ---------- accueil du module ---------- */
-const estCourt = it => it.type === "qcm" || it.type === "qcm-multi" || (it.type === "saisie" && (it.duree == null || +it.duree <= 1));
-function vueAccueil(){ vue("accueil", rendreAccueil); }
-function rendreAccueil(){
-  const res = M.etat(), st = etats(), ms = (res && res.modules[S.mod.id]) || {xp:0};
-  const tousQ = S.chapitres.flatMap(c => (c.items || []).filter(it => TYPES_Q.includes(it.type)));
-  const tousE = S.chapitres.flatMap(c => (c.items || []).filter(it => it.type === "exo"));
-  const examens = S.chapitres.flatMap(c => (c.items || []).filter(it => it.type === "examen"));
-  const nb = (l, f) => l.filter(it => st[it.id] && f(st[it.id])).length;
-  const evs = evalsDuModule();
+function vueModule(){ vue("module", rendreModule); }
+function rendreModule(){
+  const pr = progression(), ne = nbErreurs();
+  const sous = [["expl", "Explicatif"], ["follow", "Follow-along"], ["tldr", "TL;DR"]];
   L.innerHTML = `
     <nav class="l-fil"><a class="retour" href="index.html#modules">← hub</a><span>${esc(S.mod.id)}.exe</span></nav>
     <header class="l-entete"><span class="l-ic" aria-hidden="true">${esc(S.mod.icone || "")}</span><h1 class="l-titre">${esc(S.mod.nom)}</h1></header>
-    <section class="fenetre l-stats" data-titre="${esc(S.mod.id)}.exe — progression">
-      <div class="stat"><span class="k">XP module</span><span class="v">${nf(ms.xp || 0)}</span></div>
-      <div class="stat"><span class="k">Questions réussies</span><span class="v">${nb(tousQ, s => s.ok)}<small>/${tousQ.length}</small></span></div>
-      <div class="stat"><span class="k">Maîtrisées</span><span class="v">${nb(tousQ, s => s.maitrise)}</span></div>
-      <div class="stat"><span class="k">Exos validés</span><span class="v">${nb(tousE, s => s.valide)}<small>/${tousE.length}</small></span></div>
-    </section>
-    ${evs.length ? `<section class="fenetre l-evals" data-titre="evals.txt"><ul>${evs.map(e => `<li class="${e.j <= 3 ? "chaud" : ""}"><span class="j">${e.j === 0 ? "auj." : "J-" + e.j}</span><span>${esc(e.nom)}${e.chapitres && e.chapitres.length ? ` <small>· ${e.chapitres.map(c => esc((S.chapitres.find(x => x.id === c) || {}).titre || c)).join(", ")}</small>` : ""}</span>${e.modeEval ? `<span class="mode" title="Les questions maîtrisées des chapitres concernés repassent à ×1 (une fois par jour)">mode éval</span>` : ""}</li>`).join("")}</ul></section>` : ""}
-    <div class="l-actions">
-      ${tousQ.length ? `<button type="button" class="btn plein" data-a="tout">${ic("target")} Compréhension : tout le module</button>` : ""}
-      ${examens.map(x => `<button type="button" class="btn" data-a="examen" data-id="${esc(x.id)}">${ic("timer")} ${esc(x.titre || "Examen blanc")}</button>`).join("")}
+    <div class="m-barre">
+      <div class="m-onglets" role="tablist">
+        <div class="m-ong${S2.tab === "cours" ? " on" : ""}"><button type="button" role="tab" aria-selected="${S2.tab === "cours"}" data-m="tab" data-v="cours">${ic("book")} Cours</button>
+          ${S2.tab === "cours" ? `<span class="m-sous">${sous.map(([k, t]) => `<button type="button" aria-selected="${S2.sub === k}" data-m="sub" data-v="${k}">${t}</button>`).join("")}</span>` : ""}</div>
+        <div class="m-ong${S2.tab === "exos" ? " on" : ""}"><button type="button" role="tab" aria-selected="${S2.tab === "exos"}" data-m="tab" data-v="exos">${ic("wrench")} Exos${ne ? `<span class="m-badge" title="${ne} à rattraper">${ne}</span>` : ""}</button></div>
+      </div>
+      <div class="m-droite"><span class="m-anneau" style="--p:${pr.pct}" title="${pr.lues}/${pr.total} notions validées"><b>${pr.pct}</b></span>
+        ${S2.tab === "cours" && pr.suivante ? `<button type="button" class="btn plein" data-m="reprendre">Reprendre · ${esc(pr.suivante.id)}</button>` : ""}</div>
     </div>
-    <h2 class="l-h2">Chapitres</h2>
-    <div class="chapitres">${S.chapitres.length ? S.chapitres.map((c, k) => {
-      const q = (c.items || []).filter(it => TYPES_Q.includes(it.type)), ex = (c.items || []).filter(it => it.type === "exo");
-      const ok = nb(q, s => s.ok), ma = nb(q, s => s.maitrise), exOk = nb(ex, s => s.valide), aRevoir = nb(q, s => s.erreur);
-      const total = q.length + ex.length, pct = total ? (ok + exOk)/total*100 : 0;
-      return `<button type="button" class="fenetre chap chap-btn" data-ch="${esc(c.id)}" data-titre="ch${c.ordre ?? k} — ${esc(c.id)}" style="--i:${k}">
-        <small class="chap-num">Chapitre ${esc(String(c.ordre ?? k))}</small>
-        <h3>${esc(c.titre || c.id)}</h3>
-        ${c.sources && c.sources.length ? `<small class="info">${c.sources.map(esc).join(" · ")}</small>` : ""}
-        <div class="prog" title="${Math.round(pct)} %"><i style="width:${pct}%"></i></div>
-        <p class="info">${ok}/${q.length} questions · ${ma} maîtrisée${ma > 1 ? "s" : ""}${ex.length ? ` · ${exOk}/${ex.length} exos` : ""}${aRevoir ? ` · <span class="a-revoir">${aRevoir} à revoir</span>` : ""}</p>
-      </button>`; }).join("") : `<p class="vide-txt">Aucun chapitre dans ce module pour l'instant.</p>`}</div>`;
-  L.querySelectorAll("[data-ch]").forEach(b => b.onclick = () => vueChapitre(b.dataset.ch));
-  L.querySelectorAll("[data-a]").forEach(b => b.onclick = () => {
-    if(b.dataset.a === "tout") vueEntrainement(S.chapitres.map(c => c.id), "Tout le module");
-    else if(b.dataset.a === "examen") vueExamen(b.dataset.id);
-  });
+    <div id="m-corps"></div>`;
+  const box = $("m-corps");
+  if(S2.tab === "cours"){ if(S2.sub === "expl") rendreExplicatif(box); else if(S2.sub === "follow") rendreFollow(box); else rendreTldr(box); }
+  else rendreExos(box);
+  spy();
 }
-const titreCh = id => (S.chapitres.find(c => c.id === id) || {}).titre || id;
-const chap = id => S.chapitres.find(c => c.id === id) || {};
-const filCh = (ch, txt) => fil(`<span class="lien-ch">${esc(titreCh(ch))}</span> · ${txt}`, () => vueChapitre(ch));
+function majEntete(){
+  if(S.vue !== "module") return;
+  const pr = progression(), ne = nbErreurs(), an = L.querySelector(".m-anneau");
+  if(an){ an.style.setProperty("--p", pr.pct); an.querySelector("b").textContent = pr.pct; an.title = `${pr.lues}/${pr.total} notions validées`; }
+  const bd = L.querySelector(".m-badge"); if(bd) bd.textContent = ne;
+  const ctl = controles();
+  L.querySelectorAll(".som-n").forEach(b => { const n = S.notionParId[b.dataset.id]; b.classList.toggle("lue", lue(n, ctl)); b.querySelector(".som-i").textContent = lue(n, ctl) && S2.cur !== n.k ? "✓" : n.id; });
+}
 
-/* ---------- page chapitre : 3 modes cours (0 XP) + 3 modes exos ---------- */
-function vueChapitre(ch){
-  vue("chapitre", () => {
-    const c = chap(ch), st = etats();
-    const courts = (c.items || []).filter(estCourt), exos = (c.items || []).filter(it => it.type === "exo");
-    const vNorm = V(), dmoy = exos.length ? exos.reduce((a, it) => a + dureeExo(it)/((it.etapes && it.etapes.length) || 1), 0)/exos.length : 0;
-    const xpEt = m => Math.round(vNorm.xpParMinute * dmoy * vNorm.formatProduction * (1 + Math.min(dmoy*3/vNorm.concentrationDiv, vNorm.concentrationMax - 1)) * m);
-    const tuile = (a, icone, nom, desc, xp, dispo) => `<button type="button" class="mode-tuile" data-a="${a}" ${dispo ? "" : "disabled"}>
-      <span class="mt-ic">${ic(icone)}</span><span class="mt-txt"><b>${nom}</b><small>${dispo ? desc : "Pas encore de contenu pour ce mode"}</small></span>${xp && dispo ? `<span class="mt-xp">${xp}</span>` : ""}</button>`;
-    L.appendChild(fil(esc(c.titre || ch)));
-    const w = document.createElement("div");
-    w.innerHTML = `<h1 class="l-titre petit">${esc(c.titre || ch)}</h1>
-      ${c.sources && c.sources.length ? `<p class="vide-txt">Sources : ${c.sources.map(esc).join(" · ")}</p>` : ""}
-      <div class="ch-parties">
-        <section class="fenetre" data-titre="cours/">
-          <h2 class="ch-h2">${ic("book")} Cours</h2>
-          ${tuile("fa", "compass", "Follow-along", "Choisis une notion : explication écran par écran.", "", (c.parcours || []).length)}
-          ${tuile("cl", "layers", "Classique", "Fiche à cartes + éléments interactifs.", "", (c.fiche || []).length)}
-          ${tuile("tl", "zap", "TL;DR", "Un écran pour se rafraîchir la mémoire.", "", c.tldr && (c.tldr.length || c.tldr.lignes))}
-        </section>
-        <section class="fenetre" data-titre="exos/">
-          <h2 class="ch-h2">${ic("wrench")} Exos</h2>
-          ${tuile("qc", "target", "Compréhension", `QCM et saisies de moins d'une minute · ${courts.length} items.`, `${vNorm.qcm}-${Math.round(vNorm.xpParMinute*vNorm.dureeSaisie*vNorm.formatProduction)} XP<br>/question`, courts.length)}
-          ${tuile("gu", "steps", "Guidé", `On te dit quoi faire, tu fais, étape par étape · ${exos.length} exo${exos.length > 1 ? "s" : ""}.`, `×${fmt(vNorm.modeGuide)}<br>~${nf(xpEt(vNorm.modeGuide))} XP/étape`, exos.length)}
-          ${tuile("mk", "pen", "Classique / mock", "Toi et l'exo : pas d'indice, chrono, conditions réelles.", `×${fmt(vNorm.modeMock)}<br>~${nf(xpEt(vNorm.modeMock))} XP/étape`, exos.length)}
-        </section>
-      </div>`;
-    L.appendChild(w);
-    w.querySelectorAll("[data-a]").forEach(b => b.onclick = () => {
-      const a = b.dataset.a;
-      if(a === "fa") vueFollow(ch); else if(a === "cl") vueFiche(ch); else if(a === "tl") vueTldr(ch);
-      else if(a === "qc") vueEntrainement([ch], titreCh(ch)); else if(a === "gu") vueExos(ch, "guide"); else if(a === "mk") vueExos(ch, "mock");
+/* ---------- Cours · Explicatif : scroll continu, sommaire qui suit la lecture ---------- */
+function carteCheck(n, ctxe){
+  if(!n.check) return "";
+  const id = ckId(n), q = n.check, ctl = lue(n), vis = S2.chkV[id], eng = S2.eng === id;
+  const gain = ctl ? "" : `<span class="pastille">+${V().controle} XP à la 1re réussite</span>`;
+  const train = `<div class="apres"><p>Envie de t'entraîner sur cette notion ?</p><button type="button" class="btn plein" data-m="train" data-id="${esc(n.id)}">S'entraîner · ${esc(n.id)}</button></div>`;
+  if(ctl && !vis) return `<div class="check-carte valide" id="c-${esc(id)}" data-id="${esc(id)}"><p class="ck-k">${ic("check")} Notion validée</p>${train}</div>`;
+  if(ctxe === "expl" && !vis && !eng)
+    return `<div class="check-carte repli" id="c-${esc(id)}" data-m="eng" data-id="${esc(id)}" tabindex="0" role="button"><p class="ck-k">${ic("check")} Check de validation ${gain}</p><div class="ck-ligne"><span>Prêt à valider cette notion ?</span><span class="btn plein">Afficher la question</span></div></div>`;
+  const ch2 = q.choix || [], bon = [].concat(q.verif ? q.verif.attendu : q.attendu).map(a => typeof a === "number" ? a : ch2.findIndex(x => norm(x) === norm(a)));
+  const ordre = S2.ord[id] || (S2.ord[id] = melanger(ch2.map((_, k) => k)));
+  const fini = !!vis;
+  return `<div class="check-carte${eng ? " actif" : ""}" id="c-${esc(id)}" data-id="${esc(id)}">
+    <p class="ck-k">${ic("check")} Check de validation ${gain}</p>
+    <div class="q-enonce">${riche(q.enonce)}</div>
+    <div class="choix">${ordre.map(k => `<button type="button" ${fini ? "disabled" : ""} class="${fini && vis.ok && bon.includes(k) ? "bonne" : fini && !vis.ok && vis.pick === k ? "fausse" : ""}" data-m="ck" data-id="${esc(id)}" data-i="${k}"><span class="t">${mdInline(ch2[k])}</span></button>`).join("")}</div>
+    ${fini ? `<div class="q-retour ${vis.ok ? "ok" : "ko"}"><b class="verdict">${vis.ok ? "✓ Exact" : "✗ Pas tout à fait"}</b>${q.explication ? `<div class="explication">${md(q.explication)}</div>` : ""}</div>${vis.ok ? "" : `<div class="actions"><button type="button" class="btn" data-m="retry" data-id="${esc(id)}">Réessayer</button><small class="vide-txt">La notion sera validée quand tu auras réussi.</small></div>`}` : (ctxe === "expl" ? `<p class="vide-txt ck-aide">Choisis ta réponse · touche en dehors pour reprendre la lecture.</p>` : "")}
+  </div>${fini && vis.ok ? train : ""}`;
+}
+function majCarte(n, ctxe){
+  const el = document.getElementById("c-" + ckId(n)); if(!el) return;
+  const tmp = document.createElement("div"); tmp.innerHTML = carteCheck(n, ctxe);
+  const apres = el.nextElementSibling && el.nextElementSibling.classList.contains("apres") ? el.nextElementSibling : null; if(apres) apres.remove();
+  el.replaceWith(...tmp.childNodes);
+  spy();
+}
+function notionHtml(n){
+  const prep = S.notions.filter(m => (m.pre || []).includes(n.id)).map(m => m.id);
+  return `<article class="fenetre notion" id="n-${esc(n.id)}" data-titre="${esc(n.id)}.txt">
+    <p class="n-crumb">Notion ${esc(n.id)}</p>
+    <h2 class="n-titre">${mdInline(n.titre)}</h2>
+    <div class="n-corps">${riche(n.corps || "")}</div>
+    ${n.schema ? SV.rendre(n.schema) : ""}
+    ${n.labo ? `<div class="labo" data-labo="${esc(n.labo)}"></div>` : ""}
+    ${(n.rec || n.alt || n.pre.length || prep.length) ? `<details class="aide-bloc"><summary>Si tu bloques <small>rappel · autre explication · suite</small></summary><div class="aide-in">
+      ${n.rec || n.pre.length ? `<div><h4>Rappel des prérequis</h4>${n.rec ? `<div>${riche(n.rec)}</div>` : ""}${n.pre.length ? `<p class="vide-txt">Prérequis : ${n.pre.filter(id => S.notionParId[id]).map(cf).join(" ")}</p>` : ""}</div>` : ""}
+      ${n.alt ? `<div><h4>Autre explication</h4>${riche(n.alt)}</div>` : ""}
+      <div><h4>Ce que ça prépare</h4>${prep.length ? `<p>Cette notion est réutilisée en :</p><p>${prep.map(cf).join(" ")}</p>` : `<p>Cette notion sert directement aux exos et aux évals.</p>`}</div>
+    </div></details>` : ""}
+    ${carteCheck(n, "expl")}
+  </article>`;
+}
+function rendreExplicatif(box){
+  const ctl = controles(); let som = "", flux = "";
+  S.chapitres.forEach(c => {
+    som += `<p class="som-ch">Ch. ${esc(String(c.ordre ?? 0))} · ${esc(c.titre || c.id)}</p>`;
+    flux += `<div class="ch-bandeau"><span>Chapitre ${esc(String(c.ordre ?? 0))}</span><b>${esc(c.titre || c.id)}</b></div>`;
+    c.notions.forEach(n => {
+      som += `<button type="button" class="som-n${lue(n, ctl) ? " lue" : ""}${S2.cur === S.notions.indexOf(n) ? " cur" : ""}" data-m="som" data-id="${esc(n.id)}"><span class="som-i">${lue(n, ctl) ? "✓" : esc(n.id)}</span><span class="som-t">${mdInline(n.titre)}</span></button>`;
+      flux += notionHtml(n);
     });
   });
+  box.innerHTML = `<div class="cours-grille"><nav class="sommaire" aria-label="Sommaire">${som}</nav><div class="flux">${flux || `<p class="vide-txt">Aucune notion dans ce module pour l'instant.</p>`}</div></div>`;
+  monterLabos(box);
+}
+function monterLabos(box){ box.querySelectorAll("[data-labo]").forEach(el => { const f = EXT.labos[el.dataset.labo]; if(f) try{ f(el, {SV, esc, fmt, ic}); }catch(e){ el.textContent = "(labo indisponible)"; } }); }
+function allerNotion(id){
+  const n = S.notionParId[id]; if(!n) return;
+  if(S2.tab === "cours" && S2.sub === "follow"){ S2.fa = S.notions.indexOf(n); S2.fs = 0; vueModule(); return; }
+  const dedans = S.vue === "module" && S2.tab === "cours" && S2.sub === "expl";
+  S2.tab = "cours"; S2.sub = "expl"; S2.cur = S.notions.indexOf(n);
+  if(!dedans) vueModule();
+  const el = document.getElementById("n-" + id); if(el) el.scrollIntoView({behavior:dedans && !reduit ? "smooth" : "auto", block:"start"});
+}
+/* « spy » : notion courante dans le sommaire ; le flou se coupe si la carte active sort de l'écran */
+function spy(){
+  const veille = document.body.classList;
+  if(S.vue !== "module" || S2.tab !== "cours" || S2.sub !== "expl"){ veille.remove("voile-on"); return; }
+  let cur = 0;
+  S.notions.forEach((n, i) => { const el = document.getElementById("n-" + n.id); if(el && el.getBoundingClientRect().top <= 150) cur = i; });
+  if(S2.eng){
+    const c = document.getElementById("c-" + S2.eng);
+    if(!c) S2.eng = null; else { const r = c.getBoundingClientRect(); if(r.bottom < 0 || r.top > innerHeight) { S2.eng = null; const n = S.notions.find(x => ckId(x) === c.dataset.id); if(n) majCarte(n, "expl"); } }
+  }
+  if(S2.cur !== cur){ S2.cur = cur; L.querySelectorAll(".som-n").forEach(b => b.classList.toggle("cur", b.dataset.id === (S.notions[cur] || {}).id)); }
+  veille.toggle("voile-on", !!S2.eng);
+}
+addEventListener("scroll", () => spy(), {passive:true});
+/* un clic en dehors de la carte active reprend la lecture (phase de capture : avant l'éventuel clic sur une autre carte) */
+document.addEventListener("click", e => {
+  if(!S2.eng || e.target.closest(".check-carte.actif")) return;
+  const id = S2.eng; S2.eng = null; const n = S.notions.find(x => ckId(x) === id); if(n) majCarte(n, "expl"); else spy();
+}, true);
+function repondreCheck(n, i){
+  const q = n.check, ch2 = q.choix || [], id = ckId(n);
+  const bon = [].concat(q.verif ? q.verif.attendu : q.attendu).map(a => typeof a === "number" ? a : ch2.findIndex(x => norm(x) === norm(a)));
+  const ok = bon.includes(i), dejaVu = lue(n);
+  S2.chkV[id] = {pick:i, ok};
+  M.reponse(id, ok, null, {bulle: ok && !dejaVu});   /* bulle seulement quand de l'XP tombe */
+  if(ok) S2.eng = null;
+  majCarte(n, S2.tab === "cours" && S2.sub === "follow" ? "fa" : "expl");
+  if(S2.sub === "follow") vueModule();
 }
 
-/* ---------- cours : follow-along (0 XP, sauf la question de contrôle : moteur.reponse) ---------- */
-function vueFollow(ch, iNotion = 0){
-  vue("follow", () => {
-    const c = chap(ch), P = c.parcours || [], p = P[iNotion] || P[0];
-    L.appendChild(filCh(ch, "Follow-along"));
-    const w = document.createElement("div");
-    w.innerHTML = `<div class="notions" role="tablist">${P.map((x, k) => `<button type="button" role="tab" aria-selected="${k === iNotion}" class="${k === iNotion ? "on" : ""}" data-n="${k}">${mdInline(x.notion)}</button>`).join("")}</div>
-      <div class="fa"><section class="fenetre" data-titre="schema.cir"><div class="fa-schema"></div></section>
-      <section class="fenetre" data-titre="follow_along.exe"><div class="stepper"></div><div class="fa-corps"></div>
-      <div class="actions"><button type="button" class="btn" data-a="prec">← Retour</button><button type="button" class="btn plein" data-a="suiv">Suivant →</button></div></section></div>`;
-    L.appendChild(w);
-    w.querySelectorAll("[data-n]").forEach(b => b.onclick = () => vueFollow(ch, +b.dataset.n));
-    const ecrans = (p.ecrans || []).concat(p.controle ? [{titre:"Vérifie", controle:p.controle}] : []);
-    let i = 0;
-    const rendre = () => {
-      const e = ecrans[i], base = e.schema && (e.schema.modele || e.schema.el) ? e.schema : p.schema;
-      const etat = e.schema && !(e.schema.modele || e.schema.el) ? e.schema : (e.surligne ? {surligne:e.surligne} : {});
-      w.querySelector(".fa-schema").innerHTML = base ? SV.rendre(base, etat) : `<p class="vide-txt">(pas de schéma)</p>`;
-      w.querySelector(".fa-schema").closest(".fenetre").hidden = !base && !p.schema;
-      w.querySelector(".stepper").innerHTML = ecrans.map((_, k) => `<span class="${k <= i ? "on" : ""}"></span>`).join("");
-      const corps = w.querySelector(".fa-corps");
-      if(e.controle){
-        const q = e.controle, ch2 = q.choix || [], ordre = melanger(ch2.map((_, k) => k));
-        const bon = [].concat(q.verif ? q.verif.attendu : q.attendu).map(a => typeof a === "number" ? a : ch2.findIndex(x => norm(x) === norm(a)));
-        const idc = M.idControle(c, iNotion), dejaVu = ((M.etat() || {}).controles || []).includes(idc);
-        const gain = dejaVu ? "✓ déjà validé" : `+${M.valeursPour(M.interne.config, "9999-12-31").controle} XP à la 1re réussite`;
-        corps.innerHTML = `<h3>${ic("check")} Vérifie <small class="vide-txt">${gain}</small></h3><div class="q-enonce">${md(q.enonce)}</div>
-          <div class="choix">${ordre.map(k => `<button type="button" data-i="${k}"><span class="t">${mdInline(ch2[k])}</span></button>`).join("")}</div><div class="fa-retour"></div>`;
-        corps.querySelectorAll("[data-i]").forEach(b => b.onclick = () => {
-          const ok = bon.includes(+b.dataset.i);
-          corps.querySelectorAll("[data-i]").forEach(x => { x.disabled = true; if(bon.includes(+x.dataset.i)) x.classList.add("bonne"); });
-          if(!ok) b.classList.add("fausse");
-          M.reponse(idc, ok, null, {bulle: ok && !dejaVu});   // bulle seulement quand de l'XP tombe
-          corps.querySelector(".fa-retour").innerHTML = `<div class="q-retour ${ok ? "ok" : "ko"}"><b class="verdict">${ok ? "✓ Exact" : "✗ Pas tout à fait"}</b>${q.explication ? `<div class="explication">${md(q.explication)}</div>` : ""}</div>`;
-        });
-      } else corps.innerHTML = `<h3>${mdInline(e.titre || "")}</h3><div class="q-enonce">${md(e.texte)}</div>`;
-      w.querySelector("[data-a=prec]").disabled = i === 0;
-      const bs = w.querySelector("[data-a=suiv]");
-      bs.textContent = i === ecrans.length - 1 ? (iNotion < P.length - 1 ? "Notion suivante →" : "Retour au chapitre") : "Suivant →";
-    };
-    w.querySelector("[data-a=prec]").onclick = () => { if(i > 0){ i--; rendre(); } };
-    w.querySelector("[data-a=suiv]").onclick = () => { if(i < ecrans.length - 1){ i++; rendre(); } else if(iNotion < P.length - 1) vueFollow(ch, iNotion + 1); else vueChapitre(ch); };
-    S.touches = ev => { if(ev.key === "ArrowRight") w.querySelector("[data-a=suiv]").click(); else if(ev.key === "ArrowLeft") w.querySelector("[data-a=prec]").click(); };
-    rendre();
-  });
+/* ---------- Cours · Follow-along : on choisit une notion, explication écran par écran ---------- */
+function rendreFollow(box){
+  if(S2.fa === null){
+    const ctl = controles();
+    box.innerHTML = `<div class="fa2-pick"><p class="fl-k">Follow-along</p><h2 class="fl-h2">Quelle notion veux-tu comprendre ?</h2><p class="vide-txt">On t'explique pas à pas, avec un schéma qui s'allume.</p>
+      ${S.chapitres.map(c => `<p class="som-ch">Chapitre ${esc(String(c.ordre ?? 0))} · ${esc(c.titre || c.id)}</p><div class="fa2-grille">${c.notions.map(n => `<button type="button" class="fa2-carte" ${n.ecrans.length ? "" : "disabled"} data-m="fa" data-id="${esc(n.id)}"><b>${esc(n.id)} ${mdInline(n.titre)}</b><span class="pastille">${n.ecrans.length ? (lue(n, ctl) ? "validée" : "à lire") : "pas encore de pas-à-pas"}</span></button>`).join("")}</div>`).join("")}</div>`;
+    return;
+  }
+  const n = S.notions[S2.fa], ec = n.ecrans, t = ec.length, i = Math.min(S2.fs, t), suiv = S.notions[S2.fa + 1];
+  let h = `<div class="fa2"><div class="fa2-top"><button type="button" class="retour" data-m="fback">← Choisir une autre notion</button><span class="vide-txt">${esc(n.id)} ${mdInline(n.titre)}</span><span class="fa2-points">${Array.from({length:t + (n.check ? 1 : 0)}, (_, k) => `<i class="${k < i ? "done" : k === i ? "cur" : ""}"></i>`).join("")}</span></div>`;
+  if(i < t){
+    const e = ec[i], base = e.schema && (e.schema.modele || e.schema.el) ? e.schema : n.schemaFa;
+    const etat = e.schema && !(e.schema.modele || e.schema.el) ? e.schema : (e.surligne ? {surligne:e.surligne} : {});
+    h += `<div class="fa2-main${base ? "" : " sans"}"><section class="fenetre" data-titre="follow_along.exe"><p class="n-crumb">Écran ${i + 1} sur ${t}</p><h3>${mdInline(e.titre || "")}</h3><div class="q-enonce">${riche(e.texte)}</div>
+      <div class="actions">${i > 0 ? `<button type="button" class="btn" data-m="fprev">← Précédent</button>` : ""}<button type="button" class="btn plein" data-m="fnext">${i + 1 < t ? "Suivant →" : (n.check && !lue(n) ? "Passer au contrôle →" : "Terminer →")}</button></div></section>
+      ${base ? `<section class="fenetre" data-titre="schema.cir"><div class="fa-schema">${SV.rendre(base, etat)}</div></section>` : ""}</div>`;
+  } else if(n.check && (!lue(n) || S2.chkV[ckId(n)])){
+    h += `<section class="fenetre" data-titre="controle.exe"><h3>Contrôle · ${mdInline(n.titre)}</h3>${carteCheck(n, "fa")}<div class="actions"><button type="button" class="btn" data-m="fprev">← Revoir les écrans</button>${S2.chkV[ckId(n)] && S2.chkV[ckId(n)].ok && suiv ? `<button type="button" class="btn plein" data-m="fa" data-id="${esc(suiv.id)}">Notion suivante · ${esc(suiv.id)} →</button>` : ""}</div></section>`;
+  } else {
+    h += `<section class="fenetre" data-titre="fin.exe"><h3>Notion terminée</h3>${n.check ? carteCheck(n, "fa") : `<p class="vide-txt">Pas de contrôle pour cette notion.</p>`}<div class="actions"><button type="button" class="btn" data-m="fprev">← Revoir les écrans</button>${suiv ? `<button type="button" class="btn plein" data-m="fa" data-id="${esc(suiv.id)}">Notion suivante · ${esc(suiv.id)} →</button>` : ""}</div></section>`;
+  }
+  box.innerHTML = h + "</div>";
+  S.touches = ev => { if(ev.key === "ArrowRight") { const b = box.querySelector("[data-m=fnext]"); if(b) b.click(); } else if(ev.key === "ArrowLeft") { const b = box.querySelector("[data-m=fprev]"); if(b) b.click(); } };
 }
 
-/* ---------- cours : classique = fiche à cartes + schémas + labos (0 XP) ---------- */
-function vueFiche(ch){
-  vue("fiche", () => {
-    const c = chap(ch);
-    L.appendChild(filCh(ch, "Cours classique"));
-    const w = document.createElement("div");
-    w.innerHTML = `<h1 class="l-titre petit">${esc(c.titre || ch)}</h1>
-      <div class="fiche-cartes">${(c.fiche || []).map((f, k) => `<section class="fenetre fiche-carte${f.schema || f.labo ? " large" : ""}" data-titre="${f.labo ? "labo" : String(k+1).padStart(2,"0")}.txt" style="--i:${k}">
-        <h3>${f.labo ? ic("flask") + " " : ""}${mdInline(f.titre || "")}</h3>
-        <div class="${f.schema ? "fc-2col" : ""}"><div>${md(f.contenu)}</div>${f.schema ? SV.rendre(f.schema) : ""}</div>
-        ${f.labo ? `<div class="labo" data-labo="${esc(f.labo)}"></div>` : ""}</section>`).join("")}</div>
-      <div class="l-actions"><button type="button" class="btn" data-a="ch">← Retour au chapitre</button></div>`;
-    L.appendChild(w);
-    w.querySelectorAll("[data-labo]").forEach(el => { const f = EXT.labos[el.dataset.labo]; if(f) try{ f(el, {SV, esc, fmt, ic}); }catch(e){ el.textContent = "(labo indisponible)"; } });
-    w.querySelector("[data-a=ch]").onclick = () => vueChapitre(ch);
-  });
-}
-
-/* ---------- cours : TL;DR (liste, ou tableau comparatif {titres, schemas, lignes, pieges}) ---------- */
-function vueTldr(ch){
-  vue("tldr", () => {
-    const c = chap(ch), t = c.tldr;
-    L.appendChild(filCh(ch, "TL;DR"));
-    const w = document.createElement("section"); w.className = "fenetre tldr"; w.dataset.titre = "tldr.txt";
-    let h = `<h1 class="l-titre petit">${ic("zap")} ${esc(c.titre || ch)} en 30 secondes</h1>`;
-    if(Array.isArray(t)) h += `<ul class="tldr-liste">${t.map(x => `<li>${mdInline(x)}</li>`).join("")}</ul>`;
-    else if(t && t.lignes){
+/* ---------- Cours · TL;DR (liste, ou tableau comparatif {titres, schemas, lignes, pieges}) ---------- */
+function rendreTldr(box){
+  box.innerHTML = S.chapitres.filter(c => c.tldr && (c.tldr.length || c.tldr.lignes)).map(c => {
+    const t = c.tldr;
+    let h = `<div class="ch-bandeau"><span>Chapitre ${esc(String(c.ordre ?? 0))}</span><b>${esc(c.titre || c.id)}</b></div><section class="fenetre tldr" data-titre="tldr.txt">`;
+    if(Array.isArray(t)) h += `<ul class="tldr-liste">${t.map(x => `<li>${xref(mdInline(x))}</li>`).join("")}</ul>`;
+    else {
       const n = (t.titres || []).length;
       h += (t.intro ? `<p class="vide-txt">${mdInline(t.intro)}</p>` : "") + `<table class="tlt"><thead><tr><th></th>${(t.titres || []).map((x, k) => `<th class="c${k}">${mdInline(x)}</th>`).join("")}</tr></thead><tbody>
         ${t.schemas ? `<tr class="sch"><td></td>${t.schemas.map(s => `<td>${SV.rendre(s)}</td>`).join("")}</tr>` : ""}
-        ${t.lignes.map(l => `<tr><td class="k">${mdInline(l.k)}</td>${Array.isArray(l.v) ? l.v.map(x => `<td>${md(x)}</td>`).join("") : `<td colspan="${n}" class="tous">${md(l.v)}</td>`}</tr>`).join("")}
-      </tbody></table>`;
+        ${t.lignes.map(l => `<tr><td class="k">${mdInline(l.k)}</td>${Array.isArray(l.v) ? l.v.map(x => `<td>${md(x)}</td>`).join("") : `<td colspan="${n}" class="tous">${md(l.v)}</td>`}</tr>`).join("")}</tbody></table>`;
     }
-    if(t && t.pieges) h += `<div class="piege">${ic("alert")} ${mdInline(t.pieges)}</div>`;
-    w.innerHTML = h; L.appendChild(w);
-    const a = document.createElement("div"); a.className = "l-actions";
-    a.innerHTML = `<button type="button" class="btn" data-a="ch">← Retour au chapitre</button>${(c.fiche || []).length ? `<button type="button" class="btn" data-a="cl">Cours complet</button>` : ""}`;
-    L.appendChild(a);
-    a.querySelector("[data-a=ch]").onclick = () => vueChapitre(ch);
-    const bc = a.querySelector("[data-a=cl]"); if(bc) bc.onclick = () => vueFiche(ch);
-  });
+    if(t.pieges) h += `<div class="piege">${ic("alert")} ${mdInline(t.pieges)}</div>`;
+    return h + `</section>`;
+  }).join("") || `<p class="vide-txt">Pas encore de TL;DR dans ce module.</p>`;
 }
 
-/* ---------- exos : compréhension = série de questions courtes ---------- */
-function piocher(chIds, n = 10){
-  const st = etats();
-  const prio = it => { const s = st[it.id]; return !s ? 1 : s.erreur ? 0 : s.auj ? 4 : s.maitrise ? 3 : 2; };
-  return melanger(itemsDe(chIds, TYPES_Q).filter(estCourt)).map(it => [prio(it), it]).sort((a,b) => a[0] - b[0]).slice(0, n).map(x => x[1]);
+/* ---------- Exos · étape 1 : menu des notions, étape 2 : mode ---------- */
+function rendreExos(box){ box.innerHTML = S2.fl.etape === 1 ? exoEtape1() : exoEtape2(); }
+function exoEtape1(){
+  const f = S2.fl, st = etats(), ee = erreursExos(), ne = nbErreurs();
+  return `<div class="ex-flux"><p class="fl-k">Étape 1 sur 2</p><h2 class="fl-h2">Qu'est-ce que tu veux réviser ?</h2><p class="vide-txt">Coche une ou plusieurs notions.</p>
+    <div class="actions"><button type="button" class="btn" data-m="pall">Tout cocher</button><button type="button" class="btn" data-m="pnone">Tout décocher</button>${ne ? `<button type="button" class="btn" data-m="perr">Mes erreurs (${ne})</button>` : ""}</div>
+    <div class="ex-liste">${S.chapitres.map(c => { const tout = c.notions.length && c.notions.every(n => f.pick.has(n.id));
+      return `<div class="ex-ch fenetre" data-titre="ch${esc(String(c.ordre ?? 0))}.txt"><button type="button" class="ex-chb" data-m="pch" data-id="${esc(c.id)}"><i class="case${tout ? " on" : ""}"></i><b>Chapitre ${esc(String(c.ordre ?? 0))} · ${esc(c.titre || c.id)}</b></button>
+      ${c.notions.map(n => { const s = statNotion(n, st, ee); return `<button type="button" class="ex-n${f.pick.has(n.id) ? " on" : ""}" data-m="pk" data-id="${esc(n.id)}"><i class="case"></i><span><b>${esc(n.id)}</b> ${mdInline(n.titre)}</span><small>${s.faits}/${s.tot} faits${s.err ? ` · <u>${s.err} ✗</u>` : ""}</small></button>`; }).join("")}</div>`; }).join("")}</div>
+    <div class="ex-pied"><span class="vide-txt">${f.pick.size} notion${f.pick.size > 1 ? "s" : ""} cochée${f.pick.size > 1 ? "s" : ""}</span><button type="button" class="btn plein" data-m="exsuiv" ${f.pick.size ? "" : "disabled"}>Suivant ›</button></div></div>`;
 }
-function vueEntrainement(chIds, nom){
-  vue("entrainement", async () => {
-    const unSeul = chIds.length === 1;
-    L.appendChild(unSeul ? filCh(chIds[0], "Compréhension") : fil("Compréhension · " + esc(nom)));
-    const serie = piocher(chIds);
-    const barre = document.createElement("div"); barre.className = "progression"; barre.innerHTML = `<i></i><span></span>`;
-    const zone = document.createElement("div"); zone.className = "zone-q";
-    L.append(barre, zone);
-    if(!serie.length){ zone.innerHTML = `<p class="vide-txt">Pas de question courte ici.</p>`; return; }
-    const moi = S.vue; let nOk = 0, xp = 0; const bilan = [];
+function selection(){
+  const f = S2.fl, ids = f.pick, st = etats(), ee = erreursExos();
+  const courts = itemsNotions(ids, estCourt), exos = itemsNotions(ids, it => it.type === "exo"), saisies = itemsNotions(ids, it => it.type === "saisie");
+  const examens = S.chapitres.flatMap(c => (c.items || []).filter(it => it.type === "examen"));
+  return {ids, st, ee, courts, exos, saisies, examens, trous:courts.filter(it => it.type === "trous").length, exoRatrap:exos.filter(it => ee[it.id]).length};
+}
+function exoEtape2(){
+  const f = S2.fl, s = selection(), v = V(), ex = f.annale ? S.items[f.annale] : null;
+  const carte = (k, titre, desc, meta, extra = "", off = false) => `<div class="ex-carte${f.mode === k ? " on" : ""}${off ? " off" : ""}" role="radio" aria-checked="${f.mode === k}" tabindex="0" ${off ? "" : `data-m="mode" data-v="${k}"`}><div class="ec-t"><b>${titre}</b><em>${meta}</em></div><span class="vide-txt">${desc}</span>${extra}</div>`;
+  const nm = Math.min(3, s.exos.length) + Math.min(4, s.saisies.length);
+  return `<div class="ex-flux"><p class="fl-k">Étape 2 sur 2 · ${f.pick.size} notion${f.pick.size > 1 ? "s" : ""}</p><h2 class="fl-h2">Comment veux-tu réviser ?</h2>
+    <div class="ex-cartes" role="radiogroup">
+      ${carte("express", "Express", `QCM, réponses courtes et code à trous. Séries de 10${nbErreurs() ? ", erreurs d'abord" : ""}.`, `${s.courts.length} question${s.courts.length > 1 ? "s" : ""}${s.trous ? ` · dont ${s.trous} à trous` : ""}`, "", !s.courts.length)}
+      ${carte("classique", "Classique", "Exos de TD complets, sans chrono, à ton rythme.", `${s.exos.length} exo${s.exos.length > 1 ? "s" : ""}${s.exoRatrap ? ` · ${s.exoRatrap} à rattraper` : ""} · XP ×${fmt(f.guide ? v.modeGuide : v.modeClassique)}`,
+        `<button type="button" class="sw-g" aria-pressed="${f.guide}" data-m="gtog"><i></i>Guidé · consignes et indices (×${fmt(v.modeGuide)})</button>`, !s.exos.length)}
+      ${carte("mock", "Mock", "Classique sous chrono, plus difficile : exos entiers et réponses courtes, pas de QCM, pas d'indices.", ex ? `${minutes(+ex.duree || 0)} · XP ×${fmt(v.modeMock)}` : `${Math.min(3, s.exos.length)} exo${s.exos.length > 1 ? "s" : ""} + ${Math.min(4, s.saisies.length)} saisie${s.saisies.length > 1 ? "s" : ""} · XP ×${fmt(v.modeMock)}`,
+        `<span class="puces"><button type="button" class="${!f.annale ? "on" : ""}" data-m="annale" data-id="">Sujet composé</button>${s.examens.map(x => `<button type="button" class="${f.annale === x.id ? "on" : ""}" data-m="annale" data-id="${esc(x.id)}">Annale · ${mdInline(x.titre || "Examen blanc")}</button>`).join("")}</span>${f.annale ? `<small class="vide-txt">Ignore ta sélection de notions.</small>` : ""}`, !f.annale && !nm)}
+    </div>
+    <div class="ex-pied"><button type="button" class="btn" data-m="exprec">‹ Retour</button><button type="button" class="btn plein" data-m="go">Commencer ›</button></div></div>`;
+}
+
+/* =====================================================================
+   SESSIONS (écran épuré) : Express · Classique · Mock, puis écran de fin
+   ===================================================================== */
+function nouvelleSess(mode){ return {mode, t0:Date.now(), t1:null, xp:0, log:[], avant:{q:Object.fromEntries(Object.entries(etats()).filter(([, s]) => s.erreur).map(([k]) => [k, 1])), ex:erreursExos()}}; }
+function majXpSess(){ const el = L.querySelector(".s-xp"); if(el && S2.sess) el.textContent = S2.sess.xp > 0 ? `+${nf(S2.sess.xp)} XP` : ""; }
+function ouvrirSession(libelle, rendu){
+  vue("session", () => {
+    document.body.classList.add("en-session");
+    L.innerHTML = `<div class="s-barre"><button type="button" class="retour" data-m="quit">✕ Quitter</button><span class="s-lib">${libelle}</span><span class="s-chrono" role="timer" hidden></span><span class="s-xp mono"></span></div><div class="s-corps"><div class="zone-q" id="s-zone"></div></div>`;
+    rendu($("s-zone"));
+  });
+}
+const libSel = () => [...S2.fl.pick].sort().join(" · ");
+const MODES = {express:"Express", classique:"Classique", mock:"Mock"};
+
+async function sessionExpress(){
+  S2.sess = nouvelleSess("express"); const sess = S2.sess;
+  ouvrirSession(`Express · ${esc(libSel())}`, async zone => {
+    const moi = S.vue, st = etats();
+    const prio = it => { const s = st[it.id]; return !s ? 1 : s.erreur ? 0 : s.auj ? 4 : s.maitrise ? 3 : 2; };
+    const serie = melanger(itemsNotions(S2.fl.pick, estCourt)).map(it => [prio(it), it]).sort((a, b) => a[0] - b[0]).slice(0, 10).map(x => x[1]);
+    const barre = document.createElement("div"); barre.className = "progression"; barre.innerHTML = `<i></i><span></span>`; zone.before(barre);
     for(let k = 0; k < serie.length; k++){
-      barre.querySelector("i").style.width = (k/serie.length*100) + "%";
-      barre.querySelector("span").textContent = `${k+1}/${serie.length}`;
-      const r = await jouerQuestion(serie[k], zone, {pos:`${k+1}/${serie.length}`, dernier:k === serie.length-1});
+      barre.querySelector("i").style.width = (k/serie.length*100) + "%"; barre.querySelector("span").textContent = `${k+1}/${serie.length}`;
+      const r = await jouerQuestion(serie[k], zone, {pos:`${k+1}/${serie.length}`, dernier:k === serie.length-1, log:sess.log});
       if(S.vue !== moi || !zone.isConnected) return;
-      if(r.ok) nOk++; if(r.d && r.d.ok) xp += r.d.xp + r.d.bonus; bilan.push([serie[k], r.ok]);
+      if(r.d && r.d.ok) sess.xp += r.d.xp + r.d.bonus; majXpSess();
     }
-    barre.querySelector("i").style.width = "100%";
-    zone.innerHTML = `<section class="fenetre bilan" data-titre="bilan.log">
-      <p class="gros">${nOk}/${serie.length} <small>justes</small></p>
-      <p>+${nf(xp)} XP sur cette série. <span class="vide-txt">Le bonus de session (précision, endurance, série) est crédité à la fin de la session : voir ⏳ en haut.</span></p>
-      <ul class="bilan-liste">${bilan.map(([it, ok]) => `<li class="${ok ? "ok" : "ko"}">${ok ? "✓" : "✗"} <span>${mdInline(String(it.enonce || "").split("\n")[0].slice(0, 110))}</span></li>`).join("")}</ul>
-      <div class="actions"><button type="button" class="btn plein" data-a="encore">Encore une série</button><button type="button" class="btn" data-a="retour">${unSeul ? "Retour au chapitre" : "Retour au module"}</button></div>
-    </section>`;
-    zone.querySelector("[data-a=encore]").onclick = () => vueEntrainement(chIds, nom);
-    zone.querySelector("[data-a=retour]").onclick = () => unSeul ? vueChapitre(chIds[0]) : vueAccueil();
-    S.touches = e => { if(e.key === "Enter"){ e.preventDefault(); vueEntrainement(chIds, nom); } };
+    sess.t1 = Date.now(); barre.remove(); ecranFin(zone, sess);
   });
+}
+async function sessionClassique(offset = 0){
+  S2.sess = nouvelleSess("classique"); const sess = S2.sess, guide = S2.fl.guide;
+  const s = selection();
+  const exos = s.exos.slice().sort((a, b) => ((s.ee[a.id] ? 0 : (s.st[a.id] && s.st[a.id].valide) ? 2 : 1) - (s.ee[b.id] ? 0 : (s.st[b.id] && s.st[b.id].valide) ? 2 : 1)));
+  if(!exos.length) return vueModule();
+  const it0 = exos[offset % exos.length];
+  ouvrirSession(`Classique${guide ? " · guidé" : ""} · ${esc(libSel())}`, async zone => {
+    const moi = S.vue; let g = guide ? tirage(it0) : null, r;
+    for(;;){
+      const mark = sess.log.length, inst = variante(it0, g);
+      const relancer = it0.generateur && EXT.generateurs[it0.generateur] ? () => {} : null;
+      r = await (guide ? jouerExo(inst, zone, {mode:"guide", relancer, log:sess.log, aRattraper:s.ee[it0.id]}) : jouerMock(inst, zone, {mode:"classique", chrono:false, relancer, log:sess.log, aRattraper:s.ee[it0.id]}));
+      if(S.vue !== moi || !zone.isConnected) return;
+      if(r && r.relance){ sess.log.length = mark; g = tirage(it0); continue; }
+      break;
+    }
+    sess.xp += (r && r.xp) || 0; sess.t1 = Date.now(); ecranFin(zone, sess, {suivant:() => sessionClassique(offset + 1), nbExos:exos.length});
+  });
+}
+async function sessionMock(){
+  S2.sess = nouvelleSess("mock"); const sess = S2.sess, s = selection(), annale = S2.fl.annale ? S.items[S2.fl.annale] : null;
+  let liste, duree;
+  if(annale){ liste = (annale.items || []).map(i => S.items[i]).filter(it => it && it.type !== "examen"); duree = +annale.duree || liste.reduce((a, it) => a + (it.type === "exo" ? dureeExo(it) : it.type === "saisie" ? (+it.duree || .67) : .33), 0); }
+  else { const xs = s.exos.slice(0, 3), qs = s.saisies.slice(0, 4); liste = xs.concat(qs); duree = Math.max(8, xs.reduce((a, it) => a + dureeExo(it), 0) + qs.length); }
+  if(!liste.length) return vueModule();
+  ouvrirSession(`Mock${annale ? ` · ${esc(String(annale.titre || "annale"))}` : ` · ${esc(libSel())}`}`, async zone => {
+    const moi = S.vue, fin = Date.now() + duree*6e4, chrono = L.querySelector(".s-chrono"); chrono.hidden = false;
+    let fini = false;
+    const conclure = temps => {
+      if(fini || S.vue !== moi) return; fini = true;
+      clearInterval(S.chrono); S.chrono = 0; if(S.nettoyer){ S.nettoyer(); S.nettoyer = null; } S.touches = null;
+      if(temps) toast("⏱ Temps écoulé ! Copie ramassée.");
+      const vus = new Set(sess.log.map(l => l.it.id));
+      liste.forEach(it => { if(!vus.has(it.id)) sess.log.push({it, etape:null, donnee:"", ok:false, nt:true}); });
+      chrono.hidden = true; sess.t1 = Date.now(); ecranFin(zone, sess);
+    };
+    const tic = () => { const r = Math.max(0, fin - Date.now()); chrono.textContent = `⏱ ${Math.floor(r/6e4)}:${String(Math.floor(r/1000) % 60).padStart(2, "0")}`; chrono.classList.toggle("urgent", r < 6e4 * Math.min(5, duree/5)); if(r <= 0) conclure(true); };
+    tic(); S.chrono = setInterval(tic, 1000);
+    for(let k = 0; k < liste.length; k++){
+      const it = liste[k], av = s.ee[it.id];
+      const r = it.type === "exo" ? await jouerMock(it, zone, {mode:"mock", examen:true, log:sess.log, aRattraper:av}) : await jouerQuestion(it, zone, {examen:true, pos:`${k+1}/${liste.length}`, dernier:k === liste.length-1, log:sess.log});
+      if(fini || S.vue !== moi) return;
+      sess.xp += r.xp != null ? r.xp : (r.d && r.d.ok ? r.d.xp + r.d.bonus : 0); majXpSess();
+    }
+    conclure(false);
+  });
+}
+function lancerSession(){ const m = S2.fl.mode; if(m === "express") sessionExpress(); else if(m === "classique") sessionClassique(0); else sessionMock(); }
+
+/* ---------- écran de fin (commun aux 3 modes) ---------- */
+const ordreLog = log => log.filter(l => !l.nt);
+function donneeTxt(l){ return l.donnee ? esc(l.donnee) : "—"; }
+function enonceLog(l){
+  const it = l.it, e = l.etape != null && it.etapes ? it.etapes[l.etape] : null;
+  if(it.type === "trous"){ let k = 0; return md(it.enonce).replace(/\[_\]/g, () => `<span class="trou-fin">${esc((String(l.donnee || "").split(" · ")[k++]) || "…")}</span>`); }
+  return e ? `<p class="rv-ctx">${riche(it.titre ? it.titre + " — " : "")}${md(it.enonce).replace(/^<p>|<\/p>$/g, "")}</p>${md(e.question || e.consigne || "")}` : md(it.enonce);
+}
+function attenduLog(l){
+  const it = l.it, e = l.etape != null && it.etapes ? it.etapes[l.etape] : null, v = (e ? e.verif : it.verif) || {};
+  if(it.type === "qcm" || it.type === "qcm-multi"){ const att = [].concat((it.verif && it.verif.attendu) ?? it.bonnes ?? it.bonne ?? []); return att.map(a => mdInline((it.choix || [])[typeof a === "number" ? a : (it.choix || []).findIndex(c => norm(c) === norm(a))] ?? a)).join(" · "); }
+  if(it.type === "trous") return [].concat(v.attendu || []).map(mdInline).join(" · ");
+  return corrigeDe(e || it, v);
+}
+function ecranFin(zone, sess, opts = {}){
+  S.touches = null;
+  const L2 = ordreLog(sess.log), n = L2.length, ok = L2.filter(l => l.ok).length, ko = n - ok, pc = n ? Math.round(ok/n*100) : 0;
+  let best = 0, cur = 0; L2.forEach(l => { if(l.ok){ cur++; best = Math.max(best, cur); } else cur = 0; });
+  const fix = L2.filter(l => l.ok && (l.etape == null ? sess.avant.q[l.it.id] : (sess.avant.ex[l.it.id] || []).includes(l.etape))).length;
+  const kst = L2.filter(l => !l.ok && l.etape != null).length, kq = ko - kst;
+  const temps = (() => { const t = Math.max(0, Math.round(((sess.t1 || Date.now()) - sess.t0)/1000)); return `${Math.floor(t/60)}:${String(t % 60).padStart(2, "0")}`; })();
+  const verdict = pc === 100 ? "Sans faute." : pc >= 70 ? "Bien joué, la base est là." : pc >= 40 ? "À consolider : refais une série pour fixer." : "On reprend tranquillement, c'est normal au début.";
+  const note = ko ? [kq ? `${kq} question${kq > 1 ? "s" : ""} à rattraper : Express ${kq > 1 ? "les" : "la"} reprendra en premier.` : "", kst ? `${kst} étape${kst > 1 ? "s" : ""} d'exo à rattraper : l'exo rouvrira en Classique, étape en évidence.` : ""].filter(Boolean).join(" ") : "Aucune erreur à rattraper.";
+  const lab = {express:"Série terminée", classique:"Exo terminé", mock:"Copie rendue"}[sess.mode];
+  const dispo = m => { const s = selection(); return m === "express" ? s.courts.length > 0 : m === "classique" ? s.exos.length > 0 : (s.exos.length + s.saisies.length > 0 || !!S2.fl.annale); };
+  const autres = ["express", "classique", "mock"].filter(m => m !== sess.mode).map(m => `<button type="button" class="btn" data-m="vers" data-v="${m}" ${dispo(m) ? "" : "disabled"}>${{express:"Questions rapides", classique:"Exo rédigé", mock:"Mock"}[m]}</button>`).join("");
+  const r = M.etat() || {}, deb = r.xpDebut || 0, suiv = r.xpSuivant || 1, tot = r.total || 0, avant = Math.max(deb, tot - sess.xp);
+  const w1 = Math.round(100*(avant - deb)/Math.max(1, suiv - deb)), w2 = Math.round(100*(tot - avant)/Math.max(1, suiv - deb));
+  const encore = {express:"Nouvelle série", classique:opts.nbExos > 1 ? "Autre exo" : "Refaire cet exo", mock:"Nouveau mock"}[sess.mode];
+  S2.suite = opts.suivant || (() => sess.mode === "express" ? sessionExpress() : sess.mode === "classique" ? sessionClassique(0) : sessionMock());
+  zone.innerHTML = `<div class="fin">
+    <div class="fin-bloc"><div class="fin-g"><p class="fl-k">${lab}</p><p class="fin-score">${ok}<small>/${n}</small></p><p class="fin-verdict">${verdict}</p><p class="vide-txt">${note}</p>
+      <div class="fin-btns"><div class="actions"><button type="button" class="btn plein" data-m="encore">${encore}</button><button type="button" class="btn" data-m="quit">Retour au menu</button></div>
+      <div class="fin-autres"><span class="vide-txt">Essayer un autre mode sur les mêmes notions</span><div class="actions">${autres}</div></div></div></div>
+      <div class="fin-d">${sess.xp > 0 ? `<div class="fin-xp"><span>XP gagnée</span><b>+${nf(sess.xp)}</b><small class="vide-txt">Les bonus (précision, endurance, série) sont crédités au bilan de session.</small></div>` : ""}
+        <div class="fin-stats"><div><b>${pc} %</b><span>Précision</span></div><div><b>${temps}</b><span>Temps</span></div><div><b>${fix}</b><span>Erreurs rattrapées</span></div><div><b>${best}</b><span>Meilleure série</span></div></div>
+        <div class="fin-niv"><span class="vide-txt">Niveau ${r.niveau ?? 0} → ${(r.niveau ?? 0) + 1}</span><div class="fin-barre"><i style="width:${w1}%"></i><i class="g" style="width:${w2}%"></i></div><span class="vide-txt mono">${nf(tot)} / ${nf(suiv)} XP</span></div></div></div>
+    <section class="rev"><h3>Correction détaillée <span class="pastille">${sess.log.length} question${sess.log.length > 1 ? "s" : ""}</span></h3>
+    ${sess.log.map((l, k) => `<article class="rv ${l.nt ? "nt" : l.ok ? "ok" : "ko"}"><div class="rv-h"><span class="rv-n">${k + 1}</span>${l.it._n ? `<span class="pastille">${esc(titreNotion(l.it._n))}</span>` : ""}<span class="rv-s">${l.nt ? "Non traité" : l.ok ? "Juste" : "Raté"}</span></div>
+      <div class="rv-q">${enonceLog(l)}</div>
+      <div class="rv-a"><div><span>Ta réponse</span><b class="${l.ok ? "g" : "b"}">${donneeTxt(l)}</b></div>${l.ok ? "" : `<div><span>Bonne réponse</span><b class="g">${attenduLog(l) || "—"}</b></div>`}</div>
+      ${(l.etape != null ? ((l.it.etapes[l.etape] || {}).explication) : l.it.explication) ? `<div class="explication">${md(l.etape != null ? l.it.etapes[l.etape].explication : l.it.explication)}</div>` : (l.etape != null && l.it.etapes[l.etape].corrige ? `<div class="explication">${md(l.it.etapes[l.etape].corrige)}</div>` : "")}
+      <div class="rv-pied">${lienSignaler(l.it.id)}</div></article>`).join("")}</section></div>`;
+  scrollTo(0, 0);
 }
 
-/* ---------- exos longs : liste puis guidé / mock ---------- */
-const NOM_MODE = {guide:"Exos guidés", mock:"Exos classiques / mock"};
-function vueExos(ch, mode = "guide"){
-  vue("exos", () => {
-    L.appendChild(filCh(ch, NOM_MODE[mode]));
-    const st = etats(), ex = itemsDe([ch], ["exo"]);
-    const w = document.createElement("div");
-    w.innerHTML = `<h1 class="l-titre petit">${ic(mode === "mock" ? "pen" : "steps")} ${NOM_MODE[mode]}</h1>
-      <p class="vide-txt">${mode === "mock" ? `Énoncé seul, toutes les questions d'un coup, chrono, aucun indice. XP ×${fmt(V().modeMock)}.` : `Consignes étape par étape, indices possibles (−${Math.round(V().indiceCout*100)} % d'XP chacun). XP ×${fmt(V().modeGuide)}.`}</p>
-      ${petitEcran() ? `<p class="bandeau-mobile">Les exos longs sont plus confortables sur ordi, mais jouables ici.</p>` : ""}
-      <ul class="exos-liste">${ex.map(it => { const s = st[it.id] || {}, passages = s.runs ? Object.keys(s.runs).length : 0, ne = (it.etapes && it.etapes.length) || 1;
-        return `<li><button type="button" data-id="${esc(it.id)}" class="${s.valide ? "valide" : ""}">
-          <span class="etat">${s.valide ? "✓" : "○"}</span>
-          <span class="quoi"><b>${mdInline(it.titre || it.notion || it.id)}</b><small>${esc(ORIG[it.origine] || it.origine || "")}${it.notion && it.titre ? " · " + mdInline(it.notion) : ""}${it.generateur ? " · variantes" : ""}</small></span>
-          <span class="meta">${ic("timer")} ${minutes(dureeExo(it))} · ${ne} étape${ne > 1 ? "s" : ""}${passages ? ` · ${passages} passage${passages > 1 ? "s" : ""}` : ""}</span>
-        </button></li>`; }).join("")}</ul>
-      <div class="l-actions"><button type="button" class="btn" data-a="autre">${mode === "mock" ? "Passer en guidé" : "Passer en mock"}</button></div>`;
-    L.appendChild(w);
-    w.querySelectorAll("[data-id]").forEach(b => b.onclick = () => vueExo(b.dataset.id, ch, mode));
-    w.querySelector("[data-a=autre]").onclick = () => vueExos(ch, mode === "mock" ? "guide" : "mock");
-  });
-}
-function vueExo(id, ch, mode = "guide", g = null){
-  vue("exo", async () => {
-    L.appendChild(filCh(ch, mode === "mock" ? "Mock" : "Guidé"));
-    const zone = document.createElement("div"); zone.className = "zone-q"; L.appendChild(zone);
-    if(!g && mode === "guide") g = tirage(S.items[id]);   /* guidé : nouvelles valeurs à chaque ouverture */
-    const moi = S.vue, it = variante(S.items[id], g);
-    const relancer = S.items[id].generateur && EXT.generateurs[S.items[id].generateur] ? () => vueExo(id, ch, mode, tirage(S.items[id])) : null;
-    const r = await (mode === "mock" ? jouerMock(it, zone, {relancer}) : jouerExo(it, zone, {mode:"guide", relancer}));
-    if(S.vue === moi) { if(r && r.relance) return; vueExos(ch, mode); }
-  });
-}
+/* =====================================================================
+   ACTIONS (délégation de clics sur le lecteur)
+   ===================================================================== */
+const ACT = {
+  tab: b => { S2.tab = b.dataset.v; if(S2.tab === "exos") { S2.fl.etape = 1; } vueModule(); },
+  sub: b => { S2.sub = b.dataset.v; vueModule(); },
+  reprendre: () => { const n = progression().suivante; if(n) allerNotion(n.id); },
+  cf: b => allerNotion(b.dataset.id),
+  som: b => allerNotion(b.dataset.id),
+  eng: b => { const n = S.notions.find(x => ckId(x) === b.dataset.id); if(!n || lue(n)) return; S2.eng = b.dataset.id; majCarte(n, "expl"); },
+  ck: b => { const n = S.notions.find(x => ckId(x) === b.dataset.id); if(!n) return;
+    if(S2.sub === "expl" && S2.eng !== b.dataset.id){ S2.eng = b.dataset.id; majCarte(n, "expl"); return; }
+    repondreCheck(n, +b.dataset.i); },
+  retry: b => { const n = S.notions.find(x => ckId(x) === b.dataset.id); if(!n) return; delete S2.chkV[b.dataset.id]; S2.ord[b.dataset.id] = null; if(S2.sub === "expl") S2.eng = b.dataset.id; if(S2.sub === "follow") vueModule(); else majCarte(n, "expl"); },
+  train: b => { S2.tab = "exos"; S2.fl.pick = new Set([b.dataset.id]); S2.fl.mode = "express"; S2.fl.etape = 2; sessionExpress(); },
+  fa: b => { S2.fa = S.notions.findIndex(n => n.id === b.dataset.id); S2.fs = 0; vueModule(); },
+  fnext: () => { S2.fs++; vueModule(); },
+  fprev: () => { S2.fs = Math.max(0, S2.fs - 1); vueModule(); },
+  fback: () => { S2.fa = null; vueModule(); },
+  pk: b => { const p = S2.fl.pick, id = b.dataset.id; p.has(id) ? p.delete(id) : p.add(id); rendreExos($("m-corps")); },
+  pch: b => { const c = S.chapitres.find(x => x.id === b.dataset.id), ids = c.notions.map(n => n.id), tout = ids.every(i => S2.fl.pick.has(i)); ids.forEach(i => tout ? S2.fl.pick.delete(i) : S2.fl.pick.add(i)); rendreExos($("m-corps")); },
+  pall: () => { S.notions.forEach(n => S2.fl.pick.add(n.id)); rendreExos($("m-corps")); },
+  pnone: () => { S2.fl.pick.clear(); rendreExos($("m-corps")); },
+  perr: () => { const st = etats(), ee = erreursExos(); S2.fl.pick = new Set(S.notions.filter(n => statNotion(n, st, ee).err).map(n => n.id)); rendreExos($("m-corps")); },
+  exsuiv: () => { if(!S2.fl.pick.size) return; S2.fl.etape = 2; rendreExos($("m-corps")); scrollTo(0, 0); },
+  exprec: () => { S2.fl.etape = 1; rendreExos($("m-corps")); },
+  mode: b => { S2.fl.mode = b.dataset.v; rendreExos($("m-corps")); },
+  gtog: () => { S2.fl.guide = !S2.fl.guide; S2.fl.mode = "classique"; rendreExos($("m-corps")); },
+  annale: b => { S2.fl.annale = b.dataset.id || null; S2.fl.mode = "mock"; rendreExos($("m-corps")); },
+  go: () => lancerSession(),
+  quit: () => { S2.tab = "exos"; S2.fl.etape = 2; vueModule(); },
+  vers: b => { S2.fl.mode = b.dataset.v; S2.tab = "exos"; S2.fl.etape = 2; vueModule(); },
+  encore: () => { if(S2.suite) S2.suite(); }
+};
+L.addEventListener("click", e => { const b = e.target.closest("[data-m]"); if(b && ACT[b.dataset.m]) ACT[b.dataset.m](b, e); });
+L.addEventListener("keydown", e => { if((e.key === "Enter" || e.key === " ") && e.target.matches("[data-m][tabindex]")){ e.preventDefault(); e.target.click(); } });
 
-/* mock : énoncé + schéma + toutes les questions courtes, chrono, pas d'indice ; une réponse au moteur par étape */
+
+/* mock / classique : énoncé + schéma + toutes les questions courtes ; chrono seulement en mock ; une réponse au moteur par étape */
 function jouerMock(it, zone, opts = {}){
   return new Promise(resolve => {
     const run = M.debutExo(it.id);
     S.nettoyer = () => M.finExo(it.id);
     const etapes = (it.etapes && it.etapes.length) ? it.etapes : [{question:"Réponse", verif:it.verif, corrige:it.corrige}];
     const n = etapes.length, ctx = {module:S.mod.id, chapitre:S.chapDe[it.id]}, dTot = dureeExo(it), t0 = Date.now();
+    const mode = opts.mode || "mock", avecChrono = opts.chrono !== false && !opts.examen;
     zone.innerHTML = `<article class="q exo mock">
       ${teteItem(it, opts, `<span class="q-duree">${ic("timer")} ${minutes(dTot)} · ${n} question${n > 1 ? "s" : ""}</span>`)}
       ${it.titre ? `<h3 class="exo-titre">${mdInline(it.titre)}</h3>` : ""}
       <div class="mock-grille"><div><div class="q-enonce">${md(it.enonce)}</div>${it.schema ? SV.rendre(it.schema) : ""}</div>
-      <div class="mock-copie"><div class="chrono-mock" role="timer"></div><ol class="mock-qs"></ol>
+      <div class="mock-copie">${avecChrono ? `<div class="chrono-mock" role="timer"></div>` : ""}<ol class="mock-qs"></ol>
       <div class="actions"><button type="button" class="btn plein" data-a="rendre">Rendre la copie</button>${opts.relancer ? `<button type="button" class="btn" data-a="de">${ic("dice")} Autres valeurs</button>` : ""}</div>
       <div class="q-retour" hidden></div></div></div>
       <div class="actions q-actions">${lienSignaler(it.id)}</div></article>`;
     const art = zone.firstElementChild, ol = art.querySelector(".mock-qs"), ret = art.querySelector(".q-retour"), chrono = art.querySelector(".chrono-mock");
     const champs = etapes.map((e, k) => {
-      const li = document.createElement("li"); li.innerHTML = `<div class="mq-lib">${md(e.question || e.consigne || `Question ${k+1}`)}</div><div class="q-corps"></div><div class="mq-ret"></div>`;
+      const li = document.createElement("li"), rat = opts.aRattraper && opts.aRattraper.includes(k);
+      if(rat) li.classList.add("a-rattraper");
+      li.innerHTML = `${rat ? `<span class="pastille todo">À rattraper · ×${fmt(V().rattrapage)}</span>` : ""}<div class="mq-lib">${md(e.question || e.consigne || `Question ${k+1}`)}</div><div class="q-corps"></div><div class="mq-ret"></div>`;
       ol.appendChild(li);
       return creerChamp(li.querySelector(".q-corps"), e.verif || {mode:"auto"}, Object.assign({}, e, {ctx}));
     });
-    const tic = () => { const s = Math.round((Date.now() - t0)/1000), r = dTot*60 - s; chrono.textContent = `${r >= 0 ? "" : "+"}${Math.floor(Math.abs(r)/60)}:${String(Math.abs(r) % 60).padStart(2, "0")}`; chrono.classList.toggle("urgent", r < 60); };
-    tic(); S.chrono = setInterval(tic, 1000);
+    if(avecChrono){
+      const tic = () => { const s = Math.round((Date.now() - t0)/1000), r = dTot*60 - s; chrono.textContent = `${r >= 0 ? "" : "+"}${Math.floor(Math.abs(r)/60)}:${String(Math.abs(r) % 60).padStart(2, "0")}`; chrono.classList.toggle("urgent", r < 60); };
+      tic(); S.chrono = setInterval(tic, 1000);
+    }
     let rendu = false;
     const rendre = async () => {
-      if(rendu) return; rendu = true; clearInterval(S.chrono); S.chrono = 0;
+      if(rendu) return; rendu = true; if(avecChrono){ clearInterval(S.chrono); S.chrono = 0; }
       art.querySelectorAll("[data-a]").forEach(b => b.disabled = true);
       const secs = (Date.now() - t0)/1000/n; let nOk = 0, xp = 0;
       for(let k = 0; k < n; k++){
         const e = etapes[k], v = e.verif || {mode:"auto"}, ch = champs[k];
         const r = v.mode && v.mode !== "auto" ? await verifier(v, ch.lire(), ctx, ch) : {ok:false};
-        const d = M.reponse(it.id, !!r.ok, secs, {etape:k, indices:0, run, mode:"mock"});
+        const d = M.reponse(it.id, !!r.ok, secs, {etape:k, indices:0, run, mode});
+        if(opts.log) opts.log.push({it, etape:k, donnee:ch.lire(), ok:!!r.ok});
         if(r.ok){ nOk++; if(d && d.ok) xp += d.xp + d.bonus; }
         ch.el.readOnly = true; ch.el.classList.add(r.ok ? "juste" : "faux");
         ol.children[k].querySelector(".mq-ret").innerHTML = r.ok ? `<b class="ok-txt">✓</b>` : `<div class="corrige"><small>Correction</small>${corrigeDe(e, v) || md(e.explication || "")}</div>${r.msg ? `<small class="aide">${esc(r.msg)}</small>` : ""}`;
       }
       M.finExo(it.id); S.nettoyer = null;
+      if(opts.examen){ resolve({ok:nOk === n, partiel:nOk, n, xp}); return; }   /* mock : les corrections sont à l'écran de fin */
       ret.hidden = false; ret.className = "q-retour " + (nOk === n ? "ok" : "ko");
       ret.innerHTML = `<b class="verdict">${nOk === n ? "✓ Copie parfaite" : `${nOk}/${n} juste${nOk > 1 ? "s" : ""}`} <small>+${nf(xp)} XP</small></b>${it.explication ? `<div class="explication">${md(it.explication)}</div>` : ""}`;
       const act = art.querySelector(".mock-copie .actions");
@@ -1036,72 +1277,8 @@ function jouerMock(it, zone, opts = {}){
       const bd = act.querySelector("[data-a=de]"); if(bd) bd.onclick = () => { resolve({relance:true}); opts.relancer(); };
     };
     art.querySelector("[data-a=rendre]").onclick = rendre;
-    const bd = art.querySelector("[data-a=de]"); if(bd) bd.onclick = () => { M.finExo(it.id); S.nettoyer = null; resolve({relance:true}); opts.relancer(); };
+    const bd = art.querySelector("[data-a=de]"); if(bd) bd.onclick = () => { M.finExo(it.id); S.nettoyer = null; resolve({relance:true}); opts.relancer && opts.relancer(); };
     if(champs[0]) champs[0].focus();
-  });
-}
-
-/* ---------- examen blanc chronométré ---------- */
-function vueExamen(id){
-  const ex = S.items[id]; if(!ex) return;
-  const liste = (ex.items || []).map(i => S.items[i]).filter(it => it && it.type !== "examen");
-  const duree = +ex.duree || liste.reduce((a, it) => a + (it.type === "exo" ? dureeExo(it) : it.type === "saisie" ? (+it.duree || .67) : .33), 0);
-  vue("examen", () => {
-    L.appendChild(fil("Examen · " + esc(ex.titre || "Examen blanc")));
-    const w = document.createElement("div");
-    w.innerHTML = `<section class="fenetre exam-intro" data-titre="examen.exe">
-      <h1 class="l-titre petit">${esc(ex.titre || "Examen blanc")}</h1>
-      ${ex.enonce ? `<div class="q-enonce">${md(ex.enonce)}</div>` : ""}
-      <ul class="exam-infos"><li>${ic("timer")} <b>${minutes(duree)}</b> chrono</li><li>${liste.length} item${liste.length > 1 ? "s" : ""}</li><li>Pas de correction avant la fin (sauf étapes d'exo)</li><li>Chaque item rapporte son XP normale</li></ul>
-      <div class="actions"><button type="button" class="btn plein" data-a="go">Lancer le chrono</button></div>
-    </section>`;
-    L.appendChild(w);
-    w.querySelector("[data-a=go]").onclick = () => lancerExamen(ex, liste, duree);
-  });
-}
-function lancerExamen(ex, liste, duree){
-  vue("examen-en-cours", async () => {
-    const moi = S.vue, fin = Date.now() + duree*6e4;
-    const chrono = document.createElement("div"); chrono.className = "chrono"; chrono.setAttribute("role", "timer");
-    const zone = document.createElement("div"); zone.className = "zone-q";
-    L.append(fil("Examen en cours · " + esc(ex.titre || "")), chrono, zone);
-    const res = []; let fini = false;
-    const conclure = (temps) => {
-      if(fini || S.vue !== moi) return; fini = true;
-      clearInterval(S.chrono); S.chrono = 0;
-      if(S.nettoyer){ S.nettoyer(); S.nettoyer = null; }
-      S.touches = null;
-      const nOk = res.filter(r => r.ok).length, xp = res.reduce((a, r) => a + (r.xp || 0), 0);
-      if(temps) toast("⏱ Temps écoulé ! Copie ramassée."); chrono.remove();
-      zone.innerHTML = `<section class="fenetre bilan" data-titre="copie_corrigee.txt">
-        <p class="gros">${nOk}/${liste.length} <small>réussis</small></p>
-        <p>+${nf(xp)} XP${temps ? ` · ${liste.length - res.length} item(s) non traité(s)` : ""}</p>
-        <ol class="correction">${liste.map((it, k) => { const r = res[k];
-          const etat = !r ? "nt" : r.ok ? "ok" : "ko";
-          return `<li class="${etat}"><details><summary>${etat === "ok" ? "✓" : etat === "ko" ? (r.partiel ? `◐ ${r.partiel}/${r.n}` : "✗") : "—"} <span>${mdInline(String(it.titre || it.enonce || "").split("\n")[0].slice(0, 100))}</span></summary>
-            ${it.type === "qcm" || it.type === "qcm-multi" ? `<p>Bonne(s) réponse(s) : ${[].concat((it.verif && it.verif.attendu) ?? it.bonnes ?? it.bonne ?? []).map(a => typeof a === "number" ? mdInline((it.choix || [])[a]) : mdInline(a)).join(" · ")}</p>` : ""}
-            ${it.type === "saisie" && corrigeDe(it, it.verif) ? `<div class="corrige"><small>Réponse attendue</small>${corrigeDe(it, it.verif)}</div>` : ""}
-            ${it.explication ? `<div class="explication">${md(it.explication)}</div>` : ""}
-            ${lienSignaler(it.id)}</details></li>`; }).join("")}</ol>
-        <div class="actions"><button type="button" class="btn plein" data-a="retour">Retour au module</button></div>
-      </section>`;
-      zone.querySelector("[data-a=retour]").onclick = vueAccueil;
-      scrollTo(0, 0);
-    };
-    const tic = () => {
-      const r = Math.max(0, fin - Date.now()), m = Math.floor(r/6e4), s = Math.floor(r/1000) % 60;
-      chrono.textContent = `⏱ ${m}:${String(s).padStart(2, "0")} · item ${Math.min(res.length+1, liste.length)}/${liste.length}`;
-      chrono.classList.toggle("urgent", r < 6e4 * Math.min(5, duree/5));
-      if(r <= 0) conclure(true);
-    };
-    tic(); S.chrono = setInterval(tic, 1000);
-    for(let k = 0; k < liste.length; k++){
-      const r = await jouer(liste[k], zone, {examen:true, sansAttente:false, pos:`${k+1}/${liste.length}`, dernier:k === liste.length-1});
-      if(fini || S.vue !== moi) return;
-      res.push({ok:r.ok, partiel:r.partiel, n:r.n, xp:r.xp != null ? r.xp : (r.d && r.d.ok ? r.d.xp + r.d.bonus : 0)});
-      tic();
-    }
-    conclure(false);
   });
 }
 
@@ -1132,17 +1309,19 @@ const chs = await Promise.all((mod.chapitres || []).map(ch => fetch(`banques/${m
 S.chapitres = chs.filter(Boolean).sort((a, b) => (a.ordre ?? 0) - (b.ordre ?? 0));
 for(const c of S.chapitres){
   c.module = c.module || mod.id;
+  normaliser(c);
   M.charger(c);
   for(const it of c.items || []){ S.items[it.id] = it; S.chapDe[it.id] = c.id; }
 }
+indexerNotions();
 const manquants = (mod.chapitres || []).length - S.chapitres.length;
 await pInit;
 const reg = M.interne.config && M.interne.config.modules && M.interne.config.modules[mod.id];   /* icône réglée dans le panel */
 if(reg && reg.icone) S.mod.icone = reg.icone;
-vueAccueil();
+vueModule();
 if(manquants > 0) toast(`${manquants} chapitre(s) n'ont pas pu être chargés`);
 let tMaj = 0;
-M.on(() => { if(S.vue === "accueil"){ clearTimeout(tMaj); tMaj = setTimeout(rendreAccueil, 120); } });
+M.on(() => { if(S.vue === "module"){ clearTimeout(tMaj); tMaj = setTimeout(majEntete, 120); } });
 })();
 </script>
 </body>

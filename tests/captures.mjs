@@ -67,16 +67,15 @@ const SCENARIOS = {
   async module(app){
     const pg = await page(app); await pg.goto(URL0 + "module.html?mock=mia&reset#complement-electronique");
     await pg.waitForFunction(() => window.moteur && window.moteur.etat()); await attendre(1000);
-    await capture(pg, `module-1-accueil-${app}`);
-    const ch = await pg.$("[data-chapitre], .carte-chapitre, .chapitres a, .chapitres button");
-    if(ch){ await ch.click(); await attendre(900); await capture(pg, `module-2-chapitre-${app}`); }
+    await capture(pg, `module-1-cours-${app}`);
+    if(!(await pg.$$eval(".notion", e => e.length))) erreurs.push(`[${app}] aucune notion affichée dans Cours / Explicatif`);
+    await pg.click('[data-m="tab"][data-v="exos"]'); await attendre(300); await capture(pg, `module-2-exos-menu-${app}`);
     return pg;
   },
-  /* schémas de circuit + LaTeX (KaTeX via le CDN) dans les 3 vues de cours et un exo guidé */
+  /* schémas de circuit + LaTeX (KaTeX via le CDN) : Explicatif, TL;DR, Follow-along et un exo guidé */
   async schemas(app){
     const pg = await page(app); await pg.goto(URL0 + "module.html?mock=mia&reset#complement-electronique");
     await pg.waitForFunction(() => window.moteur && window.moteur.etat()); await attendre(800);
-    const ouvrirCh = async () => { await pg.click('[data-ch="elec-4-thevenin-norton"]'); await pg.waitForSelector('.mode-tuile[data-a="fa"]'); await attendre(300); };
     const verifier = async nom => {
       const v = await pg.evaluate(() => ({katex:document.querySelectorAll(".katex").length, brut:/\$[^$\s][^$]*\$/.test(document.querySelector("#lecteur").innerText), svg:document.querySelectorAll("#lecteur svg").length}));
       if(!v.katex) erreurs.push(`[${app}] ${nom} : aucune formule KaTeX rendue`);
@@ -85,15 +84,68 @@ const SCENARIOS = {
       await capture(pg, `schema-${nom}-${app}`);
       return v;
     };
-    for(const [a, nom] of [["fa", "follow"], ["cl", "fiche"], ["tl", "tldr"], ["gu", "guide"]]){
-      await ouvrirCh();
-      if(await pg.$eval(`.mode-tuile[data-a="${a}"]`, b => b.disabled)){ console.log(`   ${nom} : pas de contenu dans ce chapitre`); await pg.goto(URL0 + "module.html?v=x" + a + "#complement-electronique"); await attendre(800); continue; }
-      await pg.click(`.mode-tuile[data-a="${a}"]`); await attendre(900);
-      if(a === "gu"){ const exo = await pg.$("#lecteur .exos-liste button, #lecteur [data-exo], #lecteur .exo-carte"); if(exo){ await exo.click(); await attendre(900); } }
-      const v = await verifier(nom);
-      if((a === "fa" || a === "gu") && !v.svg) erreurs.push(`[${app}] ${nom} : pas de schéma de circuit`);
-      await pg.goto(URL0 + "module.html?v=" + a + "#complement-electronique"); await pg.waitForFunction(() => window.moteur && window.moteur.etat()); await attendre(500);
+    let v = await verifier("explicatif");
+    if(!v.svg) erreurs.push(`[${app}] explicatif : pas de schéma de circuit`);
+    await pg.click('[data-m="sub"][data-v="tldr"]'); await attendre(500); await verifier("tldr");
+    await pg.click('[data-m="sub"][data-v="follow"]'); await attendre(300);
+    await pg.click('[data-m="fa"][data-id="3.3"]'); await attendre(600);
+    v = await verifier("follow"); if(!v.svg) erreurs.push(`[${app}] follow : pas de schéma de circuit`);
+    await pg.click('[data-m="tab"][data-v="exos"]'); await pg.click('[data-m="pch"][data-id="elec-4-thevenin-norton"]'); await pg.click('[data-m="exsuiv"]');
+    await pg.click('[data-m="gtog"]'); await pg.click('[data-m="go"]'); await attendre(900);
+    v = await verifier("guide"); if(!v.svg) erreurs.push(`[${app}] guide : pas de schéma de circuit`);
+    return pg;
+  },
+  /* nouveau layout : check flouté (carte repliée → clic → flou → réussite), puis Express / Classique / Mock jusqu'à l'écran de fin */
+  async sessions(app){
+    const pg = await page(app); await pg.goto(URL0 + "module.html?mock=mia&reset#complement-electronique");
+    await pg.waitForFunction(() => window.moteur && window.moteur.etat()); await attendre(1000);
+    const flou = () => pg.evaluate(() => document.body.classList.contains("voile-on"));
+    const id = "#c-elec-3-associations-ctl-3";
+    await pg.evaluate(i => document.querySelector(i).scrollIntoView({block:"center"}), id); await attendre(400);
+    if(await pg.$$eval(id + " .choix button", e => e.length)) erreurs.push(`[${app}] la question du check est visible avant le clic`);
+    await pg.click(id); await attendre(300);
+    if(!(await flou())) erreurs.push(`[${app}] pas de flou après le clic sur la carte du check`);
+    await capture(pg, `check-flou-${app}`);
+    for(const bon of [false, true]){
+      for(const b of await pg.$$(id + " .choix button")){ const t = await b.textContent(); if((t.includes("2\\ \\Omega") && !t.includes("12")) === bon){ await b.click(); break; } }
+      await attendre(300);
+      if(!bon) await pg.click('[data-m="retry"]');
     }
+    if(!(await pg.evaluate(() => window.moteur.etat().controles.includes("elec-3-associations-ctl-3")))) erreurs.push(`[${app}] check non validé après la bonne réponse`);
+    if(await flou()) erreurs.push(`[${app}] le flou reste actif après la réussite`);
+    const aller = async (mode, depart = false) => {
+      if(depart){ await pg.click('[data-m="tab"][data-v="exos"]'); await attendre(200); await pg.click('[data-m="pall"]'); await pg.click('[data-m="exsuiv"]'); }
+      else { await pg.click('[data-m="quit"]'); await attendre(300); }   /* « Retour au menu » de l'écran de fin : sélection conservée */
+      await pg.click(`[data-m="mode"][data-v="${mode}"]`); await pg.click('[data-m="go"]'); await attendre(500);
+    };
+    const finir = async nom => {
+      await attendre(600);
+      if(!(await pg.$(".fin"))) erreurs.push(`[${app}] ${nom} : pas d'écran de fin`);
+      const n = await pg.$$eval(".rv", e => e.length); if(!n) erreurs.push(`[${app}] ${nom} : pas de correction détaillée`);
+      await capture(pg, `fin-${nom}-${app}`);
+    };
+    await aller("express", true);
+    for(let q = 0; q < 14 && !(await pg.$(".fin")); q++){
+      for(let t = 0; t < 30; t++){
+        if(await pg.$(".frag")){ const nb = await pg.$$eval(".trou", e => e.length); for(let k = 0; k < nb; k++){ await pg.click(".frag >> nth=0"); await pg.click(".trou >> nth=" + k); } await pg.click("[data-a=valider]"); break; }
+        if(await pg.$(".choix button")){ await pg.click(".choix button >> nth=0"); const mv = await pg.$("[data-a=valider]"); if(mv) await mv.click(); break; }
+        if(await pg.$(".entree")){ await pg.fill(".entree", "1"); await pg.click("[data-a=valider]"); break; }
+        await attendre(250);
+      }
+      await attendre(300); const sv = await pg.$("[data-a=suivant]"); if(sv){ await sv.click(); await attendre(300); }
+    }
+    await finir("express");
+    await aller("classique"); await attendre(300);
+    for(const i of await pg.$$(".mock-qs .entree")) await i.fill("1");
+    await pg.click('[data-a="rendre"]'); await attendre(500); await pg.click('[data-a="fin"]'); await finir("classique");
+    await aller("mock");
+    for(let k = 0; k < 10 && !(await pg.$(".fin")); k++){
+      const r = await pg.$('[data-a="rendre"]');
+      if(r){ for(const i of await pg.$$(".mock-qs .entree")) await i.fill("1"); await r.click(); await attendre(600); continue; }
+      if(await pg.$(".entree")){ await pg.fill(".entree", "1"); await pg.click("[data-a=valider]"); await attendre(400); const sv = await pg.$("[data-a=suivant]"); if(sv) await sv.click(); }
+      await attendre(300);
+    }
+    await finir("mock");
     return pg;
   },
   /* demandes en attente sur l'accueil (Adam) : validation directe + compteur sur « Admin » ; rien pour un joueur */

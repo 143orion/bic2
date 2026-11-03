@@ -6,8 +6,8 @@
      moteur.charger(chapitreJson)               // déclare les items d'une banque
      moteur.monterHeader({page:"module", module:{id,nom}})
      moteur.debutExo(idExo)                     // ouvre un passage d'exo long
-     moteur.reponse(idQuestion, correct, tempsMisSecondes, {etape, indices, mode})  // mode d'exo : "guide" | "mock"
-     moteur.reponse(moteur.idControle(chapitre, n), correct)  // question de contrôle d'un parcours (cours)
+     moteur.reponse(idQuestion, correct, tempsMisSecondes, {etape, indices, mode})  // mode d'exo : "guide" | "classique" | "mock"
+     moteur.reponse(<id du check de la notion>, correct)  // check de validation d'une notion (cours) ; id = check.id ou <chapitre>-ctl-<n°>
    Les modules ne calculent JAMAIS l'XP. Tout est recalculé ici depuis le
    journal d'événements (data/users/<id>/j_<jour>_<appareil>), avec les
    chiffres du doc config/actuelle (DEFAUT ne sert que si la base est vide).
@@ -17,9 +17,9 @@
 
 /* ---------- réglages par défaut (miroir de GAMIFICATION.md) ---------- */
 const DEFAUT = {
-  xpParMinute:20, qcm:7, qcmMulti:10, controle:5, formatProduction:1.5, modeGuide:1.2, modeMock:1.5,
+  xpParMinute:20, qcm:7, qcmMulti:10, trous:10, controle:5, formatProduction:1.5, modeGuide:1.2, modeClassique:1.75, modeMock:2,
   concentrationDiv:90, concentrationMax:1.5, dureeSaisie:0.67,
-  revanche:5,
+  rattrapage:1.1,
   exoSeuil1:0.30, exoSeuilN:0.15, exoPenalite:0.5, exoPassagesPleins:3, exoMultApres:0.5,
   repetitionJour:0.3, maitriseJours:3, maitriseBonus:15, maitriseMult:0.5, evalFenetre:14,
   precisionMin:10, precision:[[70,10],[80,20],[90,35],[100,50]],
@@ -29,7 +29,7 @@ const DEFAUT = {
   plafondSeuil1:240, plafondSeuil2:360, plafondMult2:0.5, plafondMult3:0.25, plafondEvalBonus:60,
   indiceCout:0.3, indicesMax:2,
   niveauCoef:50,
-  classementEffortMax:600, classementTaux1:165, classementTaux2:83, classementTaux3:42, classementDebut:"2026-10-31"
+  classementEffortMax:600, classementTaux1:220, classementTaux2:111, classementTaux3:56, classementDebut:"2026-10-31"
 };
 const RANGS = ["newgen","bit","octet","registre","sudoer","daemon","compilateur","l33t","opérateur","kernel","root"];
 const GLYPHS = "!<>-_\\/[]{}=+*^?#01$%&";
@@ -88,7 +88,7 @@ function calculer(evenements, ctx = {}){
 
   /* Le journal est écrit par le joueur : on ne lui fait pas confiance.
      Type, durée, module, nb d'étapes viennent des BANQUES (ctx.catalogue) ; le reste est borné. */
-  const cat = ctx.catalogue || null, tMax = now + 5*6e4, TYPES = ["qcm","qcm-multi","saisie","exo","controle"];
+  const cat = ctx.catalogue || null, tMax = now + 5*6e4, TYPES = ["qcm","qcm-multi","saisie","trous","exo","controle"];
   const propre = e => {
     if(!e || typeof e !== "object" || typeof e.i !== "string" || e.i.length > 40 || typeof e.q !== "string" || e.q.length > 120) return null;
     const t = +e.t; if(!isFinite(t) || t <= 0 || t > tMax) return null;
@@ -102,7 +102,7 @@ function calculer(evenements, ctx = {}){
       const sd = it.dureesEtapes && it.dureesEtapes[x.e]; if(sd != null) x.sd = +sd; else delete x.sd;
     } else { x.d = Math.min(x.d, 120); if(x.sd != null) x.sd = Math.min(x.sd, x.d); }
     if(!TYPES.includes(x.ty) || x.e >= x.ne) return null;
-    if(x.ty === "exo"){ x.r = String(e.r || "?").slice(0,40); x.mo = e.mo === "mock" && !x.h ? "mock" : "guide"; }  // mock avec indices = guidé
+    if(x.ty === "exo"){ x.r = String(e.r || "?").slice(0,40); x.mo = (e.mo === "mock" || e.mo === "classique") && !x.h ? e.mo : "guide"; }  // classique / mock avec indices = guidé
     return x;
   };
   const vus = new Set();
@@ -126,14 +126,15 @@ function calculer(evenements, ctx = {}){
       const dOrig = e.d || 1, dTot = durees[e.q] != null ? +durees[e.q] : dOrig, ne = e.ne || 1;
       const sd = (e.sd != null ? e.sd : dOrig/ne) * (dTot/dOrig);
       effort = sd;
-      const x = exos[e.q] || (exos[e.q] = {runs:[], ok:{}, valide:false, m:e.m});
+      const x = exos[e.q] || (exos[e.q] = {runs:[], ok:{}, err:new Set(), valide:false, m:e.m});
       if(!x.runs.includes(e.r)) x.runs.push(e.r);
       const passage = x.runs.indexOf(e.r) + 1;
       if(ok){
         const conc = Math.min(1 + dTot/v.concentrationDiv, v.concentrationMax);
         xp = v.xpParMinute * sd * v.formatProduction * conc;
         f.push("exo ×"+fmt(v.formatProduction)); if(conc > 1.005) f.push("concentration ×"+fmt(conc));
-        const mm = e.mo === "mock" ? v.modeMock : v.modeGuide; xp *= mm; f.push((e.mo === "mock" ? "mock" : "guidé")+" ×"+fmt(mm));
+        const mm = e.mo === "mock" ? v.modeMock : e.mo === "classique" ? v.modeClassique : v.modeGuide; xp *= mm; f.push((e.mo === "mock" ? "mock" : e.mo === "classique" ? "classique" : "guidé")+" ×"+fmt(mm));
+        if(x.err.has(e.e || 0)){ xp *= v.rattrapage; f.push("rattrapage ×"+fmt(v.rattrapage)); x.err.delete(e.e || 0); }
         if(passage > v.exoPassagesPleins){ xp *= v.exoMultApres; f.push(passage+"e passage ×"+fmt(v.exoMultApres)); }
         const seuil = passage === 1 ? v.exoSeuil1 : v.exoSeuilN;
         if(e.tm != null && e.tm < sd*60*seuil){
@@ -142,7 +143,7 @@ function calculer(evenements, ctx = {}){
         }
         const s = x.ok[e.r] || (x.ok[e.r] = new Set()); s.add(e.e || 0);
         if(s.size >= ne && !x.valide){ x.valide = true; m.exos.add(e.q); }
-      }
+      } else x.err.add(e.e || 0);
     } else if(e.ty === "controle"){
       /* question de contrôle du cours (follow-along) : un peu d'XP, une seule fois à vie */
       if(ctls[e.q]) f.push("contrôle déjà validé : 0 XP");
@@ -150,9 +151,10 @@ function calculer(evenements, ctx = {}){
     } else {
       const it = items[e.q] || (items[e.q] = {jours:new Set(), maitrise:false, bonusDonne:false, cred:"", erreur:false, m:e.m});
       const prod = e.ty === "saisie";
-      effort = (prod ? v.effortSaisie : e.ty === "qcm-multi" ? v.effortQcmMulti : v.effortQcm) * (it.maitrise ? .5 : 1);
+      effort = (prod ? v.effortSaisie : (e.ty === "qcm-multi" || e.ty === "trous") ? v.effortQcmMulti : v.effortQcm) * (it.maitrise ? .5 : 1);
       if(ok){
         if(e.ty === "qcm-multi"){ xp = v.qcmMulti; f.push("QCM multi"); }
+        else if(e.ty === "trous"){ xp = v.trous; f.push("code à trous"); }
         else if(prod){
           const d = durees[e.q] != null ? +durees[e.q] : (e.d || v.dureeSaisie);
           const conc = Math.min(1 + d/v.concentrationDiv, v.concentrationMax);
@@ -163,7 +165,7 @@ function calculer(evenements, ctx = {}){
           it.cred = jour;
           if(it.maitrise){ if(evl) f.push("mode éval ×1"); else { xp *= v.maitriseMult; f.push("maîtrisée ×"+fmt(v.maitriseMult)); } }
         }
-        if(it.erreur){ bonus += v.revanche; f.push("revanche +"+v.revanche); it.erreur = false; }
+        if(it.erreur){ xp *= v.rattrapage; f.push("rattrapage ×"+fmt(v.rattrapage)); it.erreur = false; }
         it.jours.add(jour);
         if(!it.maitrise && it.jours.size >= v.maitriseJours){
           it.maitrise = true; maitrise = true;
@@ -427,12 +429,16 @@ function ajouterAuCatalogue(cat, ch, moduleId){
     const et = it.etapes || [];
     cat[it.id] = {type:it.type, duree:it.duree, module:ch.module || moduleId, chapitre:ch.id, etapes:et.length || 1, dureesEtapes:et.map(s => s.duree)};
   }
-  /* questions de contrôle des parcours (follow-along) : id = controle.id, sinon <chapitre>-ctl-<n° de notion> */
+  /* checks de validation des notions : id = check.id, sinon <chapitre>-ctl-<n° de notion> */
+  ((ch && ch.notions) || []).forEach((n, k) => {
+    if(n && n.check && ch.id) cat[n.check.id || `${ch.id}-ctl-${k}`] = {type:"controle", duree:0, module:ch.module || moduleId, chapitre:ch.id, etapes:1, dureesEtapes:[]};
+  });
+  /* anciens chapitres (parcours + controle) */
   ((ch && ch.parcours) || []).forEach((p, k) => {
     if(p && p.controle && ch.id) cat[idControle(ch, k)] = {type:"controle", duree:0, module:ch.module || moduleId, chapitre:ch.id, etapes:1, dureesEtapes:[]};
   });
 }
-function idControle(ch, k){ const p = ((ch && ch.parcours) || [])[k]; return (p && p.controle && p.controle.id) || `${ch.id}-ctl-${k}`; }
+function idControle(ch, k){ const n = ((ch && ch.notions) || [])[k]; if(n && n.check) return n.check.id || `${ch.id}-ctl-${k}`; const p = ((ch && ch.parcours) || [])[k]; return (p && p.controle && p.controle.id) || `${ch.id}-ctl-${k}`; }
 
 let initP = null;
 async function init(opts = {}){
@@ -482,7 +488,7 @@ function reponse(id, correct, tempsMis, extra = {}){
   if(tempsMis != null) ev.tm = Math.round(tempsMis*10)/10;
   if(extra.indices) ev.h = extra.indices;
   if(it.type === "exo"){
-    ev.mo = extra.mode === "mock" && !extra.indices ? "mock" : "guide";
+    ev.mo = (extra.mode === "mock" || extra.mode === "classique") && !extra.indices ? extra.mode : "guide";
     ev.e = extra.etape || 0; ev.ne = it.etapes; ev.r = extra.run || E.runs[id] || debutExo(id);
     const sd = it.dureesEtapes && it.dureesEtapes[ev.e]; if(sd != null) ev.sd = sd;
   }
@@ -611,7 +617,7 @@ function bulle(d){
     ? `<b>+${nf(tot)} XP</b> · ${esc(d.f.join(" · "))}`
     : d.ty === "exo" ? `<b>0 XP</b> · étape à retravailler`
     : d.ty === "controle" ? `<b>0 XP</b> · relis l'explication, l'XP reste à prendre`
-    : `<b>0 XP</b> · à retenter : +${valeursPour(E.config, d.jour).revanche} XP de revanche quand tu la réussiras`;
+    : `<b>0 XP</b> · à retenter : ×${fmt(valeursPour(E.config, d.jour).rattrapage)} d'XP quand tu la réussiras`;
   if(d.contestable && E.mode === "synchro"){
     const c = document.createElement("button"); c.type = "button"; c.textContent = "Contester";
     c.onclick = async () => { c.disabled = true; c.textContent = "envoi…"; const ok = await contester(d.i).catch(() => false); c.textContent = ok ? "envoyé ✓" : "échec"; };

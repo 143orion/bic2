@@ -209,7 +209,7 @@ const badge = (id, n) => { const b = document.querySelector(`[data-nb="${id}"]`)
    RÉGLAGES + SIMULATEUR
    ===================================================================== */
 const SCHEMA = [
-  ["XP par réponse", [["xpParMinute","XP par minute théorique"],["qcm","QCM simple (XP)"],["qcmMulti","QCM multi tout juste (XP)"],["controle","Contrôle du cours, 1re réussite (XP)"],["formatProduction","Format production ×"],["modeGuide","Exo en mode guidé ×"],["modeMock","Exo en mode classique / mock ×"],["concentrationDiv","Concentration : 1 + durée / …"],["concentrationMax","Concentration max ×"],["dureeSaisie","Durée d'une saisie par défaut (min)"],["revanche","Revanche (+XP)"]]],
+  ["XP par réponse", [["xpParMinute","XP par minute théorique"],["qcm","QCM simple (XP)"],["qcmMulti","QCM multi tout juste (XP)"],["controle","Contrôle du cours, 1re réussite (XP)"],["formatProduction","Format production ×"],["trous","Code à trous tout juste (XP)"],["modeGuide","Exo en mode guidé ×"],["modeClassique","Exo en mode classique ×"],["modeMock","Exo en mode mock ×"],["concentrationDiv","Concentration : 1 + durée / …"],["concentrationMax","Concentration max ×"],["dureeSaisie","Durée d'une saisie par défaut (min)"],["rattrapage","Rattrapage d'une erreur ×"]]],
   ["Anti-farm & maîtrise", [["exoSeuil1","Exo trop rapide : seuil 1er passage"],["exoSeuilN","Exo trop rapide : seuil passages suivants"],["exoPenalite","Exo trop rapide ×"],["exoPassagesPleins","Passages d'exo à ×1"],["exoMultApres","Passages suivants ×"],["repetitionJour","Question refaite le même jour ×"],["maitriseJours","Maîtrise : jours de réussite"],["maitriseBonus","Bonus de maîtrise (+XP)"],["maitriseMult","Question maîtrisée ×"],["evalFenetre","Mode éval : jours avant l'éval"]]],
   ["Précision (fin de session)", [["precisionMin","Réponses minimum"],["precision","Paliers % réussite : % bonus","p"]]],
   ["Sessions & endurance", [["sessionInactivite","Fin de session après (min)"],["effortQcm","Effort d'un QCM (min)"],["effortQcmMulti","Effort d'un QCM multi (min)"],["effortSaisie","Effort d'une saisie (min)"],["endurance","Paliers minutes : % bonus","p"]]],
@@ -236,7 +236,7 @@ function exemples(v){
   const conc = d => Math.min(1 + d/v.concentrationDiv, v.concentrationMax), prod = d => v.xpParMinute*d*v.formatProduction*conc(d);
   const pal = (l, x) => { let r = 0; for(const [s, b] of l) if(x >= s) r = b; return r; };
   return [
-    ["Contrôle du cours (1 fois)", v.controle], ["QCM simple", v.qcm], ["QCM multi", v.qcmMulti], ["Tapée 40 s", prod(v.dureeSaisie)], ["Exo 10 min guidé", prod(10)*v.modeGuide], ["Exo 10 min mock", prod(10)*v.modeMock], ["Exo 45 min guidé", prod(45)*v.modeGuide], ["Exo 45 min mock", prod(45)*v.modeMock],
+    ["Contrôle du cours (1 fois)", v.controle], ["QCM simple", v.qcm], ["QCM multi", v.qcmMulti], ["Tapée 40 s", prod(v.dureeSaisie)], ["Code à trous", v.trous], ["Exo 10 min guidé", prod(10)*v.modeGuide], ["Exo 10 min classique", prod(10)*v.modeClassique], ["Exo 10 min mock", prod(10)*v.modeMock], ["Exo 45 min guidé", prod(45)*v.modeGuide], ["Exo 45 min classique", prod(45)*v.modeClassique], ["Exo 45 min mock", prod(45)*v.modeMock],
     ["Bonus 1 h à 90 % au 10e jour", "+" + (pal(v.precision, 90) + pal(v.endurance, 60) + Math.min(10*v.seriePas, v.seriePlafond)) + " %"],
     ["Niveau 10", v.niveauCoef*100], ["Niveau 50", v.niveauCoef*2500], ["Niveau 100", v.niveauCoef*10000]
   ];
@@ -355,7 +355,7 @@ const ITEMS = {};
 function xpRendue(q){
   const it = ITEMS[q]; if(!it) return null;
   const v = actuelles(), d0 = (E.config && E.config.durees || {})[q] ?? it.duree, conc = d => Math.min(1 + d/v.concentrationDiv, v.concentrationMax), prod = d => v.xpParMinute*d*v.formatProduction*conc(d);
-  const x = it.type === "qcm" ? v.qcm : it.type === "qcm-multi" ? v.qcmMulti : it.type === "saisie" ? prod(d0 || v.dureeSaisie) : it.type === "exo" ? prod(d0 || 1)*v.modeGuide : null;
+  const x = it.type === "qcm" ? v.qcm : it.type === "qcm-multi" ? v.qcmMulti : it.type === "trous" ? v.trous : it.type === "saisie" ? prod(d0 || v.dureeSaisie) : it.type === "exo" ? prod(d0 || 1)*v.modeGuide : null;
   return x == null ? null : Math.round(x);
 }
 async function rendreModules(){

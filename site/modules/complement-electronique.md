@@ -32,6 +32,12 @@ Ids des items : `e<chapitre>-0xx` (questions courtes), `e<chapitre>-1xx` (exos),
 - **labos** (mode Classique) : `diviseur` (ch. 3), `thev-charge` (ch. 4).
 - États de schéma par étape / écran : `surligne`, `eteint` (grisé = débranché ou source de courant éteinte), `court` (source de tension éteinte dessinée comme un fil « = 0 »).
 
+## Migration vers le layout baseline (03/11/2026, branche refonte-lecteur)
+- **Chapitre 3 migré** (test) au format `notions[]` : 3.1 série · 3.2 parallèle · 3.3 diviseur de tension (schéma + labo `diviseur`) · 3.4 diviseur de courant · 3.5 association de générateurs. Chaque notion a `corps`, `rec`, `alt`, `pre`, `ecrans` et `check`.
+- Ids des checks **explicites** pour garder l'historique des anciens contrôles : 3.3 = `elec-3-associations-ctl-0`, 3.4 = `-ctl-1` (anciens parcours), 3.1 = `-ctl-2`, 3.2 = `-ctl-3`, 3.5 = `-ctl-4`.
+- Nouveaux items : `e3-011` et `e3-012` (code à trous). Les items pointent vers une notion par son id (`notion: "3.2"`).
+- Chapitres 0, 1, 2, 4, 5 : encore à l'ancien format, affichés par la compatibilité du lecteur (notion `<ordre>.<n° de carte de fiche>`, contrôle repris du parcours). À migrer en gardant ces ids.
+
 ## Règles de correction propres au module
 - Réponses numériques en mode `numerique` avec `unite` (V, A, Ω, W, Hz, S) : « 5 mA », « 0,005 », « 4,7 kΩ » acceptés ; tolérance ±1 % (absolue 0,01 quand la réponse vaut 0 ou est négative).
 - Signes : le sens est celui des flèches du schéma ; une valeur négative est attendue quand le sens réel est opposé.
