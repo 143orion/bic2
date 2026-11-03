@@ -19,5 +19,25 @@
   ],
   "items": 86,
   "ext": true
+ },
+ {
+  "id": "programmation-c",
+  "nom": "Programmation C",
+  "icone": "{}",
+  "theme": {
+   "bg": "#212842",
+   "fg": "#F0E7D5",
+   "ac": "#F0E7D5",
+   "onAc": "#212842",
+   "font": "'Fira Code',ui-monospace,monospace",
+   "googleFont": "Fira Code:wght@400;500;600"
+  },
+  "chapitres": [
+   "c-1-prise-en-main",
+   "c-2-variables-types",
+   "c-3-entrees-sorties",
+   "c-4-controle"
+  ],
+  "items": 103
  }
 ]

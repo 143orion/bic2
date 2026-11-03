@@ -1,0 +1,881 @@
+{
+ "id": "c-2-variables-types",
+ "module": "programmation-c",
+ "titre": "Variables, types et opérateurs",
+ "ordre": 2,
+ "sources": [
+  "CM1 (Langage C)",
+  "Types et Structures",
+  "TD Premiers pas ex. 3, 5, 6"
+ ],
+ "tldr": [
+  "`int i = 3;` déclare + initialise · `#define PI 3.14` (sans `=` ni `;`).",
+  "Types : `char` 1 o · `int` 4 o · `float` 4 o · `double` 8 o. `unsigned` double la plage positive.",
+  "`7 / 2` = 3 · `7 % 2` = 1 · `9.0 / 5` = 1.8 · `(int)2.52` = 2 · `=` affecte, `==` compare.",
+  "Faux = 0, vrai = tout le reste ; `stdbool.h` donne `bool`."
+ ],
+ "notions": [
+  {
+   "id": "2.1",
+   "titre": "Variables",
+   "corps": "Une **variable** est un emplacement mémoire qui a un **type** et un **nom**.\n```c\nint i;            // déclaration : type + nom\ni = 3;            // initialisation : première valeur\nint j = 10;        // déclaration ET initialisation\ni = i * 2;        // modification : i vaut maintenant 6\nint a = 1, b = 2;  // plusieurs variables du même type\n```\n\nUne variable **déclarée mais non initialisée** contient une valeur quelconque : initialise toujours avant de lire.",
+   "rec": "Le type dit ce qu'on peut ranger dans la variable (entier, réel, caractère).",
+   "alt": "Une variable est une boîte étiquetée : le type est la forme de la boîte, le nom est l'étiquette, la valeur est ce qu'elle contient.",
+   "pre": [
+    "1.2"
+   ],
+   "ecrans": [
+    {
+     "titre": "Déclarer",
+     "texte": "`int i;` réserve une boîte nommée `i` pour un entier."
+    },
+    {
+     "titre": "Initialiser",
+     "texte": "`i = 3;` ou directement `int i = 3;`."
+    },
+    {
+     "titre": "Modifier",
+     "texte": "`i = i * 2;` calcule avec l'ancienne valeur puis range le résultat."
+    }
+   ],
+   "check": {
+    "id": "c-2-variables-types-ctl-0",
+    "enonce": "Après `int i = 5; i = i * 2;`, que vaut `i` ?",
+    "choix": [
+     "10",
+     "5",
+     "2",
+     "25"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "`i * 2` vaut 10, et ce résultat est rangé dans `i`."
+   }
+  },
+  {
+   "id": "2.2",
+   "titre": "Constantes symboliques (#define)",
+   "corps": "Une **constante** ne change pas pendant l'exécution. On la définit avec la directive `#define`, **sans `=` ni `;`** :\n```c\n#define PI 3.14159\n#define MESSAGE \"Bonjour\"\n\ndouble aire = PI * rayon * rayon;\n```\n\nÇa évite les « valeurs magiques » (des nombres sans explication) dispersés dans le code, et un seul endroit à modifier. Par convention, les macros s'écrivent en `UPPER_SNAKE_CASE`.",
+   "rec": "Le préprocesseur remplace le nom par sa valeur **avant** la compilation.",
+   "alt": "C'est un copier-coller automatique : chaque `PI` du code est remplacé par `3.14159`.",
+   "pre": [
+    "2.1",
+    "1.3"
+   ],
+   "ecrans": [
+    {
+     "titre": "Syntaxe",
+     "texte": "`#define NOM valeur` : pas de `=`, pas de `;`."
+    },
+    {
+     "titre": "Pourquoi",
+     "texte": "Un nom parlant (`PI`) vaut mieux qu'un nombre brut (3.14159) répété partout."
+    }
+   ],
+   "check": {
+    "id": "c-2-variables-types-ctl-1",
+    "enonce": "Quelle ligne définit correctement une constante ?",
+    "choix": [
+     "#define MAX 100",
+     "#define MAX = 100;",
+     "const MAX == 100",
+     "define MAX 100;"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "`#define` s'écrit sans `=` ni `;`."
+   }
+  },
+  {
+   "id": "2.3",
+   "titre": "Types de base et modificateurs",
+   "corps": "**Types de base** :\n- `char` : caractère ou petit entier (8 bits) ;\n- `int` : entier (en général 32 bits) ;\n- `float` : réel simple précision ; `double` : réel double précision.\n\n**Modificateurs** : `signed` (négatifs permis, par défaut), `unsigned` (positifs uniquement, plage doublée), `short` (plus petit), `long` (plus grand).\n\n`sizeof(type)` donne la taille en **octets** :\n```c\nprintf(\"%zu\\n\", sizeof(int));   // 4 en général\n```\n\nUn `int` a une plage limitée : dépasser provoque un **débordement** (résultat faux).",
+   "rec": "Un octet = 8 bits. Un `int` sur 4 octets = 32 bits.",
+   "alt": "Choisir un type, c'est choisir la taille de la boîte : trop petite, la valeur déborde ; trop grande, on gaspille de la mémoire.",
+   "pre": [
+    "2.1"
+   ],
+   "ecrans": [
+    {
+     "titre": "Les types",
+     "texte": "`char`, `int`, `float`, `double`."
+    },
+    {
+     "titre": "Les tailles",
+     "texte": "`char` = 1 octet, `int` = 4, `float` = 4, `double` = 8 (cas courant). `sizeof` donne la valeur sur ta machine."
+    },
+    {
+     "titre": "Les modificateurs",
+     "texte": "`unsigned` double la plage positive ; `short` et `long` changent la taille."
+    }
+   ],
+   "check": {
+    "id": "c-2-variables-types-ctl-2",
+    "enonce": "Quel type convient pour stocker 3,14 ?",
+    "choix": [
+     "double",
+     "int",
+     "char",
+     "unsigned"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "Un nombre à virgule se range dans un `float` ou un `double`."
+   }
+  },
+  {
+   "id": "2.4",
+   "titre": "Opérateurs",
+   "corps": "- **Arithmétiques** : `+ - * / %` (`%` = reste de la division entière).\n- **Comparaison** (renvoient 1 si vrai, 0 sinon) : `== != < <= > >=`.\n- **Logiques** : `&&` (et), `||` (ou), `!` (non).\n- **Affectation** : `=` et les formes combinées `+= -= *= /=`.\n- **Incrémentation** : `i++` / `i--`.\n\nAttention : entre deux entiers, `/` fait une **division entière** :\n```c\n7 / 2   // 3  (pas 3.5)\n7 % 2   // 1\nx += 4; // x = x + 4;\n```\n\n`=` **affecte**, `==` **compare** : `if (x = 3)` est presque toujours une erreur.",
+   "rec": "Le modulo `a % b` donne ce qui reste quand on a retiré tous les `b` possibles de `a`.",
+   "alt": "`/` entre deux entiers jette la partie décimale, comme si tu partageais des billes entières : 7 billes à 2 → 3 chacun, il en reste 1 (le `%`).",
+   "pre": [
+    "2.1",
+    "2.3"
+   ],
+   "ecrans": [
+    {
+     "titre": "Arithmétique",
+     "texte": "`+ - * / %` ; division entière entre deux `int`."
+    },
+    {
+     "titre": "Comparaison et logique",
+     "texte": "`==`, `!=`, `<`… renvoient 1 ou 0 ; `&&`, `||`, `!` combinent des conditions."
+    },
+    {
+     "titre": "Raccourcis",
+     "texte": "`x += 4` ⇔ `x = x + 4` ; `i++` ajoute 1."
+    }
+   ],
+   "check": {
+    "id": "c-2-variables-types-ctl-3",
+    "enonce": "Que vaut `7 / 2` en C avec des entiers ?",
+    "choix": [
+     "3",
+     "3,5",
+     "4",
+     "2"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "Division entière : le quotient est 3 (le reste, `7 % 2`, est 1)."
+   }
+  },
+  {
+   "id": "2.5",
+   "titre": "Conversions de types",
+   "corps": "Une **conversion** change le type d'une donnée.\n- **Implicite** : faite toute seule par le compilateur (`int x = 8.324;` range 8).\n- **Explicite (cast)** : forcée avec `(type)` :\n```c\nint x = (int)2.52;      // 2  (on tronque)\ndouble y = (double)1;   // 1.000000\ndouble q = (double)7 / 2;  // 3.5 (le cast agit avant la division)\n```\n\nPiège classique : `9 / 5` vaut **1** (division entière). Pour obtenir 1,8, il faut qu'**un des deux opérandes soit réel** : `9.0 / 5`.",
+   "rec": "Convertir un réel en entier **tronque** (ne remplit pas à l'arrondi).",
+   "alt": "Dans une opération, le C « monte » vers le type le plus large : `int` avec `double` donne `double`. Mais deux `int` restent des `int`.",
+   "pre": [
+    "2.3",
+    "2.4"
+   ],
+   "ecrans": [
+    {
+     "titre": "Implicite",
+     "texte": "Le compilateur convertit seul, parfois en perdant la partie décimale."
+    },
+    {
+     "titre": "Cast",
+     "texte": "`(int)2.52` donne 2 ; `(double)7 / 2` donne 3.5."
+    },
+    {
+     "titre": "Le piège",
+     "texte": "`9/5` = 1 ; `9.0/5` = 1.8."
+    }
+   ],
+   "check": {
+    "id": "c-2-variables-types-ctl-4",
+    "enonce": "Que vaut `(double)7 / 2` ?",
+    "choix": [
+     "3.5",
+     "3",
+     "4",
+     "1.5"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "Le cast s'applique à 7 : l'opération se fait en réels, donc 3.5."
+   }
+  },
+  {
+   "id": "2.6",
+   "titre": "Le type booléen",
+   "corps": "Le C d'origine n'a **pas de type booléen**. Règle : **0 = faux**, **toute autre valeur = vrai**. Les comparaisons renvoient 1 ou 0.\n\nOn peut simuler un booléen :\n```c\n#define BOOL int\n#define TRUE 1\n#define FALSE 0\n\nBOOL est_majeur = TRUE;\n```\n\nDepuis C99, `#include <stdbool.h>` fournit `bool`, `true` et `false`.",
+   "rec": "Une condition `if (x)` est vraie dès que `x` est différent de 0.",
+   "alt": "C'est un interrupteur : 0 = éteint, tout le reste = allumé.",
+   "pre": [
+    "2.4"
+   ],
+   "ecrans": [
+    {
+     "titre": "Faux = 0",
+     "texte": "Tout ce qui est différent de 0 est vrai."
+    },
+    {
+     "titre": "Simuler",
+     "texte": "`#define TRUE 1` et `#define FALSE 0` ; ou `stdbool.h` (C99)."
+    }
+   ],
+   "check": {
+    "id": "c-2-variables-types-ctl-5",
+    "enonce": "En C, quelle valeur est interprétée comme « faux » ?",
+    "choix": [
+     "0",
+     "-1",
+     "1",
+     "NULL uniquement"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "0 est faux, toute autre valeur est vraie."
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "c2-001",
+   "type": "saisie",
+   "notion": "2.1",
+   "origine": "cours",
+   "enonce": "Après `int i = 3; i = i + 4;`, que vaut `i` ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 7
+   },
+   "duree": 0.67,
+   "explication": "`i + 4` = 7, rangé dans `i`."
+  },
+  {
+   "id": "c2-002",
+   "type": "qcm",
+   "notion": "2.1",
+   "origine": "cours",
+   "enonce": "Quelle ligne déclare ET initialise une variable ?",
+   "choix": [
+    "int j = 10;",
+    "int j;",
+    "j = 10;",
+    "10 = int j;"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Type + nom + `= valeur` en une ligne."
+  },
+  {
+   "id": "c2-003",
+   "type": "trous",
+   "notion": "2.1",
+   "origine": "cours",
+   "enonce": "[_] a = 1, b = 2, c = 3;\na = a [_] 2;",
+   "fragments": [
+    "int",
+    "double",
+    "*",
+    "=="
+   ],
+   "verif": {
+    "mode": "trous",
+    "attendu": [
+     "int",
+     "*"
+    ]
+   },
+   "duree": 0.5,
+   "explication": "Plusieurs entiers se déclarent sur une ligne ; `a * 2` multiplie."
+  },
+  {
+   "id": "c2-004",
+   "type": "qcm",
+   "notion": "2.1",
+   "origine": "cours",
+   "enonce": "Quel est le risque d'une variable non initialisée ?",
+   "choix": [
+    "elle contient une valeur quelconque",
+    "elle vaut toujours 0",
+    "elle ne compile pas",
+    "elle est constante"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Une variable locale non initialisée contient n'importe quoi."
+  },
+  {
+   "id": "c2-005",
+   "type": "qcm",
+   "notion": "2.2",
+   "origine": "cours",
+   "enonce": "Quelle ligne définit correctement `PI` ?",
+   "choix": [
+    "#define PI 3.14159",
+    "#define PI = 3.14159;",
+    "int PI == 3.14159;",
+    "define PI 3.14159"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "`#define NOM valeur`, sans `=` ni `;`."
+  },
+  {
+   "id": "c2-006",
+   "type": "saisie",
+   "notion": "2.2",
+   "origine": "cours",
+   "enonce": "Quelle directive définit une constante symbolique ? (avec le #)",
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     "#define",
+     "define"
+    ]
+   },
+   "duree": 0.67,
+   "explication": "On utilise `#define`."
+  },
+  {
+   "id": "c2-007",
+   "type": "qcm",
+   "notion": "2.2",
+   "origine": "cours",
+   "enonce": "Pourquoi préférer `#define MAX_POINTS 1024` à un `1024` répété ?",
+   "choix": [
+    "un seul endroit à modifier et un nom parlant",
+    "le programme va plus vite",
+    "1024 est interdit",
+    "ça réduit la mémoire"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "On évite les valeurs magiques et on centralise le changement."
+  },
+  {
+   "id": "c2-008",
+   "type": "saisie",
+   "notion": "2.3",
+   "origine": "cours",
+   "enonce": "Combien d'octets occupe un `int` dans le cas courant ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 4
+   },
+   "duree": 0.67,
+   "explication": "Un `int` fait en général 4 octets (32 bits)."
+  },
+  {
+   "id": "c2-009",
+   "type": "saisie",
+   "notion": "2.3",
+   "origine": "cours",
+   "enonce": "Combien d'octets occupe un `double` dans le cas courant ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 8
+   },
+   "duree": 0.67,
+   "explication": "Un `double` est sur 8 octets (64 bits)."
+  },
+  {
+   "id": "c2-010",
+   "type": "qcm",
+   "notion": "2.3",
+   "origine": "cours",
+   "enonce": "Que fait le modificateur `unsigned` ?",
+   "choix": [
+    "n'autorise que les valeurs positives et double la plage",
+    "autorise les nombres à virgule",
+    "réduit la taille du type",
+    "interdit la modification"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "`unsigned` : pas de négatifs, plage positive doublée."
+  },
+  {
+   "id": "c2-011",
+   "type": "qcm",
+   "notion": "2.3",
+   "origine": "cours",
+   "enonce": "Quel type utiliser pour une température de 21,5 ?",
+   "choix": [
+    "float ou double",
+    "int",
+    "char",
+    "unsigned int"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Un nombre décimal demande un type réel."
+  },
+  {
+   "id": "c2-012",
+   "type": "saisie",
+   "notion": "2.4",
+   "origine": "cours",
+   "enonce": "Que vaut `17 % 5` ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 2
+   },
+   "duree": 0.67,
+   "explication": "17 = 3 × 5 + 2 : le reste est 2."
+  },
+  {
+   "id": "c2-013",
+   "type": "saisie",
+   "notion": "2.4",
+   "origine": "cours",
+   "enonce": "Que vaut `17 / 5` avec des entiers ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 3
+   },
+   "duree": 0.67,
+   "explication": "Division entière : 3."
+  },
+  {
+   "id": "c2-014",
+   "type": "saisie",
+   "notion": "2.4",
+   "origine": "cours",
+   "enonce": "Que vaut `5 == 5` en C ? (0 ou 1)",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 1
+   },
+   "duree": 0.67,
+   "explication": "Une comparaison vraie renvoie 1."
+  },
+  {
+   "id": "c2-015",
+   "type": "qcm",
+   "notion": "2.4",
+   "origine": "cours",
+   "enonce": "Que fait `x += 4;` ?",
+   "choix": [
+    "x = x + 4",
+    "x = 4",
+    "x == x + 4",
+    "x = x * 4"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "`+=` ajoute à la valeur courante."
+  },
+  {
+   "id": "c2-016",
+   "type": "qcm",
+   "notion": "2.4",
+   "origine": "cours",
+   "enonce": "Quelle expression teste l'égalité ?",
+   "choix": [
+    "a == b",
+    "a = b",
+    "a => b",
+    "a := b"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "`==` compare ; `=` affecte."
+  },
+  {
+   "id": "c2-017",
+   "type": "qcm-multi",
+   "notion": "2.4",
+   "origine": "cours",
+   "enonce": "Quels opérateurs sont des opérateurs logiques ?",
+   "choix": [
+    "&&",
+    "||",
+    "!",
+    "%"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0,
+     1,
+     2
+    ]
+   },
+   "duree": 0.5,
+   "explication": "`&&`, `||`, `!` sont les opérateurs logiques ; `%` est le modulo."
+  },
+  {
+   "id": "c2-018",
+   "type": "saisie",
+   "notion": "2.5",
+   "origine": "cours",
+   "enonce": "Que vaut `(int)2.52` ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 2
+   },
+   "duree": 0.67,
+   "explication": "Le cast vers `int` tronque la partie décimale."
+  },
+  {
+   "id": "c2-019",
+   "type": "saisie",
+   "notion": "2.5",
+   "origine": "cours",
+   "enonce": "Que vaut `9 / 5` avec des entiers ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 1
+   },
+   "duree": 0.67,
+   "explication": "Division entière : 1."
+  },
+  {
+   "id": "c2-020",
+   "type": "saisie",
+   "notion": "2.5",
+   "origine": "cours",
+   "enonce": "Que vaut `9.0 / 5` ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 1.8
+   },
+   "duree": 0.67,
+   "explication": "Un opérande réel suffit pour une division réelle : 1,8."
+  },
+  {
+   "id": "c2-021",
+   "type": "qcm",
+   "notion": "2.5",
+   "origine": "cours",
+   "enonce": "Après `int x = 8.324;`, que contient `x` ?",
+   "choix": [
+    "8",
+    "8.324",
+    "9",
+    "0"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "La conversion implicite tronque : 8."
+  },
+  {
+   "id": "c2-022",
+   "type": "saisie",
+   "notion": "2.5",
+   "origine": "cours",
+   "enonce": "Quel mot désigne une conversion forcée par le programmeur avec `(type)` ?",
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     "cast",
+     "conversion explicite",
+     "un cast"
+    ]
+   },
+   "duree": 0.67,
+   "explication": "Le cast est la conversion explicite."
+  },
+  {
+   "id": "c2-023",
+   "type": "qcm",
+   "notion": "2.6",
+   "origine": "cours",
+   "enonce": "Parmi ces valeurs, laquelle est « vraie » en C ?",
+   "choix": [
+    "5",
+    "0",
+    "0 seulement après un cast",
+    "aucune"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Toute valeur différente de 0 est vraie."
+  },
+  {
+   "id": "c2-024",
+   "type": "trous",
+   "notion": "2.6",
+   "origine": "cours",
+   "enonce": "#define BOOL int\n#define TRUE [_]\n#define FALSE [_]",
+   "fragments": [
+    "0",
+    "1",
+    "-1",
+    "true"
+   ],
+   "verif": {
+    "mode": "trous",
+    "attendu": [
+     "1",
+     "0"
+    ]
+   },
+   "duree": 0.5,
+   "explication": "TRUE vaut 1 et FALSE vaut 0."
+  },
+  {
+   "id": "c2-025",
+   "type": "qcm",
+   "notion": "2.6",
+   "origine": "cours",
+   "enonce": "Quel en-tête (depuis C99) fournit `bool`, `true` et `false` ?",
+   "choix": [
+    "stdbool.h",
+    "stdio.h",
+    "bool.h",
+    "string.h"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "`stdbool.h` définit le type booléen."
+  },
+  {
+   "id": "c2-101",
+   "type": "exo",
+   "notion": "2.4",
+   "origine": "td",
+   "titre": "Opérations sur deux entiers",
+   "enonce": "On lit deux entiers a et b ; on veut afficher leur somme, différence, produit et quotient (TD Premiers pas, exercice 3). On prend a = 17 et b = 5.",
+   "guidage": "**Outils** : `+ - * / %`.\n\n**Piège** : `a / b` entre deux `int` est une division entière.",
+   "duree": 2.3,
+   "etapes": [
+    {
+     "consigne": "Additionne a et b.",
+     "question": "a + b = ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 22
+     },
+     "corrige": "17 + 5 = 22.",
+     "indices": [
+      "Une simple addition."
+     ],
+     "duree": 0.4
+    },
+    {
+     "consigne": "Soustrais b de a.",
+     "question": "a - b = ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 12
+     },
+     "corrige": "17 - 5 = 12.",
+     "indices": [
+      "a moins b."
+     ],
+     "duree": 0.4
+    },
+    {
+     "consigne": "Multiplie a par b.",
+     "question": "a * b = ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 85
+     },
+     "corrige": "17 × 5 = 85.",
+     "indices": [
+      "17 fois 5."
+     ],
+     "duree": 0.4
+    },
+    {
+     "consigne": "Divise a par b avec des entiers : le quotient est entier.",
+     "question": "a / b = ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 3
+     },
+     "corrige": "17 / 5 vaut 3 en division entière.",
+     "indices": [
+      "Deux `int` donnent une division entière.",
+      "5 × 3 = 15, il reste 2."
+     ],
+     "duree": 0.6
+    },
+    {
+     "consigne": "Quel opérateur donne le reste de cette division ?",
+     "question": "Écris le reste, a % b = ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 2
+     },
+     "corrige": "17 % 5 = 2.",
+     "indices": [
+      "Le modulo donne le reste.",
+      "17 - 15 = 2."
+     ],
+     "duree": 0.5
+    }
+   ]
+  },
+  {
+   "id": "c2-102",
+   "type": "exo",
+   "notion": "2.5",
+   "origine": "td",
+   "titre": "Conversion °C → °F",
+   "enonce": "On convertit une température en degrés Celsius vers Fahrenheit : F = C × 9/5 + 32 (TD Premiers pas, exercice 5). On prend C = 100, avec `int c = 100;`.",
+   "guidage": "**Piège** : `9/5` entre entiers vaut 1, pas 1,8. L'ordre des opérations et le type des opérandes changent le résultat.",
+   "duree": 2.1,
+   "etapes": [
+    {
+     "consigne": "Évalue d'abord `c * (9 / 5) + 32` avec des entiers.",
+     "question": "Que vaut cette expression ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 132
+     },
+     "corrige": "`9 / 5` = 1, donc 100 × 1 + 32 = 132 (résultat faux).",
+     "indices": [
+      "Calcule d'abord la parenthèse : `9 / 5`.",
+      "Avec des entiers, 9 / 5 = 1."
+     ],
+     "duree": 0.8
+    },
+    {
+     "consigne": "Corrige avec des réels : `c * 9.0 / 5 + 32`.",
+     "question": "Que vaut cette expression ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 212
+     },
+     "corrige": "100 × 9,0 = 900,0 ; 900,0 / 5 = 180,0 ; + 32 = 212.",
+     "indices": [
+      "Un opérande réel (9.0) rend le calcul réel.",
+      "100 × 9 / 5 = 180."
+     ],
+     "duree": 0.8
+    },
+    {
+     "consigne": "Le résultat doit être rangé dans une variable réelle.",
+     "question": "Quel type déclares-tu pour `f` ?",
+     "verif": {
+      "mode": "exact",
+      "attendu": [
+       "double",
+       "float"
+      ]
+     },
+     "corrige": "`double f = c * 9.0 / 5 + 32;`",
+     "indices": [
+      "Un réel : `float` ou `double`."
+     ],
+     "duree": 0.5
+    }
+   ]
+  },
+  {
+   "id": "c2-103",
+   "type": "exo",
+   "notion": "2.5",
+   "origine": "td",
+   "titre": "Conversion km → miles",
+   "enonce": "Convertir une distance en kilomètres en miles : miles = km / 1,609344 (TD Premiers pas, exercice 6). On prend km = 10.",
+   "guidage": "**Outils** : division réelle, formatage. Le résultat n'est pas un entier : il faut des `double`.",
+   "duree": 1.2999999999999998,
+   "etapes": [
+    {
+     "consigne": "Avec `double km = 10;`, calcule `km / 1.609344`.",
+     "question": "Combien de miles (arrondi à 0,01) ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 6.21,
+      "tol": 0.01
+     },
+     "corrige": "10 / 1,609344 ≈ 6,2137, soit 6,21 miles.",
+     "indices": [
+      "Une division réelle.",
+      "10 / 1,6 ≈ 6,2."
+     ],
+     "duree": 0.7
+    },
+    {
+     "consigne": "Pour afficher le résultat avec deux décimales, quelle partie du format écris-tu après `%` ?",
+     "question": "Écris le format (ex. `%d`).",
+     "verif": {
+      "mode": "regex",
+      "motif": "%\\.2l?f",
+      "exemple": "%.2f"
+     },
+     "corrige": "`%.2f` affiche deux chiffres après la virgule.",
+     "indices": [
+      "`.N` fixe le nombre de décimales.",
+      "Format d'un réel : `f`."
+     ],
+     "duree": 0.6
+    }
+   ]
+  }
+ ]
+}

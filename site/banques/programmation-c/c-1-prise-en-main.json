@@ -1,0 +1,449 @@
+{
+ "id": "c-1-prise-en-main",
+ "module": "programmation-c",
+ "titre": "Prise en main",
+ "ordre": 1,
+ "sources": [
+  "CM1 (Langage C)",
+  "TD Premiers pas ex. 1"
+ ],
+ "tldr": [
+  "Le C est un langage **compilé** : le cours donne les règles du jeu (casse, `;`, `main`) qui évitent les erreurs de compilation.",
+  "Squelette : `#include <stdio.h>` · `int main(void) { … return 0; }` · instructions terminées par `;`.",
+  "Commentaires : `//` ligne, `/* */` bloc. Conventions : `snake_case` (variables, fonctions, fichiers), `UPPER_SNAKE_CASE` (macros, valeurs d'enum), `PascalCase` (types)."
+ ],
+ "notions": [
+  {
+   "id": "1.1",
+   "titre": "Le langage C et son jargon",
+   "corps": "Le C a été conçu par **Dennis Ritchie** chez **Bell Labs** en 1972-1973 pour écrire le système **Unix**. Il est **concis, efficace, portable et stable** : on le trouve dans les systèmes d'exploitation, l'embarqué et beaucoup d'autres langages.\n\n**Vocabulaire à connaître** :\n- **code source** : ce que tu écris (fichier `.c`) ;\n- **compiler** (build) : transformer le code source en programme compréhensible par la machine ;\n- **exécutable** : le programme compilé, que la machine peut lancer ;\n- **bibliothèque** : fonctions déjà écrites (`printf`, `sqrt`…) ;\n- **fichier d'en-tête** (`.h`) : déclare des fonctions et des constantes, inclus au début du code source.",
+   "rec": "Un langage compilé se traduit **avant** de s'exécuter : tu écris, tu compiles, puis tu lances l'exécutable. Une erreur de syntaxe est détectée à la compilation.",
+   "alt": "Imagine une recette (code source) que tu fais traduire en gestes précis pour un robot (compilation). Le robot suit ensuite ces gestes sans rien relire (exécutable).",
+   "pre": [],
+   "ecrans": [
+    {
+     "titre": "Origine",
+     "texte": "Le C naît en 1972-1973 chez Bell Labs, créé par Dennis Ritchie pour Unix."
+    },
+    {
+     "titre": "Du code au programme",
+     "texte": "Code source (`.c`) → compilation → exécutable. Les fichiers `.h` déclarent les fonctions des bibliothèques."
+    },
+    {
+     "titre": "À retenir",
+     "texte": "Source = ce que tu tapes · compiler = traduire · exécutable = ce qui tourne · bibliothèque = fonctions déjà écrites."
+    }
+   ],
+   "check": {
+    "id": "c-1-prise-en-main-ctl-0",
+    "enonce": "Quel élément transforme le code source en exécutable ?",
+    "choix": [
+     "la compilation",
+     "l'exécution",
+     "l'inclusion",
+     "le commentaire"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "Compiler = construire l'exécutable à partir du code source."
+   }
+  },
+  {
+   "id": "1.2",
+   "titre": "Structure d'un programme C",
+   "corps": "Tout programme C a **un point d'entrée unique** : la fonction `main`. Ses instructions sont dans un bloc délimité par des accolades `{ }`, et elle se termine par `return 0;` (0 = tout s'est bien passé).\n\n```c\n#include <stdio.h>\n\nint main(void) {\n    printf(\"Hello World\\n\");\n    return 0;\n}\n```\n\n- `#include <stdio.h>` : ajoute la bibliothèque d'entrées/sorties (`printf`) ;\n- chaque **instruction se termine par `;`** ;\n- le C est **sensible à la casse** : `main` et `Main` sont deux noms différents ;\n- les retours à la ligne et l'indentation ne comptent pas pour le compilateur, mais pour **ta lisibilité**.",
+   "rec": "Une fonction est un bloc de code nommé. `main` est la seule que le système appelle tout seul au lancement.",
+   "alt": "`main` est la porte d'entrée de l'immeuble : toutes les autres fonctions ne sont appelées que si `main` (ou une fonction qu'elle appelle) les utilise.",
+   "pre": [
+    "1.1"
+   ],
+   "ecrans": [
+    {
+     "titre": "Le squelette",
+     "texte": "`#include`, puis `int main(void) { … return 0; }`."
+    },
+    {
+     "titre": "Les `;`",
+     "texte": "Une instruction se termine par `;`. Oublier un `;` est l'erreur de compilation la plus fréquente."
+    },
+    {
+     "titre": "La casse",
+     "texte": "`printf` fonctionne, `Printf` n'existe pas : le compilateur distingue majuscules et minuscules."
+    }
+   ],
+   "check": {
+    "id": "c-1-prise-en-main-ctl-1",
+    "enonce": "Quelle est la fonction par laquelle commence tout programme C ?",
+    "choix": [
+     "main",
+     "start",
+     "begin",
+     "printf"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "Le point d'entrée unique est `main`."
+   }
+  },
+  {
+   "id": "1.3",
+   "titre": "Commentaires et conventions de nommage",
+   "corps": "**Commentaires** (ignorés par le compilateur, utiles pour les humains) :\n```c\n// commentaire sur une seule ligne\n/* commentaire\n   sur plusieurs lignes */\n```\n\n**Conventions de nommage** (celles du cours) :\n\n| Catégorie | Convention | Exemple |\n|---|---|---|\n| Fichiers | `lower_snake_case.c` / `.h` | `mon_module.c` |\n| Fonctions, variables | `lower_snake_case` | `calc_area()`, `line_count` |\n| Macros / `#define` | `UPPER_SNAKE_CASE` | `MAX_SIZE` |\n| Types (`struct`, `enum`) | `PascalCase` | `Point`, `Color` |\n| Valeurs d'`enum` | `UPPER_SNAKE_CASE` | `COLOR_RED` |\n\nChoisis des **noms significatifs** : `nb_notes` vaut mieux que `n2`.",
+   "rec": "Un commentaire explique le **pourquoi**, pas ce que le code dit déjà.",
+   "alt": "Les conventions sont la grammaire commune de l'équipe : on reconnaît d'un coup d'œil une constante (MAJUSCULES) d'un type (Majuscule initiale) ou d'une variable (minuscules).",
+   "pre": [
+    "1.2"
+   ],
+   "ecrans": [
+    {
+     "titre": "Deux syntaxes",
+     "texte": "`//` jusqu'à la fin de la ligne, `/* … */` sur plusieurs lignes."
+    },
+    {
+     "titre": "Le tableau",
+     "texte": "Variables et fonctions en `snake_case`, macros en `UPPER_SNAKE_CASE`, types en `PascalCase`."
+    }
+   ],
+   "check": {
+    "id": "c-1-prise-en-main-ctl-2",
+    "enonce": "Quel nom respecte la convention du cours pour une macro ?",
+    "choix": [
+     "MAX_SIZE",
+     "maxSize",
+     "Max_size",
+     "max_size"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "Les macros s'écrivent en UPPER_SNAKE_CASE : `MAX_SIZE`."
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "c1-001",
+   "type": "qcm",
+   "notion": "1.1",
+   "origine": "cours",
+   "enonce": "Qui a développé le langage C, et où ?",
+   "choix": [
+    "Dennis Ritchie, chez Bell Labs",
+    "Linus Torvalds, chez Intel",
+    "Bjarne Stroustrup, chez Microsoft",
+    "Ken Thompson, chez IBM"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "C est né chez Bell Labs (1972-1973) sous la plume de Dennis Ritchie, pour Unix."
+  },
+  {
+   "id": "c1-002",
+   "type": "qcm",
+   "notion": "1.1",
+   "origine": "cours",
+   "enonce": "« Compiler » signifie…",
+   "choix": [
+    "construire un programme exécutable à partir du code source",
+    "lancer le programme",
+    "écrire des commentaires",
+    "télécharger une bibliothèque"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "On compile le code source pour obtenir l'exécutable."
+  },
+  {
+   "id": "c1-003",
+   "type": "saisie",
+   "notion": "1.1",
+   "origine": "cours",
+   "enonce": "Quelle extension portent les fichiers d'en-tête ? (avec le point)",
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     ".h",
+     "h"
+    ]
+   },
+   "duree": 0.67,
+   "explication": "Les fichiers d'en-tête ont l'extension `.h`."
+  },
+  {
+   "id": "c1-004",
+   "type": "qcm",
+   "notion": "1.1",
+   "origine": "cours",
+   "enonce": "Laquelle de ces propositions est une bibliothèque au sens du cours ?",
+   "choix": [
+    "un ensemble de fonctions prédéfinies",
+    "un fichier exécutable",
+    "un commentaire de bloc",
+    "une variable globale"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Une bibliothèque regroupe des fonctions prédéfinies (stdio, math…)."
+  },
+  {
+   "id": "c1-005",
+   "type": "qcm",
+   "notion": "1.2",
+   "origine": "cours",
+   "enonce": "Quelle ligne est le point d'entrée d'un programme C ?",
+   "choix": [
+    "int main(void)",
+    "#include <stdio.h>",
+    "return 0;",
+    "printf(\"Hello\");"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "L'exécution démarre dans `main`."
+  },
+  {
+   "id": "c1-006",
+   "type": "saisie",
+   "notion": "1.2",
+   "origine": "cours",
+   "enonce": "Quel caractère termine une instruction en C ?",
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     ";",
+     "point-virgule",
+     "le point-virgule"
+    ]
+   },
+   "duree": 0.67,
+   "explication": "Chaque instruction se termine par un point-virgule."
+  },
+  {
+   "id": "c1-007",
+   "type": "saisie",
+   "notion": "1.2",
+   "origine": "cours",
+   "enonce": "Quelle valeur `main` renvoie-t-elle à la fin d'un programme qui s'est bien passé ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 0
+   },
+   "duree": 0.67,
+   "explication": "`return 0;` signale que tout s'est bien passé."
+  },
+  {
+   "id": "c1-008",
+   "type": "trous",
+   "notion": "1.2",
+   "origine": "cours",
+   "enonce": "#include <[_]>\n\nint main(void) {\n    printf(\"Hello World\\n\");\n    [_] 0;\n}",
+   "fragments": [
+    "stdio.h",
+    "string.h",
+    "return",
+    "break"
+   ],
+   "verif": {
+    "mode": "trous",
+    "attendu": [
+     "stdio.h",
+     "return"
+    ]
+   },
+   "duree": 0.5,
+   "explication": "`stdio.h` fournit `printf` ; `return 0;` termine `main`."
+  },
+  {
+   "id": "c1-009",
+   "type": "qcm",
+   "notion": "1.2",
+   "origine": "cours",
+   "enonce": "Le compilateur refuse `Main()` à la place de `main()`. Pourquoi ?",
+   "choix": [
+    "le C est sensible à la casse",
+    "le nom doit avoir 4 lettres",
+    "Main est un mot réservé",
+    "les majuscules sont interdites dans le code"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "`Main` et `main` sont deux identifiants distincts."
+  },
+  {
+   "id": "c1-010",
+   "type": "qcm",
+   "notion": "1.3",
+   "origine": "cours",
+   "enonce": "Quelle syntaxe est un commentaire sur plusieurs lignes ?",
+   "choix": [
+    "/* … */",
+    "// … //",
+    "<!-- … -->",
+    "# …"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Les commentaires de bloc s'écrivent `/* … */`."
+  },
+  {
+   "id": "c1-011",
+   "type": "qcm",
+   "notion": "1.3",
+   "origine": "cours",
+   "enonce": "Quelle convention s'applique à un type `struct` ?",
+   "choix": [
+    "PascalCase (ex. `Point`)",
+    "UPPER_SNAKE_CASE",
+    "lower_snake_case",
+    "aucune"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Les types (`struct`, `enum`) s'écrivent en PascalCase."
+  },
+  {
+   "id": "c1-012",
+   "type": "qcm",
+   "notion": "1.3",
+   "origine": "cours",
+   "enonce": "Quel nom de fonction suit la convention du cours ?",
+   "choix": [
+    "calc_area()",
+    "CalcArea()",
+    "CALC_AREA()",
+    "calcArea()"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Les fonctions s'écrivent en lower_snake_case."
+  },
+  {
+   "id": "c1-013",
+   "type": "trous",
+   "notion": "1.3",
+   "origine": "cours",
+   "enonce": "[_] commentaire sur une ligne\nint age = 20; [_] commentaire de bloc [_]",
+   "fragments": [
+    "//",
+    "/*",
+    "*/",
+    "#"
+   ],
+   "verif": {
+    "mode": "trous",
+    "attendu": [
+     "//",
+     "/*",
+     "*/"
+    ]
+   },
+   "duree": 0.5,
+   "explication": "`//` pour une ligne, `/* … */` pour un bloc."
+  },
+  {
+   "id": "c1-101",
+   "type": "exo",
+   "notion": "1.2",
+   "origine": "td",
+   "titre": "Hello World",
+   "enonce": "Écrire un programme qui affiche « Hello World » (TD Premiers pas, exercice 1).",
+   "guidage": "**Plan** : bibliothèque d'affichage → fonction `main` → affichage → fin du programme.\n\n**Piège** : chaque instruction se termine par `;`.",
+   "duree": 1.6,
+   "etapes": [
+    {
+     "consigne": "Pour utiliser `printf`, il faut inclure la bibliothèque d'entrées/sorties standard.",
+     "question": "Écris la ligne d'inclusion.",
+     "verif": {
+      "mode": "regex",
+      "motif": "#include\\s*<stdio\\.h>",
+      "exemple": "#include <stdio.h>"
+     },
+     "corrige": "`#include <stdio.h>` déclare `printf`.",
+     "indices": [
+      "`printf` fait partie de la bibliothèque des entrées/sorties standard (standard input/output).",
+      "Le nom du fichier d'en-tête est `stdio.h`, entre chevrons."
+     ],
+     "duree": 0.5
+    },
+    {
+     "consigne": "Dans `main`, affiche le texte suivi d'un retour à la ligne.",
+     "question": "Écris l'instruction d'affichage (avec le `;`).",
+     "verif": {
+      "mode": "regex",
+      "motif": "printf\\(\\s*\"Hello World\\\\n\"\\s*\\)\\s*;",
+      "exemple": "printf(\"Hello World\\n\");"
+     },
+     "corrige": "`printf(\"Hello World\\n\");` affiche le texte puis passe à la ligne.",
+     "indices": [
+      "La fonction d'affichage est `printf`, le texte va entre guillemets.",
+      "`\\n` produit le retour à la ligne ; n'oublie pas le `;`."
+     ],
+     "duree": 0.7
+    },
+    {
+     "consigne": "`main` doit signaler que tout s'est bien passé.",
+     "question": "Écris la dernière instruction de `main`.",
+     "verif": {
+      "mode": "regex",
+      "motif": "return\\s+0\\s*;",
+      "exemple": "return 0;"
+     },
+     "corrige": "`return 0;` termine `main` avec le code 0.",
+     "indices": [
+      "On renvoie la valeur 0.",
+      "`return` suivi de la valeur, puis `;`."
+     ],
+     "duree": 0.4
+    }
+   ]
+  }
+ ]
+}

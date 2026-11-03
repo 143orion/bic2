@@ -1,0 +1,528 @@
+{
+ "id": "c-3-entrees-sorties",
+ "module": "programmation-c",
+ "titre": "Entrées / sorties",
+ "ordre": 3,
+ "sources": [
+  "CM1 (Langage C)",
+  "TD Premiers pas ex. 2, 3"
+ ],
+ "tldr": [
+  "`printf(\"…%d…\\n\", valeur);` · un format par valeur, dans l'ordre.",
+  "Formats : `%d` int · `%f` float · `%lf` double (lecture) · `%c` char · `%s` chaîne · `%x` hexadécimal · `%5d` largeur · `%.2f` précision.",
+  "`scanf(\"%d\", &x);` — le `&` est obligatoire pour les variables simples, pas pour un tableau. `scanf(\" %c\", &c);` : l'espace ignore le retour à la ligne."
+ ],
+ "notions": [
+  {
+   "id": "3.1",
+   "titre": "Afficher avec printf",
+   "corps": "`printf` affiche un texte formaté à l'écran. Elle demande `#include <stdio.h>`.\n```c\nprintf(\"Bonjour\\n\");                 // texte + retour à la ligne\nprintf(\"Age : %d ans\\n\", age);   // %d est remplacé par la valeur de age\n```\n\n- `\\n` = retour à la ligne ; `\\t` = tabulation ;\n- le texte est entre **guillemets doubles** ;\n- chaque `%…` du texte attend **une valeur** dans la liste qui suit, dans le même ordre.",
+   "rec": "Un caractère seul s'écrit entre apostrophes (`'A'`), une chaîne entre guillemets (`\"A\"`).",
+   "alt": "`printf` est un texte à trous : les `%d`, `%f`… sont les trous, et les valeurs après la virgule les remplissent dans l'ordre.",
+   "pre": [
+    "1.2",
+    "2.1"
+   ],
+   "ecrans": [
+    {
+     "titre": "Le principe",
+     "texte": "Texte entre guillemets, puis les valeurs à insérer."
+    },
+    {
+     "titre": "Le retour à la ligne",
+     "texte": "`\\n` n'est pas automatique : sans lui, l'affichage suivant reste sur la même ligne."
+    }
+   ],
+   "check": {
+    "id": "c-3-entrees-sorties-ctl-0",
+    "enonce": "Quel caractère produit un retour à la ligne dans `printf` ?",
+    "choix": [
+     "\\n",
+     "/n",
+     "\\r seulement",
+     "<br>"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "`\\n` insère un retour à la ligne."
+   }
+  },
+  {
+   "id": "3.2",
+   "titre": "Les formats d'affichage",
+   "corps": "| Format | Type | Exemple |\n|---|---|---|\n| `%d` | `int` | `printf(\"%d\", 42)` → 42 |\n| `%ld` | `long` | |\n| `%f` / `%lf` | `float` / `double` | `printf(\"%f\", 3.14)` → 3.140000 |\n| `%c` | `char` | `printf(\"%c\", 'A')` → A |\n| `%s` | chaîne | `printf(\"%s\", \"Bonjour\")` |\n| `%x` | entier en hexadécimal | 42 → `2a` |\n\n**Largeur et précision** :\n```c\nprintf(\"%5d\", 42);     // \"   42\"  (au moins 5 caractères)\nprintf(\"%.2f\", 3.14159); // 3.14   (2 chiffres après la virgule)\nprintf(\"%10.2f\", pi);    // largeur 10, 2 décimales\n```\n\nLe format doit **correspondre au type** : `%d` avec un `double` donne un résultat absurde.",
+   "rec": "`%.2f` arrondit à 2 décimales à l'affichage, sans changer la variable.",
+   "alt": "Le format est le gabarit du texte final : largeur = taille de la case, précision = nombre de chiffres après la virgule.",
+   "pre": [
+    "3.1",
+    "2.3"
+   ],
+   "ecrans": [
+    {
+     "titre": "Un format par type",
+     "texte": "`%d` entier, `%f` réel, `%c` caractère, `%s` chaîne."
+    },
+    {
+     "titre": "Largeur",
+     "texte": "`%5d` réserve au moins 5 caractères."
+    },
+    {
+     "titre": "Précision",
+     "texte": "`%.2f` garde 2 décimales."
+    }
+   ],
+   "check": {
+    "id": "c-3-entrees-sorties-ctl-1",
+    "enonce": "Que fait `printf(\"%.2f\", 3.14159)` ?",
+    "choix": [
+     "affiche 3.14",
+     "affiche 3.14159",
+     "affiche 3",
+     "provoque une erreur"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "`%.2f` affiche deux chiffres après la virgule : 3.14."
+   }
+  },
+  {
+   "id": "3.3",
+   "titre": "Saisir avec scanf",
+   "corps": "`scanf` lit ce que tape l'utilisateur et le range dans une variable. **Il faut passer l'adresse de la variable avec `&`** :\n```c\nint age;\ndouble pi;\nchar lettre;\nchar mot[20];\n\nscanf(\"%d\", &age);\nscanf(\"%lf\", &pi);       // %lf pour un double\nscanf(\" %c\", &lettre);   // l'espace avant %c ignore le retour à la ligne restant\nscanf(\"%19s\", mot);      // pas de & pour un tableau ; 19 = taille - 1\n```\n\n- le format de `scanf` doit correspondre au type : `%d`, `%lf` (double), `%c`, `%s` ;\n- `%s` s'arrête au premier espace ;\n- limiter la taille (`%19s`) évite de déborder du tableau.",
+   "rec": "Sans `&`, `scanf` reçoit la valeur de la variable (inutile) au lieu de son adresse : le programme plante ou ne lit rien.",
+   "alt": "`scanf` doit savoir **où** ranger la valeur : `&age` = « l'adresse de la boîte `age` ».",
+   "pre": [
+    "3.2",
+    "2.1"
+   ],
+   "ecrans": [
+    {
+     "titre": "Le `&`",
+     "texte": "`scanf(\"%d\", &age);` : l'adresse de `age`, pas sa valeur."
+    },
+    {
+     "titre": "`%lf` pour les `double`",
+     "texte": "`%f` pour un `float`, `%lf` pour un `double` en lecture."
+    },
+    {
+     "titre": "Les chaînes",
+     "texte": "Pas de `&` pour un tableau de `char`, et on limite la taille : `%19s`."
+    }
+   ],
+   "check": {
+    "id": "c-3-entrees-sorties-ctl-2",
+    "enonce": "Quelle ligne lit correctement un entier dans `age` ?",
+    "choix": [
+     "scanf(\"%d\", &age);",
+     "scanf(\"%d\", age);",
+     "scanf(age, \"%d\");",
+     "scanf(\"%f\", &age);"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "Il faut le bon format (`%d`) et l'adresse de la variable (`&age`)."
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "c3-001",
+   "type": "qcm",
+   "notion": "3.1",
+   "origine": "cours",
+   "enonce": "Quelle bibliothèque faut-il inclure pour `printf` ?",
+   "choix": [
+    "stdio.h",
+    "math.h",
+    "string.h",
+    "stdlib.h"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "`printf` et `scanf` viennent de `stdio.h`."
+  },
+  {
+   "id": "c3-002",
+   "type": "qcm",
+   "notion": "3.1",
+   "origine": "cours",
+   "enonce": "Que fait `printf(\"Salut\");` sans `\\n` ?",
+   "choix": [
+    "affiche Salut et reste sur la même ligne",
+    "affiche Salut puis un retour à la ligne",
+    "ne compile pas",
+    "n'affiche rien"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Sans `\\n`, le curseur reste sur la ligne."
+  },
+  {
+   "id": "c3-003",
+   "type": "saisie",
+   "notion": "3.1",
+   "origine": "cours",
+   "enonce": "Quelle séquence d'échappement insère une tabulation ?",
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     "\\t"
+    ]
+   },
+   "duree": 0.67,
+   "explication": "`\\t` insère une tabulation."
+  },
+  {
+   "id": "c3-004",
+   "type": "qcm",
+   "notion": "3.1",
+   "origine": "cours",
+   "enonce": "Combien de valeurs `printf(\"%d et %d\", a, b)` consomme-t-elle ?",
+   "choix": [
+    "2",
+    "1",
+    "3",
+    "0"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Deux `%d` = deux valeurs : `a` et `b`."
+  },
+  {
+   "id": "c3-005",
+   "type": "saisie",
+   "notion": "3.2",
+   "origine": "cours",
+   "enonce": "Quel format affiche un entier ?",
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     "%d"
+    ]
+   },
+   "duree": 0.67,
+   "explication": "`%d` est le format des `int`."
+  },
+  {
+   "id": "c3-006",
+   "type": "saisie",
+   "notion": "3.2",
+   "origine": "cours",
+   "enonce": "Quel format affiche une chaîne de caractères ?",
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     "%s"
+    ]
+   },
+   "duree": 0.67,
+   "explication": "`%s` est le format des chaînes."
+  },
+  {
+   "id": "c3-007",
+   "type": "saisie",
+   "notion": "3.2",
+   "origine": "cours",
+   "enonce": "Que vaut `printf(\"%.2f\", 3.14159)` ? (nombre affiché)",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 3.14
+   },
+   "duree": 0.67,
+   "explication": "Deux décimales : 3.14."
+  },
+  {
+   "id": "c3-008",
+   "type": "saisie",
+   "notion": "3.2",
+   "origine": "cours",
+   "enonce": "Que s'affiche avec `printf(\"%x\", 42)` ? (en minuscules)",
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     "2a"
+    ]
+   },
+   "duree": 0.67,
+   "explication": "42 en hexadécimal vaut 2a."
+  },
+  {
+   "id": "c3-009",
+   "type": "qcm",
+   "notion": "3.2",
+   "origine": "cours",
+   "enonce": "Que fait `%5d` avec la valeur 42 ?",
+   "choix": [
+    "affiche 42 sur au moins 5 caractères (alignement à droite)",
+    "affiche 42 cinq fois",
+    "affiche 5 chiffres après la virgule",
+    "affiche 42 en hexadécimal"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "`%5d` réserve une largeur minimale de 5 caractères."
+  },
+  {
+   "id": "c3-010",
+   "type": "trous",
+   "notion": "3.2",
+   "origine": "cours",
+   "enonce": "printf(\"Pi = [_]\\n\", 3.14159);   // affiche 3.14\nprintf(\"Lettre = [_]\\n\", 'A');",
+   "fragments": [
+    ".2f",
+    "%d",
+    "%c",
+    "%s",
+    "%.2f"
+   ],
+   "verif": {
+    "mode": "trous",
+    "attendu": [
+     "%.2f",
+     "%c"
+    ]
+   },
+   "duree": 0.5,
+   "explication": "`%.2f` pour deux décimales, `%c` pour un caractère."
+  },
+  {
+   "id": "c3-011",
+   "type": "qcm",
+   "notion": "3.3",
+   "origine": "cours",
+   "enonce": "Pourquoi `scanf(\"%d\", age);` est-il incorrect ?",
+   "choix": [
+    "il manque le & devant age",
+    "%d est faux",
+    "il faut un ;",
+    "age doit être un double"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "`scanf` a besoin de l'adresse : `&age`."
+  },
+  {
+   "id": "c3-012",
+   "type": "saisie",
+   "notion": "3.3",
+   "origine": "cours",
+   "enonce": "Quel format utilises-tu dans `scanf` pour lire un `double` ?",
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     "%lf"
+    ]
+   },
+   "duree": 0.67,
+   "explication": "On lit un `double` avec `%lf`."
+  },
+  {
+   "id": "c3-013",
+   "type": "trous",
+   "notion": "3.3",
+   "origine": "cours",
+   "enonce": "char mot[20];\nscanf(\"[_]\", mot);   // lit au plus 19 caractères",
+   "fragments": [
+    "%19s",
+    "%20s",
+    "%d",
+    "%c"
+   ],
+   "verif": {
+    "mode": "trous",
+    "attendu": [
+     "%19s"
+    ]
+   },
+   "duree": 0.5,
+   "explication": "`%19s` limite la saisie pour garder la place du `'\\0'`."
+  },
+  {
+   "id": "c3-014",
+   "type": "qcm",
+   "notion": "3.3",
+   "origine": "cours",
+   "enonce": "Pourquoi écrit-on `scanf(\" %c\", &lettre);` avec une espace avant `%c` ?",
+   "choix": [
+    "pour ignorer le retour à la ligne laissé par la saisie précédente",
+    "pour lire deux caractères",
+    "pour passer en majuscules",
+    "c'est obligatoire pour tous les formats"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "L'espace consomme les blancs et retours à la ligne restants."
+  },
+  {
+   "id": "c3-015",
+   "type": "qcm",
+   "notion": "3.3",
+   "origine": "cours",
+   "enonce": "Que fait `scanf(\"%s\", mot)` si l'utilisateur tape « Jean Luc » ?",
+   "choix": [
+    "lit seulement Jean (s'arrête à l'espace)",
+    "lit Jean Luc",
+    "provoque toujours une erreur",
+    "lit Luc"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "`%s` s'arrête au premier espace."
+  },
+  {
+   "id": "c3-101",
+   "type": "exo",
+   "notion": "3.3",
+   "origine": "td",
+   "titre": "Bonjour X",
+   "enonce": "Lire un prénom et afficher « Bonjour X » (TD Premiers pas, exercice 2).",
+   "guidage": "**Plan** : un tableau de `char` pour ranger le prénom → `scanf` → `printf` avec `%s`.\n\n**Piège** : pas de `&` devant un tableau, et on limite la taille lue.",
+   "duree": 1.9,
+   "etapes": [
+    {
+     "consigne": "Déclare un tableau de 20 caractères nommé `prenom`.",
+     "question": "Écris la déclaration.",
+     "verif": {
+      "mode": "regex",
+      "motif": "char\\s+prenom\\s*\\[\\s*20\\s*\\]\\s*;",
+      "exemple": "char prenom[20];"
+     },
+     "corrige": "`char prenom[20];` réserve 20 caractères (19 + le `'\\0'`).",
+     "indices": [
+      "Un `char` par lettre, entre crochets la taille.",
+      "Syntaxe : `char nom[taille];`"
+     ],
+     "duree": 0.5
+    },
+    {
+     "consigne": "Lis le prénom en limitant à 19 caractères.",
+     "question": "Écris l'instruction de lecture.",
+     "verif": {
+      "mode": "regex",
+      "motif": "scanf\\(\\s*\"%19s\"\\s*,\\s*prenom\\s*\\)\\s*;",
+      "exemple": "scanf(\"%19s\", prenom);"
+     },
+     "corrige": "Un tableau est déjà une adresse : pas de `&`.",
+     "indices": [
+      "Format d'une chaîne : `%s`, avec la limite : `%19s`.",
+      "Pas de `&` pour un tableau."
+     ],
+     "duree": 0.7
+    },
+    {
+     "consigne": "Affiche « Bonjour » suivi du prénom et d'un retour à la ligne.",
+     "question": "Écris l'instruction d'affichage.",
+     "verif": {
+      "mode": "regex",
+      "motif": "printf\\(\\s*\"Bonjour\\s+%s\\\\n\"\\s*,\\s*prenom\\s*\\)\\s*;",
+      "exemple": "printf(\"Bonjour %s\\n\", prenom);"
+     },
+     "corrige": "`%s` est remplacé par le contenu de `prenom`.",
+     "indices": [
+      "Le format d'une chaîne est `%s`.",
+      "N'oublie pas `\\n` et le `;`."
+     ],
+     "duree": 0.7
+    }
+   ]
+  },
+  {
+   "id": "c3-102",
+   "type": "exo",
+   "notion": "3.2",
+   "origine": "td",
+   "titre": "Quatre opérations sur deux entiers",
+   "enonce": "Lire deux entiers puis afficher somme, différence, produit et quotient (TD Premiers pas, exercice 3). On saisit a = 17 et b = 5.",
+   "guidage": "**Plan** : une lecture avec deux `%d`, puis un affichage par opération.\n\n**Piège** : `a / b` avec des `int` est entier ; pour afficher 3,40 il faut convertir un opérande.",
+   "duree": 2.0,
+   "etapes": [
+    {
+     "consigne": "Lis les deux entiers en une seule instruction.",
+     "question": "Écris le `scanf` (variables `a` et `b`).",
+     "verif": {
+      "mode": "regex",
+      "motif": "scanf\\(\\s*\"%d\\s*%d\"\\s*,\\s*&a\\s*,\\s*&b\\s*\\)\\s*;",
+      "exemple": "scanf(\"%d %d\", &a, &b);"
+     },
+     "corrige": "Un `%d` par variable, avec `&` devant chacune.",
+     "indices": [
+      "Deux entiers = deux `%d`.",
+      "Chaque variable est précédée de `&`."
+     ],
+     "duree": 0.8
+    },
+    {
+     "consigne": "`printf(\"%d\", a / b)` avec a = 17 et b = 5.",
+     "question": "Quel nombre s'affiche ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 3
+     },
+     "corrige": "Division entière : 3.",
+     "indices": [
+      "Deux `int` donnent une division entière."
+     ],
+     "duree": 0.5
+    },
+    {
+     "consigne": "`printf(\"%.2f\", (double)a / b)`.",
+     "question": "Quel nombre s'affiche ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 3.4
+     },
+     "corrige": "(double)17 / 5 = 3,4 → affiché 3.40.",
+     "indices": [
+      "Le cast agit sur `a` avant la division.",
+      "17 / 5 = 3,4."
+     ],
+     "duree": 0.7
+    }
+   ]
+  }
+ ]
+}

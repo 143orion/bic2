@@ -1,0 +1,1707 @@
+{
+ "id": "c-4-controle",
+ "module": "programmation-c",
+ "titre": "Structures de contrôle",
+ "ordre": 4,
+ "sources": [
+  "CM1 (Langage C)",
+  "TD Premiers pas ex. 2-18",
+  "TD Boucles, chaînes et tableaux (partie débutant)"
+ ],
+ "tldr": [
+  "`if / else if / else` : une seule branche s'exécute, tests dans l'ordre. `switch` : cases + `break` + `default`.",
+  "`for (init; condition; action)` pour un nombre de tours connu · `while` teste avant · `do-while` exécute au moins une fois (`;` final).",
+  "`break` sort de la boucle · `continue` passe au tour suivant · `=` affecte, `==` compare.",
+  "Accumulateurs : somme part de 0, produit part de 1. Chiffres d'un entier : `% 10` et `/ 10`."
+ ],
+ "notions": [
+  {
+   "id": "4.1",
+   "titre": "Conditions : if, else if, else",
+   "corps": "Un `if` exécute son bloc si la condition est vraie (≠ 0). Les autres blocs sont ignorés.\n```c\nint note = 14;\nif (note >= 16) {\n    printf(\"Très bien\\n\");\n} else if (note >= 12) {\n    printf(\"Assez bien\\n\");\n} else {\n    printf(\"Insuffisant\\n\");\n}\n```\n\nLes conditions sont testées **dans l'ordre** : la première vraie gagne, le reste est ignoré. On combine les conditions avec `&&`, `||`, `!`.\n\n**Opérateur ternaire** (une condition, deux valeurs) :\n```c\nchar *statut = (age >= 18) ? \"majeur\" : \"mineur\";\n```\n\nAttention : `==` compare, `=` affecte.",
+   "rec": "Une condition vaut 1 si elle est vraie, 0 sinon.",
+   "alt": "Un aiguillage : le train prend la première voie dont le signal est vert ; les autres voies restent fermées.",
+   "pre": [
+    "2.4",
+    "2.6"
+   ],
+   "ecrans": [
+    {
+     "titre": "Deux branches",
+     "texte": "`if (x % 2 == 0) { pair } else { impair }`."
+    },
+    {
+     "titre": "Plusieurs branches",
+     "texte": "`else if` enchaîne les tests du plus strict au plus large ; une seule branche s'exécute."
+    },
+    {
+     "titre": "Le ternaire",
+     "texte": "`(condition) ? valeur_si_vrai : valeur_si_faux`."
+    }
+   ],
+   "check": {
+    "id": "c-4-controle-ctl-0",
+    "enonce": "Avec `note = 14`, quel message l'exemple du cours affiche-t-il ?",
+    "choix": [
+     "Assez bien",
+     "Très bien",
+     "Insuffisant",
+     "aucun"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "14 ≥ 16 est faux, 14 ≥ 12 est vrai : « Assez bien »."
+   }
+  },
+  {
+   "id": "4.2",
+   "titre": "Le choix multiple : switch",
+   "corps": "`switch` choisit un bloc selon la valeur d'une variable **entière ou caractère** :\n```c\nswitch (note) {\n    case 20: case 19: case 18: case 17: case 16:\n        printf(\"Très bien\\n\");\n        break;\n    case 15: case 14: case 13: case 12:\n        printf(\"Assez bien\\n\");\n        break;\n    default:\n        printf(\"Insuffisant\\n\");\n        break;\n}\n```\n\n- `case` enchaînés = même bloc pour plusieurs valeurs ;\n- **`break` termine le `case`** : sans lui, l'exécution continue dans le `case` suivant ;\n- `default` s'exécute si aucun `case` ne correspond.",
+   "rec": "`switch` ne teste que l'égalité avec des valeurs fixes : pas d'intervalle (`>= 12`).",
+   "alt": "C'est une table de correspondance : on saute directement à la ligne `case` de la bonne valeur, puis on lit jusqu'au `break`.",
+   "pre": [
+    "4.1"
+   ],
+   "ecrans": [
+    {
+     "titre": "Les cas",
+     "texte": "Un `case` par valeur ; plusieurs `case` collés partagent le même bloc."
+    },
+    {
+     "titre": "Le `break`",
+     "texte": "Oublie-le et l'exécution « tombe » dans le cas suivant."
+    },
+    {
+     "titre": "`default`",
+     "texte": "Le filet de sécurité quand aucun cas ne correspond."
+    }
+   ],
+   "check": {
+    "id": "c-4-controle-ctl-1",
+    "enonce": "Que se passe-t-il si on oublie le `break` à la fin d'un `case` ?",
+    "choix": [
+     "l'exécution continue dans le case suivant",
+     "le programme ne compile pas",
+     "le switch s'arrête quand même",
+     "default est exécuté seul"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "Sans `break`, l'exécution « tombe » dans le `case` suivant."
+   }
+  },
+  {
+   "id": "4.3",
+   "titre": "La boucle for",
+   "corps": "`for (initialisation; condition; action)` répète un bloc un nombre de fois connu :\n- **initialisation** : une seule fois, avant le début ;\n- **condition** : testée **avant chaque tour** ; si vraie on exécute le corps, sinon on sort ;\n- **action** : exécutée **à la fin de chaque tour** (`i++`, `i *= 2`, `j--`…).\n```c\nfor (int i = 1; i <= 3; i++) {\n    printf(\"%d\\n\", i);   // 1, 2, 3\n}\n\nint tab[4] = {5, 8, 12, 20};\nfor (int i = 0; i < 4; i++) {\n    printf(\"Élément %d : %d\\n\", i, tab[i]);\n}\n```\n\nOn peut **imbriquer** deux boucles (ex. tableau de multiplication, triangle) : la boucle intérieure fait tous ses tours à chaque tour de la boucle extérieure.",
+   "rec": "`i <= N` fait N tours à partir de 1 ; `i < N` en fait N à partir de 0.",
+   "alt": "Un compteur de tours de piste : on part de l'initialisation, on vérifie qu'on a encore le droit de courir, on court, on avance le compteur.",
+   "pre": [
+    "4.1",
+    "2.4"
+   ],
+   "ecrans": [
+    {
+     "titre": "Les 3 parties",
+     "texte": "`for (int i = 1; i <= 10; i++)` : départ, condition de continuation, pas."
+    },
+    {
+     "titre": "Combien de tours ?",
+     "texte": "`i = 0 ; i < 5 ; i++` fait 5 tours : 0, 1, 2, 3, 4."
+    },
+    {
+     "titre": "Imbriquées",
+     "texte": "Boucle intérieure complète à chaque tour de la boucle extérieure."
+    }
+   ],
+   "check": {
+    "id": "c-4-controle-ctl-2",
+    "enonce": "Combien de fois le corps de `for (int i = 0; i < 5; i++)` s'exécute-t-il ?",
+    "choix": [
+     "5",
+     "4",
+     "6",
+     "0"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "`i` prend 0, 1, 2, 3, 4 : cinq tours."
+   }
+  },
+  {
+   "id": "4.4",
+   "titre": "La boucle while",
+   "corps": "`while (condition)` répète tant que la condition est vraie. Elle est utilisée quand **le nombre de tours n'est pas connu** à l'avance. La condition est testée **avant** chaque tour (boucle à entrée conditionnelle) : le corps peut ne **jamais** s'exécuter.\n```c\nint i = 1;\nwhile (i <= 10) {\n    printf(\"%d\\n\", i);\n    i++;\n}\n\nint valeur = 0;\nwhile (valeur != 42) {\n    printf(\"Entrez un nombre : \");\n    scanf(\"%d\", &valeur);\n}\n```\n\nIl faut **modifier une variable de la condition** dans le corps (ici `i++`), sinon la boucle ne s'arrête jamais.",
+   "rec": "Une boucle `for` est un `while` avec initialisation et pas regroupés sur une ligne.",
+   "alt": "Tant que le feu est rouge, j'attends : je regarde le feu **avant** de décider d'attendre.",
+   "pre": [
+    "4.3"
+   ],
+   "ecrans": [
+    {
+     "titre": "Tester d'abord",
+     "texte": "La condition est évaluée avant le corps : zéro tour possible."
+    },
+    {
+     "titre": "Faire évoluer la condition",
+     "texte": "Sans `i++` (ou une saisie), boucle infinie."
+    },
+    {
+     "titre": "Parcours de chaîne",
+     "texte": "`while (mot[i] != '\\0')` s'arrête au caractère nul."
+    }
+   ],
+   "check": {
+    "id": "c-4-controle-ctl-3",
+    "enonce": "Quelle est la particularité d'une boucle `while` ?",
+    "choix": [
+     "la condition est testée avant chaque tour",
+     "le corps s'exécute au moins une fois",
+     "elle ne s'utilise qu'avec des tableaux",
+     "elle s'arrête toute seule"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "`while` teste avant : le corps peut ne jamais s'exécuter."
+   }
+  },
+  {
+   "id": "4.5",
+   "titre": "La boucle do-while",
+   "corps": "`do { … } while (condition);` exécute le corps **au moins une fois**, puis teste la condition (boucle à sortie conditionnelle). Attention au `;` final.\n```c\nint valeur;\ndo {\n    printf(\"Entrez un nombre (1 à 10) : \");\n    scanf(\"%d\", &valeur);\n} while (valeur < 1 || valeur > 10);\n```\n\nTypique : **valider une saisie** ou afficher un **menu** au moins une fois. Le cours précise de ne l'utiliser que quand une première exécution sans condition est vraiment utile.",
+   "rec": "Elle répète tant que la saisie est incorrecte, mais demande toujours une première fois.",
+   "alt": "On goûte d'abord, on décide ensuite si on en reprend.",
+   "pre": [
+    "4.4"
+   ],
+   "ecrans": [
+    {
+     "titre": "Au moins un tour",
+     "texte": "Le corps passe avant le test."
+    },
+    {
+     "titre": "Le `;` final",
+     "texte": "`} while (condition);` : le point-virgule est obligatoire."
+    },
+    {
+     "titre": "Cas typique",
+     "texte": "Redemander une saisie tant qu'elle est invalide."
+    }
+   ],
+   "check": {
+    "id": "c-4-controle-ctl-4",
+    "enonce": "Combien de fois au minimum le corps d'une boucle `do-while` s'exécute-t-il ?",
+    "choix": [
+     "1",
+     "0",
+     "2",
+     "autant que la condition"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "Le test se fait après le corps : au moins un tour."
+   }
+  },
+  {
+   "id": "4.6",
+   "titre": "break et continue",
+   "corps": "- **`break`** : sort **immédiatement** de la boucle (ou du `switch`).\n- **`continue`** : saute la fin du tour en cours et passe au tour suivant.\n```c\nfor (int x = 0; x < 10; x++) {\n    if (x % 2 == 0) {\n        continue;        // on saute les pairs\n    }\n    printf(\"%d \", x);    // 1 3 5 7 9\n}\n\nfor (int d = 2; d * d <= n; d++) {\n    if (n % d == 0) {\n        premier = 0;\n        break;           // inutile de chercher plus loin\n    }\n}\n```\n\nUtilisés avec modération, ils évitent des tests supplémentaires (recherche, primalité).",
+   "rec": "`break` s'applique à la boucle (ou au `switch`) la plus proche.",
+   "alt": "`continue` = « passe ton tour » ; `break` = « quitte la partie ».",
+   "pre": [
+    "4.3",
+    "4.4"
+   ],
+   "ecrans": [
+    {
+     "titre": "`break`",
+     "texte": "Sortie immédiate de la boucle."
+    },
+    {
+     "titre": "`continue`",
+     "texte": "Saute au tour suivant ; ici on n'affiche que les impairs."
+    }
+   ],
+   "check": {
+    "id": "c-4-controle-ctl-5",
+    "enonce": "Que fait `continue` dans une boucle ?",
+    "choix": [
+     "passe directement au tour suivant",
+     "sort de la boucle",
+     "arrête le programme",
+     "relit la ligne précédente"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "`continue` saute la fin du tour courant."
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "c4-001",
+   "type": "qcm",
+   "notion": "4.1",
+   "origine": "cours",
+   "enonce": "Dans une chaîne `if / else if / else`, combien de blocs s'exécutent au plus ?",
+   "choix": [
+    "un seul",
+    "tous les blocs vrais",
+    "deux",
+    "aucun"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Dès qu'une condition est vraie, les suivantes sont ignorées."
+  },
+  {
+   "id": "c4-002",
+   "type": "saisie",
+   "notion": "4.1",
+   "origine": "cours",
+   "enonce": "Quel mot-clé enchaîne un second test après un `if` ?",
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     "else if"
+    ]
+   },
+   "duree": 0.67,
+   "explication": "`else if` ajoute un test."
+  },
+  {
+   "id": "c4-003",
+   "type": "saisie",
+   "notion": "4.1",
+   "origine": "cours",
+   "enonce": "`int x = 3; if (x % 2 == 0) printf(\"1\"); else printf(\"2\");` : quel chiffre s'affiche ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 2
+   },
+   "duree": 0.67,
+   "explication": "3 est impair : branche `else`, affiche 2."
+  },
+  {
+   "id": "c4-004",
+   "type": "qcm",
+   "notion": "4.1",
+   "origine": "cours",
+   "enonce": "Quelle ligne contient une erreur classique ?",
+   "choix": [
+    "if (x = 3)",
+    "if (x == 3)",
+    "if (x != 3)",
+    "if (x >= 3)"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "`=` affecte ; il faut `==` pour comparer."
+  },
+  {
+   "id": "c4-005",
+   "type": "trous",
+   "notion": "4.1",
+   "origine": "cours",
+   "enonce": "int age = 20;\nchar *statut = (age [_] 18) [_] \"majeur\" : \"mineur\";",
+   "fragments": [
+    ">=",
+    "?",
+    "&&",
+    "=="
+   ],
+   "verif": {
+    "mode": "trous",
+    "attendu": [
+     ">=",
+     "?"
+    ]
+   },
+   "duree": 0.5,
+   "explication": "Ternaire : `condition ? valeur_vrai : valeur_faux`."
+  },
+  {
+   "id": "c4-006",
+   "type": "qcm",
+   "notion": "4.1",
+   "origine": "cours",
+   "enonce": "Quelle expression est vraie si `x` est dans l'intervalle [5 ; 10] ?",
+   "choix": [
+    "x >= 5 && x <= 10",
+    "x >= 5 || x <= 10",
+    "x >= 5, x <= 10",
+    "5 <= x <= 10 compare comme prévu"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Les deux conditions doivent être vraies : `&&`."
+  },
+  {
+   "id": "c4-007",
+   "type": "qcm",
+   "notion": "4.2",
+   "origine": "cours",
+   "enonce": "À quoi sert `default` dans un `switch` ?",
+   "choix": [
+    "à traiter le cas où aucun case ne correspond",
+    "à commencer le switch",
+    "à arrêter le switch",
+    "à répéter le dernier case"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "`default` est le filet de sécurité."
+  },
+  {
+   "id": "c4-008",
+   "type": "qcm",
+   "notion": "4.2",
+   "origine": "cours",
+   "enonce": "Que fait `break` à la fin d'un `case` ?",
+   "choix": [
+    "il sort du switch",
+    "il saute au case suivant",
+    "il relance le switch",
+    "il ne sert à rien"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "`break` termine le `switch`."
+  },
+  {
+   "id": "c4-009",
+   "type": "qcm",
+   "notion": "4.2",
+   "origine": "cours",
+   "enonce": "Quel type de valeur peut-on tester dans un `switch` ?",
+   "choix": [
+    "entier ou caractère",
+    "réel",
+    "chaîne de caractères",
+    "tableau"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "`switch` accepte des entiers et des caractères."
+  },
+  {
+   "id": "c4-010",
+   "type": "trous",
+   "notion": "4.2",
+   "origine": "cours",
+   "enonce": "switch (op) {\n    [_] '+': r = a + b; [_];\n    default: r = 0;\n}",
+   "fragments": [
+    "case",
+    "break",
+    "if",
+    "continue"
+   ],
+   "verif": {
+    "mode": "trous",
+    "attendu": [
+     "case",
+     "break"
+    ]
+   },
+   "duree": 0.5,
+   "explication": "Chaque cas commence par `case` et finit par `break`."
+  },
+  {
+   "id": "c4-011",
+   "type": "saisie",
+   "notion": "4.3",
+   "origine": "cours",
+   "enonce": "Combien de lignes `for (int i = 1; i <= 10; i++) printf(\"%d\\n\", i);` affiche-t-elle ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 10
+   },
+   "duree": 0.67,
+   "explication": "i vaut 1, 2, …, 10 : dix lignes."
+  },
+  {
+   "id": "c4-012",
+   "type": "saisie",
+   "notion": "4.3",
+   "origine": "cours",
+   "enonce": "Que vaut `i` à la sortie de `for (int i = 0; i < 5; i++)` ? (valeur au moment où la condition devient fausse)",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 5
+   },
+   "duree": 0.67,
+   "explication": "La boucle s'arrête quand `i < 5` est faux : `i = 5`."
+  },
+  {
+   "id": "c4-013",
+   "type": "saisie",
+   "notion": "4.3",
+   "origine": "cours",
+   "enonce": "`for (int i = 1; i < 1000; i *= 2)` : combien de tours ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 10
+   },
+   "duree": 0.67,
+   "explication": "i vaut 1, 2, 4, 8, 16, 32, 64, 128, 256, 512 : dix tours (1024 ≥ 1000)."
+  },
+  {
+   "id": "c4-014",
+   "type": "trous",
+   "notion": "4.3",
+   "origine": "cours",
+   "enonce": "for ([_]; i <= 5; [_]) {\n    printf(\"%d\\n\", i);\n}",
+   "fragments": [
+    "int i = 1",
+    "i++",
+    "i = 0;",
+    "i--"
+   ],
+   "verif": {
+    "mode": "trous",
+    "attendu": [
+     "int i = 1",
+     "i++"
+    ]
+   },
+   "duree": 0.5,
+   "explication": "Initialisation `int i = 1`, action `i++`."
+  },
+  {
+   "id": "c4-015",
+   "type": "saisie",
+   "notion": "4.3",
+   "origine": "cours",
+   "enonce": "Écris la boucle `for` qui parcourt un tableau `tab` de 4 éléments avec `i` de 0 à 3 (juste l'en-tête, sans accolade).",
+   "verif": {
+    "mode": "regex",
+    "motif": "for\\s*\\(\\s*int\\s+i\\s*=\\s*0\\s*;\\s*i\\s*<\\s*4\\s*;\\s*i\\+\\+\\s*\\)",
+    "exemple": "for (int i = 0; i < 4; i++)"
+   },
+   "duree": 0.67,
+   "explication": "Départ à 0, `i < 4`, pas `i++`."
+  },
+  {
+   "id": "c4-016",
+   "type": "qcm",
+   "notion": "4.4",
+   "origine": "cours",
+   "enonce": "Quand préférer `while` à `for` ?",
+   "choix": [
+    "quand le nombre de tours n'est pas connu à l'avance",
+    "quand on veut un seul tour",
+    "quand on lit un tableau",
+    "jamais"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "`while` convient quand une condition d'arrêt décide."
+  },
+  {
+   "id": "c4-017",
+   "type": "qcm",
+   "notion": "4.4",
+   "origine": "cours",
+   "enonce": "Une boucle `while (i <= 10)` sans `i++` dans son corps…",
+   "choix": [
+    "ne s'arrête jamais",
+    "s'arrête après 10 tours",
+    "ne s'exécute pas",
+    "affiche une erreur"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Si la condition ne change pas, boucle infinie."
+  },
+  {
+   "id": "c4-018",
+   "type": "saisie",
+   "notion": "4.4",
+   "origine": "cours",
+   "enonce": "`int i = 5; while (i < 5) { i++; }` : combien de tours ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 0
+   },
+   "duree": 0.67,
+   "explication": "La condition est fausse dès le départ : zéro tour."
+  },
+  {
+   "id": "c4-019",
+   "type": "trous",
+   "notion": "4.4",
+   "origine": "cours",
+   "enonce": "char mot[] = \"Bonjour\";\nint i = 0;\nwhile (mot[i] [_] '\\0') {\n    printf(\"%c\", mot[i]);\n    [_];\n}",
+   "fragments": [
+    "!=",
+    "==",
+    "i++",
+    "i--"
+   ],
+   "verif": {
+    "mode": "trous",
+    "attendu": [
+     "!=",
+     "i++"
+    ]
+   },
+   "duree": 0.5,
+   "explication": "On avance tant que le caractère n'est pas le caractère nul."
+  },
+  {
+   "id": "c4-020",
+   "type": "qcm",
+   "notion": "4.5",
+   "origine": "cours",
+   "enonce": "Quelle boucle exécute toujours son corps au moins une fois ?",
+   "choix": [
+    "do-while",
+    "while",
+    "for",
+    "aucune"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "`do-while` teste après le corps."
+  },
+  {
+   "id": "c4-021",
+   "type": "qcm",
+   "notion": "4.5",
+   "origine": "cours",
+   "enonce": "Quel est le cas typique d'un `do-while` ?",
+   "choix": [
+    "redemander une saisie tant qu'elle est invalide",
+    "parcourir un tableau",
+    "choisir une valeur dans un switch",
+    "définir une constante"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "On saisit au moins une fois, puis on revalide."
+  },
+  {
+   "id": "c4-022",
+   "type": "saisie",
+   "notion": "4.5",
+   "origine": "cours",
+   "enonce": "Quel caractère termine `do { … } while (condition)` ?",
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     ";",
+     "point-virgule"
+    ]
+   },
+   "duree": 0.67,
+   "explication": "Le `;` après la condition est obligatoire."
+  },
+  {
+   "id": "c4-023",
+   "type": "trous",
+   "notion": "4.5",
+   "origine": "cours",
+   "enonce": "[_] {\n    scanf(\"%d\", &valeur);\n} [_] (valeur < 1 || valeur > 10);",
+   "fragments": [
+    "do",
+    "while",
+    "for",
+    "if"
+   ],
+   "verif": {
+    "mode": "trous",
+    "attendu": [
+     "do",
+     "while"
+    ]
+   },
+   "duree": 0.5,
+   "explication": "`do { … } while (condition);`."
+  },
+  {
+   "id": "c4-024",
+   "type": "qcm",
+   "notion": "4.6",
+   "origine": "cours",
+   "enonce": "Que fait `break` dans une boucle ?",
+   "choix": [
+    "sort immédiatement de la boucle",
+    "passe au tour suivant",
+    "redémarre la boucle",
+    "arrête le programme"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "`break` quitte la boucle."
+  },
+  {
+   "id": "c4-025",
+   "type": "saisie",
+   "notion": "4.6",
+   "origine": "cours",
+   "enonce": "Quel mot-clé saute au tour suivant de la boucle ?",
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     "continue"
+    ]
+   },
+   "duree": 0.67,
+   "explication": "`continue` passe au tour suivant."
+  },
+  {
+   "id": "c4-026",
+   "type": "saisie",
+   "notion": "4.6",
+   "origine": "cours",
+   "enonce": "`for (int x = 0; x < 10; x++) { if (x % 2 == 0) continue; printf(\"%d \", x); }` affiche quels nombres ? (séparés par des espaces)",
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     "1 3 5 7 9"
+    ]
+   },
+   "duree": 0.67,
+   "explication": "Les pairs sont sautés : 1 3 5 7 9."
+  },
+  {
+   "id": "c4-027",
+   "type": "saisie",
+   "notion": "4.6",
+   "origine": "cours",
+   "enonce": "`for (int i = 0; i < 10; i++) { if (i == 3) break; }` : combien de tours complets avant la sortie (i = 0, 1, 2) ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 3
+   },
+   "duree": 0.67,
+   "explication": "À i = 3, `break` sort : trois tours complets (0, 1, 2)."
+  },
+  {
+   "id": "c4-101",
+   "type": "exo",
+   "notion": "4.1",
+   "origine": "td",
+   "titre": "Majeur ou mineur",
+   "enonce": "Lire l'âge et afficher s'il est majeur (≥ 18) ou mineur (TD Premiers pas, exercice 4).",
+   "guidage": "**Plan** : lire l'âge → tester `age >= 18` → deux branches.\n\n**Piège** : 18 est majeur (≥), pas > .",
+   "duree": 1.6,
+   "etapes": [
+    {
+     "consigne": "Quelle condition teste « majeur » ?",
+     "question": "Écris la condition (sans `if`).",
+     "verif": {
+      "mode": "regex",
+      "motif": "\\(?\\s*age\\s*>=\\s*18\\s*\\)?",
+      "exemple": "age >= 18"
+     },
+     "corrige": "`age >= 18` est vrai à 18 ans.",
+     "indices": [
+      "Majeur = au moins 18.",
+      "Opérateur « supérieur ou égal » : `>=`."
+     ],
+     "duree": 0.6
+    },
+    {
+     "consigne": "Pour `age = 18`, quelle branche s'exécute ?",
+     "question": "Écris « majeur » ou « mineur ».",
+     "verif": {
+      "mode": "exact",
+      "attendu": [
+       "majeur"
+      ]
+     },
+     "corrige": "18 ≥ 18 est vrai : majeur.",
+     "indices": [
+      "Remplace `age` par 18 dans la condition."
+     ],
+     "duree": 0.5
+    },
+    {
+     "consigne": "Pour `age = 17`, quelle branche s'exécute ?",
+     "question": "Écris « majeur » ou « mineur ».",
+     "verif": {
+      "mode": "exact",
+      "attendu": [
+       "mineur"
+      ]
+     },
+     "corrige": "17 ≥ 18 est faux : branche `else`, mineur.",
+     "indices": [
+      "17 >= 18 est faux."
+     ],
+     "duree": 0.5
+    }
+   ]
+  },
+  {
+   "id": "c4-102",
+   "type": "exo",
+   "notion": "4.1",
+   "origine": "td",
+   "titre": "Positif, négatif ou nul",
+   "enonce": "Lire un entier et dire s'il est positif, négatif ou nul (TD Premiers pas, exercice 7).",
+   "guidage": "**Plan** : trois cas, donc `if / else if / else`.\n\n**Piège** : l'ordre des tests. Zéro n'est ni positif ni négatif.",
+   "duree": 1.4,
+   "etapes": [
+    {
+     "consigne": "Combien de branches te faut-il ?",
+     "question": "Écris le nombre de branches (cas).",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 3
+     },
+     "corrige": "Positif, négatif, nul : trois cas.",
+     "indices": [
+      "Pense aux trois situations possibles."
+     ],
+     "duree": 0.4
+    },
+    {
+     "consigne": "Quel test place-t-on dans le premier `if` pour « positif » ?",
+     "question": "Écris la condition.",
+     "verif": {
+      "mode": "regex",
+      "motif": "\\(?\\s*n\\s*>\\s*0\\s*\\)?",
+      "exemple": "n > 0"
+     },
+     "corrige": "`n > 0` (strictement positif).",
+     "indices": [
+      "Strictement supérieur à zéro."
+     ],
+     "duree": 0.5
+    },
+    {
+     "consigne": "Pour `n = 0`, quelle branche s'exécute (positif / négatif / nul) ?",
+     "question": "Écris ta réponse.",
+     "verif": {
+      "mode": "exact",
+      "attendu": [
+       "nul"
+      ]
+     },
+     "corrige": "0 > 0 est faux, 0 < 0 est faux : branche `else` : nul.",
+     "indices": [
+      "Teste 0 > 0, puis 0 < 0."
+     ],
+     "duree": 0.5
+    }
+   ]
+  },
+  {
+   "id": "c4-103",
+   "type": "exo",
+   "notion": "4.1",
+   "origine": "td",
+   "titre": "Maximum et minimum de trois entiers",
+   "enonce": "Lire trois entiers a, b, c et afficher le maximum et le minimum (TD Premiers pas, exercice 8). On prend a = 7, b = 12, c = 4.",
+   "guidage": "**Plan** : garder dans une variable `max` la plus grande valeur vue, la comparer aux autres.\n\n**Astuce** : même raisonnement pour `min`.",
+   "duree": 1.5,
+   "etapes": [
+    {
+     "consigne": "Initialise `max = a`, puis `if (b > max) max = b;`.",
+     "question": "Que vaut `max` après ce test ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 12
+     },
+     "corrige": "12 > 7 : `max` devient 12.",
+     "indices": [
+      "Compare b = 12 à max = 7."
+     ],
+     "duree": 0.5
+    },
+    {
+     "consigne": "Puis `if (c > max) max = c;`.",
+     "question": "Que vaut `max` à la fin ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 12
+     },
+     "corrige": "4 > 12 est faux : `max` reste 12.",
+     "indices": [
+      "Compare c = 4 à max = 12."
+     ],
+     "duree": 0.4
+    },
+    {
+     "consigne": "Même méthode pour `min` : `min = a`, puis `if (b < min) …`, puis `if (c < min) …`.",
+     "question": "Que vaut `min` à la fin ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 4
+     },
+     "corrige": "min part à 7, 12 < 7 faux, 4 < 7 vrai : min = 4.",
+     "indices": [
+      "Compare avec `<`.",
+      "c = 4 est la plus petite valeur."
+     ],
+     "duree": 0.6
+    }
+   ]
+  },
+  {
+   "id": "c4-104",
+   "type": "exo",
+   "notion": "4.1",
+   "origine": "td",
+   "titre": "Moyenne et mention",
+   "enonce": "Lire 4 notes et afficher la moyenne avec une mention (TD Premiers pas, exercice 9). On prend 12, 14, 16, 18.",
+   "guidage": "**Piège** : une division entière ferait perdre les décimales ; la moyenne est réelle.",
+   "duree": 1.3,
+   "etapes": [
+    {
+     "consigne": "Calcule la somme des 4 notes.",
+     "question": "Somme = ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 60
+     },
+     "corrige": "12 + 14 + 16 + 18 = 60.",
+     "indices": [
+      "Additionne les quatre notes."
+     ],
+     "duree": 0.4
+    },
+    {
+     "consigne": "La moyenne se calcule en réel : `somme / 4.0`.",
+     "question": "Moyenne = ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 15
+     },
+     "corrige": "60 / 4,0 = 15.",
+     "indices": [
+      "Divise par le nombre de notes."
+     ],
+     "duree": 0.4
+    },
+    {
+     "consigne": "Avec la grille « ≥ 16 : A, ≥ 12 : B, sinon C », quelle mention pour 15 ?",
+     "question": "Écris A, B ou C.",
+     "verif": {
+      "mode": "exact",
+      "attendu": [
+       "B"
+      ]
+     },
+     "corrige": "15 ≥ 16 faux ; 15 ≥ 12 vrai : mention B.",
+     "indices": [
+      "Teste dans l'ordre : d'abord ≥ 16, puis ≥ 12."
+     ],
+     "duree": 0.5
+    }
+   ]
+  },
+  {
+   "id": "c4-105",
+   "type": "exo",
+   "notion": "4.1",
+   "origine": "td",
+   "titre": "Année bissextile",
+   "enonce": "Lire une année et dire si elle est bissextile : multiple de 4 mais pas de 100, ou multiple de 400 (TD Premiers pas, exercice 13).",
+   "guidage": "**Plan** : une seule condition combinée avec `&&` et `||`.\n\n**Piège** : 1900 est multiple de 100 sans l'être de 400 ; 2000 l'est.",
+   "duree": 2.5,
+   "etapes": [
+    {
+     "consigne": "Écris la condition complète (variable `an`).",
+     "question": "Condition ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "\\(?\\s*\\(\\s*an\\s*%\\s*4\\s*==\\s*0\\s*&&\\s*an\\s*%\\s*100\\s*!=\\s*0\\s*\\)\\s*\\|\\|\\s*an\\s*%\\s*400\\s*==\\s*0\\s*\\)?",
+      "exemple": "(an % 4 == 0 && an % 100 != 0) || an % 400 == 0"
+     },
+     "corrige": "`(an % 4 == 0 && an % 100 != 0) || an % 400 == 0`.",
+     "indices": [
+      "Multiple de 4 : `an % 4 == 0`.",
+      "Multiple de 4 mais pas de 100, ou multiple de 400."
+     ],
+     "duree": 1.5
+    },
+    {
+     "consigne": "1900 est-il bissextile ? (1 pour oui, 0 pour non)",
+     "question": "1 ou 0 ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 0
+     },
+     "corrige": "1900 est multiple de 100 mais pas de 400 : non.",
+     "indices": [
+      "Teste 1900 % 4, % 100, % 400."
+     ],
+     "duree": 0.5
+    },
+    {
+     "consigne": "2000 est-il bissextile ? (1 pour oui, 0 pour non)",
+     "question": "1 ou 0 ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 1
+     },
+     "corrige": "2000 est multiple de 400 : oui.",
+     "indices": [
+      "2000 % 400 = 0."
+     ],
+     "duree": 0.5
+    }
+   ]
+  },
+  {
+   "id": "c4-106",
+   "type": "exo",
+   "notion": "4.2",
+   "origine": "td",
+   "titre": "Calculatrice avec switch",
+   "enonce": "Simuler une calculatrice (+, -, *, /) sur deux entiers (TD Premiers pas, exercice 12). On saisit a = 12, b = 4 et l'opérateur.",
+   "guidage": "**Plan** : lire `a`, l'opérateur (`char`) puis `b` ; un `switch` sur l'opérateur.\n\n**Piège** : la division par 0 doit être refusée.",
+   "duree": 2.4,
+   "etapes": [
+    {
+     "consigne": "Quelle instruction lit l'opérateur (variable `op`) en ignorant le retour à la ligne précédent ?",
+     "question": "Écris le `scanf`.",
+     "verif": {
+      "mode": "regex",
+      "motif": "scanf\\(\\s*\"\\s%c\"\\s*,\\s*&op\\s*\\)\\s*;",
+      "exemple": "scanf(\" %c\", &op);"
+     },
+     "corrige": "L'espace avant `%c` consomme les blancs restants.",
+     "indices": [
+      "Format d'un caractère : `%c`.",
+      "Une espace avant `%c`, et `&op`."
+     ],
+     "duree": 0.8
+    },
+    {
+     "consigne": "Dans `switch (op)`, quelle est la ligne du cas « addition » ?",
+     "question": "Écris la ligne `case`.",
+     "verif": {
+      "mode": "regex",
+      "motif": "case\\s*'\\+'\\s*:",
+      "exemple": "case '+':"
+     },
+     "corrige": "Un caractère s'écrit entre apostrophes : `case '+':`.",
+     "indices": [
+      "`case`, puis la valeur, puis `:`.",
+      "Le caractère `+` entre apostrophes."
+     ],
+     "duree": 0.6
+    },
+    {
+     "consigne": "Avec a = 12, b = 4 et op = `/`, quel résultat entier affiche-t-on ?",
+     "question": "Résultat ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 3
+     },
+     "corrige": "12 / 4 = 3.",
+     "indices": [
+      "12 divisé par 4."
+     ],
+     "duree": 0.4
+    },
+    {
+     "consigne": "Que doit-on tester avant la division ?",
+     "question": "Écris la condition qui refuse la division.",
+     "verif": {
+      "mode": "regex",
+      "motif": "\\(?\\s*b\\s*==\\s*0\\s*\\)?",
+      "exemple": "b == 0"
+     },
+     "corrige": "On refuse quand `b == 0`.",
+     "indices": [
+      "On ne divise jamais par zéro."
+     ],
+     "duree": 0.6
+    }
+   ]
+  },
+  {
+   "id": "c4-107",
+   "type": "exo",
+   "notion": "4.3",
+   "origine": "td",
+   "titre": "Somme de 1 à N",
+   "enonce": "Lire N et afficher 1 + 2 + … + N (TD Premiers pas, exercice 2). On prend N = 5.",
+   "guidage": "**Plan** : un accumulateur initialisé à 0, une boucle `for` qui ajoute `i`.\n\n**Vérification** : la formule $\\dfrac{N(N+1)}{2}$.",
+   "duree": 1.9,
+   "etapes": [
+    {
+     "consigne": "Quelle valeur initiale pour l'accumulateur `somme` ?",
+     "question": "Valeur ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 0
+     },
+     "corrige": "On part de 0, l'élément neutre de l'addition.",
+     "indices": [
+      "Quelle valeur n'ajoute rien ?"
+     ],
+     "duree": 0.4
+    },
+    {
+     "consigne": "Écris l'instruction du corps de la boucle qui ajoute `i`.",
+     "question": "Instruction ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "somme\\s*(\\+=\\s*i|=\\s*somme\\s*\\+\\s*i)\\s*;",
+      "exemple": "somme += i;"
+     },
+     "corrige": "`somme += i;` accumule.",
+     "indices": [
+      "Ajoute `i` à `somme`."
+     ],
+     "duree": 0.7
+    },
+    {
+     "consigne": "Que vaut `somme` pour N = 5 ?",
+     "question": "Somme ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 15
+     },
+     "corrige": "1 + 2 + 3 + 4 + 5 = 15.",
+     "indices": [
+      "Additionne de 1 à 5."
+     ],
+     "duree": 0.4
+    },
+    {
+     "consigne": "Retrouve le même résultat avec $\\dfrac{N(N+1)}{2}$.",
+     "question": "Valeur ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 15
+     },
+     "corrige": "5 × 6 / 2 = 15.",
+     "indices": [
+      "N × (N+1) / 2."
+     ],
+     "duree": 0.4
+    }
+   ]
+  },
+  {
+   "id": "c4-108",
+   "type": "exo",
+   "notion": "4.3",
+   "origine": "td",
+   "titre": "Factorielle",
+   "enonce": "Calculer N! = 1 × 2 × … × N (TD Premiers pas, exercice 4). On prend N = 5.",
+   "guidage": "**Plan** : accumulateur multiplicatif initialisé à 1 (et non 0).\n\n**Piège** : un accumulateur à 0 donnerait toujours 0.",
+   "duree": 1.6,
+   "etapes": [
+    {
+     "consigne": "Quelle valeur initiale pour `fact` ?",
+     "question": "Valeur ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 1
+     },
+     "corrige": "1 est l'élément neutre de la multiplication.",
+     "indices": [
+      "Quelle valeur ne change pas un produit ?"
+     ],
+     "duree": 0.4
+    },
+    {
+     "consigne": "Écris l'instruction du corps de la boucle.",
+     "question": "Instruction ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "fact\\s*(\\*=\\s*i|=\\s*fact\\s*\\*\\s*i)\\s*;",
+      "exemple": "fact *= i;"
+     },
+     "corrige": "`fact *= i;` multiplie à chaque tour.",
+     "indices": [
+      "Multiplie `fact` par `i`."
+     ],
+     "duree": 0.7
+    },
+    {
+     "consigne": "Que vaut `fact` pour N = 5 ?",
+     "question": "5! = ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 120
+     },
+     "corrige": "1 × 2 × 3 × 4 × 5 = 120.",
+     "indices": [
+      "2 × 3 = 6, × 4 = 24, × 5 = 120."
+     ],
+     "duree": 0.5
+    }
+   ]
+  },
+  {
+   "id": "c4-109",
+   "type": "exo",
+   "notion": "4.3",
+   "origine": "td",
+   "titre": "Puissance par multiplications successives",
+   "enonce": "Calculer X puissance n avec des multiplications successives (Tableaux_chainex, exercice 3). On prend X = 2 et n = 10.",
+   "guidage": "**Plan** : `res` initialisé à 1, puis n multiplications par X.\n\n**Piège** : n tours exactement.",
+   "duree": 1.5,
+   "etapes": [
+    {
+     "consigne": "Combien de tours de boucle faut-il ?",
+     "question": "Tours ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 10
+     },
+     "corrige": "n = 10 multiplications.",
+     "indices": [
+      "Une multiplication par exposant."
+     ],
+     "duree": 0.4
+    },
+    {
+     "consigne": "Quel en-tête de `for` fait n tours avec `i` à partir de 1 ?",
+     "question": "Écris l'en-tête (X, n connus).",
+     "verif": {
+      "mode": "regex",
+      "motif": "for\\s*\\(\\s*int\\s+i\\s*=\\s*1\\s*;\\s*i\\s*<=\\s*n\\s*;\\s*i\\+\\+\\s*\\)",
+      "exemple": "for (int i = 1; i <= n; i++)"
+     },
+     "corrige": "De 1 à n inclus.",
+     "indices": [
+      "`i <= n` pour inclure n."
+     ],
+     "duree": 0.7
+    },
+    {
+     "consigne": "Que vaut 2^10 ?",
+     "question": "Valeur ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 1024
+     },
+     "corrige": "2^10 = 1024.",
+     "indices": [
+      "Double dix fois à partir de 1."
+     ],
+     "duree": 0.4
+    }
+   ]
+  },
+  {
+   "id": "c4-110",
+   "type": "exo",
+   "notion": "4.3",
+   "origine": "td",
+   "titre": "Triangle numérique",
+   "enonce": "Pour N = 4, afficher un triangle aligné à gauche (TD Premiers pas, exercice 18) : ligne 1 : « 1 », ligne 2 : « 1 2 », … jusqu'à « 1 2 3 4 ».",
+   "guidage": "**Plan** : deux boucles imbriquées. La boucle extérieure choisit la ligne `l`, l'intérieure affiche les nombres de 1 à `l`.\n\n**Piège** : ne pas oublier le retour à la ligne après chaque ligne.",
+   "duree": 1.9,
+   "etapes": [
+    {
+     "consigne": "Quel en-tête pour la boucle extérieure (variable `l`, de 1 à N) ?",
+     "question": "En-tête ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "for\\s*\\(\\s*int\\s+l\\s*=\\s*1\\s*;\\s*l\\s*<=\\s*N\\s*;\\s*l\\+\\+\\s*\\)",
+      "exemple": "for (int l = 1; l <= N; l++)"
+     },
+     "corrige": "Une itération par ligne.",
+     "indices": [
+      "De 1 à N inclus."
+     ],
+     "duree": 0.8
+    },
+    {
+     "consigne": "Quelle condition pour la boucle intérieure (variable `c`, départ 1) ?",
+     "question": "Condition ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "c\\s*<=\\s*l",
+      "exemple": "c <= l"
+     },
+     "corrige": "La ligne `l` contient `l` nombres.",
+     "indices": [
+      "Combien de nombres sur la ligne l ?"
+     ],
+     "duree": 0.6
+    },
+    {
+     "consigne": "Combien de nombres au total sont affichés pour N = 4 ?",
+     "question": "Total ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 10
+     },
+     "corrige": "1 + 2 + 3 + 4 = 10 nombres.",
+     "indices": [
+      "Additionne le nombre de nombres de chaque ligne."
+     ],
+     "duree": 0.5
+    }
+   ]
+  },
+  {
+   "id": "c4-111",
+   "type": "exo",
+   "notion": "4.4",
+   "origine": "td",
+   "titre": "Notes jusqu'à une valeur négative",
+   "enonce": "Lire des notes positives et afficher le nombre de notes, la moyenne, la meilleure, la pire et le nombre d'admis (≥ 10) ; arrêt à la première note négative, qui n'entre pas dans le calcul (TD Premiers pas, exercice 15). On saisit 12, 8, 15, -1.",
+   "guidage": "**Plan** : `while` tant que la note lue est ≥ 0, avec la lecture **avant** la boucle puis **à la fin** de chaque tour.\n\n**Piège** : la note négative ne doit pas être comptée.",
+   "duree": 2.2,
+   "etapes": [
+    {
+     "consigne": "Quelle condition de boucle maintient la lecture tant que la note est valide (variable `note`) ?",
+     "question": "Condition ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "\\(?\\s*note\\s*>=\\s*0\\s*\\)?",
+      "exemple": "note >= 0"
+     },
+     "corrige": "On continue tant que `note >= 0`.",
+     "indices": [
+      "Une note négative arrête la boucle."
+     ],
+     "duree": 0.7
+    },
+    {
+     "consigne": "Combien de notes sont comptées avec la saisie 12, 8, 15, -1 ?",
+     "question": "Nombre ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 3
+     },
+     "corrige": "Les trois premières ; -1 est exclue.",
+     "indices": [
+      "Le -1 ne compte pas."
+     ],
+     "duree": 0.4
+    },
+    {
+     "consigne": "Quelle est la moyenne des notes comptées ?",
+     "question": "Moyenne ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 11.67,
+      "tol": 0.01
+     },
+     "corrige": "(12 + 8 + 15) / 3 = 35 / 3 ≈ 11,67.",
+     "indices": [
+      "Somme = 35, divisée par 3, en réel."
+     ],
+     "duree": 0.7
+    },
+    {
+     "consigne": "Combien d'admis (≥ 10) ?",
+     "question": "Admis ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 2
+     },
+     "corrige": "12 et 15 sont ≥ 10 ; 8 ne l'est pas.",
+     "indices": [
+      "Compte les notes ≥ 10."
+     ],
+     "duree": 0.4
+    }
+   ]
+  },
+  {
+   "id": "c4-112",
+   "type": "exo",
+   "notion": "4.4",
+   "origine": "td",
+   "titre": "Somme des chiffres et miroir d'un entier",
+   "enonce": "Lire un entier et calculer la somme de ses chiffres, puis son miroir (TD Premiers pas, exercices 9 et 10). On prend n = 1234.",
+   "guidage": "**Outils** : `n % 10` donne le dernier chiffre ; `n / 10` retire ce chiffre.\n\n**Plan** : `while (n > 0)`.",
+   "duree": 2.0,
+   "etapes": [
+    {
+     "consigne": "Que vaut `1234 % 10` ?",
+     "question": "Dernier chiffre ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 4
+     },
+     "corrige": "Le reste de la division par 10 est le chiffre des unités.",
+     "indices": [
+      "Le modulo par 10 isole le dernier chiffre."
+     ],
+     "duree": 0.4
+    },
+    {
+     "consigne": "Que vaut `1234 / 10` avec des entiers ?",
+     "question": "Nombre ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 123
+     },
+     "corrige": "La division entière retire le dernier chiffre.",
+     "indices": [
+      "Division entière."
+     ],
+     "duree": 0.4
+    },
+    {
+     "consigne": "Quelle est la somme des chiffres de 1234 ?",
+     "question": "Somme ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 10
+     },
+     "corrige": "1 + 2 + 3 + 4 = 10.",
+     "indices": [
+      "Additionne les quatre chiffres."
+     ],
+     "duree": 0.4
+    },
+    {
+     "consigne": "Le miroir se construit par `miroir = miroir * 10 + chiffre`. Que vaut le miroir de 1234 ?",
+     "question": "Miroir ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 4321
+     },
+     "corrige": "4 → 43 → 432 → 4321.",
+     "indices": [
+      "On part de 0 : 0×10+4, puis ×10+3…"
+     ],
+     "duree": 0.8
+    }
+   ]
+  },
+  {
+   "id": "c4-113",
+   "type": "exo",
+   "notion": "4.5",
+   "origine": "td",
+   "titre": "Mot de passe en 3 essais",
+   "enonce": "Demander un mot de passe avec 3 tentatives maximum (TD Premiers pas, exercice 12).",
+   "guidage": "**Plan** : un compteur d'essais ; on sort dès que le mot de passe est bon ou que les 3 essais sont épuisés.\n\n**Astuce** : un `do-while` demande au moins une fois.",
+   "duree": 1.6,
+   "etapes": [
+    {
+     "consigne": "Quelle boucle permet de demander au moins une fois ?",
+     "question": "Écris le mot-clé de début.",
+     "verif": {
+      "mode": "exact",
+      "attendu": [
+       "do"
+      ]
+     },
+     "corrige": "`do { … } while (…);` exécute le corps au moins une fois.",
+     "indices": [
+      "Boucle à sortie conditionnelle."
+     ],
+     "duree": 0.4
+    },
+    {
+     "consigne": "Quelle condition continue à demander tant que le mot de passe est faux ET qu'il reste des essais (variables `ok` valant 0/1 et `essais`) ?",
+     "question": "Condition de `while` ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "\\(?\\s*ok\\s*==\\s*0\\s*&&\\s*essais\\s*<\\s*3\\s*\\)?",
+      "exemple": "ok == 0 && essais < 3"
+     },
+     "corrige": "Il faut **les deux** : pas encore trouvé et il reste des essais.",
+     "indices": [
+      "Combine deux conditions avec `&&`."
+     ],
+     "duree": 0.9
+    },
+    {
+     "consigne": "Combien de tentatives au maximum sont possibles ?",
+     "question": "Nombre ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 3
+     },
+     "corrige": "3 tentatives maximum.",
+     "indices": [
+      "C'est dans l'énoncé."
+     ],
+     "duree": 0.3
+    }
+   ]
+  },
+  {
+   "id": "c4-114",
+   "type": "exo",
+   "notion": "4.6",
+   "origine": "td",
+   "titre": "Nombre premier",
+   "enonce": "Lire n et dire s'il est premier (test jusqu'à √n) (TD Premiers pas, exercice 13). On teste n = 29.",
+   "guidage": "**Plan** : essayer les diviseurs d de 2 jusqu'à √n ; au premier diviseur, `break`.\n\n**Astuce** : au lieu de la racine, `d * d <= n`.",
+   "duree": 1.7,
+   "etapes": [
+    {
+     "consigne": "Quelle condition de boucle remplace « d ≤ √n » sans racine ?",
+     "question": "Condition ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "d\\s*\\*\\s*d\\s*<=\\s*n",
+      "exemple": "d * d <= n"
+     },
+     "corrige": "d² ≤ n équivaut à d ≤ √n.",
+     "indices": [
+      "Élève d au carré."
+     ],
+     "duree": 0.7
+    },
+    {
+     "consigne": "29 a-t-il un diviseur entre 2 et 5 ? (1 oui, 0 non)",
+     "question": "1 ou 0 ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 0
+     },
+     "corrige": "29 n'est divisible ni par 2, 3, 4 ni 5.",
+     "indices": [
+      "Teste 29 % 2, 29 % 3, 29 % 4, 29 % 5."
+     ],
+     "duree": 0.6
+    },
+    {
+     "consigne": "Que fait-on dès qu'on trouve un diviseur ?",
+     "question": "Écris le mot-clé.",
+     "verif": {
+      "mode": "exact",
+      "attendu": [
+       "break"
+      ]
+     },
+     "corrige": "`break` sort de la boucle : inutile de chercher plus loin.",
+     "indices": [
+      "Sortir de la boucle immédiatement."
+     ],
+     "duree": 0.4
+    }
+   ]
+  },
+  {
+   "id": "c4-115",
+   "type": "exo",
+   "notion": "4.4",
+   "origine": "td",
+   "titre": "PGCD et Fibonacci",
+   "enonce": "PGCD par l'algorithme d'Euclide (exercice 15) puis les n premiers termes de Fibonacci (exercice 16). On prend PGCD(48, 18) et n = 8.",
+   "guidage": "**Euclide** : tant que `b != 0`, on remplace (a, b) par (b, a % b).\n**Fibonacci** : chaque terme est la somme des deux précédents.",
+   "duree": 1.5,
+   "etapes": [
+    {
+     "consigne": "Premier tour d'Euclide pour (48, 18) : que vaut `48 % 18` ?",
+     "question": "Reste ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 12
+     },
+     "corrige": "48 = 2 × 18 + 12.",
+     "indices": [
+      "48 - 36 = 12."
+     ],
+     "duree": 0.4
+    },
+    {
+     "consigne": "Suite : (18, 12) → (12, 6) → (6, 0). Quel est le PGCD ?",
+     "question": "PGCD ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 6
+     },
+     "corrige": "Quand b vaut 0, a (= 6) est le PGCD.",
+     "indices": [
+      "La dernière valeur non nulle."
+     ],
+     "duree": 0.5
+    },
+    {
+     "consigne": "Fibonacci avec 0 et 1 comme premiers termes : que vaut le 8e terme ? (0, 1, 1, 2, 3, 5, 8, …)",
+     "question": "8e terme ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 13
+     },
+     "corrige": "0, 1, 1, 2, 3, 5, 8, 13 : le 8e terme est 13.",
+     "indices": [
+      "Continue la suite jusqu'au 8e terme."
+     ],
+     "duree": 0.6
+    }
+   ]
+  },
+  {
+   "id": "c4-116",
+   "type": "exo",
+   "notion": "4.4",
+   "origine": "td",
+   "titre": "Division euclidienne par soustractions",
+   "enonce": "Calculer quotient et reste de a par b avec des soustractions successives, sans `/` ni `%` (Tableaux_chainex, exercice 2). On prend a = 17, b = 5.",
+   "guidage": "**Plan** : tant que `a >= b`, on soustrait `b` et on compte un tour.\n\n**Piège** : la condition `a >= b` (et non `a > b`).",
+   "duree": 1.6,
+   "etapes": [
+    {
+     "consigne": "Quelle condition maintient la boucle ?",
+     "question": "Condition ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "\\(?\\s*a\\s*>=\\s*b\\s*\\)?",
+      "exemple": "a >= b"
+     },
+     "corrige": "On soustrait tant qu'il reste au moins `b`.",
+     "indices": [
+      "Quand reste-t-il assez pour retirer b ?"
+     ],
+     "duree": 0.7
+    },
+    {
+     "consigne": "Combien de soustractions avec a = 17 et b = 5 ?",
+     "question": "Quotient ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 3
+     },
+     "corrige": "17 → 12 → 7 → 2 : trois soustractions.",
+     "indices": [
+      "Retire 5 jusqu'à ce que ça ne soit plus possible."
+     ],
+     "duree": 0.5
+    },
+    {
+     "consigne": "Que vaut `a` à la fin ?",
+     "question": "Reste ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 2
+     },
+     "corrige": "Il reste 2.",
+     "indices": [
+      "Après 3 soustractions."
+     ],
+     "duree": 0.4
+    }
+   ]
+  },
+  {
+   "id": "c4-117",
+   "type": "exo",
+   "notion": "4.3",
+   "origine": "td",
+   "titre": "Carré parfait",
+   "enonce": "Un entier x est un carré parfait s'il existe y < x/2 tel que y × y = x ; le programme le vérifie sans racine carrée (Tableaux_chainex, exercice 5). On teste x = 49 puis x = 50.",
+   "guidage": "**Plan** : boucle sur y de 1 jusqu'à x/2 ; `break` dès que `y * y == x`.\n\n**Piège** : un entier positif est requis : le programme le vérifie d'abord.",
+   "duree": 1.3,
+   "etapes": [
+    {
+     "consigne": "Quel test valide d'abord l'entrée (variable `x`) ?",
+     "question": "Condition d'entrée correcte ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "\\(?\\s*x\\s*>\\s*0\\s*\\)?",
+      "exemple": "x > 0"
+     },
+     "corrige": "x doit être strictement positif.",
+     "indices": [
+      "Strictement positif."
+     ],
+     "duree": 0.5
+    },
+    {
+     "consigne": "49 est-il un carré parfait ? (1 oui, 0 non)",
+     "question": "1 ou 0 ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 1
+     },
+     "corrige": "7 × 7 = 49.",
+     "indices": [
+      "Cherche y tel que y × y = 49."
+     ],
+     "duree": 0.4
+    },
+    {
+     "consigne": "50 est-il un carré parfait ? (1 oui, 0 non)",
+     "question": "1 ou 0 ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 0
+     },
+     "corrige": "7 × 7 = 49 et 8 × 8 = 64 : aucun y ne donne 50.",
+     "indices": [
+      "Teste 7 et 8."
+     ],
+     "duree": 0.4
+    }
+   ]
+  }
+ ]
+}
