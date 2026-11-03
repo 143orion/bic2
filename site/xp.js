@@ -610,6 +610,8 @@ function rendreHUD(){
 
 function bulle(d){
   if(!H || !d) return;
+  /* jamais de « 0 XP » : rien ne s'affiche quand une réponse ne rapporte rien (sauf si elle est contestable) */
+  if(!d.ok || (d.xp + d.bonus <= 0 && !d.contestable)) return;
   const b = document.createElement("div");
   b.className = "bulle" + (d.ok ? "" : " zero") + (d.maitrise ? " maitrise" : "");
   const tot = d.xp + d.bonus;
