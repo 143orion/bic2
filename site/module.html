@@ -73,36 +73,102 @@ function toast(t){ const el = $("toast"); el.textContent = t; el.classList.add("
 document.addEventListener("click", e => { if(e.target.closest("button, .retour")) M.son("tap"); });
 addEventListener("keydown", e => { if(S.touches && $("m-signal").hidden && !e.target.closest("input, textarea")) S.touches(e); });
 
-/* mini-markdown sûr : ```blocs```, `code`, **gras**, listes « - », paragraphes */
+/* mini-markdown sûr : ```blocs``` (```c colorés), `code`, **gras**, listes « - » et « 1. », tableaux « | a | b | »,
+   encadrés « > **Piège** : … » (piège / à retenir / astuce / exemple / attention), intertitres « ### », paragraphes */
 function mdInline(t){
   const codes = [];
   t = String(t ?? "").replace(/`([^`\n]+)`/g, (_, c) => (codes.push(c), `\u0001${codes.length-1}\u0001`));
   t = esc(t).replace(/\*\*([^*\n]+)\*\*/g, "<b>$1</b>");
   return t.replace(/\u0001(\d+)\u0001/g, (_, k) => `<code>${esc(codes[k])}</code>`);
 }
+
+/* ---- coloration syntaxique C (palette VS Code Dark+) ---- */
+const C_MOTS = new Set("if else for while do switch case break continue return default goto sizeof".split(" "));
+const C_TYPES = new Set("int char float double void long short unsigned signed const static struct enum typedef union extern bool size_t FILE".split(" "));
+const C_CONST = new Set("NULL true false EOF stdin stdout stderr".split(" "));
+const RE_C = /(\/\/[^\n]*|\/\*[\s\S]*?(?:\*\/|(?![\s\S])))|("(?:\\.|[^"\\\n])*"?)|('(?:\\.|[^'\\\n])*'?)|(^[ \t]*#[ \t]*include[ \t]*<[^>\n]*>?)|(^[ \t]*#[ \t]*[a-z]+)|(\b0[xX][0-9a-fA-F]+\b|\b\d+(?:\.\d*)?(?:[eE][+-]?\d+)?[uUlLfF]*\b|\B\.\d+\b)|([A-Za-z_]\w*)/gm;
+function hlChaine(t){
+  return esc(t).replace(/(\\[ntr0'"\\abfv]|\\x[0-9a-fA-F]+)|(%[-+ #0]*(?:\d+|\*)?(?:\.(?:\d+|\*))?(?:hh|h|ll|l|L|z)?[diouxXfFeEgGcsp%])/g,
+    (m, e, f) => e ? `<span class="tk-e">${m}</span>` : `<span class="tk-fmt">${m}</span>`);
+}
+function hlC(code){
+  code = String(code ?? "");
+  let out = "", i = 0, m;
+  RE_C.lastIndex = 0;
+  while((m = RE_C.exec(code))){
+    if(m[0] === ""){ RE_C.lastIndex++; continue; }
+    out += esc(code.slice(i, m.index)); i = m.index + m[0].length;
+    const x = m[0];
+    if(m[1]) out += `<span class="tk-cm">${esc(x)}</span>`;
+    else if(m[2] || m[3]) out += `<span class="tk-s">${hlChaine(x)}</span>`;
+    else if(m[4]){ const k = x.indexOf("<"); out += `<span class="tk-p">${esc(x.slice(0, k))}</span><span class="tk-s">${esc(x.slice(k))}</span>`; }
+    else if(m[5]) out += `<span class="tk-p">${esc(x)}</span>`;
+    else if(m[6]) out += `<span class="tk-n">${esc(x)}</span>`;
+    else {
+      const suite = code.slice(i).match(/^\s*\(/);
+      const cls = C_MOTS.has(x) ? "tk-k" : C_TYPES.has(x) ? "tk-t" : C_CONST.has(x) ? "tk-cst"
+        : /^[A-Z][A-Z0-9_]+$/.test(x) ? "tk-cst" : suite ? "tk-f" : /^[A-Z]/.test(x) ? "tk-ty" : "tk-v";
+      out += `<span class="${cls}">${esc(x)}</span>`;
+    }
+  }
+  return out + esc(code.slice(i));
+}
+function blocCode(lang, c){
+  c = c.replace(/\n$/, "");
+  const estC = /^(c|h)$/i.test(lang || "");
+  return `<div class="bloc-code${estC ? " lang-c" : ""}">${lang ? `<span class="bc-lang">${esc(lang.toUpperCase())}</span>` : ""}<button type="button" class="bc-copier" data-copier aria-label="Copier le code">${ic("copy")}</button><pre class="code"><code>${estC ? hlC(c) : esc(c)}</code></pre></div>`;
+}
+const ENCADRES = {"piège":"piege", "piege":"piege", "attention":"piege", "à retenir":"retenir", "a retenir":"retenir", "retenir":"retenir", "astuce":"astuce", "exemple":"exemple", "méthode":"astuce", "remarque":"exemple"};
+function encadre(lignes){
+  const txt = lignes.map(l => l.replace(/^\s*>\s?/, "")).join("\n");
+  const m = txt.match(/^\*\*([^*]+)\*\*\s*:?\s*/);
+  const cle = m ? m[1].trim().toLowerCase() : "";
+  const type = ENCADRES[cle] || "note";
+  const titre = m && ENCADRES[cle] ? m[1].trim() : "";
+  let corps = titre ? txt.slice(m[0].length) : txt;
+  if(titre) corps = corps.charAt(0).toUpperCase() + corps.slice(1);
+  const icone = {piege:"alert", retenir:"check", astuce:"bulb", exemple:"code", note:"info"}[type];
+  return `<div class="encadre enc-${type}"><div class="enc-tete">${ic(icone)}${titre ? `<b>${esc(titre)}</b>` : ""}</div><div class="enc-corps">${md(corps)}</div></div>`;
+}
+function tableau(lignes){
+  const cel = l => l.trim().replace(/\\\|/g, "\u0003").replace(/^\||\|$/g, "").split("|").map(c => c.trim().replace(/\u0003/g, "|"));
+  const sep = lignes[1] && /^\s*\|?\s*:?-{2,}/.test(lignes[1]);
+  const tete = sep ? cel(lignes[0]) : null, corps = (sep ? lignes.slice(2) : lignes).map(cel);
+  return `<div class="md-table-wrap"><table class="md-table">${tete ? `<thead><tr>${tete.map(c => `<th>${mdInline(c)}</th>`).join("")}</tr></thead>` : ""}<tbody>${corps.map(r => `<tr>${r.map(c => `<td>${mdInline(c)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+}
 function md(s){
   if(Array.isArray(s)) s = s.join("\n");
   const blocs = [];
-  const t = String(s ?? "").replace(/```[\w-]*\n?([\s\S]*?)```/g, (_, c) => (blocs.push(`<pre class="code"><code>${esc(c.replace(/\n$/,""))}</code></pre>`), `\n\u0002${blocs.length-1}\u0002\n`));
+  const t = String(s ?? "").replace(/```([\w-]*)\n?([\s\S]*?)```/g, (_, lang, c) => (blocs.push(blocCode(lang, c)), `\n\u0002${blocs.length-1}\u0002\n`));
   const out = [];
   for(const para of t.split(/\n\s*\n/)){
     const lignes = para.split("\n").filter(l => l.trim() !== "");
     if(!lignes.length) continue;
-    let html = "", liste = false, texte = [];
+    if(lignes.every(l => /^\s*>/.test(l))){ out.push(encadre(lignes)); continue; }
+    let html = "", liste = "", texte = [], tab = [];
     const vider = () => { if(texte.length){ html += `<p>${texte.join("<br>")}</p>`; texte = []; } };
-    const fermer = () => { if(liste){ html += "</ul>"; liste = false; } };
+    const fermer = () => { if(liste){ html += `</${liste}>`; liste = ""; } };
+    const finTab = () => { if(tab.length){ html += tableau(tab); tab = []; } };
     for(const l of lignes){
       const b = l.match(/^\u0002(\d+)\u0002$/);
-      const li = l.match(/^\s*[-•]\s+(.*)$/);
+      const li = l.match(/^\s*[-•]\s+(.*)$/), ol = l.match(/^\s*\d+[.)]\s+(.*)$/), h = l.match(/^\s*#{2,4}\s+(.*)$/);
+      if(/^\s*\|.*\|\s*$/.test(l)){ vider(); fermer(); tab.push(l); continue; }
+      finTab();
       if(b){ vider(); fermer(); html += blocs[b[1]]; }
-      else if(li){ vider(); if(!liste){ html += "<ul>"; liste = true; } html += `<li>${mdInline(li[1])}</li>`; }
+      else if(h){ vider(); fermer(); html += `<h4 class="md-h">${mdInline(h[1])}</h4>`; }
+      else if(li || ol){ const tg = li ? "ul" : "ol"; vider(); if(liste !== tg){ fermer(); html += `<${tg}>`; liste = tg; } html += `<li>${mdInline((li || ol)[1])}</li>`; }
       else { fermer(); texte.push(mdInline(l)); }
     }
-    vider(); fermer();
+    finTab(); vider(); fermer();
     out.push(html);
   }
   return out.join("");
 }
+document.addEventListener("click", async e => {
+  const b = e.target.closest("[data-copier]"); if(!b) return;
+  const code = b.parentElement.querySelector("pre code");
+  try{ await navigator.clipboard.writeText(code ? code.textContent : ""); toast("Code copié ✓"); }catch(err){ toast("Copie impossible ici : sélectionne le code à la main"); }
+});
 
 /* ---------- D.A. du module : variables --m-* + police Google ---------- */
 function appliquerTheme(t = {}){
@@ -193,6 +259,9 @@ const SV = {
 
 /* ---------- icônes (style Lucide, SVG inline) ---------- */
 const ICONES = {
+  copy:'<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>',
+  code:'<path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/>',
+  info:'<circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/>',
   zap:'<path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/>',
   timer:'<path d="M10 2h4"/><path d="M12 14l3-3"/><circle cx="12" cy="14" r="8"/>',
   book:'<path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2z"/><path d="M22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7z"/>',
@@ -396,9 +465,19 @@ function executerC(code, entree){
 function messageC(err){
   err = String(err || "");
   if(/Time limit exceeded/i.test(err)) return "Temps dépassé : boucle infinie ?";
+  if(/sortie trop longue/.test(err)) return "Ton programme affiche sans s'arrêter : boucle infinie ?";
   const m = err.match(/Parsing Failure:\s*\n?line (\d+) \(column (\d+)\)/);
   if(m) return `Erreur de syntaxe ligne ${m[1]} (colonne ${m[2]}) : vérifie les ;, les accolades et les parenthèses.`;
-  return err;
+  const ln = (err.match(/^(\d+):(\d+)\s/) || [])[1], ou = ln ? ` (ligne ${ln})` : "";
+  if(/method main is not defined/.test(err)) return "Il n'y a pas de fonction main : elle s'écrit en minuscules, int main(void) { … }.";
+  let x = err.match(/variable (\w+) does not exist/);
+  if(x) return `La variable ${x[1]} n'existe pas${ou} : est-elle déclarée, et bien orthographiée ?`;
+  x = err.match(/method (\w+) is not defined/);
+  if(x) return `La fonction ${x[1]} n'existe pas${ou} : faute de frappe, ou #include manquant ?`;
+  if(/you must return a value/.test(err)) return `Il manque un return${ou} dans une fonction qui doit renvoyer une valeur.`;
+  if(/divid\w* by zero|division by zero/i.test(err)) return `Division par zéro${ou}.`;
+  if(/overflow/.test(err)) return `Dépassement de capacité${ou} : la valeur ne tient pas dans le type choisi.`;
+  return err.replace(/^\d+:\d+\s/, ln ? `Ligne ${ln} : ` : "");
 }
 const nombresC = s => (String(s ?? "").match(/[-+]?\d+(?:[.,]\d+)?/g) || []).map(x => +x.replace(",", "."));
 function memeSortieC(a, b, v){
@@ -410,9 +489,19 @@ function memeSortieC(a, b, v){
   return f(a) === f(b);
 }
 const blocC = (titre, txt) => `<small>${esc(titre)}</small><pre class="code"><code>${esc(String(txt ?? "") || " ")}</code></pre>`;
+/* code sans commentaires ni chaînes : pour les contraintes « exige » / « interdit » de la banque */
+const codeNu = c => String(c ?? "").replace(/\/\*[\s\S]*?\*\/|\/\/[^\n]*/g, " ").replace(/"(?:\\.|[^"\\\n])*"|'(?:\\.|[^'\\\n])*'/g, '""');
+function contraintesC(v, rep){
+  const nu = codeNu(rep);
+  for(const r of [].concat(v.interdit || [])) if(new RegExp(r.motif).test(nu)) return r.msg || "Ton code utilise quelque chose d'interdit par l'énoncé.";
+  for(const r of [].concat(v.exige || [])) if(!new RegExp(r.motif).test(r.brut ? rep : nu)) return r.msg || "Ton code n'utilise pas ce que demande l'énoncé.";
+  return "";
+}
 async function verifC(v, rep){
   const tests = v.tests || [];
   if(!String(rep ?? "").trim()) return {ok:false, msg:"Écris ton programme avant de valider."};
+  const viol = contraintesC(v, rep);
+  if(viol) return {ok:false, msg:viol};
   if(!tests.length) return {auto:true};
   for(let k = 0; k < tests.length; k++){
     const t = tests[k], r = await executerC(rep, t.entree);
@@ -489,7 +578,9 @@ function creerChamp(cont, v, x){
   let ip = 0;
   const champHtml = `<input class="entree" spellcheck="false" autocapitalize="off" autocomplete="off" placeholder="${esc(ph)}" aria-label="Ta réponse"${mode === "numerique" ? ' inputmode="decimal"' : ""}>`;
   cont.innerHTML = (multi
-      ? `<textarea class="entree code-entree" spellcheck="false" autocapitalize="off" autocomplete="off" placeholder="${esc(ph)}" aria-label="Ta réponse">${esc(x.depart || "")}</textarea>`
+      ? (mode === "c"
+        ? `<div class="code-wrap"><pre class="code-hl" aria-hidden="true"><code></code></pre><textarea class="entree code-entree code-c" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" wrap="off" placeholder="${esc(ph)}" aria-label="Ton programme C">${esc(x.depart || "")}</textarea></div>`
+        : `<textarea class="entree code-entree" spellcheck="false" autocapitalize="off" autocomplete="off" placeholder="${esc(ph)}" aria-label="Ta réponse">${esc(x.depart || "")}</textarea>`)
       : unite ? `<span class="entree-unite">${champHtml}<button type="button" class="btn-unite" title="Changer l'unité" aria-label="Unité de la réponse : ${esc(unite)}. Cliquer pour changer"></button></span>` : champHtml)
     + (mode === "auto" ? `<small class="aide">Brouillon libre : tu compareras avec la correction et tu t'auto-évalues.</small>` : "")
     + (mode === "sql" ? `<div class="actions mini"><button type="button" class="btn" data-a="executer">Exécuter</button><small class="aide">Ctrl + Entrée pour valider</small></div><div class="sql-zone"></div>` : "")
@@ -522,6 +613,33 @@ function creerChamp(cont, v, x){
     };
   }
   if(mode === "c"){
+    /* coloration : un <pre> sous la zone de saisie (texte transparent), mêmes métriques, défilement synchronisé */
+    const hl = cont.querySelector(".code-hl"), hlc = hl.firstElementChild;
+    const metriques = () => {
+      const cs = getComputedStyle(champ);
+      for(const k of ["fontFamily","fontSize","lineHeight","letterSpacing","paddingTop","paddingRight","paddingBottom","paddingLeft","borderTopWidth","borderRightWidth","borderBottomWidth","borderLeftWidth","tabSize"]) hl.style[k] = cs[k];
+    };
+    const peindre = () => { hlc.innerHTML = hlC(champ.value) + "\n"; hl.scrollTop = champ.scrollTop; hl.scrollLeft = champ.scrollLeft; };
+    champ.addEventListener("input", peindre);
+    champ.addEventListener("scroll", () => { hl.scrollTop = champ.scrollTop; hl.scrollLeft = champ.scrollLeft; });
+    if(window.ResizeObserver) new ResizeObserver(() => { metriques(); peindre(); }).observe(champ);
+    metriques(); peindre();
+    /* Entrée : garde l'indentation (+4 après « { ») ; « } » en début de ligne : retire 4 espaces */
+    champ.addEventListener("keydown", e => {
+      if(champ.readOnly) return;
+      const v0 = champ.value, a = champ.selectionStart, b = champ.selectionEnd;
+      if(e.key === "Enter" && !e.ctrlKey && !e.metaKey && !e.shiftKey){
+        const debut = v0.lastIndexOf("\n", a - 1) + 1, ligne = v0.slice(debut, a);
+        let ind = (ligne.match(/^[ \t]*/) || [""])[0];
+        if(/\{\s*$/.test(ligne)) ind += "    ";
+        e.preventDefault(); champ.setRangeText("\n" + ind, a, b, "end"); peindre();
+      }else if(e.key === "}" && a === b){
+        const debut = v0.lastIndexOf("\n", a - 1) + 1, avant = v0.slice(debut, a);
+        if(/^ {4,}$/.test(avant)){ e.preventDefault(); champ.setRangeText(avant.slice(4) + "}", debut, a, "end"); peindre(); }
+      }else if(e.key === "Tab" && !e.shiftKey){
+        e.preventDefault(); champ.setRangeText("    ", a, b, "end"); peindre();
+      }
+    });
     const zone = cont.querySelector(".c-zone"), stdin = cont.querySelector(".c-stdin");
     cont.querySelector("[data-a=executer]").onclick = async () => {
       zone.innerHTML = `<p class="vide-txt">exécution…</p>`;
@@ -531,7 +649,7 @@ function creerChamp(cont, v, x){
     };
   }
   if(champ.tagName === "TEXTAREA") champ.addEventListener("keydown", e => {
-    if(e.key === "Tab" && !e.shiftKey && (mode === "sql" || mode === "dom" || mode === "c")){ e.preventDefault(); const s = champ.selectionStart; champ.setRangeText("  ", s, champ.selectionEnd, "end"); }
+    if(e.key === "Tab" && !e.shiftKey && (mode === "sql" || mode === "dom")){ e.preventDefault(); const s = champ.selectionStart; champ.setRangeText("  ", s, champ.selectionEnd, "end"); }
   });
   return o;
 }

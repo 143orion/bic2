@@ -222,15 +222,15 @@ const SCENARIOS = {
     const pg = await page(app); await pg.goto(URL0 + "module.html?mock=mia&reset#programmation-c");
     await pg.waitForFunction(() => window.moteur && window.moteur.etat()); await attendre(800);
     await pg.click('[data-m="tab"][data-v="exos"]'); await attendre(200);
-    await pg.click('[data-m="pk"][data-id="1.2"]'); await pg.click('[data-m="exsuiv"]');
+    await pg.click('[data-m="pk"][data-id="1.3"]'); await pg.click('[data-m="exsuiv"]');   /* 1.3 : un seul exo, de code */
     await pg.click('[data-m="mode"][data-v="classique"]'); await pg.click('[data-m="go"]'); await attendre(600);
     const champs = await pg.$$(".mock-qs .entree");
-    if(champs.length !== 4){ erreurs.push(`[${app}] éditeur C : 4 champs attendus, ${champs.length} trouvés`); return pg; }
-    await champs[0].fill("#include <stdio.h>"); await champs[1].fill('printf("Hello World\\n");'); await champs[2].fill("return 0;");
-    await champs[3].fill('#include <stdio.h>\n\nint main(void) {\n    printf("Hello World\\n");\n    return 0;\n}');
+    if(champs.length !== 1 || !(await pg.$(".mock-qs .code-hl"))){ erreurs.push(`[${app}] éditeur C : éditeur coloré introuvable (${champs.length} champ(s))`); return pg; }
+    await champs[0].fill('#include <stdio.h>\n\n/* reponse */\nint main(void) {\n    printf("%d\\n", 42); // affichage\n    return 0;\n}');
+    if(!(await pg.$(".mock-qs .code-hl .tk-k"))) erreurs.push(`[${app}] éditeur C : pas de coloration syntaxique`);
     await pg.click('.mock-qs [data-a="executer"]');
     await pg.waitForSelector(".mock-qs .c-sortie", {timeout:8000});
-    if(!(await pg.textContent(".mock-qs .c-sortie")).includes("Hello World")) erreurs.push(`[${app}] éditeur C : la sortie du programme n'est pas affichée`);
+    if(!(await pg.textContent(".mock-qs .c-sortie")).includes("42")) erreurs.push(`[${app}] éditeur C : la sortie du programme n'est pas affichée`);
     await capture(pg, `editeur-c-${app}`);
     await pg.click('[data-a="rendre"]'); await attendre(2500);
     const verdict = await pg.textContent(".q-retour");

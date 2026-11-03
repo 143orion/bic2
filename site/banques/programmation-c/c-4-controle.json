@@ -18,9 +18,9 @@
   {
    "id": "4.1",
    "titre": "Conditions : if, else if, else",
-   "corps": "Un `if` exécute son bloc si la condition est vraie (≠ 0). Les autres blocs sont ignorés.\n```c\nint note = 14;\nif (note >= 16) {\n    printf(\"Très bien\\n\");\n} else if (note >= 12) {\n    printf(\"Assez bien\\n\");\n} else {\n    printf(\"Insuffisant\\n\");\n}\n```\n\nLes conditions sont testées **dans l'ordre** : la première vraie gagne, le reste est ignoré. On combine les conditions avec `&&`, `||`, `!`.\n\n**Opérateur ternaire** (une condition, deux valeurs) :\n```c\nchar *statut = (age >= 18) ? \"majeur\" : \"mineur\";\n```\n\nAttention : `==` compare, `=` affecte.",
-   "rec": "Une condition vaut 1 si elle est vraie, 0 sinon.",
-   "alt": "Un aiguillage : le train prend la première voie dont le signal est vert ; les autres voies restent fermées.",
+   "corps": "Un `if` exécute son bloc **si la condition est vraie** (différente de 0). Avec `else if` et `else`, on enchaîne plusieurs cas :\n\n```c\nint note = 14;\nif (note >= 16) {\n    printf(\"Très bien\\n\");\n} else if (note >= 12) {\n    printf(\"Assez bien\\n\");     // ← exécuté : 14 >= 12\n} else if (note >= 10) {\n    printf(\"Passable\\n\");\n} else {\n    printf(\"Insuffisant\\n\");\n}\n```\n\nLes conditions sont testées **dans l'ordre**, et **une seule branche** s'exécute : la première dont la condition est vraie. D'où l'ordre « du plus strict au plus large ».\n\n### Combiner des conditions\n| Opérateur | Sens | Exemple |\n|---|---|---|\n| `&&` | et (les deux) | `age >= 18 && age < 65` |\n| `\\|\\|` | ou (au moins une) | `x < 0 \\|\\| x > 100` |\n| `!` | non | `!(n % 2 == 0)` |\n\n### L'opérateur ternaire\nUne condition, deux valeurs, en une expression :\n```c\nchar *statut = (age >= 18) ? \"majeur\" : \"mineur\";\n```\n\n> **Piège** : `if (x = 0)` **range** 0 dans `x`, puis teste 0 (faux) : la branche ne s'exécute jamais, et `x` est écrasé. Pour comparer : `==`.\n\n> **Piège** : `5 <= x <= 10` ne teste pas un intervalle en C : il faut `x >= 5 && x <= 10`.",
+   "rec": "Une condition vaut 1 si elle est vraie, 0 sinon (voir le type booléen). `if (x)` équivaut donc à `if (x != 0)`.",
+   "alt": "Un aiguillage : le train prend la première voie dont le signal est vert ; toutes les voies suivantes restent fermées, même si leur signal est vert aussi.",
    "pre": [
     "2.4",
     "2.6"
@@ -28,11 +28,15 @@
    "ecrans": [
     {
      "titre": "Deux branches",
-     "texte": "`if (x % 2 == 0) { pair } else { impair }`."
+     "texte": "```c\nif (x % 2 == 0) {\n    printf(\"pair\\n\");\n} else {\n    printf(\"impair\\n\");\n}\n```"
     },
     {
      "titre": "Plusieurs branches",
      "texte": "`else if` enchaîne les tests du plus strict au plus large ; une seule branche s'exécute."
+    },
+    {
+     "titre": "Combiner",
+     "texte": "`&&` (et), `||` (ou), `!` (non) : `age >= 18 && age < 65`."
     },
     {
      "titre": "Le ternaire",
@@ -59,9 +63,9 @@
   {
    "id": "4.2",
    "titre": "Le choix multiple : switch",
-   "corps": "`switch` choisit un bloc selon la valeur d'une variable **entière ou caractère** :\n```c\nswitch (note) {\n    case 20: case 19: case 18: case 17: case 16:\n        printf(\"Très bien\\n\");\n        break;\n    case 15: case 14: case 13: case 12:\n        printf(\"Assez bien\\n\");\n        break;\n    default:\n        printf(\"Insuffisant\\n\");\n        break;\n}\n```\n\n- `case` enchaînés = même bloc pour plusieurs valeurs ;\n- **`break` termine le `case`** : sans lui, l'exécution continue dans le `case` suivant ;\n- `default` s'exécute si aucun `case` ne correspond.",
-   "rec": "`switch` ne teste que l'égalité avec des valeurs fixes : pas d'intervalle (`>= 12`).",
-   "alt": "C'est une table de correspondance : on saute directement à la ligne `case` de la bonne valeur, puis on lit jusqu'au `break`.",
+   "corps": "`switch` choisit un bloc selon la **valeur** d'une variable **entière ou caractère** :\n\n```c\nswitch (note) {\n    case 20: case 19: case 18: case 17: case 16:\n        printf(\"Très bien\\n\");\n        break;\n    case 15: case 14: case 13: case 12:\n        printf(\"Assez bien\\n\");\n        break;\n    default:\n        printf(\"Insuffisant\\n\");\n        break;\n}\n```\n\n| Élément | Rôle |\n|---|---|\n| `case valeur:` | point d'entrée quand la variable vaut `valeur` |\n| plusieurs `case` collés | même bloc pour plusieurs valeurs |\n| `break;` | **sort** du `switch` |\n| `default:` | exécuté si aucun `case` ne correspond |\n\n> **Piège** : sans `break`, l'exécution **continue dans le `case` suivant** (on dit qu'elle « tombe »). C'est la cause n°1 des bugs de `switch`.\n\n```c\nswitch (n) {\n    case 1: printf(\"un\\n\");      // pas de break…\n    case 2: printf(\"deux\\n\");    // … donc avec n = 1, on affiche un PUIS deux\n            break;\n}\n```\n\n> **À retenir** : `switch` ne compare qu'à des **valeurs fixes** (`case 12:`), jamais à des intervalles (`>= 12`). Pour un caractère : `case '+':`.",
+   "rec": "`switch` est un raccourci pour une suite de `if (x == valeur)`. Il ne marche qu'avec des entiers ou des caractères.",
+   "alt": "Une table de correspondance : on saute directement à la ligne `case` de la bonne valeur, puis on lit tout jusqu'au premier `break`.",
    "pre": [
     "4.1"
    ],
@@ -71,12 +75,16 @@
      "texte": "Un `case` par valeur ; plusieurs `case` collés partagent le même bloc."
     },
     {
-     "titre": "Le `break`",
-     "texte": "Oublie-le et l'exécution « tombe » dans le cas suivant."
+     "titre": "Le break",
+     "texte": "Oublie-le et l'exécution « tombe » dans le cas suivant :\n```c\ncase 1: printf(\"un\\n\");\ncase 2: printf(\"deux\\n\"); break;\n```"
     },
     {
-     "titre": "`default`",
+     "titre": "default",
      "texte": "Le filet de sécurité quand aucun cas ne correspond."
+    },
+    {
+     "titre": "Un caractère",
+     "texte": "`switch (op) { case '+': … }` : le caractère entre apostrophes."
     }
    ],
    "check": {
@@ -99,9 +107,9 @@
   {
    "id": "4.3",
    "titre": "La boucle for",
-   "corps": "`for (initialisation; condition; action)` répète un bloc un nombre de fois connu :\n- **initialisation** : une seule fois, avant le début ;\n- **condition** : testée **avant chaque tour** ; si vraie on exécute le corps, sinon on sort ;\n- **action** : exécutée **à la fin de chaque tour** (`i++`, `i *= 2`, `j--`…).\n```c\nfor (int i = 1; i <= 3; i++) {\n    printf(\"%d\\n\", i);   // 1, 2, 3\n}\n\nint tab[4] = {5, 8, 12, 20};\nfor (int i = 0; i < 4; i++) {\n    printf(\"Élément %d : %d\\n\", i, tab[i]);\n}\n```\n\nOn peut **imbriquer** deux boucles (ex. tableau de multiplication, triangle) : la boucle intérieure fait tous ses tours à chaque tour de la boucle extérieure.",
-   "rec": "`i <= N` fait N tours à partir de 1 ; `i < N` en fait N à partir de 0.",
-   "alt": "Un compteur de tours de piste : on part de l'initialisation, on vérifie qu'on a encore le droit de courir, on court, on avance le compteur.",
+   "corps": "`for` répète un bloc **un nombre de fois connu** :\n\n```c\nfor (initialisation; condition; action) {\n    // corps\n}\n```\n\n| Partie | Quand ? | Exemple |\n|---|---|---|\n| initialisation | **une seule fois**, avant de commencer | `int i = 1` |\n| condition | **avant chaque tour** : vraie → on exécute le corps, fausse → on sort | `i <= 10` |\n| action | **à la fin de chaque tour** | `i++`, `i *= 2`, `j--` |\n\n```c\nfor (int i = 1; i <= 3; i++) {\n    printf(\"%d\\n\", i);           // 1 puis 2 puis 3\n}\n\nint tab[4] = {5, 8, 12, 20};\nfor (int i = 0; i < 4; i++) {     // les indices vont de 0 à 3\n    printf(\"Élément %d : %d\\n\", i, tab[i]);\n}\n```\n\n### Boucles imbriquées\nLa boucle intérieure fait **tous ses tours** à chaque tour de la boucle extérieure :\n```c\nfor (int l = 1; l <= 3; l++) {       // 3 lignes\n    for (int c = 1; c <= l; c++) {   // l nombres sur la ligne l\n        printf(\"%d \", c);\n    }\n    printf(\"\\n\");\n}\n```\n```text\n1\n1 2\n1 2 3\n```\n\n> **À retenir** : `i = 1 ; i <= N` fait N tours à partir de 1 ; `i = 0 ; i < N` fait aussi N tours, à partir de 0 (le cas des tableaux).\n\n> **Piège** : un `;` juste après la parenthèse (`for (…);`) donne une boucle **vide** : le bloc qui suit ne s'exécute qu'une fois.",
+   "rec": "`for` regroupe sur une ligne les trois ingrédients de toute boucle : un départ, une condition pour continuer, et un pas pour avancer.",
+   "alt": "Un compteur de tours de piste : on part de la ligne de départ (initialisation), on vérifie qu'on a encore le droit de courir (condition), on court un tour (corps), on avance le compteur (action).",
    "pre": [
     "4.1",
     "2.4"
@@ -109,15 +117,19 @@
    "ecrans": [
     {
      "titre": "Les 3 parties",
-     "texte": "`for (int i = 1; i <= 10; i++)` : départ, condition de continuation, pas."
+     "texte": "```c\nfor (int i = 1; i <= 10; i++)\n```\ndépart, condition pour continuer, pas."
     },
     {
      "titre": "Combien de tours ?",
      "texte": "`i = 0 ; i < 5 ; i++` fait 5 tours : 0, 1, 2, 3, 4."
     },
     {
+     "titre": "Accumuler",
+     "texte": "```c\nint somme = 0;\nfor (int i = 1; i <= n; i++) {\n    somme += i;\n}\n```"
+    },
+    {
      "titre": "Imbriquées",
-     "texte": "Boucle intérieure complète à chaque tour de la boucle extérieure."
+     "texte": "La boucle intérieure fait tous ses tours à chaque tour de la boucle extérieure : 3 × 4 = 12 passages pour 3 et 4 tours."
     }
    ],
    "check": {
@@ -140,9 +152,9 @@
   {
    "id": "4.4",
    "titre": "La boucle while",
-   "corps": "`while (condition)` répète tant que la condition est vraie. Elle est utilisée quand **le nombre de tours n'est pas connu** à l'avance. La condition est testée **avant** chaque tour (boucle à entrée conditionnelle) : le corps peut ne **jamais** s'exécuter.\n```c\nint i = 1;\nwhile (i <= 10) {\n    printf(\"%d\\n\", i);\n    i++;\n}\n\nint valeur = 0;\nwhile (valeur != 42) {\n    printf(\"Entrez un nombre : \");\n    scanf(\"%d\", &valeur);\n}\n```\n\nIl faut **modifier une variable de la condition** dans le corps (ici `i++`), sinon la boucle ne s'arrête jamais.",
-   "rec": "Une boucle `for` est un `while` avec initialisation et pas regroupés sur une ligne.",
-   "alt": "Tant que le feu est rouge, j'attends : je regarde le feu **avant** de décider d'attendre.",
+   "corps": "`while (condition)` répète **tant que** la condition est vraie. On l'utilise quand le **nombre de tours n'est pas connu** à l'avance. La condition est testée **avant** chaque tour : le corps peut ne **jamais** s'exécuter.\n\n```c\nint i = 1;\nwhile (i <= 10) {\n    printf(\"%d\\n\", i);\n    i++;                   // ← sans cette ligne, boucle infinie\n}\n\nint valeur = 0;\nwhile (valeur != 42) {     // on ne sait pas combien d'essais il faudra\n    printf(\"Entrez un nombre : \");\n    scanf(\"%d\", &valeur);\n}\n```\n\n### Le schéma classique : traiter les chiffres d'un entier\n```c\nint n = 1234, somme = 0;\nwhile (n > 0) {\n    somme += n % 10;       // dernier chiffre\n    n /= 10;               // on le retire\n}\n// somme vaut 1 + 2 + 3 + 4 = 10\n```\n\n| Tour | `n` avant | `n % 10` | `somme` | `n` après |\n|---|---|---|---|---|\n| 1 | 1234 | 4 | 4 | 123 |\n| 2 | 123 | 3 | 7 | 12 |\n| 3 | 12 | 2 | 9 | 1 |\n| 4 | 1 | 1 | 10 | 0 → on sort |\n\n> **Piège** : la condition doit finir par devenir fausse. Si rien dans le corps ne modifie une variable de la condition, la boucle ne s'arrête **jamais** (dans l'éditeur : « Temps dépassé : boucle infinie ? »).",
+   "rec": "Un `for` est un `while` dont l'initialisation et le pas sont écrits sur la même ligne. Choisis `while` quand c'est une **condition** (et pas un compteur) qui décide de l'arrêt.",
+   "alt": "Tant que le feu est rouge, j'attends : je regarde le feu **avant** de décider d'attendre encore. S'il est déjà vert, je n'attends pas du tout.",
    "pre": [
     "4.3"
    ],
@@ -153,7 +165,11 @@
     },
     {
      "titre": "Faire évoluer la condition",
-     "texte": "Sans `i++` (ou une saisie), boucle infinie."
+     "texte": "Sans `i++` (ou une nouvelle saisie), boucle infinie."
+    },
+    {
+     "titre": "Les chiffres d'un entier",
+     "texte": "`n % 10` donne le dernier chiffre, `n /= 10` le retire, `while (n > 0)` s'arrête quand il n'en reste plus."
     },
     {
      "titre": "Parcours de chaîne",
@@ -180,8 +196,8 @@
   {
    "id": "4.5",
    "titre": "La boucle do-while",
-   "corps": "`do { … } while (condition);` exécute le corps **au moins une fois**, puis teste la condition (boucle à sortie conditionnelle). Attention au `;` final.\n```c\nint valeur;\ndo {\n    printf(\"Entrez un nombre (1 à 10) : \");\n    scanf(\"%d\", &valeur);\n} while (valeur < 1 || valeur > 10);\n```\n\nTypique : **valider une saisie** ou afficher un **menu** au moins une fois. Le cours précise de ne l'utiliser que quand une première exécution sans condition est vraiment utile.",
-   "rec": "Elle répète tant que la saisie est incorrecte, mais demande toujours une première fois.",
+   "corps": "`do { … } while (condition);` exécute le corps **au moins une fois**, **puis** teste la condition (boucle à sortie conditionnelle).\n\n```c\nint valeur;\ndo {\n    printf(\"Entrez un nombre (1 à 10) : \");\n    scanf(\"%d\", &valeur);\n} while (valeur < 1 || valeur > 10);   // ← le ; est obligatoire\n```\n\n| | `while` | `do-while` |\n|---|---|---|\n| Test | avant le corps | après le corps |\n| Nombre minimal de tours | 0 | 1 |\n| Usage typique | parcourir, compter | valider une saisie, afficher un menu |\n\n> **À retenir** : le cours précise de réserver `do-while` aux cas où une **première exécution sans condition** a du sens (saisie à valider, menu). Sinon, préfère `while`.\n\n> **Piège** : le `;` après `while (…)` est obligatoire pour un `do-while`… et interdit juste après un `while (…)` ordinaire (il en ferait une boucle vide).",
+   "rec": "La condition d'un `do-while` porte en général sur ce qu'on vient de faire dans le corps (la valeur saisie), d'où le test **après**.",
    "alt": "On goûte d'abord, on décide ensuite si on en reprend.",
    "pre": [
     "4.4"
@@ -192,12 +208,12 @@
      "texte": "Le corps passe avant le test."
     },
     {
-     "titre": "Le `;` final",
+     "titre": "Le ; final",
      "texte": "`} while (condition);` : le point-virgule est obligatoire."
     },
     {
      "titre": "Cas typique",
-     "texte": "Redemander une saisie tant qu'elle est invalide."
+     "texte": "Redemander une saisie tant qu'elle est invalide :\n```c\ndo {\n    scanf(\"%d\", &v);\n} while (v < 1 || v > 10);\n```"
     }
    ],
    "check": {
@@ -220,8 +236,8 @@
   {
    "id": "4.6",
    "titre": "break et continue",
-   "corps": "- **`break`** : sort **immédiatement** de la boucle (ou du `switch`).\n- **`continue`** : saute la fin du tour en cours et passe au tour suivant.\n```c\nfor (int x = 0; x < 10; x++) {\n    if (x % 2 == 0) {\n        continue;        // on saute les pairs\n    }\n    printf(\"%d \", x);    // 1 3 5 7 9\n}\n\nfor (int d = 2; d * d <= n; d++) {\n    if (n % d == 0) {\n        premier = 0;\n        break;           // inutile de chercher plus loin\n    }\n}\n```\n\nUtilisés avec modération, ils évitent des tests supplémentaires (recherche, primalité).",
-   "rec": "`break` s'applique à la boucle (ou au `switch`) la plus proche.",
+   "corps": "| Instruction | Effet |\n|---|---|\n| `break;` | **sort immédiatement** de la boucle (ou du `switch`) |\n| `continue;` | saute la fin du tour en cours et **passe au tour suivant** |\n\n```c\nfor (int x = 0; x < 10; x++) {\n    if (x % 2 == 0) {\n        continue;          // on saute les pairs\n    }\n    printf(\"%d \", x);      // 1 3 5 7 9\n}\n```\n\n```c\nint premier = 1;\nfor (int d = 2; d * d <= n; d++) {\n    if (n % d == 0) {\n        premier = 0;\n        break;             // un diviseur suffit : inutile de chercher plus loin\n    }\n}\n```\n\n> **Astuce** : `break` est idéal pour une **recherche** : dès qu'on a trouvé, on s'arrête. Pour une recherche sans `break`, on ajoute la condition « pas encore trouvé » dans la condition de la boucle.\n\n> **À retenir** : `break` et `continue` agissent sur la boucle **la plus proche** qui les contient.",
+   "rec": "`break` s'applique à la boucle (ou au `switch`) la plus proche. Dans deux boucles imbriquées, il ne fait sortir que de la boucle intérieure.",
    "alt": "`continue` = « passe ton tour » ; `break` = « quitte la partie ».",
    "pre": [
     "4.3",
@@ -229,12 +245,16 @@
    ],
    "ecrans": [
     {
-     "titre": "`break`",
-     "texte": "Sortie immédiate de la boucle."
+     "titre": "break",
+     "texte": "Sortie immédiate de la boucle : parfait pour une recherche."
     },
     {
-     "titre": "`continue`",
-     "texte": "Saute au tour suivant ; ici on n'affiche que les impairs."
+     "titre": "continue",
+     "texte": "Saute au tour suivant ; ici on n'affiche que les impairs :\n```c\nif (x % 2 == 0) continue;\n```"
+    },
+    {
+     "titre": "La boucle la plus proche",
+     "texte": "Dans deux boucles imbriquées, `break` ne sort que de la boucle intérieure."
     }
    ],
    "check": {
@@ -1006,7 +1026,7 @@
    "titre": "Moyenne et mention",
    "enonce": "Lire 4 notes et afficher la moyenne avec une mention (TD Premiers pas, exercice 9). On prend 12, 14, 16, 18.",
    "guidage": "**Piège** : une division entière ferait perdre les décimales ; la moyenne est réelle.",
-   "duree": 1.3,
+   "duree": 7.3,
    "etapes": [
     {
      "consigne": "Calcule la somme des 4 notes.",
@@ -1048,6 +1068,34 @@
       "Teste dans l'ordre : d'abord ≥ 16, puis ≥ 12."
      ],
      "duree": 0.5
+    },
+    {
+     "consigne": "Écris le programme qui lit 4 notes entières et affiche la moyenne avec 2 décimales, une espace, puis la mention : A si la moyenne est au moins 16, B si elle est au moins 12, C sinon.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "12 14 16 18",
+        "sortie": "15.00 B"
+       },
+       {
+        "entree": "16 17 18 19",
+        "sortie": "17.50 A"
+       },
+       {
+        "entree": "5 8 9 10",
+        "sortie": "8.00 C"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int a, b, c, d;\n    scanf(\"%d %d %d %d\", &a, &b, &c, &d);\n    double moy = (a + b + c + d) / 4.0;\n    char mention;\n    if (moy >= 16) {\n        mention = 'A';\n    } else if (moy >= 12) {\n        mention = 'B';\n    } else {\n        mention = 'C';\n    }\n    printf(\"%.2f %c\\n\", moy, mention);\n    return 0;\n}"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int a, b, c, d;\n    scanf(\"%d %d %d %d\", &a, &b, &c, &d);\n    double moy = (a + b + c + d) / 4.0;\n    char mention;\n    if (moy >= 16) {\n        mention = 'A';\n    } else if (moy >= 12) {\n        mention = 'B';\n    } else {\n        mention = 'C';\n    }\n    printf(\"%.2f %c\\n\", moy, mention);\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 6
     }
    ]
   },
@@ -1588,7 +1636,7 @@
    "titre": "Notes jusqu'à une valeur négative",
    "enonce": "Lire des notes positives et afficher le nombre de notes, la moyenne, la meilleure, la pire et le nombre d'admis (≥ 10) ; arrêt à la première note négative, qui n'entre pas dans le calcul (TD Premiers pas, exercice 15). On saisit 12, 8, 15, -1.",
    "guidage": "**Plan** : `while` tant que la note lue est ≥ 0, avec la lecture **avant** la boucle puis **à la fin** de chaque tour.\n\n**Piège** : la note négative ne doit pas être comptée.",
-   "duree": 2.2,
+   "duree": 10.2,
    "etapes": [
     {
      "consigne": "Quelle condition de boucle maintient la lecture tant que la note est valide (variable `note`) ?",
@@ -1643,6 +1691,35 @@
       "Compte les notes ≥ 10."
      ],
      "duree": 0.4
+    },
+    {
+     "consigne": "Écris le programme complet : il lit des notes jusqu'à une note négative, puis affiche sur une ligne le nombre de notes, la moyenne (2 décimales), la meilleure, la pire et le nombre d'admis (≥ 10). On suppose au moins une note valide.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "12 8 15 -1",
+        "sortie": "3 11.67 15 8 2"
+       },
+       {
+        "entree": "10 10 -5",
+        "sortie": "2 10.00 10 10 2"
+       },
+       {
+        "entree": "4 19 7 0 -3",
+        "sortie": "4 7.50 19 0 1"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int note, nb = 0, somme = 0, admis = 0, max = 0, min = 20;\n    scanf(\"%d\", &note);\n    while (note >= 0) {\n        nb++;\n        somme += note;\n        if (note >= 10) admis++;\n        if (note > max) max = note;\n        if (note < min) min = note;\n        scanf(\"%d\", &note);\n    }\n    printf(\"%d %.2f %d %d %d\\n\", nb, (double)somme / nb, max, min, admis);\n    return 0;\n}",
+      "nombres": true
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int note, nb = 0, somme = 0, admis = 0, max = 0, min = 20;\n    scanf(\"%d\", &note);\n    while (note >= 0) {\n        nb++;\n        somme += note;\n        if (note >= 10) admis++;\n        if (note > max) max = note;\n        if (note < min) min = note;\n        scanf(\"%d\", &note);\n    }\n    printf(\"%d %.2f %d %d %d\\n\", nb, (double)somme / nb, max, min, admis);\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 8
     }
    ]
   },
@@ -1747,7 +1824,7 @@
    "titre": "Mot de passe en 3 essais",
    "enonce": "Demander un mot de passe avec 3 tentatives maximum (TD Premiers pas, exercice 12).",
    "guidage": "**Plan** : un compteur d'essais ; on sort dès que le mot de passe est bon ou que les 3 essais sont épuisés.\n\n**Astuce** : un `do-while` demande au moins une fois.",
-   "duree": 1.6,
+   "duree": 7.6,
    "etapes": [
     {
      "consigne": "Quelle boucle permet de demander au moins une fois ?",
@@ -1790,6 +1867,34 @@
       "C'est dans l'énoncé."
      ],
      "duree": 0.3
+    },
+    {
+     "consigne": "Version testable : le code secret est l'entier 1234. Écris le programme qui lit jusqu'à 3 codes et affiche « ok » dès que le bon code est saisi, ou « bloque » après 3 échecs.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "1111 1234",
+        "sortie": "ok"
+       },
+       {
+        "entree": "1 2 3",
+        "sortie": "bloque"
+       },
+       {
+        "entree": "1234",
+        "sortie": "ok"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\n#define SECRET 1234\n\nint main(void) {\n    int code, essais = 0, ok = 0;\n    do {\n        scanf(\"%d\", &code);\n        essais++;\n        if (code == SECRET) ok = 1;\n    } while (ok == 0 && essais < 3);\n    if (ok) printf(\"ok\\n\");\n    else printf(\"bloque\\n\");\n    return 0;\n}"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\n#define SECRET 1234\n\nint main(void) {\n    int code, essais = 0, ok = 0;\n    do {\n        scanf(\"%d\", &code);\n        essais++;\n        if (code == SECRET) ok = 1;\n    } while (ok == 0 && essais < 3);\n    if (ok) printf(\"ok\\n\");\n    else printf(\"bloque\\n\");\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 6
     }
    ]
   },
@@ -2048,7 +2153,7 @@
    "titre": "Carré parfait",
    "enonce": "Un entier x est un carré parfait s'il existe y < x/2 tel que y × y = x ; le programme le vérifie sans racine carrée (Tableaux_chainex, exercice 5). On teste x = 49 puis x = 50.",
    "guidage": "**Plan** : boucle sur y de 1 jusqu'à x/2 ; `break` dès que `y * y == x`.\n\n**Piège** : un entier positif est requis : le programme le vérifie d'abord.",
-   "duree": 1.3,
+   "duree": 7.3,
    "etapes": [
     {
      "consigne": "Quel test valide d'abord l'entrée (variable `x`) ?",
@@ -2089,6 +2194,893 @@
       "Teste 7 et 8."
      ],
      "duree": 0.4
+    },
+    {
+     "consigne": "Écris le programme qui lit x et affiche « invalide » si x ≤ 0, sinon 1 si x est un carré parfait et 0 sinon (sans racine carrée).",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "49",
+        "sortie": "1"
+       },
+       {
+        "entree": "50",
+        "sortie": "0"
+       },
+       {
+        "entree": "1",
+        "sortie": "1"
+       },
+       {
+        "entree": "-4",
+        "sortie": "invalide"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int x;\n    scanf(\"%d\", &x);\n    if (x <= 0) {\n        printf(\"invalide\\n\");\n    } else {\n        int carre = 0;\n        for (int y = 1; y * y <= x; y++) {\n            if (y * y == x) {\n                carre = 1;\n                break;\n            }\n        }\n        printf(\"%d\\n\", carre);\n    }\n    return 0;\n}"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int x;\n    scanf(\"%d\", &x);\n    if (x <= 0) {\n        printf(\"invalide\\n\");\n    } else {\n        int carre = 0;\n        for (int y = 1; y * y <= x; y++) {\n            if (y * y == x) {\n                carre = 1;\n                break;\n            }\n        }\n        printf(\"%d\\n\", carre);\n    }\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 6
+    }
+   ]
+  },
+  {
+   "id": "c4-028",
+   "type": "saisie",
+   "notion": "4.3",
+   "origine": "cours",
+   "enonce": "Que vaut `t` à la fin ?\n```c\nint t = 0;\nfor (int i = 0; i < 3; i++)\n    for (int j = 0; j < 4; j++)\n        t++;\n```",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 12
+   },
+   "duree": 0.67,
+   "explication": "La boucle intérieure fait 4 tours à chacun des 3 tours extérieurs : 12."
+  },
+  {
+   "id": "c4-029",
+   "type": "saisie",
+   "notion": "4.2",
+   "origine": "cours",
+   "enonce": "Qu'affiche ce code avec `n = 1` ? (mots séparés par une espace)\n```c\nswitch (n) {\n    case 1: printf(\"un \");\n    case 2: printf(\"deux \"); break;\n    case 3: printf(\"trois \");\n}\n```",
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     "un deux"
+    ]
+   },
+   "duree": 0.67,
+   "explication": "Pas de `break` après `case 1` : l'exécution tombe dans `case 2`, puis le `break` arrête."
+  },
+  {
+   "id": "c4-030",
+   "type": "saisie",
+   "notion": "4.4",
+   "origine": "cours",
+   "enonce": "Que vaut `k` à la fin ?\n```c\nint n = 100, k = 0;\nwhile (n > 1) {\n    n /= 2;\n    k++;\n}\n```",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 6
+   },
+   "duree": 0.67,
+   "explication": "100 → 50 → 25 → 12 → 6 → 3 → 1 : six divisions."
+  },
+  {
+   "id": "c4-031",
+   "type": "qcm",
+   "notion": "4.3",
+   "origine": "cours",
+   "enonce": "Combien de fois `Bonjour` s'affiche-t-il ?\n```c\nfor (int i = 0; i < 3; i++);\n{\n    printf(\"Bonjour\\n\");\n}\n```",
+   "choix": [
+    "une fois",
+    "trois fois",
+    "zéro fois",
+    "à l'infini"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Le `;` après la parenthèse donne une boucle vide ; le bloc qui suit est exécuté une seule fois, après la boucle."
+  },
+  {
+   "id": "c4-032",
+   "type": "saisie",
+   "notion": "4.1",
+   "origine": "cours",
+   "enonce": "Qu'affiche ce code ?\n```c\nint x = 5;\nif (x = 0) printf(\"zero\");\nelse printf(\"x=%d\", x);\n```",
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     "x=0"
+    ]
+   },
+   "duree": 0.67,
+   "explication": "`x = 0` range 0 dans `x` puis vaut 0 (faux) : branche `else`, et `x` vaut maintenant 0."
+  },
+  {
+   "id": "c4-118",
+   "type": "exo",
+   "notion": "4.1",
+   "origine": "generee",
+   "titre": "Tarif du cinéma",
+   "enonce": "Écris un programme qui lit un âge et affiche le prix de la place : `5` pour moins de 12 ans, `7` de 12 à 25 ans **ou** à partir de 65 ans, `10` sinon.",
+   "guidage": "**Plan** : `if / else if / else`, du cas le plus strict au plus large. Le tarif réduit combine deux conditions avec `||`.",
+   "duree": 5,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "8",
+        "sortie": "5"
+       },
+       {
+        "entree": "12",
+        "sortie": "7"
+       },
+       {
+        "entree": "25",
+        "sortie": "7"
+       },
+       {
+        "entree": "26",
+        "sortie": "10"
+       },
+       {
+        "entree": "70",
+        "sortie": "7"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int age;\n    scanf(\"%d\", &age);\n    if (age < 12) {\n        printf(\"5\\n\");\n    } else if (age <= 25 || age >= 65) {\n        printf(\"7\\n\");\n    } else {\n        printf(\"10\\n\");\n    }\n    return 0;\n}",
+      "nombres": true
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int age;\n    scanf(\"%d\", &age);\n    if (age < 12) {\n        printf(\"5\\n\");\n    } else if (age <= 25 || age >= 65) {\n        printf(\"7\\n\");\n    } else {\n        printf(\"10\\n\");\n    }\n    return 0;\n}\n```",
+     "indices": [
+      "Teste d'abord `age < 12`.",
+      "Puis `age <= 25 || age >= 65`, sinon 10."
+     ],
+     "duree": 5
+    }
+   ]
+  },
+  {
+   "id": "c4-119",
+   "type": "exo",
+   "notion": "4.2",
+   "origine": "generee",
+   "titre": "Jour de la semaine",
+   "enonce": "Écris un programme qui lit un numéro de 1 à 7 et affiche le jour correspondant en minuscules (`lundi`, `mardi`, …, `dimanche`), ou `invalide` pour tout autre nombre. Utilise un `switch`.",
+   "guidage": "Un `case` par jour, chacun terminé par `break`, et `default` pour les numéros invalides.",
+   "duree": 5,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "1",
+        "sortie": "lundi"
+       },
+       {
+        "entree": "3",
+        "sortie": "mercredi"
+       },
+       {
+        "entree": "7",
+        "sortie": "dimanche"
+       },
+       {
+        "entree": "9",
+        "sortie": "invalide"
+       },
+       {
+        "entree": "0",
+        "sortie": "invalide"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int j;\n    scanf(\"%d\", &j);\n    switch (j) {\n        case 1: printf(\"lundi\\n\"); break;\n        case 2: printf(\"mardi\\n\"); break;\n        case 3: printf(\"mercredi\\n\"); break;\n        case 4: printf(\"jeudi\\n\"); break;\n        case 5: printf(\"vendredi\\n\"); break;\n        case 6: printf(\"samedi\\n\"); break;\n        case 7: printf(\"dimanche\\n\"); break;\n        default: printf(\"invalide\\n\");\n    }\n    return 0;\n}",
+      "exige": [
+       {
+        "motif": "switch\\s*\\(",
+        "msg": "Utilise un switch, comme demandé."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int j;\n    scanf(\"%d\", &j);\n    switch (j) {\n        case 1: printf(\"lundi\\n\"); break;\n        case 2: printf(\"mardi\\n\"); break;\n        case 3: printf(\"mercredi\\n\"); break;\n        case 4: printf(\"jeudi\\n\"); break;\n        case 5: printf(\"vendredi\\n\"); break;\n        case 6: printf(\"samedi\\n\"); break;\n        case 7: printf(\"dimanche\\n\"); break;\n        default: printf(\"invalide\\n\");\n    }\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 5
+    }
+   ]
+  },
+  {
+   "id": "c4-120",
+   "type": "exo",
+   "notion": "4.2",
+   "origine": "generee",
+   "titre": "Le switch bavard",
+   "enonce": "Ce programme doit afficher **un seul** mot selon le chiffre lu (`un`, `deux`, `trois`, sinon `autre`). Avec `1`, il affiche pourtant quatre mots.",
+   "guidage": "Regarde ce qui se passe à la fin de chaque `case`.",
+   "duree": 3,
+   "etapes": [
+    {
+     "consigne": "Corrige le programme ci-dessous pour qu'il fasse ce que dit l'énoncé, puis valide.",
+     "question": "Corrige le programme.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "1",
+        "sortie": "un"
+       },
+       {
+        "entree": "2",
+        "sortie": "deux"
+       },
+       {
+        "entree": "3",
+        "sortie": "trois"
+       },
+       {
+        "entree": "8",
+        "sortie": "autre"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    switch (n) {\n        case 1: printf(\"un\\n\"); break;\n        case 2: printf(\"deux\\n\"); break;\n        case 3: printf(\"trois\\n\"); break;\n        default: printf(\"autre\\n\");\n    }\n    return 0;\n}"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    switch (n) {\n        case 1: printf(\"un\\n\"); break;\n        case 2: printf(\"deux\\n\"); break;\n        case 3: printf(\"trois\\n\"); break;\n        default: printf(\"autre\\n\");\n    }\n    return 0;\n}\n```",
+     "indices": [
+      "Sans `break`, l'exécution continue dans le `case` suivant.",
+      "Ajoute `break;` à la fin des cas 1, 2 et 3."
+     ],
+     "duree": 3,
+     "depart": "#include <stdio.h>\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    switch (n) {\n        case 1: printf(\"un\\n\");\n        case 2: printf(\"deux\\n\");\n        case 3: printf(\"trois\\n\");\n        default: printf(\"autre\\n\");\n    }\n    return 0;\n}"
+    }
+   ]
+  },
+  {
+   "id": "c4-121",
+   "type": "exo",
+   "notion": "4.1",
+   "origine": "generee",
+   "titre": "Toujours « non nul »",
+   "enonce": "Ce programme doit afficher `nul` si l'entier lu vaut 0, `non nul` sinon. Il se trompe toujours.",
+   "guidage": "Relis la condition du `if` caractère par caractère.",
+   "duree": 3,
+   "etapes": [
+    {
+     "consigne": "Corrige le programme ci-dessous pour qu'il fasse ce que dit l'énoncé, puis valide.",
+     "question": "Corrige le programme.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "0",
+        "sortie": "nul"
+       },
+       {
+        "entree": "5",
+        "sortie": "non nul"
+       },
+       {
+        "entree": "-2",
+        "sortie": "non nul"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int x;\n    scanf(\"%d\", &x);\n    if (x == 0) {\n        printf(\"nul\\n\");\n    } else {\n        printf(\"non nul\\n\");\n    }\n    return 0;\n}"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int x;\n    scanf(\"%d\", &x);\n    if (x == 0) {\n        printf(\"nul\\n\");\n    } else {\n        printf(\"non nul\\n\");\n    }\n    return 0;\n}\n```",
+     "indices": [
+      "`=` range une valeur, `==` compare.",
+      "`if (x == 0)`."
+     ],
+     "duree": 3,
+     "depart": "#include <stdio.h>\n\nint main(void) {\n    int x;\n    scanf(\"%d\", &x);\n    if (x = 0) {\n        printf(\"nul\\n\");\n    } else {\n        printf(\"non nul\\n\");\n    }\n    return 0;\n}"
+    }
+   ]
+  },
+  {
+   "id": "c4-122",
+   "type": "exo",
+   "notion": "4.3",
+   "origine": "td",
+   "titre": "Table de multiplication",
+   "enonce": "Écris un programme qui lit `n` et affiche sa table de multiplication : `n×1`, `n×2`, …, `n×10`, un résultat par ligne (TD Premiers pas, exercice 7).",
+   "guidage": "Une boucle `for` de 1 à 10 ; à chaque tour, affiche `n * i`.",
+   "duree": 4,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "3",
+        "sortie": "3\n6\n9\n12\n15\n18\n21\n24\n27\n30"
+       },
+       {
+        "entree": "7",
+        "sortie": "7\n14\n21\n28\n35\n42\n49\n56\n63\n70"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    for (int i = 1; i <= 10; i++) {\n        printf(\"%d\\n\", n * i);\n    }\n    return 0;\n}",
+      "nombres": true
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    for (int i = 1; i <= 10; i++) {\n        printf(\"%d\\n\", n * i);\n    }\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 4
+    }
+   ]
+  },
+  {
+   "id": "c4-123",
+   "type": "exo",
+   "notion": "4.3",
+   "origine": "td",
+   "titre": "Compter les pairs",
+   "enonce": "Écris un programme qui lit `N` et affiche le nombre d'entiers pairs dans l'intervalle [1 ; N] (TD Premiers pas, exercice 3).",
+   "guidage": "Parcours 1 … N, et augmente un compteur quand `i % 2 == 0`. (Bonus : la réponse vaut aussi `N / 2`.)",
+   "duree": 4,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "10",
+        "sortie": "5"
+       },
+       {
+        "entree": "7",
+        "sortie": "3"
+       },
+       {
+        "entree": "1",
+        "sortie": "0"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int n, nb = 0;\n    scanf(\"%d\", &n);\n    for (int i = 1; i <= n; i++) {\n        if (i % 2 == 0) {\n            nb++;\n        }\n    }\n    printf(\"%d\\n\", nb);\n    return 0;\n}",
+      "nombres": true
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int n, nb = 0;\n    scanf(\"%d\", &n);\n    for (int i = 1; i <= n; i++) {\n        if (i % 2 == 0) {\n            nb++;\n        }\n    }\n    printf(\"%d\\n\", nb);\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 4
+    }
+   ]
+  },
+  {
+   "id": "c4-124",
+   "type": "exo",
+   "notion": "4.3",
+   "origine": "td",
+   "titre": "Suite de Fibonacci",
+   "enonce": "Écris un programme qui lit `n` (1 ≤ n ≤ 40) et affiche les `n` premiers termes de la suite de Fibonacci, séparés par des espaces, en commençant par `0 1` (TD Premiers pas, exercice 16).",
+   "guidage": "**Plan** : deux variables `a = 0`, `b = 1` ; à chaque tour, on affiche `a`, puis `suivant = a + b`, `a = b`, `b = suivant`.",
+   "duree": 6,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "8",
+        "sortie": "0 1 1 2 3 5 8 13"
+       },
+       {
+        "entree": "1",
+        "sortie": "0"
+       },
+       {
+        "entree": "12",
+        "sortie": "0 1 1 2 3 5 8 13 21 34 55 89"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int n, a = 0, b = 1;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        printf(\"%d \", a);\n        int suivant = a + b;\n        a = b;\n        b = suivant;\n    }\n    printf(\"\\n\");\n    return 0;\n}",
+      "nombres": true
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int n, a = 0, b = 1;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        printf(\"%d \", a);\n        int suivant = a + b;\n        a = b;\n        b = suivant;\n    }\n    printf(\"\\n\");\n    return 0;\n}\n```",
+     "indices": [
+      "Garde les deux derniers termes dans `a` et `b`.",
+      "Affiche `a`, puis décale : `suivant = a + b; a = b; b = suivant;`."
+     ],
+     "duree": 6
+    }
+   ]
+  },
+  {
+   "id": "c4-125",
+   "type": "exo",
+   "notion": "4.3",
+   "origine": "td",
+   "titre": "Nombres premiers jusqu'à N",
+   "enonce": "Écris un programme qui lit `N` et affiche tous les nombres premiers inférieurs ou égaux à `N`, séparés par des espaces (TD Premiers pas, exercice 14).",
+   "guidage": "**Plan** : deux boucles imbriquées. La boucle extérieure parcourt les candidats `k` de 2 à N ; la boucle intérieure cherche un diviseur `d` tant que `d * d <= k`.",
+   "duree": 7,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "20",
+        "sortie": "2 3 5 7 11 13 17 19"
+       },
+       {
+        "entree": "2",
+        "sortie": "2"
+       },
+       {
+        "entree": "30",
+        "sortie": "2 3 5 7 11 13 17 19 23 29"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    for (int k = 2; k <= n; k++) {\n        int premier = 1;\n        for (int d = 2; d * d <= k; d++) {\n            if (k % d == 0) {\n                premier = 0;\n                break;\n            }\n        }\n        if (premier) {\n            printf(\"%d \", k);\n        }\n    }\n    printf(\"\\n\");\n    return 0;\n}",
+      "nombres": true
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    for (int k = 2; k <= n; k++) {\n        int premier = 1;\n        for (int d = 2; d * d <= k; d++) {\n            if (k % d == 0) {\n                premier = 0;\n                break;\n            }\n        }\n        if (premier) {\n            printf(\"%d \", k);\n        }\n    }\n    printf(\"\\n\");\n    return 0;\n}\n```",
+     "indices": [
+      "Réutilise le test de primalité pour chaque `k`.",
+      "Remets `premier = 1` au début de chaque candidat."
+     ],
+     "duree": 7
+    }
+   ]
+  },
+  {
+   "id": "c4-126",
+   "type": "exo",
+   "notion": "4.3",
+   "origine": "td",
+   "titre": "Multiplication par additions",
+   "enonce": "Écris un programme qui lit deux entiers positifs `a` et `b` et affiche `a × b` **calculé avec des additions successives**, sans utiliser l'opérateur `*` (Tableaux_chainex, exercice 1).",
+   "guidage": "Ajouter `a` à un total, `b` fois.",
+   "duree": 4,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "6 7",
+        "sortie": "42"
+       },
+       {
+        "entree": "5 0",
+        "sortie": "0"
+       },
+       {
+        "entree": "12 3",
+        "sortie": "36"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int a, b, res = 0;\n    scanf(\"%d %d\", &a, &b);\n    for (int i = 0; i < b; i++) {\n        res += a;\n    }\n    printf(\"%d\\n\", res);\n    return 0;\n}",
+      "nombres": true,
+      "interdit": [
+       {
+        "motif": "\\*",
+        "msg": "L'énoncé interdit l'opérateur * : utilise des additions."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int a, b, res = 0;\n    scanf(\"%d %d\", &a, &b);\n    for (int i = 0; i < b; i++) {\n        res += a;\n    }\n    printf(\"%d\\n\", res);\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 4
+    }
+   ]
+  },
+  {
+   "id": "c4-127",
+   "type": "exo",
+   "notion": "4.4",
+   "origine": "td",
+   "titre": "Compter les positifs",
+   "enonce": "Écris un programme qui lit `N`, puis `N` entiers, et affiche combien sont strictement positifs (TD Premiers pas, exercice 6).",
+   "guidage": "Une boucle de `N` tours ; dans chaque tour, un `scanf` et un test `> 0`.",
+   "duree": 5,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "5\n1 -2 3 0 4",
+        "sortie": "3"
+       },
+       {
+        "entree": "3\n-1 -2 -3",
+        "sortie": "0"
+       },
+       {
+        "entree": "1\n7",
+        "sortie": "1"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int n, x, nb = 0;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        scanf(\"%d\", &x);\n        if (x > 0) {\n            nb++;\n        }\n    }\n    printf(\"%d\\n\", nb);\n    return 0;\n}",
+      "nombres": true
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int n, x, nb = 0;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        scanf(\"%d\", &x);\n        if (x > 0) {\n            nb++;\n        }\n    }\n    printf(\"%d\\n\", nb);\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 5
+    }
+   ]
+  },
+  {
+   "id": "c4-128",
+   "type": "exo",
+   "notion": "4.4",
+   "origine": "td",
+   "titre": "Miroir d'un entier",
+   "enonce": "Écris un programme qui lit un entier positif et affiche son **miroir** (ses chiffres à l'envers) : `1234` → `4321` (TD Premiers pas, exercice 10).",
+   "guidage": "**Plan** : `while (n > 0)` ; à chaque tour, `miroir = miroir * 10 + n % 10` puis `n /= 10`.",
+   "duree": 5,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "1234",
+        "sortie": "4321"
+       },
+       {
+        "entree": "7",
+        "sortie": "7"
+       },
+       {
+        "entree": "120",
+        "sortie": "21"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int n, miroir = 0;\n    scanf(\"%d\", &n);\n    while (n > 0) {\n        miroir = miroir * 10 + n % 10;\n        n /= 10;\n    }\n    printf(\"%d\\n\", miroir);\n    return 0;\n}",
+      "nombres": true
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int n, miroir = 0;\n    scanf(\"%d\", &n);\n    while (n > 0) {\n        miroir = miroir * 10 + n % 10;\n        n /= 10;\n    }\n    printf(\"%d\\n\", miroir);\n    return 0;\n}\n```",
+     "indices": [
+      "Le dernier chiffre est `n % 10`.",
+      "On « pousse » le miroir d'un rang : `miroir * 10 + chiffre`."
+     ],
+     "duree": 5
+    }
+   ]
+  },
+  {
+   "id": "c4-129",
+   "type": "exo",
+   "notion": "4.4",
+   "origine": "td",
+   "titre": "Nombre de chiffres",
+   "enonce": "Écris un programme qui lit un entier positif et affiche son nombre de chiffres, **sans le convertir en chaîne** (TD Premiers pas, exercice 11). On considère que 0 a 1 chiffre.",
+   "guidage": "Divise par 10 jusqu'à tomber à 0, en comptant les divisions. Attention au cas 0.",
+   "duree": 4,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "1234",
+        "sortie": "4"
+       },
+       {
+        "entree": "7",
+        "sortie": "1"
+       },
+       {
+        "entree": "100000",
+        "sortie": "6"
+       },
+       {
+        "entree": "0",
+        "sortie": "1"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int n, nb = 0;\n    scanf(\"%d\", &n);\n    do {\n        nb++;\n        n /= 10;\n    } while (n > 0);\n    printf(\"%d\\n\", nb);\n    return 0;\n}",
+      "nombres": true
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int n, nb = 0;\n    scanf(\"%d\", &n);\n    do {\n        nb++;\n        n /= 10;\n    } while (n > 0);\n    printf(\"%d\\n\", nb);\n    return 0;\n}\n```",
+     "indices": [
+      "Un `do-while` compte au moins un chiffre, ce qui règle le cas 0.",
+      "`nb++` puis `n /= 10`, tant que `n > 0`."
+     ],
+     "duree": 4
+    }
+   ]
+  },
+  {
+   "id": "c4-130",
+   "type": "exo",
+   "notion": "4.4",
+   "origine": "generee",
+   "titre": "La boucle qui ne s'arrête pas",
+   "enonce": "Ce programme doit afficher les entiers de 1 à 5, un par ligne. Exécute-le : il tourne sans fin.",
+   "guidage": "Qu'est-ce qui, dans le corps de la boucle, fait évoluer la condition ?",
+   "duree": 3,
+   "etapes": [
+    {
+     "consigne": "Corrige le programme ci-dessous pour qu'il fasse ce que dit l'énoncé, puis valide.",
+     "question": "Corrige le programme.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "",
+        "sortie": "1\n2\n3\n4\n5"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int i = 1;\n    while (i <= 5) {\n        printf(\"%d\\n\", i);\n        i++;\n    }\n    return 0;\n}",
+      "nombres": true
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int i = 1;\n    while (i <= 5) {\n        printf(\"%d\\n\", i);\n        i++;\n    }\n    return 0;\n}\n```",
+     "indices": [
+      "`i` vaut toujours 1 : la condition reste vraie.",
+      "Ajoute `i++;` dans le corps."
+     ],
+     "duree": 3,
+     "depart": "#include <stdio.h>\n\nint main(void) {\n    int i = 1;\n    while (i <= 5) {\n        printf(\"%d\\n\", i);\n    }\n    return 0;\n}"
+    }
+   ]
+  },
+  {
+   "id": "c4-131",
+   "type": "exo",
+   "notion": "4.5",
+   "origine": "generee",
+   "titre": "Saisie contrôlée",
+   "enonce": "Écris un programme qui lit des entiers jusqu'à en obtenir un compris entre 1 et 10, puis affiche le **nombre d'essais** et la **valeur acceptée**.\n\nExemple : saisies `0 15 7` → `3 7`.",
+   "guidage": "C'est le cas d'école du `do-while` : on lit toujours une première fois, puis on recommence tant que la valeur est hors de [1 ; 10].",
+   "duree": 5,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "0 15 7",
+        "sortie": "3 7"
+       },
+       {
+        "entree": "5",
+        "sortie": "1 5"
+       },
+       {
+        "entree": "-4 11 10",
+        "sortie": "3 10"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int v, essais = 0;\n    do {\n        scanf(\"%d\", &v);\n        essais++;\n    } while (v < 1 || v > 10);\n    printf(\"%d %d\\n\", essais, v);\n    return 0;\n}",
+      "nombres": true,
+      "exige": [
+       {
+        "motif": "\\bdo\\b",
+        "msg": "Utilise une boucle do-while."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int v, essais = 0;\n    do {\n        scanf(\"%d\", &v);\n        essais++;\n    } while (v < 1 || v > 10);\n    printf(\"%d %d\\n\", essais, v);\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 5
+    }
+   ]
+  },
+  {
+   "id": "c4-132",
+   "type": "exo",
+   "notion": "4.5",
+   "origine": "td",
+   "titre": "Deviner un nombre",
+   "enonce": "Le nombre secret est `42` (`#define SECRET 42`). Le programme lit des propositions jusqu'à trouver : il affiche `plus` si le secret est plus grand, `moins` s'il est plus petit, et pour finir `trouve` suivi du nombre d'essais (TD Premiers pas, exercice 17).\n\nExemple : `50 25 42` → `moins`, `plus`, `trouve 3` (une réponse par ligne).",
+   "guidage": "**Plan** : `do { lire ; compter ; comparer } while (proposition != SECRET);`, puis afficher `trouve` et le nombre d'essais.",
+   "duree": 7,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "50 25 42",
+        "sortie": "moins\nplus\ntrouve 3"
+       },
+       {
+        "entree": "42",
+        "sortie": "trouve 1"
+       },
+       {
+        "entree": "1 99 41 43 42",
+        "sortie": "plus\nmoins\nplus\nmoins\ntrouve 5"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\n#define SECRET 42\n\nint main(void) {\n    int p, essais = 0;\n    do {\n        scanf(\"%d\", &p);\n        essais++;\n        if (p < SECRET) {\n            printf(\"plus\\n\");\n        } else if (p > SECRET) {\n            printf(\"moins\\n\");\n        }\n    } while (p != SECRET);\n    printf(\"trouve %d\\n\", essais);\n    return 0;\n}"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\n#define SECRET 42\n\nint main(void) {\n    int p, essais = 0;\n    do {\n        scanf(\"%d\", &p);\n        essais++;\n        if (p < SECRET) {\n            printf(\"plus\\n\");\n        } else if (p > SECRET) {\n            printf(\"moins\\n\");\n        }\n    } while (p != SECRET);\n    printf(\"trouve %d\\n\", essais);\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 7
+    }
+   ]
+  },
+  {
+   "id": "c4-133",
+   "type": "exo",
+   "notion": "4.6",
+   "origine": "generee",
+   "titre": "Somme jusqu'au premier négatif",
+   "enonce": "Écris un programme qui lit au plus 10 entiers et affiche la somme de ceux lus **avant le premier nombre négatif** (le négatif n'est pas compté, et on arrête de lire avec `break`).\n\nExemple : `3 4 -1 5` → `7`.",
+   "guidage": "Une boucle `for` de 10 tours ; dans chaque tour : lire, sortir avec `break` si négatif, sinon ajouter.",
+   "duree": 5,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "3 4 -1 5",
+        "sortie": "7"
+       },
+       {
+        "entree": "1 2 3 4 5 6 7 8 9 10",
+        "sortie": "55"
+       },
+       {
+        "entree": "-5",
+        "sortie": "0"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int x, somme = 0;\n    for (int i = 0; i < 10; i++) {\n        scanf(\"%d\", &x);\n        if (x < 0) {\n            break;\n        }\n        somme += x;\n    }\n    printf(\"%d\\n\", somme);\n    return 0;\n}",
+      "nombres": true,
+      "exige": [
+       {
+        "motif": "\\bbreak\\b",
+        "msg": "Utilise break pour arrêter la lecture."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int x, somme = 0;\n    for (int i = 0; i < 10; i++) {\n        scanf(\"%d\", &x);\n        if (x < 0) {\n            break;\n        }\n        somme += x;\n    }\n    printf(\"%d\\n\", somme);\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 5
+    }
+   ]
+  },
+  {
+   "id": "c4-134",
+   "type": "exo",
+   "notion": "4.6",
+   "origine": "generee",
+   "titre": "Somme des impairs avec continue",
+   "enonce": "Écris un programme qui lit `N` et affiche la somme des entiers **impairs** de 1 à N, en sautant les pairs avec `continue`.\n\nExemple : `10` → `25` (1 + 3 + 5 + 7 + 9).",
+   "guidage": "Parcours 1 … N ; si `i` est pair, `continue` ; sinon, ajoute `i`.",
+   "duree": 4,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "10",
+        "sortie": "25"
+       },
+       {
+        "entree": "1",
+        "sortie": "1"
+       },
+       {
+        "entree": "6",
+        "sortie": "9"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int n, somme = 0;\n    scanf(\"%d\", &n);\n    for (int i = 1; i <= n; i++) {\n        if (i % 2 == 0) {\n            continue;\n        }\n        somme += i;\n    }\n    printf(\"%d\\n\", somme);\n    return 0;\n}",
+      "nombres": true,
+      "exige": [
+       {
+        "motif": "\\bcontinue\\b",
+        "msg": "Utilise continue pour sauter les pairs."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int n, somme = 0;\n    scanf(\"%d\", &n);\n    for (int i = 1; i <= n; i++) {\n        if (i % 2 == 0) {\n            continue;\n        }\n        somme += i;\n    }\n    printf(\"%d\\n\", somme);\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 4
+    }
+   ]
+  },
+  {
+   "id": "c4-135",
+   "type": "exo",
+   "notion": "4.3",
+   "origine": "td",
+   "titre": "Pyramide d'étoiles",
+   "enonce": "Écris un programme qui lit `N` et affiche un triangle d'étoiles aligné à gauche : la ligne `l` contient `l` étoiles (TD Premiers pas, exercice 19).\n\nExemple pour `3` :\n```text\n*\n**\n***\n```",
+   "guidage": "Deux boucles imbriquées, comme le triangle numérique ; affiche `*` sans espace, puis `\\n` en fin de ligne.",
+   "duree": 5,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "3",
+        "sortie": "*\n**\n***"
+       },
+       {
+        "entree": "5",
+        "sortie": "*\n**\n***\n****\n*****"
+       },
+       {
+        "entree": "1",
+        "sortie": "*"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    for (int l = 1; l <= n; l++) {\n        for (int c = 0; c < l; c++) {\n            printf(\"*\");\n        }\n        printf(\"\\n\");\n    }\n    return 0;\n}"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    for (int l = 1; l <= n; l++) {\n        for (int c = 0; c < l; c++) {\n            printf(\"*\");\n        }\n        printf(\"\\n\");\n    }\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 5
     }
    ]
   }

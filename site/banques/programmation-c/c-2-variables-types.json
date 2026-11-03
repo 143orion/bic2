@@ -18,9 +18,9 @@
   {
    "id": "2.1",
    "titre": "Variables",
-   "corps": "Une **variable** est un emplacement mémoire qui a un **type** et un **nom**.\n```c\nint i;            // déclaration : type + nom\ni = 3;            // initialisation : première valeur\nint j = 10;        // déclaration ET initialisation\ni = i * 2;        // modification : i vaut maintenant 6\nint a = 1, b = 2;  // plusieurs variables du même type\n```\n\nUne variable **déclarée mais non initialisée** contient une valeur quelconque : initialise toujours avant de lire.",
-   "rec": "Le type dit ce qu'on peut ranger dans la variable (entier, réel, caractère).",
-   "alt": "Une variable est une boîte étiquetée : le type est la forme de la boîte, le nom est l'étiquette, la valeur est ce qu'elle contient.",
+   "corps": "Une **variable** est un emplacement en mémoire qui a un **type** (ce qu'on peut y ranger) et un **nom** (pour s'en servir).\n\n```c\nint i;              // déclaration : type + nom (valeur encore inconnue !)\ni = 3;              // initialisation : première valeur\nint j = 10;         // déclaration ET initialisation en une ligne\ni = i * 2;          // modification : on lit i (3), on calcule, on range 6\nint a = 1, b = 2;   // plusieurs variables du même type\n```\n\n| Étape | Syntaxe | Effet |\n|---|---|---|\n| Déclarer | `int age;` | réserve une case mémoire pour un entier |\n| Initialiser | `age = 20;` ou `int age = 20;` | lui donne sa première valeur |\n| Modifier | `age = age + 1;` | lit l'ancienne valeur, range la nouvelle |\n\n> **Piège** : une variable **déclarée mais pas initialisée** contient une valeur quelconque (ce qui traînait en mémoire). Initialise toujours avant de lire.\n\n> **À retenir** : `=` signifie « **ranger** la valeur de droite dans la variable de gauche », pas « est égal à ». `i = i * 2;` a donc un sens : on calcule à droite avec l'ancien `i`, puis on écrase.\n\n### Échanger deux variables\nPour échanger `a` et `b`, il faut une **troisième** variable, sinon on perd une valeur :\n```c\nint tmp = a;   // on met a de côté\na = b;\nb = tmp;\n```",
+   "rec": "Le type dit ce qu'on peut ranger : `int` pour un entier, `double` pour un réel, `char` pour un caractère. Une variable doit être **déclarée avant** d'être utilisée.",
+   "alt": "Une variable est une boîte étiquetée : le type est la forme de la boîte, le nom est l'étiquette, la valeur est ce qu'il y a dedans. Ranger une nouvelle valeur jette l'ancienne.",
    "pre": [
     "1.2"
    ],
@@ -31,11 +31,15 @@
     },
     {
      "titre": "Initialiser",
-     "texte": "`i = 3;` ou directement `int i = 3;`."
+     "texte": "`i = 3;`, ou directement `int i = 3;`."
     },
     {
      "titre": "Modifier",
-     "texte": "`i = i * 2;` calcule avec l'ancienne valeur puis range le résultat."
+     "texte": "`i = i * 2;` : on calcule à droite avec l'ancienne valeur (3), puis on range 6."
+    },
+    {
+     "titre": "Échanger",
+     "texte": "Une variable temporaire évite de perdre une valeur :\n```c\nint tmp = a;\na = b;\nb = tmp;\n```"
     }
    ],
    "check": {
@@ -58,9 +62,9 @@
   {
    "id": "2.2",
    "titre": "Constantes symboliques (#define)",
-   "corps": "Une **constante** ne change pas pendant l'exécution. On la définit avec la directive `#define`, **sans `=` ni `;`** :\n```c\n#define PI 3.14159\n#define MESSAGE \"Bonjour\"\n\ndouble aire = PI * rayon * rayon;\n```\n\nÇa évite les « valeurs magiques » (des nombres sans explication) dispersés dans le code, et un seul endroit à modifier. Par convention, les macros s'écrivent en `UPPER_SNAKE_CASE`.",
-   "rec": "Le préprocesseur remplace le nom par sa valeur **avant** la compilation.",
-   "alt": "C'est un copier-coller automatique : chaque `PI` du code est remplacé par `3.14159`.",
+   "corps": "Une **constante** ne change pas pendant l'exécution. On la définit avec la directive `#define`, en haut du fichier :\n\n```c\n#include <stdio.h>\n\n#define PI 3.14159\n#define MESSAGE \"Bonjour, constantes en C !\"\n\nint main(void) {\n    double rayon = 5.0;\n    double aire = PI * rayon * rayon;\n    printf(\"%s\\n\", MESSAGE);\n    printf(\"Aire du cercle = %.2f\\n\", aire);\n    return 0;\n}\n```\n\n- **Pas de `=`, pas de `;`** : `#define NOM valeur`.\n- Avant la compilation, le **préprocesseur** remplace chaque `PI` du code par `3.14159` (un copier-coller automatique).\n- Par convention : `UPPER_SNAKE_CASE`.\n\n> **À retenir** : une constante remplace une « valeur magique » (un nombre sans explication) dispersée dans le code. Un seul endroit à modifier, et un nom qui explique.\n\n> **Piège** : `#define PI = 3.14;` remplacerait `PI` par `= 3.14;`… et `aire = = 3.14; * r` ne compile plus.",
+   "rec": "Les lignes qui commencent par `#` sont traitées par le **préprocesseur**, avant la compilation : `#include` colle un fichier, `#define` remplace un nom par une valeur.",
+   "alt": "C'est un « rechercher / remplacer » fait juste avant la compilation : chaque `PI` du texte devient `3.14159`.",
    "pre": [
     "2.1",
     "1.3"
@@ -71,8 +75,12 @@
      "texte": "`#define NOM valeur` : pas de `=`, pas de `;`."
     },
     {
+     "titre": "Remplacement",
+     "texte": "Le préprocesseur remplace chaque `PI` par `3.14159` avant la compilation."
+    },
+    {
      "titre": "Pourquoi",
-     "texte": "Un nom parlant (`PI`) vaut mieux qu'un nombre brut (3.14159) répété partout."
+     "texte": "Un nom parlant (`MAX_ETUDIANTS`) vaut mieux qu'un `40` répété dix fois."
     }
    ],
    "check": {
@@ -95,24 +103,24 @@
   {
    "id": "2.3",
    "titre": "Types de base et modificateurs",
-   "corps": "**Types de base** :\n- `char` : caractère ou petit entier (8 bits) ;\n- `int` : entier (en général 32 bits) ;\n- `float` : réel simple précision ; `double` : réel double précision.\n\n**Modificateurs** : `signed` (négatifs permis, par défaut), `unsigned` (positifs uniquement, plage doublée), `short` (plus petit), `long` (plus grand).\n\n`sizeof(type)` donne la taille en **octets** :\n```c\nprintf(\"%zu\\n\", sizeof(int));   // 4 en général\n```\n\nUn `int` a une plage limitée : dépasser provoque un **débordement** (résultat faux).",
-   "rec": "Un octet = 8 bits. Un `int` sur 4 octets = 32 bits.",
-   "alt": "Choisir un type, c'est choisir la taille de la boîte : trop petite, la valeur déborde ; trop grande, on gaspille de la mémoire.",
+   "corps": "### Les types fondamentaux\n| Type | Contenu | Taille courante | Format `printf` |\n|---|---|---|---|\n| `char` | un caractère (ou petit entier) | 1 octet | `%c` |\n| `int` | un entier | 4 octets | `%d` |\n| `float` | un réel, simple précision | 4 octets | `%f` |\n| `double` | un réel, double précision | 8 octets | `%f` (et `%lf` dans `scanf`) |\n\n### Les modificateurs\n| Modificateur | Effet | Exemple |\n|---|---|---|\n| `signed` | négatifs autorisés (par défaut) | `signed int` |\n| `unsigned` | positifs seulement, plage positive doublée | `unsigned int` |\n| `short` | taille réduite (souvent 2 octets) | `short s;` |\n| `long` | taille augmentée (4 ou 8 octets) | `long l;` |\n\n`sizeof` donne la taille **en octets** sur ta machine :\n```c\nprintf(\"%d\\n\", (int)sizeof(int));     // 4\nprintf(\"%d\\n\", (int)sizeof(double));  // 8\n```\n\n> **Piège** : un type a une **plage limitée**. Un `int` sur 4 octets ne dépasse pas environ 2,1 milliards : au-delà, le résultat est faux (**débordement**).\n\n> **À retenir** : 1 octet = 8 bits. Un nombre à virgule se range dans un `double` (plus précis que `float`, c'est le choix par défaut).",
+   "rec": "Choisir un type, c'est choisir combien de mémoire on réserve et ce qu'on peut y mettre : entier, réel ou caractère.",
+   "alt": "Choisir un type, c'est choisir la taille de la boîte : trop petite, la valeur déborde ; trop grande, on gaspille de la place.",
    "pre": [
     "2.1"
    ],
    "ecrans": [
     {
-     "titre": "Les types",
-     "texte": "`char`, `int`, `float`, `double`."
-    },
-    {
-     "titre": "Les tailles",
-     "texte": "`char` = 1 octet, `int` = 4, `float` = 4, `double` = 8 (cas courant). `sizeof` donne la valeur sur ta machine."
+     "titre": "Les quatre types",
+     "texte": "`char` (1 o), `int` (4 o), `float` (4 o), `double` (8 o)."
     },
     {
      "titre": "Les modificateurs",
-     "texte": "`unsigned` double la plage positive ; `short` et `long` changent la taille."
+     "texte": "`unsigned` : pas de négatifs, plage doublée. `short` / `long` : plus petit / plus grand."
+    },
+    {
+     "titre": "sizeof",
+     "texte": "`sizeof(int)` renvoie la taille en octets sur ta machine."
     }
    ],
    "check": {
@@ -135,9 +143,9 @@
   {
    "id": "2.4",
    "titre": "Opérateurs",
-   "corps": "- **Arithmétiques** : `+ - * / %` (`%` = reste de la division entière).\n- **Comparaison** (renvoient 1 si vrai, 0 sinon) : `== != < <= > >=`.\n- **Logiques** : `&&` (et), `||` (ou), `!` (non).\n- **Affectation** : `=` et les formes combinées `+= -= *= /=`.\n- **Incrémentation** : `i++` / `i--`.\n\nAttention : entre deux entiers, `/` fait une **division entière** :\n```c\n7 / 2   // 3  (pas 3.5)\n7 % 2   // 1\nx += 4; // x = x + 4;\n```\n\n`=` **affecte**, `==` **compare** : `if (x = 3)` est presque toujours une erreur.",
-   "rec": "Le modulo `a % b` donne ce qui reste quand on a retiré tous les `b` possibles de `a`.",
-   "alt": "`/` entre deux entiers jette la partie décimale, comme si tu partageais des billes entières : 7 billes à 2 → 3 chacun, il en reste 1 (le `%`).",
+   "corps": "| Famille | Opérateurs | Exemple | Résultat |\n|---|---|---|---|\n| Arithmétiques | `+ - * / %` | `17 % 5` | `2` (reste) |\n| Comparaison | `== != < <= > >=` | `3 < 5` | `1` (vrai) |\n| Logiques | `&&` (et) · `\\|\\|` (ou) · `!` (non) | `!(3 < 5)` | `0` (faux) |\n| Affectation | `= += -= *= /= %=` | `x += 4` | `x = x + 4` |\n| Incrémentation | `++ --` | `i++` | `i = i + 1` |\n\n### La division entière\nEntre **deux entiers**, `/` donne le **quotient entier** et `%` le **reste** :\n```c\nint q = 17 / 5;   // 3\nint r = 17 % 5;   // 2   car 17 = 3 × 5 + 2\n```\nC'est très utile : `n % 2 == 0` teste si `n` est pair, `n % 10` donne le dernier chiffre de `n`, `n / 10` le retire.\n\n> **Piège** : `=` **range**, `==` **compare**. `if (x = 3)` range 3 dans `x` puis teste 3 (vrai) : la condition est toujours vraie.\n\n> **Astuce** : en cas de doute sur la priorité des opérateurs, mets des parenthèses. `*`, `/`, `%` passent avant `+` et `-`, comme en maths.",
+   "rec": "Le modulo `a % b` donne ce qui reste quand on a retiré de `a` autant de fois `b` que possible. Il n'existe qu'entre entiers.",
+   "alt": "Sept billes partagées entre deux personnes : chacune en reçoit 3 (`7 / 2`) et il en reste 1 (`7 % 2`).",
    "pre": [
     "2.1",
     "2.3"
@@ -145,10 +153,14 @@
    "ecrans": [
     {
      "titre": "Arithmétique",
-     "texte": "`+ - * / %` ; division entière entre deux `int`."
+     "texte": "`+ - * / %` ; entre deux `int`, `/` est une division entière."
     },
     {
-     "titre": "Comparaison et logique",
+     "titre": "Quotient et reste",
+     "texte": "```c\n17 / 5   // 3\n17 % 5   // 2\n```"
+    },
+    {
+     "titre": "Comparer et combiner",
      "texte": "`==`, `!=`, `<`… renvoient 1 ou 0 ; `&&`, `||`, `!` combinent des conditions."
     },
     {
@@ -176,9 +188,9 @@
   {
    "id": "2.5",
    "titre": "Conversions de types",
-   "corps": "Une **conversion** change le type d'une donnée.\n- **Implicite** : faite toute seule par le compilateur (`int x = 8.324;` range 8).\n- **Explicite (cast)** : forcée avec `(type)` :\n```c\nint x = (int)2.52;      // 2  (on tronque)\ndouble y = (double)1;   // 1.000000\ndouble q = (double)7 / 2;  // 3.5 (le cast agit avant la division)\n```\n\nPiège classique : `9 / 5` vaut **1** (division entière). Pour obtenir 1,8, il faut qu'**un des deux opérandes soit réel** : `9.0 / 5`.",
-   "rec": "Convertir un réel en entier **tronque** (ne remplit pas à l'arrondi).",
-   "alt": "Dans une opération, le C « monte » vers le type le plus large : `int` avec `double` donne `double`. Mais deux `int` restent des `int`.",
+   "corps": "Une **conversion** change le type d'une valeur.\n\n| Conversion | Qui la fait | Exemple | Résultat |\n|---|---|---|---|\n| Implicite | le compilateur, tout seul | `int x = 8.324;` | `x` vaut `8` |\n| Implicite | idem | `double y = 4;` | `y` vaut `4.000000` |\n| Explicite (cast) | toi, avec `(type)` | `(int)2.52` | `2` |\n| Explicite | idem | `(double)7 / 2` | `3.5` |\n\n```c\nint a = 7, b = 2;\ndouble faux = a / b;           // 3.00 : division entière, PUIS conversion\ndouble juste = (double)a / b;  // 3.50 : a converti AVANT la division\n```\n\n> **Piège** : `9 / 5` vaut **1**, pas 1,8. Le type du résultat dépend des **opérandes**, pas de la variable qui reçoit. Pour une division réelle, il suffit qu'**un** des deux soit réel : `9.0 / 5` ou `(double)9 / 5`.\n\n> **À retenir** : convertir un réel en entier **tronque** (coupe la partie décimale) : `(int)2.99` vaut `2`, pas `3`.",
+   "rec": "Dans une opération, le C convertit vers le type « le plus large » des deux opérandes : `int` avec `double` donne `double`. Mais deux `int` restent des `int`.",
+   "alt": "Une division entre deux entiers, c'est un partage de billes : impossible d'en donner une moitié. Il faut transformer les billes en pâte à modeler (des réels) **avant** de couper.",
    "pre": [
     "2.3",
     "2.4"
@@ -186,7 +198,7 @@
    "ecrans": [
     {
      "titre": "Implicite",
-     "texte": "Le compilateur convertit seul, parfois en perdant la partie décimale."
+     "texte": "Le compilateur convertit seul, parfois en perdant la partie décimale : `int x = 8.324;` donne 8."
     },
     {
      "titre": "Cast",
@@ -194,7 +206,7 @@
     },
     {
      "titre": "Le piège",
-     "texte": "`9/5` = 1 ; `9.0/5` = 1.8."
+     "texte": "```c\ndouble r = 7 / 2;          // 3.0\ndouble s = (double)7 / 2;  // 3.5\n```"
     }
    ],
    "check": {
@@ -217,20 +229,24 @@
   {
    "id": "2.6",
    "titre": "Le type booléen",
-   "corps": "Le C d'origine n'a **pas de type booléen**. Règle : **0 = faux**, **toute autre valeur = vrai**. Les comparaisons renvoient 1 ou 0.\n\nOn peut simuler un booléen :\n```c\n#define BOOL int\n#define TRUE 1\n#define FALSE 0\n\nBOOL est_majeur = TRUE;\n```\n\nDepuis C99, `#include <stdbool.h>` fournit `bool`, `true` et `false`.",
-   "rec": "Une condition `if (x)` est vraie dès que `x` est différent de 0.",
-   "alt": "C'est un interrupteur : 0 = éteint, tout le reste = allumé.",
+   "corps": "Le C d'origine n'a **pas de type booléen**. La règle est simple :\n\n| Valeur | Interprétation |\n|---|---|\n| `0` | faux |\n| toute autre valeur (`1`, `-3`, `42`…) | vrai |\n\nLes comparaisons et opérateurs logiques renvoient **1** (vrai) ou **0** (faux) :\n```c\nint est_pair = (n % 2 == 0);   // 1 si n est pair, 0 sinon\nprintf(\"%d\\n\", 5 > 3);         // 1\n```\n\nOn peut **simuler** un booléen avec `#define`, comme dans le cours :\n```c\n#define BOOL int\n#define TRUE 1\n#define FALSE 0\n\nBOOL majeur = TRUE;\n```\n\nDepuis le C99, `#include <stdbool.h>` fournit `bool`, `true` et `false`.\n\n> **À retenir** : `if (x)` est équivalent à `if (x != 0)`.",
+   "rec": "Une condition est un nombre : 0 = faux, le reste = vrai. Une comparaison produit elle-même 0 ou 1, qu'on peut ranger dans une variable.",
+   "alt": "C'est un interrupteur : 0 = éteint, toute autre valeur = allumé.",
    "pre": [
     "2.4"
    ],
    "ecrans": [
     {
      "titre": "Faux = 0",
-     "texte": "Tout ce qui est différent de 0 est vrai."
+     "texte": "Tout ce qui est différent de 0 est vrai ; une comparaison vaut 1 ou 0."
     },
     {
      "titre": "Simuler",
-     "texte": "`#define TRUE 1` et `#define FALSE 0` ; ou `stdbool.h` (C99)."
+     "texte": "`#define TRUE 1` et `#define FALSE 0`, ou `stdbool.h` (C99)."
+    },
+    {
+     "titre": "Ranger une condition",
+     "texte": "```c\nint est_pair = (n % 2 == 0);\n```"
     }
    ],
    "check": {
@@ -961,6 +977,415 @@
       "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
      ],
      "duree": 5
+    }
+   ]
+  },
+  {
+   "id": "c2-026",
+   "type": "saisie",
+   "notion": "2.4",
+   "origine": "cours",
+   "enonce": "Que vaut `i` à la fin ?\n```c\nint i = 5;\ni++;\ni += 3;\ni *= 2;\n```",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 18
+   },
+   "duree": 0.67,
+   "explication": "5 → 6 → 9 → 18."
+  },
+  {
+   "id": "c2-027",
+   "type": "saisie",
+   "notion": "2.4",
+   "origine": "cours",
+   "enonce": "Que vaut `x` ?\n```c\nint x = 10;\nx %= 4;\n```",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 2
+   },
+   "duree": 0.67,
+   "explication": "`x %= 4` ⇔ `x = x % 4` : 10 = 2 × 4 + 2, donc 2."
+  },
+  {
+   "id": "c2-028",
+   "type": "saisie",
+   "notion": "2.5",
+   "origine": "cours",
+   "enonce": "Que vaut `(int)7.9 + (int)2.5` ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 9
+   },
+   "duree": 0.67,
+   "explication": "On tronque chaque réel : 7 + 2 = 9."
+  },
+  {
+   "id": "c2-029",
+   "type": "qcm-multi",
+   "notion": "2.1",
+   "origine": "cours",
+   "enonce": "Quelles lignes sont des déclarations valides ?",
+   "choix": [
+    "int age = 20;",
+    "double prix, total = 0;",
+    "int 2eme = 3;",
+    "char lettre = 'A';"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0,
+     1,
+     3
+    ]
+   },
+   "duree": 0.5,
+   "explication": "Un nom ne peut pas commencer par un chiffre : `2eme` est invalide."
+  },
+  {
+   "id": "c2-030",
+   "type": "saisie",
+   "notion": "2.6",
+   "origine": "cours",
+   "enonce": "Qu'affiche `printf(\"%d\", (3 < 5) + (2 == 2) + !(1));` ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 2
+   },
+   "duree": 0.67,
+   "explication": "1 + 1 + 0 = 2 : `!(1)` vaut 0."
+  },
+  {
+   "id": "c2-031",
+   "type": "trous",
+   "notion": "2.1",
+   "origine": "cours",
+   "enonce": "int a = 3, b = 8;\nint tmp = [_];\na = [_];\nb = [_];",
+   "fragments": [
+    "a",
+    "b",
+    "tmp",
+    "0"
+   ],
+   "verif": {
+    "mode": "trous",
+    "attendu": [
+     "a",
+     "b",
+     "tmp"
+    ]
+   },
+   "duree": 0.5,
+   "explication": "On met `a` de côté dans `tmp`, puis `a = b`, puis `b = tmp`."
+  },
+  {
+   "id": "c2-104",
+   "type": "exo",
+   "notion": "2.1",
+   "origine": "generee",
+   "titre": "Échanger deux variables",
+   "enonce": "Écris un programme qui lit deux entiers `a` et `b`, **échange** leurs valeurs avec une variable temporaire, puis affiche `a` puis `b`.\n\nExemple : avec `3 8`, le programme affiche `8 3`.",
+   "guidage": "**Piège** : `a = b; b = a;` ne marche pas : après la première ligne, l'ancienne valeur de `a` est perdue.",
+   "duree": 4,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet (lecture, échange, affichage `a b`).",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "3 8",
+        "sortie": "8 3"
+       },
+       {
+        "entree": "-1 5",
+        "sortie": "5 -1"
+       },
+       {
+        "entree": "7 7",
+        "sortie": "7 7"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int a, b;\n    scanf(\"%d %d\", &a, &b);\n    int tmp = a;\n    a = b;\n    b = tmp;\n    printf(\"%d %d\\n\", a, b);\n    return 0;\n}",
+      "nombres": true,
+      "interdit": [
+       {
+        "motif": "printf\\s*\\(\\s*\"[^\"]*\"\\s*,\\s*b\\s*,\\s*a\\s*\\)",
+        "msg": "Échange vraiment les variables : n'affiche pas simplement b puis a."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int a, b;\n    scanf(\"%d %d\", &a, &b);\n    int tmp = a;\n    a = b;\n    b = tmp;\n    printf(\"%d %d\\n\", a, b);\n    return 0;\n}\n```",
+     "indices": [
+      "Mets `a` de côté dans une variable `tmp`.",
+      "`tmp = a; a = b; b = tmp;`"
+     ],
+     "duree": 4
+    }
+   ]
+  },
+  {
+   "id": "c2-105",
+   "type": "exo",
+   "notion": "2.2",
+   "origine": "generee",
+   "titre": "Aire et périmètre d'un cercle",
+   "enonce": "Écris un programme qui définit `PI` avec `#define` (valeur 3.14159), lit un rayon réel, puis affiche l'aire puis le périmètre, avec 2 décimales.\n\nExemple : rayon `2.5` → `19.63 15.71`.",
+   "guidage": "**Formules** : aire $= \\pi r^2$, périmètre $= 2 \\pi r$. Le rayon est un réel : `double` et `%lf` dans `scanf`.",
+   "duree": 5,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "1",
+        "sortie": "3.14 6.28"
+       },
+       {
+        "entree": "2.5",
+        "sortie": "19.63 15.71"
+       },
+       {
+        "entree": "10",
+        "sortie": "314.16 62.83"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\n#define PI 3.14159\n\nint main(void) {\n    double r;\n    scanf(\"%lf\", &r);\n    printf(\"%.2f %.2f\\n\", PI * r * r, 2 * PI * r);\n    return 0;\n}",
+      "nombres": true,
+      "exige": [
+       {
+        "motif": "#\\s*define\\s+PI\\b",
+        "brut": true,
+        "msg": "Définis PI avec #define, comme demandé."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\n#define PI 3.14159\n\nint main(void) {\n    double r;\n    scanf(\"%lf\", &r);\n    printf(\"%.2f %.2f\\n\", PI * r * r, 2 * PI * r);\n    return 0;\n}\n```",
+     "indices": [
+      "`#define PI 3.14159` en haut du fichier, sans `=` ni `;`.",
+      "Lis le rayon avec `scanf(\"%lf\", &r);`."
+     ],
+     "duree": 5
+    }
+   ]
+  },
+  {
+   "id": "c2-106",
+   "type": "exo",
+   "notion": "2.3",
+   "origine": "generee",
+   "titre": "Tailles des types",
+   "enonce": "Écris un programme qui affiche, sur une ligne et séparées par des espaces, les tailles en octets de `char`, `int`, `float` et `double`, obtenues avec `sizeof`.",
+   "guidage": "`sizeof(type)` renvoie une taille ; convertis-la en `int` pour l'afficher avec `%d` : `(int)sizeof(int)`.",
+   "duree": 3,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "",
+        "sortie": "1 4 4 8"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    printf(\"%d %d %d %d\\n\", (int)sizeof(char), (int)sizeof(int),\n           (int)sizeof(float), (int)sizeof(double));\n    return 0;\n}",
+      "nombres": true,
+      "exige": [
+       {
+        "motif": "sizeof",
+        "msg": "Utilise sizeof plutôt que d'écrire les nombres à la main."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    printf(\"%d %d %d %d\\n\", (int)sizeof(char), (int)sizeof(int),\n           (int)sizeof(float), (int)sizeof(double));\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 3
+    }
+   ]
+  },
+  {
+   "id": "c2-107",
+   "type": "exo",
+   "notion": "2.4",
+   "origine": "generee",
+   "titre": "Convertir des secondes",
+   "enonce": "Écris un programme qui lit un nombre de secondes et affiche le nombre d'heures, de minutes et de secondes restantes.\n\nExemple : `3725` → `1 2 5` (1 h 2 min 5 s).",
+   "guidage": "**Outils** : division entière et modulo. 1 h = 3600 s, 1 min = 60 s.\n\n**Plan** : heures = `s / 3600` ; ce qui reste = `s % 3600` ; minutes = reste `/ 60` ; secondes = reste `% 60`.",
+   "duree": 5,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "3725",
+        "sortie": "1 2 5"
+       },
+       {
+        "entree": "59",
+        "sortie": "0 0 59"
+       },
+       {
+        "entree": "7200",
+        "sortie": "2 0 0"
+       },
+       {
+        "entree": "86399",
+        "sortie": "23 59 59"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int s;\n    scanf(\"%d\", &s);\n    int h = s / 3600;\n    int m = (s % 3600) / 60;\n    int sec = s % 60;\n    printf(\"%d %d %d\\n\", h, m, sec);\n    return 0;\n}",
+      "nombres": true
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int s;\n    scanf(\"%d\", &s);\n    int h = s / 3600;\n    int m = (s % 3600) / 60;\n    int sec = s % 60;\n    printf(\"%d %d %d\\n\", h, m, sec);\n    return 0;\n}\n```",
+     "indices": [
+      "Heures : `s / 3600`. Minutes : `(s % 3600) / 60`.",
+      "Secondes restantes : `s % 60`."
+     ],
+     "duree": 5
+    }
+   ]
+  },
+  {
+   "id": "c2-108",
+   "type": "exo",
+   "notion": "2.5",
+   "origine": "generee",
+   "titre": "Moyenne de trois entiers",
+   "enonce": "Écris un programme qui lit trois entiers et affiche leur moyenne **réelle** avec 2 décimales.\n\nExemple : `1 2 2` → `1.67`.",
+   "guidage": "**Piège** : `(a + b + c) / 3` est une division entière (1, pas 1,67). Convertis avant de diviser.",
+   "duree": 4,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "1 2 2",
+        "sortie": "1.67"
+       },
+       {
+        "entree": "10 11 12",
+        "sortie": "11.00"
+       },
+       {
+        "entree": "7 8 8",
+        "sortie": "7.67"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int a, b, c;\n    scanf(\"%d %d %d\", &a, &b, &c);\n    double moy = (a + b + c) / 3.0;\n    printf(\"%.2f\\n\", moy);\n    return 0;\n}",
+      "nombres": true
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int a, b, c;\n    scanf(\"%d %d %d\", &a, &b, &c);\n    double moy = (a + b + c) / 3.0;\n    printf(\"%.2f\\n\", moy);\n    return 0;\n}\n```",
+     "indices": [
+      "Divise par `3.0` (un réel) au lieu de `3`.",
+      "Ou bien : `(double)(a + b + c) / 3`."
+     ],
+     "duree": 4
+    }
+   ]
+  },
+  {
+   "id": "c2-109",
+   "type": "exo",
+   "notion": "2.5",
+   "origine": "generee",
+   "titre": "Division qui tombe juste… à tort",
+   "enonce": "Ce programme doit afficher `3.50` (7 divisé par 2), mais il affiche `3.00`. Corrige-le **sans changer les types de `a` et `b`**.",
+   "guidage": "Le type du résultat dépend des **opérandes**, pas de la variable qui le reçoit.",
+   "duree": 3,
+   "etapes": [
+    {
+     "consigne": "Corrige le programme ci-dessous pour qu'il fasse ce que dit l'énoncé, puis valide.",
+     "question": "Corrige le programme.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "",
+        "sortie": "3.50"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int a = 7, b = 2;\n    double r = (double)a / b;\n    printf(\"%.2f\\n\", r);\n    return 0;\n}",
+      "nombres": true,
+      "exige": [
+       {
+        "motif": "int\\s+a\\s*=\\s*7\\s*,\\s*b\\s*=\\s*2",
+        "msg": "Garde int a = 7, b = 2 : la correction se fait dans le calcul."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int a = 7, b = 2;\n    double r = (double)a / b;\n    printf(\"%.2f\\n\", r);\n    return 0;\n}\n```",
+     "indices": [
+      "`a / b` est calculé entre deux `int` : 3.",
+      "Convertis l'un des deux avant la division : `(double)a / b`."
+     ],
+     "duree": 3,
+     "depart": "#include <stdio.h>\n\nint main(void) {\n    int a = 7, b = 2;\n    double r = a / b;\n    printf(\"%.2f\\n\", r);\n    return 0;\n}"
+    }
+   ]
+  },
+  {
+   "id": "c2-110",
+   "type": "exo",
+   "notion": "2.6",
+   "origine": "generee",
+   "titre": "Pair ou impair (booléen)",
+   "enonce": "Écris un programme qui lit un entier `n`, range dans une variable `est_pair` le résultat de la condition « `n` est pair », puis affiche `est_pair` (donc `1` ou `0`).",
+   "guidage": "Une comparaison vaut 1 (vrai) ou 0 (faux) : on peut la ranger directement dans un `int`.",
+   "duree": 3,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "4",
+        "sortie": "1"
+       },
+       {
+        "entree": "7",
+        "sortie": "0"
+       },
+       {
+        "entree": "0",
+        "sortie": "1"
+       },
+       {
+        "entree": "-3",
+        "sortie": "0"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    int est_pair = (n % 2 == 0);\n    printf(\"%d\\n\", est_pair);\n    return 0;\n}",
+      "nombres": true,
+      "exige": [
+       {
+        "motif": "est_pair\\s*=",
+        "msg": "Range la condition dans une variable est_pair."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    int est_pair = (n % 2 == 0);\n    printf(\"%d\\n\", est_pair);\n    return 0;\n}\n```",
+     "indices": [
+      "Pair ⇔ le reste de la division par 2 vaut 0.",
+      "`int est_pair = (n % 2 == 0);`"
+     ],
+     "duree": 3
     }
    ]
   }

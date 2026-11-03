@@ -16,18 +16,22 @@
   {
    "id": "1.1",
    "titre": "Le langage C et son jargon",
-   "corps": "Le C a été conçu par **Dennis Ritchie** chez **Bell Labs** en 1972-1973 pour écrire le système **Unix**. Il est **concis, efficace, portable et stable** : on le trouve dans les systèmes d'exploitation, l'embarqué et beaucoup d'autres langages.\n\n**Vocabulaire à connaître** :\n- **code source** : ce que tu écris (fichier `.c`) ;\n- **compiler** (build) : transformer le code source en programme compréhensible par la machine ;\n- **exécutable** : le programme compilé, que la machine peut lancer ;\n- **bibliothèque** : fonctions déjà écrites (`printf`, `sqrt`…) ;\n- **fichier d'en-tête** (`.h`) : déclare des fonctions et des constantes, inclus au début du code source.",
-   "rec": "Un langage compilé se traduit **avant** de s'exécuter : tu écris, tu compiles, puis tu lances l'exécutable. Une erreur de syntaxe est détectée à la compilation.",
-   "alt": "Imagine une recette (code source) que tu fais traduire en gestes précis pour un robot (compilation). Le robot suit ensuite ces gestes sans rien relire (exécutable).",
+   "corps": "Le C a été conçu par **Dennis Ritchie** chez **Bell Labs** en 1972-1973 pour écrire le système **Unix**. Cinquante ans plus tard, il fait toujours tourner les noyaux de systèmes d'exploitation, l'embarqué (microcontrôleurs, voitures, objets connectés) et l'interpréteur de nombreux autres langages.\n\n### Pourquoi le C ?\n| Qualité | Concrètement |\n|---|---|\n| Concis | une trentaine de mots-clés seulement |\n| Efficace | le compilateur produit du code machine très rapide |\n| Portable | le même code source se compile sur des machines différentes |\n| Stable | un programme C de 1990 compile encore aujourd'hui |\n| Proche de la machine | on manipule directement la mémoire (octets, adresses) |\n\n### Du code source à l'exécutable\n1. Tu écris le **code source** dans un fichier `.c`.\n2. Le **compilateur** le traduit en langage machine : c'est la **compilation** (en anglais, build).\n3. Tu obtiens un **exécutable**, que la machine lance.\n\n```bash\ngcc hello.c -o hello    # compiler : hello.c → exécutable hello\n./hello                 # exécuter\n```\n\n### Le vocabulaire du programmeur C\n| Terme | Définition |\n|---|---|\n| Code source | ce que tu tapes, le programme que tu écris (`.c`) |\n| Compiler | construire, à partir du code source, un programme compréhensible par la machine |\n| Exécutable | le programme compilé, que la machine peut exécuter |\n| Bibliothèque | des fonctions déjà écrites (`printf`, `sqrt`…) |\n| Fichier d'en-tête | fichier `.h` inclus au début du code pour déclarer des fonctions et des constantes |\n\n> **À retenir** : une erreur de syntaxe est détectée **à la compilation**, avant toute exécution. Dans ce module, le bouton **Exécuter** de l'éditeur fait les deux étapes pour toi.",
+   "rec": "Un langage **compilé** se traduit entièrement **avant** de s'exécuter (C, C++). Un langage **interprété** est lu ligne à ligne pendant l'exécution (Python). C'est pour ça qu'un programme C qui contient une seule faute de syntaxe ne démarre pas du tout.",
+   "alt": "Imagine une recette écrite en français (le code source) que tu fais traduire, une fois pour toutes, en gestes précis pour un robot (la compilation). Le robot suit ensuite ces gestes très vite, sans jamais relire la recette (l'exécutable).",
    "pre": [],
    "ecrans": [
     {
-     "titre": "Origine",
-     "texte": "Le C naît en 1972-1973 chez Bell Labs, créé par Dennis Ritchie pour Unix."
+     "titre": "D'où vient le C",
+     "texte": "Créé en 1972-1973 par Dennis Ritchie chez Bell Labs, pour écrire Unix."
     },
     {
-     "titre": "Du code au programme",
-     "texte": "Code source (`.c`) → compilation → exécutable. Les fichiers `.h` déclarent les fonctions des bibliothèques."
+     "titre": "La chaîne de compilation",
+     "texte": "Code source `.c` → **compilation** → **exécutable**.\n```bash\ngcc hello.c -o hello\n./hello\n```"
+    },
+    {
+     "titre": "Bibliothèques et en-têtes",
+     "texte": "Les fonctions toutes faites (`printf`…) viennent de **bibliothèques**. Un fichier d'en-tête `.h` les déclare ; on l'inclut avec `#include`."
     },
     {
      "titre": "À retenir",
@@ -54,24 +58,28 @@
   {
    "id": "1.2",
    "titre": "Structure d'un programme C",
-   "corps": "Tout programme C a **un point d'entrée unique** : la fonction `main`. Ses instructions sont dans un bloc délimité par des accolades `{ }`, et elle se termine par `return 0;` (0 = tout s'est bien passé).\n\n```c\n#include <stdio.h>\n\nint main(void) {\n    printf(\"Hello World\\n\");\n    return 0;\n}\n```\n\n- `#include <stdio.h>` : ajoute la bibliothèque d'entrées/sorties (`printf`) ;\n- chaque **instruction se termine par `;`** ;\n- le C est **sensible à la casse** : `main` et `Main` sont deux noms différents ;\n- les retours à la ligne et l'indentation ne comptent pas pour le compilateur, mais pour **ta lisibilité**.",
-   "rec": "Une fonction est un bloc de code nommé. `main` est la seule que le système appelle tout seul au lancement.",
-   "alt": "`main` est la porte d'entrée de l'immeuble : toutes les autres fonctions ne sont appelées que si `main` (ou une fonction qu'elle appelle) les utilise.",
+   "corps": "Tout programme C a **un point d'entrée unique** : la fonction `main`. Le système l'appelle au lancement ; ses instructions sont dans un **bloc** délimité par des accolades `{ }`.\n\n```c\n#include <stdio.h>          // 1. bibliothèque d'entrées/sorties (printf)\n\nint main(void) {            // 2. point d'entrée du programme\n    printf(\"Hello World\\n\"); // 3. une instruction, terminée par ;\n    return 0;               // 4. « tout s'est bien passé »\n}\n```\n\n| Ligne | Rôle |\n|---|---|\n| `#include <stdio.h>` | inclut la bibliothèque d'entrées/sorties standard, qui déclare `printf` |\n| `int main(void)` | la fonction principale ; `int` = elle renvoie un entier |\n| `{ … }` | le bloc d'instructions de `main` |\n| `printf(\"…\\n\");` | affiche un texte ; `\\n` passe à la ligne |\n| `return 0;` | termine `main` : 0 signifie « tout s'est bien passé » |\n\n### Les règles fondamentales\n- **Chaque instruction se termine par `;`** (mais pas les lignes `#include`, ni les `{` `}`).\n- Le C est **sensible à la casse** : `main`, `Main` et `MAIN` sont trois noms différents.\n- Les espaces, retours à la ligne et l'indentation sont **ignorés par le compilateur**… mais indispensables pour **toi** : indente de 4 espaces à chaque `{`.\n\n> **Piège** : un `;` oublié est signalé **sur la ligne suivante**, car c'est là que le compilateur s'aperçoit que l'instruction ne s'est pas arrêtée.\n\n```c\nprintf(\"Bonjour\")     // ← il manque le ;\nreturn 0;             // ← l'erreur est signalée ici\n```",
+   "rec": "Une fonction est un bloc de code nommé. `main` est la seule que le système appelle tout seul au lancement : tout ce qui n'est pas atteint depuis `main` ne s'exécute jamais.",
+   "alt": "Le programme est un immeuble : `main` est l'unique porte d'entrée, les accolades sont les murs d'une pièce, et chaque `;` est un point final à la fin d'une phrase.",
    "pre": [
     "1.1"
    ],
    "ecrans": [
     {
      "titre": "Le squelette",
-     "texte": "`#include`, puis `int main(void) { … return 0; }`."
+     "texte": "Tout programme commence par le même squelette :\n```c\n#include <stdio.h>\n\nint main(void) {\n    return 0;\n}\n```"
     },
     {
-     "titre": "Les `;`",
-     "texte": "Une instruction se termine par `;`. Oublier un `;` est l'erreur de compilation la plus fréquente."
+     "titre": "Les instructions",
+     "texte": "Dans le bloc, une instruction par ligne, chacune terminée par `;` :\n```c\nprintf(\"Bonjour\\n\");\n```"
     },
     {
      "titre": "La casse",
      "texte": "`printf` fonctionne, `Printf` n'existe pas : le compilateur distingue majuscules et minuscules."
+    },
+    {
+     "titre": "Le piège du ;",
+     "texte": "Un `;` oublié est signalé sur la ligne **suivante**. Lis toujours la ligne indiquée **et celle d'avant**."
     }
    ],
    "check": {
@@ -94,9 +102,9 @@
   {
    "id": "1.3",
    "titre": "Commentaires et conventions de nommage",
-   "corps": "**Commentaires** (ignorés par le compilateur, utiles pour les humains) :\n```c\n// commentaire sur une seule ligne\n/* commentaire\n   sur plusieurs lignes */\n```\n\n**Conventions de nommage** (celles du cours) :\n\n| Catégorie | Convention | Exemple |\n|---|---|---|\n| Fichiers | `lower_snake_case.c` / `.h` | `mon_module.c` |\n| Fonctions, variables | `lower_snake_case` | `calc_area()`, `line_count` |\n| Macros / `#define` | `UPPER_SNAKE_CASE` | `MAX_SIZE` |\n| Types (`struct`, `enum`) | `PascalCase` | `Point`, `Color` |\n| Valeurs d'`enum` | `UPPER_SNAKE_CASE` | `COLOR_RED` |\n\nChoisis des **noms significatifs** : `nb_notes` vaut mieux que `n2`.",
-   "rec": "Un commentaire explique le **pourquoi**, pas ce que le code dit déjà.",
-   "alt": "Les conventions sont la grammaire commune de l'équipe : on reconnaît d'un coup d'œil une constante (MAJUSCULES) d'un type (Majuscule initiale) ou d'une variable (minuscules).",
+   "corps": "### Les commentaires\nIls sont **ignorés par le compilateur** et servent aux humains (toi dans trois semaines, ton binôme, ton prof).\n\n```c\n// commentaire sur une seule ligne (jusqu'à la fin de la ligne)\n\n/* commentaire de bloc,\n   sur plusieurs lignes */\n\nint total = 0;   // on peut aussi commenter en bout de ligne\n```\n\n> **Astuce** : un bon commentaire explique **pourquoi**, pas ce que le code dit déjà. `i++; // ajoute 1 à i` n'apprend rien ; `i++; // on passe à l'étudiant suivant` aide.\n\n### Les conventions de nommage du cours\n| Catégorie | Convention | Exemple |\n|---|---|---|\n| Fichiers | `lower_snake_case.c` / `.h` | `mon_module.c` |\n| Fonctions | `lower_snake_case()` | `calc_area()` |\n| Variables | `lower_snake_case` | `line_count` |\n| Macros, `#define` | `UPPER_SNAKE_CASE` | `MAX_SIZE` |\n| Types (`struct`, `enum`) | `PascalCase` | `Point`, `Color` |\n| Valeurs d'`enum` | `UPPER_SNAKE_CASE` | `COLOR_RED` |\n| Gardiens d'en-tête | `UPPER_SNAKE_CASE` | `DEMO_MODULE_H` |\n\nLes mots sont séparés par `_`. Choisis des noms **significatifs** :\n\n```c\nint n2 = 0;          // ✗ que contient n2 ?\nint nb_notes = 0;    // ✓ on comprend tout de suite\n#define MAX_POINTS 1024\n```",
+   "rec": "Un commentaire commence par `//` (jusqu'à la fin de la ligne) ou est encadré par `/*` et `*/`. Tout ce qui est dedans disparaît à la compilation.",
+   "alt": "Les conventions sont la grammaire commune d'une équipe : on reconnaît d'un coup d'œil une constante (TOUT_EN_MAJUSCULES), un type (Majuscule initiale) et une variable (minuscules).",
    "pre": [
     "1.2"
    ],
@@ -106,8 +114,12 @@
      "texte": "`//` jusqu'à la fin de la ligne, `/* … */` sur plusieurs lignes."
     },
     {
-     "titre": "Le tableau",
-     "texte": "Variables et fonctions en `snake_case`, macros en `UPPER_SNAKE_CASE`, types en `PascalCase`."
+     "titre": "Les conventions",
+     "texte": "Variables, fonctions et fichiers en `snake_case` ; macros et valeurs d'enum en `UPPER_SNAKE_CASE` ; types en `PascalCase`."
+    },
+    {
+     "titre": "Des noms parlants",
+     "texte": "`nb_notes`, `moyenne`, `MAX_SIZE` : on lit le code comme une phrase."
     }
    ],
    "check": {
@@ -457,6 +469,199 @@
       "exemple": "#include <stdio.h>\n\nint main(void) {\n    printf(\"Hello World\\n\");\n    return 0;\n}"
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    printf(\"Hello World\\n\");\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 3
+    }
+   ]
+  },
+  {
+   "id": "c1-014",
+   "type": "qcm",
+   "notion": "1.2",
+   "origine": "cours",
+   "enonce": "Ce programme compile-t-il ?\n```c\n#include <stdio.h>\n\nint main(void) {\n    printf(\"Salut\\n\")\n    return 0;\n}\n```",
+   "choix": [
+    "non : il manque un ; après printf(…)",
+    "oui, il affiche Salut",
+    "non : il manque des guillemets",
+    "non : main doit s'écrire Main"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "L'instruction `printf(\"Salut\\n\")` n'est pas terminée par `;` : le compilateur le signale sur la ligne `return 0;`."
+  },
+  {
+   "id": "c1-015",
+   "type": "trous",
+   "notion": "1.2",
+   "origine": "cours",
+   "enonce": "#include <stdio.h>\n\nint [_](void) [_]\n    printf(\"Bonjour\\n\")[_]\n    return 0;\n[_]",
+   "fragments": [
+    "main",
+    "{",
+    "}",
+    ";",
+    "Main",
+    "("
+   ],
+   "verif": {
+    "mode": "trous",
+    "attendu": [
+     "main",
+     "{",
+     ";",
+     "}"
+    ]
+   },
+   "duree": 0.5,
+   "explication": "Squelette : `int main(void) {`, instructions terminées par `;`, accolade fermante."
+  },
+  {
+   "id": "c1-016",
+   "type": "qcm",
+   "notion": "1.1",
+   "origine": "cours",
+   "enonce": "Quelle commande compile `hello.c` en un exécutable nommé `hello` ?",
+   "choix": [
+    "gcc hello.c -o hello",
+    "./hello.c",
+    "run hello.c",
+    "printf hello.c"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "`gcc fichier.c -o nom` compile ; `./nom` exécute ensuite."
+  },
+  {
+   "id": "c1-017",
+   "type": "saisie",
+   "notion": "1.3",
+   "origine": "cours",
+   "enonce": "Combien de lignes s'affichent ?\n```c\nprintf(\"A\\n\");\n// printf(\"B\\n\");\n/* printf(\"C\\n\"); */\nprintf(\"D\\n\");\n```\n(réponds par un nombre)",
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     "2",
+     "deux"
+    ]
+   },
+   "duree": 0.67,
+   "explication": "Les lignes B et C sont en commentaire : seules A et D s'affichent."
+  },
+  {
+   "id": "c1-102",
+   "type": "exo",
+   "notion": "1.2",
+   "origine": "generee",
+   "titre": "Programme cassé",
+   "enonce": "Ce programme devrait afficher `Bonjour ESILV`, mais il ne compile pas : il contient **deux** erreurs de base.",
+   "guidage": "**Méthode** : lis le message d'erreur, regarde la ligne indiquée **et celle d'avant**. Vérifie la casse des noms et les `;`.",
+   "duree": 3,
+   "etapes": [
+    {
+     "consigne": "Corrige le programme ci-dessous pour qu'il fasse ce que dit l'énoncé, puis valide.",
+     "question": "Corrige le programme.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "",
+        "sortie": "Bonjour ESILV"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    printf(\"Bonjour ESILV\\n\");\n    return 0;\n}"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    printf(\"Bonjour ESILV\\n\");\n    return 0;\n}\n```",
+     "indices": [
+      "Le C est sensible à la casse : comment s'écrit la fonction principale ?",
+      "`main` en minuscules, et un `;` à la fin de l'appel à `printf`."
+     ],
+     "duree": 3,
+     "depart": "#include <stdio.h>\n\nint Main(void) {\n    printf(\"Bonjour ESILV\\n\")\n    return 0;\n}"
+    }
+   ]
+  },
+  {
+   "id": "c1-103",
+   "type": "exo",
+   "notion": "1.2",
+   "origine": "generee",
+   "titre": "Bannière sur trois lignes",
+   "enonce": "Écris un programme qui affiche exactement ces trois lignes :\n```text\nBIC2.exe\nProgrammation C\nChapitre 1 : prise en main\n```",
+   "guidage": "**Plan** : un `printf` par ligne, chacun terminé par `\\n`. Le texte doit être identique (majuscules, espaces, deux-points).",
+   "duree": 3,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "",
+        "sortie": "BIC2.exe\nProgrammation C\nChapitre 1 : prise en main"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    printf(\"BIC2.exe\\n\");\n    printf(\"Programmation C\\n\");\n    printf(\"Chapitre 1 : prise en main\\n\");\n    return 0;\n}"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    printf(\"BIC2.exe\\n\");\n    printf(\"Programmation C\\n\");\n    printf(\"Chapitre 1 : prise en main\\n\");\n    return 0;\n}\n```",
+     "indices": [
+      "Trois appels à `printf`, un par ligne.",
+      "N'oublie pas le `\\n` à la fin de chaque texte."
+     ],
+     "duree": 3
+    }
+   ]
+  },
+  {
+   "id": "c1-104",
+   "type": "exo",
+   "notion": "1.3",
+   "origine": "generee",
+   "titre": "Programme commenté",
+   "enonce": "Écris un programme qui affiche `42`, et qui contient **au moins un commentaire sur une ligne** (`//`) **et un commentaire de bloc** (`/* … */`).",
+   "guidage": "Les commentaires n'ont aucun effet sur l'exécution : le correcteur vérifie la sortie **et** la présence des deux types de commentaires.",
+   "duree": 3,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "",
+        "sortie": "42"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\n/* Affiche la réponse à la grande question */\nint main(void) {\n    printf(\"42\\n\"); // la réponse\n    return 0;\n}",
+      "exige": [
+       {
+        "motif": "//",
+        "brut": true,
+        "msg": "Il manque un commentaire sur une ligne (//)."
+       },
+       {
+        "motif": "/\\*[\\s\\S]*?\\*/",
+        "brut": true,
+        "msg": "Il manque un commentaire de bloc (/* … */)."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\n/* Affiche la réponse à la grande question */\nint main(void) {\n    printf(\"42\\n\"); // la réponse\n    return 0;\n}\n```",
      "indices": [
       "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
       "N'oublie ni `#include <stdio.h>`, ni `return 0;`."

@@ -82,6 +82,28 @@ const stdioC = {
     rt.defVar("stdin", INT, rt.val(INT, 0));
   }
 };
+
+/* #define NOM valeur : traité ici (le préprocesseur de JSCPP coupe mal les valeurs décimales comme 3.14159).
+   Les lignes sont vidées (numéros de ligne conservés) et les noms remplacés hors chaînes et commentaires.
+   Les macros à paramètres (#define CARRE(x) …) restent à JSCPP. */
+function macrosSimples(code){
+  const defs = {};
+  const lignes = code.split("\n").map(l => {
+    const m = l.match(/^\s*#\s*define\s+([A-Za-z_]\w*)(?=\s|$)(.*)$/);
+    if(!m) return l;
+    defs[m[1]] = m[2].replace(/\/\/.*$/, "").replace(/\/\*.*?\*\//g, "").trim();
+    return "";
+  });
+  let src = lignes.join("\n");
+  if(!Object.keys(defs).length) return src;
+  const re = /(\/\/[^\n]*|\/\*[\s\S]*?\*\/|"(?:\\.|[^"\\\n])*"|'(?:\\.|[^'\\\n])*'|^[ \t]*#[^\n]*)|([A-Za-z_]\w*)/gm;
+  for(let tour = 0; tour < 5; tour++){
+    let change = false;
+    src = src.replace(re, (x, garde, id) => { if(garde || !(id in defs)) return x; change = true; return defs[id]; });
+    if(!change) break;
+  }
+  return src;
+}
 const vide = {load(){}};
 
 onmessage = e => {
@@ -89,7 +111,7 @@ onmessage = e => {
   let out = "";
   try{
     const includes = Object.assign({}, BASE.Object, {"stdio.h": stdioC, cstdio: stdioC, "stdbool.h": vide});
-    JSCPP.run(String(code || "").replace(/\(\s*void\s*\)/g, "()"), String(stdin || ""), {
+    JSCPP.run(macrosSimples(String(code || "").replace(/\(\s*void\s*\)/g, "()")), String(stdin || ""), {
       includes, maxTimeout: 3000, unsigned_overflow: "warn",
       stdio: {drain: () => String(stdin || ""), write(s){ out += s; if(out.length > MAX) throw new Error("sortie trop longue"); }}
     });

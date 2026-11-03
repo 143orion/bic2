@@ -16,9 +16,9 @@
   {
    "id": "3.1",
    "titre": "Afficher avec printf",
-   "corps": "`printf` affiche un texte formaté à l'écran. Elle demande `#include <stdio.h>`.\n```c\nprintf(\"Bonjour\\n\");                 // texte + retour à la ligne\nprintf(\"Age : %d ans\\n\", age);   // %d est remplacé par la valeur de age\n```\n\n- `\\n` = retour à la ligne ; `\\t` = tabulation ;\n- le texte est entre **guillemets doubles** ;\n- chaque `%…` du texte attend **une valeur** dans la liste qui suit, dans le même ordre.",
-   "rec": "Un caractère seul s'écrit entre apostrophes (`'A'`), une chaîne entre guillemets (`\"A\"`).",
-   "alt": "`printf` est un texte à trous : les `%d`, `%f`… sont les trous, et les valeurs après la virgule les remplissent dans l'ordre.",
+   "corps": "`printf` (déclarée dans `stdio.h`) affiche un **texte formaté** : un texte modèle, puis les valeurs à y insérer.\n\n```c\nint age = 19;\ndouble moyenne = 13.75;\nprintf(\"Bonjour !\\n\");                          // texte seul\nprintf(\"Age : %d ans\\n\", age);                  // %d ← age\nprintf(\"%d ans, moyenne %.2f\\n\", age, moyenne); // 2 trous, 2 valeurs, dans l'ordre\n```\nSortie :\n```text\nBonjour !\nAge : 19 ans\n19 ans, moyenne 13.75\n```\n\n### Les séquences d'échappement\n| Séquence | Effet |\n|---|---|\n| `\\n` | retour à la ligne |\n| `\\t` | tabulation |\n| `\\\"` | un guillemet dans le texte |\n| `\\\\` | une barre oblique inversée |\n| `%%` | un signe `%` |\n\n> **Piège** : le retour à la ligne n'est **jamais automatique**. Sans `\\n`, l'affichage suivant se colle à la suite.\n\n> **À retenir** : un caractère seul s'écrit entre apostrophes (`'A'`), une chaîne entre guillemets (`\"A\"`).",
+   "rec": "`printf` remplace chaque `%…` du modèle par la valeur correspondante, dans l'ordre. Le nombre de `%` doit être égal au nombre de valeurs.",
+   "alt": "`printf` est un texte à trous : les `%d`, `%f`… sont les trous, et les valeurs après la virgule viennent les boucher, de gauche à droite.",
    "pre": [
     "1.2",
     "2.1"
@@ -26,7 +26,11 @@
    "ecrans": [
     {
      "titre": "Le principe",
-     "texte": "Texte entre guillemets, puis les valeurs à insérer."
+     "texte": "Un modèle entre guillemets, puis les valeurs :\n```c\nprintf(\"Age : %d ans\\n\", age);\n```"
+    },
+    {
+     "titre": "Plusieurs valeurs",
+     "texte": "Un `%…` par valeur, dans le même ordre :\n```c\nprintf(\"%d / %d\\n\", a, b);\n```"
     },
     {
      "titre": "Le retour à la ligne",
@@ -53,9 +57,9 @@
   {
    "id": "3.2",
    "titre": "Les formats d'affichage",
-   "corps": "| Format | Type | Exemple |\n|---|---|---|\n| `%d` | `int` | `printf(\"%d\", 42)` → 42 |\n| `%ld` | `long` | |\n| `%f` / `%lf` | `float` / `double` | `printf(\"%f\", 3.14)` → 3.140000 |\n| `%c` | `char` | `printf(\"%c\", 'A')` → A |\n| `%s` | chaîne | `printf(\"%s\", \"Bonjour\")` |\n| `%x` | entier en hexadécimal | 42 → `2a` |\n\n**Largeur et précision** :\n```c\nprintf(\"%5d\", 42);     // \"   42\"  (au moins 5 caractères)\nprintf(\"%.2f\", 3.14159); // 3.14   (2 chiffres après la virgule)\nprintf(\"%10.2f\", pi);    // largeur 10, 2 décimales\n```\n\nLe format doit **correspondre au type** : `%d` avec un `double` donne un résultat absurde.",
-   "rec": "`%.2f` arrondit à 2 décimales à l'affichage, sans changer la variable.",
-   "alt": "Le format est le gabarit du texte final : largeur = taille de la case, précision = nombre de chiffres après la virgule.",
+   "corps": "### Un format par type\n| Format | Type | Exemple | Affiche |\n|---|---|---|---|\n| `%d` | `int` | `printf(\"%d\", 42)` | `42` |\n| `%ld` | `long` | `printf(\"%ld\", 5L)` | `5` |\n| `%f` | `float` / `double` | `printf(\"%f\", 3.14)` | `3.140000` |\n| `%c` | `char` | `printf(\"%c\", 'A')` | `A` |\n| `%s` | chaîne | `printf(\"%s\", \"Bonjour\")` | `Bonjour` |\n| `%x` | entier en hexadécimal | `printf(\"%x\", 42)` | `2a` |\n\n### Largeur et précision\n```c\nprintf(\"[%5d]\\n\", 42);        // [   42]   au moins 5 caractères, aligné à droite\nprintf(\"[%-5d]\\n\", 42);       // [42   ]   aligné à gauche\nprintf(\"[%.2f]\\n\", 3.14159);  // [3.14]    2 chiffres après la virgule\nprintf(\"[%8.2f]\\n\", 3.14159); // [    3.14] largeur 8, 2 décimales\n```\n\n> **À retenir** : `%.2f` **arrondit à l'affichage** ; la variable garde toute sa précision.\n\n> **Piège** : le format doit **correspondre au type**. `printf(\"%d\", 3.5)` affiche n'importe quoi, sans erreur de compilation.\n\n> **Astuce** : un `char` est un petit entier. `printf(\"%c %d\", 'A', 'A')` affiche `A 65` : le caractère, puis son code ASCII.",
+   "rec": "`%.2f` arrondit l'affichage à 2 décimales, sans toucher à la valeur stockée. La largeur (`%5d`) ajoute des espaces pour aligner des colonnes.",
+   "alt": "Le format est le gabarit de la case : la largeur est la taille de la case, la précision le nombre de chiffres après la virgule qu'on y écrit.",
    "pre": [
     "3.1",
     "2.3"
@@ -63,15 +67,19 @@
    "ecrans": [
     {
      "titre": "Un format par type",
-     "texte": "`%d` entier, `%f` réel, `%c` caractère, `%s` chaîne."
+     "texte": "`%d` entier · `%f` réel · `%c` caractère · `%s` chaîne · `%x` hexadécimal."
     },
     {
      "titre": "Largeur",
-     "texte": "`%5d` réserve au moins 5 caractères."
+     "texte": "`%5d` réserve au moins 5 caractères : `[   42]`."
     },
     {
      "titre": "Précision",
-     "texte": "`%.2f` garde 2 décimales."
+     "texte": "`%.2f` garde 2 décimales : 3.14159 → `3.14`."
+    },
+    {
+     "titre": "Caractère ou code",
+     "texte": "```c\nprintf(\"%c %d\\n\", 'A', 'A');  // A 65\n```"
     }
    ],
    "check": {
@@ -94,25 +102,29 @@
   {
    "id": "3.3",
    "titre": "Saisir avec scanf",
-   "corps": "`scanf` lit ce que tape l'utilisateur et le range dans une variable. **Il faut passer l'adresse de la variable avec `&`** :\n```c\nint age;\ndouble pi;\nchar lettre;\nchar mot[20];\n\nscanf(\"%d\", &age);\nscanf(\"%lf\", &pi);       // %lf pour un double\nscanf(\" %c\", &lettre);   // l'espace avant %c ignore le retour à la ligne restant\nscanf(\"%19s\", mot);      // pas de & pour un tableau ; 19 = taille - 1\n```\n\n- le format de `scanf` doit correspondre au type : `%d`, `%lf` (double), `%c`, `%s` ;\n- `%s` s'arrête au premier espace ;\n- limiter la taille (`%19s`) évite de déborder du tableau.",
-   "rec": "Sans `&`, `scanf` reçoit la valeur de la variable (inutile) au lieu de son adresse : le programme plante ou ne lit rien.",
-   "alt": "`scanf` doit savoir **où** ranger la valeur : `&age` = « l'adresse de la boîte `age` ».",
+   "corps": "`scanf` lit ce que tape l'utilisateur et le **range dans une variable**. Elle a besoin de **l'adresse** de la variable : on la donne avec `&`.\n\n```c\nint age;\ndouble taille;\nchar lettre;\nchar mot[20];               // 19 caractères + le '\\0' final\n\nscanf(\"%d\", &age);          // entier\nscanf(\"%lf\", &taille);      // double : %lf (et pas %f) dans scanf\nscanf(\" %c\", &lettre);      // l'espace avant %c saute le retour à la ligne précédent\nscanf(\"%19s\", mot);         // tableau : pas de & ; 19 = taille - 1\nscanf(\"%d %d\", &a, &b);     // plusieurs valeurs en une fois\n```\n\n| À lire | Format `scanf` | Variable passée |\n|---|---|---|\n| `int` | `%d` | `&n` |\n| `double` | `%lf` | `&x` |\n| `float` | `%f` | `&x` |\n| `char` | `\" %c\"` | `&c` |\n| mot (chaîne) | `%19s` | `mot` (sans `&`) |\n\n> **Piège** : sans `&`, `scanf` reçoit la **valeur** de la variable au lieu de son adresse : le programme plante ou ne lit rien. Dans l'éditeur du module, tu verras « il manque le & devant la variable ».\n\n> **Piège** : `%s` s'arrête au **premier espace** : « Jean Luc » ne donne que `Jean`.",
+   "rec": "`scanf` doit savoir **où** ranger ce qu'elle lit : `&age` signifie « l'adresse de la case `age` ». Un tableau (`mot`) est déjà une adresse, d'où l'absence de `&`.",
+   "alt": "`scanf` est un livreur : `&age` est l'adresse de livraison. Sans adresse, le colis n'arrive nulle part.",
    "pre": [
     "3.2",
     "2.1"
    ],
    "ecrans": [
     {
-     "titre": "Le `&`",
+     "titre": "Le &",
      "texte": "`scanf(\"%d\", &age);` : l'adresse de `age`, pas sa valeur."
     },
     {
-     "titre": "`%lf` pour les `double`",
+     "titre": "%lf pour les double",
      "texte": "`%f` pour un `float`, `%lf` pour un `double` en lecture."
     },
     {
+     "titre": "Les caractères",
+     "texte": "`scanf(\" %c\", &c);` : l'espace saute le `\\n` laissé par la saisie précédente."
+    },
+    {
      "titre": "Les chaînes",
-     "texte": "Pas de `&` pour un tableau de `char`, et on limite la taille : `%19s`."
+     "texte": "Pas de `&` pour un tableau, et on limite la taille : `%19s` pour un `char mot[20]`."
     }
    ],
    "check": {
@@ -574,6 +586,281 @@
       "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
      ],
      "duree": 6
+    }
+   ]
+  },
+  {
+   "id": "c3-016",
+   "type": "saisie",
+   "notion": "3.2",
+   "origine": "cours",
+   "enonce": "Qu'affiche ce code ?\n```c\nprintf(\"%d %d\\n\", 5 / 2, 5 % 2);\n```",
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     "2 1"
+    ]
+   },
+   "duree": 0.67,
+   "explication": "5 / 2 = 2 (division entière) et 5 % 2 = 1."
+  },
+  {
+   "id": "c3-017",
+   "type": "saisie",
+   "notion": "3.1",
+   "origine": "cours",
+   "enonce": "Qu'affiche `printf(\"[%c%c]\", 'O', 'K');` ?",
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     "[OK]"
+    ]
+   },
+   "duree": 0.67,
+   "explication": "Les deux `%c` sont remplacés par O puis K."
+  },
+  {
+   "id": "c3-018",
+   "type": "saisie",
+   "notion": "3.2",
+   "origine": "cours",
+   "enonce": "Quel nombre affiche `printf(\"%d\", 'B');` ? (code ASCII)",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 66
+   },
+   "duree": 0.67,
+   "explication": "Un `char` est un petit entier : 'A' vaut 65, donc 'B' vaut 66."
+  },
+  {
+   "id": "c3-019",
+   "type": "qcm",
+   "notion": "3.3",
+   "origine": "cours",
+   "enonce": "Quelle ligne lit correctement un `double prix` ?",
+   "choix": [
+    "scanf(\"%lf\", &prix);",
+    "scanf(\"%f\", prix);",
+    "scanf(\"%d\", &prix);",
+    "scanf(\"%lf\", prix);"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Un `double` se lit avec `%lf`, et il faut son adresse : `&prix`."
+  },
+  {
+   "id": "c3-103",
+   "type": "exo",
+   "notion": "3.2",
+   "origine": "generee",
+   "titre": "Ticket de caisse",
+   "enonce": "Écris un programme qui lit un prix unitaire (réel) puis une quantité (entier), et affiche sur une ligne : le total HT, la TVA à 20 %, puis le total TTC, chacun avec 2 décimales.\n\nExemple : `2.5 4` → `10.00 2.00 12.00`.",
+   "guidage": "**Plan** : lire avec `%lf` puis `%d` ; HT = prix × quantité ; TVA = HT × 0,2 ; TTC = HT + TVA ; afficher avec `%.2f`.",
+   "duree": 5,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "2.5 4",
+        "sortie": "10.00 2.00 12.00"
+       },
+       {
+        "entree": "19.99 3",
+        "sortie": "59.97 11.99 71.96"
+       },
+       {
+        "entree": "100 1",
+        "sortie": "100.00 20.00 120.00"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    double prix;\n    int qte;\n    scanf(\"%lf %d\", &prix, &qte);\n    double ht = prix * qte;\n    double tva = ht * 0.2;\n    printf(\"%.2f %.2f %.2f\\n\", ht, tva, ht + tva);\n    return 0;\n}",
+      "nombres": true
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    double prix;\n    int qte;\n    scanf(\"%lf %d\", &prix, &qte);\n    double ht = prix * qte;\n    double tva = ht * 0.2;\n    printf(\"%.2f %.2f %.2f\\n\", ht, tva, ht + tva);\n    return 0;\n}\n```",
+     "indices": [
+      "Le prix est un `double` : `%lf` dans `scanf`.",
+      "`printf(\"%.2f %.2f %.2f\\n\", ht, tva, ht + tva);`"
+     ],
+     "duree": 5
+    }
+   ]
+  },
+  {
+   "id": "c3-104",
+   "type": "exo",
+   "notion": "3.3",
+   "origine": "generee",
+   "titre": "Le scanf qui ne lit rien",
+   "enonce": "Ce programme doit lire un âge (entier) et une taille (réel), puis les afficher. Il contient **deux** erreurs dans les `scanf`.\n\nExemple : `20 1.75` → `20 1.75`.",
+   "guidage": "Regarde ce que reçoit chaque `scanf` : une adresse ? le bon format pour un `double` ?",
+   "duree": 3,
+   "etapes": [
+    {
+     "consigne": "Corrige le programme ci-dessous pour qu'il fasse ce que dit l'énoncé, puis valide.",
+     "question": "Corrige le programme.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "20 1.75",
+        "sortie": "20 1.75"
+       },
+       {
+        "entree": "35 1.8",
+        "sortie": "35 1.80"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int age;\n    double taille;\n    scanf(\"%d\", &age);\n    scanf(\"%lf\", &taille);\n    printf(\"%d %.2f\\n\", age, taille);\n    return 0;\n}",
+      "nombres": true,
+      "exige": [
+       {
+        "motif": "%lf",
+        "brut": true,
+        "msg": "Un double se lit avec %lf dans scanf."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int age;\n    double taille;\n    scanf(\"%d\", &age);\n    scanf(\"%lf\", &taille);\n    printf(\"%d %.2f\\n\", age, taille);\n    return 0;\n}\n```",
+     "indices": [
+      "`scanf` a besoin de l'adresse de `age`.",
+      "Un `double` se lit avec `%lf`, pas `%f`."
+     ],
+     "duree": 3,
+     "depart": "#include <stdio.h>\n\nint main(void) {\n    int age;\n    double taille;\n    scanf(\"%d\", age);\n    scanf(\"%f\", &taille);\n    printf(\"%d %.2f\\n\", age, taille);\n    return 0;\n}"
+    }
+   ]
+  },
+  {
+   "id": "c3-105",
+   "type": "exo",
+   "notion": "3.2",
+   "origine": "generee",
+   "titre": "Caractère et code ASCII",
+   "enonce": "Écris un programme qui lit **un caractère** et affiche ce caractère, une espace, puis son code ASCII.\n\nExemple : `A` → `A 65`.",
+   "guidage": "Un `char` est un petit entier : le même `char` s'affiche comme caractère avec `%c` et comme nombre avec `%d`.",
+   "duree": 3,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "A",
+        "sortie": "A 65"
+       },
+       {
+        "entree": "z",
+        "sortie": "z 122"
+       },
+       {
+        "entree": "0",
+        "sortie": "0 48"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    char c;\n    scanf(\" %c\", &c);\n    printf(\"%c %d\\n\", c, c);\n    return 0;\n}"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    char c;\n    scanf(\" %c\", &c);\n    printf(\"%c %d\\n\", c, c);\n    return 0;\n}\n```",
+     "indices": [
+      "Lis avec `scanf(\" %c\", &c);`.",
+      "Affiche deux fois la même variable : `printf(\"%c %d\\n\", c, c);`"
+     ],
+     "duree": 3
+    }
+   ]
+  },
+  {
+   "id": "c3-106",
+   "type": "exo",
+   "notion": "3.1",
+   "origine": "generee",
+   "titre": "Fiche d'identité",
+   "enonce": "Écris un programme qui lit un prénom (un mot) puis un âge, et affiche exactement :\n```text\nPrenom : <prénom>\nAge : <âge> ans\n```\nExemple : `Lea 19` → `Prenom : Lea` puis `Age : 19 ans`.",
+   "guidage": "**Plan** : un tableau `char prenom[20]`, un `int age`, un seul `scanf(\"%19s %d\", …)`, puis deux `printf`.",
+   "duree": 4,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "Lea 19",
+        "sortie": "Prenom : Lea\nAge : 19 ans"
+       },
+       {
+        "entree": "Adam 20",
+        "sortie": "Prenom : Adam\nAge : 20 ans"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    char prenom[20];\n    int age;\n    scanf(\"%19s %d\", prenom, &age);\n    printf(\"Prenom : %s\\n\", prenom);\n    printf(\"Age : %d ans\\n\", age);\n    return 0;\n}"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    char prenom[20];\n    int age;\n    scanf(\"%19s %d\", prenom, &age);\n    printf(\"Prenom : %s\\n\", prenom);\n    printf(\"Age : %d ans\\n\", age);\n    return 0;\n}\n```",
+     "indices": [
+      "Pas de `&` devant le tableau `prenom`, mais un `&` devant `age`.",
+      "Deux `printf`, chacun terminé par `\\n`."
+     ],
+     "duree": 4
+    }
+   ]
+  },
+  {
+   "id": "c3-107",
+   "type": "exo",
+   "notion": "3.3",
+   "origine": "generee",
+   "titre": "Somme de trois réels",
+   "enonce": "Écris un programme qui lit trois nombres réels et affiche leur somme avec **une** décimale.\n\nExemple : `1.5 2.2 3` → `6.7`.",
+   "guidage": "Trois `double`, un seul `scanf` avec trois `%lf`, un `printf` avec `%.1f`.",
+   "duree": 3,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "1.5 2.2 3",
+        "sortie": "6.7"
+       },
+       {
+        "entree": "0.1 0.2 0.3",
+        "sortie": "0.6"
+       },
+       {
+        "entree": "-1 -2.5 10",
+        "sortie": "6.5"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    double a, b, c;\n    scanf(\"%lf %lf %lf\", &a, &b, &c);\n    printf(\"%.1f\\n\", a + b + c);\n    return 0;\n}",
+      "nombres": true,
+      "tol": 0.05,
+      "exige": [
+       {
+        "motif": "%lf",
+        "brut": true,
+        "msg": "Lis des double avec %lf."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    double a, b, c;\n    scanf(\"%lf %lf %lf\", &a, &b, &c);\n    printf(\"%.1f\\n\", a + b + c);\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 3
     }
    ]
   }

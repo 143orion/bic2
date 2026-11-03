@@ -5,10 +5,10 @@ Cours ESILV Programmation C (BIC) : langage C de base jusqu'aux structures et à
 ## Chapitres (`banques/programmation-c/`)
 | ordre | id | titre | statut | sources |
 |---|---|---|---|---|
-| 1 | `c-1-prise-en-main` | Prise en main | ✅ en ligne | CM1 · TD ex. 1 |
-| 2 | `c-2-variables-types` | Variables, types et opérateurs | ✅ en ligne | CM1 · Types · TD ex. 3, 5, 6 |
-| 3 | `c-3-entrees-sorties` | Entrées / sorties | ✅ en ligne | CM1 · TD ex. 2, 3 |
-| 4 | `c-4-controle` | Structures de contrôle | ✅ en ligne | CM1 · TD Premiers pas · TD Boucles (débutant) |
+| 1 | `c-1-prise-en-main` | Prise en main (21 items) | ✅ en ligne | CM1 · TD ex. 1 |
+| 2 | `c-2-variables-types` | Variables, types et opérateurs (41 items) | ✅ en ligne | CM1 · Types · TD ex. 3, 5, 6 |
+| 3 | `c-3-entrees-sorties` | Entrées / sorties (26 items) | ✅ en ligne | CM1 · TD ex. 2, 3 |
+| 4 | `c-4-controle` | Structures de contrôle (67 items) | ✅ en ligne | CM1 · TD Premiers pas · TD Boucles (débutant) |
 | 5 | `c-5-tableaux` | Tableaux 1D | à faire | Tableaux1D · TD Boucles (intermédiaire) |
 | 6 | `c-6-chaines` | Chaînes de caractères | à faire | Chaînes · Fonctions (`string.h`) |
 | 7 | `c-7-fonctions` | Fonctions | à faire | Fonctions |
@@ -35,6 +35,13 @@ Prévu pour la suite : 5.1 déclarer/accéder · 5.2 taille physique vs logique 
 - Moteur : interpréteur **JSCPP 2.0.9** dans un **Web Worker** (`site/vendor/c-worker.js`, généré par `tools/c-worker/`, voir son README), arrêté au bout de 5 s (boucle infinie). Notre propre lecture d'entrée : `scanf` (largeurs `%19s`, `%lf`, `" %c"`), `getchar`, `gets`, `fgets(…, stdin)` ; `stdbool.h` ; `main(void)` accepté. Dépassement de tampon signalé en français.
 - **Limites** : pas de `malloc` / `free` / `realloc`, pas de `typedef struct` anonyme (`typedef struct Nom {…} Nom;` à tester) → chapitres 9 et 10 sans exécution (étapes `regex` / `numerique` / `exact`). Messages d'erreur de syntaxe traduits (ligne + colonne).
 - Ne pas utiliser `mode:"c"` dans des items `qcm` / `saisie` courts : l'étape de code est un `exo` (durée 3 à 7 min).
+
+
+## Rédaction (polish du 03/11/2026, à garder pour les chapitres suivants)
+- **Cours** : chaque notion combine texte court, blocs ```` ```c ```` (colorés façon VS Code, bouton copier), **tableaux** markdown (`| a | b |`, `\|` pour une barre dans une cellule), **encadrés** `> **Piège** : …`, `> **À retenir** : …`, `> **Astuce** : …`, `> **Exemple** : …`, intertitres `### …`. Follow-along : un écran = une idée, avec un petit bloc de code.
+- **Exos de code = cœur du module** : chaque notion a au moins un exo « écris le programme » (`code_exo`) ou « corrige le programme » (`bug_exo`, code de départ `depart` qui doit **échouer** à ses tests). Chaque exo de TD « écrire un programme » finit par une étape « programme complet ». Les contraintes de l'énoncé (« sans * », « avec un switch », « avec #define ») passent par `verif.exige` / `verif.interdit` (`{motif, msg, brut?}` ; motif testé sur le code sans commentaires ni chaînes, sauf `brut:true`).
+- Express : questions « qu'affiche ce code ? » avec le code dans l'énoncé.
+- Compte au 03/11 : 155 items, dont 56 étapes de code exécutées (toutes les solutions passent leurs tests ; les 6 codes de départ des exos « corrige » échouent).
 
 ## Règles de correction propres au module
 - Réponses de code en `regex` (toute la réponse, insensible à la casse, espaces libres via `\s*`) ; l'`exemple` affiché en correction est la forme canonique.

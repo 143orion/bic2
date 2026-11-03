@@ -1182,3 +1182,36 @@ body.en-session .lecteur{background:radial-gradient(ellipse at top,color-mix(in 
   .fin-d{border-left:0;border-top:1px solid var(--verre-bord)}
 }
 @media (prefers-reduced-motion:reduce){body.en-session .lecteur,.fin{animation:none}}
+
+/* ---- lecteur : markdown enrichi (tableaux, encadrés, intertitres) ---- */
+.lecteur ol{padding-left:1.4em}
+.md-h{margin:1.1em 0 .4em;font-size:15px;letter-spacing:.02em;color:var(--blanc)}
+.md-table-wrap{overflow-x:auto;margin:.4em 0 1em}
+.md-table{border-collapse:separate;border-spacing:0;min-width:60%;font-size:14px;border:1px solid var(--verre-bord);border-radius:8px;overflow:hidden}
+.md-table th{text-align:left;padding:8px 12px;font-weight:700;color:var(--m-on-ac);background:color-mix(in srgb,var(--m-ac) 85%,transparent)}
+.md-table td{padding:7px 12px;border-top:1px solid var(--verre-bord);vertical-align:top}
+.md-table tbody tr:nth-child(even) td{background:rgba(255,255,255,.03)}
+.encadre{margin:.6em 0 1em;padding:10px 14px 10px 14px;border-radius:8px;border:1px solid var(--verre-bord);border-left:3px solid var(--enc,#8fa3d6);background:color-mix(in srgb,var(--enc,#8fa3d6) 9%,transparent)}
+.encadre .enc-tete{display:flex;align-items:center;gap:8px;color:var(--enc,#8fa3d6);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.encadre .enc-tete svg{width:16px;height:16px;flex:none}
+.encadre .enc-corps>:first-child{margin-top:4px}.encadre .enc-corps>:last-child{margin-bottom:0}
+.enc-piege{--enc:#ff9b8a}.enc-retenir{--enc:#8fe0a8}.enc-astuce{--enc:#f3d27a}.enc-exemple{--enc:#9cdcfe}.enc-note{--enc:#b9c3ee}
+/* ---- blocs de code et coloration façon VS Code Dark+ ---- */
+.bloc-code{position:relative;margin:0 0 .8em}
+.bloc-code pre.code{margin:0;padding-top:26px}
+.lecteur .bloc-code.lang-c pre.code,.code-wrap{background:#14182a}
+.bc-lang{position:absolute;top:7px;left:12px;font-size:10px;letter-spacing:.12em;color:#7f87a8}
+.bc-copier{all:unset;position:absolute;top:4px;right:6px;cursor:pointer;padding:4px;border-radius:6px;color:#7f87a8;line-height:0}
+.bc-copier:hover{color:var(--blanc);background:rgba(255,255,255,.08)}.bc-copier:focus-visible{outline:2px solid var(--m-ac)}
+.bc-copier svg{width:15px;height:15px}
+.lang-c code,.code-hl code{color:#d4d4d4;font-variant-ligatures:none}
+.tk-k{color:#c586c0}.tk-t{color:#569cd6}.tk-s{color:#ce9178}.tk-e{color:#d7ba7d}.tk-fmt{color:#4fc1ff}.tk-n{color:#b5cea8}
+.tk-cm{color:#6a9955;font-style:italic}.tk-p{color:#c586c0}.tk-f{color:#dcdcaa}.tk-v{color:#9cdcfe}.tk-cst{color:#4fc1ff}.tk-ty{color:#4ec9b0}
+/* ---- éditeur C : zone de saisie transparente au-dessus du code coloré ---- */
+.code-wrap{position:relative;border-radius:6px}
+.code-hl{position:absolute;inset:0;margin:0;overflow:hidden;pointer-events:none;white-space:pre;border-style:solid;border-color:transparent;box-sizing:border-box;font-variant-ligatures:none}
+.code-hl code{background:none;padding:0;font:inherit}
+textarea.code-c{position:relative;display:block;width:100%;min-height:220px;background:transparent;color:transparent;caret-color:#f0e7d5;-webkit-text-fill-color:transparent;font-variant-ligatures:none;white-space:pre;overflow:auto}
+textarea.code-c::placeholder{color:#5b6383;-webkit-text-fill-color:#5b6383}
+textarea.code-c::selection{background:rgba(38,79,120,.8);-webkit-text-fill-color:transparent}
+.md-table th code{background:rgba(0,0,0,.14);color:inherit;border:0}
