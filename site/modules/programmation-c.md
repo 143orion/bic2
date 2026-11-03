@@ -29,10 +29,12 @@ Prévu pour la suite : 5.1 déclarer/accéder · 5.2 taille physique vs logique 
 - Icône de carte : `{}`.
 - Choix fait le 03/11/2026 à partir de 3 directions (Mémoire vive, Plan de masse, Diagnostic) ; prototype « Proto – Programmation C ».
 
-## Extension et éditeur C (à venir)
-- Pas d'extension `.js` pour l'instant (`ext` absent de `liste.json`).
-- **Éditeur C dans le navigateur** voulu (réponse d'Adam). Test fait : l'interpréteur **JSCPP** (npm `JSCPP` 2.0.9) exécute `printf`/`scanf`, boucles, tableaux, chaînes (`string.h`), pointeurs vers variables et fonctions ; il **ne gère pas `malloc`** ni les `typedef struct` anonymes → couvre les chapitres 1 à 8 ; chapitres 9 et 10 à traiter autrement (vérification par saisies/trous, ou autre moteur). Il faudra un mode de vérification `c` (programme + jeux d'entrées/sorties) et un `<module>.html` ou une évolution du lecteur : à valider avec Adam avant.
-- En attendant, les exos « écrire un programme » du TD sont découpés en étapes (écrire l'instruction clé, prédire la sortie, calculer un cas) vérifiées en `regex` / `numerique` / `exact`.
+## Éditeur C (mode de vérification `c`, en ligne depuis le 03/11/2026)
+- Les exos « écris le programme » ont une **dernière étape « Écris le programme complet »** (`verif.mode:"c"`) : champ de code, zone « Entrée du programme » (préremplie avec le 1er test), bouton **Exécuter** qui affiche la sortie, puis la validation lance le programme sur **chaque jeu de tests** de la banque et compare ce qu'il affiche.
+- Item : `verif:{mode:"c", tests:[{entree, sortie, nom?}], exemple:"<solution>", nombres?:true, tol?}`. `nombres:true` compare seulement la suite des **nombres** affichés (le texte autour est libre, tolérance 0,01) ; sinon comparaison du texte (espaces et fin de ligne normalisés, casse respectée). L'énoncé de l'étape doit **préciser le format de sortie**. `exemple` = solution montrée en correction ; **chaque solution doit passer ses propres tests** (vérifié à chaque modification : script `valider` dans la conversation de création).
+- Moteur : interpréteur **JSCPP 2.0.9** dans un **Web Worker** (`site/vendor/c-worker.js`, généré par `tools/c-worker/`, voir son README), arrêté au bout de 5 s (boucle infinie). Notre propre lecture d'entrée : `scanf` (largeurs `%19s`, `%lf`, `" %c"`), `getchar`, `gets`, `fgets(…, stdin)` ; `stdbool.h` ; `main(void)` accepté. Dépassement de tampon signalé en français.
+- **Limites** : pas de `malloc` / `free` / `realloc`, pas de `typedef struct` anonyme (`typedef struct Nom {…} Nom;` à tester) → chapitres 9 et 10 sans exécution (étapes `regex` / `numerique` / `exact`). Messages d'erreur de syntaxe traduits (ligne + colonne).
+- Ne pas utiliser `mode:"c"` dans des items `qcm` / `saisie` courts : l'étape de code est un `exo` (durée 3 à 7 min).
 
 ## Règles de correction propres au module
 - Réponses de code en `regex` (toute la réponse, insensible à la casse, espaces libres via `\s*`) ; l'`exemple` affiché en correction est la forme canonique.

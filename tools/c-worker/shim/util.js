@@ -1,0 +1,1 @@
+module.exports = { inspect: v => { try{ return JSON.stringify(v); }catch(e){ return String(v); } }, format: (...a) => a.join(" "), inherits(c, s){ c.prototype = Object.create(s.prototype); c.prototype.constructor = c; } };

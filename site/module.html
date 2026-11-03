@@ -322,6 +322,7 @@ async function verifier(v, rep, ctx, champ){
     }
     case "sql": return verifSQL(v, rep, ctx);
     case "dom": return verifDOM(v, rep, champ);
+    case "c": return verifC(v, rep);
     default: return {auto:true};
   }
 }
@@ -376,6 +377,52 @@ async function verifSQL(v, rep, ctx){
   if(!v.ordre){ a = a.slice().sort(); b = b.slice().sort(); }
   const ok = a.length === b.length && a.every((x, i) => x === b[i]);
   return {ok, sortie, msg: ok ? "" : a.length !== b.length ? `${a.length} ligne(s) obtenue(s), ${b.length} attendue(s).` : v.ordre ? "Bonnes lignes ? Vérifie aussi l'ordre (ORDER BY)." : "Les lignes ne correspondent pas au résultat attendu."};
+}
+
+/* ---- C : interpréteur JSCPP dans un Web Worker (vendor/c-worker.js, source dans tools/c-worker/) ----
+   Le programme de l'élève est exécuté avec chaque jeu d'entrées de la banque ; on compare ce qu'il affiche. */
+function executerC(code, entree){
+  return new Promise(res => {
+    let w;
+    try{ w = new Worker("vendor/c-worker.js"); }catch(e){ res({ok:false, out:"", err:"Exécuteur C indisponible dans ce navigateur."}); return; }
+    let t = 0;
+    const fin = r => { clearTimeout(t); w.terminate(); res(r); };
+    t = setTimeout(() => fin({ok:false, out:"", err:"Temps dépassé : boucle infinie ?"}), 5000);
+    w.onmessage = e => fin(e.data);
+    w.onerror = () => fin({ok:false, out:"", err:"Exécuteur C injoignable (réseau ?)."});
+    w.postMessage({code:String(code ?? ""), stdin:String(entree ?? "")});
+  });
+}
+function messageC(err){
+  err = String(err || "");
+  if(/Time limit exceeded/i.test(err)) return "Temps dépassé : boucle infinie ?";
+  const m = err.match(/Parsing Failure:\s*\n?line (\d+) \(column (\d+)\)/);
+  if(m) return `Erreur de syntaxe ligne ${m[1]} (colonne ${m[2]}) : vérifie les ;, les accolades et les parenthèses.`;
+  return err;
+}
+const nombresC = s => (String(s ?? "").match(/[-+]?\d+(?:[.,]\d+)?/g) || []).map(x => +x.replace(",", "."));
+function memeSortieC(a, b, v){
+  if(v.nombres){
+    const x = nombresC(a), y = nombresC(b), tol = v.tol != null ? +v.tol : 0.01;
+    return x.length === y.length && x.every((q, i) => Math.abs(q - y[i]) <= tol + 1e-12);
+  }
+  const f = s => String(s ?? "").replace(/\r/g, "").replace(/[ \t]+\n/g, "\n").replace(/\s+$/, "").replace(/[ \t]+/g, " ");
+  return f(a) === f(b);
+}
+const blocC = (titre, txt) => `<small>${esc(titre)}</small><pre class="code"><code>${esc(String(txt ?? "") || " ")}</code></pre>`;
+async function verifC(v, rep){
+  const tests = v.tests || [];
+  if(!String(rep ?? "").trim()) return {ok:false, msg:"Écris ton programme avant de valider."};
+  if(!tests.length) return {auto:true};
+  for(let k = 0; k < tests.length; k++){
+    const t = tests[k], r = await executerC(rep, t.entree);
+    if(!r.ok) return {ok:false, msg:messageC(r.err), sortie: r.out ? `<div class="c-sortie">${blocC("Affiché avant l'erreur", r.out)}</div>` : ""};
+    if(!memeSortieC(r.out, t.sortie, v)){
+      return {ok:false, msg:`Test ${k + 1} / ${tests.length}${t.nom ? " (" + t.nom + ")" : ""} : la sortie ne correspond pas${v.nombres ? " (seuls les nombres affichés sont comparés)" : ""}.`,
+        sortie:`<div class="c-sortie">${t.entree ? blocC("Entrée tapée", t.entree) : ""}${blocC("Ton programme affiche", r.out)}${blocC("Attendu", t.sortie)}</div>`};
+    }
+  }
+  return {ok:true};
 }
 
 /* ---- DOM : rendu dans une iframe sans scripts, tests par sélecteurs ---- */
@@ -434,8 +481,8 @@ function teteItem(it, opts = {}, extra = ""){
 }
 /* champ de réponse adapté au mode de vérification */
 function creerChamp(cont, v, x){
-  const mode = (v && v.mode) || "auto", multi = mode === "sql" || mode === "dom" || mode === "auto" || x.multiligne;
-  const ph = mode === "sql" ? "SELECT …" : mode === "dom" ? "<h1>…</h1>" : mode === "numerique" ? "valeur" : "ta réponse";
+  const mode = (v && v.mode) || "auto", multi = mode === "sql" || mode === "dom" || mode === "c" || mode === "auto" || x.multiligne;
+  const ph = mode === "sql" ? "SELECT …" : mode === "c" ? "#include <stdio.h>\n\nint main(void) {\n    …\n    return 0;\n}" : mode === "dom" ? "<h1>…</h1>" : mode === "numerique" ? "valeur" : "ta réponse";
   /* réponse chiffrée avec unité : bouton qui fait défiler les préfixes (A → mA → µA → kA…) */
   const unite = mode === "numerique" && !multi && v.unite ? String(v.unite) : "";
   const PREF = unite === "Ω" ? ["", "k", "M", "m"] : ["", "m", "µ", "k", "M"];
@@ -446,8 +493,9 @@ function creerChamp(cont, v, x){
       : unite ? `<span class="entree-unite">${champHtml}<button type="button" class="btn-unite" title="Changer l'unité" aria-label="Unité de la réponse : ${esc(unite)}. Cliquer pour changer"></button></span>` : champHtml)
     + (mode === "auto" ? `<small class="aide">Brouillon libre : tu compareras avec la correction et tu t'auto-évalues.</small>` : "")
     + (mode === "sql" ? `<div class="actions mini"><button type="button" class="btn" data-a="executer">Exécuter</button><small class="aide">Ctrl + Entrée pour valider</small></div><div class="sql-zone"></div>` : "")
+    + (mode === "c" ? `<div class="c-run"><label class="aide">Entrée du programme (ce que tu tapes au clavier)</label><textarea class="c-stdin" rows="2" spellcheck="false" autocapitalize="off" aria-label="Entrée du programme">${esc((v.tests && v.tests[0] && v.tests[0].entree) || "")}</textarea><div class="actions mini"><button type="button" class="btn" data-a="executer">Exécuter</button><small class="aide">Ctrl + Entrée pour valider</small></div><div class="c-zone" aria-live="polite"></div></div>` : "")
     + (mode === "dom" ? `<small class="aide">Aperçu en direct (scripts désactivés)</small><iframe class="dom-apercu" sandbox="allow-same-origin" title="Aperçu de ton code"></iframe>` : "")
-    + (multi && mode !== "sql" ? `<small class="aide">Ctrl + Entrée pour valider</small>` : "");
+    + (multi && mode !== "sql" && mode !== "c" ? `<small class="aide">Ctrl + Entrée pour valider</small>` : "");
   const champ = cont.querySelector(".entree");
   const bU = cont.querySelector(".btn-unite");
   const majU = () => { bU.textContent = PREF[ip] + unite; bU.setAttribute("aria-label", "Unité de la réponse : " + PREF[ip] + unite + ". Cliquer pour changer"); };
@@ -473,8 +521,17 @@ function creerChamp(cont, v, x){
       catch(e){ zone.innerHTML = `<p class="erreur-txt">Erreur SQL : ${esc(e.message || e)}</p>`; }
     };
   }
+  if(mode === "c"){
+    const zone = cont.querySelector(".c-zone"), stdin = cont.querySelector(".c-stdin");
+    cont.querySelector("[data-a=executer]").onclick = async () => {
+      zone.innerHTML = `<p class="vide-txt">exécution…</p>`;
+      const r = await executerC(champ.value, stdin.value);
+      zone.innerHTML = r.ok ? `<div class="c-sortie">${blocC("Ton programme affiche", r.out)}</div>`
+        : `<p class="erreur-txt">${esc(messageC(r.err))}</p>${r.out ? `<div class="c-sortie">${blocC("Affiché avant l'erreur", r.out)}</div>` : ""}`;
+    };
+  }
   if(champ.tagName === "TEXTAREA") champ.addEventListener("keydown", e => {
-    if(e.key === "Tab" && !e.shiftKey && (mode === "sql" || mode === "dom")){ e.preventDefault(); const s = champ.selectionStart; champ.setRangeText("  ", s, champ.selectionEnd, "end"); }
+    if(e.key === "Tab" && !e.shiftKey && (mode === "sql" || mode === "dom" || mode === "c")){ e.preventDefault(); const s = champ.selectionStart; champ.setRangeText("  ", s, champ.selectionEnd, "end"); }
   });
   return o;
 }
@@ -502,6 +559,7 @@ function corrigeDe(x, v){
     case "numerique": return `<code>${esc(fmt(+v.attendu))}${v.unite ? " " + esc(v.unite) : ""}</code>` + (v.tol ? ` <small>(± ${esc(fmt(+v.tol))})</small>` : "");
     case "regex": return v.exemple ? `<code>${esc(v.exemple)}</code>` : "";
     case "sql": return `<pre class="code"><code>${esc(v.attendu || "")}</code></pre>`;
+    case "c": return v.exemple ? `<pre class="code"><code>${esc(v.exemple)}</code></pre>` : "";
     default: return "";
   }
 }

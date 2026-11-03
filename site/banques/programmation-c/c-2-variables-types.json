@@ -708,7 +708,7 @@
    "titre": "Opérations sur deux entiers",
    "enonce": "On lit deux entiers a et b ; on veut afficher leur somme, différence, produit et quotient (TD Premiers pas, exercice 3). On prend a = 17 et b = 5.",
    "guidage": "**Outils** : `+ - * / %`.\n\n**Piège** : `a / b` entre deux `int` est une division entière.",
-   "duree": 2.3,
+   "duree": 7.300000000000001,
    "etapes": [
     {
      "consigne": "Additionne a et b.",
@@ -776,6 +776,35 @@
       "17 - 15 = 2."
      ],
      "duree": 0.5
+    },
+    {
+     "consigne": "Écris le programme qui lit a et b puis affiche sur une seule ligne, séparés par des espaces : somme, différence, produit, quotient entier et reste.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "17 5",
+        "sortie": "22 12 85 3 2"
+       },
+       {
+        "entree": "9 4",
+        "sortie": "13 5 36 2 1"
+       },
+       {
+        "entree": "20 3",
+        "sortie": "23 17 60 6 2"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int a, b;\n    scanf(\"%d %d\", &a, &b);\n    printf(\"%d %d %d %d %d\\n\", a + b, a - b, a * b, a / b, a % b);\n    return 0;\n}",
+      "nombres": true
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int a, b;\n    scanf(\"%d %d\", &a, &b);\n    printf(\"%d %d %d %d %d\\n\", a + b, a - b, a * b, a / b, a % b);\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 5
     }
    ]
   },
@@ -787,7 +816,7 @@
    "titre": "Conversion °C → °F",
    "enonce": "On convertit une température en degrés Celsius vers Fahrenheit : F = C × 9/5 + 32 (TD Premiers pas, exercice 5). On prend C = 100, avec `int c = 100;`.",
    "guidage": "**Piège** : `9/5` entre entiers vaut 1, pas 1,8. L'ordre des opérations et le type des opérandes changent le résultat.",
-   "duree": 2.1,
+   "duree": 7.1,
    "etapes": [
     {
      "consigne": "Évalue d'abord `c * (9 / 5) + 32` avec des entiers.",
@@ -832,6 +861,35 @@
       "Un réel : `float` ou `double`."
      ],
      "duree": 0.5
+    },
+    {
+     "consigne": "Écris le programme qui lit une température entière en °C et affiche la valeur en °F avec 2 décimales.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "100",
+        "sortie": "212.00"
+       },
+       {
+        "entree": "37",
+        "sortie": "98.60"
+       },
+       {
+        "entree": "-40",
+        "sortie": "-40.00"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int c;\n    scanf(\"%d\", &c);\n    double f = c * 9.0 / 5 + 32;\n    printf(\"%.2f\\n\", f);\n    return 0;\n}",
+      "nombres": true
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int c;\n    scanf(\"%d\", &c);\n    double f = c * 9.0 / 5 + 32;\n    printf(\"%.2f\\n\", f);\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 5
     }
    ]
   },
@@ -843,7 +901,7 @@
    "titre": "Conversion km → miles",
    "enonce": "Convertir une distance en kilomètres en miles : miles = km / 1,609344 (TD Premiers pas, exercice 6). On prend km = 10.",
    "guidage": "**Outils** : division réelle, formatage. Le résultat n'est pas un entier : il faut des `double`.",
-   "duree": 1.2999999999999998,
+   "duree": 6.3,
    "etapes": [
     {
      "consigne": "Avec `double km = 10;`, calcule `km / 1.609344`.",
@@ -874,6 +932,35 @@
       "Format d'un réel : `f`."
      ],
      "duree": 0.6
+    },
+    {
+     "consigne": "Écris le programme qui lit une distance en km (réel) et affiche la distance en miles avec 2 décimales (1 mile = 1,609344 km).",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "10",
+        "sortie": "6.21"
+       },
+       {
+        "entree": "42.195",
+        "sortie": "26.22"
+       },
+       {
+        "entree": "0",
+        "sortie": "0.00"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    double km;\n    scanf(\"%lf\", &km);\n    printf(\"%.2f\\n\", km / 1.609344);\n    return 0;\n}",
+      "nombres": true
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    double km;\n    scanf(\"%lf\", &km);\n    printf(\"%.2f\\n\", km / 1.609344);\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 5
     }
    ]
   }

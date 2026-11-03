@@ -1,0 +1,10 @@
+{
+  "name": "bic2-c-worker",
+  "private": true,
+  "description": "Exécuteur C du module Programmation C (JSCPP dans un Web Worker). Sortie : site/vendor/c-worker.js",
+  "scripts": {
+    "build": "esbuild worker.js --bundle --minify --format=iife --platform=browser --target=es2018 --alias:stream=./shim/stream.js --alias:util=./shim/util.js --banner:js=\"/* BIC2 c-worker : JSCPP 2.0.9 (MIT, https://github.com/felixhao28/JSCPP) + pegjs-util, lodash, printf (MIT). Généré par tools/c-worker : ne pas éditer à la main. */\" --outfile=../../site/vendor/c-worker.js"
+  },
+  "dependencies": { "JSCPP": "2.0.9" },
+  "devDependencies": { "esbuild": "0.25.0" }
+}

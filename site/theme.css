@@ -531,6 +531,12 @@ body.hub:not(.dedans) .modules{display:none}
 .sql-sortie th{text-align:left;font-weight:700;color:var(--blanc);padding:5px 10px;border-bottom:1px solid var(--m-ac)}
 .sql-sortie td{padding:4px 10px;border-bottom:1px dashed #333;white-space:nowrap}
 .sql-sortie small{display:block;margin-top:4px;font-size:11px;color:var(--gris-2)}
+/* éditeur C : entrée du programme, sortie et comparaison */
+.c-run{display:grid;gap:8px;margin-top:8px}
+.c-stdin{width:100%;min-height:52px;resize:vertical;font-family:var(--police);font-size:13px;line-height:1.5;padding:8px 10px;border-radius:8px;border:1px solid var(--verre-bord);background:rgba(0,0,0,.35);color:inherit}
+.c-sortie{display:grid;gap:4px;margin:8px 0}
+.c-sortie small{font-size:11px;color:var(--gris-2)}
+.c-sortie pre.code{margin:0 0 4px;white-space:pre-wrap}
 .dom-apercu{display:block;width:100%;height:220px;margin-top:4px;border:1px solid var(--verre-bord);border-radius:8px;background:#fff}
 /* exos par étapes */
 .etapes{list-style:none;margin:18px 0 0;padding:0;display:flex;flex-direction:column;gap:12px;counter-reset:none}

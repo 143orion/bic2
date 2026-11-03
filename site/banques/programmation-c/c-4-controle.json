@@ -758,7 +758,7 @@
    "titre": "Majeur ou mineur",
    "enonce": "Lire l'âge et afficher s'il est majeur (≥ 18) ou mineur (TD Premiers pas, exercice 4).",
    "guidage": "**Plan** : lire l'âge → tester `age >= 18` → deux branches.\n\n**Piège** : 18 est majeur (≥), pas > .",
-   "duree": 1.6,
+   "duree": 5.6,
    "etapes": [
     {
      "consigne": "Quelle condition teste « majeur » ?",
@@ -804,6 +804,34 @@
       "17 >= 18 est faux."
      ],
      "duree": 0.5
+    },
+    {
+     "consigne": "Écris le programme qui lit l'âge et affiche « majeur » ou « mineur » (en minuscules).",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "18",
+        "sortie": "majeur"
+       },
+       {
+        "entree": "17",
+        "sortie": "mineur"
+       },
+       {
+        "entree": "40",
+        "sortie": "majeur"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int age;\n    scanf(\"%d\", &age);\n    if (age >= 18) {\n        printf(\"majeur\\n\");\n    } else {\n        printf(\"mineur\\n\");\n    }\n    return 0;\n}"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int age;\n    scanf(\"%d\", &age);\n    if (age >= 18) {\n        printf(\"majeur\\n\");\n    } else {\n        printf(\"mineur\\n\");\n    }\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 4
     }
    ]
   },
@@ -815,7 +843,7 @@
    "titre": "Positif, négatif ou nul",
    "enonce": "Lire un entier et dire s'il est positif, négatif ou nul (TD Premiers pas, exercice 7).",
    "guidage": "**Plan** : trois cas, donc `if / else if / else`.\n\n**Piège** : l'ordre des tests. Zéro n'est ni positif ni négatif.",
-   "duree": 1.4,
+   "duree": 5.4,
    "etapes": [
     {
      "consigne": "Combien de branches te faut-il ?",
@@ -858,6 +886,34 @@
       "Teste 0 > 0, puis 0 < 0."
      ],
      "duree": 0.5
+    },
+    {
+     "consigne": "Écris le programme qui lit un entier et affiche « positif », « negatif » ou « nul » (sans accent).",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "5",
+        "sortie": "positif"
+       },
+       {
+        "entree": "-3",
+        "sortie": "negatif"
+       },
+       {
+        "entree": "0",
+        "sortie": "nul"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    if (n > 0) {\n        printf(\"positif\\n\");\n    } else if (n < 0) {\n        printf(\"negatif\\n\");\n    } else {\n        printf(\"nul\\n\");\n    }\n    return 0;\n}"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    if (n > 0) {\n        printf(\"positif\\n\");\n    } else if (n < 0) {\n        printf(\"negatif\\n\");\n    } else {\n        printf(\"nul\\n\");\n    }\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 4
     }
    ]
   },
@@ -869,7 +925,7 @@
    "titre": "Maximum et minimum de trois entiers",
    "enonce": "Lire trois entiers a, b, c et afficher le maximum et le minimum (TD Premiers pas, exercice 8). On prend a = 7, b = 12, c = 4.",
    "guidage": "**Plan** : garder dans une variable `max` la plus grande valeur vue, la comparer aux autres.\n\n**Astuce** : même raisonnement pour `min`.",
-   "duree": 1.5,
+   "duree": 7.5,
    "etapes": [
     {
      "consigne": "Initialise `max = a`, puis `if (b > max) max = b;`.",
@@ -910,6 +966,35 @@
       "c = 4 est la plus petite valeur."
      ],
      "duree": 0.6
+    },
+    {
+     "consigne": "Écris le programme qui lit trois entiers et affiche, sur une ligne, le maximum puis le minimum.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "7 12 4",
+        "sortie": "12 4"
+       },
+       {
+        "entree": "5 5 5",
+        "sortie": "5 5"
+       },
+       {
+        "entree": "-1 -8 -3",
+        "sortie": "-1 -8"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int a, b, c;\n    scanf(\"%d %d %d\", &a, &b, &c);\n    int max = a, min = a;\n    if (b > max) max = b;\n    if (c > max) max = c;\n    if (b < min) min = b;\n    if (c < min) min = c;\n    printf(\"%d %d\\n\", max, min);\n    return 0;\n}",
+      "nombres": true
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int a, b, c;\n    scanf(\"%d %d %d\", &a, &b, &c);\n    int max = a, min = a;\n    if (b > max) max = b;\n    if (c > max) max = c;\n    if (b < min) min = b;\n    if (c < min) min = c;\n    printf(\"%d %d\\n\", max, min);\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 6
     }
    ]
   },
@@ -974,7 +1059,7 @@
    "titre": "Année bissextile",
    "enonce": "Lire une année et dire si elle est bissextile : multiple de 4 mais pas de 100, ou multiple de 400 (TD Premiers pas, exercice 13).",
    "guidage": "**Plan** : une seule condition combinée avec `&&` et `||`.\n\n**Piège** : 1900 est multiple de 100 sans l'être de 400 ; 2000 l'est.",
-   "duree": 2.5,
+   "duree": 7.5,
    "etapes": [
     {
      "consigne": "Écris la condition complète (variable `an`).",
@@ -1016,6 +1101,39 @@
       "2000 % 400 = 0."
      ],
      "duree": 0.5
+    },
+    {
+     "consigne": "Écris le programme qui lit une année et affiche 1 si elle est bissextile, 0 sinon.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "2000",
+        "sortie": "1"
+       },
+       {
+        "entree": "1900",
+        "sortie": "0"
+       },
+       {
+        "entree": "2024",
+        "sortie": "1"
+       },
+       {
+        "entree": "2023",
+        "sortie": "0"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int an;\n    scanf(\"%d\", &an);\n    if ((an % 4 == 0 && an % 100 != 0) || an % 400 == 0) {\n        printf(\"1\\n\");\n    } else {\n        printf(\"0\\n\");\n    }\n    return 0;\n}",
+      "nombres": true
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int an;\n    scanf(\"%d\", &an);\n    if ((an % 4 == 0 && an % 100 != 0) || an % 400 == 0) {\n        printf(\"1\\n\");\n    } else {\n        printf(\"0\\n\");\n    }\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 5
     }
    ]
   },
@@ -1027,7 +1145,7 @@
    "titre": "Calculatrice avec switch",
    "enonce": "Simuler une calculatrice (+, -, *, /) sur deux entiers (TD Premiers pas, exercice 12). On saisit a = 12, b = 4 et l'opérateur.",
    "guidage": "**Plan** : lire `a`, l'opérateur (`char`) puis `b` ; un `switch` sur l'opérateur.\n\n**Piège** : la division par 0 doit être refusée.",
-   "duree": 2.4,
+   "duree": 9.4,
    "etapes": [
     {
      "consigne": "Quelle instruction lit l'opérateur (variable `op`) en ignorant le retour à la ligne précédent ?",
@@ -1085,6 +1203,42 @@
       "On ne divise jamais par zéro."
      ],
      "duree": 0.6
+    },
+    {
+     "consigne": "Écris le programme qui lit « a op b » (par exemple 12 + 4) et affiche le résultat entier ; pour une division par 0, affiche « erreur ».",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "12 + 4",
+        "sortie": "16"
+       },
+       {
+        "entree": "12 / 4",
+        "sortie": "3"
+       },
+       {
+        "entree": "12 * 4",
+        "sortie": "48"
+       },
+       {
+        "entree": "7 - 9",
+        "sortie": "-2"
+       },
+       {
+        "entree": "5 / 0",
+        "sortie": "erreur"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int a, b;\n    char op;\n    scanf(\"%d %c %d\", &a, &op, &b);\n    switch (op) {\n        case '+': printf(\"%d\\n\", a + b); break;\n        case '-': printf(\"%d\\n\", a - b); break;\n        case '*': printf(\"%d\\n\", a * b); break;\n        case '/':\n            if (b == 0) printf(\"erreur\\n\");\n            else printf(\"%d\\n\", a / b);\n            break;\n        default: printf(\"erreur\\n\");\n    }\n    return 0;\n}"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int a, b;\n    char op;\n    scanf(\"%d %c %d\", &a, &op, &b);\n    switch (op) {\n        case '+': printf(\"%d\\n\", a + b); break;\n        case '-': printf(\"%d\\n\", a - b); break;\n        case '*': printf(\"%d\\n\", a * b); break;\n        case '/':\n            if (b == 0) printf(\"erreur\\n\");\n            else printf(\"%d\\n\", a / b);\n            break;\n        default: printf(\"erreur\\n\");\n    }\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 7
     }
    ]
   },
@@ -1096,7 +1250,7 @@
    "titre": "Somme de 1 à N",
    "enonce": "Lire N et afficher 1 + 2 + … + N (TD Premiers pas, exercice 2). On prend N = 5.",
    "guidage": "**Plan** : un accumulateur initialisé à 0, une boucle `for` qui ajoute `i`.\n\n**Vérification** : la formule $\\dfrac{N(N+1)}{2}$.",
-   "duree": 1.9,
+   "duree": 6.9,
    "etapes": [
     {
      "consigne": "Quelle valeur initiale pour l'accumulateur `somme` ?",
@@ -1150,6 +1304,39 @@
       "N × (N+1) / 2."
      ],
      "duree": 0.4
+    },
+    {
+     "consigne": "Écris le programme qui lit N et affiche 1 + 2 + … + N.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "5",
+        "sortie": "15"
+       },
+       {
+        "entree": "1",
+        "sortie": "1"
+       },
+       {
+        "entree": "10",
+        "sortie": "55"
+       },
+       {
+        "entree": "0",
+        "sortie": "0"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int n, somme = 0;\n    scanf(\"%d\", &n);\n    for (int i = 1; i <= n; i++) {\n        somme += i;\n    }\n    printf(\"%d\\n\", somme);\n    return 0;\n}",
+      "nombres": true
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int n, somme = 0;\n    scanf(\"%d\", &n);\n    for (int i = 1; i <= n; i++) {\n        somme += i;\n    }\n    printf(\"%d\\n\", somme);\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 5
     }
    ]
   },
@@ -1161,7 +1348,7 @@
    "titre": "Factorielle",
    "enonce": "Calculer N! = 1 × 2 × … × N (TD Premiers pas, exercice 4). On prend N = 5.",
    "guidage": "**Plan** : accumulateur multiplicatif initialisé à 1 (et non 0).\n\n**Piège** : un accumulateur à 0 donnerait toujours 0.",
-   "duree": 1.6,
+   "duree": 6.6,
    "etapes": [
     {
      "consigne": "Quelle valeur initiale pour `fact` ?",
@@ -1202,6 +1389,35 @@
       "2 × 3 = 6, × 4 = 24, × 5 = 120."
      ],
      "duree": 0.5
+    },
+    {
+     "consigne": "Écris le programme qui lit N et affiche N! (0! = 1).",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "5",
+        "sortie": "120"
+       },
+       {
+        "entree": "0",
+        "sortie": "1"
+       },
+       {
+        "entree": "7",
+        "sortie": "5040"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int n, fact = 1;\n    scanf(\"%d\", &n);\n    for (int i = 2; i <= n; i++) {\n        fact *= i;\n    }\n    printf(\"%d\\n\", fact);\n    return 0;\n}",
+      "nombres": true
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int n, fact = 1;\n    scanf(\"%d\", &n);\n    for (int i = 2; i <= n; i++) {\n        fact *= i;\n    }\n    printf(\"%d\\n\", fact);\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 5
     }
    ]
   },
@@ -1213,7 +1429,7 @@
    "titre": "Puissance par multiplications successives",
    "enonce": "Calculer X puissance n avec des multiplications successives (Tableaux_chainex, exercice 3). On prend X = 2 et n = 10.",
    "guidage": "**Plan** : `res` initialisé à 1, puis n multiplications par X.\n\n**Piège** : n tours exactement.",
-   "duree": 1.5,
+   "duree": 6.5,
    "etapes": [
     {
      "consigne": "Combien de tours de boucle faut-il ?",
@@ -1254,6 +1470,35 @@
       "Double dix fois à partir de 1."
      ],
      "duree": 0.4
+    },
+    {
+     "consigne": "Écris le programme qui lit X et n puis affiche X puissance n, avec des multiplications successives.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "2 10",
+        "sortie": "1024"
+       },
+       {
+        "entree": "3 0",
+        "sortie": "1"
+       },
+       {
+        "entree": "5 3",
+        "sortie": "125"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int x, n, res = 1;\n    scanf(\"%d %d\", &x, &n);\n    for (int i = 1; i <= n; i++) {\n        res *= x;\n    }\n    printf(\"%d\\n\", res);\n    return 0;\n}",
+      "nombres": true
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int x, n, res = 1;\n    scanf(\"%d %d\", &x, &n);\n    for (int i = 1; i <= n; i++) {\n        res *= x;\n    }\n    printf(\"%d\\n\", res);\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 5
     }
    ]
   },
@@ -1265,7 +1510,7 @@
    "titre": "Triangle numérique",
    "enonce": "Pour N = 4, afficher un triangle aligné à gauche (TD Premiers pas, exercice 18) : ligne 1 : « 1 », ligne 2 : « 1 2 », … jusqu'à « 1 2 3 4 ».",
    "guidage": "**Plan** : deux boucles imbriquées. La boucle extérieure choisit la ligne `l`, l'intérieure affiche les nombres de 1 à `l`.\n\n**Piège** : ne pas oublier le retour à la ligne après chaque ligne.",
-   "duree": 1.9,
+   "duree": 7.9,
    "etapes": [
     {
      "consigne": "Quel en-tête pour la boucle extérieure (variable `l`, de 1 à N) ?",
@@ -1307,6 +1552,31 @@
       "Additionne le nombre de nombres de chaque ligne."
      ],
      "duree": 0.5
+    },
+    {
+     "consigne": "Écris le programme qui lit N et affiche le triangle numérique : la ligne l contient les nombres de 1 à l, séparés par des espaces.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "4",
+        "sortie": "1\n1 2\n1 2 3\n1 2 3 4"
+       },
+       {
+        "entree": "3",
+        "sortie": "1\n1 2\n1 2 3"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    for (int l = 1; l <= n; l++) {\n        for (int c = 1; c <= l; c++) {\n            printf(\"%d \", c);\n        }\n        printf(\"\\n\");\n    }\n    return 0;\n}",
+      "nombres": true
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    for (int l = 1; l <= n; l++) {\n        for (int c = 1; c <= l; c++) {\n            printf(\"%d \", c);\n        }\n        printf(\"\\n\");\n    }\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 6
     }
    ]
   },
@@ -1384,7 +1654,7 @@
    "titre": "Somme des chiffres et miroir d'un entier",
    "enonce": "Lire un entier et calculer la somme de ses chiffres, puis son miroir (TD Premiers pas, exercices 9 et 10). On prend n = 1234.",
    "guidage": "**Outils** : `n % 10` donne le dernier chiffre ; `n / 10` retire ce chiffre.\n\n**Plan** : `while (n > 0)`.",
-   "duree": 2.0,
+   "duree": 7.0,
    "etapes": [
     {
      "consigne": "Que vaut `1234 % 10` ?",
@@ -1437,6 +1707,35 @@
       "On part de 0 : 0×10+4, puis ×10+3…"
      ],
      "duree": 0.8
+    },
+    {
+     "consigne": "Écris le programme qui lit un entier positif et affiche la somme de ses chiffres.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "1234",
+        "sortie": "10"
+       },
+       {
+        "entree": "9",
+        "sortie": "9"
+       },
+       {
+        "entree": "505",
+        "sortie": "10"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int n, somme = 0;\n    scanf(\"%d\", &n);\n    while (n > 0) {\n        somme += n % 10;\n        n /= 10;\n    }\n    printf(\"%d\\n\", somme);\n    return 0;\n}",
+      "nombres": true
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int n, somme = 0;\n    scanf(\"%d\", &n);\n    while (n > 0) {\n        somme += n % 10;\n        n /= 10;\n    }\n    printf(\"%d\\n\", somme);\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 5
     }
    ]
   },
@@ -1502,7 +1801,7 @@
    "titre": "Nombre premier",
    "enonce": "Lire n et dire s'il est premier (test jusqu'à √n) (TD Premiers pas, exercice 13). On teste n = 29.",
    "guidage": "**Plan** : essayer les diviseurs d de 2 jusqu'à √n ; au premier diviseur, `break`.\n\n**Astuce** : au lieu de la racine, `d * d <= n`.",
-   "duree": 1.7,
+   "duree": 8.7,
    "etapes": [
     {
      "consigne": "Quelle condition de boucle remplace « d ≤ √n » sans racine ?",
@@ -1545,6 +1844,38 @@
       "Sortir de la boucle immédiatement."
      ],
      "duree": 0.4
+    },
+    {
+     "consigne": "Écris le programme qui lit n et affiche « premier » ou « non premier » (1 n'est pas premier).",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "29",
+        "sortie": "premier"
+       },
+       {
+        "entree": "1",
+        "sortie": "non premier"
+       },
+       {
+        "entree": "49",
+        "sortie": "non premier"
+       },
+       {
+        "entree": "2",
+        "sortie": "premier"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int n, premier = 1;\n    scanf(\"%d\", &n);\n    if (n < 2) premier = 0;\n    for (int d = 2; d * d <= n; d++) {\n        if (n % d == 0) {\n            premier = 0;\n            break;\n        }\n    }\n    if (premier) printf(\"premier\\n\");\n    else printf(\"non premier\\n\");\n    return 0;\n}"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int n, premier = 1;\n    scanf(\"%d\", &n);\n    if (n < 2) premier = 0;\n    for (int d = 2; d * d <= n; d++) {\n        if (n % d == 0) {\n            premier = 0;\n            break;\n        }\n    }\n    if (premier) printf(\"premier\\n\");\n    else printf(\"non premier\\n\");\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 7
     }
    ]
   },
@@ -1556,7 +1887,7 @@
    "titre": "PGCD et Fibonacci",
    "enonce": "PGCD par l'algorithme d'Euclide (exercice 15) puis les n premiers termes de Fibonacci (exercice 16). On prend PGCD(48, 18) et n = 8.",
    "guidage": "**Euclide** : tant que `b != 0`, on remplace (a, b) par (b, a % b).\n**Fibonacci** : chaque terme est la somme des deux précédents.",
-   "duree": 1.5,
+   "duree": 7.5,
    "etapes": [
     {
      "consigne": "Premier tour d'Euclide pour (48, 18) : que vaut `48 % 18` ?",
@@ -1596,6 +1927,35 @@
       "Continue la suite jusqu'au 8e terme."
      ],
      "duree": 0.6
+    },
+    {
+     "consigne": "Écris le programme qui lit a et b (entiers positifs) et affiche leur PGCD (algorithme d'Euclide).",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "48 18",
+        "sortie": "6"
+       },
+       {
+        "entree": "17 5",
+        "sortie": "1"
+       },
+       {
+        "entree": "100 75",
+        "sortie": "25"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int a, b;\n    scanf(\"%d %d\", &a, &b);\n    while (b != 0) {\n        int r = a % b;\n        a = b;\n        b = r;\n    }\n    printf(\"%d\\n\", a);\n    return 0;\n}",
+      "nombres": true
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int a, b;\n    scanf(\"%d %d\", &a, &b);\n    while (b != 0) {\n        int r = a % b;\n        a = b;\n        b = r;\n    }\n    printf(\"%d\\n\", a);\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 6
     }
    ]
   },
@@ -1607,7 +1967,7 @@
    "titre": "Division euclidienne par soustractions",
    "enonce": "Calculer quotient et reste de a par b avec des soustractions successives, sans `/` ni `%` (Tableaux_chainex, exercice 2). On prend a = 17, b = 5.",
    "guidage": "**Plan** : tant que `a >= b`, on soustrait `b` et on compte un tour.\n\n**Piège** : la condition `a >= b` (et non `a > b`).",
-   "duree": 1.6,
+   "duree": 7.6,
    "etapes": [
     {
      "consigne": "Quelle condition maintient la boucle ?",
@@ -1648,6 +2008,35 @@
       "Après 3 soustractions."
      ],
      "duree": 0.4
+    },
+    {
+     "consigne": "Écris le programme qui lit a et b puis affiche le quotient et le reste de a par b, calculés avec des soustractions (sans / ni %).",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "17 5",
+        "sortie": "3 2"
+       },
+       {
+        "entree": "20 4",
+        "sortie": "5 0"
+       },
+       {
+        "entree": "3 5",
+        "sortie": "0 3"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int a, b, q = 0;\n    scanf(\"%d %d\", &a, &b);\n    while (a >= b) {\n        a -= b;\n        q++;\n    }\n    printf(\"%d %d\\n\", q, a);\n    return 0;\n}",
+      "nombres": true
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int a, b, q = 0;\n    scanf(\"%d %d\", &a, &b);\n    while (a >= b) {\n        a -= b;\n        q++;\n    }\n    printf(\"%d %d\\n\", q, a);\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 6
     }
    ]
   },

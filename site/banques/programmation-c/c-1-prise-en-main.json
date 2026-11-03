@@ -396,7 +396,7 @@
    "titre": "Hello World",
    "enonce": "Écrire un programme qui affiche « Hello World » (TD Premiers pas, exercice 1).",
    "guidage": "**Plan** : bibliothèque d'affichage → fonction `main` → affichage → fin du programme.\n\n**Piège** : chaque instruction se termine par `;`.",
-   "duree": 1.6,
+   "duree": 4.6,
    "etapes": [
     {
      "consigne": "Pour utiliser `printf`, il faut inclure la bibliothèque d'entrées/sorties standard.",
@@ -442,6 +442,26 @@
       "`return` suivi de la valeur, puis `;`."
      ],
      "duree": 0.4
+    },
+    {
+     "consigne": "Assemble les trois étapes : écris le programme complet qui affiche Hello World.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "",
+        "sortie": "Hello World"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    printf(\"Hello World\\n\");\n    return 0;\n}"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    printf(\"Hello World\\n\");\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 3
     }
    ]
   }

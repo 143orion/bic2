@@ -421,7 +421,7 @@
    "titre": "Bonjour X",
    "enonce": "Lire un prénom et afficher « Bonjour X » (TD Premiers pas, exercice 2).",
    "guidage": "**Plan** : un tableau de `char` pour ranger le prénom → `scanf` → `printf` avec `%s`.\n\n**Piège** : pas de `&` devant un tableau, et on limite la taille lue.",
-   "duree": 1.9,
+   "duree": 6.9,
    "etapes": [
     {
      "consigne": "Déclare un tableau de 20 caractères nommé `prenom`.",
@@ -467,6 +467,30 @@
       "N'oublie pas `\\n` et le `;`."
      ],
      "duree": 0.7
+    },
+    {
+     "consigne": "Écris le programme complet : il lit un prénom (un seul mot) et affiche « Bonjour » suivi du prénom.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "Lea",
+        "sortie": "Bonjour Lea"
+       },
+       {
+        "entree": "Adam",
+        "sortie": "Bonjour Adam"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    char prenom[20];\n    scanf(\"%19s\", prenom);\n    printf(\"Bonjour %s\\n\", prenom);\n    return 0;\n}"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    char prenom[20];\n    scanf(\"%19s\", prenom);\n    printf(\"Bonjour %s\\n\", prenom);\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 5
     }
    ]
   },
@@ -478,7 +502,7 @@
    "titre": "Quatre opérations sur deux entiers",
    "enonce": "Lire deux entiers puis afficher somme, différence, produit et quotient (TD Premiers pas, exercice 3). On saisit a = 17 et b = 5.",
    "guidage": "**Plan** : une lecture avec deux `%d`, puis un affichage par opération.\n\n**Piège** : `a / b` avec des `int` est entier ; pour afficher 3,40 il faut convertir un opérande.",
-   "duree": 2.0,
+   "duree": 8.0,
    "etapes": [
     {
      "consigne": "Lis les deux entiers en une seule instruction.",
@@ -521,6 +545,35 @@
       "17 / 5 = 3,4."
      ],
      "duree": 0.7
+    },
+    {
+     "consigne": "Écris le programme qui lit a et b puis affiche sur une ligne : somme, différence, produit, puis le quotient réel avec 2 décimales.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "17 5",
+        "sortie": "22 12 85 3.40"
+       },
+       {
+        "entree": "9 4",
+        "sortie": "13 5 36 2.25"
+       },
+       {
+        "entree": "7 2",
+        "sortie": "9 5 14 3.50"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int a, b;\n    scanf(\"%d %d\", &a, &b);\n    printf(\"%d %d %d %.2f\\n\", a + b, a - b, a * b, (double)a / b);\n    return 0;\n}",
+      "nombres": true
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int a, b;\n    scanf(\"%d %d\", &a, &b);\n    printf(\"%d %d %d %.2f\\n\", a + b, a - b, a * b, (double)a / b);\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
+      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+     ],
+     "duree": 6
     }
    ]
   }
