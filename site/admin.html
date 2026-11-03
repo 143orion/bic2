@@ -88,7 +88,7 @@
       <form class="fenetre" data-titre="annonce.txt — popup Messenger du hub" id="f-annonce">
         <label class="champ">Message<textarea id="a-texte" maxlength="400" placeholder="DS de SQL jeudi 14h — révisez les jointures !"></textarea></label>
         <div class="actions">
-          <label class="champ">Image (facultative, réduite automatiquement ; tu peux aussi la coller avec Ctrl+V)<input type="file" id="a-image" accept="image/*"></label>
+          <label class="champ">Image ou GIF animé (facultatif ; images réduites automatiquement, GIF gardé tel quel, 700 Ko max ; tu peux aussi la coller avec Ctrl+V)<input type="file" id="a-image" accept="image/*"></label>
           <img id="a-apercu" alt="" style="max-height:90px;border-radius:6px" hidden>
           <button class="lien" type="button" id="a-sans-image" hidden>retirer l'image</button>
         </div>
@@ -393,6 +393,11 @@ function rendreAnnonce(){
 }
 function prendreImage(f){
   if(!f || !/^image\//.test(f.type)) return;
+  if(f.type === "image/gif"){ /* GIF : on garde le fichier tel quel (sinon l'animation est perdue) ; limite Firestore 1 Mo par document */
+    if(f.size > 700*1024){ $("msg-annonce").textContent = "GIF trop lourd (" + Math.round(f.size/1024) + " Ko, max 700 Ko) : compresse-le d'abord."; $("a-image").value = ""; return; }
+    $("msg-annonce").textContent = "";
+    const r = new FileReader(); r.onload = () => { imageAnnonce = r.result; rendreAnnonceImg(); }; r.readAsDataURL(f); return;
+  }
   const img = new Image(), url = URL.createObjectURL(f);
   img.onload = () => { const max = 680, k = Math.min(1, max/Math.max(img.width, img.height)), c = document.createElement("canvas");
     c.width = Math.round(img.width*k); c.height = Math.round(img.height*k); const x = c.getContext("2d"); x.fillStyle = "#fff"; x.fillRect(0, 0, c.width, c.height); x.drawImage(img, 0, 0, c.width, c.height);
