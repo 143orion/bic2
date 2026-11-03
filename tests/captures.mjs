@@ -236,6 +236,28 @@ const SCENARIOS = {
     const verdict = await pg.textContent(".q-retour");
     if(!/Copie parfaite/.test(verdict)) erreurs.push(`[${app}] éditeur C : l'exo complet n'est pas validé (${verdict.trim().slice(0, 60)})`);
     return pg;
+  },
+  /* panneau du Cours : fiche qui suit la lecture, « Essayer » → bac à sable C ; ordi = grand écran (colonne), tel = tiroir */
+  async panneau(app){
+    const pg = await page(app);
+    if(app === "ordi") await pg.setViewportSize({width:1600, height:900});
+    await pg.goto(URL0 + "module.html?mock=mia&reset#programmation-c");
+    await pg.waitForFunction(() => window.moteur && window.moteur.etat()); await attendre(800);
+    await pg.evaluate(() => { document.getElementById("n-5.1").scrollIntoView(); }); await attendre(400);
+    const titre = await pg.textContent("#pan-fiche .pan-titre");
+    if(!/5\.1/.test(titre)) erreurs.push(`[${app}] panneau : la fiche ne suit pas la notion lue (${titre.trim().slice(0, 40)})`);
+    if(!(await pg.$("#pan-fiche [data-m=ftrain]"))) erreurs.push(`[${app}] panneau : bouton « S'entraîner » absent`);
+    if(app === "ordi") await capture(pg, `panneau-fiche-${app}`);
+    await pg.click("#n-5\\.1 .bc-essayer"); await attendre(400);
+    if(!(await pg.isVisible("#pan-bac .code-c"))) { erreurs.push(`[${app}] panneau : le bac à sable ne s'ouvre pas`); return pg; }
+    await pg.click('#pan-bac [data-a="executer"]');
+    await pg.waitForSelector("#pan-bac .c-sortie", {timeout:8000});
+    if(!(await pg.textContent("#pan-bac .c-sortie")).includes("8")) erreurs.push(`[${app}] panneau : l'extrait du cours ne s'exécute pas`);
+    await capture(pg, `panneau-bac-${app}`);
+    await pg.evaluate(() => document.querySelector("#pan-fiche [data-m=ftrain]").click());   /* fiche masquée par l'onglet Bac à sable */
+    await attendre(300);
+    if(!(await pg.$('.ex-cartes'))) erreurs.push(`[${app}] panneau : « S'entraîner » n'ouvre pas les Exos sur la notion`);
+    return pg;
   }
 };
 

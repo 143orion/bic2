@@ -36,6 +36,7 @@ Ids des items : `c<chapitre>-0xx` (questions courtes), `c<chapitre>-1xx` (exos).
 - **Limites restantes** (à traiter en QCM/saisie) : tableaux à taille variable, `sizeof(float)` vaut 8 (float stocké en double), `const` non vérifié. Un dépassement de tableau qui reste dans la mémoire du programme n'est pas détecté (comme en vrai C). Messages d'erreur traduits (ligne + explication).
 - L'éditeur part du squelette `#include <stdio.h>` + `int main(void) { … return 0; }` quand l'étape n'a pas de `depart`. Il grandit avec le code (au moins 320 px) ; dans un exo qui contient du code, l'énoncé passe au-dessus et l'éditeur prend toute la largeur.
 - Ne pas utiliser `mode:"c"` dans des items `qcm` / `saisie` courts : l'étape de code est un `exo` (durée 3 à 7 min).
+- **Bac à sable du cours** (03/11/2026) : onglet du panneau latéral de l'Explicatif (voir `GAMIFICATION.md`), affiché parce que le module a des exos `mode:"c"`. Bouton « Essayer » sur chaque bloc ```` ```c ```` du cours. Un extrait sans `main` reçoit les `#include` utiles (`stdio.h`, plus `stdlib.h` / `string.h` / `stdbool.h` selon le code) et un `main` : le code est placé dedans, ou un `main` vide est ajouté après des définitions de fonctions. Aucune XP.
 
 
 ## Rédaction (polish du 03/11/2026, à garder pour les chapitres suivants)
