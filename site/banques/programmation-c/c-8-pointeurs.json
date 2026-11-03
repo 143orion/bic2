@@ -141,7 +141,7 @@
   {
    "id": "8.4",
    "titre": "L'arithmétique des pointeurs",
-   "corps": "On peut **additionner** un entier à un pointeur : il avance d'autant d'**éléments** (pas d'octets) ; le C tient compte de la taille du type pointé.\n\n| Opération | Effet |\n|---|---|\n| `p++` | avance d'un élément |\n| `p--` | recule d'un élément |\n| `p + n` | adresse n éléments plus loin |\n| `p - n` | adresse n éléments plus tôt |\n| `p2 - p1` | nombre d'éléments entre deux pointeurs |\n| `p1 < p2` | comparaison de positions (dans un même tableau) |\n\n```c\nint tableau[5] = {10, 20, 30, 40, 50};\nint *ptr = tableau;           // ptr → 10\nptr++;                        // ptr → 20 (avance de 4 octets : un int)\nptr = ptr + 2;                // ptr → 40\nprintf(\"%d\\n\", *ptr);         // 40\n```\n\n| `tableau` | 10 | 20 | 30 | 40 | 50 |\n|---|---|---|---|---|---|\n| Adresse (exemple) | 1000 | 1004 | 1008 | 1012 | 1016 |\n| | `ptr` | `ptr + 1` | `ptr + 2` | `ptr + 3` | `ptr + 4` |\n\n> **À retenir** : `ptr + 1` sur un `int *` avance de `sizeof(int)` = 4 octets ; sur un `char *`, d'un seul octet.\n\n> **Attention** : l'exécuteur du site accepte `p++` et `p + n` sur une **variable pointeur**, mais ni la comparaison (`p < fin`) ni la soustraction de pointeurs. Dans les exos exécutés, parcours avec un compteur.",
+   "corps": "On peut **additionner** un entier à un pointeur : il avance d'autant d'**éléments** (pas d'octets) ; le C tient compte de la taille du type pointé.\n\n| Opération | Effet |\n|---|---|\n| `p++` | avance d'un élément |\n| `p--` | recule d'un élément |\n| `p + n` | adresse n éléments plus loin |\n| `p - n` | adresse n éléments plus tôt |\n| `p2 - p1` | nombre d'éléments entre deux pointeurs |\n| `p1 < p2` | comparaison de positions (dans un même tableau) |\n\n```c\nint tableau[5] = {10, 20, 30, 40, 50};\nint *ptr = tableau;           // ptr → 10\nptr++;                        // ptr → 20 (avance de 4 octets : un int)\nptr = ptr + 2;                // ptr → 40\nprintf(\"%d\\n\", *ptr);         // 40\n```\n\n| `tableau` | 10 | 20 | 30 | 40 | 50 |\n|---|---|---|---|---|---|\n| Adresse (exemple) | 1000 | 1004 | 1008 | 1012 | 1016 |\n| | `ptr` | `ptr + 1` | `ptr + 2` | `ptr + 3` | `ptr + 4` |\n\n> **À retenir** : `ptr + 1` sur un `int *` avance de `sizeof(int)` = 4 octets ; sur un `char *`, d'un seul octet.\n\n> **Astuce** : on peut aussi parcourir un tableau sans compteur, en comparant deux pointeurs : `for (int *p = t; p < t + n; p++)`. Et `fin - debut` donne le **nombre d'éléments** entre deux adresses, pas d'octets.",
    "rec": "Le pointeur se déplace d'élément en élément : `p + 2` désigne l'élément situé deux cases plus loin, quel que soit le nombre d'octets qu'occupe chaque case.",
    "alt": "Avancer un pointeur, c'est avancer d'une maison dans une rue où toutes les maisons ont la même largeur (le type) : on compte en maisons, pas en mètres.",
    "pre": [
@@ -227,7 +227,7 @@
   {
    "id": "8.6",
    "titre": "Pointeurs et const",
-   "corps": "`const` protège contre les modifications accidentelles. Sa place change tout :\n\n| Déclaration | La valeur pointée | Le pointeur lui-même |\n|---|---|---|\n| `const int *p` | **non modifiable** (`*p = 3;` refusé) | modifiable (`p = &y;` OK) |\n| `int *const p = &x` | modifiable | **non modifiable** |\n| `const int *const p = &x` | non modifiable | non modifiable |\n\nL'usage le plus courant : un paramètre qu'on veut **lire sans le modifier**, sans payer la copie :\n```c\nint somme(const int *t, int n) {   // « je lis t, je promets de ne pas l'écrire »\n    int s = 0;\n    for (int i = 0; i < n; i++) {\n        s += t[i];                 // lecture : OK\n        // t[i] = 0;               // refusé par le compilateur\n    }\n    return s;\n}\n```\n\n> **Astuce** : lis la déclaration de droite à gauche : `const int *p` = « p est un pointeur vers un int constant ».\n\n> **Remarque** : l'exécuteur du site ignore `const` (il exécute sans vérifier). Un vrai compilateur, lui, refuse d'écrire à travers un `const int *`.",
+   "corps": "`const` protège contre les modifications accidentelles. Sa place change tout :\n\n| Déclaration | La valeur pointée | Le pointeur lui-même |\n|---|---|---|\n| `const int *p` | **non modifiable** (`*p = 3;` refusé) | modifiable (`p = &y;` OK) |\n| `int *const p = &x` | modifiable | **non modifiable** |\n| `const int *const p = &x` | non modifiable | non modifiable |\n\nL'usage le plus courant : un paramètre qu'on veut **lire sans le modifier**, sans payer la copie :\n```c\nint somme(const int *t, int n) {   // « je lis t, je promets de ne pas l'écrire »\n    int s = 0;\n    for (int i = 0; i < n; i++) {\n        s += t[i];                 // lecture : OK\n        // t[i] = 0;               // refusé par le compilateur\n    }\n    return s;\n}\n```\n\n> **Astuce** : lis la déclaration de droite à gauche : `const int *p` = « p est un pointeur vers un int constant ».\n\n> **Remarque** : l'éditeur du site ne vérifie pas `const` (il exécute sans contrôler). Un vrai compilateur, lui, refuse d'écrire à travers un `const int *`.",
    "rec": "`const` avant l'étoile protège la valeur pointée ; après l'étoile, il protège l'adresse contenue dans le pointeur.",
    "alt": "`const int *p` : une visite en lecture seule, tu peux changer de musée mais pas toucher aux œuvres. `int *const p` : tu es attaché à un seul musée, mais tu peux repeindre.",
    "pre": [
@@ -1045,6 +1045,104 @@
       "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
      ],
      "duree": 4
+    }
+   ]
+  },
+  {
+   "id": "c8-111",
+   "type": "exo",
+   "notion": "8.4",
+   "origine": "generee",
+   "titre": "Parcours sans compteur",
+   "enonce": "Écris un programme qui lit un entier `n` (au plus 10), puis `n` entiers rangés dans un tableau `t`, et affiche leur somme. **Sans indice `i`** : parcours le tableau avec un pointeur `p`, de `t` jusqu'à `t + n` exclu.",
+   "guidage": "La boucle s'écrit `for (int *p = t; p < t + n; p++)`. Pour lire dans la case pointée, `scanf(\"%d\", p)` : `p` est déjà une adresse.",
+   "duree": 5,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "4\n1 2 3 4",
+        "sortie": "10"
+       },
+       {
+        "entree": "1\n-7",
+        "sortie": "-7"
+       },
+       {
+        "entree": "0",
+        "sortie": "0"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[10];\n    int n;\n    scanf(\"%d\", &n);\n    for (int *p = t; p < t + n; p++) {\n        scanf(\"%d\", p);\n    }\n    int somme = 0;\n    for (int *p = t; p < t + n; p++) {\n        somme += *p;\n    }\n    printf(\"%d\\n\", somme);\n    return 0;\n}",
+      "nombres": true,
+      "exige": [
+       {
+        "motif": "<\\s*t\\s*\\+\\s*n",
+        "msg": "Compare le pointeur à la fin du tableau : p < t + n."
+       },
+       {
+        "motif": "\\*\\s*p\\b",
+        "msg": "Lis la valeur pointée avec *p."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[10];\n    int n;\n    scanf(\"%d\", &n);\n    for (int *p = t; p < t + n; p++) {\n        scanf(\"%d\", p);\n    }\n    int somme = 0;\n    for (int *p = t; p < t + n; p++) {\n        somme += *p;\n    }\n    printf(\"%d\\n\", somme);\n    return 0;\n}\n```",
+     "indices": [
+      "`t + n` est l'adresse juste après la dernière case remplie.",
+      "`scanf(\"%d\", p)` sans & : p contient déjà l'adresse de la case."
+     ],
+     "duree": 5
+    }
+   ]
+  },
+  {
+   "id": "c8-112",
+   "type": "exo",
+   "notion": "8.4",
+   "origine": "generee",
+   "titre": "Longueur par soustraction",
+   "enonce": "Écris une fonction `int longueur(char *s)` qui renvoie la longueur d'une chaîne **sans compteur** : avance un pointeur `q` jusqu'au `'\\0'`, puis renvoie `q - s`. Dans `main`, lis un mot et affiche sa longueur.",
+   "guidage": "La différence de deux pointeurs sur le même tableau donne le nombre d'éléments qui les séparent.",
+   "duree": 5,
+   "etapes": [
+    {
+     "consigne": "Écris le programme complet.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "pointeur",
+        "sortie": "8"
+       },
+       {
+        "entree": "C",
+        "sortie": "1"
+       },
+       {
+        "entree": "esilv",
+        "sortie": "5"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint longueur(char *s) {\n    char *q = s;\n    while (*q != '\\0') {\n        q++;\n    }\n    return q - s;\n}\n\nint main(void) {\n    char mot[50];\n    scanf(\"%s\", mot);\n    printf(\"%d\\n\", longueur(mot));\n    return 0;\n}",
+      "nombres": true,
+      "exige": [
+       {
+        "motif": "q\\s*-\\s*s",
+        "msg": "Renvoie la différence des deux pointeurs : q - s."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint longueur(char *s) {\n    char *q = s;\n    while (*q != '\\0') {\n        q++;\n    }\n    return q - s;\n}\n\nint main(void) {\n    char mot[50];\n    scanf(\"%s\", mot);\n    printf(\"%d\\n\", longueur(mot));\n    return 0;\n}\n```",
+     "indices": [
+      "Commence avec `char *q = s;` puis `while (*q != '\\0') q++;`.",
+      "À la fin, `q` pointe sur le `'\\0'` : `q - s` est le nombre de caractères avant lui."
+     ],
+     "duree": 5
     }
    ]
   }

@@ -486,7 +486,9 @@ function messageC(err){
   if(/non-pointer argument to scanf/.test(msg)) return `scanf a besoin de l'adresse de la variable${ou} : il manque le &.`;
   if(/NULL pointer dereference/.test(msg)) return `Accès à un pointeur NULL${ou} : le pointeur ne pointe sur rien.`;
   if(/no value returned/.test(msg)) return `Il manque un return${ou} : la fonction doit renvoyer une valeur.`;
-  if(/invalid operation/.test(msg)) return `Opération refusée${ou}. Attention : l'exécuteur du site ne gère pas l'arithmétique sur un nom de tableau (t + 2) ni la comparaison de pointeurs ; passe par une variable pointeur (int *p = t; p = p + 2;).`;
+  if(/invalid operation/.test(msg)) return `Opération impossible${ou} : vérifie les types des deux côtés (on ne peut pas additionner deux pointeurs, ni comparer une structure entière).`;
+  if(/memory access out of bounds|accès mémoire invalide/.test(msg)) return `Accès mémoire hors limites${ou} : indice de tableau ou pointeur qui sort de la zone réservée.`;
+  if(/pile d'appels saturée|out of memory/i.test(msg)) return `Mémoire de pile saturée${ou} : récursion sans cas d'arrêt ?`;
   if(/can't assign/.test(msg)) return `Affectation impossible${ou} : les types ne correspondent pas.`;
   if(/is already defined|already been defined/.test(msg)) return `Nom déjà utilisé${ou} : une variable ou fonction porte déjà ce nom.`;
   if(/^\d+:\d+\s/.test(err) && !/[éèà]/.test(msg)) return `Erreur${ou} : ${msg}`;

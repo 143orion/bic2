@@ -1,10 +1,12 @@
 {
   "name": "bic2-c-worker",
   "private": true,
-  "description": "Exécuteur C du module Programmation C (PicoC en WebAssembly dans un Web Worker). Sortie : site/vendor/c-worker.js",
+  "description": "Exécuteur C du module Programmation C (PicoC patché, compilé en WebAssembly WASI par zig, dans un Web Worker). Sortie : site/vendor/c-worker.js",
   "scripts": {
-    "build": "esbuild worker-picoc.js --bundle --minify --format=iife --platform=browser --target=es2020 --external:module --external:fs --external:path --define:import.meta.url=self.location.href --banner:js=\"/* BIC2 c-worker : PicoC (BSD, https://gitlab.com/zsaleeba/picoc) via picoc-web 1.1.0 (ISC). Généré par tools/c-worker : ne pas éditer à la main. */\" --outfile=../../site/vendor/c-worker.js"
+    "wasm": "sh build-wasm.sh",
+    "build": "esbuild worker-picoc.js --bundle --minify --format=iife --platform=browser --target=es2020 --banner:js=\"/* BIC2 c-worker : PicoC (BSD, https://gitlab.com/zsaleeba/picoc) patché pour BIC2, WebAssembly WASI. Généré par tools/c-worker : ne pas éditer à la main. */\" --outfile=../../site/vendor/c-worker.js"
   },
-  "dependencies": { "picoc-web": "1.1.0" },
-  "devDependencies": { "esbuild": "0.25.0" }
+  "devDependencies": {
+    "esbuild": "0.25.0"
+  }
 }
