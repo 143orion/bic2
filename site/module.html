@@ -450,17 +450,27 @@ async function verifSQL(v, rep, ctx){
 
 /* ---- C : interpréteur JSCPP dans un Web Worker (vendor/c-worker.js, source dans tools/c-worker/) ----
    Le programme de l'élève est exécuté avec chaque jeu d'entrées de la banque ; on compare ce qu'il affiche. */
+/* un seul worker, réutilisé (le moteur pèse ~1,2 Mo : on ne le recharge pas à chaque essai) ;
+   il est tué et recréé en cas de dépassement du délai (boucle infinie) */
+let wC = null, fileC = Promise.resolve(), nC = 0;
+function workerC(){
+  if(!wC){ try{ wC = new Worker("vendor/c-worker.js"); }catch(e){ wC = null; } }
+  return wC;
+}
 function executerC(code, entree){
-  return new Promise(res => {
-    let w;
-    try{ w = new Worker("vendor/c-worker.js"); }catch(e){ res({ok:false, out:"", err:"Exécuteur C indisponible dans ce navigateur."}); return; }
-    let t = 0;
-    const fin = r => { clearTimeout(t); w.terminate(); res(r); };
-    t = setTimeout(() => fin({ok:false, out:"", err:"Temps dépassé : boucle infinie ?"}), 5000);
-    w.onmessage = e => fin(e.data);
-    w.onerror = () => fin({ok:false, out:"", err:"Exécuteur C injoignable (réseau ?)."});
-    w.postMessage({code:String(code ?? ""), stdin:String(entree ?? "")});
-  });
+  const tache = fileC.then(() => new Promise(res => {
+    const w = workerC();
+    if(!w){ res({ok:false, out:"", err:"Exécuteur C indisponible dans ce navigateur."}); return; }
+    const id = ++nC; let t = 0;
+    const fin = r => { clearTimeout(t); w.removeEventListener("message", recu); w.removeEventListener("error", erreur); res(r); };
+    const recu = e => { if(e.data && e.data.id === id) fin(e.data); };
+    const erreur = () => { wC = null; w.terminate(); fin({ok:false, out:"", err:"Exécuteur C injoignable (réseau ?)."}); };
+    w.addEventListener("message", recu); w.addEventListener("error", erreur);
+    t = setTimeout(() => { w.terminate(); if(wC === w) wC = null; fin({ok:false, out:"", err:"Temps dépassé : boucle infinie ?"}); }, 8000);
+    w.postMessage({id, code:String(code ?? ""), stdin:String(entree ?? "")});
+  }));
+  fileC = tache.catch(() => {});
+  return tache;
 }
 function messageC(err){
   err = String(err || "");
@@ -469,6 +479,17 @@ function messageC(err){
   const m = err.match(/Parsing Failure:\s*\n?line (\d+) \(column (\d+)\)/);
   if(m) return `Erreur de syntaxe ligne ${m[1]} (colonne ${m[2]}) : vérifie les ;, les accolades et les parenthèses.`;
   const ln = (err.match(/^(\d+):(\d+)\s/) || [])[1], ou = ln ? ` (ligne ${ln})` : "";
+  let y = err.match(/^\d+:\d+\s+(.*)$/); const msg = y ? y[1] : err;
+  if(/^';' expected/.test(msg)) return `Il manque un ;${ou} (ou à la fin de la ligne d'avant).`;
+  y = msg.match(/^'(.+)' expected/); if(y) return `« ${y[1]} » attendu${ou} : vérifie les parenthèses, accolades et ;.`;
+  y = msg.match(/VariableGet Ident: '(\w+)' is undefined/); if(y) return `${y[1]} n'existe pas${ou} : variable non déclarée, faute de frappe, fonction non définie ou #include manquant ?`;
+  if(/non-pointer argument to scanf/.test(msg)) return `scanf a besoin de l'adresse de la variable${ou} : il manque le &.`;
+  if(/NULL pointer dereference/.test(msg)) return `Accès à un pointeur NULL${ou} : le pointeur ne pointe sur rien.`;
+  if(/no value returned/.test(msg)) return `Il manque un return${ou} : la fonction doit renvoyer une valeur.`;
+  if(/invalid operation/.test(msg)) return `Opération refusée${ou}. Attention : l'exécuteur du site ne gère pas l'arithmétique sur un nom de tableau (t + 2) ni la comparaison de pointeurs ; passe par une variable pointeur (int *p = t; p = p + 2;).`;
+  if(/can't assign/.test(msg)) return `Affectation impossible${ou} : les types ne correspondent pas.`;
+  if(/is already defined|already been defined/.test(msg)) return `Nom déjà utilisé${ou} : une variable ou fonction porte déjà ce nom.`;
+  if(/^\d+:\d+\s/.test(err) && !/[éèà]/.test(msg)) return `Erreur${ou} : ${msg}`;
   if(/method main is not defined/.test(err)) return "Il n'y a pas de fonction main : elle s'écrit en minuscules, int main(void) { … }.";
   let x = err.match(/variable (\w+) does not exist/);
   if(x) return `La variable ${x[1]} n'existe pas${ou} : est-elle déclarée, et bien orthographiée ?`;
@@ -479,6 +500,7 @@ function messageC(err){
   if(/overflow/.test(err)) return `Dépassement de capacité${ou} : la valeur ne tient pas dans le type choisi.`;
   return err.replace(/^\d+:\d+\s/, ln ? `Ligne ${ln} : ` : "");
 }
+const SQUELETTE_C = "#include <stdio.h>\n\nint main(void) {\n    \n    return 0;\n}";
 const nombresC = s => (String(s ?? "").match(/[-+]?\d+(?:[.,]\d+)?/g) || []).map(x => +x.replace(",", "."));
 function memeSortieC(a, b, v){
   if(v.nombres){
@@ -579,7 +601,7 @@ function creerChamp(cont, v, x){
   const champHtml = `<input class="entree" spellcheck="false" autocapitalize="off" autocomplete="off" placeholder="${esc(ph)}" aria-label="Ta réponse"${mode === "numerique" ? ' inputmode="decimal"' : ""}>`;
   cont.innerHTML = (multi
       ? (mode === "c"
-        ? `<div class="code-wrap"><pre class="code-hl" aria-hidden="true"><code></code></pre><textarea class="entree code-entree code-c" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" wrap="off" placeholder="${esc(ph)}" aria-label="Ton programme C">${esc(x.depart || "")}</textarea></div>`
+        ? `<div class="code-wrap"><pre class="code-hl" aria-hidden="true"><code></code></pre><textarea class="entree code-entree code-c" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" wrap="off" placeholder="${esc(ph)}" aria-label="Ton programme C">${esc(x.depart || SQUELETTE_C)}</textarea></div>`
         : `<textarea class="entree code-entree" spellcheck="false" autocapitalize="off" autocomplete="off" placeholder="${esc(ph)}" aria-label="Ta réponse">${esc(x.depart || "")}</textarea>`)
       : unite ? `<span class="entree-unite">${champHtml}<button type="button" class="btn-unite" title="Changer l'unité" aria-label="Unité de la réponse : ${esc(unite)}. Cliquer pour changer"></button></span>` : champHtml)
     + (mode === "auto" ? `<small class="aide">Brouillon libre : tu compareras avec la correction et tu t'auto-évalues.</small>` : "")
@@ -623,6 +645,9 @@ function creerChamp(cont, v, x){
     champ.addEventListener("input", peindre);
     champ.addEventListener("scroll", () => { hl.scrollTop = champ.scrollTop; hl.scrollLeft = champ.scrollLeft; });
     if(window.ResizeObserver) new ResizeObserver(() => { metriques(); peindre(); }).observe(champ);
+    const grandir = () => { champ.style.height = "auto"; champ.style.height = Math.min(Math.max(champ.scrollHeight + 4, 320), Math.round(innerHeight * 0.8)) + "px"; };
+    champ.addEventListener("input", grandir); grandir();
+    if(!x.depart){ const k = champ.value.indexOf("    \n    return"); if(k >= 0) champ.addEventListener("pointerup", () => { if(champ.value === SQUELETTE_C && champ.selectionStart === champ.selectionEnd) champ.setSelectionRange(k + 4, k + 4); }, {once:true}); }
     metriques(); peindre();
     /* Entrée : garde l'indentation (+4 après « { ») ; « } » en début de ligne : retire 4 espaces */
     champ.addEventListener("keydown", e => {
@@ -640,6 +665,7 @@ function creerChamp(cont, v, x){
         e.preventDefault(); champ.setRangeText("    ", a, b, "end"); peindre();
       }
     });
+    workerC();   /* préchauffage du moteur */
     const zone = cont.querySelector(".c-zone"), stdin = cont.querySelector(".c-stdin");
     cont.querySelector("[data-a=executer]").onclick = async () => {
       zone.innerHTML = `<p class="vide-txt">exécution…</p>`;

@@ -1179,7 +1179,7 @@
    "notion": "2.3",
    "origine": "generee",
    "titre": "Tailles des types",
-   "enonce": "Écris un programme qui affiche, sur une ligne et séparées par des espaces, les tailles en octets de `char`, `int`, `float` et `double`, obtenues avec `sizeof`.",
+   "enonce": "Écris un programme qui affiche, sur une ligne et séparées par des espaces, les tailles en octets de `char`, `int` et `double`, obtenues avec `sizeof`.",
    "guidage": "`sizeof(type)` renvoie une taille ; convertis-la en `int` pour l'afficher avec `%d` : `(int)sizeof(int)`.",
    "duree": 3,
    "etapes": [
@@ -1191,10 +1191,10 @@
       "tests": [
        {
         "entree": "",
-        "sortie": "1 4 4 8"
+        "sortie": "1 4 8"
        }
       ],
-      "exemple": "#include <stdio.h>\n\nint main(void) {\n    printf(\"%d %d %d %d\\n\", (int)sizeof(char), (int)sizeof(int),\n           (int)sizeof(float), (int)sizeof(double));\n    return 0;\n}",
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    printf(\"%d %d %d\\n\", (int)sizeof(char), (int)sizeof(int), (int)sizeof(double));\n    return 0;\n}",
       "nombres": true,
       "exige": [
        {
@@ -1203,7 +1203,7 @@
        }
       ]
      },
-     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    printf(\"%d %d %d %d\\n\", (int)sizeof(char), (int)sizeof(int),\n           (int)sizeof(float), (int)sizeof(double));\n    return 0;\n}\n```",
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    printf(\"%d %d %d\\n\", (int)sizeof(char), (int)sizeof(int), (int)sizeof(double));\n    return 0;\n}\n```",
      "indices": [
       "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
       "N'oublie ni `#include <stdio.h>`, ni `return 0;`."

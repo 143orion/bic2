@@ -1211,7 +1211,12 @@ body.en-session .lecteur{background:radial-gradient(ellipse at top,color-mix(in 
 .code-wrap{position:relative;border-radius:6px}
 .code-hl{position:absolute;inset:0;margin:0;overflow:hidden;pointer-events:none;white-space:pre;border-style:solid;border-color:transparent;box-sizing:border-box;font-variant-ligatures:none}
 .code-hl code{background:none;padding:0;font:inherit}
-textarea.code-c{position:relative;display:block;width:100%;min-height:220px;background:transparent;color:transparent;caret-color:#f0e7d5;-webkit-text-fill-color:transparent;font-variant-ligatures:none;white-space:pre;overflow:auto}
+textarea.code-c{position:relative;display:block;width:100%;min-height:320px;font-size:14px;line-height:1.6;background:transparent;color:transparent;caret-color:#f0e7d5;-webkit-text-fill-color:transparent;font-variant-ligatures:none;white-space:pre;overflow:auto}
 textarea.code-c::placeholder{color:#5b6383;-webkit-text-fill-color:#5b6383}
 textarea.code-c::selection{background:rgba(38,79,120,.8);-webkit-text-fill-color:transparent}
 .md-table th code{background:rgba(0,0,0,.14);color:inherit;border:0}
+
+/* exos de code : énoncé au-dessus, éditeur sur toute la largeur (et lecteur élargi) */
+.mock-grille:has(.code-c),.exo-grille:has(.code-c){grid-template-columns:1fr}
+.mock-grille:has(.code-c)>div:first-child,.exo-grille:has(.code-c) .exo-gauche{position:static}
+body.en-session .lecteur:has(.code-c){max-width:1180px}
