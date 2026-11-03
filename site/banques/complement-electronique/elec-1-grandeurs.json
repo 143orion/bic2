@@ -15,47 +15,216 @@
   "Source de tension idéale : $U = E$ quel que soit $I$ · réelle : $U = E - R_G\\,I$.",
   "Source de courant idéale : $I = I_0$ quel que soit $U$ · réelle : $R_G$ **en parallèle**."
  ],
- "fiche": [
+ "notions": [
   {
+   "id": "1.1",
    "titre": "Signaux",
-   "contenu": "- **Analogique** : varie de façon continue dans le temps.\n- **Numérique** : prend des niveaux discrets (souvent codés en binaire).\n- **Périodique** : se répète toutes les $T$ secondes, fréquence $F = 1/T$ (Hz).\n\nUn signal peut transporter de l'information (électronique) ou juste de l'énergie (électrocinétique : alimentation)."
-  },
-  {
-   "titre": "Matériaux",
-   "contenu": "Trois familles : **conducteurs** (argent $1{,}6 \\times 10^{-8}\\ \\Omega\\cdot\\text{m}$, cuivre $1{,}7 \\times 10^{-8}$…), **isolants** (air, bois, verre) et **semi-conducteurs** (électronique).\n\nPlus la **résistivité** $\\rho$ est faible, mieux le matériau conduit."
-  },
-  {
-   "titre": "Courant électrique",
-   "contenu": "$$i = \\frac{dq}{dt}$$\nC'est la quantité de charge qui traverse une section par seconde : $1\\ \\text{A} = 1\\ \\text{C/s}$.\n\nÀ l'échelle microscopique : $i = n\\,q\\,S\\,v$ ($n$ porteurs par m³, charge $q$, section $S$, vitesse moyenne $v$)."
-  },
-  {
-   "titre": "Tension et puissance",
-   "contenu": "$$U_{AB} = V_A - V_B = \\frac{W}{q}$$\nC'est le travail par unité de charge pour aller de A à B (V = J/C).\n\nPuissance reçue par une branche : $$P = U_{AB} \\times I$$"
-  },
-  {
-   "titre": "Résistance et loi d'Ohm",
-   "contenu": "La résistance transforme toute l'énergie reçue en chaleur (**effet Joule**).\n$$U = R\\,I \\qquad P = R\\,I^2 = \\frac{U^2}{R} \\qquad G = \\frac{1}{R}$$\n**Piège** : $U = RI$ suppose la convention récepteur (flèches de $U$ et $I$ opposées)."
-  },
-  {
-   "titre": "Générateurs réels",
-   "contenu": "- **Source de tension réelle** = $E$ idéale **en série** avec $R_G$ : $U = E - R_G\\,I$ (la tension baisse quand on tire du courant).\n- **Source de courant réelle** = $I_0$ idéale **en parallèle** avec $R_G$.\n- Idéales : tension constante quel que soit $I$ / courant constant quel que soit $U$.",
-   "schema": {
-    "modele": "gen-reel",
-    "vals": {
-     "E": "",
-     "RG": "",
-     "R": "charge"
+   "corps": "- **Analogique** : varie de façon continue dans le temps.\n- **Numérique** : prend des niveaux discrets (souvent codés en binaire).\n- **Périodique** : se répète toutes les $T$ secondes, fréquence $F = 1/T$ (Hz).\n\nUn signal peut transporter de l'information (électronique) ou juste de l'énergie (électrocinétique : alimentation).",
+   "rec": "Pour passer d'une période en ms à des secondes, on utilise les préfixes ({{0.1}}) : $2\\ \\text{ms} = 0{,}002\\ \\text{s}$. La fréquence est l'inverse de la période.",
+   "alt": "Analogique = une rampe (toutes les hauteurs possibles) ; numérique = un escalier (quelques marches). Périodique = un motif qui se répète, comme les battements d'un cœur.",
+   "pre": [
+    "0.1"
+   ],
+   "ecrans": [
+    {
+     "titre": "Analogique ou numérique",
+     "texte": "Un signal **analogique** varie continûment ; un signal **numérique** ne prend que quelques niveaux (souvent 0 et 1)."
     },
-    "surligne": [
-     "E",
-     "RG"
-    ]
+    {
+     "titre": "Périodique",
+     "texte": "Un signal **périodique** se répète toutes les $T$ secondes. Sa fréquence est $F = \\frac{1}{T}$, en hertz (Hz)."
+    },
+    {
+     "titre": "Exemple",
+     "texte": "$T = 2\\ \\text{ms} = 0{,}002\\ \\text{s}$ donne $F = \\frac{1}{0{,}002} = 500\\ \\text{Hz}$."
+    }
+   ],
+   "check": {
+    "id": "elec-1-grandeurs-ctl-1",
+    "enonce": "Un signal se répète toutes les $T = 10\\ \\text{ms}$. Sa fréquence vaut…",
+    "choix": [
+     "$100\\ \\text{Hz}$",
+     "$10\\ \\text{Hz}$",
+     "$0{,}1\\ \\text{Hz}$",
+     "$1000\\ \\text{Hz}$"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$F = 1/T = 1/0{,}01 = 100\\ \\text{Hz}$."
    }
-  }
- ],
- "parcours": [
+  },
   {
-   "notion": "Générateur réel",
+   "id": "1.2",
+   "titre": "Matériaux",
+   "corps": "Trois familles : **conducteurs** (argent $1{,}6 \\times 10^{-8}\\ \\Omega\\cdot\\text{m}$, cuivre $1{,}7 \\times 10^{-8}$…), **isolants** (air, bois, verre) et **semi-conducteurs** (électronique).\n\nPlus la **résistivité** $\\rho$ est faible, mieux le matériau conduit.",
+   "rec": "La résistivité $\\rho$ s'exprime en $\\Omega\\cdot\\text{m}$ et s'écrit en notation scientifique ({{0.2}}) : $1{,}7 \\times 10^{-8}$ est un très petit nombre.",
+   "alt": "Un conducteur, c'est une autoroute pour les charges ; un isolant, un mur. Plus $\\rho$ est petit, plus l'autoroute est large.",
+   "pre": [
+    "0.2"
+   ],
+   "ecrans": [
+    {
+     "titre": "Trois familles",
+     "texte": "**Conducteurs** (métaux), **isolants** (air, verre, bois) et **semi-conducteurs** (silicium, la base de l'électronique)."
+    },
+    {
+     "titre": "La résistivité",
+     "texte": "$\\rho$ mesure à quel point un matériau s'oppose au courant. Plus $\\rho$ est **faible**, mieux il conduit."
+    },
+    {
+     "titre": "Comparer",
+     "texte": "Argent $1{,}6 \\times 10^{-8}$ contre cuivre $1{,}7 \\times 10^{-8}\\ \\Omega\\cdot\\text{m}$ : l'argent conduit un peu mieux."
+    }
+   ],
+   "check": {
+    "id": "elec-1-grandeurs-ctl-2",
+    "enonce": "Entre deux matériaux, le meilleur conducteur est celui qui a…",
+    "choix": [
+     "la plus petite résistivité",
+     "la plus grande résistivité",
+     "la plus grande masse",
+     "la couleur la plus claire"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "Plus $\\rho$ est faible, moins le matériau s'oppose au courant."
+   }
+  },
+  {
+   "id": "1.3",
+   "titre": "Courant électrique",
+   "corps": "$$i = \\frac{dq}{dt}$$\nC'est la quantité de charge qui traverse une section par seconde : $1\\ \\text{A} = 1\\ \\text{C/s}$.\n\nÀ l'échelle microscopique : $i = n\\,q\\,S\\,v$ ($n$ porteurs par m³, charge $q$, section $S$, vitesse moyenne $v$).",
+   "rec": "Le courant compte des charges par seconde : il suffit d'une division. Charge en coulombs (C), temps en secondes (s).",
+   "alt": "Des voitures qui passent un péage : le courant, c'est le nombre de voitures par seconde. $6\\ \\text{C}$ en $3\\ \\text{s}$, c'est $2\\ \\text{C}$ chaque seconde, donc $2\\ \\text{A}$.",
+   "pre": [],
+   "ecrans": [
+    {
+     "titre": "Des charges qui bougent",
+     "texte": "Le courant est un déplacement de charges électriques dans un conducteur."
+    },
+    {
+     "titre": "La définition",
+     "texte": "$i = \\frac{dq}{dt}$ : la charge qui traverse une section, divisée par le temps. $1\\ \\text{A} = 1\\ \\text{C/s}$."
+    },
+    {
+     "titre": "À l'échelle des porteurs",
+     "texte": "$i = n\\,q\\,S\\,v$ : nombre de porteurs par m³, charge de chacun, section du fil, vitesse moyenne."
+    }
+   ],
+   "check": {
+    "id": "elec-1-grandeurs-ctl-3",
+    "enonce": "$10\\ \\text{C}$ traversent un fil en $5\\ \\text{s}$. Le courant vaut…",
+    "choix": [
+     "$2\\ \\text{A}$",
+     "$50\\ \\text{A}$",
+     "$0{,}5\\ \\text{A}$",
+     "$15\\ \\text{A}$"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$I = q/t = 10/5 = 2\\ \\text{A}$."
+   }
+  },
+  {
+   "id": "1.4",
+   "titre": "Tension et puissance",
+   "corps": "$$U_{AB} = V_A - V_B = \\frac{W}{q}$$\nC'est le travail par unité de charge pour aller de A à B (V = J/C).\n\nPuissance reçue par une branche : $$P = U_{AB} \\times I$$",
+   "rec": "La tension $U_{AB}$ compare deux points A et B, et sa flèche pointe vers A ({{0.6}}). La puissance combine cette tension et le courant ({{1.3}}).",
+   "alt": "La tension, c'est la « pression » qui pousse les charges ; le courant, le débit. La puissance, c'est pression × débit, comme pour un tuyau d'arrosage.",
+   "pre": [
+    "0.6",
+    "1.3"
+   ],
+   "ecrans": [
+    {
+     "titre": "Une différence de potentiels",
+     "texte": "$U_{AB} = V_A - V_B$ : la tension se mesure **entre** deux points."
+    },
+    {
+     "titre": "Énergie par charge",
+     "texte": "$U_{AB} = \\frac{W}{q}$ : $12\\ \\text{J}$ pour $3\\ \\text{C}$ donnent $4\\ \\text{V}$ ($1\\ \\text{V} = 1\\ \\text{J/C}$)."
+    },
+    {
+     "titre": "La puissance",
+     "texte": "Puissance reçue par un dipôle : $P = U \\times I$, en watts. $12\\ \\text{V} \\times 0{,}5\\ \\text{A} = 6\\ \\text{W}$."
+    }
+   ],
+   "check": {
+    "id": "elec-1-grandeurs-ctl-4",
+    "enonce": "Un dipôle reçoit $U = 5\\ \\text{V}$ et $I = 2\\ \\text{A}$. Sa puissance vaut…",
+    "choix": [
+     "$10\\ \\text{W}$",
+     "$2{,}5\\ \\text{W}$",
+     "$7\\ \\text{W}$",
+     "$0{,}4\\ \\text{W}$"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$P = UI = 5 \\times 2 = 10\\ \\text{W}$."
+   }
+  },
+  {
+   "id": "1.5",
+   "titre": "Résistance et loi d'Ohm",
+   "corps": "La résistance transforme toute l'énergie reçue en chaleur (**effet Joule**).\n$$U = R\\,I \\qquad P = R\\,I^2 = \\frac{U^2}{R} \\qquad G = \\frac{1}{R}$$\n**Piège** : $U = RI$ suppose la convention récepteur (flèches de $U$ et $I$ opposées).",
+   "rec": "Il faut la tension et le courant ({{1.4}}), et la convention récepteur : flèches de $U$ et $I$ opposées ({{0.6}}). Attention aux préfixes ({{0.1}}).",
+   "alt": "Une résistance freine le courant : sous une même tension, plus $R$ est grande, plus le courant est petit. $U = RI$ se lit « $R$ volts par ampère qui passe ».",
+   "pre": [
+    "1.4",
+    "0.6",
+    "0.1"
+   ],
+   "ecrans": [
+    {
+     "titre": "La loi d'Ohm",
+     "texte": "Pour une résistance (convention récepteur) : $U = R\\,I$."
+    },
+    {
+     "titre": "Les trois écritures",
+     "texte": "$U = RI$, $I = \\frac{U}{R}$, $R = \\frac{U}{I}$ : on isole ce qu'on cherche."
+    },
+    {
+     "titre": "La puissance dissipée",
+     "texte": "Effet Joule : $P = UI = RI^2 = \\frac{U^2}{R}$, toute l'énergie part en chaleur."
+    },
+    {
+     "titre": "La conductance",
+     "texte": "$G = \\frac{1}{R}$, en siemens (S). $R = 50\\ \\Omega$ donne $G = 0{,}02\\ \\text{S}$."
+    }
+   ],
+   "check": {
+    "id": "elec-1-grandeurs-ctl-5",
+    "enonce": "$R = 2\\ \\text{k}\\Omega$ et $I = 3\\ \\text{mA}$. La tension $U$ vaut…",
+    "choix": [
+     "$6\\ \\text{V}$",
+     "$6\\ \\text{mV}$",
+     "$0{,}67\\ \\text{V}$",
+     "$6000\\ \\text{V}$"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$U = RI = 2000 \\times 0{,}003 = 6\\ \\text{V}$ (raccourci : kΩ × mA = V)."
+   }
+  },
+  {
+   "id": "1.6",
+   "titre": "Générateurs réels",
+   "corps": "- **Source de tension réelle** = $E$ idéale **en série** avec $R_G$ : $U = E - R_G\\,I$ (la tension baisse quand on tire du courant).\n- **Source de courant réelle** = $I_0$ idéale **en parallèle** avec $R_G$.\n- Idéales : tension constante quel que soit $I$ / courant constant quel que soit $U$.",
    "schema": {
     "modele": "gen-reel",
     "vals": {
@@ -64,6 +233,12 @@
      "R": ""
     }
    },
+   "rec": "Le générateur réel combine une source idéale et une résistance : il faut la loi d'Ohm ({{1.5}}) et la tension aux bornes d'un dipôle ({{1.4}}).",
+   "alt": "Une pile neuve affiche $9\\ \\text{V}$ à vide, mais sa tension baisse quand on lui demande beaucoup de courant : une partie se perd dans sa résistance interne, comme un souffle qui faiblit quand on court.",
+   "pre": [
+    "1.5",
+    "1.4"
+   ],
    "ecrans": [
     {
      "titre": "Le montage",
@@ -100,7 +275,8 @@
      }
     }
    ],
-   "controle": {
+   "check": {
+    "id": "elec-1-grandeurs-ctl-0",
     "enonce": "Pour une source de tension réelle, quand le courant débité augmente, la tension à ses bornes…",
     "choix": [
      "diminue",
@@ -121,7 +297,7 @@
   {
    "id": "e1-001",
    "type": "qcm",
-   "notion": "Signaux",
+   "notion": "1.1",
    "origine": "cours",
    "enonce": "Un signal qui ne prend que quelques niveaux discrets est…",
    "choix": [
@@ -142,7 +318,7 @@
   {
    "id": "e1-002",
    "type": "saisie",
-   "notion": "Signaux",
+   "notion": "1.1",
    "origine": "cours",
    "enonce": "Un signal périodique a une période $T = 2\\ \\text{ms}$. Sa fréquence (en Hz) ?",
    "verif": {
@@ -156,7 +332,7 @@
   {
    "id": "e1-003",
    "type": "qcm",
-   "notion": "Matériaux",
+   "notion": "1.2",
    "origine": "cours",
    "enonce": "Lequel est le meilleur conducteur ?",
    "choix": [
@@ -177,7 +353,7 @@
   {
    "id": "e1-004",
    "type": "saisie",
-   "notion": "Courant",
+   "notion": "1.3",
    "origine": "cours",
    "enonce": "Une charge de $6\\ \\text{C}$ traverse un fil en $3\\ \\text{s}$. Courant (A) ?",
    "verif": {
@@ -191,7 +367,7 @@
   {
    "id": "e1-005",
    "type": "qcm",
-   "notion": "Tension",
+   "notion": "1.4",
    "origine": "cours",
    "enonce": "$U_{AB}$ vaut…",
    "choix": [
@@ -212,7 +388,7 @@
   {
    "id": "e1-006",
    "type": "saisie",
-   "notion": "Tension",
+   "notion": "1.4",
    "origine": "cours",
    "enonce": "Il faut $12\\ \\text{J}$ pour amener $3\\ \\text{C}$ de A à B. $U_{AB}$ (V) ?",
    "verif": {
@@ -226,7 +402,7 @@
   {
    "id": "e1-007",
    "type": "saisie",
-   "notion": "Puissance",
+   "notion": "1.4",
    "origine": "cours",
    "enonce": "Un dipôle reçoit $U = 12\\ \\text{V}$ et $I = 0{,}5\\ \\text{A}$. Puissance (W) ?",
    "verif": {
@@ -240,7 +416,7 @@
   {
    "id": "e1-008",
    "type": "saisie",
-   "notion": "Loi d'Ohm",
+   "notion": "1.5",
    "origine": "cours",
    "enonce": "$R = 470\\ \\Omega$, $I = 10\\ \\text{mA}$. Tension $U$ (V) ?",
    "verif": {
@@ -254,7 +430,7 @@
   {
    "id": "e1-009",
    "type": "saisie",
-   "notion": "Loi d'Ohm",
+   "notion": "1.5",
    "origine": "cours",
    "enonce": "$U = 9\\ \\text{V}$ aux bornes de $R = 3\\ \\text{k}\\Omega$. Courant (en mA) ?",
    "verif": {
@@ -267,7 +443,7 @@
   {
    "id": "e1-010",
    "type": "saisie",
-   "notion": "Loi d'Ohm",
+   "notion": "1.5",
    "origine": "cours",
    "enonce": "Puissance dissipée par $R = 100\\ \\Omega$ sous $U = 10\\ \\text{V}$ (W) ?",
    "verif": {
@@ -281,7 +457,7 @@
   {
    "id": "e1-011",
    "type": "saisie",
-   "notion": "Loi d'Ohm",
+   "notion": "1.5",
    "origine": "cours",
    "enonce": "Conductance d'une résistance de $50\\ \\Omega$ (en S) ?",
    "verif": {
@@ -295,7 +471,7 @@
   {
    "id": "e1-012",
    "type": "qcm",
-   "notion": "Générateurs",
+   "notion": "1.6",
    "origine": "cours",
    "enonce": "Une source de tension **réelle** se modélise par…",
    "choix": [
@@ -316,7 +492,7 @@
   {
    "id": "e1-013",
    "type": "qcm",
-   "notion": "Générateurs",
+   "notion": "1.6",
    "origine": "cours",
    "enonce": "Une source de courant **idéale** impose…",
    "choix": [
@@ -337,7 +513,7 @@
   {
    "id": "e1-014",
    "type": "qcm-multi",
-   "notion": "Générateurs",
+   "notion": "1.6",
    "origine": "cours",
    "enonce": "Quelles affirmations sont vraies ?",
    "choix": [
@@ -361,7 +537,7 @@
    "id": "e1-101",
    "type": "exo",
    "titre": "Générateur réel qui alimente une charge",
-   "notion": "Générateur réel",
+   "notion": "1.6",
    "origine": "generee",
    "enonce": "Un générateur de f.é.m. $E$ = [[E]] et de résistance interne $R_G$ = [[RG]] alimente une charge $R$ = [[R]].",
    "guidage": "**Montage** : un générateur réel = une source idéale $E$ en série avec sa résistance interne $R_G$. Ici tout est en série : **une seule maille**, donc un seul courant $I$ partout.\n\n**Plan** :\n- loi des mailles → $I$ ;\n- loi d'Ohm sur la charge → $U$ ;\n- $P = UI$ → puissance reçue par la charge.\n\n**Piège** : $U$ n'est pas égale à $E$ : une partie de $E$ « se perd » dans $R_G$.",
@@ -448,7 +624,7 @@
    "id": "e1-102",
    "type": "exo",
    "titre": "Résistance chauffante",
-   "notion": "Loi d'Ohm et puissance",
+   "notion": "1.5",
    "origine": "generee",
    "enonce": "Une résistance $R$ = [[R]] est parcourue par $I$ = [[I]].",
    "guidage": "**Outils** : loi d'Ohm $U = RI$ et puissance $P = UI$.\n\n**Unités** : les formules marchent en unités de base (Ω, A, V, W). Convertis les mA en A avant de calculer (ou associe kΩ avec mA, qui donnent directement des V).\n\n**Plan** : $U$ par la loi d'Ohm, puis la puissance dissipée par effet Joule.",

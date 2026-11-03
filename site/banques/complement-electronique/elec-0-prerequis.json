@@ -14,43 +14,169 @@
   "**Nœud** = point où se rejoignent **au moins 3** branches · **branche** = tronçon entre deux nœuds · **maille** = contour fermé.",
   "Flèche de tension $U_{AB}$ : elle **pointe vers A** et $U_{AB} = V_A - V_B$."
  ],
- "fiche": [
+ "notions": [
   {
+   "id": "0.1",
    "titre": "Préfixes SI",
-   "contenu": "- $\\text{p}$ pico $= 10^{-12}$, $\\text{n}$ nano $= 10^{-9}$, $\\mu$ micro $= 10^{-6}$, $\\text{m}$ milli $= 10^{-3}$\n- $\\text{k}$ kilo $= 10^{3}$, $\\text{M}$ méga $= 10^{6}$, $\\text{G}$ giga $= 10^{9}$\n\nRéflexe : on convertit **tout** en unités de base avant de calculer, puis on remet un préfixe à la fin pour lire le résultat."
-  },
-  {
-   "titre": "Notation scientifique",
-   "contenu": "$0{,}0047 = 4{,}7 \\times 10^{-3}$ et $22\\,000 = 2{,}2 \\times 10^{4}$.\n\nProduit : on multiplie les mantisses et on **additionne** les exposants : $(2 \\times 10^{3}) \\times (5 \\times 10^{-3}) = 10 \\times 10^{0} = 10$.\n\nRaccourci utile : $\\text{k}\\Omega \\times \\text{mA} = \\text{V}$ (les $10^{3}$ et $10^{-3}$ s'annulent)."
-  },
-  {
-   "titre": "Fractions et inverses",
-   "contenu": "$$\\frac{1}{\\frac{1}{a}+\\frac{1}{b}} = \\frac{ab}{a+b}$$\nC'est la formule des résistances en parallèle (chapitre 3).\n\n**Pièges** : $\\frac{1}{a+b} \\neq \\frac{1}{a} + \\frac{1}{b}$ ; et pour diviser par une fraction, on multiplie par son inverse."
-  },
-  {
-   "titre": "Système de 2 équations",
-   "contenu": "Méthode par **substitution** : on isole une inconnue dans une équation et on la remplace dans l'autre.\n\nExemple : $I_1 + I_2 = 3$ et $2I_1 - I_2 = 0$ → $I_2 = 2I_1$ → $3I_1 = 3$ → $I_1 = 1$, $I_2 = 2$.\n\nC'est exactement ce qu'on fait avec les lois des nœuds et des mailles."
-  },
-  {
-   "titre": "Lire un schéma",
-   "contenu": "- **Fil** : même potentiel partout (pas de tension entre ses extrémités).\n- **Nœud** : point de jonction d'**au moins 3** branches (gros point noir).\n- **Branche** : tronçon de circuit entre deux nœuds ; tous ses éléments en série ont le même courant.\n- **Maille** : contour fermé qu'on peut parcourir sans repasser deux fois par le même point.",
-   "schema": {
-    "modele": "diviseur",
-    "vals": {
-     "E": "",
-     "R1": "",
-     "R2": ""
+   "corps": "- $\\text{p}$ pico $= 10^{-12}$, $\\text{n}$ nano $= 10^{-9}$, $\\mu$ micro $= 10^{-6}$, $\\text{m}$ milli $= 10^{-3}$\n- $\\text{k}$ kilo $= 10^{3}$, $\\text{M}$ méga $= 10^{6}$, $\\text{G}$ giga $= 10^{9}$\n\nRéflexe : on convertit **tout** en unités de base avant de calculer, puis on remet un préfixe à la fin pour lire le résultat.",
+   "rec": "Une puissance de 10 compte les zéros : $10^{3} = 1000$ et $10^{-3} = 0{,}001$. Un préfixe n'est qu'un raccourci pour une puissance de 10.",
+   "alt": "Pense aux distances : $1\\ \\text{km} = 1000\\ \\text{m}$ et $1\\ \\text{mm} = 0{,}001\\ \\text{m}$. En électricité c'est pareil : $1\\ \\text{k}\\Omega = 1000\\ \\Omega$ et $1\\ \\text{mA} = 0{,}001\\ \\text{A}$.",
+   "pre": [],
+   "ecrans": [
+    {
+     "titre": "Le principe",
+     "texte": "Un préfixe remplace une puissance de 10 : $\\text{k} = 10^{3}$, $\\text{m} = 10^{-3}$, $\\mu = 10^{-6}$."
+    },
+    {
+     "titre": "Vers l'unité de base",
+     "texte": "On remplace le préfixe par sa puissance de 10 : $4{,}7\\ \\text{k}\\Omega = 4{,}7 \\times 10^{3}\\ \\Omega = 4700\\ \\Omega$."
+    },
+    {
+     "titre": "Le réflexe",
+     "texte": "Avant un calcul, **tout** en unités de base (V, A, Ω). À la fin, on choisit le préfixe qui rend le résultat lisible : $0{,}005\\ \\text{A} = 5\\ \\text{mA}$."
     }
+   ],
+   "check": {
+    "id": "elec-0-prerequis-ctl-1",
+    "enonce": "$20\\ \\text{mA}$ en ampères, c'est…",
+    "choix": [
+     "$0{,}02\\ \\text{A}$",
+     "$0{,}2\\ \\text{A}$",
+     "$20\\,000\\ \\text{A}$",
+     "$2\\ \\text{A}$"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$20 \\times 10^{-3} = 0{,}02\\ \\text{A}$."
    }
   },
   {
-   "titre": "Flèches de tension et de courant",
-   "contenu": "- La flèche de **courant** est posée **sur** le fil, dans le sens choisi pour $I$.\n- La flèche de **tension** $U_{AB}$ est à côté du dipôle et **pointe vers A** : $U_{AB} = V_A - V_B$.\n- Résultat négatif ? Pas d'erreur : la grandeur va simplement dans l'autre sens que la flèche.\n- **Convention récepteur** (résistance) : flèches de $U$ et $I$ en sens opposés → $U = RI$."
-  }
- ],
- "parcours": [
+   "id": "0.2",
+   "titre": "Notation scientifique",
+   "corps": "$0{,}0047 = 4{,}7 \\times 10^{-3}$ et $22\\,000 = 2{,}2 \\times 10^{4}$.\n\nProduit : on multiplie les mantisses et on **additionne** les exposants : $(2 \\times 10^{3}) \\times (5 \\times 10^{-3}) = 10 \\times 10^{0} = 10$.\n\nRaccourci utile : $\\text{k}\\Omega \\times \\text{mA} = \\text{V}$ (les $10^{3}$ et $10^{-3}$ s'annulent).",
+   "rec": "Préfixes et puissances de 10 : {{0.1}}. Rappel : $10^{a} \\times 10^{b} = 10^{a+b}$.",
+   "alt": "Sépare le calcul en deux : d'un côté les nombres « normaux » (les mantisses), de l'autre les puissances de 10. On multiplie les premiers et on additionne les exposants des secondes.",
+   "pre": [
+    "0.1"
+   ],
+   "ecrans": [
+    {
+     "titre": "Écrire un nombre",
+     "texte": "On l'écrit $a \\times 10^{n}$ avec $1 \\le a < 10$ : $0{,}0047 = 4{,}7 \\times 10^{-3}$."
+    },
+    {
+     "titre": "Multiplier",
+     "texte": "On multiplie les mantisses et on **additionne** les exposants : $(2 \\times 10^{3}) \\times (5 \\times 10^{-3}) = 10 \\times 10^{0} = 10$."
+    },
+    {
+     "titre": "Le raccourci des circuits",
+     "texte": "$\\text{k}\\Omega \\times \\text{mA} = \\text{V}$ : les $10^{3}$ et $10^{-3}$ s'annulent. $2\\ \\text{k}\\Omega \\times 5\\ \\text{mA} = 10\\ \\text{V}$."
+    }
+   ],
+   "check": {
+    "id": "elec-0-prerequis-ctl-2",
+    "enonce": "$(3 \\times 10^{2}) \\times (2 \\times 10^{-3})$ vaut…",
+    "choix": [
+     "$0{,}6$",
+     "$6$",
+     "$60$",
+     "$6 \\times 10^{-6}$"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$3 \\times 2 = 6$ et $10^{2-3} = 10^{-1}$ : $6 \\times 10^{-1} = 0{,}6$."
+   }
+  },
   {
-   "notion": "Lire un schéma",
+   "id": "0.3",
+   "titre": "Fractions et inverses",
+   "corps": "$$\\frac{1}{\\frac{1}{a}+\\frac{1}{b}} = \\frac{ab}{a+b}$$\nC'est la formule des résistances en parallèle ({{3.2}}).\n\n**Pièges** : $\\frac{1}{a+b} \\neq \\frac{1}{a} + \\frac{1}{b}$ ; et pour diviser par une fraction, on multiplie par son inverse.",
+   "rec": "L'inverse de $a$ est $\\frac{1}{a}$. Pour additionner deux fractions, on les met au même dénominateur : $\\frac{1}{a} + \\frac{1}{b} = \\frac{a+b}{ab}$.",
+   "alt": "Retourne la fraction : si $\\frac{1}{x} = \\frac{a+b}{ab}$, alors $x = \\frac{ab}{a+b}$, « produit sur somme ». Avec $a = b = 100$ : $\\frac{100 \\times 100}{200} = 50$.",
+   "pre": [],
+   "ecrans": [
+    {
+     "titre": "Même dénominateur",
+     "texte": "$\\frac{1}{a} + \\frac{1}{b} = \\frac{b}{ab} + \\frac{a}{ab} = \\frac{a+b}{ab}$"
+    },
+    {
+     "titre": "On retourne",
+     "texte": "Si $\\frac{1}{x} = \\frac{a+b}{ab}$, alors $x = \\frac{ab}{a+b}$ : c'est « produit sur somme »."
+    },
+    {
+     "titre": "Le piège",
+     "texte": "$\\frac{1}{a+b}$ n'est **pas** $\\frac{1}{a} + \\frac{1}{b}$. Teste avec $a = b = 1$ : $\\frac{1}{2} \\ne 2$."
+    }
+   ],
+   "check": {
+    "id": "elec-0-prerequis-ctl-3",
+    "enonce": "$\\dfrac{1}{\\frac{1}{6} + \\frac{1}{3}}$ vaut…",
+    "choix": [
+     "$2$",
+     "$9$",
+     "$\\frac{1}{2}$",
+     "$4{,}5$"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "Produit sur somme : $\\frac{6 \\times 3}{6 + 3} = \\frac{18}{9} = 2$."
+   }
+  },
+  {
+   "id": "0.4",
+   "titre": "Système de 2 équations",
+   "corps": "Méthode par **substitution** : on isole une inconnue dans une équation et on la remplace dans l'autre.\n\nExemple : $I_1 + I_2 = 3$ et $2I_1 - I_2 = 0$ → $I_2 = 2I_1$ → $3I_1 = 3$ → $I_1 = 1$, $I_2 = 2$.\n\nC'est exactement ce qu'on fait avec les lois des nœuds et des mailles ({{2.4}}).",
+   "rec": "Isoler une inconnue, c'est la laisser seule d'un côté du signe $=$, en faisant la même opération des deux côtés.",
+   "alt": "Méthode par addition : en additionnant $x + y = 10$ et $x - y = 2$, les $y$ disparaissent : $2x = 12$, donc $x = 6$.",
+   "pre": [],
+   "ecrans": [
+    {
+     "titre": "Deux équations, deux inconnues",
+     "texte": "Exemple : $I_1 + I_2 = 3$ et $2I_1 - I_2 = 0$."
+    },
+    {
+     "titre": "Isoler",
+     "texte": "La deuxième équation donne $I_2 = 2I_1$."
+    },
+    {
+     "titre": "Substituer",
+     "texte": "On remplace dans la première : $I_1 + 2I_1 = 3$, donc $I_1 = 1$, puis $I_2 = 2$."
+    },
+    {
+     "titre": "Vérifier",
+     "texte": "On remet les valeurs dans **les deux** équations : $1 + 2 = 3$ ✓ et $2 - 2 = 0$ ✓."
+    }
+   ],
+   "check": {
+    "id": "elec-0-prerequis-ctl-4",
+    "enonce": "$x + y = 6$ et $y = 2x$. Que vaut $x$ ?",
+    "choix": [
+     "$2$",
+     "$3$",
+     "$4$",
+     "$6$"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$x + 2x = 6$, donc $3x = 6$ et $x = 2$."
+   }
+  },
+  {
+   "id": "0.5",
+   "titre": "Lire un schéma",
+   "corps": "- **Fil** : même potentiel partout (pas de tension entre ses extrémités).\n- **Nœud** : point de jonction d'**au moins 3** branches (gros point noir).\n- **Branche** : tronçon de circuit entre deux nœuds ; tous ses éléments en série ont le même courant.\n- **Maille** : contour fermé qu'on peut parcourir sans repasser deux fois par le même point.",
    "schema": {
     "modele": "diviseur",
     "vals": {
@@ -59,6 +185,9 @@
      "R2": ""
     }
    },
+   "rec": "Un circuit, ce sont des dipôles (générateurs, résistances) reliés par des fils. On le lit en repérant d'abord les nœuds, puis les branches entre eux.",
+   "alt": "Imagine un réseau de routes : les fils sont des routes, les nœuds des carrefours (au moins 3 routes), une branche est une route entre deux carrefours, une maille un trajet qui revient à son point de départ.",
+   "pre": [],
    "ecrans": [
     {
      "titre": "Le circuit",
@@ -99,7 +228,8 @@
      "texte": "$I$ est fléché sur le fil. $V_1$ et $V_2$ sont fléchées **à côté** des résistances, **en sens opposé au courant** : c'est la convention récepteur, celle qui donne $V = RI$."
     }
    ],
-   "controle": {
+   "check": {
+    "id": "elec-0-prerequis-ctl-0",
     "enonce": "Un nœud relie au minimum…",
     "choix": [
      "3 branches",
@@ -114,13 +244,57 @@
     },
     "explication": "2 branches qui se touchent, c'est juste un fil qui continue : il faut au moins 3 branches pour parler de nœud."
    }
+  },
+  {
+   "id": "0.6",
+   "titre": "Flèches de tension et de courant",
+   "corps": "- La flèche de **courant** est posée **sur** le fil, dans le sens choisi pour $I$.\n- La flèche de **tension** $U_{AB}$ est à côté du dipôle et **pointe vers A** : $U_{AB} = V_A - V_B$.\n- Résultat négatif ? Pas d'erreur : la grandeur va simplement dans l'autre sens que la flèche.\n- **Convention récepteur** (résistance) : flèches de $U$ et $I$ en sens opposés → $U = RI$.",
+   "rec": "Repère d'abord les points A et B sur le schéma ({{0.5}}). La tension $U_{AB}$ compare leurs potentiels : $U_{AB} = V_A - V_B$ (détails en {{2.3}}).",
+   "alt": "Une flèche est un choix de sens, comme un axe en physique : si le résultat est négatif, la grandeur va simplement dans l'autre sens. Rien n'est faux.",
+   "pre": [
+    "0.5"
+   ],
+   "ecrans": [
+    {
+     "titre": "Le courant",
+     "texte": "La flèche de courant est **sur le fil** et indique le sens choisi pour $I$."
+    },
+    {
+     "titre": "La tension",
+     "texte": "La flèche de $U_{AB}$ est à côté du dipôle et **pointe vers A** : $U_{AB} = V_A - V_B$."
+    },
+    {
+     "titre": "Convention récepteur",
+     "texte": "Pour une résistance, on met les flèches de $U$ et de $I$ en sens opposés : alors $U = RI$ ({{1.5}})."
+    },
+    {
+     "titre": "Résultat négatif",
+     "texte": "$I = -2\\ \\text{A}$ ? Le courant réel circule simplement dans le sens inverse de la flèche."
+    }
+   ],
+   "check": {
+    "id": "elec-0-prerequis-ctl-5",
+    "enonce": "On trouve $U_{AB} = -5\\ \\text{V}$. Cela signifie que…",
+    "choix": [
+     "$V_B$ est plus grand que $V_A$",
+     "le calcul est forcément faux",
+     "$V_A$ est plus grand que $V_B$",
+     "il n'y a pas de tension"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$U_{AB} = V_A - V_B < 0$, donc $V_B > V_A$ : la tension va dans l'autre sens que la flèche."
+   }
   }
  ],
  "items": [
   {
    "id": "e0-001",
    "type": "saisie",
-   "notion": "Préfixes",
+   "notion": "0.1",
    "origine": "cours",
    "enonce": "Convertis $4{,}7\\ \\text{k}\\Omega$ en ohms.",
    "verif": {
@@ -134,7 +308,7 @@
   {
    "id": "e0-002",
    "type": "saisie",
-   "notion": "Préfixes",
+   "notion": "0.1",
    "origine": "cours",
    "enonce": "Convertis $20\\ \\text{mA}$ en ampères (valeur en A).",
    "verif": {
@@ -148,7 +322,7 @@
   {
    "id": "e0-003",
    "type": "saisie",
-   "notion": "Préfixes",
+   "notion": "0.1",
    "origine": "cours",
    "enonce": "Combien de milliampères dans $0{,}005\\ \\text{A}$ ? (nombre de mA)",
    "verif": {
@@ -161,7 +335,7 @@
   {
    "id": "e0-004",
    "type": "saisie",
-   "notion": "Préfixes",
+   "notion": "0.2",
    "origine": "cours",
    "enonce": "Calcule $U = R \\times I$ avec $R = 2\\ \\text{k}\\Omega$ et $I = 5\\ \\text{mA}$ (en V).",
    "verif": {
@@ -175,7 +349,7 @@
   {
    "id": "e0-005",
    "type": "qcm",
-   "notion": "Préfixes",
+   "notion": "0.1",
    "origine": "cours",
    "enonce": "Le préfixe $\\text{M}$ (méga) vaut…",
    "choix": [
@@ -196,7 +370,7 @@
   {
    "id": "e0-006",
    "type": "qcm",
-   "notion": "Préfixes",
+   "notion": "0.1",
    "origine": "cours",
    "enonce": "$1\\ \\mu\\text{A}$ correspond à…",
    "choix": [
@@ -217,7 +391,7 @@
   {
    "id": "e0-007",
    "type": "saisie",
-   "notion": "Fractions et inverses",
+   "notion": "0.3",
    "origine": "cours",
    "enonce": "Calcule $\\dfrac{1}{\\frac{1}{100} + \\frac{1}{100}}$.",
    "verif": {
@@ -230,7 +404,7 @@
   {
    "id": "e0-008",
    "type": "saisie",
-   "notion": "Fractions et inverses",
+   "notion": "0.3",
    "origine": "cours",
    "enonce": "Calcule $\\dfrac{ab}{a+b}$ pour $a = 300$ et $b = 600$.",
    "verif": {
@@ -243,7 +417,7 @@
   {
    "id": "e0-009",
    "type": "qcm",
-   "notion": "Fractions et inverses",
+   "notion": "0.3",
    "origine": "cours",
    "enonce": "$\\dfrac{1}{a+b}$ est égal à…",
    "choix": [
@@ -264,7 +438,7 @@
   {
    "id": "e0-010",
    "type": "saisie",
-   "notion": "Système de 2 équations",
+   "notion": "0.4",
    "origine": "cours",
    "enonce": "$x + y = 10$ et $x - y = 2$. Que vaut $x$ ?",
    "verif": {
@@ -277,7 +451,7 @@
   {
    "id": "e0-011",
    "type": "qcm",
-   "notion": "Lire un schéma",
+   "notion": "0.5",
    "origine": "cours",
    "enonce": "Une **maille** est…",
    "choix": [
@@ -298,7 +472,7 @@
   {
    "id": "e0-012",
    "type": "qcm",
-   "notion": "Lire un schéma",
+   "notion": "0.5",
    "origine": "cours",
    "enonce": "Deux éléments placés dans la même branche, sans dérivation entre eux, sont…",
    "choix": [
@@ -319,7 +493,7 @@
   {
    "id": "e0-013",
    "type": "qcm",
-   "notion": "Flèches",
+   "notion": "0.6",
    "origine": "cours",
    "enonce": "La flèche de tension $U_{AB}$ pointe…",
    "choix": [
@@ -340,7 +514,7 @@
   {
    "id": "e0-014",
    "type": "qcm",
-   "notion": "Flèches",
+   "notion": "0.6",
    "origine": "cours",
    "enonce": "On trouve $I = -2\\ \\text{A}$ pour un courant fléché vers la droite. Cela signifie…",
    "choix": [
@@ -362,7 +536,7 @@
    "id": "e0-101",
    "type": "exo",
    "titre": "Système d'équations façon circuit",
-   "notion": "Système de 2 équations",
+   "notion": "0.4",
    "origine": "generee",
    "enonce": "Deux courants vérifient la loi des nœuds $I_1 + I_2$ = [[S]] et une loi des mailles qui donne [[EQ2]].",
    "guidage": "**Ce qu'on cherche** : deux inconnues ($I_1$ et $I_2$) et deux équations → un système de 2 équations à 2 inconnues.\n\n**Méthode par substitution** :\n- dans l'équation la plus simple, exprime une inconnue en fonction de l'autre ;\n- remplace-la dans l'autre équation : il ne reste qu'une inconnue, que tu trouves ;\n- reviens à l'expression du début pour la deuxième.\n\nC'est exactement ce que tu feras avec les lois de Kirchhoff : chaque loi (nœud ou maille) donne une équation.",

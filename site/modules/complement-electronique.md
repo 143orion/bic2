@@ -32,11 +32,11 @@ Ids des items : `e<chapitre>-0xx` (questions courtes), `e<chapitre>-1xx` (exos),
 - **labos** (mode Classique) : `diviseur` (ch. 3), `thev-charge` (ch. 4).
 - États de schéma par étape / écran : `surligne`, `eteint` (grisé = débranché ou source de courant éteinte), `court` (source de tension éteinte dessinée comme un fil « = 0 »).
 
-## Migration vers le layout baseline (03/11/2026, branche refonte-lecteur)
-- **Chapitre 3 migré** (test) au format `notions[]` : 3.1 série · 3.2 parallèle · 3.3 diviseur de tension (schéma + labo `diviseur`) · 3.4 diviseur de courant · 3.5 association de générateurs. Chaque notion a `corps`, `rec`, `alt`, `pre`, `ecrans` et `check`.
-- Ids des checks **explicites** pour garder l'historique des anciens contrôles : 3.3 = `elec-3-associations-ctl-0`, 3.4 = `-ctl-1` (anciens parcours), 3.1 = `-ctl-2`, 3.2 = `-ctl-3`, 3.5 = `-ctl-4`.
-- Nouveaux items : `e3-011` et `e3-012` (code à trous). Les items pointent vers une notion par son id (`notion: "3.2"`).
-- Chapitres 0, 1, 2, 4, 5 : encore à l'ancien format, affichés par la compatibilité du lecteur (notion `<ordre>.<n° de carte de fiche>`, contrôle repris du parcours). À migrer en gardant ces ids.
+## Format baseline (migré le 03/11/2026)
+- Les 6 chapitres sont au format `notions[]` (28 notions) : chaque notion a `corps`, `rec`, `alt`, `pre`, `ecrans` (Follow-along) et `check`. Les items pointent vers une notion par son id (`notion: "3.2"`).
+- Notions : 0.1 préfixes · 0.2 notation scientifique · 0.3 fractions · 0.4 système · 0.5 lire un schéma · 0.6 flèches · 1.1 signaux · 1.2 matériaux · 1.3 courant · 1.4 tension et puissance · 1.5 loi d'Ohm · 1.6 générateurs réels · 2.1 nœuds · 2.2 mailles · 2.3 potentiels · 2.4 méthode · 3.1 série · 3.2 parallèle · 3.3 diviseur de tension (labo `diviseur`) · 3.4 diviseur de courant · 3.5 association de générateurs · 4.1 modèle de Thévenin (labo `thev-charge`) · 4.2 trouver $E_{th}$ et $R_{th}$ · 4.3 Norton · 4.4 passer de l'un à l'autre · 5.1 superposition · 5.2 méthode en 3 temps · 5.3 Millman.
+- **Ids des checks explicites** : les anciens contrôles des parcours gardent leur id (`<chapitre>-ctl-<n° du parcours>`, ex. 3.3 = `elec-3-associations-ctl-0`, 4.2 = `elec-4-thevenin-norton-ctl-0`) pour conserver la progression ; les nouveaux checks prennent les numéros suivants. Ne jamais les renuméroter.
+- Code à trous : `e3-011`, `e3-012`.
 
 ## Règles de correction propres au module
 - Réponses numériques en mode `numerique` avec `unite` (V, A, Ω, W, Hz, S) : « 5 mA », « 0,005 », « 4,7 kΩ » acceptés ; tolérance ±1 % (absolue 0,01 quand la réponse vaut 0 ou est négative).

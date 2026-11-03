@@ -63,10 +63,11 @@
   ],
   "pieges": "On débranche la charge avant tout · on n'éteint que les sources **indépendantes**."
  },
- "fiche": [
+ "notions": [
   {
+   "id": "4.1",
    "titre": "Le modèle de Thévenin",
-   "contenu": "Tout dipôle actif linéaire vu entre deux bornes A et B se remplace par **une source $E_{th}$ en série avec une résistance $R_{th}$**.\n$$U_{AB} = E_{th} - R_{th}\\,I$$",
+   "corps": "Tout dipôle actif linéaire vu entre deux bornes A et B se remplace par **une source $E_{th}$ en série avec une résistance $R_{th}$**.\n$$U_{AB} = E_{th} - R_{th}\\,I$$\n\nLabo ci-dessous : fais varier $E_{th}$, $R_{th}$ et la charge $R$ : courant et tension se mettent à jour.",
    "schema": {
     "modele": "thev-eq",
     "vals": {
@@ -77,36 +78,55 @@
      "Eth",
      "Rth"
     ]
-   }
-  },
-  {
-   "titre": "Trouver $E_{th}$ et $R_{th}$",
-   "contenu": "- $E_{th}$ = tension $U_{AB}$ **à vide** (charge débranchée).\n- $R_{th}$ = résistance vue entre A et B, **sources indépendantes éteintes**.\n\nSource de tension éteinte → **fil** · source de courant éteinte → **circuit ouvert**.\n\n**Piège classique** : oublier de débrancher la charge avant de calculer $E_{th}$."
-  },
-  {
-   "titre": "Norton et l'équivalence",
-   "contenu": "Norton = **source de courant $I_N$ en parallèle avec $R_N$**. $I_N$ = courant de court-circuit entre A et B ; $R_N = R_{th}$.\n$$I_N = \\frac{E_{th}}{R_{th}} \\qquad E_{th} = R_N\\,I_N$$",
-   "schema": {
-    "modele": "norton-eq",
-    "vals": {
-     "IN": "",
-     "RN": ""
-    },
-    "surligne": [
-     "IN",
-     "RN"
-    ]
-   }
-  },
-  {
-   "titre": "Labo : branche une charge sur le modèle",
+   },
    "labo": "thev-charge",
-   "contenu": "Fais varier $E_{th}$, $R_{th}$ et la charge $R$ : courant et tension se mettent à jour."
-  }
- ],
- "parcours": [
+   "rec": "Le modèle de Thévenin ressemble au générateur réel ({{1.6}}) : une source idéale en série avec une résistance. Avec une charge, on retrouve un diviseur de tension ({{3.3}}).",
+   "alt": "Peu importe ce qu'il y a dans la boîte : vu de l'extérieur, on ne voit qu'une pile ($E_{th}$) avec sa résistance interne ($R_{th}$).",
+   "pre": [
+    "1.6",
+    "3.3"
+   ],
+   "ecrans": [
+    {
+     "titre": "L'idée",
+     "texte": "Vu de ses deux bornes A et B, un circuit compliqué (sources + résistances) se comporte comme un circuit très simple."
+    },
+    {
+     "titre": "Le modèle",
+     "texte": "Une source $E_{th}$ **en série** avec une résistance $R_{th}$ : $U_{AB} = E_{th} - R_{th}\\,I$.",
+     "schema": {
+      "surligne": [
+       "Eth",
+       "Rth"
+      ]
+     }
+    },
+    {
+     "titre": "Avec une charge",
+     "texte": "On branche une charge $R$ entre A et B : $I = \\frac{E_{th}}{R_{th} + R}$ et la charge reçoit $E_{th}\\,\\frac{R}{R_{th} + R}$."
+    }
+   ],
+   "check": {
+    "id": "elec-4-thevenin-norton-ctl-3",
+    "enonce": "Un modèle $E_{th} = 10\\ \\text{V}$, $R_{th} = 1\\ \\text{k}\\Omega$ alimente une charge $R = 1\\ \\text{k}\\Omega$. La tension aux bornes de la charge vaut…",
+    "choix": [
+     "$5\\ \\text{V}$",
+     "$10\\ \\text{V}$",
+     "$0\\ \\text{V}$",
+     "$20\\ \\text{V}$"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "Diviseur de tension : $10 \\times \\frac{1}{1 + 1} = 5\\ \\text{V}$."
+   }
+  },
   {
-   "notion": "Thévenin",
+   "id": "4.2",
+   "titre": "Trouver $E_{th}$ et $R_{th}$",
+   "corps": "- $E_{th}$ = tension $U_{AB}$ **à vide** (charge débranchée).\n- $R_{th}$ = résistance vue entre A et B, **sources indépendantes éteintes**.\n\nSource de tension éteinte → **fil** · source de courant éteinte → **circuit ouvert**.\n\n**Piège classique** : oublier de débrancher la charge avant de calculer $E_{th}$.",
    "schema": {
     "modele": "thev-L",
     "vals": {
@@ -117,6 +137,13 @@
      "R": "1 kΩ"
     }
    },
+   "rec": "Il faut savoir calculer une tension à vide (diviseur de tension {{3.3}}) et une résistance équivalente série / parallèle ({{3.1}}, {{3.2}}).",
+   "alt": "Deux mesures suffisent : un voltmètre entre A et B sans rien brancher donne $E_{th}$ ; en coupant les sources et en mesurant la résistance entre A et B, on obtient $R_{th}$.",
+   "pre": [
+    "4.1",
+    "3.3",
+    "3.2"
+   ],
    "ecrans": [
     {
      "titre": "Le problème",
@@ -176,7 +203,8 @@
      }
     }
    ],
-   "controle": {
+   "check": {
+    "id": "elec-4-thevenin-norton-ctl-0",
     "enonce": "$E_{th}$ se calcule…",
     "choix": [
      "charge débranchée (à vide)",
@@ -193,7 +221,9 @@
    }
   },
   {
-   "notion": "Norton",
+   "id": "4.3",
+   "titre": "Le modèle de Norton",
+   "corps": "Norton = **source de courant $I_N$ en parallèle avec $R_N$**.\n- $I_N$ = courant de **court-circuit** entre A et B ;\n- $R_N = R_{th}$, la résistance vue entre A et B, sources éteintes.",
    "schema": {
     "modele": "thev-L",
     "vals": {
@@ -205,6 +235,13 @@
      "R": "1 kΩ"
     }
    },
+   "rec": "Le modèle de Norton repose sur la source de courant réelle ({{1.6}}) et sur le diviseur de courant ({{3.4}}).",
+   "alt": "Thévenin et Norton décrivent la même boîte, l'un avec une source de tension, l'autre avec une source de courant : deux façons de dire la même chose.",
+   "pre": [
+    "4.1",
+    "1.6",
+    "3.4"
+   ],
    "ecrans": [
     {
      "titre": "Le montage",
@@ -257,7 +294,8 @@
      }
     }
    ],
-   "controle": {
+   "check": {
+    "id": "elec-4-thevenin-norton-ctl-1",
     "enonce": "Pour trouver $I_N$, on remplace la charge par…",
     "choix": [
      "un fil (court-circuit)",
@@ -274,7 +312,9 @@
    }
   },
   {
-   "notion": "Passer de l'un à l'autre",
+   "id": "4.4",
+   "titre": "Passer de l'un à l'autre",
+   "corps": "Les deux modèles décrivent le même dipôle :\n$$I_N = \\frac{E_{th}}{R_{th}} \\qquad E_{th} = R_N\\,I_N \\qquad R_N = R_{th}$$",
    "schema": {
     "modele": "thev-eq",
     "vals": {
@@ -282,6 +322,13 @@
      "Rth": "500 Ω"
     }
    },
+   "rec": "Il suffit de la loi d'Ohm ({{1.5}}) appliquée au modèle de Thévenin mis en court-circuit ({{4.2}}, {{4.3}}).",
+   "alt": "En court-circuit, le modèle de Thévenin débite $E_{th}/R_{th}$ : c'est exactement le courant de Norton.",
+   "pre": [
+    "4.2",
+    "4.3",
+    "1.5"
+   ],
    "ecrans": [
     {
      "titre": "Même dipôle, deux modèles",
@@ -312,7 +359,8 @@
      }
     }
    ],
-   "controle": {
+   "check": {
+    "id": "elec-4-thevenin-norton-ctl-2",
     "enonce": "$E_{th} = 12\\ \\text{V}$ et $R_{th} = 4\\ \\text{k}\\Omega$. Que vaut $I_N$ ?",
     "choix": [
      "$3\\ \\text{mA}$",
@@ -333,7 +381,7 @@
   {
    "id": "e4-001",
    "type": "qcm",
-   "notion": "Éteindre les sources",
+   "notion": "4.2",
    "origine": "cours",
    "enonce": "Une source de **courant** idéale éteinte devient…",
    "choix": [
@@ -354,7 +402,7 @@
   {
    "id": "e4-002",
    "type": "qcm",
-   "notion": "Éteindre les sources",
+   "notion": "4.2",
    "origine": "cours",
    "enonce": "Une source de **tension** idéale éteinte devient…",
    "choix": [
@@ -375,7 +423,7 @@
   {
    "id": "e4-003",
    "type": "saisie",
-   "notion": "Équivalence",
+   "notion": "4.4",
    "origine": "cours",
    "enonce": "$E_{th} = 12\\ \\text{V}$ et $R_{th} = 4\\ \\text{k}\\Omega$. Que vaut $I_N$ (A) ?",
    "verif": {
@@ -389,7 +437,7 @@
   {
    "id": "e4-004",
    "type": "qcm",
-   "notion": "Équivalence",
+   "notion": "4.4",
    "origine": "cours",
    "enonce": "Par rapport à $R_{th}$, la résistance de Norton $R_N$ est…",
    "choix": [
@@ -410,7 +458,7 @@
   {
    "id": "e4-005",
    "type": "saisie",
-   "notion": "Équivalence",
+   "notion": "4.4",
    "origine": "cours",
    "enonce": "$I_N = 2\\ \\text{mA}$ et $R_N = 5\\ \\text{k}\\Omega$. Que vaut $E_{th}$ (V) ?",
    "verif": {
@@ -424,7 +472,7 @@
   {
    "id": "e4-006",
    "type": "qcm",
-   "notion": "Norton",
+   "notion": "4.3",
    "origine": "cours",
    "enonce": "Pour obtenir $I_N$, on remplace la charge par…",
    "choix": [
@@ -445,7 +493,7 @@
   {
    "id": "e4-007",
    "type": "qcm",
-   "notion": "Thévenin",
+   "notion": "4.2",
    "origine": "cours",
    "enonce": "$E_{th}$ se mesure…",
    "choix": [
@@ -466,7 +514,7 @@
   {
    "id": "e4-008",
    "type": "saisie",
-   "notion": "Thévenin",
+   "notion": "4.1",
    "origine": "cours",
    "enonce": "Modèle $E_{th} = 6\\ \\text{V}$, $R_{th} = 1\\ \\text{k}\\Omega$ branché sur $R = 2\\ \\text{k}\\Omega$. Tension aux bornes de $R$ (V) ?",
    "verif": {
@@ -480,7 +528,7 @@
   {
    "id": "e4-009",
    "type": "qcm",
-   "notion": "Thévenin",
+   "notion": "4.1",
    "origine": "cours",
    "enonce": "Avec une charge $R = R_{th}$, la tension aux bornes de la charge vaut…",
    "choix": [
@@ -501,7 +549,7 @@
   {
    "id": "e4-010",
    "type": "qcm",
-   "notion": "Éteindre les sources",
+   "notion": "4.2",
    "origine": "cours",
    "enonce": "Quand on éteint les sources pour calculer $R_{th}$, on éteint…",
    "choix": [
@@ -523,7 +571,7 @@
    "id": "e4-101",
    "type": "exo",
    "titre": "TD2 · Exercice 4 — Modèle de Thévenin",
-   "notion": "Thévenin",
+   "notion": "4.2",
    "origine": "td",
    "enonce": "Détermine le modèle équivalent de Thévenin qui alimente $R$, puis la tension aux bornes de $R$. $E$ = [[E]], $R_1$ = [[R1]], $R_2$ = [[R2]], $R_3$ = [[R3]], $R$ = [[R]].",
    "guidage": "**Théorème de Thévenin** : vu depuis B et M, tout le circuit à gauche de $R$ se remplace par **une source $E_{th}$ en série avec $R_{th}$**.\n\n**Plan** :\n- $E_{th}$ = tension **à vide** entre B et M ($R$ débranchée) ;\n- $R_{th}$ = résistance vue entre B et M **sources éteintes** (source de tension éteinte = un fil) ;\n- on rebranche $R$ sur ce modèle simple et on calcule $U_R$.\n\n**Intérêt** : si on change $R$, seule la dernière étape est à refaire.",
@@ -626,7 +674,7 @@
    "id": "e4-102",
    "type": "exo",
    "titre": "TD2 · Exercice 5 — Modèle de Norton",
-   "notion": "Norton",
+   "notion": "4.3",
    "origine": "td",
    "enonce": "Détermine le modèle équivalent de Norton qui alimente $R$, puis la tension $U_{BM}$ (en valeur absolue). $I$ = [[E]], $R_1$ = [[R1]], $R_2$ = [[R2]], $R_3$ = [[R3]], $R$ = [[R]].",
    "guidage": "**Théorème de Norton** : vu depuis B et M, le circuit se remplace par une **source de courant $I_N$ en parallèle avec $R_N$**.\n\n**Plan** :\n- $I_N$ = courant de **court-circuit** entre B et M ;\n- $R_N$ = résistance vue entre B et M sources éteintes (source de **courant** éteinte = **circuit ouvert** : on l'enlève) ;\n- on rebranche $R$ : $I_N$ se partage entre $R_N$ et $R$.\n\n$R_N$ se calcule exactement comme $R_{th}$ : c'est la même résistance.",
