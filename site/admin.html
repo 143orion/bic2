@@ -470,9 +470,9 @@ function rendrePh(){
     <td><button class="lien" data-del-ph="${k}" type="button">supprimer</button></td></tr>`).join("") || `<tr><td colspan="5" class="vide-txt">Aucun placeholder créé ici.</td></tr>`;
 }
 async function sauverPh(liste, msg){
-  const nouveau = Object.assign(clone(E.config), {placeholders:liste, maj:Date.now()});
-  if(!nouveau.valeurs) nouveau.valeurs = clone(D);
-  await db.doc("config/actuelle").set(nouveau); E.config = nouveau;
+  const maj = Date.now();
+  await db.doc("config/actuelle").set({placeholders:liste, maj}, {merge:true});   /* écriture ciblée : ne réécrit pas le reste de la config */
+  E.config = Object.assign({}, E.config, {placeholders:liste, maj});
   recomposerListe(); rendrePh(); rendreCal(); await rendreModules(); toast(msg);
 }
 $("f-ph").addEventListener("submit", async e => { e.preventDefault();
