@@ -519,9 +519,11 @@ function contester(evId, message = ""){
   const ev = tousLesEvenements().find(e => e.i === evId);
   return ecrireListe("contestations/" + E.uid, {ev:evId, q:d.q, m:d.m, t:d.t, tm:ev && ev.tm, d:ev && ev.d, sd:ev && ev.sd, ne:ev && ev.ne, message, envoye:Date.now()});
 }
-function signaler(idItem, message = ""){
+function signaler(idItem, message = "", contexte = null){
   const it = E.items[idItem] || {};
-  return ecrireListe("signalements/" + E.uid, {q:idItem, m:it.module || E.moduleCourant, message, envoye:Date.now()});
+  const doc = {q:idItem, m:it.module || E.moduleCourant, message, envoye:Date.now()};
+  if(contexte && contexte.enonce != null){ doc.enonce = contexte.enonce; doc.rep = contexte.rep || []; }   /* énoncé vu + réponse(s) du joueur */
+  return ecrireListe("signalements/" + E.uid, doc);
 }
 async function ecrireJoueur(champs){
   if(E.mode !== "synchro") return false;

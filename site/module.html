@@ -59,7 +59,7 @@ const L = $("lecteur");
 const reduit = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const petitEcran = () => matchMedia("(max-width:760px)").matches;
 const V = () => M.valeursPour(M.interne.config, "9999-12-31");
-const S = {mod:null, chapitres:[], items:{}, chapDe:{}, notions:[], notionParId:{}, vue:null, nettoyer:null, touches:null};
+const S = {mod:null, chapitres:[], items:{}, chapDe:{}, notions:[], notionParId:{}, vue:null, nettoyer:null, touches:null, trace:{}};
 const TYPES_Q = ["qcm","qcm-multi","saisie","trous"];
 const LIB = {qcm:"QCM", "qcm-multi":"QCM multi", saisie:"Réponse tapée", trous:"Code à trous", exo:"Exo", examen:"Examen blanc"};
 const ORIG = {cours:"cours", td:"TD", annale:"annale", generee:"générée"};
@@ -715,6 +715,19 @@ function lienSignaler(id){ return `<button type="button" class="lien signaler" d
 L.addEventListener("click", e => { const b = e.target.closest("[data-signaler]"); if(b) ouvrirSignal(b.dataset.signaler); });
 
 /* ---------- signalement ---------- */
+/* Relevé de ce que le joueur a vu et tapé, par item, pour joindre l'énoncé et SA réponse au signalement.
+   Mémoire de la page seulement (rien d'écrit tant qu'il ne signale pas) ; une variante 🎲 écrase la précédente. */
+const rognerTxt = (t, n) => { t = String(t == null ? "" : t); return t.length > n ? t.slice(0, n) + "…" : t; };
+function trace(it, k, donnee, ok){
+  let r = S.trace[it.id];
+  if(!r || r.enonce !== it.enonce) r = S.trace[it.id] = {enonce:it.enonce, etapes:{}};
+  const e = k == null ? null : (it.etapes || [])[k];
+  r.etapes[k == null ? 0 : k] = {k:k == null ? null : k + 1, txt:e ? (e.question || e.consigne || "") : "", donnee, ok:!!ok};
+}
+function pieceSignal(id){
+  const r = S.trace[id]; if(!r) return null;
+  return {enonce:rognerTxt(r.enonce, 1500), rep:Object.values(r.etapes).slice(0, 20).map(x => ({k:x.k, txt:rognerTxt(x.txt, 300), donnee:rognerTxt(x.donnee, 600), ok:x.ok}))};
+}
 let signalId = null;
 function ouvrirSignal(id){
   if(M.interne.mode !== "synchro") return toast(M.interne.mode === "lecture" ? "Lecture seule : impossible d'envoyer un signalement" : "Connecte-toi à Claude pour signaler une erreur");
@@ -726,7 +739,7 @@ $("f-signal").addEventListener("submit", async e => {
   e.preventDefault();
   const msg = $("i-signal").value.trim(); if(!msg) return;
   const b = e.target.querySelector("[type=submit]"); b.disabled = true;
-  const ok = await M.signaler(signalId, msg).catch(() => false);
+  const ok = await M.signaler(signalId, msg, pieceSignal(signalId)).catch(() => false);
   b.disabled = false;
   if(ok){ $("m-signal").hidden = true; toast("Signalement envoyé ✓ merci !"); }
   else $("e-signal").textContent = "Échec de l'envoi, réessaie.";
@@ -751,7 +764,7 @@ function jouerQuestion(it, zone, opts = {}){
 
     function terminer(ok, extra = {}){
       if(fini) return; fini = true; S.touches = null;
-      if(opts.log) opts.log.push({it, etape:null, donnee, ok});
+      trace(it, null, donnee, ok); if(opts.log) opts.log.push({it, etape:null, donnee, ok});
       const d = M.reponse(it.id, ok, (Date.now() - t0)/1000, {indices:nIndices(), bulle:!opts.examen});
       art.classList.add(ok ? "juste" : "rate");
       if(opts.examen){ resolve({ok, d}); return; }
@@ -923,7 +936,7 @@ function jouerExo(it, zone, opts = {}){
       const rep = ok => M.reponse(it.id, ok, secs(), {etape:k, indices:ok ? nIndices() : 0, run, mode:opts.mode || "guide"});
       const fermer = (ok, contenu = "") => {
         if(close) return; close = true;
-        if(opts.log) opts.log.push({it, etape:k, donnee:champ.lire(), ok});
+        trace(it, k, champ.lire(), ok); if(opts.log) opts.log.push({it, etape:k, donnee:champ.lire(), ok});
         li.className = "etape " + (ok ? "faite" : "ratee"); champ.el.readOnly = true;
         li.querySelectorAll("[data-a=indice], [data-a=executer]").forEach(b => b.disabled = true);
         act.innerHTML = "";
@@ -1566,7 +1579,7 @@ function jouerMock(it, zone, opts = {}){
         const e = etapes[k], v = e.verif || {mode:"auto"}, ch = champs[k];
         const r = v.mode && v.mode !== "auto" ? await verifier(v, ch.lire(), ctx, ch) : {ok:false};
         const d = M.reponse(it.id, !!r.ok, secs, {etape:k, indices:0, run, mode});
-        if(opts.log) opts.log.push({it, etape:k, donnee:ch.lire(), ok:!!r.ok});
+        trace(it, k, ch.lire(), !!r.ok); if(opts.log) opts.log.push({it, etape:k, donnee:ch.lire(), ok:!!r.ok});
         if(r.ok){ nOk++; if(d && d.ok) xp += d.xp + d.bonus; }
         ch.el.readOnly = true; ch.el.classList.add(r.ok ? "juste" : "faux");
         ol.children[k].querySelector(".mq-ret").innerHTML = r.ok ? `<b class="ok-txt">✓</b>` : `<div class="corrige"><small>Correction</small>${corrigeDe(e, v) || md(e.explication || "")}</div>${r.msg ? `<small class="aide">${esc(r.msg)}</small>` : ""}`;

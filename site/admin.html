@@ -562,12 +562,14 @@ async function rendreListes(){
     return `<tr><td>${esc(pseudo(uid))}</td><td>${esc(it.q)}</td><td>${Math.round(+it.tm || 0)} s</td><td>${Math.round(+th || 0)} s</td><td>${quand(it.t)}</td><td>${esc(it.message || "")}</td>
       <td><button class="btn" data-c="ok" data-uid="${esc(uid)}" data-ev="${esc(it.ev)}">Valider</button> <button class="btn danger" data-c="non" data-uid="${esc(uid)}" data-ev="${esc(it.ev)}">Refuser</button></td></tr>`; }).join("");
 
+  const detailSignal = it => it.enonce == null ? "" : `<details class="sig-detail"><summary>Question &amp; réponse du joueur</summary>
+    <pre style="white-space:pre-wrap;margin:.3em 0">${esc(it.enonce)}</pre>${(it.rep || []).map(x => `<div>${x.k ? "Étape " + x.k + (x.txt ? " (" + esc(x.txt) + ")" : "") + " : " : "Réponse : "}<code>${esc(x.donnee || "(vide)")}</code> ${x.ok ? "✓" : "✗"}</div>`).join("")}</details>`;
   const ss = Object.entries(L.signalements).flatMap(([uid, d]) => (d.items || []).map(it => ({uid, it})));
   $("signal-vide").hidden = !!ss.length; badge("signalements", ss.length);
   const gardees = {}; document.querySelectorAll("#t-signal .raison").forEach(i => { gardees[i.dataset.k] = i.value; });
   $("t-signal").innerHTML = ss.map(({uid, it}) => { const k = uid + "|" + it.q + "|" + it.envoye, xp = xpRendue(it.q), lib = xp == null ? "XP rendue" : `XP rendue (+${xp} XP)`,
     da = `data-uid="${esc(uid)}" data-q="${esc(it.q)}" data-t="${esc(it.envoye)}"`;
-    return `<tr><td>${esc(pseudo(uid))}</td><td>${esc(it.q)}</td><td>${esc(nomModule(it.m))}</td><td>${esc(it.message || "")}</td><td>${quand(it.envoye)}</td>
+    return `<tr><td>${esc(pseudo(uid))}</td><td>${esc(it.q)}</td><td>${esc(nomModule(it.m))}</td><td>${esc(it.message || "")}${detailSignal(it)}</td><td>${quand(it.envoye)}</td>
     <td class="sig-actions"><input class="entree raison" data-k="${esc(k)}" maxlength="300" placeholder="Raison écrite (visible par le joueur)" value="${esc(gardees[k] || "")}">
       <button class="btn" data-claude="1" ${da}>Envoyer à Claude</button>
       <button class="btn" data-s="faux" data-r="1" ${da}>Item faux → ${lib} + raison</button>
@@ -607,9 +609,10 @@ document.querySelector('[data-vue="calendrier"]').addEventListener("click", e =>
 });
 /* « Envoyer à Claude » : copie un message prêt à coller dans une conversation du projet BIC2.exe */
 const rapportClaude = lst => {
-  const lignes = lst.map(({uid, it}, i) => `${i + 1}. item \`${it.q}\` (module \`${it.m}\`), signalé par ${pseudo(uid)} le ${quand(it.envoye)} : « ${String(it.message || "(pas de message)").replace(/\s+/g, " ")} »`).join("\n");
+  const lignes = lst.map(({uid, it}, i) => `${i + 1}. item \`${it.q}\` (module \`${it.m}\`), signalé par ${pseudo(uid)} le ${quand(it.envoye)} : « ${String(it.message || "(pas de message)").replace(/\s+/g, " ")} »`
+    + (it.enonce != null ? `\n   Énoncé tel que le joueur l'a vu :\n${String(it.enonce).split("\n").map(l => "   > " + l).join("\n")}\n` + (it.rep || []).map(x => `   Sa réponse${x.k ? " (étape " + x.k + (x.txt ? " « " + String(x.txt).replace(/\s+/g, " ") + " »" : "") + ")" : ""} : \`${String(x.donnee || "(vide)").replace(/\s+/g, " ")}\` → ${x.ok ? "jugée juste" : "jugée fausse"}`).join("\n") : "\n   (pas de réponse jointe : signalement fait sans avoir répondu)")).join("\n");
   return `Tweak/fix : corriger ${lst.length > 1 ? "ces " + lst.length + " items signalés" : "un item signalé"} dans les banques.\n\n${lignes}\n\n`
-    + "Pour chaque item : retrouve-le avec grep sur son id dans site/banques/<module>/ (ne lis pas les fichiers en entier), vérifie l'énoncé, le verif et l'explication, explique-moi ce qui était faux, puis corrige-le en gardant le même id (ne supprime jamais un item). Montre-moi le avant/après, puis commit + push. Si le signalement est infondé, dis-le sans modifier la banque.";
+    + "Pour chaque item : retrouve-le avec grep sur son id dans site/banques/<module>/ (ne lis pas les fichiers en entier), vérifie l'énoncé, le verif et l'explication, puis teste la réponse du joueur contre le verif (est-elle vraiment équivalente à une bonne réponse ? alors élargis `attendu` / `motif` / `tol`), explique-moi ce qui était faux, puis corrige-le en gardant le même id (ne supprime jamais un item). Montre-moi le avant/après, puis commit + push. Si le signalement est infondé, dis-le sans modifier la banque.";
 };
 const copier = async txt => {
   try{ await navigator.clipboard.writeText(txt); }
