@@ -45,10 +45,12 @@
       <div class="fenetre" data-titre="evals.txt">
         <table class="tableau"><thead><tr><th>Date</th><th>Module</th><th>Nom</th><th>Chapitres (vide = tout)</th><th></th></tr></thead><tbody id="t-evals"></tbody></table>
         <form class="actions" id="f-eval">
-          <input class="entree" type="date" id="e-date" required>
+          <div class="pop-wrap"><input type="hidden" id="e-date"><button type="button" class="entree pop-champ" id="e-date-btn" aria-haspopup="dialog" aria-expanded="false"><span>Choisir la date</span><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></button>
+            <div class="pop pop-cal" id="pop-date" hidden></div></div>
           <select class="entree" id="e-module" required></select>
           <input class="entree" id="e-nom" placeholder="DS, CC2, partiel…" required>
-          <input class="entree" id="e-ch" placeholder="ids de chapitres, séparés par des virgules">
+          <div class="pop-wrap pop-ch-wrap"><input class="entree" id="e-ch" placeholder="Chapitres (vide = tout)" autocomplete="off" aria-haspopup="listbox" aria-expanded="false">
+            <div class="pop pop-ch" id="pop-ch" hidden></div></div>
           <button class="btn" type="submit">Ajouter l'éval</button>
         </form>
       </div>
@@ -290,8 +292,74 @@ function rendreCal(){
   $("t-vac").innerHTML = cal.vacances.map((p, k) => `<tr><td>${esc(p.nom)}</td><td>${esc(p.debut)}</td><td>${esc(p.fin)}</td><td><button class="lien" data-del-vac="${k}">supprimer</button></td></tr>`).join("") || `<tr><td colspan="4" class="vide-txt">Aucune période (samedi et dimanche sont déjà neutres).</td></tr>`;
 }
 $("f-eval").addEventListener("submit", e => { e.preventDefault(); if(!$("e-module").value) return toast("Crée d'abord un module");
+  if(!$("e-date").value){ ouvrirDate(); return toast("Choisis la date de l'éval"); }
   cal.evals.push({id:Date.now().toString(36), date:$("e-date").value, module:$("e-module").value, nom:$("e-nom").value.trim(), chapitres:$("e-ch").value.split(",").map(s => s.trim()).filter(Boolean)});
-  e.target.reset(); rendreCal(); toast("Ajoutée, pense à enregistrer"); });
+  const mod = $("e-module").value; e.target.reset(); $("e-module").value = mod; choisirDate(""); fermerPops(); rendreCal(); toast("Ajoutée, pense à enregistrer"); });
+/* ---------- sélecteur de date de l'éval (calendrier déroulant) ---------- */
+let popMois = (() => { const d = new Date(); d.setDate(1); return d; })();
+function choisirDate(j){
+  $("e-date").value = j;
+  $("e-date-btn").firstElementChild.textContent = j ? new Date(j+"T12:00").toLocaleDateString("fr-FR", {weekday:"short", day:"numeric", month:"short", year:"numeric"}) : "Choisir la date";
+  $("e-date-btn").classList.toggle("rempli", !!j);
+}
+function rendrePopDate(){
+  const auj = ymd(new Date()), choisi = $("e-date").value, d0 = popMois, nb = new Date(d0.getFullYear(), d0.getMonth() + 1, 0).getDate(), decal = (d0.getDay() + 6) % 7;
+  let h = `<div class="cal-tete"><button type="button" data-pnav="-1" aria-label="Mois précédent">‹</button><h4>${MOIS(d0)}</h4><button type="button" data-pnav="1" aria-label="Mois suivant">›</button></div><div class="cal-jours">${["L","M","M","J","V","S","D"].map(x => `<span class="ent">${x}</span>`).join("")}${"<span></span>".repeat(decal)}`;
+  for(let k = 1; k <= nb; k++){
+    const j = ymd(new Date(d0.getFullYear(), d0.getMonth(), k)), w = new Date(j+"T12:00").getDay(), ev = cal.evals.filter(e => e.date === j), v = cal.vacances.find(p => j >= p.debut && j <= p.fin);
+    const c = ["cal-j"]; if(w === 0 || w === 6) c.push("we"); if(j < auj) c.push("passe"); if(j === auj) c.push("auj"); if(v) c.push("vac"); if(ev.length) c.push("eval"); if(j === choisi) c.push("debut", "fin");
+    const titre = [v && "Vacances : " + v.nom, ...ev.map(e => "Éval : " + e.nom + " (" + nomModule(e.module) + ")")].filter(Boolean).join(" · ");
+    h += `<button type="button" class="${c.join(" ")}" data-pj="${j}"${titre ? ` title="${esc(titre)}"` : ""}>${k}</button>`;
+  }
+  $("pop-date").innerHTML = h + `</div><div class="pop-pied"><button type="button" class="lien" data-pj="${auj}">aujourd'hui</button><button type="button" class="lien" data-pj="${plusJours(auj, 7)}">dans 7 j</button><button type="button" class="lien" data-pj="${plusJours(auj, 14)}">dans 14 j</button></div>`;
+}
+function fermerPops(sauf){
+  [["pop-date","e-date-btn"],["pop-ch","e-ch"]].forEach(([p, b]) => { if(p !== sauf){ $(p).hidden = true; $(b).setAttribute("aria-expanded", "false"); } });
+}
+function ouvrirDate(){
+  const j = $("e-date").value; if(j){ const d = new Date(j+"T12:00"); popMois = new Date(d.getFullYear(), d.getMonth(), 1); }
+  fermerPops("pop-date"); rendrePopDate(); $("pop-date").hidden = false; $("e-date-btn").setAttribute("aria-expanded", "true");
+}
+$("e-date-btn").onclick = () => { M.son("tap"); $("pop-date").hidden ? ouvrirDate() : fermerPops(); };
+$("pop-date").addEventListener("click", e => {
+  const n = e.target.closest("[data-pnav]");
+  if(n){ popMois = new Date(popMois.getFullYear(), popMois.getMonth() + +n.dataset.pnav, 1); M.son("tap"); return rendrePopDate(); }
+  const b = e.target.closest("[data-pj]"); if(!b) return;
+  M.son("tap"); choisirDate(b.dataset.pj); fermerPops(); $("e-nom").focus({preventScroll:true});
+});
+/* ---------- menu des chapitres du module choisi ---------- */
+const titresCh = {};   // module -> {id chapitre: "n. titre"}
+async function chargerTitres(mid){
+  if(titresCh[mid]) return titresCh[mid];
+  const m = modulesListe.find(x => x.id === mid) || {}, t = {};
+  await Promise.all((m.chapitres || []).map(ch => fetch(`banques/${mid}/${ch}.json`).then(r => r.ok ? r.json() : null).catch(() => null)
+    .then(j => { if(j) t[ch] = (j.ordre != null ? j.ordre + ". " : "") + (j.titre || ""); })));
+  return titresCh[mid] = t;
+}
+const chSaisis = () => $("e-ch").value.split(",").map(s => s.trim()).filter(Boolean);
+async function rendrePopCh(){
+  const mid = $("e-module").value, m = modulesListe.find(x => x.id === mid);
+  if(!m || !(m.chapitres || []).length){ $("pop-ch").innerHTML = `<p class="vide-txt">Ce module n'a pas de chapitre.</p>`; return; }
+  const t = titresCh[mid] || {}, pris = chSaisis();
+  $("pop-ch").innerHTML = `<label class="pop-opt tout"><input type="checkbox" data-tout ${pris.length ? "" : "checked"}><span>Tout le module</span></label>`
+    + m.chapitres.map(ch => `<label class="pop-opt"><input type="checkbox" data-ch="${esc(ch)}" ${pris.includes(ch) ? "checked" : ""}><span>${esc(t[ch] || ch)}<small>${esc(ch)}</small></span></label>`).join("");
+  if(!titresCh[mid]){ await chargerTitres(mid); if(!$("pop-ch").hidden && $("e-module").value === mid) rendrePopCh(); }
+}
+function ouvrirCh(){ if(!$("pop-ch").hidden) return; fermerPops("pop-ch"); $("pop-ch").hidden = false; $("e-ch").setAttribute("aria-expanded", "true"); rendrePopCh(); }
+$("e-ch").addEventListener("focus", ouvrirCh);
+$("e-ch").addEventListener("click", ouvrirCh);
+$("e-ch").addEventListener("input", () => { if(!$("pop-ch").hidden) rendrePopCh(); });
+$("pop-ch").addEventListener("change", e => {
+  const m = modulesListe.find(x => x.id === $("e-module").value) || {chapitres:[]};
+  if(e.target.dataset.tout != null) $("e-ch").value = "";
+  else { const pris = new Set(chSaisis()); e.target.checked ? pris.add(e.target.dataset.ch) : pris.delete(e.target.dataset.ch);
+    $("e-ch").value = m.chapitres.filter(c => pris.has(c)).concat([...pris].filter(c => !m.chapitres.includes(c))).join(", "); }
+  M.son("tap"); rendrePopCh();
+});
+$("e-module").addEventListener("change", () => { $("e-ch").value = ""; chargerTitres($("e-module").value); if(!$("pop-ch").hidden) rendrePopCh(); });
+document.addEventListener("pointerdown", e => { if(!e.target.closest(".pop-wrap")) fermerPops(); });
+document.addEventListener("keydown", e => { if(e.key === "Escape" && (!$("pop-date").hidden || !$("pop-ch").hidden)){ fermerPops(); } });
+$("f-eval").addEventListener("focusin", e => { if(!e.target.closest(".pop-wrap")) fermerPops(); });
 /* ---------- calendrier interactif des vacances ---------- */
 const sel = {debut:"", fin:"", survol:""};
 let calDebut = (() => { const d = new Date(); d.setDate(1); return d; })();

@@ -307,6 +307,29 @@ body.hub:not(.dedans) .modules{display:none}
 .cal-j.eval::after{content:"";position:absolute;bottom:4px;left:50%;width:5px;height:5px;margin-left:-2.5px;border-radius:50%;background:var(--braise-3);box-shadow:0 0 6px var(--braise-2)}
 .cal-legende{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:11px;color:var(--gris-2);margin-top:12px}
 .cal-legende i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+/* popovers du formulaire d'éval (date + chapitres) */
+.fenetre:has(.pop:not([hidden])){z-index:30}
+.pop-wrap{position:relative;display:flex}
+.pop-wrap>.entree{flex:1 1 auto}
+.pop-champ{all:unset;box-sizing:border-box;font:inherit;font-size:14px;color:var(--gris-2);background:#0d0d0d;border:1px solid #444;border-radius:6px;padding:8px 10px;display:flex;align-items:center;justify-content:space-between;gap:12px;min-width:190px;cursor:pointer}
+.pop-champ.rempli{color:var(--blanc)}
+.pop-champ:hover,.pop-champ[aria-expanded="true"]{border-color:var(--violet-clair)}
+.pop-champ:focus-visible{outline:none;border-color:var(--violet-clair);box-shadow:0 0 0 3px rgba(127,73,180,.3)}
+.pop-champ svg{color:var(--violet-pale);flex:none}
+.pop-ch-wrap{min-width:240px}
+.pop{position:absolute;top:calc(100% + 6px);left:0;z-index:40;background:#111;border:1px solid var(--violet);border-radius:8px;box-shadow:0 14px 40px rgba(0,0,0,.6),var(--glow);padding:12px}
+.pop-cal{width:300px}
+.pop-cal .cal-tete{margin-bottom:8px}.pop-cal h4{margin:0;flex:1;text-align:center;font-size:13px;color:var(--violet-clair);text-transform:capitalize}
+.pop-cal .cal-j{height:34px}
+.pop-pied{display:flex;justify-content:space-between;gap:8px;margin-top:10px;padding-top:8px;border-top:1px solid #2a2a2a;font-size:12px}
+.pop-ch{width:max(100%,320px);max-height:320px;overflow:auto;padding:6px}
+.pop-opt{display:flex;align-items:flex-start;gap:10px;padding:7px 8px;border-radius:6px;cursor:pointer;font-size:13px;color:var(--gris)}
+.pop-opt:hover{background:rgba(127,73,180,.2)}
+.pop-opt input{accent-color:var(--violet);margin-top:2px}
+.pop-opt span{display:flex;flex-direction:column;gap:1px}
+.pop-opt small{font-size:10px;color:var(--gris-2)}
+.pop-opt.tout{border-bottom:1px solid #2a2a2a;border-radius:6px 6px 0 0;margin-bottom:4px;color:var(--violet-pale)}
+@media (max-width:760px){.pop-wrap{flex:1 1 100%}.pop-cal{width:min(100%,320px)}.pop-ch{width:100%}}
 @media (max-width:760px){.cal-mois-wrap{grid-template-columns:1fr}.cal-m+.cal-m{display:none}.cal-j{height:42px;font-size:14px}}
 
 /* hub : vues Classement (podium) et Joueurs (Messenger) */
