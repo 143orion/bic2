@@ -45,5 +45,44 @@
    "c-10-structures"
   ],
   "items": 326
+ },
+ {
+  "id": "algorithmique",
+  "nom": "Algorithmique",
+  "icone": "⌗",
+  "bientot": true,
+  "theme": {
+   "bg": "#1b1b1e",
+   "fg": "#CFCFCF",
+   "ac": "#7F49B4"
+  },
+  "chapitres": [],
+  "items": 0
+ },
+ {
+  "id": "modelisation-sql",
+  "nom": "Modélisation & SQL",
+  "icone": "⛁",
+  "bientot": true,
+  "theme": {
+   "bg": "#1b1b1e",
+   "fg": "#CFCFCF",
+   "ac": "#7F49B4"
+  },
+  "chapitres": [],
+  "items": 0
+ },
+ {
+  "id": "systemes-exploitation",
+  "nom": "Systèmes d'exploitation",
+  "icone": "$_",
+  "bientot": true,
+  "theme": {
+   "bg": "#1b1b1e",
+   "fg": "#CFCFCF",
+   "ac": "#7F49B4"
+  },
+  "chapitres": [],
+  "items": 0
  }
 ]

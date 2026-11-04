@@ -433,7 +433,7 @@ async function rendreModules(){
   const reg = (E.config && E.config.modules) || {};
   $("mods-vide").hidden = !!modulesListe.length;
   $("t-mods").innerHTML = modulesListe.map((m, k) => { const r = reg[m.id] || {};
-    return `<tr data-m="${esc(m.id)}"><td>${esc(m.nom)} <small class="vide-txt">${esc(m.id)}</small></td><td><input type="checkbox" data-f="visible" ${r.visible === false ? "" : "checked"}></td>
+    return `<tr data-m="${esc(m.id)}"><td>${esc(m.nom)} <small class="vide-txt">${esc(m.id)}${m.bientot ? " · bientôt" : ""}</small></td><td><input type="checkbox" data-f="visible" ${r.visible === false ? "" : "checked"}></td>
       <td><input class="entree" type="number" data-f="ordre" value="${r.ordre ?? k}"></td><td><input class="entree" data-f="icone" value="${esc(r.icone ?? m.icone ?? "")}"></td><td>${(m.chapitres || []).length}</td></tr>`; }).join("");
   const exos = [];
   await Promise.all(modulesListe.flatMap(m => (m.chapitres || []).map(ch => fetch(`banques/${m.id}/${ch}.json`).then(r => r.ok ? r.json() : null).catch(() => null)

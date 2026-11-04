@@ -419,14 +419,15 @@ function rendreModules(r, E){
     const t = m.theme || {}, st = r.modules[m.id] || {xp:0, reussies:0, maitrisees:0, exos:0};
     chargerPolice(t.googleFont);
     const total = m.items || 0, pct = total ? Math.min(100, Math.round((st.reussies + st.exos)/total*100)) : 0;
-    const c = document.createElement("button"); c.type = "button"; c.className = "carte"; c.dataset.exe = m.id + ".exe";
+    const c = document.createElement("button"); c.type = "button"; c.className = "carte" + (m.bientot ? " bientot" : ""); c.dataset.exe = m.id + ".exe";
     c.style.cssText = `--i:${i};${t.bg ? "--m-bg:"+t.bg+";" : ""}${t.fg ? "--m-fg:"+t.fg+";" : ""}${t.ac ? "--m-ac:"+t.ac+";" : ""}${t.onAc ? "--m-on-ac:"+t.onAc+";" : ""}${t.font ? "--m-font:"+t.font+";" : ""}`;
     const nbCh = (m.chapitres || []).length, ev = prochaine[m.id], j = ev ? ecartJours(auj, ev.date) : 0, nv = ev ? nivEval(j) : "";
     if(ev){ c.classList.add("a-eval"); if(nv !== "loin") c.classList.add("niv-" + nv); }
     c.innerHTML = `${ev && nv !== "loin" ? `<span class="tampon" title="${esc(ev.nom)} · ${esc(new Date(ev.date+"T12:00").toLocaleDateString("fr-FR",{weekday:"long", day:"numeric", month:"long"}))}"><b>${quandEval(j)}</b><small>${esc(ev.nom)}</small></span>` : ""}<span class="ic" aria-hidden="true">${esc(m.icone || "▣")}</span>
       <span class="nom">${esc(m.nom)}</span>
-      <span class="info">${nbCh} chapitre${nbCh > 1 ? "s" : ""} · ${nf(st.xp)} XP${total ? " · " + pct + " %" : ""}${st.maitrisees ? " · " + st.maitrisees + " ✓" : ""}</span>
-      ${ev && nv === "loin" ? `<span class="ev-tag"><i></i>${esc(ev.nom)} · ${quandEval(j)}</span>` : ""}<span class="prog"><i style="width:${pct}%"></i></span>`;
+      <span class="info">${m.bientot ? "coming soon" : `${nbCh} chapitre${nbCh > 1 ? "s" : ""} · ${nf(st.xp)} XP${total ? " · " + pct + " %" : ""}${st.maitrisees ? " · " + st.maitrisees + " ✓" : ""}`}</span>
+      ${ev && nv === "loin" ? `<span class="ev-tag"><i></i>${esc(ev.nom)} · ${quandEval(j)}</span>` : ""}${m.bientot ? "" : `<span class="prog"><i style="width:${pct}%"></i></span>`}`;
+    if(m.bientot){ c.setAttribute("aria-disabled", "true"); c.tabIndex = -1; g.appendChild(c); return; }
     c.addEventListener("pointerenter", e => { if(e.pointerType === "mouse" && performance.now() - modulesDepuis >= 1000) M.son("hover"); });
     c.addEventListener("click", () => {
       M.son("tap");
@@ -639,7 +640,7 @@ function rendreProfilPage(){
 
   /* choix des plaques */
   const opts = RANGS.map((n, k) => ({id:"r" + k, nom:n, verrou:k*10 > inf.niveau ? `Débloquée au niveau ${k*10}` : "", sous:k*10 > inf.niveau ? `🔒 niveau ${k*10}` : `niveaux ${k*10}${k < 10 ? "–" + (k*10+9) : "+"}`}))
-    .concat(modulesListe.map(m => { const ok = inf.deb.includes("m:" + m.id); return {id:"m:" + m.id, nom:m.nom, verrou:ok ? "" : `Complète ${m.nom} (toutes les questions + tous les exos)`, sous:ok ? "module complété" : "🔒 module à compléter"}; }));
+    .concat(modulesListe.filter(m => !m.bientot).map(m => { const ok = inf.deb.includes("m:" + m.id); return {id:"m:" + m.id, nom:m.nom, verrou:ok ? "" : `Complète ${m.nom} (toutes les questions + tous les exos)`, sous:ok ? "module complété" : "🔒 module à compléter"}; }));
   $("p-choix").replaceChildren(...opts.map(o => {
     const b = document.createElement("button"); b.type = "button"; b.className = "p-opt" + (o.verrou ? " verrou" : "");
     b.dataset.id = o.id; if(o.verrou) b.dataset.verrou = o.verrou;
@@ -739,7 +740,7 @@ function rendreHeat(r){
 
 /* ---------- progression par module ---------- */
 function rendreModsProfil(r){
-  const mods = modulesVisibles();
+  const mods = modulesVisibles().filter(m => !m.bientot);
   $("p-mods").replaceChildren(...mods.map(m => {
     const st = r.modules[m.id] || {xp:0, reussies:0, exos:0, maitrisees:0}, tot = m.items || 0, n = st.reussies + st.exos, pct = tot ? Math.min(100, Math.round(n/tot*100)) : 0;
     const li = document.createElement("li");

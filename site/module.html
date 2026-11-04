@@ -1599,6 +1599,12 @@ if(mod) appliquerTheme(mod.theme);
 M.monterHeader({page:"module", module:{id:S.mod.id, nom:((S.mod.icone ? S.mod.icone + " " : "") + S.mod.nom)}});
 const pInit = M.init({module:S.mod.id});
 
+if(mod && mod.bientot){
+  await pInit;
+  L.innerHTML = `<section class="fenetre l-vide" data-titre="coming-soon.log"><p><b>${esc(mod.nom)} — coming soon.</b></p>
+    <p class="vide-txt">Ce module n'est pas encore disponible.</p><div class="actions"><a class="btn" href="index.html#modules">Retour au hub</a></div></section>`;
+  return;
+}
 if(!mod){
   await pInit;
   L.innerHTML = `<section class="fenetre l-vide" data-titre="erreur.log"><p><b>Module « ${esc(idMod || "(aucun)")} » introuvable.</b></p>

@@ -168,6 +168,11 @@ a{color:inherit}
 .carte .prog i{position:absolute;inset:0 auto 0 0;background:var(--m-ac)}
 .carte.vide{background:transparent;color:inherit;border:2px dashed currentColor;opacity:.45;align-items:center;justify-content:center;font-size:15px;box-shadow:none}
 .carte.vide::before{content:none}
+.carte.bientot{cursor:not-allowed;border-style:dashed;box-shadow:none}
+.carte.bientot .ic,.carte.bientot .nom,.carte.bientot .info{opacity:.5;filter:grayscale(.6)}
+.carte.bientot::before{opacity:.5}
+.carte.bientot:hover{transform:none}
+.carte.bientot .info{text-transform:uppercase;letter-spacing:.12em;font-size:12px}
 @keyframes pop{from{opacity:0;transform:translateY(18px) scale(.94)}}
 
 /* ---------- responsive & accessibilité ---------- */
@@ -274,7 +279,7 @@ body.hub:not(.dedans) .modules{display:none}
 @keyframes tampon{50%{transform:rotate(8deg) scale(1.08)}}
 .carte .ev-tag{font-size:11px;display:inline-flex;align-items:center;gap:6px;padding:3px 9px;border-radius:999px;width:max-content;background:color-mix(in srgb,var(--m-fg) 12%,transparent)}
 .carte .ev-tag i{width:7px;height:7px;border-radius:50%;background:var(--violet-clair)}
-.grille.focus-on .carte:not(.a-eval):not(.vide){filter:saturate(.4) brightness(.7);transition:filter .3s}
+.grille.focus-on .carte:not(.a-eval):not(.vide):not(.bientot){filter:saturate(.4) brightness(.7);transition:filter .3s}
 .grille.focus-on .carte:not(.a-eval):not(.vide):hover{filter:none}
 @media (prefers-reduced-motion:reduce){.carte.niv-chaud .tampon{animation:none}}
 
