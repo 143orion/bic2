@@ -57,6 +57,16 @@ function moduleComplet(st, m){
   const tot = Math.floor(+(m && m.items) || 0);
   return tot > 0 && !!st && Math.max(0, Math.floor(+st.reussies || 0)) + Math.max(0, Math.floor(+st.exos || 0)) >= tot;
 }
+/* placeholders créés depuis le panel (config.placeholders = [{id, nom, icone, bg, ac}]) → entrées de type liste.json, bientot:true */
+function lumHex(h){ const n = parseInt(h.slice(1), 16), c = k => { const v = ((n >> k) & 255)/255; return v <= .03928 ? v/12.92 : Math.pow((v + .055)/1.055, 2.4); }; return .2126*c(16) + .7152*c(8) + .0722*c(0); }
+function placeholders(cfg){
+  const hex = (v, d) => typeof v === "string" && /^#[0-9a-f]{6}$/i.test(v) ? v : d;
+  return ((cfg && cfg.placeholders) || []).filter(p => p && typeof p.id === "string" && p.id && typeof p.nom === "string" && p.nom).map(p => {
+    const bg = hex(p.bg, "#1b1b1e"), ac = hex(p.ac, "#7F49B4");
+    return {id:p.id, nom:p.nom, icone:String(p.icone || "▣").slice(0, 4), bientot:true, chapitres:[], items:0,
+      theme:{bg, fg:lumHex(bg) > .4 ? "#141414" : "#CFCFCF", ac, onAc:lumHex(ac) > .4 ? "#141414" : "#FFFFFF"}};
+  });
+}
 function plaquesDebloquees(niveau, stats, liste){
   const out = []; for(let k = 0; k <= palierDe(niveau); k++) out.push("r" + k);
   for(const m of liste || []) if(m && m.id && moduleComplet(stats && stats[m.id], m)) out.push("m:" + m.id);
@@ -701,7 +711,7 @@ setInterval(() => {
 
 window.moteur = {
   init, charger, debutExo, finExo, reponse, contester, signaler, definirPseudo, definirPlaque, idControle,
-  plaque, plaquesDebloquees, plaqueEquipee, moduleComplet, palierDe,
+  plaque, placeholders, plaquesDebloquees, plaqueEquipee, moduleComplet, palierDe,
   monterHeader, bulle, son, titreHTML, GLYPHS,
   on(fn){ E.ecouteurs.add(fn); if(E.res) fn(E.res, E); return () => E.ecouteurs.delete(fn); },
   etat: () => E.res, interne: E, evenements: tousLesEvenements, contexte,

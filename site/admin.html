@@ -76,6 +76,17 @@
 
     <!-- MODULES -->
     <section class="vue" data-vue="modules" hidden>
+      <div class="fenetre" data-titre="placeholders.ini — modules à venir">
+        <p class="vide-txt">Un placeholder apparaît dans le hub avec « coming soon » (non ouvrable) et permet déjà de saisir des évals. Il disparaît du hub dès qu'un vrai module du même id existe.</p>
+        <form id="f-ph" class="ligne-form">
+          <input class="entree" id="ph-nom" placeholder="Nom du module" maxlength="40" required>
+          <input class="entree" id="ph-icone" placeholder="Icône" maxlength="4" size="4">
+          <label>Fond <input type="color" id="ph-bg" value="#1b1b1e"></label>
+          <label>Accent <input type="color" id="ph-ac" value="#7F49B4"></label>
+          <button class="btn" type="submit">Ajouter</button>
+        </form>
+        <table class="tableau"><thead><tr><th>Placeholder</th><th>Icône</th><th>Fond</th><th>Accent</th><th></th></tr></thead><tbody id="t-ph"></tbody></table>
+      </div>
       <div class="fenetre" data-titre="modules.ini — affichage dans le hub">
         <table class="tableau"><thead><tr><th>Module</th><th>Visible</th><th>Ordre</th><th>Icône</th><th>Chapitres</th></tr></thead><tbody id="t-mods"></tbody></table>
         <p class="vide-txt" id="mods-vide" hidden>Aucun module pour l'instant : ils apparaissent ici dès qu'un module est créé (fichier modules/liste.json).</p>
@@ -286,8 +297,15 @@ $("reset-config").onclick = () => { remplirConfig(D); toast("Valeurs de GAMIFICA
 let cal = clone(E.calendrier); cal.evals = cal.evals || []; cal.vacances = cal.vacances || [];
 let modulesListe = await fetch("modules/liste.json").then(r => r.ok ? r.json() : []).catch(() => []);
 if(!Array.isArray(modulesListe)) modulesListe = [];
+const listeJson = modulesListe.slice();
+function recomposerListe(){
+  modulesListe = listeJson.concat(M.placeholders(E.config).filter(p => !listeJson.some(m => m.id === p.id)));
+  const cur = $("e-module").value;
+  $("e-module").innerHTML = modulesListe.length ? modulesListe.map(m => `<option value="${esc(m.id)}">${esc(m.nom)}${m.bientot ? " (bientôt)" : ""}</option>`).join("") : `<option value="">(aucun module)</option>`;
+  if(cur && modulesListe.some(m => m.id === cur)) $("e-module").value = cur;
+}
 const nomModule = id => (modulesListe.find(m => m.id === id) || {}).nom || id;
-$("e-module").innerHTML = modulesListe.length ? modulesListe.map(m => `<option value="${esc(m.id)}">${esc(m.nom)}</option>`).join("") : `<option value="">(aucun module)</option>`;
+recomposerListe();
 function rendreCal(){
   cal.evals.sort((a,b) => a.date < b.date ? -1 : 1);
   $("t-evals").innerHTML = cal.evals.map((e, k) => `<tr><td>${esc(e.date)}</td><td>${esc(nomModule(e.module))}</td><td>${esc(e.nom)}</td><td>${esc((e.chapitres || []).join(", ") || "tout")}</td><td><button class="lien" data-del-eval="${k}">supprimer</button></td></tr>`).join("") || `<tr><td colspan="5" class="vide-txt">Aucune éval.</td></tr>`;
@@ -430,6 +448,7 @@ function xpRendue(q){
   return x == null ? null : Math.round(x);
 }
 async function rendreModules(){
+  rendrePh();
   const reg = (E.config && E.config.modules) || {};
   $("mods-vide").hidden = !!modulesListe.length;
   $("t-mods").innerHTML = modulesListe.map((m, k) => { const r = reg[m.id] || {};
@@ -444,6 +463,29 @@ async function rendreModules(){
   $("t-durees").innerHTML = exos.sort((a,b) => a.id < b.id ? -1 : 1).map(x => `<tr><td>${esc(x.id)}</td><td>${esc(x.m)} · ${esc(x.ch)}</td><td>${x.n}</td><td>${fmt(x.d || 0)}</td>
     <td><input class="entree" type="number" step="any" min="0" data-duree="${esc(x.id)}" value="${dur[x.id] ?? ""}" placeholder="${fmt(x.d || 0)}"></td></tr>`).join("");
 }
+function rendrePh(){
+  const l = (E.config && E.config.placeholders) || [];
+  $("t-ph").innerHTML = l.map((p, k) => `<tr><td>${esc(p.nom)} <small class="vide-txt">${esc(p.id)}${listeJson.some(m => m.id === p.id) ? " · remplacé par le vrai module" : ""}</small></td><td>${esc(p.icone || "▣")}</td>
+    <td><span style="display:inline-block;width:18px;height:18px;border-radius:4px;background:${esc(p.bg)}"></span> ${esc(p.bg)}</td><td><span style="display:inline-block;width:18px;height:18px;border-radius:4px;background:${esc(p.ac)}"></span> ${esc(p.ac)}</td>
+    <td><button class="lien" data-del-ph="${k}" type="button">supprimer</button></td></tr>`).join("") || `<tr><td colspan="5" class="vide-txt">Aucun placeholder créé ici.</td></tr>`;
+}
+async function sauverPh(liste, msg){
+  const nouveau = Object.assign(clone(E.config), {placeholders:liste, maj:Date.now()});
+  if(!nouveau.valeurs) nouveau.valeurs = clone(D);
+  await db.doc("config/actuelle").set(nouveau); E.config = nouveau;
+  recomposerListe(); rendrePh(); rendreCal(); await rendreModules(); toast(msg);
+}
+$("f-ph").addEventListener("submit", async e => { e.preventDefault();
+  const nom = $("ph-nom").value.trim(), id = nom.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  if(!nom || !id) return toast("Donne un nom au module");
+  if(modulesListe.some(m => m.id === id)) return toast("Un module avec cet id existe déjà (" + id + ")");
+  try{ await sauverPh(((E.config && E.config.placeholders) || []).concat({id, nom, icone:$("ph-icone").value.trim() || "▣", bg:$("ph-bg").value, ac:$("ph-ac").value}), "Placeholder ajouté"); e.target.reset(); $("ph-bg").value = "#1b1b1e"; $("ph-ac").value = "#7F49B4"; }
+  catch(err){ toast("Échec de l'enregistrement : " + (err.message || err)); } });
+$("t-ph").addEventListener("click", async e => { const b = e.target.closest("[data-del-ph]"); if(!b) return;
+  const l = ((E.config && E.config.placeholders) || []).slice(), p = l[+b.dataset.delPh]; if(!p) return;
+  if(cal.evals.some(ev => ev.module === p.id) && !confirm("Des évals utilisent ce placeholder : elles garderont son id sans nom. Supprimer quand même ?")) return;
+  l.splice(+b.dataset.delPh, 1);
+  try{ await sauverPh(l, "Placeholder supprimé"); }catch(err){ toast("Échec : " + (err.message || err)); } });
 $("save-mods").onclick = e => occupe(e.currentTarget, $("msg-mods"), async () => {
   const modules = {}, durees = {};
   document.querySelectorAll("#t-mods tr[data-m]").forEach(tr => { modules[tr.dataset.m] = {visible:tr.querySelector('[data-f="visible"]').checked, ordre:+tr.querySelector('[data-f="ordre"]').value || 0, icone:tr.querySelector('[data-f="icone"]').value}; });

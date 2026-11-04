@@ -217,6 +217,29 @@ const SCENARIOS = {
     await capture(neo, `acces-6-neo-valide-${app}`);
     return neo;
   },
+  /* placeholders de modules créés depuis le panel (nom, icône, 2 couleurs) → hub « coming soon » + évals */
+  async placeholders(app){
+    const pg = await page(app);
+    pg.on("pageerror", e => erreurs.push(`[${app}] placeholders: ${e.message}`));
+    await pg.goto(URL0 + "admin.html?mock=adam&reset"); await pg.waitForFunction(() => window.moteur && window.moteur.etat()); await attendre(800);
+    await pg.click('#onglets [data-v="modules"]'); await attendre(400);
+    await pg.fill("#ph-nom", "Réseaux & Télécoms"); await pg.fill("#ph-icone", "@");
+    await pg.$eval("#ph-bg", e => { e.value = "#102030"; }); await pg.$eval("#ph-ac", e => { e.value = "#ff8800"; });
+    await pg.click('#f-ph button[type="submit"]'); await attendre(800);
+    await capture(pg, `placeholders-1-admin-${app}`);
+    const r = await pg.evaluate(() => ({ph:(window.__mock.base()["config/actuelle"] || {}).placeholders, opt:[...document.querySelectorAll("#e-module option")].map(o => o.value)}));
+    if(!r.ph || r.ph.length !== 1 || r.ph[0].id !== "reseaux-telecoms" || r.ph[0].ac !== "#ff8800") erreurs.push(`[${app}] placeholder non enregistré ${JSON.stringify(r.ph)}`);
+    if(!r.opt.includes("reseaux-telecoms")) erreurs.push(`[${app}] placeholder absent du menu des évals`);
+    await pg.goto(URL0 + "index.html?mock=mia#modules"); await pg.waitForFunction(() => window.moteur && window.moteur.etat()); await attendre(900);
+    const c = await pg.$$eval(".carte.bientot", l => l.map(x => x.dataset.exe));
+    if(!c.includes("reseaux-telecoms.exe")) erreurs.push(`[${app}] carte placeholder absente du hub ${JSON.stringify(c)}`);
+    await capture(pg, `placeholders-2-hub-${app}`);
+    await pg.goto(URL0 + "admin.html?mock=adam"); await pg.waitForFunction(() => window.moteur && window.moteur.etat()); await attendre(800);
+    await pg.click('#onglets [data-v="modules"]'); await pg.click("[data-del-ph]"); await attendre(800);
+    const ap = await pg.evaluate(() => (window.__mock.base()["config/actuelle"] || {}).placeholders);
+    if(ap && ap.length) erreurs.push(`[${app}] placeholder non supprimé`);
+    return pg;
+  },
   /* module Programmation C : éditeur C (interpréteur JSCPP dans un Web Worker) dans un exo Classique */
   async editeurC(app){
     const pg = await page(app); await pg.goto(URL0 + "module.html?mock=mia&reset#programmation-c");

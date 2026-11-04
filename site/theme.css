@@ -1376,3 +1376,4 @@ body.en-session .pan-bouton{display:none}
   .pan-corps{padding:12px}
 }
 @media (prefers-reduced-motion:reduce){.panneau{transition:none!important}}
+.ligne-form{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:10px 0}.ligne-form label{display:inline-flex;gap:6px;align-items:center;font-size:13px}.ligne-form input[type=color]{width:34px;height:28px;padding:0;border:0;background:none}
