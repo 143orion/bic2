@@ -55,6 +55,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
+      - name: Anti-cache (version du commit sur les scripts et le CSS locaux)
+        run: sed -i -E "s#(src|href)=\"((firebase-config|firebase-adapter|xp)\.js|theme\.css)\"#\1=\"\2?v=${GITHUB_SHA::8}\"#g" site/*.html
       - uses: actions/upload-pages-artifact@v3
         with:
           path: site

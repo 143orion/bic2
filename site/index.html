@@ -345,7 +345,7 @@ $("annonce-x").onclick = () => { const a = M.interne.annonce; annonceVue = Strin
 let modulesListe = [];
 const nivEval = j => j <= 3 ? "chaud" : j <= 14 ? "eval" : "loin";
 const quandEval = j => j === 0 ? "J" : "J-" + j;
-const toutesListe = () => modulesListe.concat(M.placeholders(M.interne.config).filter(p => !modulesListe.some(m => m.id === p.id)));
+const toutesListe = () => modulesListe.concat((M.placeholders ? M.placeholders(M.interne.config) : []).filter(p => !modulesListe.some(m => m.id === p.id)));
 const nomMod = id => { const m = toutesListe().find(x => x.id === id); return m ? m.nom : id; };
 let evMois = (() => { const d = new Date(); return new Date(d.getFullYear(), d.getMonth(), 1); })();
 function rendreEvals(E){

@@ -299,7 +299,7 @@ let modulesListe = await fetch("modules/liste.json").then(r => r.ok ? r.json() :
 if(!Array.isArray(modulesListe)) modulesListe = [];
 const listeJson = modulesListe.slice();
 function recomposerListe(){
-  modulesListe = listeJson.concat(M.placeholders(E.config).filter(p => !listeJson.some(m => m.id === p.id)));
+  modulesListe = listeJson.concat((M.placeholders ? M.placeholders(E.config) : []).filter(p => !listeJson.some(m => m.id === p.id)));
   const cur = $("e-module").value;
   $("e-module").innerHTML = modulesListe.length ? modulesListe.map(m => `<option value="${esc(m.id)}">${esc(m.nom)}${m.bientot ? " (bientôt)" : ""}</option>`).join("") : `<option value="">(aucun module)</option>`;
   if(cur && modulesListe.some(m => m.id === cur)) $("e-module").value = cur;
