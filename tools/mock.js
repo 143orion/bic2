@@ -48,6 +48,11 @@ function demo(){
   s["demandes/omar"] = {pseudo:"x.0r", cree:Date.now() - 20*60e3, statut:"attente"};
   s["identites/eve"] = {prenom:"Ève", nom:"Inconnue", email:"eve@example.com"};
   s["demandes/eve"] = {pseudo:"eve", cree:Date.now() - 2*864e5, statut:"refusee", traite:Date.now() - 864e5};
+  /* calendrier : deux évals proches + une remarque de la classe */
+  const dans = k => new Date(Date.now() + k*864e5).toISOString().slice(0,10);
+  s["calendrier/principal"] = {evals:[{id:"ds1", date:dans(2), module:"programmation-c", nom:"DS1", chapitres:["c-4-controle","c-5-tableaux"]},
+    {id:"cc2", date:dans(11), module:"complement-electronique", nom:"CC2", chapitres:[]}], vacances:[], maj:1};
+  s["remarques_cal/lucas"] = {items:[{type:"date", ev:"cc2", nom:"CC2", m:"complement-electronique", date:dans(11), texte:"Le prof a dit le lendemain en TD", envoye:Date.now() - 2*3600e3}]};
   Object.assign(s, window.__seed || {});
   return s;
 }
@@ -76,6 +81,7 @@ function autorise(op, chemin, uid, apres, avant){
     return !!r && r.uid === uid;
   }
   if(col === "classement") return op === "read" ? estMembre(uid) : admin || (moi && estMembre(uid));
+  if(col === "remarques_cal") return op === "read" ? (moi || admin) : (admin || (moi && estMembre(uid)));
   if(col === "contestations" || col === "signalements") return op === "read" ? (moi || admin) : (admin || (moi && estMembre(uid)));
   if(col === "decisions") return op === "read" ? (moi || admin) : admin;
   if(col === "pseudos"){

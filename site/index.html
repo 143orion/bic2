@@ -56,7 +56,10 @@
 
 <main class="modules" id="modules">
   <section class="vue-hub" data-vue="modules">
-    <section class="fenetre evals" id="evals" data-titre="evals.txt — comptes à rebours" hidden><ul id="evals-liste"></ul></section>
+    <section class="fenetre evals" id="evals" data-titre="evals.txt — calendrier des évals">
+      <div class="ev-grille"><div class="cal ev-cal" id="ev-cal"></div>
+        <div><div class="ev-tete"><span>À venir</span><button class="ev-signal" id="ev-signal" type="button" title="Une éval à la mauvaise date, ou une éval qui manque ?" aria-label="Signaler une erreur dans le calendrier des évals">❗</button></div><ul id="evals-liste"></ul></div></div>
+    </section>
     <h2>Modules</h2>
     <div class="grille" id="grille"></div>
   </section>
@@ -137,6 +140,18 @@
     <div class="actions"><button class="btn plein" type="submit">Valider</button><button class="btn" type="button" id="annuler-pseudo">Plus tard</button><span class="erreur-txt" id="e-pseudo"></span></div>
   </form>
 </div>
+<div class="modale" id="m-rem" hidden>
+  <form class="fenetre" data-titre="evals.txt — signaler à Adam" id="f-rem">
+    <p>Une éval à la mauvaise date, ou une éval qui manque ? Adam reçoit ta remarque et corrige le calendrier.</p>
+    <div class="rem-types" role="radiogroup" aria-label="Type de remarque">
+      <label><input type="radio" name="rem-type" value="date" checked><span>Mauvaise date</span></label>
+      <label><input type="radio" name="rem-type" value="manque"><span>Éval manquante</span></label>
+    </div>
+    <label class="champ" id="rem-ev-l">Quelle éval ?<select id="rem-ev"></select></label>
+    <label class="champ">Explications (facultatif)<textarea id="rem-txt" maxlength="300" placeholder="ex. le DS1 est le 14, pas le 12 · CC3 d'élec le 2 déc. sur Thévenin…"></textarea></label>
+    <div class="actions"><button class="btn plein" type="submit">Envoyer</button><button class="btn" type="button" id="annuler-rem">Annuler</button><span class="erreur-txt" id="e-rem"></span></div>
+  </form>
+</div>
 <div class="toast" id="toast" role="status"></div>
 
 <script src="firebase-config.js"></script>
@@ -144,7 +159,7 @@
 <script src="xp.js"></script>
 <script>
 (() => {
-const M = window.moteur, {esc, nf, ecartJours, ymd} = M.outils;
+const M = window.moteur, {esc, nf, ecartJours, ymd, plusJours} = M.outils;
 const $ = id => document.getElementById(id);
 const reduit = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const titre = $("titre"), slot = $("slot"), accueil = $("accueil");
@@ -326,18 +341,65 @@ function rendreAnnonce(E){
 }
 $("annonce-x").onclick = () => { const a = M.interne.annonce; annonceVue = String(a && a.maj); try{ localStorage.setItem("bic2.annonce", annonceVue); }catch(e){} $("annonce").hidden = true; M.son("tap"); };
 
-/* ---------- comptes à rebours des évals ---------- */
+/* ---------- évals : calendrier + liste (evals.txt) ---------- */
 let modulesListe = [];
+const nivEval = j => j <= 3 ? "chaud" : j <= 14 ? "eval" : "loin";
+const quandEval = j => j === 0 ? "J" : "J-" + j;
+const nomMod = id => { const m = modulesListe.find(x => x.id === id); return m ? m.nom : id; };
+let evMois = (() => { const d = new Date(); return new Date(d.getFullYear(), d.getMonth(), 1); })();
 function rendreEvals(E){
   const cal = E.calendrier || {}, auj = ymd(new Date()), fen = M.valeursPour(E.config, auj).evalFenetre;
-  const evs = (cal.evals || []).filter(e => e.date >= auj).sort((a,b) => a.date < b.date ? -1 : 1).slice(0, 6);
-  $("evals").hidden = !evs.length;
+  const toutes = (cal.evals || []).slice().sort((a,b) => a.date < b.date ? -1 : 1);
+  const evs = toutes.filter(e => e.date >= auj).slice(0, 6);
   $("evals-liste").innerHTML = evs.map(e => {
-    const j = ecartJours(auj, e.date), mod = modulesListe.find(m => m.id === e.module);
-    const quand = j === 0 ? "J" : "J-" + j;
-    return `<li class="${j <= 3 ? "chaud" : ""}"><span class="j">${quand}</span><span>${esc(e.nom)} <small>· ${esc(mod ? mod.nom : e.module)} · ${new Date(e.date+"T12:00").toLocaleDateString("fr-FR",{weekday:"short", day:"numeric", month:"short"})}</small></span>${j <= fen ? '<span class="mode">mode éval</span>' : ""}</li>`;
-  }).join("");
+    const j = ecartJours(auj, e.date);
+    return `<li class="${j <= 3 ? "chaud" : ""}"><span class="j">${quandEval(j)}</span><span>${esc(e.nom)} <small>· ${esc(nomMod(e.module))} · ${new Date(e.date+"T12:00").toLocaleDateString("fr-FR",{weekday:"short", day:"numeric", month:"short"})}</small></span>${j <= fen ? '<span class="mode">mode éval</span>' : ""}</li>`;
+  }).join("") || `<li class="vide-txt">Aucune éval à venir.</li>`;
+  /* calendrier du mois */
+  const d0 = evMois, nb = new Date(d0.getFullYear(), d0.getMonth() + 1, 0).getDate(), decal = (d0.getDay() + 6) % 7, vac = cal.vacances || [];
+  let h = `<div class="cal-tete"><button type="button" data-evnav="-1" aria-label="Mois précédent">‹</button><h4>${d0.toLocaleDateString("fr-FR", {month:"long", year:"numeric"})}</h4><button type="button" data-evnav="1" aria-label="Mois suivant">›</button></div>
+    <div class="cal-jours">${["L","M","M","J","V","S","D"].map(x => `<span class="ent">${x}</span>`).join("")}${"<span></span>".repeat(decal)}`;
+  for(let k = 1; k <= nb; k++){
+    const j = ymd(new Date(d0.getFullYear(), d0.getMonth(), k)), w = new Date(j+"T12:00").getDay(), ev = toutes.filter(e => e.date === j), v = vac.find(p => j >= p.debut && j <= p.fin);
+    const c = ["cal-j"]; if(w === 0 || w === 6) c.push("we"); if(j < auj) c.push("passe"); if(j === auj) c.push("auj"); if(v) c.push("vac");
+    if(ev.length) c.push("eval", j >= auj ? "ev-" + nivEval(ecartJours(auj, j)) : "ev-passe");
+    const titre = [v && "Vacances : " + v.nom, ...ev.map(e => e.nom + " · " + nomMod(e.module))].filter(Boolean).join("\n");
+    h += `<span class="${c.join(" ")}"${titre ? ` title="${esc(titre)}"` : ""}><b>${k}</b>${ev.length ? `<small>${esc(ev.map(e => e.nom).join(" · "))}</small>` : ""}</span>`;
+  }
+  $("ev-cal").innerHTML = h + `</div>`;
 }
+$("ev-cal").addEventListener("click", e => { const n = e.target.closest("[data-evnav]"); if(!n) return;
+  evMois = new Date(evMois.getFullYear(), evMois.getMonth() + +n.dataset.evnav, 1); M.son("tap"); rendreEvals(M.interne); });
+/* ---------- ❗ remarque sur le calendrier → remarques_cal/<uid> (lu par Adam seul) ---------- */
+const mr = $("m-rem");
+function majTypeRem(){ const t = document.querySelector('[name="rem-type"]:checked').value; $("rem-ev-l").hidden = t !== "date"; }
+$("ev-signal").onclick = () => {
+  M.son("tap"); const E = M.interne, auj = ymd(new Date());
+  const evs = ((E.calendrier && E.calendrier.evals) || []).filter(e => e.date >= plusJours(auj, -30)).sort((a,b) => a.date < b.date ? -1 : 1);
+  $("rem-ev").innerHTML = evs.map(e => `<option value="${esc(e.id || e.date + e.nom)}">${esc(e.nom)} · ${esc(nomMod(e.module))} · ${new Date(e.date+"T12:00").toLocaleDateString("fr-FR",{day:"numeric", month:"short"})}</option>`).join("");
+  const r = document.querySelector('[name="rem-type"][value="date"]'); r.disabled = !evs.length;
+  document.querySelector(`[name="rem-type"][value="${evs.length ? "date" : "manque"}"]`).checked = true;
+  $("rem-txt").value = ""; $("e-rem").textContent = ""; majTypeRem(); mr.hidden = false;
+};
+document.querySelectorAll('[name="rem-type"]').forEach(r => r.addEventListener("change", majTypeRem));
+$("annuler-rem").onclick = () => { mr.hidden = true; };
+mr.addEventListener("click", e => { if(e.target === mr) mr.hidden = true; });
+document.addEventListener("keydown", e => { if(e.key === "Escape" && !mr.hidden) mr.hidden = true; });
+$("f-rem").addEventListener("submit", async e => {
+  e.preventDefault(); const E = M.interne, type = document.querySelector('[name="rem-type"]:checked').value, texte = $("rem-txt").value.trim().slice(0, 300);
+  if(type === "manque" && !texte){ $("e-rem").textContent = "Dis-nous quelle éval manque (module, nom, date)"; $("rem-txt").focus(); return; }
+  const item = {type, texte, envoye:Date.now()};
+  if(type === "date"){ const ev = ((E.calendrier && E.calendrier.evals) || []).find(x => (x.id || x.date + x.nom) === $("rem-ev").value);
+    if(ev) Object.assign(item, {ev:ev.id || "", nom:ev.nom, m:ev.module, date:ev.date}); }
+  const b = e.submitter; if(b) b.disabled = true;
+  try{
+    if(!E.db || !E.uid) throw new Error("hors ligne");
+    const ref = E.db.doc("remarques_cal/" + E.uid), sn = await ref.get(), items = ((sn.exists && sn.data().items) || []).slice(-49);
+    items.push(item); await ref.set({items});
+    mr.hidden = true; toast("Envoyé à Adam, merci !");
+  }catch(err){ $("e-rem").textContent = "Impossible d'envoyer (accès en lecture seule ?)"; }
+  finally{ if(b) b.disabled = false; }
+});
 
 /* ---------- cartes de modules ---------- */
 let lecteurDispo = null;
@@ -350,17 +412,21 @@ function chargerPolice(gf){
 function rendreModules(r, E){
   const mods = modulesVisibles();
   const g = $("grille"); g.innerHTML = "";
+  const auj = ymd(new Date()), prochaine = {};
+  ((E.calendrier && E.calendrier.evals) || []).filter(e => e.date >= auj).sort((a,b) => a.date < b.date ? -1 : 1).forEach(e => { if(!prochaine[e.module]) prochaine[e.module] = e; });
+  g.classList.toggle("focus-on", Object.values(prochaine).some(e => ecartJours(auj, e.date) <= 3));
   mods.forEach((m, i) => {
     const t = m.theme || {}, st = r.modules[m.id] || {xp:0, reussies:0, maitrisees:0, exos:0};
     chargerPolice(t.googleFont);
     const total = m.items || 0, pct = total ? Math.min(100, Math.round((st.reussies + st.exos)/total*100)) : 0;
     const c = document.createElement("button"); c.type = "button"; c.className = "carte"; c.dataset.exe = m.id + ".exe";
     c.style.cssText = `--i:${i};${t.bg ? "--m-bg:"+t.bg+";" : ""}${t.fg ? "--m-fg:"+t.fg+";" : ""}${t.ac ? "--m-ac:"+t.ac+";" : ""}${t.onAc ? "--m-on-ac:"+t.onAc+";" : ""}${t.font ? "--m-font:"+t.font+";" : ""}`;
-    const nbCh = (m.chapitres || []).length;
-    c.innerHTML = `<span class="ic" aria-hidden="true">${esc(m.icone || "▣")}</span>
+    const nbCh = (m.chapitres || []).length, ev = prochaine[m.id], j = ev ? ecartJours(auj, ev.date) : 0, nv = ev ? nivEval(j) : "";
+    if(ev){ c.classList.add("a-eval"); if(nv !== "loin") c.classList.add("niv-" + nv); }
+    c.innerHTML = `${ev && nv !== "loin" ? `<span class="tampon" title="${esc(ev.nom)} · ${esc(new Date(ev.date+"T12:00").toLocaleDateString("fr-FR",{weekday:"long", day:"numeric", month:"long"}))}"><b>${quandEval(j)}</b><small>${esc(ev.nom)}</small></span>` : ""}<span class="ic" aria-hidden="true">${esc(m.icone || "▣")}</span>
       <span class="nom">${esc(m.nom)}</span>
       <span class="info">${nbCh} chapitre${nbCh > 1 ? "s" : ""} · ${nf(st.xp)} XP${total ? " · " + pct + " %" : ""}${st.maitrisees ? " · " + st.maitrisees + " ✓" : ""}</span>
-      <span class="prog"><i style="width:${pct}%"></i></span>`;
+      ${ev && nv === "loin" ? `<span class="ev-tag"><i></i>${esc(ev.nom)} · ${quandEval(j)}</span>` : ""}<span class="prog"><i style="width:${pct}%"></i></span>`;
     c.addEventListener("pointerenter", e => { if(e.pointerType === "mouse" && performance.now() - modulesDepuis >= 1000) M.son("hover"); });
     c.addEventListener("click", () => {
       M.son("tap");

@@ -226,13 +226,58 @@ body.hub:not(.dedans) .modules{display:none}
 .annonce .fermer{all:unset;cursor:pointer;position:absolute;top:6px;right:10px;z-index:2;width:22px;height:22px;text-align:center;color:transparent}
 .annonce[hidden]{display:none}
 .evals{margin:0 0 30px}
-.evals ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:10px 26px}
+.evals ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
 .evals li{display:flex;align-items:baseline;gap:10px;font-size:14px}
-.evals .j{font-weight:800;color:var(--blanc);font-size:20px;min-width:3.2ch}
-.evals .chaud .j{color:var(--braise-3);text-shadow:0 0 12px rgba(255,61,0,.6)}
+.evals .j{font-weight:800;color:var(--blanc);font-size:20px;min-width:3.2ch;white-space:nowrap}
+.evals .chaud .j{color:var(--braise-3);text-shadow:0 0 12px rgba(255,143,0,.5)}
 .evals small{color:var(--gris-2)}
 .evals .mode{font-size:10px;padding:1px 7px;border-radius:var(--r-pilule);background:var(--violet);color:#fff}
 .carte .ic{width:34px;height:34px;color:var(--m-ac);font-size:28px;line-height:1}
+/* evals.txt : calendrier du mois + liste des prochaines évals + ❗ */
+.ev-tete{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 12px;padding-bottom:8px;border-bottom:1px solid #2a2a2a;font-size:12px;color:var(--gris-2)}
+.ev-signal{all:unset;cursor:pointer;flex:none;width:30px;height:30px;display:grid;place-items:center;font-size:15px;border:1px dashed rgba(201,166,240,.5);border-radius:6px}
+.ev-signal:hover{background:rgba(127,73,180,.25);border-style:solid}
+.ev-signal:focus-visible{outline:2px solid var(--violet-pale);outline-offset:2px}
+.ev-grille{display:grid;grid-template-columns:minmax(0,560px) minmax(240px,1fr);gap:32px;align-items:start}
+.ev-cal{margin:0}
+.ev-cal .cal-tete h4{margin:0;flex:1;text-align:center;font-size:13px;color:var(--violet-clair);text-transform:capitalize}
+.ev-cal .cal-j{cursor:default;height:auto;min-height:44px;padding:4px 2px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:2px}
+.ev-cal .cal-j:hover{border-color:transparent}
+.ev-cal .cal-j b{font-weight:400}
+.ev-cal .cal-j small{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:9px;padding:1px 4px;border-radius:4px;background:var(--violet);color:#fff}
+.ev-cal .cal-j.eval::after{content:none}
+.ev-cal .cal-j.ev-eval{background:rgba(127,73,180,.22)}
+.ev-cal .cal-j.ev-chaud{background:rgba(255,143,0,.14);border-color:rgba(255,143,0,.55)}
+.ev-cal .cal-j.ev-chaud small{background:var(--braise-3);color:#141414;font-weight:800}
+.ev-cal .cal-j.ev-loin small{background:rgba(127,73,180,.6)}
+.ev-cal .cal-j.ev-passe small{background:#333;color:var(--gris-2)}
+.evals .vide-txt{font-size:13px}
+.rem-types{display:flex;gap:8px;margin:0 0 12px}
+.rem-types label{flex:1;cursor:pointer}
+.rem-types input{position:absolute;opacity:0;pointer-events:none}
+.rem-types span{display:block;text-align:center;padding:9px 10px;border:1px dashed rgba(201,166,240,.5);border-radius:6px;font-size:13px}
+.rem-types input:checked+span{background:var(--violet);border:1px solid var(--violet);color:#fff;font-weight:700}
+.rem-types input:disabled+span{opacity:.35;cursor:not-allowed}
+.rem-types input:focus-visible+span{outline:2px solid var(--violet-pale);outline-offset:2px}
+#f-rem .champ{margin-bottom:12px}
+#f-rem .champ[hidden]{display:none}
+@media (max-width:900px){.ev-grille{grid-template-columns:1fr;gap:18px}}
+@media (max-width:760px){.carte .tampon{right:-4px}.ev-cal .cal-j{min-height:40px}.ev-cal .cal-j small{font-size:8px;padding:0 2px}}
+
+/* cartes de modules : éval proche (tampon J-n). Une seule teinte par niveau : violet (≤ 14 j), ambre braise-3 (≤ 3 j) */
+.carte .tampon{position:absolute;top:-14px;right:-10px;z-index:2;transform:rotate(8deg);padding:8px 12px 6px;border:2px solid currentColor;border-radius:6px;background:#141414;font-family:var(--police);font-weight:800;text-align:center;line-height:1;color:var(--violet-pale);box-shadow:0 8px 18px rgba(0,0,0,.5)}
+.carte .tampon b{display:block;font-size:24px}
+.carte .tampon small{display:block;font-size:9px;letter-spacing:.08em;text-transform:uppercase;margin-top:4px}
+.carte.niv-eval{outline:2px dashed var(--violet-pale);outline-offset:4px}
+.carte.niv-chaud{outline:2px solid var(--braise-3);outline-offset:4px;box-shadow:0 0 28px rgba(255,143,0,.28),0 16px 40px rgba(0,0,0,.45)}
+.carte.niv-chaud .tampon{color:#141414;background:var(--braise-3);border-color:var(--braise-3);box-shadow:0 0 18px rgba(255,143,0,.55),0 8px 18px rgba(0,0,0,.5);animation:tampon 1.6s ease-in-out infinite}
+@keyframes tampon{50%{transform:rotate(8deg) scale(1.08)}}
+.carte .ev-tag{font-size:11px;display:inline-flex;align-items:center;gap:6px;padding:3px 9px;border-radius:999px;width:max-content;background:color-mix(in srgb,var(--m-fg) 12%,transparent)}
+.carte .ev-tag i{width:7px;height:7px;border-radius:50%;background:var(--violet-clair)}
+.grille.focus-on .carte:not(.a-eval):not(.vide){filter:saturate(.4) brightness(.7);transition:filter .3s}
+.grille.focus-on .carte:not(.a-eval):not(.vide):hover{filter:none}
+@media (prefers-reduced-motion:reduce){.carte.niv-chaud .tampon{animation:none}}
+
 .toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);z-index:40;padding:10px 16px;border:1px solid var(--violet);border-radius:6px;background:var(--noir);font-size:13px;opacity:0;transition:opacity .25s;pointer-events:none}
 .toast.on{opacity:1}
 

@@ -83,6 +83,11 @@ service cloud.firestore {
       allow read: if moi(uid) || admin();
       allow write: if admin() || (moi(uid) && membre() && seulement(['items']) && nouveau().items is list && nouveau().items.size() <= 300);
     }
+    // Remarques sur le calendrier des évals (❗ d'evals.txt) : écrites par le joueur, lues par lui et Adam
+    match /remarques_cal/{uid} {
+      allow read: if moi(uid) || admin();
+      allow write: if admin() || (moi(uid) && membre() && seulement(['items']) && nouveau().items is list && nouveau().items.size() <= 50);
+    }
     match /decisions/{uid} {
       allow read: if moi(uid) || admin();
       allow write: if admin();

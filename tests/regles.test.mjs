@@ -202,6 +202,14 @@ test("contestations / signalements : privés (joueur + admin)", async () => {
   await assertSucceeds(getDocs(collection(admin(), "contestations")));
   await assertFails(getDocs(collection(membre(), "contestations")));
 });
+test("remarques_cal : écrites par le membre, lues par lui et Adam seuls", async () => {
+  await assertSucceeds(setDoc(doc(membre(), "remarques_cal/mia"), {items: [{type: "manque", texte: "CC3", envoye: 1}]}));
+  await assertFails(setDoc(doc(membre(), "remarques_cal/mia"), {items: [], autre: 1}));
+  await assertFails(setDoc(doc(autre(), "remarques_cal/mia"), {items: []}));
+  await assertFails(getDoc(doc(autre(), "remarques_cal/mia")));
+  await assertSucceeds(getDocs(collection(admin(), "remarques_cal")));
+  await assertFails(getDocs(collection(membre(), "remarques_cal")));
+});
 test("racine verrouillée : aucun chemin non prévu", async () => {
   await assertFails(setDoc(doc(membre(), "nimporte/quoi"), {a: 1}));
   await assertFails(setDoc(doc(admin(), "nimporte/quoi"), {a: 1}));

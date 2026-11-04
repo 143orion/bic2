@@ -42,6 +42,9 @@
 
     <!-- CALENDRIER -->
     <section class="vue" data-vue="calendrier" hidden>
+      <div class="fenetre" data-titre="remarques.txt — signalées par la classe (❗ d'evals.txt)" id="f-rem" hidden>
+        <table class="tableau"><thead><tr><th>Joueur</th><th>Type</th><th>Éval</th><th>Explications</th><th>Le</th><th></th></tr></thead><tbody id="t-rem"></tbody></table>
+      </div>
       <div class="fenetre" data-titre="evals.txt">
         <table class="tableau"><thead><tr><th>Date</th><th>Module</th><th>Nom</th><th>Chapitres (vide = tout)</th><th></th></tr></thead><tbody id="t-evals"></tbody></table>
         <form class="actions" id="f-eval">
@@ -488,7 +491,7 @@ $("f-annonce").addEventListener("submit", e => { e.preventDefault();
 /* =====================================================================
    JOUEURS, CONTESTATIONS, SIGNALEMENTS (listes en direct)
    ===================================================================== */
-const L = {joueurs:{}, classement:{}, contestations:{}, signalements:{}};
+const L = {joueurs:{}, classement:{}, contestations:{}, signalements:{}, remarques_cal:{}};
 const profils = {};
 async function noms(ids){
   const manque = ids.filter(id => !(id in profils)); if(!manque.length || !E.user || !E.user.profiles) return;
@@ -498,11 +501,11 @@ const pseudo = uid => (L.joueurs[uid] && L.joueurs[uid].pseudo) || profils[uid] 
 function ecouter(col){
   db.collection(col).onSnapshot(s => { L[col] = {}; s.docs.forEach(d => L[col][d.id] = d.data()); rendreListes(); }, err => console.warn(col, err));
 }
-["joueurs","classement","contestations","signalements"].forEach(ecouter);
+["joueurs","classement","contestations","signalements","remarques_cal"].forEach(ecouter);
 M.on(() => rendreListes());
 
 async function rendreListes(){
-  const ids = [...new Set([...Object.keys(L.joueurs), ...Object.keys(L.contestations), ...Object.keys(L.signalements)])];
+  const ids = [...new Set([...Object.keys(L.joueurs), ...Object.keys(L.contestations), ...Object.keys(L.signalements), ...Object.keys(L.remarques_cal)])];
   await noms(ids);
   const js = Object.entries(L.joueurs).sort((a,b) => (b[1].maj || 0) - (a[1].maj || 0));
   $("joueurs-vide").hidden = !!js.length;
@@ -528,6 +531,11 @@ async function rendreListes(){
       <button class="btn" data-s="faux" data-r="1" ${da}>Item faux → ${lib} + raison</button>
       <button class="btn" data-s="faux" ${da}>Item faux → ${lib}</button>
       <button class="btn danger" data-s="rejet" data-r="1" ${da}>Rejeter + raison</button></td></tr>`; }).join("");
+  const rs = Object.entries(L.remarques_cal).flatMap(([uid, d]) => (d.items || []).map(it => ({uid, it}))).sort((a,b) => (b.it.envoye || 0) - (a.it.envoye || 0));
+  $("f-rem").hidden = !rs.length; badge("calendrier", rs.length);
+  $("t-rem").innerHTML = rs.map(({uid, it}) => `<tr><td>${esc(pseudo(uid))}</td><td>${it.type === "manque" ? "Éval manquante" : "Mauvaise date"}</td>
+    <td>${it.type === "date" ? `${esc(it.nom || "?")} · ${esc(nomModule(it.m || ""))} · ${esc(it.date || "")}` : "—"}</td><td>${esc(it.texte || "")}</td><td>${quand(it.envoye)}</td>
+    <td><button class="btn" data-rem-ok data-uid="${esc(uid)}" data-t="${esc(it.envoye)}">Traité ✓</button></td></tr>`).join("");
   const corr = (E.corrections && E.corrections.items) || {};
   const rai = (E.corrections && E.corrections.raisons) || {}, rej = (E.corrections && E.corrections.rejets) || [];
   $("l-corr").innerHTML = Object.entries(corr).map(([q, t]) => `<li>${esc(q)} — corrigé le ${quand(t)}${rai[q] ? " · « " + esc(rai[q]) + " »" : ""}</li>`)
@@ -549,6 +557,11 @@ document.querySelector('[data-vue="contestations"]').addEventListener("click", e
     await retirer("contestations", uid, it => it.ev !== ev);
     toast(c === "ok" ? "Validée : XP complète rendue" : "Refusée");
   });
+});
+document.querySelector('[data-vue="calendrier"]').addEventListener("click", e => {
+  const b = e.target.closest("[data-rem-ok]"); if(!b) return;
+  const {uid, t} = b.dataset;
+  occupe(b, null, async () => { await retirer("remarques_cal", uid, it => String(it.envoye) !== t); toast("Remarque retirée de la file"); });
 });
 /* « Envoyer à Claude » : copie un message prêt à coller dans une conversation du projet BIC2.exe */
 const rapportClaude = lst => {
