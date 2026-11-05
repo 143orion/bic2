@@ -20,6 +20,7 @@ const DEFAUT = {
   xpParMinute:20, qcm:7, qcmMulti:10, trous:10, controle:5, formatProduction:1.5, modeGuide:1.2, modeClassique:1.75, modeMock:2,
   concentrationDiv:90, concentrationMax:1.5, dureeSaisie:0.67,
   rattrapage:1.1,
+  progressionMax:1.5,   // multiplicateur d'XP en fin de module (×1 au début) ; réglable par module : config.modules[id].progMax
   exoSeuil1:0.30, exoSeuilN:0.15, exoPenalite:0.5, exoPassagesPleins:3, exoMultApres:0.5,
   repetitionJour:0.3, maitriseJours:3, maitriseBonus:15, maitriseMult:0.5, evalFenetre:14,
   precisionMin:10, precision:[[70,10],[80,20],[90,35],[100,50]],
@@ -80,6 +81,13 @@ function valeursPour(cfgDoc, jour){
   return Object.assign({}, DEFAUT, cfgDoc && cfgDoc.valeurs);
 }
 
+/* progression dans le module : ×1 sur la 1re notion → ×progMax sur la dernière (linéaire sur le parcours de notions) */
+const bornerProg = x => Math.max(1, Math.min(3, isFinite(+x) ? +x : 1));
+function progMaxModule(cfgDoc, id, v){
+  const r = cfgDoc && cfgDoc.modules && cfgDoc.modules[id];
+  return bornerProg(r && r.progMax != null && r.progMax !== "" ? r.progMax : (v || DEFAUT).progressionMax);
+}
+
 /* =====================================================================
    CALCUL PUR : journal → XP, niveau, série, sessions, détail par réponse
    ===================================================================== */
@@ -108,7 +116,7 @@ function calculer(evenements, ctx = {}){
     if(e.sd != null && isFinite(+e.sd)) x.sd = Math.max(0, +e.sd);
     if(cat){
       const it = cat[e.q]; if(!it) return null;
-      x.ty = it.type; x.d = +it.duree || 0; x.m = it.module; x.c = it.chapitre; x.ne = it.etapes || 1;
+      x.ty = it.type; x.d = +it.duree || 0; x.m = it.module; x.c = it.chapitre; x.ne = it.etapes || 1; x.pos = Math.max(0, Math.min(1, +it.pos || 0));
       const sd = it.dureesEtapes && it.dureesEtapes[x.e]; if(sd != null) x.sd = +sd; else delete x.sd;
     } else { x.d = Math.min(x.d, 120); if(x.sd != null) x.sd = Math.min(x.sd, x.d); }
     if(!TYPES.includes(x.ty) || x.e >= x.ne) return null;
@@ -185,6 +193,10 @@ function calculer(evenements, ctx = {}){
       } else { it.erreur = true; it.maitrise = false; it.jours.clear(); }
     }
     if(corrige){ const rs = ctx.corrections && ctx.corrections.raisons, r = rs && rs[e.q]; f.push("item corrigé : XP rendue" + (r ? " — " + r : "")); }
+    if(ok && e.ty !== "controle" && xp > 0){
+      const pm = progMaxModule(cfgDoc, e.m, v), mp = 1 + (pm - 1)*(e.pos || 0);
+      if(mp > 1.005){ xp *= mp; f.push("progression ×"+fmt(mp)); }
+    }
     if(ok && e.h){ const h = Math.min(e.h, v.indicesMax); xp *= Math.max(0, 1 - v.indiceCout*h); f.push(h+" indice"+(h>1?"s":"")+" −"+Math.round(v.indiceCout*h*100)+" %"); }
     const cum = effortJour[jour] || 0, plus = evl ? v.plafondEvalBonus : 0;
     const pm = cum < v.plafondSeuil1 + plus ? 1 : cum < v.plafondSeuil2 + plus ? v.plafondMult2 : v.plafondMult3;
@@ -258,6 +270,9 @@ function calculer(evenements, ctx = {}){
    ===================================================================== */
 function xpClassement(doc, cfgDoc, depuis, jusqua, toutTemps){
   const v = valeursPour(cfgDoc, "9999-12-31"), auj = jourDe(Date.now(), v.serieHeure);
+  /* plafond relevé du multiplicateur de progression le plus haut (sinon un joueur parfait en fin de module serait écrêté) */
+  const regs = Object.values((cfgDoc && cfgDoc.modules) || {}).filter(r => r && typeof r === "object");
+  const fp = regs.length ? Math.max(...regs.map(r => bornerProg(r.progMax != null && r.progMax !== "" ? r.progMax : v.progressionMax))) : bornerProg(v.progressionMax);
   let total = 0; const suspects = [];
   const jours = (doc && typeof doc.jours === "object" && doc.jours) || {};
   for(const [j, x] of Object.entries(jours)){
@@ -265,7 +280,7 @@ function xpClassement(doc, cfgDoc, depuis, jusqua, toutTemps){
     if((!toutTemps && v.classementDebut && j < v.classementDebut) || (depuis && j < depuis) || (jusqua && j > jusqua)) continue;
     const effBrut = Math.max(0, +x.eff || 0), eff = Math.min(effBrut, v.classementEffortMax), xp = Math.max(0, +x.xp || 0);
     const s1 = v.plafondSeuil1, s2 = v.plafondSeuil2;
-    const max = v.classementTaux1*Math.min(eff, s1) + v.classementTaux2*Math.max(0, Math.min(eff, s2) - s1) + v.classementTaux3*Math.max(0, eff - s2);
+    const max = fp*(v.classementTaux1*Math.min(eff, s1) + v.classementTaux2*Math.max(0, Math.min(eff, s2) - s1) + v.classementTaux3*Math.max(0, eff - s2));
     if(xp > max + 1 || effBrut > v.classementEffortMax){ suspects.push(j); continue; }   // jour anormal : compte 0, sans prévenir
     total += xp;
   }
@@ -428,10 +443,28 @@ async function chargerCatalogue(){
     const r = await fetch("modules/liste.json"); if(!r.ok) return;
     const liste = await r.json(); if(!Array.isArray(liste)) return;
     const cat = {};
-    await Promise.all(liste.flatMap(m => (m.chapitres || []).map(ch =>
-      fetch(`banques/${m.id}/${ch}.json`).then(x => x.ok ? x.json() : null).catch(() => null).then(j => { if(j) ajouterAuCatalogue(cat, j, m.id); }))));
+    await Promise.all(liste.map(async m => {
+      const chs = await Promise.all((m.chapitres || []).map(ch => fetch(`banques/${m.id}/${ch}.json`).then(x => x.ok ? x.json() : null).catch(() => null)));
+      chs.forEach(j => { if(j) ajouterAuCatalogue(cat, j, m.id); });
+      poserPositions(cat, chs);
+    }));
     E.catalogue = cat;
   }catch(e){ /* hors ligne : pas de validation, l'affichage perso reste juste */ }
+}
+/* position (0 → 1) de chaque item dans le parcours du module : rang de sa notion parmi toutes les notions, dans l'ordre des chapitres de liste.json */
+function poserPositions(cat, chs){
+  const rang = {}; let n = 0;
+  for(const j of chs) if(j && j.id) for(const nt of j.notions || []) if(nt && nt.id != null) rang[j.id + "|" + nt.id] = n++;
+  const den = Math.max(1, n - 1);
+  for(const j of chs){
+    if(!j || !j.id) continue;
+    const prem = (j.notions || [])[0], base = prem && prem.id != null ? rang[j.id + "|" + prem.id] : 0;
+    for(const it of j.items || []){
+      const c = it && cat[it.id]; if(!c) continue;
+      const r = rang[j.id + "|" + it.notion];
+      c.pos = (r != null ? r : (base || 0)) / den;
+    }
+  }
 }
 function ajouterAuCatalogue(cat, ch, moduleId){
   for(const it of (ch && ch.items) || []){
@@ -717,6 +750,6 @@ window.moteur = {
   monterHeader, bulle, son, titreHTML, GLYPHS,
   on(fn){ E.ecouteurs.add(fn); if(E.res) fn(E.res, E); return () => E.ecouteurs.delete(fn); },
   etat: () => E.res, interne: E, evenements: tousLesEvenements, contexte,
-  calculer, xpClassement, valeursPour, niveauDe, rangDe, DEFAUT, RANGS, outils:{jourDe, plusJours, ecartJours, fmt, nf, esc, ymd}
+  calculer, xpClassement, valeursPour, progMaxModule, niveauDe, rangDe, DEFAUT, RANGS, outils:{jourDe, plusJours, ecartJours, fmt, nf, esc, ymd}
 };
 })();
