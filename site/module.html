@@ -1509,7 +1509,8 @@ const ACT = {
     if(S2.sub === "expl" && S2.eng !== b.dataset.id){ S2.eng = b.dataset.id; majCarte(n, "expl"); return; }
     repondreCheck(n, +b.dataset.i); },
   retry: b => { const n = S.notions.find(x => ckId(x) === b.dataset.id); if(!n) return; delete S2.chkV[b.dataset.id]; S2.ord[b.dataset.id] = null; if(S2.sub === "expl") S2.eng = b.dataset.id; if(S2.sub === "follow") vueModule(); else majCarte(n, "expl"); },
-  train: b => { S2.tab = "exos"; S2.fl.pick = new Set([b.dataset.id]); S2.fl.mode = "express"; S2.fl.etape = 2; sessionExpress(); },
+  /* bas de notion → même chemin que la fiche : choix du mode (Express / Classique / Mock), notion cochée */
+  train: (b, e) => ACT.ftrain(b, e),
   fa: b => { S2.fa = S.notions.findIndex(n => n.id === b.dataset.id); S2.fs = 0; vueModule(); },
   fnext: () => { S2.fs++; vueModule(); },
   fprev: () => { S2.fs = Math.max(0, S2.fs - 1); vueModule(); },
