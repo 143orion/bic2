@@ -234,12 +234,64 @@ const SCHEMA = [
   ["Indices & niveaux", [["indiceCout","Coût d'un indice (0,3 = −30 %)"],["indicesMax","Indices max"],["niveauCoef","XP du niveau n = coef × n²"]]],
   ["Classement (anti-triche)", [["classementDebut","Début de la saison (jours d'avant ignorés)","d"],["classementEffortMax","Effort max crédible par jour (min)"],["classementTaux1","XP max par min d'effort (plein tarif)"],["classementTaux2","XP max par min (demi-tarif)"],["classementTaux3","XP max par min (au-delà)"]]]
 ];
+/* aide « ? » de chaque réglage : ce que ça change, en détail (affichée en cliquant sur le ? du champ) */
+const AIDE = {
+  xpParMinute:"Base de tout le calcul d'XP : XP = ce nombre × durée théorique (min) × format × concentration × mode. Le monter multiplie proportionnellement les gains des saisies et des exos longs (pas les QCM, trous et contrôles, qui ont leur XP fixe). Les niveaux, eux, ne bougent pas : tout le monde monte plus vite, donc le classement « XP » se tasse en haut.",
+  qcm:"XP fixe d'un QCM à réponse unique réussi. Son effort théorique est la durée définie plus bas (« Effort d'un QCM »), donc XP/min ≈ ce nombre ÷ effort. À garder sous les saisies et les exos pour que produire rapporte plus que reconnaître ; trop haut, c'est la ferme à QCM.",
+  qcmMulti:"XP fixe d'un QCM multi-réponses réussi, seulement si TOUTES les bonnes cases (et rien d'autre) sont cochées, sinon 0. Plus élevé que le QCM simple car l'effort théorique est plus long (« Effort d'un QCM multi »).",
+  controle:"XP du check de validation de fin de notion (Cours). Donné une seule fois à vie par contrôle, à la 1re réussite ; un échec ne coûte rien et l'XP reste à prendre. Hors précision, maîtrise et rattrapage. Le monter récompense la lecture du cours ; trop haut, on clique les checks sans lire.",
+  formatProduction:"Multiplicateur appliqué quand l'élève produit lui-même la réponse (saisie tapée, exo) plutôt que de reconnaître (QCM, trous : ×1). Plus il est haut, plus l'écart saisie/exo vs QCM se creuse. Ne touche pas les QCM ni les trous.",
+  trous:"XP fixe d'un code à trous réussi, seulement si tous les trous sont justes (sinon 0). Même logique que le QCM multi : reconnaissance (×1), effort théorique de 30 s.",
+  modeGuide:"Multiplicateur d'XP d'un exo fait en mode guidé (consignes et indices visibles). Le plus faible des 3 modes d'exo : on est aidé. Les indices utilisés retirent en plus un pourcentage (voir « Coût d'un indice »).",
+  modeClassique:"Multiplicateur d'XP d'un exo complet en mode classique : sans chrono, sans indices, sans consignes. Doit rester entre guidé et mock pour garder la hiérarchie voulue (mock > classique > guidé).",
+  modeMock:"Multiplicateur d'XP d'un exo en mode mock (chrono, plus difficile). Le plus rémunérateur : c'est le mode le plus proche de l'examen. Ne s'applique qu'aux exos et aux saisies d'un mock ; les QCM et trous valent ×1. C'est aussi ce qui fixe les plafonds anti-triche du classement (tout joueur parfait en mock plafonne là).",
+  concentrationDiv:"Le bonus de concentration vaut 1 + durée (min) ÷ ce nombre, plafonné par « Concentration max ». Avec 90 : un exo de 45 min vaut ×1,5, un de 10 min ×1,11. Baisser ce nombre fait monter le bonus plus vite avec la durée, donc avantage les longs exos ; l'augmenter l'aplatit.",
+  concentrationMax:"Plafond du bonus de concentration (1 + durée ÷ diviseur). Une fois atteint, un exo plus long ne rapporte pas plus par minute. 1,5 = jamais plus de +50 %. Descendre à 1 supprime le bonus.",
+  dureeSaisie:"Durée théorique (en minutes) d'une saisie quand la banque n'en précise pas : 0,67 ≈ 40 s. Elle sert au calcul d'XP (20 × durée × 1,5 …) ET à l'effort compté pour les séries/endurance. L'augmenter rend toutes les saisies par défaut plus rentables.",
+  rattrapage:"Multiplicateur quand on réussit un item qui était en erreur (dernier résultat faux) : XP normale × ce nombre, et l'item sort des erreurs. 1,1 = +10 % pour récompenser le fait de revenir sur ses fautes. À 1, aucun bonus de rattrapage.",
+  exoSeuil1:"Anti-farm sur exos longs : si, au 1er passage, le temps réel est inférieur à ce pourcentage de la durée théorique (0,3 = 30 %), l'XP est pénalisée (voir « Exo trop rapide × »). Détecte les clics au hasard. Le joueur peut Contester pour que tu valides à la main.",
+  exoSeuilN:"Même contrôle que ci-dessus mais pour les passages suivants (2e, 3e…), où on connaît déjà la solution : seuil plus bas (0,15 = 15 %) car refaire un exo est légitimement plus rapide.",
+  exoPenalite:"Multiplicateur appliqué à l'XP d'un exo fait trop vite (sous les seuils). 0,5 = XP divisée par 2. Passe à 1 pour désactiver la pénalité ; à 0 pour tout annuler. Le joueur voit « trop rapide » et peut contester.",
+  exoPassagesPleins:"Nombre de passages d'un même exo qui rapportent l'XP complète (×1). Guidé, classique et mock partagent le même compteur ; une variante 🎲 compte comme un passage. Au-delà, c'est « Passages suivants ». Le 1er passage valide l'exo.",
+  exoMultApres:"Multiplicateur d'XP à partir du passage qui suit les passages pleins (le 4e avec la valeur par défaut). 0,5 = moitié. Évite de farmer toujours le même gros exo.",
+  repetitionJour:"Une question rapporte son XP complète au plus une fois par jour ; si on la refait le même jour, elle vaut ce multiplicateur (0,3 = 30 %). Contre le spam d'un QCM facile en boucle.",
+  maitriseJours:"Nombre de jours DIFFÉRENTS où il faut réussir une question pour qu'elle soit « maîtrisée » (bulle ✓ + bonus). Une erreur fait perdre la maîtrise. Plus haut = maîtrise plus rare et plus longue à obtenir.",
+  maitriseBonus:"XP offerte une fois quand une question devient maîtrisée (en plus de l'XP de la réponse). Sert de récompense à la régularité sur plusieurs jours.",
+  maitriseMult:"Une fois maîtrisée, une question rapporte ce multiplicateur (0,5 = moitié) pour pousser vers de nouvelles questions. En mode éval (juste avant un examen), elle repasse à ×1.",
+  evalFenetre:"Nombre de jours avant une éval pendant lesquels le mode éval est actif : les questions maîtrisées des chapitres concernés repassent à ×1 (une fois par jour) et les seuils du plafond journalier sont relevés (voir « Seuils relevés en mode éval »). Ne marche que si l'éval est dans le Calendrier.",
+  precisionMin:"Nombre minimum de réponses dans une session pour que le bonus de précision s'applique. Sous ce seuil, aucun bonus (pas de 100 % facile sur 3 questions). Exos comptés par étape, trous comme une réponse, contrôles du cours non comptés.",
+  precision:"Paliers du bonus de précision de fin de session, au format « % de réussite : % de bonus ». Exemple 70:10, 80:20, 90:35, 100:50 → 90 % de bonnes réponses donne +35 % sur l'XP de la session. On prend le plus haut palier atteint ; sous le premier, 0. Ce bonus s'additionne avec endurance et série.",
+  sessionInactivite:"Minutes d'inactivité au bout desquelles la session se termine et le bilan (bonus précision/endurance/série) est crédité. Un exo long en cours garde la session ouverte. Plus long = les pauses ne coupent pas la session (donc l'endurance continue de monter).",
+  effortQcm:"Minutes d'effort théorique comptées pour un QCM (0,3333 = 20 s). Sert à l'endurance, aux jours validés de série (10 min d'effort), au plafond journalier et aux plafonds anti-triche du classement. Plus haut = les QCM remplissent plus vite les objectifs de temps.",
+  effortQcmMulti:"Minutes d'effort théorique d'un QCM multi (et du code à trous : 0,5 = 30 s). Même usage que l'effort d'un QCM : endurance, série, plafond journalier et classement.",
+  effortSaisie:"Minutes d'effort théorique d'une saisie tapée (0,6667 ≈ 40 s). Même usage que ci-dessus. À garder cohérent avec « Durée d'une saisie par défaut ».",
+  endurance:"Paliers du bonus d'endurance, au format « minutes d'effort dans la session : % de bonus ». Ex. 15:5, 30:10, 60:25, 90:40, 120:55 → une session de 60 min d'effort donne +25 %. Récompense les longues sessions ; s'additionne avec précision et série.",
+  serieJourMin:"Minutes d'effort à faire dans la journée pour que le jour compte comme « validé » pour la série (et la heatmap du profil). Plus bas = série plus facile à tenir.",
+  serieHeure:"Heure à laquelle la journée change pour les séries et le plafond journalier (4 = 4 h du matin). Les révisions faites à 2 h comptent pour la veille. Modifier ce réglage décale les jours de tout le monde.",
+  seriePas:"Pourcentage d'XP bonus ajouté par jour de série consécutif (3 = +3 %/jour), jusqu'au plafond. Ex. 10 jours = +30 % avec les valeurs par défaut.",
+  seriePlafond:"Bonus de série maximal en % (30 = +30 %). Une fois atteint, la série continue (et les jokers aussi) mais ne rapporte plus rien de plus. Il s'additionne avec précision et endurance.",
+  jokerTous:"Un joker est gagné tous les N jours de série. Il est consommé automatiquement sur un jour de semaine raté (les samedis, dimanches et vacances sont neutres) et évite que la série soit divisée par 2.",
+  jokerMax:"Nombre maximum de jokers qu'on peut stocker. Au-delà, ils ne s'accumulent plus.",
+  plafondSeuil1:"Plafond journalier : nombre de minutes d'effort par jour payées plein tarif (×1). Après, c'est « Au-delà du 1er seuil ». Protège contre le gavage de 12 h et incite à la régularité. Aussi relevé en mode éval.",
+  plafondSeuil2:"Minutes d'effort par jour jusqu'auxquelles on est au demi-tarif. Au-delà, c'est le multiplicateur du 2e seuil (quasi plus rien).",
+  plafondMult2:"Multiplicateur d'XP entre le 1er et le 2e seuil du plafond journalier (0,5 = moitié).",
+  plafondMult3:"Multiplicateur d'XP au-delà du 2e seuil (0,25 = quart). À 0, plus aucune XP après ce seuil.",
+  plafondEvalBonus:"Minutes ajoutées aux deux seuils du plafond journalier pendant le mode éval (fenêtre avant une éval), pour laisser les gros jours de révision avant l'examen. 60 = seuils relevés d'1 h.",
+  indiceCout:"Part d'XP retirée à chaque indice utilisé sur une saisie ou une étape d'exo guidé (0,3 = −30 %). Cumulable jusqu'à « Indices max ». Un indice ne compte pas comme une erreur pour la précision. Jamais d'indice en classique ni en mock.",
+  indicesMax:"Nombre maximum d'indices utilisables par saisie/étape (2 = −60 % au pire avec 0,3).",
+  niveauCoef:"XP totale pour atteindre le niveau n = coef × n². Avec 50 : niveau 10 = 5 000 XP, niveau 100 = 500 000 XP. Le monter ralentit toute la progression de niveaux (rangs et plaques inclus) ; le baisser l'accélère. Rétroactif : les niveaux sont recalculés depuis le journal.",
+  classementDebut:"Début de la saison en cours : les jours AVANT cette date sont ignorés par le classement de saison et par les vérifications. Ne touche ni niveau, ni XP totale, ni séries, ni maîtrises. Utilisé par « Clore la saison ».",
+  classementEffortMax:"Anti-triche du classement : effort maximal crédible par jour (min). Un jour publié au-dessus compte 0, automatiquement et sans prévenir le joueur ; tu vois juste un ⚠ dans l'onglet Joueurs. Mets-le assez haut pour ne jamais écrêter un vrai joueur très motivé.",
+  classementTaux1:"Anti-triche : XP maximale par minute d'effort plausible tant qu'on est au plein tarif du plafond journalier. Calibré sur le mode mock (×2) d'un joueur parfait. Un jour qui dépasse (taux) compte 0 au classement.",
+  classementTaux2:"Même plafond d'XP par minute d'effort, pour la tranche au demi-tarif du plafond journalier.",
+  classementTaux3:"Même plafond d'XP par minute d'effort, pour la tranche au-delà du 2e seuil."
+};
 const pTxt = l => (l || []).map(([a,b]) => a + ":" + b).join(", ");
 const pLire = s => s.split(/[,;]/).map(x => x.trim()).filter(Boolean).map(x => x.split(":").map(Number)).filter(p => p.length === 2 && p.every(isFinite)).sort((a,b) => a[0]-b[0]);
 const actuelles = () => Object.assign({}, D, E.config && E.config.valeurs);
 function remplirConfig(v){
   $("champs-config").innerHTML = SCHEMA.map(([g, champs]) => `<div class="groupe"><h3>${g}</h3><div class="champs">${champs.map(([k, l, t]) =>
-    `<label class="champ">${l}<input data-k="${k}" ${t === "p" ? `data-p="1" value="${esc(pTxt(v[k]))}"` : t === "d" ? `data-d="1" type="date" value="${esc(v[k] || "")}"` : `type="number" step="any" value="${+(+v[k]).toFixed(4)}"`}></label>`).join("")}</div></div>`).join("");
+    `<label class="champ"><span class="champ-l">${l}${AIDE[k] ? `<button type="button" class="aide-btn" data-aide="${k}" aria-expanded="false" aria-label="Aide : ${esc(l)}">?</button>` : ""}</span><input data-k="${k}" ${t === "p" ? `data-p="1" value="${esc(pTxt(v[k]))}"` : t === "d" ? `data-d="1" type="date" value="${esc(v[k] || "")}"` : `type="number" step="any" value="${+(+v[k]).toFixed(4)}"`}></label>`).join("")}</div></div>`).join("");
   simuler();
 }
 function lireConfig(){
@@ -247,6 +299,16 @@ function lireConfig(){
   document.querySelectorAll("#champs-config [data-k]").forEach(i => { v[i.dataset.k] = i.dataset.p ? pLire(i.value) : i.dataset.d ? i.value : (i.value === "" ? D[i.dataset.k] : +i.value); });
   return v;
 }
+$("champs-config").addEventListener("click", e => {
+  const b = e.target.closest(".aide-btn"); if(!b) return;
+  e.preventDefault();
+  const lab = b.closest("label"), nxt = lab.nextElementSibling, ouvert = nxt && nxt.classList.contains("aide-ligne") && nxt.dataset.k === b.dataset.aide;
+  document.querySelectorAll("#champs-config .aide-ligne").forEach(x => x.remove());
+  document.querySelectorAll("#champs-config .aide-btn").forEach(x => x.setAttribute("aria-expanded", "false"));
+  if(ouvert) return;
+  const d = document.createElement("div"); d.className = "aide-ligne"; d.dataset.k = b.dataset.aide; d.textContent = AIDE[b.dataset.aide];
+  lab.after(d); b.setAttribute("aria-expanded", "true");
+});
 $("f-config").addEventListener("input", simuler);
 function exemples(v){
   const conc = d => Math.min(1 + d/v.concentrationDiv, v.concentrationMax), prod = d => v.xpParMinute*d*v.formatProduction*conc(d);
