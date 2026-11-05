@@ -470,7 +470,7 @@ function ajouterAuCatalogue(cat, ch, moduleId){
   for(const it of (ch && ch.items) || []){
     if(!it || it.type === "examen" || !it.id) continue;
     const et = it.etapes || [];
-    cat[it.id] = {type:it.type, duree:it.duree, module:ch.module || moduleId, chapitre:ch.id, etapes:et.length || 1, dureesEtapes:et.map(s => s.duree)};
+    cat[it.id] = {type:it.type, duree:it.duree, module:ch.module || moduleId, chapitre:ch.id, etapes:et.length || 1, dureesEtapes:et.map(s => s.duree), pos:(cat[it.id] && cat[it.id].pos) || 0};   // pos conservée si l'item est déjà au catalogue (charger() ne la connaît pas)
   }
   /* checks de validation des notions : id = check.id, sinon <chapitre>-ctl-<n° de notion> */
   ((ch && ch.notions) || []).forEach((n, k) => {
