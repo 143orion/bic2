@@ -51,8 +51,15 @@ const garde = p => p.catch(err => { throw traduire(err); });
    ENVELOPPE db : même interface que window.claude.use("db")
    ===================================================================== */
 function envelopper(fs, auth, etat){
-  const snapDoc = s => ({id:s.id, exists:s.exists, data:() => s.data(), metadata:{fromCache:s.metadata.fromCache, hasPendingWrites:s.metadata.hasPendingWrites}});
-  const snapCol = s => ({docs:s.docs.map(d => ({id:d.id, exists:true, data:() => d.data()})), size:s.size, empty:s.empty, metadata:{fromCache:s.metadata.fromCache}});
+  /* Firestore refuse les tableaux imbriqués (ex. paliers [[70,10],[80,20]] des réglages) :
+     on enveloppe chaque tableau interne dans {__a:[…]} à l'écriture et on le déballe à la lecture. */
+  const objPlat = x => x && typeof x === "object" && Object.getPrototypeOf(x) === Object.prototype;
+  const encoder = (x, dansTab) => Array.isArray(x) ? (dansTab ? {__a:x.map(y => encoder(y, true))} : x.map(y => encoder(y, true)))
+    : objPlat(x) ? Object.fromEntries(Object.entries(x).map(([k, y]) => [k, encoder(y, false)])) : x;
+  const decoder = x => Array.isArray(x) ? x.map(decoder)
+    : objPlat(x) ? (Object.keys(x).length === 1 && Array.isArray(x.__a) ? x.__a.map(decoder) : Object.fromEntries(Object.entries(x).map(([k, y]) => [k, decoder(y)]))) : x;
+  const snapDoc = s => ({id:s.id, exists:s.exists, data:() => decoder(s.data()), metadata:{fromCache:s.metadata.fromCache, hasPendingWrites:s.metadata.hasPendingWrites}});
+  const snapCol = s => ({docs:s.docs.map(d => ({id:d.id, exists:true, data:() => decoder(d.data())})), size:s.size, empty:s.empty, metadata:{fromCache:s.metadata.fromCache}});
   const surErreur = err => e => { if(err) err(traduire(e)); else console.warn("[firebase]", e); };
 
   function doc(chemin){
@@ -66,7 +73,7 @@ function envelopper(fs, auth, etat){
       set(data, opts){
         const m = /^joueurs\/([^/]+)$/.exec(chemin);
         if(m && data && typeof data.pseudo === "string") return ecrireJoueur(m[1], data);
-        return garde(ref.set(data, opts || {}));
+        return garde(ref.set(encoder(data, false), opts || {}));
       },
       delete(){ return garde(ref.delete()); }
     };
