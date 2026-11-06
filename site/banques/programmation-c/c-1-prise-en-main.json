@@ -22,20 +22,28 @@
    "pre": [],
    "ecrans": [
     {
-     "titre": "D'où vient le C",
-     "texte": "Créé en 1972-1973 par Dennis Ritchie chez Bell Labs, pour écrire Unix."
+     "titre": "Pourquoi apprendre le C ?",
+     "texte": "Le C a été créé en 1972-1973 par **Dennis Ritchie** chez **Bell Labs** pour écrire le système **Unix**. Plus de cinquante ans après, il est toujours partout : noyaux de systèmes (Linux, Windows), microcontrôleurs, voitures, objets connectés, et même les interpréteurs d'autres langages (Python est écrit en C).\n\nPourquoi ce succès ? Parce qu'il est **proche de la machine** : tu y manipules directement la mémoire. C'est aussi pour ça que l'apprendre te fait comprendre ce que font réellement les autres langages en coulisses."
     },
     {
-     "titre": "La chaîne de compilation",
-     "texte": "Code source `.c` → **compilation** → **exécutable**.\n```bash\ngcc hello.c -o hello\n./hello\n```"
+     "titre": "Ses qualités, en clair",
+     "texte": "Cinq qualités à connaître :\n\n- **Concis** : une trentaine de mots-clés seulement, peu de choses à retenir.\n- **Efficace** : le compilateur produit du code machine très rapide.\n- **Portable** : le même code source se compile sur des machines différentes.\n- **Stable** : un programme C de 1990 compile encore aujourd'hui.\n- **Proche de la machine** : octets, adresses, tu vois tout.\n\nLa contrepartie : le C ne te protège pas. Si tu fais une bêtise (sortir d'un tableau, oublier d'initialiser), il ne t'arrête pas toujours."
     },
     {
-     "titre": "Bibliothèques et en-têtes",
-     "texte": "Les fonctions toutes faites (`printf`…) viennent de **bibliothèques**. Un fichier d'en-tête `.h` les déclare ; on l'inclut avec `#include`."
+     "titre": "Du texte à un programme",
+     "texte": "Un ordinateur ne comprend pas le C : il ne comprend que le **langage machine** (des suites de 0 et de 1). Il faut donc une traduction en trois temps :\n\n1. Tu écris le **code source** dans un fichier `.c` (c'est du texte).\n2. Le **compilateur** traduit ce texte en langage machine : c'est la **compilation**.\n3. Tu obtiens un **exécutable**, que la machine peut lancer.\n\n```\nhello.c  ──compilation──►  hello  ──exécution──►  affichage\n(source)    (compilateur)  (exécutable)\n```"
     },
     {
-     "titre": "À retenir",
-     "texte": "Source = ce que tu tapes · compiler = traduire · exécutable = ce qui tourne · bibliothèque = fonctions déjà écrites."
+     "titre": "Les deux commandes",
+     "texte": "Dans un terminal, on fait les deux étapes séparément :\n\n```bash\ngcc hello.c -o hello    # compiler : hello.c → exécutable « hello »\n./hello                 # exécuter l'exécutable\n```\n\n`gcc` est le compilateur, `-o hello` donne le nom de l'exécutable. Le `./` signifie « dans le dossier courant ».\n\nIci, sur BIC2.exe, le bouton **Exécuter** de l'éditeur enchaîne les deux étapes pour toi."
+    },
+    {
+     "titre": "Bibliothèques et fichiers d'en-tête",
+     "texte": "Tu ne vas pas réécrire à la main la fonction qui affiche du texte à l'écran. Elle existe déjà, dans une **bibliothèque** : un lot de fonctions déjà écrites (`printf`, `sqrt`…).\n\nPour que ton programme sache que ces fonctions existent, on inclut un **fichier d'en-tête** (extension `.h`) qui les **déclare** :\n\n```c\n#include <stdio.h>   // déclare printf, scanf…\n#include <math.h>    // déclare sqrt, pow…\n```"
+    },
+    {
+     "titre": "Quand l'erreur est-elle détectée ?",
+     "texte": "Une **erreur de syntaxe** (un `;` oublié, un mot mal écrit) est détectée **à la compilation**, donc avant que le programme ne s'exécute. Le compilateur refuse de produire l'exécutable et t'indique la ligne.\n\nUne erreur de **logique** (le programme calcule faux) n'est pas détectée par le compilateur : le programme tourne, mais donne un mauvais résultat. C'est à toi de tester.\n\n**À retenir** : source = ce que tu tapes · compiler = traduire · exécutable = ce qui tourne · bibliothèque = fonctions déjà écrites · en-tête `.h` = leur déclaration."
     }
    ],
    "check": {
@@ -66,20 +74,32 @@
    ],
    "ecrans": [
     {
-     "titre": "Le squelette",
-     "texte": "Tout programme commence par le même squelette :\n```c\n#include <stdio.h>\n\nint main(void) {\n    return 0;\n}\n```"
+     "titre": "Le point d'entrée : main",
+     "texte": "Un programme C peut contenir des dizaines de fonctions, mais il n'a qu'**un seul point d'entrée** : la fonction `main`. Quand tu lances l'exécutable, le système appelle `main`, et le programme s'arrête quand `main` se termine.\n\nSes instructions sont rassemblées dans un **bloc**, délimité par des accolades `{ }`."
     },
     {
-     "titre": "Les instructions",
-     "texte": "Dans le bloc, une instruction par ligne, chacune terminée par `;` :\n```c\nprintf(\"Bonjour\\n\");\n```"
+     "titre": "Le plus petit programme complet",
+     "texte": "```c\n#include <stdio.h>\n\nint main(void) {\n    printf(\"Hello World\\n\");\n    return 0;\n}\n```\n\nQuatre éléments : l'**inclusion** de la bibliothèque, la fonction `main`, une **instruction** (`printf`) et le `return 0`. On les décortique un par un."
     },
     {
-     "titre": "La casse",
-     "texte": "`printf` fonctionne, `Printf` n'existe pas : le compilateur distingue majuscules et minuscules."
+     "titre": "Ligne 1 : #include",
+     "texte": "```c\n#include <stdio.h>\n```\n\n`stdio` signifie *standard input/output* : les entrées/sorties standard. Cette ligne dit au compilateur de charger la déclaration de `printf` (et `scanf`…).\n\nSans elle, il ne connaît pas `printf` et proteste. Cette ligne **ne se termine pas par `;`** : ce n'est pas une instruction C, c'est une directive pour le préprocesseur."
     },
     {
-     "titre": "Le piège du ;",
-     "texte": "Un `;` oublié est signalé sur la ligne **suivante**. Lis toujours la ligne indiquée **et celle d'avant**."
+     "titre": "Ligne 2 : int main(void)",
+     "texte": "```c\nint main(void) {\n```\n\n- `int` : la fonction **renvoie un entier** au système.\n- `main` : son nom, imposé.\n- `(void)` : elle ne reçoit **aucun paramètre**.\n- `{` : début du bloc.\n\nTout ce qui est entre cette accolade ouvrante et l'accolade fermante `}` est le corps du programme. Pas de `;` après `)` ni après `{`."
+    },
+    {
+     "titre": "Lignes 3 et 4 : l'instruction et le return",
+     "texte": "```c\n    printf(\"Hello World\\n\");\n    return 0;\n```\n\n`printf` affiche le texte entre guillemets ; `\\n` est un retour à la ligne. **Chaque instruction se termine par `;`.**\n\n`return 0;` termine `main` et renvoie `0` au système, par convention « tout s'est bien passé ». Une valeur différente de 0 signalerait une erreur."
+    },
+    {
+     "titre": "Trois règles à ne jamais oublier",
+     "texte": "- **`;` à la fin de chaque instruction** (mais pas après `#include`, ni après `{` `}`).\n- Le C est **sensible à la casse** : `main`, `Main` et `MAIN` sont trois noms différents. `Printf` n'existe pas.\n- Les espaces, retours à la ligne et l'indentation sont **ignorés par le compilateur**, mais indispensables pour **toi** : indente de 4 espaces à chaque `{`."
+    },
+    {
+     "titre": "Le piège du point-virgule oublié",
+     "texte": "```c\nprintf(\"Bonjour\")     // il manque le ;\nreturn 0;             // l'erreur est signalée ICI\n```\n\nLe compilateur lit `printf(\"Bonjour\") return 0;` comme une seule instruction qui ne s'arrête pas : il ne s'en aperçoit qu'en arrivant à `return`, **sur la ligne suivante**.\n\nRéflexe : quand une erreur est signalée à la ligne N, regarde aussi la fin de la ligne **N-1**."
     }
    ],
    "check": {
@@ -110,16 +130,24 @@
    ],
    "ecrans": [
     {
-     "titre": "Deux syntaxes",
-     "texte": "`//` jusqu'à la fin de la ligne, `/* … */` sur plusieurs lignes."
+     "titre": "À quoi servent les commentaires",
+     "texte": "Un commentaire est du texte **ignoré par le compilateur**. Il est écrit pour les humains : toi dans trois semaines (tu auras oublié pourquoi tu as fait ça), ton binôme, ton correcteur.\n\nUn programme sans commentaire est plus dur à relire ; un programme avec trop de commentaires inutiles aussi. Le but : éclairer, pas répéter."
     },
     {
-     "titre": "Les conventions",
-     "texte": "Variables, fonctions et fichiers en `snake_case` ; macros et valeurs d'enum en `UPPER_SNAKE_CASE` ; types en `PascalCase`."
+     "titre": "Les deux syntaxes",
+     "texte": "```c\n// commentaire sur une seule ligne (jusqu'à la fin de la ligne)\n\n/* commentaire de bloc,\n   sur plusieurs lignes */\n\nint total = 0;   // on peut aussi commenter en bout de ligne\n```\n\n`//` commente tout ce qui suit **jusqu'à la fin de la ligne**. `/* … */` commente tout ce qu'il y a entre les deux marques, sur autant de lignes que tu veux."
     },
     {
-     "titre": "Des noms parlants",
-     "texte": "`nb_notes`, `moyenne`, `MAX_SIZE` : on lit le code comme une phrase."
+     "titre": "Un bon commentaire dit pourquoi",
+     "texte": "Compare :\n\n```c\ni++;   // ajoute 1 à i                  ✗ le code le dit déjà\ni++;   // on passe à l'étudiant suivant ✓ on comprend l'intention\n```\n\nRègle simple : le **code** dit *ce que* l'on fait, le **commentaire** dit *pourquoi*. Si tu as besoin de commenter chaque ligne pour comprendre, c'est que les noms de variables sont mal choisis."
+    },
+    {
+     "titre": "Choisir des noms qui parlent",
+     "texte": "```c\nint n2 = 0;          // ✗ que contient n2 ?\nint nb_notes = 0;    // ✓ on comprend tout de suite\n```\n\nUn nom doit être **significatif**. Les mots sont séparés par `_` (on ne met pas d'espace dans un nom, et on évite les accents). C'est ce qu'on appelle le **snake_case**."
+    },
+    {
+     "titre": "Le tableau des conventions du cours",
+     "texte": "| Catégorie | Convention | Exemple |\n|---|---|---|\n| Fichiers, fonctions, variables | `lower_snake_case` | `calc_area()`, `line_count` |\n| Macros, `#define`, valeurs d'`enum`, gardiens d'en-tête | `UPPER_SNAKE_CASE` | `MAX_SIZE`, `COLOR_RED` |\n| Types (`struct`, `enum`) | `PascalCase` | `Point`, `Color` |\n\nMoyen mnémotechnique : **tout en majuscules = constante** (valeur qui ne bouge pas), **majuscule au début de chaque mot = nouveau type**, tout le reste en minuscules."
     }
    ],
    "check": {

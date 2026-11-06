@@ -27,20 +27,32 @@
    ],
    "ecrans": [
     {
-     "titre": "Deux branches",
-     "texte": "```c\nif (x % 2 == 0) {\n    printf(\"pair\\n\");\n} else {\n    printf(\"impair\\n\");\n}\n```"
+     "titre": "Faire des choix",
+     "texte": "Jusqu'ici, un programme exécute ses lignes de haut en bas. Avec `if`, il peut **choisir** : n'exécuter un bloc que si une condition est vraie.\n\n```c\nif (age >= 18) {\n    printf(\"Majeur\\n\");\n}\n```\n\nLa condition est entre parenthèses. Elle est **vraie si elle vaut autre chose que 0** (rappel du type booléen)."
     },
     {
-     "titre": "Plusieurs branches",
-     "texte": "`else if` enchaîne les tests du plus strict au plus large ; une seule branche s'exécute."
+     "titre": "Si… sinon…",
+     "texte": "```c\nif (age >= 18) {\n    printf(\"Majeur\\n\");\n} else {\n    printf(\"Mineur\\n\");\n}\n```\n\nExactement **un** des deux blocs s'exécute : `else` couvre tous les cas où la condition est fausse. Pas de condition après `else`."
     },
     {
-     "titre": "Combiner",
-     "texte": "`&&` (et), `||` (ou), `!` (non) : `age >= 18 && age < 65`."
+     "titre": "Enchaîner plusieurs cas : else if",
+     "texte": "```c\nint note = 14;\nif (note >= 16) {\n    printf(\"Très bien\\n\");\n} else if (note >= 12) {\n    printf(\"Assez bien\\n\");\n} else if (note >= 10) {\n    printf(\"Passable\\n\");\n} else {\n    printf(\"Insuffisant\\n\");\n}\n```\n\nOn peut mettre autant de `else if` que nécessaire, et un `else` final facultatif pour « tous les autres cas »."
     },
     {
-     "titre": "Le ternaire",
-     "texte": "`(condition) ? valeur_si_vrai : valeur_si_faux`."
+     "titre": "Suivre l'exécution",
+     "texte": "Avec `note = 14` :\n\n1. `note >= 16` ? **Faux** → on passe au suivant.\n2. `note >= 12` ? **Vrai** → on affiche « Assez bien ».\n3. Les autres tests ne sont **jamais examinés**.\n\nLes conditions sont testées **dans l'ordre**, et **une seule branche** s'exécute : la première vraie. C'est pourquoi on les range « du plus strict au plus large » : si on testait `note >= 10` d'abord, tout le monde aurait « Passable »."
+    },
+    {
+     "titre": "Combiner des conditions",
+     "texte": "| Opérateur | Sens | Exemple |\n|---|---|---|\n| `&&` | et (les deux) | `age >= 18 && age < 65` |\n| `\\|\\|` | ou (au moins une) | `x < 0 \\|\\| x > 100` |\n| `!` | non | `!(n % 2 == 0)` |\n\nPour tester un intervalle, il faut **deux** comparaisons reliées par `&&` : `x >= 5 && x <= 10`. L'écriture mathématique `5 <= x <= 10` ne fait pas ce que tu crois en C."
+    },
+    {
+     "titre": "L'opérateur ternaire",
+     "texte": "Quand on choisit seulement entre deux **valeurs**, il y a une écriture compacte :\n\n```c\nchar *statut = (age >= 18) ? \"majeur\" : \"mineur\";\n```\n\nLecture : « si la condition est vraie, prends la valeur après `?`, sinon celle après `:` ». À réserver aux cas simples."
+    },
+    {
+     "titre": "Le piège = / ==",
+     "texte": "```c\nif (x = 0)    // ✗ range 0 dans x, puis teste 0 : faux, toujours\nif (x == 0)   // ✓ compare\n```\n\nAvec `=`, la condition ne dépend plus de `x` : elle prend la valeur rangée. La branche ne s'exécute jamais (ou toujours, avec une valeur non nulle) et `x` est écrasé. Une seule lettre de différence, vérifie à chaque fois."
     }
    ],
    "check": {
@@ -71,20 +83,28 @@
    ],
    "ecrans": [
     {
-     "titre": "Les cas",
-     "texte": "Un `case` par valeur ; plusieurs `case` collés partagent le même bloc."
+     "titre": "Quand utiliser switch",
+     "texte": "Si tu enchaînes beaucoup de `else if` qui comparent **la même variable** à des valeurs précises (`n == 1`, `n == 2`…), `switch` est plus lisible.\n\n```c\nswitch (note) {\n    case 20: ... \n}\n```\n\nCondition : la variable testée est un **entier ou un caractère**."
     },
     {
-     "titre": "Le break",
-     "texte": "Oublie-le et l'exécution « tombe » dans le cas suivant :\n```c\ncase 1: printf(\"un\\n\");\ncase 2: printf(\"deux\\n\"); break;\n```"
+     "titre": "La structure",
+     "texte": "```c\nswitch (variable) {\n    case valeur1:\n        // instructions\n        break;\n    case valeur2:\n        // instructions\n        break;\n    default:\n        // si aucun case ne correspond\n        break;\n}\n```\n\nLe programme saute directement au `case` dont la valeur est égale à celle de la variable. `default` joue le rôle du `else` final."
     },
     {
-     "titre": "default",
-     "texte": "Le filet de sécurité quand aucun cas ne correspond."
+     "titre": "Grouper plusieurs valeurs",
+     "texte": "Plusieurs `case` collés partagent le même bloc :\n\n```c\nswitch (note) {\n    case 20: case 19: case 18: case 17: case 16:\n        printf(\"Très bien\\n\");\n        break;\n    case 15: case 14: case 13: case 12:\n        printf(\"Assez bien\\n\");\n        break;\n    default:\n        printf(\"Insuffisant\\n\");\n        break;\n}\n```\n\nSi `note` vaut 14, on entre au `case 14:` et on exécute jusqu'au `break`."
     },
     {
-     "titre": "Un caractère",
-     "texte": "`switch (op) { case '+': … }` : le caractère entre apostrophes."
+     "titre": "Le rôle du break",
+     "texte": "`break;` **sort du switch**. Sans lui, l'exécution ne s'arrête pas à la fin du `case` : elle **continue dans le `case` suivant**, même si sa valeur ne correspond pas. On dit qu'elle « tombe ».\n\nChaque `case` qui doit s'arrêter là se termine donc par un `break`."
+    },
+    {
+     "titre": "Le piège de la chute",
+     "texte": "```c\nswitch (n) {\n    case 1: printf(\"un\\n\");      // pas de break…\n    case 2: printf(\"deux\\n\");    // … on tombe ici\n            break;\n}\n```\n\nAvec `n = 1`, on affiche **un puis deux**. C'est la cause numéro 1 des bugs de `switch`. Quand tu relis ton code, vérifie que chaque `case` finit bien par `break` (sauf quand les `case` sont groupés exprès)."
+    },
+    {
+     "titre": "Ses limites",
+     "texte": "`switch` compare à des **valeurs fixes** : `case 12:` ou `case '+':`. Il ne sait pas tester un intervalle (`case >= 12` n'existe pas) ni des réels.\n\nPour un caractère, on met des apostrophes : `case '+':`. Pour un intervalle ou une condition quelconque, retour au `if` / `else if`."
     }
    ],
    "check": {
@@ -116,20 +136,28 @@
    ],
    "ecrans": [
     {
-     "titre": "Les 3 parties",
-     "texte": "```c\nfor (int i = 1; i <= 10; i++)\n```\ndépart, condition pour continuer, pas."
+     "titre": "Répéter quand on connaît le nombre de tours",
+     "texte": "Afficher les nombres de 1 à 100 sans écrire cent `printf` : c'est le rôle d'une **boucle**. `for` convient quand on sait **combien de fois** répéter.\n\n```c\nfor (initialisation; condition; action) {\n    // corps\n}\n```\n\nLes trois parties sont séparées par des `;` et ne se terminent pas par un `;` supplémentaire."
     },
     {
-     "titre": "Combien de tours ?",
-     "texte": "`i = 0 ; i < 5 ; i++` fait 5 tours : 0, 1, 2, 3, 4."
+     "titre": "Les trois parties",
+     "texte": "| Partie | Quand ? | Exemple |\n|---|---|---|\n| initialisation | **une fois**, avant de commencer | `int i = 1` |\n| condition | **avant chaque tour** : vraie → on exécute le corps, fausse → on sort | `i <= 10` |\n| action | **à la fin de chaque tour** | `i++` |\n\nC'est la condition qui décide si la boucle continue."
     },
     {
-     "titre": "Accumuler",
-     "texte": "```c\nint somme = 0;\nfor (int i = 1; i <= n; i++) {\n    somme += i;\n}\n```"
+     "titre": "Suivre une boucle pas à pas",
+     "texte": "```c\nfor (int i = 1; i <= 3; i++) {\n    printf(\"%d\\n\", i);\n}\n```\n\n1. `i = 1` ; condition `1 <= 3` vraie → affiche **1** ; `i++` → 2.\n2. Condition `2 <= 3` vraie → affiche **2** ; `i++` → 3.\n3. Condition `3 <= 3` vraie → affiche **3** ; `i++` → 4.\n4. Condition `4 <= 3` **fausse** → on sort.\n\nLe corps s'est exécuté 3 fois."
     },
     {
-     "titre": "Imbriquées",
-     "texte": "La boucle intérieure fait tous ses tours à chaque tour de la boucle extérieure : 3 × 4 = 12 passages pour 3 et 4 tours."
+     "titre": "Parcourir un tableau",
+     "texte": "```c\nint tab[4] = {5, 8, 12, 20};\nfor (int i = 0; i < 4; i++) {\n    printf(\"Élément %d : %d\\n\", i, tab[i]);\n}\n```\n\nLes indices commencent à **0** : un tableau de 4 éléments a les indices 0, 1, 2, 3. D'où `i < 4` (et pas `<=`).\n\n**À retenir** : `i = 1 ; i <= N` et `i = 0 ; i < N` font tous deux N tours."
+    },
+    {
+     "titre": "Boucles imbriquées",
+     "texte": "```c\nfor (int l = 1; l <= 3; l++) {\n    for (int c = 1; c <= l; c++) {\n        printf(\"%d \", c);\n    }\n    printf(\"\\n\");\n}\n```\n\nLa boucle intérieure fait **tous ses tours** à chaque tour de l'extérieure. Pour `l = 1` : 1 nombre ; `l = 2` : 2 nombres ; `l = 3` : 3 nombres.\n\n```text\n1\n1 2\n1 2 3\n```"
+    },
+    {
+     "titre": "Le piège du point-virgule",
+     "texte": "```c\nfor (int i = 0; i < 3; i++);   // ✗ ce ; est le corps !\n{\n    printf(\"coucou\\n\");        // exécuté UNE seule fois\n}\n```\n\nLe `;` juste après la parenthèse est interprété comme un **corps vide** : la boucle tourne 3 fois à vide, puis le bloc suivant s'exécute une fois. Jamais de `;` après `for (…)`."
     }
    ],
    "check": {
@@ -160,20 +188,28 @@
    ],
    "ecrans": [
     {
-     "titre": "Tester d'abord",
-     "texte": "La condition est évaluée avant le corps : zéro tour possible."
+     "titre": "Répéter tant que…",
+     "texte": "Quand on ne sait pas à l'avance combien de tours il faudra (attendre une bonne saisie, traiter les chiffres d'un nombre), on utilise `while` : **tant que** la condition est vraie, on recommence.\n\n```c\nwhile (condition) {\n    // corps\n}\n```\n\nLa condition est testée **avant** chaque tour : si elle est fausse dès le départ, le corps ne s'exécute **jamais**."
     },
     {
-     "titre": "Faire évoluer la condition",
-     "texte": "Sans `i++` (ou une nouvelle saisie), boucle infinie."
+     "titre": "Compter avec while",
+     "texte": "```c\nint i = 1;\nwhile (i <= 10) {\n    printf(\"%d\\n\", i);\n    i++;\n}\n```\n\nTrois ingrédients à ne pas oublier : **initialiser** `i` avant la boucle, une **condition** sur `i`, et **modifier** `i` dans le corps. Ici c'est équivalent à un `for`."
     },
     {
-     "titre": "Les chiffres d'un entier",
-     "texte": "`n % 10` donne le dernier chiffre, `n /= 10` le retire, `while (n > 0)` s'arrête quand il n'en reste plus."
+     "titre": "Le danger de la boucle infinie",
+     "texte": "Si le corps ne modifie jamais une variable de la condition, celle-ci reste vraie pour toujours :\n\n```c\nint i = 1;\nwhile (i <= 10) {\n    printf(\"%d\\n\", i);\n    // oubli de i++  → boucle infinie\n}\n```\n\nLe programme ne s'arrête plus. Dans l'éditeur, tu verras « Temps dépassé : boucle infinie ? ». Réflexe : **qu'est-ce qui rend la condition fausse un jour ?**"
     },
     {
-     "titre": "Parcours de chaîne",
-     "texte": "`while (mot[i] != '\\0')` s'arrête au caractère nul."
+     "titre": "Quand on ne connaît pas le nombre de tours",
+     "texte": "```c\nint valeur = 0;\nwhile (valeur != 42) {\n    printf(\"Entrez un nombre : \");\n    scanf(\"%d\", &valeur);\n}\n```\n\nOn ne sait pas si l'utilisateur trouvera 42 au premier ou au dixième essai : `while` est le bon outil. La variable `valeur` est initialisée à 0 pour que le premier test soit possible."
+    },
+    {
+     "titre": "Le schéma classique : les chiffres d'un entier",
+     "texte": "```c\nint n = 1234, somme = 0;\nwhile (n > 0) {\n    somme += n % 10;   // dernier chiffre\n    n /= 10;           // on le retire\n}\n```\n\nIdée : `n % 10` donne le dernier chiffre, `n / 10` le supprime. On répète jusqu'à ce qu'il ne reste plus rien (`n` vaut 0)."
+    },
+    {
+     "titre": "La trace de l'exécution",
+     "texte": "| Tour | `n` avant | `n % 10` | `somme` | `n` après |\n|---|---|---|---|---|\n| 1 | 1234 | 4 | 4 | 123 |\n| 2 | 123 | 3 | 7 | 12 |\n| 3 | 12 | 2 | 9 | 1 |\n| 4 | 1 | 1 | 10 | 0 → on sort |\n\nÀ la fin, `somme` vaut 1 + 2 + 3 + 4 = 10. Faire un tableau de suivi comme celui-ci est la meilleure façon de comprendre (et de vérifier) une boucle."
     }
    ],
    "check": {
@@ -204,16 +240,20 @@
    ],
    "ecrans": [
     {
-     "titre": "Au moins un tour",
-     "texte": "Le corps passe avant le test."
+     "titre": "Une boucle qui s'exécute au moins une fois",
+     "texte": "Avec `while`, si la condition est fausse au départ, le corps ne s'exécute pas du tout. Parfois, on veut l'**inverse** : faire d'abord, vérifier ensuite. C'est `do-while` :\n\n```c\ndo {\n    // corps\n} while (condition);\n```\n\nLe corps s'exécute **au moins une fois**, puis la condition décide si on recommence."
     },
     {
-     "titre": "Le ; final",
-     "texte": "`} while (condition);` : le point-virgule est obligatoire."
+     "titre": "L'usage typique : valider une saisie",
+     "texte": "```c\nint valeur;\ndo {\n    printf(\"Entrez un nombre (1 à 10) : \");\n    scanf(\"%d\", &valeur);\n} while (valeur < 1 || valeur > 10);\n```\n\nOn est obligé de demander **une première fois** avant de pouvoir juger la valeur : c'est exactement le cas du `do-while`. La boucle recommence tant que la valeur est invalide."
     },
     {
-     "titre": "Cas typique",
-     "texte": "Redemander une saisie tant qu'elle est invalide :\n```c\ndo {\n    scanf(\"%d\", &v);\n} while (v < 1 || v > 10);\n```"
+     "titre": "while ou do-while ?",
+     "texte": "| | `while` | `do-while` |\n|---|---|---|\n| Test | avant le corps | après le corps |\n| Tours minimum | 0 | 1 |\n| Usage | parcourir, compter | valider une saisie, menu |\n\nRègle du cours : réserver `do-while` aux cas où une **première exécution sans condition** a du sens. Dans tous les autres cas, préfère `while`."
+    },
+    {
+     "titre": "Le piège du point-virgule",
+     "texte": "```c\ndo {\n    ...\n} while (cond);    // ✓ ; obligatoire ici\n\nwhile (cond);      // ✗ ; ici = corps vide, boucle bloquée\n```\n\nPour `do-while`, le `;` final est **obligatoire**. Pour un `while` ordinaire, un `;` juste après la parenthèse en fait une boucle vide, donc souvent infinie. Deux boucles, deux règles opposées."
     }
    ],
    "check": {
@@ -245,16 +285,20 @@
    ],
    "ecrans": [
     {
-     "titre": "break",
-     "texte": "Sortie immédiate de la boucle : parfait pour une recherche."
+     "titre": "Modifier le déroulement d'une boucle",
+     "texte": "Normalement, une boucle va jusqu'au bout de ses tours. Deux instructions permettent d'intervenir :\n\n| Instruction | Effet |\n|---|---|\n| `break;` | **sort immédiatement** de la boucle (ou du `switch`) |\n| `continue;` | saute la fin du tour et **passe au suivant** |"
     },
     {
-     "titre": "continue",
-     "texte": "Saute au tour suivant ; ici on n'affiche que les impairs :\n```c\nif (x % 2 == 0) continue;\n```"
+     "titre": "continue : sauter un tour",
+     "texte": "```c\nfor (int x = 0; x < 10; x++) {\n    if (x % 2 == 0) {\n        continue;          // on saute les pairs\n    }\n    printf(\"%d \", x);\n}\n```\n\nQuand `x` est pair, `continue` renvoie directement au `x++` de la boucle, sans passer par le `printf`. Sortie : `1 3 5 7 9`."
     },
     {
-     "titre": "La boucle la plus proche",
-     "texte": "Dans deux boucles imbriquées, `break` ne sort que de la boucle intérieure."
+     "titre": "break : arrêter la boucle",
+     "texte": "```c\nint premier = 1;\nfor (int d = 2; d * d <= n; d++) {\n    if (n % d == 0) {\n        premier = 0;\n        break;             // un diviseur suffit\n    }\n}\n```\n\nOn cherche un diviseur de `n`. Dès qu'on en a trouvé un, `n` n'est pas premier : inutile de continuer. `break` quitte la boucle immédiatement."
+    },
+    {
+     "titre": "Quand l'utiliser",
+     "texte": "`break` est idéal pour une **recherche** : dès qu'on a trouvé ce qu'on cherchait, on s'arrête. Sans lui, la boucle continue pour rien (et peut même écraser le résultat).\n\n`continue` sert à **ignorer** certains cas sans imbriquer tout le corps dans un `if`.\n\n**À retenir** : `break` et `continue` agissent sur la boucle **la plus proche** qui les contient. Dans deux boucles imbriquées, ils ne sortent que de l'intérieure."
     }
    ],
    "check": {

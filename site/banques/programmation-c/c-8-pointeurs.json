@@ -25,16 +25,20 @@
    ],
    "ecrans": [
     {
-     "titre": "Des octets numérotés",
-     "texte": "Chaque octet a une adresse unique, écrite en hexadécimal."
+     "titre": "La mémoire est une longue rue",
+     "texte": "La mémoire de l'ordinateur est une **suite d'octets**, tous alignés. Chacun possède un numéro unique, son **adresse**, qu'on écrit en hexadécimal : `0x1000`, `0x1001`, `0x1002`…\n\nImagine une rue très longue où chaque maison (octet) a un numéro."
     },
     {
-     "titre": "Une variable, une adresse",
-     "texte": "L'adresse d'une variable est celle de son premier octet : `&nombre`."
+     "titre": "Une variable occupe des octets",
+     "texte": "Une variable occupe un ou plusieurs octets **contigus**, selon son type. Son adresse est celle de son **premier octet**.\n\n| Adresse | Taille | Variable |\n|---|---|---|\n| `0x1000` … `0x1003` | 4 octets | `int nombre = 42;` |\n| `0x1004` | 1 octet | `char lettre = 'A';` |\n| `0x1008` … `0x100F` | 8 octets | `double prix = 19.99;` |\n\n`nombre` occupe 4 maisons voisines ; son adresse est le numéro de la première."
     },
     {
-     "titre": "Afficher",
-     "texte": "```c\nprintf(\"%p\\n\", (void *)&nombre);\n```"
+     "titre": "Obtenir l'adresse : &",
+     "texte": "L'opérateur `&` placé devant une variable donne son **adresse** :\n\n```c\nint nombre = 42;\n&nombre      // l'adresse du premier octet de nombre\n```\n\nTu connais déjà ce symbole : c'est exactement le `&` du `scanf`. `scanf` a besoin de savoir **où** ranger la valeur."
+    },
+    {
+     "titre": "L'afficher avec %p",
+     "texte": "```c\nint nombre = 42;\nprintf(\"%d octets\\n\", (int)sizeof(nombre));    // 4\nprintf(\"adresse : %p\\n\", (void *)&nombre);     // par ex. 0x7ffd5fbff5bc\n```\n\n`%p` affiche une adresse, en hexadécimal. `sizeof` donne la taille de la variable en octets.\n\nL'adresse affichée **change à chaque exécution** : ce qui compte, c'est qu'elle désigne **où** la valeur est rangée."
     }
    ],
    "check": {
@@ -65,20 +69,28 @@
    ],
    "ecrans": [
     {
-     "titre": "L'adresse",
-     "texte": "`int *p = &nombre;` : p contient l'adresse de nombre."
+     "titre": "Un pointeur : une variable qui contient une adresse",
+     "texte": "On sait obtenir l'adresse d'une variable avec `&`. Un **pointeur** est une variable spéciale qui sert à la **ranger**.\n\n```c\nint nombre = 42;\nint *pointeur = &nombre;\n```\n\n`pointeur` contient l'adresse de `nombre`. On dit qu'il **pointe sur** `nombre`."
     },
     {
-     "titre": "La valeur pointée",
-     "texte": "`*p` vaut 42 : la valeur rangée à cette adresse."
+     "titre": "Les deux opérateurs",
+     "texte": "| Opérateur | Nom | Sur | Donne |\n|---|---|---|---|\n| `&x` | « adresse de » | une variable | son adresse |\n| `*p` | déréférencement | un pointeur | la valeur **rangée à cette adresse** |\n\nIls sont **inverses** l'un de l'autre : `*&nombre` est simplement `nombre`."
     },
     {
-     "titre": "Écrire à travers",
-     "texte": "`*p = 100;` modifie `nombre`."
+     "titre": "Lire à travers un pointeur",
+     "texte": "```c\nint nombre = 42;\nint *pointeur = &nombre;\n\nprintf(\"%d\\n\", *pointeur);     // 42\n```\n\n`*pointeur` veut dire : « va à l'adresse contenue dans `pointeur`, et regarde ce qu'il y a dedans ». On y trouve 42, la valeur de `nombre`."
     },
     {
-     "titre": "Deux sens de *",
-     "texte": "Déclaration : « est un pointeur ». Expression : « case pointée »."
+     "titre": "Écrire à travers un pointeur",
+     "texte": "```c\n*pointeur = 100;\nprintf(\"%d\\n\", nombre);        // 100\n```\n\nOn écrit **à l'adresse pointée**. Or cette adresse est celle de `nombre` : c'est donc `nombre` qui change. Le pointeur permet de modifier une variable sans utiliser son nom."
+    },
+    {
+     "titre": "Le résumé en tableau",
+     "texte": "| Expression | Vaut |\n|---|---|\n| `nombre` | `100` |\n| `&nombre` | `0x7fff5fbff5bc` (l'adresse) |\n| `pointeur` | `0x7fff5fbff5bc` (la même adresse) |\n| `*pointeur` | `100` |\n\nAnalogie : `&maison` = noter l'adresse d'une maison sur un papier ; `*papier` = aller à l'adresse écrite et regarder (ou changer) ce qu'il y a dedans."
+    },
+    {
+     "titre": "Le piège des deux sens de *",
+     "texte": "```c\nint *p = &x;    // déclaration : « p EST un pointeur »\n*p = 5;         // expression : « la case POINTÉE par p »\n```\n\nLa même étoile a deux sens selon l'endroit. Dans une **déclaration**, elle indique le type pointeur. Dans une **expression**, elle signifie « la case pointée ». Quand tu lis du code, cherche toujours dans quel cas tu es."
     }
    ],
    "check": {
@@ -109,16 +121,28 @@
    ],
    "ecrans": [
     {
-     "titre": "Typé",
-     "texte": "`int *` pointe sur un int, `char *` sur un char…"
+     "titre": "Un pointeur est typé",
+     "texte": "Un pointeur sait **sur quel type** il pointe : `int *` pointe sur un `int`, `double *` sur un `double`. C'est ce qui lui permet de savoir combien d'octets lire.\n\n```c\nint *p1;\nfloat *p_reel;\ndouble *p_double;\nvoid *p_generique;     // « pointeur sur n'importe quoi » (malloc en renvoie un)\n```\n\nSa propre taille est fixe (4 ou 8 octets selon la machine), quel que soit le type pointé."
     },
     {
-     "titre": "NULL",
-     "texte": "`int *p = NULL;` : ne pointe sur rien ; on teste `if (p != NULL)` avant `*p`."
+     "titre": "Initialiser avec une adresse",
+     "texte": "```c\nint valeur = 50;\nint *p1 = &valeur;\n```\n\nLe cas normal : on donne au pointeur l'adresse d'une variable qui existe. À partir de là, `*p1` est utilisable sans danger."
     },
     {
-     "titre": "Jamais au hasard",
-     "texte": "`int *p; *p = 5;` : comportement indéfini."
+     "titre": "NULL : ne pointe sur rien",
+     "texte": "Si tu n'as pas encore d'adresse à ranger, mets `NULL` :\n\n```c\nint *p2 = NULL;\n```\n\n`NULL` signifie « ce pointeur ne désigne rien pour l'instant ». Il est considéré comme **faux** dans une condition. Déréférencer `NULL` plante le programme, d'où le test avant."
+    },
+    {
+     "titre": "Toujours tester avant de déréférencer",
+     "texte": "```c\nif (p2 != NULL) {\n    *p2 = 10;\n}\n```\n\nAvec `NULL`, tu sais que le pointeur est vide. Tu ne fais `*p2` que quand tu as vérifié qu'il pointe vraiment quelque part. Ce test est essentiel avec `malloc`, qui peut échouer et renvoyer `NULL`."
+    },
+    {
+     "titre": "Le danger : un pointeur non initialisé",
+     "texte": "```c\nint *p;\n*p = 5;      // ✗ p pointe n'importe où\n```\n\nUn pointeur non initialisé contient une adresse **quelconque**. Écrire à travers lui écrit au hasard dans la mémoire : comportement indéfini, plantage probable.\n\n| Initialisation | Sûr ? |\n|---|---|\n| `int *p = &x;` | oui |\n| `int *p = NULL;` | oui, si on teste avant `*p` |\n| `int *p;` | **non** |"
+    },
+    {
+     "titre": "Le piège de la déclaration",
+     "texte": "```c\nint *a, b;     // a est un pointeur, b est un simple int !\n```\n\nL'étoile ne s'applique qu'à la variable qui la suit. Pour éviter la confusion, écris **une déclaration par ligne** :\n\n```c\nint *a;\nint *b;\n```"
     }
    ],
    "check": {
@@ -150,16 +174,24 @@
    ],
    "ecrans": [
     {
-     "titre": "Avancer",
-     "texte": "`p++` passe à l'élément suivant ; `p + n` saute n éléments."
+     "titre": "Avancer dans la mémoire",
+     "texte": "Un pointeur contient une adresse : on peut donc le **déplacer**. Si on lui ajoute un entier `n`, il avance de `n` **éléments** (et non de `n` octets) : le C tient compte de la taille du type pointé."
     },
     {
-     "titre": "En éléments",
-     "texte": "Pour un `int *`, +1 avance de 4 octets ; pour un `char *`, d'un octet."
+     "titre": "Les opérations possibles",
+     "texte": "| Opération | Effet |\n|---|---|\n| `p++` | avance d'un élément |\n| `p--` | recule d'un élément |\n| `p + n` | adresse n éléments plus loin |\n| `p - n` | adresse n éléments plus tôt |\n| `p2 - p1` | nombre d'éléments entre les deux |\n| `p1 < p2` | compare les positions (dans un même tableau) |"
     },
     {
-     "titre": "Comparer, soustraire",
-     "texte": "`p2 - p1` = nombre d'éléments entre les deux ; `p1 < p2` compare leurs positions."
+     "titre": "Un exemple pas à pas",
+     "texte": "```c\nint tableau[5] = {10, 20, 30, 40, 50};\nint *ptr = tableau;           // ptr → 10\nptr++;                        // ptr → 20\nptr = ptr + 2;                // ptr → 40\nprintf(\"%d\\n\", *ptr);         // 40\n```\n\n`ptr` démarre sur la 1re case. `ptr++` l'amène à la 2e, `ptr + 2` à la 4e, et `*ptr` lit la valeur 40."
+    },
+    {
+     "titre": "Pourquoi des éléments et pas des octets",
+     "texte": "| `tableau` | 10 | 20 | 30 | 40 | 50 |\n|---|---|---|---|---|---|\n| Adresse | 1000 | 1004 | 1008 | 1012 | 1016 |\n| Pointeur | `ptr` | `ptr+1` | `ptr+2` | `ptr+3` | `ptr+4` |\n\nUn `int` occupe 4 octets. Donc `ptr + 1` avance de `sizeof(int)` = **4 octets**, et tombe exactement sur l'élément suivant. Sur un `char *`, il avancerait d'**1 seul octet**."
+    },
+    {
+     "titre": "Parcourir sans compteur",
+     "texte": "```c\nfor (int *p = t; p < t + n; p++) {\n    printf(\"%d \", *p);\n}\n```\n\n`t + n` est l'adresse juste après le dernier élément. On avance `p` tant qu'il est avant. Et `fin - debut` donne le **nombre d'éléments** entre deux adresses, pas un nombre d'octets."
     }
    ],
    "check": {
@@ -191,20 +223,24 @@
    ],
    "ecrans": [
     {
-     "titre": "Le nom = l'adresse",
-     "texte": "`tab` vaut `&tab[0]`."
+     "titre": "Le nom d'un tableau est une adresse",
+     "texte": "Le nom d'un tableau est (presque) un pointeur constant vers son **premier élément** : `tab` vaut `&tab[0]`.\n\n```c\nint tab[5] = {10, 20, 30, 40, 50};\nint *ptr = tab;       // ptr = &tab[0], pas besoin de &\n```\n\nC'est ce qui explique pourquoi `scanf(\"%s\", mot)` n'a pas de `&`."
     },
     {
-     "titre": "Équivalence",
-     "texte": "`tab[i]` ⇔ `*(tab + i)` ⇔ `ptr[i]` ⇔ `*(ptr + i)`."
+     "titre": "Quatre écritures équivalentes",
+     "texte": "| Notation | Sens |\n|---|---|\n| `tab[2]` | notation tableau |\n| `*(tab + 2)` | notation pointeur |\n| `ptr[2]` | notation tableau, sur un pointeur |\n| `*(ptr + 2)` | notation pointeur |\n\n```c\nprintf(\"%d %d\\n\", tab[2], *(ptr + 2));    // 30 30\n```\n\n`tab[i]` est en fait une abréviation de `*(tab + i)` : on avance de `i` éléments, puis on lit."
     },
     {
-     "titre": "Dans une fonction",
-     "texte": "`int tab[]` et `int *tab` sont la même chose en paramètre."
+     "titre": "Passer un tableau à une fonction",
+     "texte": "Ces trois prototypes sont **équivalents** :\n\n```c\nvoid afficher1(int tab[], int taille);\nvoid afficher2(int *tab, int taille);\nvoid afficher3(int tab[10], int taille);\n```\n\nDans les trois cas, la fonction reçoit l'**adresse du premier élément**. Le `10` du troisième est ignoré par le compilateur."
     },
     {
-     "titre": "Tableau de chaînes",
-     "texte": "`char *jours[] = {\"Lundi\", \"Mardi\"};` : un tableau de pointeurs."
+     "titre": "Pourquoi la fonction modifie le tableau",
+     "texte": "```c\nvoid modifier(int *tab, int taille) {\n    for (int i = 0; i < taille; i++) {\n        tab[i] *= 2;\n    }\n}\n```\n\nLa fonction ne reçoit pas une copie, mais l'adresse du tableau d'origine : elle écrit donc directement dedans. C'est l'explication de ce qu'on a vu en {{7.6}}."
+    },
+    {
+     "titre": "Un tableau de pointeurs",
+     "texte": "```c\nchar *jours[] = {\"Lundi\", \"Mardi\", \"Mercredi\", \"Jeudi\", \"Vendredi\"};\nprintf(\"%s\\n\", jours[2]);     // Mercredi\n```\n\nChaque case de `jours` est un `char *`, donc l'adresse d'une chaîne. C'est la manière habituelle de ranger plusieurs chaînes de longueurs différentes."
     }
    ],
    "check": {
@@ -236,16 +272,24 @@
    ],
    "ecrans": [
     {
-     "titre": "const avant *",
-     "texte": "`const int *p` : on ne modifie pas `*p`."
+     "titre": "Protéger contre les erreurs",
+     "texte": "Le mot-clé `const` dit au compilateur : « cette valeur ne doit pas être modifiée ». S'il voit une tentative de modification, il refuse de compiler. C'est un garde-fou contre les erreurs d'inattention.\n\nAvec les pointeurs, la **place** du `const` change ce qui est protégé."
     },
     {
-     "titre": "const après *",
-     "texte": "`int *const p` : on ne fait pas pointer `p` ailleurs."
+     "titre": "Valeur protégée : const int *p",
+     "texte": "```c\nconst int *p = &x;\n*p = 3;       // ✗ refusé : la valeur pointée est constante\np = &y;       // ✓ autorisé : le pointeur peut changer de cible\n```\n\nTu peux déplacer le pointeur, mais pas écrire à travers lui."
     },
     {
-     "titre": "Paramètre en lecture",
-     "texte": "`int somme(const int *t, int n)` : la fonction promet de ne pas modifier le tableau."
+     "titre": "Pointeur protégé : int *const p",
+     "texte": "```c\nint *const p = &x;\n*p = 3;       // ✓ autorisé : la valeur peut changer\np = &y;       // ✗ refusé : le pointeur est fixé\n```\n\nIci c'est l'inverse : le pointeur est attaché à `x` pour de bon, mais la valeur est modifiable. Et `const int *const p` protège les deux."
+    },
+    {
+     "titre": "L'astuce de lecture",
+     "texte": "Lis la déclaration **de droite à gauche** :\n\n- `const int *p` : « p est un pointeur vers un int constant ».\n- `int *const p` : « p est un pointeur constant vers un int ».\n\n| Déclaration | Valeur pointée | Pointeur |\n|---|---|---|\n| `const int *p` | non modifiable | modifiable |\n| `int *const p` | modifiable | non modifiable |"
+    },
+    {
+     "titre": "Le cas courant : un paramètre en lecture",
+     "texte": "```c\nint somme(const int *t, int n) {\n    int s = 0;\n    for (int i = 0; i < n; i++) {\n        s += t[i];       // lecture : OK\n        // t[i] = 0;     // refusé par le compilateur\n    }\n    return s;\n}\n```\n\nLa fonction promet de ne pas modifier le tableau. L'éditeur du site ne vérifie pas `const`, mais un vrai compilateur, lui, refuse d'écrire à travers un `const int *`."
     }
    ],
    "check": {

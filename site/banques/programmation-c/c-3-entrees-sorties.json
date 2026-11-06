@@ -25,16 +25,24 @@
    ],
    "ecrans": [
     {
-     "titre": "Le principe",
-     "texte": "Un modèle entre guillemets, puis les valeurs :\n```c\nprintf(\"Age : %d ans\\n\", age);\n```"
+     "titre": "Afficher du texte",
+     "texte": "`printf` (déclarée dans `stdio.h`) affiche du texte à l'écran. Le cas le plus simple : un texte entre guillemets.\n\n```c\nprintf(\"Bonjour !\\n\");\n```\n\nLe `\\n` à la fin est un **retour à la ligne**. Il n'est **jamais automatique** : sans lui, l'affichage suivant se colle juste après."
     },
     {
-     "titre": "Plusieurs valeurs",
-     "texte": "Un `%…` par valeur, dans le même ordre :\n```c\nprintf(\"%d / %d\\n\", a, b);\n```"
+     "titre": "Insérer des valeurs : les trous",
+     "texte": "`printf` prend un **texte modèle** avec des « trous » (`%d`, `%f`…), puis les valeurs qui viennent les remplir, **dans l'ordre** :\n\n```c\nint age = 19;\nprintf(\"Age : %d ans\\n\", age);\n```\n\nLe `%d` est remplacé par la valeur de `age`. Sortie : `Age : 19 ans`."
     },
     {
-     "titre": "Le retour à la ligne",
-     "texte": "`\\n` n'est pas automatique : sans lui, l'affichage suivant reste sur la même ligne."
+     "titre": "Plusieurs trous, plusieurs valeurs",
+     "texte": "```c\nint age = 19;\ndouble moyenne = 13.75;\nprintf(\"%d ans, moyenne %.2f\\n\", age, moyenne);\n```\n\nLe 1er trou (`%d`) prend la 1re valeur (`age`), le 2e trou (`%.2f`) prend la 2e (`moyenne`). **Autant de valeurs que de trous**, dans le même ordre.\n\nSortie : `19 ans, moyenne 13.75`."
+    },
+    {
+     "titre": "Les séquences d'échappement",
+     "texte": "Certains caractères ne peuvent pas être tapés tels quels dans un texte. On les écrit avec une barre oblique inversée :\n\n| Séquence | Effet |\n|---|---|\n| `\\n` | retour à la ligne |\n| `\\t` | tabulation |\n| `\\\"` | un guillemet dans le texte |\n| `\\\\` | une barre oblique inversée |\n| `%%` | un signe `%` (sinon `%` annonce un trou) |"
+    },
+    {
+     "titre": "Caractère ou chaîne ?",
+     "texte": "Deux écritures qui se ressemblent mais sont différentes :\n\n```c\n'A'    // un caractère (apostrophes)  → type char\n\"A\"    // une chaîne (guillemets)     → texte\n```\n\nUn caractère seul va entre **apostrophes**, un texte entre **guillemets**. On les affiche avec `%c` et `%s`.\n\n**À retenir** : modèle + valeurs dans l'ordre, `\\n` pour passer à la ligne, `%%` pour afficher un pour-cent."
     }
    ],
    "check": {
@@ -67,19 +75,23 @@
    "ecrans": [
     {
      "titre": "Un format par type",
-     "texte": "`%d` entier · `%f` réel · `%c` caractère · `%s` chaîne · `%x` hexadécimal."
+     "texte": "Le caractère qui suit le `%` dit à `printf` **comment interpréter** la valeur :\n\n| Format | Type | Affiche |\n|---|---|---|\n| `%d` | `int` | `42` |\n| `%ld` | `long` | `5` |\n| `%f` | `float` / `double` | `3.140000` |\n| `%c` | `char` | `A` |\n| `%s` | chaîne | `Bonjour` |\n| `%x` | entier en hexadécimal | `2a` pour 42 |\n\nRetiens surtout `%d`, `%f`, `%c`, `%s`."
     },
     {
-     "titre": "Largeur",
-     "texte": "`%5d` réserve au moins 5 caractères : `[   42]`."
+     "titre": "Le format doit correspondre au type",
+     "texte": "```c\nprintf(\"%d\", 3.5);   // ✗ affiche n'importe quoi\n```\n\nLe compilateur ne bloque pas, mais la valeur est lue de travers, et le résultat est faux. Avant d'écrire un `printf`, demande-toi : **de quel type est ma variable ?** Puis choisis le format correspondant."
     },
     {
-     "titre": "Précision",
-     "texte": "`%.2f` garde 2 décimales : 3.14159 → `3.14`."
+     "titre": "Contrôler le nombre de décimales",
+     "texte": "Par défaut, `%f` affiche 6 décimales : `3.140000`. Pour en choisir le nombre, on ajoute `.N` :\n\n```c\nprintf(\"[%.2f]\\n\", 3.14159);   // [3.14]\nprintf(\"[%.0f]\\n\", 2.7);       // [3]\n```\n\n`%.2f` **arrondit à l'affichage seulement** : la variable, elle, garde toute sa précision."
     },
     {
-     "titre": "Caractère ou code",
-     "texte": "```c\nprintf(\"%c %d\\n\", 'A', 'A');  // A 65\n```"
+     "titre": "La largeur d'affichage",
+     "texte": "Un nombre avant la lettre fixe une **largeur minimale** : utile pour aligner des colonnes.\n\n```c\nprintf(\"[%5d]\\n\", 42);        // [   42]   aligné à droite\nprintf(\"[%-5d]\\n\", 42);       // [42   ]   le - aligne à gauche\nprintf(\"[%8.2f]\\n\", 3.14159); // [    3.14] largeur 8, 2 décimales\n```\n\nLes crochets ne servent qu'à voir où commence et finit le champ."
+    },
+    {
+     "titre": "Un char est un petit entier",
+     "texte": "Un `char` est stocké comme un nombre : son code **ASCII**. On peut donc l'afficher de deux façons :\n\n```c\nprintf(\"%c %d\\n\", 'A', 'A');   // A 65\n```\n\n`%c` affiche le caractère, `%d` affiche son code. Pratique pour comprendre `'A' + 1` (qui vaut 66, soit `'B'`)."
     }
    ],
    "check": {
@@ -111,20 +123,28 @@
    ],
    "ecrans": [
     {
-     "titre": "Le &",
-     "texte": "`scanf(\"%d\", &age);` : l'adresse de `age`, pas sa valeur."
+     "titre": "Lire ce que tape l'utilisateur",
+     "texte": "`printf` affiche, `scanf` fait l'inverse : elle **lit** ce que l'utilisateur tape au clavier et le range dans une variable.\n\n```c\nint age;\nprintf(\"Ton âge : \");\nscanf(\"%d\", &age);\n```\n\nLe format (`%d`) dit quel type lire, et il faut donner **où ranger** la valeur : `&age`."
     },
     {
-     "titre": "%lf pour les double",
-     "texte": "`%f` pour un `float`, `%lf` pour un `double` en lecture."
+     "titre": "Pourquoi le &",
+     "texte": "`scanf` doit **modifier** ta variable. Or si tu lui donnais `age`, elle recevrait seulement une copie de la valeur. Elle a donc besoin de **l'adresse** de la case mémoire : c'est ce que donne `&age`.\n\n```c\nscanf(\"%d\", &age);   // ✓ adresse de age\nscanf(\"%d\", age);    // ✗ le programme plante ou ne lit rien\n```\n\nSi tu oublies le `&`, l'éditeur du module te le signale."
     },
     {
-     "titre": "Les caractères",
-     "texte": "`scanf(\" %c\", &c);` : l'espace saute le `\\n` laissé par la saisie précédente."
+     "titre": "Un format par type de variable",
+     "texte": "| À lire | Format | On passe |\n|---|---|---|\n| `int` | `%d` | `&n` |\n| `double` | `%lf` | `&x` |\n| `float` | `%f` | `&x` |\n| `char` | `\" %c\"` | `&c` |\n\nLe piège classique : un `double` se lit avec **`%lf`** dans `scanf`, alors que `printf` utilise `%f`. Ne confonds pas les deux."
     },
     {
-     "titre": "Les chaînes",
-     "texte": "Pas de `&` pour un tableau, et on limite la taille : `%19s` pour un `char mot[20]`."
+     "titre": "Lire plusieurs valeurs",
+     "texte": "```c\nint a, b;\nscanf(\"%d %d\", &a, &b);\n```\n\nUn format par valeur, et une adresse par format, dans l'ordre. L'utilisateur sépare les valeurs par un espace ou un retour à la ligne."
+    },
+    {
+     "titre": "Lire un caractère",
+     "texte": "```c\nchar lettre;\nscanf(\" %c\", &lettre);   // l'espace avant %c est voulu\n```\n\nQuand tu valides une saisie, le retour à la ligne (`Entrée`) reste dans le tampon. Sans l'espace, `%c` le lirait comme le caractère demandé. L'espace avant `%c` dit à `scanf` d'ignorer les espaces et retours à la ligne en attente."
+    },
+    {
+     "titre": "Lire un mot",
+     "texte": "```c\nchar mot[20];            // 19 caractères + le '\\0' final\nscanf(\"%19s\", mot);      // pas de & : le nom d'un tableau est déjà une adresse\n```\n\nDeux points : **pas de `&`** pour un tableau, et le `19` limite la lecture à la taille du tableau moins 1 (on garde la place du `'\\0'`).\n\nPiège : `%s` s'arrête au **premier espace**. « Jean Luc » ne donne que `Jean`."
     }
    ],
    "check": {

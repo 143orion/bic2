@@ -28,16 +28,24 @@
    ],
    "ecrans": [
     {
-     "titre": "Un tableau de char",
-     "texte": "`char mot[] = \"toto\";` range 't' 'o' 't' 'o' puis '\\0'."
+     "titre": "Pas de type chaîne en C",
+     "texte": "Dans beaucoup de langages, `\"bonjour\"` est un type à part. En C, il n'existe **pas de type chaîne**. Une chaîne est simplement un **tableau de `char`**, et elle se termine **toujours** par un caractère spécial : le caractère nul `'\\0'`."
     },
     {
-     "titre": "4 lettres, 5 cases",
-     "texte": "La dernière case contient toujours le caractère nul `'\\0'`."
+     "titre": "Un exemple, case par case",
+     "texte": "```c\nchar mot[] = \"toto\";\n```\n\nLe compilateur range dans le tableau :\n\n| Indice | 0 | 1 | 2 | 3 | 4 |\n|---|---|---|---|---|---|\n| `mot[i]` | `'t'` | `'o'` | `'t'` | `'o'` | `'\\0'` |\n\nLe mot visible a **4** caractères, mais il occupe **5** cases : le `'\\0'` compte dans le tableau."
     },
     {
-     "titre": "Prévoir la place",
-     "texte": "`char prenom[20]` : 19 lettres au plus."
+     "titre": "Pourquoi le '\\0' ?",
+     "texte": "Un tableau ne connaît pas sa taille. Comment `printf` sait-elle où s'arrête le texte ? Elle lit les cases une à une **jusqu'à trouver `'\\0'`**.\n\nC'est aussi ce qui permet qu'un tableau de 100 cases contienne un mot de 10 lettres : le texte s'arrête au `'\\0'`, le reste est ignoré."
+    },
+    {
+     "titre": "Prévoir une case de plus",
+     "texte": "Règle simple : un tableau doit avoir **une case de plus** que le nombre de caractères à stocker.\n\n```c\nchar prenom[20];   // au plus 19 lettres + le '\\0'\n```\n\nPour le mot « Bonjour » (7 lettres), il faut au moins 8 cases."
+    },
+    {
+     "titre": "Le danger de l'oubli",
+     "texte": "Sans `'\\0'`, `printf`, `strlen`, `strcpy` ne trouvent jamais la fin : elles **lisent la mémoire au-delà du tableau**. Au mieux elles affichent des caractères parasites, au pire le programme plante.\n\nC'est l'une des erreurs les plus courantes en C, et une faille de sécurité classique : le **débordement de tampon** (*buffer overflow*)."
     }
    ],
    "check": {
@@ -68,16 +76,28 @@
    ],
    "ecrans": [
     {
-     "titre": "La forme recommandée",
-     "texte": "`char ch[] = \"toto\";` : taille calculée, '\\0' ajouté."
+     "titre": "Réserver une chaîne vide",
+     "texte": "```c\nchar ch[50];\n```\n\nOn réserve 50 cases pour la remplir plus tard (49 caractères au plus + le `'\\0'`). Elle ne contient rien de valide tant qu'on n'a rien écrit."
     },
     {
-     "titre": "Lecture seule",
-     "texte": "`char *str = \"hello\";` pointe sur une constante : on ne la modifie pas."
+     "titre": "L'initialisation recommandée",
+     "texte": "```c\nchar ch[] = \"toto\";\n```\n\nOn laisse les crochets vides : le compilateur **calcule lui-même la taille** (5) et **ajoute le `'\\0'`**. C'est la forme à préférer, car on ne peut pas se tromper."
     },
     {
-     "titre": "Pas de = après coup",
-     "texte": "`ville = \"Lyon\";` est refusé : `strcpy(ville, \"Lyon\");`."
+     "titre": "Avec une taille plus grande",
+     "texte": "```c\nchar ville[30] = \"Paris\";   // \"Paris\" + '\\0', puis le reste à 0\nchar vide[10] = \"\";          // chaîne vide : vide[0] vaut '\\0'\n```\n\nTu peux réserver plus de place que nécessaire, pour modifier le contenu plus tard. La chaîne vide `\"\"` est valide : elle se compose uniquement du `'\\0'`."
+    },
+    {
+     "titre": "La forme fastidieuse",
+     "texte": "```c\nchar ch[5] = {'t', 'o', 't', 'o', '\\0'};\n```\n\nC'est équivalent, mais il faut écrire chaque lettre et **penser au `'\\0'`**. À éviter sauf besoin précis."
+    },
+    {
+     "titre": "Pointeur sur une constante",
+     "texte": "```c\nchar *str = \"hello\";\nstr[0] = 'H';          // ✗ plante : lecture seule\n```\n\nAvec `char *`, la chaîne est stockée dans une zone **en lecture seule**. On peut la lire, pas la modifier. Si tu dois changer des lettres, utilise un tableau `char ch[] = \"hello\";`."
+    },
+    {
+     "titre": "Pas d'affectation avec =",
+     "texte": "```c\nchar ville[30] = \"Paris\";\nville = \"Lyon\";            // ✗ refusé par le compilateur\n```\n\nLe `=` marche **uniquement à la déclaration**. Après, il faut copier les caractères avec `strcpy(ville, \"Lyon\");` (on la voit dans `string.h`, notion 6.5)."
     }
    ],
    "check": {
@@ -109,20 +129,24 @@
    ],
    "ecrans": [
     {
-     "titre": "Un mot",
-     "texte": "`scanf(\"%19s\", nom);` s'arrête au premier espace."
+     "titre": "Deux outils pour saisir du texte",
+     "texte": "Pour lire une chaîne au clavier, on a `scanf(\"%s\", …)` et `fgets(…)`. Ils ne se comportent pas pareil, et le choix dépend de ce que tu veux lire : **un mot** ou **une ligne entière**."
     },
     {
-     "titre": "Une ligne",
-     "texte": "`fgets(phrase, sizeof(phrase), stdin);` lit toute la ligne, sans déborder."
+     "titre": "scanf : un mot",
+     "texte": "```c\nchar nom[20];\nscanf(\"%19s\", nom);\n```\n\n`scanf` s'arrête au **premier espace**, tabulation ou retour à la ligne. Si l'utilisateur tape « Jean Luc », `nom` contient seulement `Jean`.\n\nLe `19` limite la lecture à la taille du tableau moins 1, pour garder la place du `'\\0'`. Pas de `&` devant `nom` : un tableau est déjà une adresse."
     },
     {
-     "titre": "Le \\n de fgets",
-     "texte": "```c\nphrase[strcspn(phrase, \"\\n\")] = '\\0';\n```"
+     "titre": "fgets : une ligne",
+     "texte": "```c\nchar phrase[100];\nfgets(phrase, sizeof(phrase), stdin);\n```\n\n`fgets` lit **toute la ligne**, espaces compris, et s'arrête à la fin de la ligne **ou** quand le tableau est plein. Elle ne dépasse jamais la taille indiquée : elle est **sûre**.\n\n`stdin` désigne l'entrée standard, c'est-à-dire le clavier."
     },
     {
-     "titre": "gets",
-     "texte": "Jamais : aucune vérification de taille."
+     "titre": "Le \\n que laisse fgets",
+     "texte": "`fgets` **garde** le retour à la ligne dans la chaîne. Si l'utilisateur tape `Salut le monde` puis Entrée :\n\n```\nphrase = \"Salut le monde\\n\"\n```\n\nSouvent, on veut l'enlever. Avec `strcspn`, qui donne la position du premier `\\n` :\n\n```c\n#include <string.h>\nphrase[strcspn(phrase, \"\\n\")] = '\\0';   // on remplace \\n par \\0\n```"
+    },
+    {
+     "titre": "Tableau comparatif et interdit",
+     "texte": "| | `scanf(\"%s\")` | `fgets` |\n|---|---|---|\n| S'arrête | au premier espace | à la fin de la ligne |\n| Espaces acceptés | non | oui |\n| Taille vérifiée | seulement avec `%19s` | toujours |\n| `\\n` final | reste dans le tampon | stocké dans la chaîne |\n\nEt ne **jamais** utiliser `gets()` : elle ne vérifie pas la taille et provoque des débordements."
     }
    ],
    "check": {
@@ -154,16 +178,24 @@
    ],
    "ecrans": [
     {
-     "titre": "Jusqu'au \\0",
-     "texte": "```c\nfor (int i = 0; s[i] != '\\0'; i++)\n```"
+     "titre": "Jusqu'au '\\0'",
+     "texte": "Pour parcourir une chaîne, on n'a pas besoin de connaître sa longueur : on avance **jusqu'au `'\\0'`**.\n\n```c\nchar mot[] = \"Bonjour\";\nfor (int i = 0; mot[i] != '\\0'; i++) {\n    printf(\"%c \", mot[i]);\n}\n```\n\nLa condition `mot[i] != '\\0'` dit « tant qu'on n'est pas arrivé à la fin »."
     },
     {
-     "titre": "Les codes",
-     "texte": "'A' = 65, 'a' = 97, '0' = 48 : les lettres et les chiffres se suivent."
+     "titre": "La même chose avec un pointeur",
+     "texte": "```c\nchar *p = mot;\nwhile (*p != '\\0') {\n    printf(\"%c\", *p);\n    p++;\n}\n```\n\nIci `p` pointe sur le premier caractère, `*p` donne ce caractère, `p++` avance au suivant. On verra les pointeurs au chapitre 8, ne t'inquiète pas si tu ne les maîtrises pas encore."
     },
     {
-     "titre": "Calculer",
-     "texte": "`c - 'a' + 'A'` met une minuscule en majuscule ; `c - '0'` donne la valeur d'un chiffre."
+     "titre": "Un caractère est un petit entier",
+     "texte": "Chaque caractère est stocké comme un nombre : son code **ASCII**.\n\n| Caractère | Code ASCII |\n|---|---|\n| `'0'` … `'9'` | 48 … 57 |\n| `'A'` … `'Z'` | 65 … 90 |\n| `'a'` … `'z'` | 97 … 122 |\n\nConséquence : les lettres sont rangées dans l'ordre alphabétique, on peut les **comparer** et faire des **calculs** dessus."
+    },
+    {
+     "titre": "Tester une lettre",
+     "texte": "```c\nif (c >= 'a' && c <= 'z') {\n    // c est une minuscule\n}\n```\n\nComme `'a'` vaut 97 et `'z'` vaut 122, tester si `c` est entre les deux revient à tester si c'est une minuscule. On ne se soucie pas des codes, on écrit directement les caractères."
+    },
+    {
+     "titre": "Convertir avec des calculs",
+     "texte": "```c\nchar maj  = c - 'a' + 'A';    // 'b' → 'B'\nint chiffre = c - '0';        // '7' → 7\n```\n\n- `c - 'a'` donne la position de la lettre dans l'alphabet (`'b'` → 1) ; `+ 'A'` la replace dans les majuscules.\n- `c - '0'` convertit le caractère d'un chiffre en sa valeur : `'7'` (55) − `'0'` (48) = 7.\n\nLa longueur d'une chaîne est simplement le nombre de tours avant le `'\\0'`."
     }
    ],
    "check": {
@@ -194,16 +226,28 @@
    ],
    "ecrans": [
     {
-     "titre": "Mesurer",
-     "texte": "`strlen(s)` : nombre de caractères, sans le '\\0'."
+     "titre": "Une boîte à outils : string.h",
+     "texte": "Manipuler une chaîne case par case est long. La bibliothèque `string.h` fournit les opérations courantes, déjà écrites :\n\n```c\n#include <string.h>\n```\n\nOn voit les plus utiles : longueur, copie, concaténation, comparaison."
     },
     {
-     "titre": "Copier, coller",
-     "texte": "`strcpy(dest, src)` puis `strcat(dest, \" fin\")` : la destination doit être assez grande."
+     "titre": "strlen : la longueur",
+     "texte": "```c\nstrlen(\"Bonjour\")    // 7\n```\n\n`strlen` compte les caractères **sans le `'\\0'`**. Un tableau `char s[] = \"Bonjour\"` occupe 8 cases, mais `strlen(s)` vaut 7."
     },
     {
-     "titre": "Comparer",
-     "texte": "`strcmp(a, b) == 0` si les chaînes sont égales. Jamais `a == b`."
+     "titre": "strcpy et strcat",
+     "texte": "```c\nchar source[] = \"Bonjour\";\nchar destination[20];                  // assez grand !\nstrcpy(destination, source);           // \"Bonjour\"\nstrcat(destination, \" le monde!\");     // \"Bonjour le monde!\"\n```\n\n- `strcpy(dest, src)` **copie** `src` dans `dest` (c'est la façon de « faire un `=`»).\n- `strcat(dest, src)` **ajoute** `src` à la fin de `dest`.\n\n`strncpy(dest, src, n)` est la version qui limite à `n` caractères."
+    },
+    {
+     "titre": "strcmp : comparer",
+     "texte": "```c\nif (strcmp(source, \"Bonjour\") == 0) {\n    printf(\"identiques\\n\");\n}\n```\n\n`strcmp(a, b)` renvoie :\n- **0** si les chaînes sont égales,\n- un nombre **< 0** si `a` vient avant `b` dans l'ordre alphabétique,\n- un nombre **> 0** sinon.\n\nAttention : tester l'égalité, c'est `== 0`, ce qui est contre-intuitif au début."
+    },
+    {
+     "titre": "Chercher dans une chaîne",
+     "texte": "- `strchr(s, c)` : trouve la première occurrence du **caractère** `c` dans `s`.\n- `strstr(s, sous)` : trouve la première occurrence de la **sous-chaîne** `sous`.\n\nCes fonctions renvoient l'endroit où l'élément a été trouvé (ou `NULL` s'il est absent)."
+    },
+    {
+     "titre": "Les deux pièges",
+     "texte": "**Comparer avec `==`** :\n\n```c\nif (a == b)              // ✗ compare les ADRESSES\nif (strcmp(a, b) == 0)   // ✓ compare le contenu\n```\n\n**Destination trop petite** :\n`strcpy` et `strcat` **ne vérifient pas** la place. Si `destination` est trop petit, elles écrivent au-delà : débordement. La destination doit pouvoir contenir le texte **et** le `'\\0'`."
     }
    ],
    "check": {

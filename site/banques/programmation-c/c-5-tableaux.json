@@ -27,20 +27,28 @@
    ],
    "ecrans": [
     {
-     "titre": "Déclarer",
-     "texte": "`int t[5];` réserve 5 entiers contigus : `t[0]` … `t[4]`."
+     "titre": "Pourquoi un tableau ?",
+     "texte": "Pour stocker 30 notes, tu ne vas pas créer 30 variables `note1`, `note2`… Un **tableau** range plusieurs valeurs **du même type** dans une zone mémoire **contiguë** (les unes à côté des autres), sous un seul nom.\n\nChaque élément est repéré par un **indice**, un numéro de case."
+    },
+    {
+     "titre": "Déclarer un tableau",
+     "texte": "```c\nint notes[5];\n```\n\nCette ligne réserve 5 entiers. Les indices vont de **0 à 4** : le premier élément est `notes[0]`, le dernier `notes[4]`. Pour N éléments, le dernier indice est **N − 1**.\n\nComme pour une variable, les cases ne sont pas initialisées : elles contiennent n'importe quoi tant qu'on n'y a rien écrit."
     },
     {
      "titre": "Initialiser",
-     "texte": "```c\nint t[5] = {12, 15, 8, 10, 17};\nint u[5] = {1, 2};   // le reste vaut 0\n```"
+     "texte": "```c\nint notes2[5] = {12, 15, 8, 10, 17};   // toutes les valeurs\nint notes3[5] = {1, 2};                // les autres cases valent 0\n```\n\n| Indice | 0 | 1 | 2 | 3 | 4 |\n|---|---|---|---|---|---|\n| `notes2[i]` | 12 | 15 | 8 | 10 | 17 |\n\nSi on donne moins de valeurs que de cases, les cases restantes sont mises à **0**."
     },
     {
-     "titre": "Parcourir",
-     "texte": "```c\nfor (int i = 0; i < 5; i++) {\n    printf(\"%d \", t[i]);\n}\n```"
+     "titre": "Lire et modifier une case",
+     "texte": "```c\nnotes[0] = 20;                 // modifie le 1er élément\nprintf(\"%d\\n\", notes2[2]);     // affiche le 3e élément : 8\n```\n\n`notes2[2]` est le **troisième** élément, car on compte à partir de 0. C'est la source d'erreurs la plus fréquente : l'élément n° k est à l'indice k − 1."
     },
     {
-     "titre": "Les indices",
-     "texte": "De 0 à N − 1 : `t[5]` n'existe pas dans un tableau de 5 cases."
+     "titre": "Parcourir avec une boucle",
+     "texte": "On ne peut pas lire ou afficher un tableau « d'un coup » : on passe **case par case** avec un `for`.\n\n```c\n#define N 5\nint t[N];\nfor (int i = 0; i < N; i++) {      // saisie\n    scanf(\"%d\", &t[i]);\n}\nfor (int i = 0; i < N; i++) {      // affichage\n    printf(\"%d \", t[i]);\n}\n```\n\nOn utilise `i < N` (pas `<=`) parce que le dernier indice est N − 1."
+    },
+    {
+     "titre": "Taille fixe et constante",
+     "texte": "La taille d'un tableau statique doit être **connue à la compilation** : un nombre, ou un `#define`. Elle ne change plus ensuite.\n\n```c\n#define N 5\nint t[N];    // ✓\n```\n\nAstuce : `sizeof(t) / sizeof(t[0])` donne le nombre d'éléments, à condition de le calculer dans la fonction où `t` est déclaré."
     }
    ],
    "check": {
@@ -71,16 +79,24 @@
    ],
    "ecrans": [
     {
-     "titre": "Deux tailles",
-     "texte": "Physique = capacité réservée (constante). Logique = cases utilisées (variable `tl`)."
+     "titre": "Deux tailles, deux idées",
+     "texte": "Comme la taille d'un tableau est fixe, on en réserve souvent plus qu'il n'en faut. Il faut alors distinguer :\n\n| | Taille **physique** | Taille **logique** |\n|---|---|---|\n| C'est | la mémoire réservée | le nombre de cases **utilisées** |\n| Fixée par | la déclaration | le programme, à l'exécution |\n| Exemple | `int t[20];` → 20 | `int tl = 7;` |"
     },
     {
-     "titre": "Ajouter",
-     "texte": "```c\nif (tl < TP) { t[tl] = x; tl++; }\n```"
+     "titre": "Un exemple concret",
+     "texte": "Imagine une salle de 20 chaises (taille physique) où 7 personnes sont assises (taille logique). Les 7 premières chaises sont occupées ; les 13 autres sont vides mais existent.\n\n```c\n#define TP 20\nint t[TP];\nint tl = 7;\n```\n\nLes cases `t[0]` à `t[6]` sont valides ; `t[7]` à `t[19]` contiennent n'importe quoi."
+    },
+    {
+     "titre": "Lire jusqu'à la taille logique",
+     "texte": "```c\nint tl;\nscanf(\"%d\", &tl);              // nombre d'éléments voulus (tl <= TP)\nfor (int i = 0; i < tl; i++) {\n    scanf(\"%d\", &t[i]);\n}\n```\n\nToutes les boucles vont jusqu'à **`tl`**, jamais jusqu'à `TP` : au-delà de `tl`, les cases ne contiennent rien d'utile."
+    },
+    {
+     "titre": "Ajouter à la fin",
+     "texte": "```c\nif (tl < TP) {     // reste-t-il de la place ?\n    t[tl] = x;     // première case libre = t[tl]\n    tl++;          // un élément de plus\n}\n```\n\nLa première case libre est exactement `t[tl]` (si 7 cases sont utilisées, ce sont les indices 0 à 6, donc la suivante est la 7). On vérifie d'abord `tl < TP`, sinon on écrirait hors du tableau."
     },
     {
      "titre": "Supprimer le dernier",
-     "texte": "```c\nif (tl > 0) tl--;\n```"
+     "texte": "```c\nif (tl > 0) {\n    tl--;\n}\n```\n\nOn n'efface rien : on **oublie** simplement la dernière case en diminuant la taille logique. La valeur reste en mémoire, mais plus aucune boucle n'ira la lire.\n\n**À retenir** : la taille logique est une simple variable que tu mets à jour ; elle définit ce qui compte dans le tableau."
     }
    ],
    "check": {
@@ -111,16 +127,24 @@
    ],
    "ecrans": [
     {
-     "titre": "Taille constante",
-     "texte": "`int T[n];` avec `n` lu au clavier est refusé dans le cours : la taille est un `#define` ou un nombre."
+     "titre": "Des erreurs venues d'autres langages",
+     "texte": "Si tu viens de Python, certains réflexes ne fonctionnent pas en C. Le cours liste six erreurs fréquentes. Pour chacune, on voit ce qui est faux, pourquoi, et la bonne manière de faire."
     },
     {
-     "titre": "Une case à la fois",
-     "texte": "`scanf`, `printf`, comparaison : toujours dans une boucle, case par case."
+     "titre": "Taille variable et taille négative",
+     "texte": "```c\nint n; scanf(\"%d\", &n);\nint T[n];        // ✗ la taille doit être constante\n```\nUn tableau statique a une taille connue à la compilation. Corrige avec `#define N 10` puis `int T[N];`.\n\n```c\nT[-1] = 0;       // ✗ il n'y a pas d'indice négatif\n```\nLes indices vont de 0 à N − 1. Un indice négatif écrit dans la mémoire **avant** le tableau."
     },
     {
-     "titre": "Pas de dépassement",
-     "texte": "`i < N`, jamais `i <= N`."
+     "titre": "Lire et afficher sans boucle",
+     "texte": "```c\nscanf(\"%d\", T);      // ✗ ne lit qu'UNE valeur\nprintf(\"%d\", T);     // ✗ affiche une adresse, pas le contenu\n```\n\n`T` seul désigne l'**adresse** du tableau, pas ses valeurs. Pour lire ou afficher, il faut une boucle sur les indices :\n\n```c\nfor (int i = 0; i < N; i++) scanf(\"%d\", &T[i]);\nfor (int i = 0; i < N; i++) printf(\"%d \", T[i]);\n```"
+    },
+    {
+     "titre": "len() et comparaison",
+     "texte": "```c\nn = len(T);          // ✗ len n'existe pas en C\nif (T1 == T2)        // ✗ compare les ADRESSES\n```\n\nUn tableau ne connaît pas sa propre taille : garde-la dans une variable. Et `T1 == T2` demande « les deux tableaux sont-ils au **même endroit** en mémoire ? », presque toujours faux. Pour comparer, on parcourt case par case."
+    },
+    {
+     "titre": "Le grand piège : sortir du tableau",
+     "texte": "```c\nint t[5];\nfor (int i = 0; i <= 5; i++) {   // ✗ i = 5 est hors du tableau\n    t[i] = 0;\n}\n```\n\nÉcrire `t[5]` dans un tableau de 5 cases (indices 0 à 4) est un **comportement indéfini** : le programme peut planter, afficher n'importe quoi… ou sembler marcher. **Le compilateur ne prévient pas.**\n\nCorrection : `i < 5`. Vérifie toujours la borne de tes boucles."
     }
    ],
    "check": {
@@ -152,20 +176,28 @@
    ],
    "ecrans": [
     {
-     "titre": "Somme et moyenne",
-     "texte": "```c\nint s = 0;\nfor (int i = 0; i < n; i++) s += t[i];\ndouble moy = (double)s / n;\n```"
+     "titre": "Le principe commun",
+     "texte": "Presque tous les algorithmes sur un tableau sont un **parcours** pendant lequel une variable « retient » quelque chose : une somme, le plus petit élément, un compteur, une position.\n\nPour chacun, trois questions : **quelle variable ? quelle valeur de départ ? que fait-on à chaque case ?**"
     },
     {
-     "titre": "Minimum",
-     "texte": "On part de `t[0]`, pas de 0."
+     "titre": "Somme et comptage",
+     "texte": "```c\nint s = 0;\nfor (int i = 0; i < n; i++) {\n    s += t[i];                 // on ajoute chaque élément\n}\n\nint nb = 0;\nfor (int i = 0; i < n; i++) {\n    if (t[i] == v) nb++;       // on compte les occurrences de v\n}\n```\n\nLes deux démarrent à **0** : c'est l'élément neutre de l'addition."
     },
     {
-     "titre": "Recherche",
-     "texte": "`pos = -1`, puis `break` dès qu'on trouve."
+     "titre": "Minimum (ou maximum)",
+     "texte": "```c\nint min = t[0];                // on part du 1er élément\nfor (int i = 1; i < n; i++) {\n    if (t[i] < min) min = t[i];\n}\n```\n\nPourquoi pas `min = 0` ? Si toutes les valeurs sont positives, `0` serait plus petit que tout le monde et donnerait un faux résultat. **On part toujours de `t[0]`.**"
     },
     {
-     "titre": "Décaler",
-     "texte": "Chaque case prend la valeur de sa voisine : `t[i] = t[i + 1];`."
+     "titre": "Chercher une position",
+     "texte": "```c\nint pos = -1;                  // -1 = pas trouvé\nfor (int i = 0; i < n; i++) {\n    if (t[i] == v) {\n        pos = i;\n        break;                 // on s'arrête à la première\n    }\n}\nif (pos == -1) printf(\"absent\\n\");\n```\n\n`-1` n'est jamais un indice valide, c'est donc une valeur parfaite pour dire « pas trouvé »."
+    },
+    {
+     "titre": "Décaler à gauche, de façon circulaire",
+     "texte": "```c\nint premier = t[0];              // on met le 1er de côté\nfor (int i = 0; i < n - 1; i++) {\n    t[i] = t[i + 1];             // chacun prend la place de son voisin\n}\nt[n - 1] = premier;              // le 1er passe à la fin\n```\n\nSi on écrasait `t[0]` sans le sauvegarder, sa valeur serait perdue. On remplit de gauche à droite : chaque case est copiée **avant** d'être écrasée."
+    },
+    {
+     "titre": "Supprimer une case",
+     "texte": "```c\nfor (int i = pos; i < n - 1; i++) {\n    t[i] = t[i + 1];             // on referme le trou\n}\nn--;                             // un élément de moins\n```\n\nPour supprimer la case `pos`, chaque élément qui la suit recule d'une place, puis la taille logique diminue. Même mécanique que le décalage, en s'arrêtant sur le trou."
     }
    ],
    "check": {

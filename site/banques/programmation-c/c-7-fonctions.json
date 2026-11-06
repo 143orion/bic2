@@ -27,16 +27,28 @@
    ],
    "ecrans": [
     {
-     "titre": "Prototype",
-     "texte": "```c\nint multiplier(int x, int y);\n```\nannonce la fonction, avec `;`."
+     "titre": "Pourquoi des fonctions ?",
+     "texte": "Quand un programme grossit, tout mettre dans `main` devient illisible. Une **fonction** est un bloc de code **nommé et réutilisable** qui accomplit une tâche précise.\n\n| Avantage | Concrètement |\n|---|---|\n| Réutilisabilité | écrite une fois, appelée partout |\n| Lisibilité | `moyenne(notes, n)` se lit comme une phrase |\n| Maintenance | une correction à un seul endroit |\n| Abstraction | tu utilises `sqrt` sans savoir comment elle calcule |"
     },
     {
-     "titre": "Définition",
-     "texte": "```c\nint multiplier(int x, int y) {\n    return x * y;\n}\n```"
+     "titre": "Un exemple complet",
+     "texte": "```c\n#include <stdio.h>\n\nint multiplier(int x, int y);          // 1. prototype\n\nint main(void) {\n    int produit = multiplier(5, 7);    // 3. appel\n    printf(\"%d\\n\", produit);           // 35\n    return 0;\n}\n\nint multiplier(int x, int y) {         // 2. définition\n    return x * y;\n}\n```\n\nTrois morceaux : le **prototype**, la **définition**, l'**appel**. On les voit un par un."
     },
     {
-     "titre": "Appel",
-     "texte": "`int p = multiplier(5, 7);` : 5 va dans `x`, 7 dans `y`, `p` reçoit 35."
+     "titre": "L'en-tête d'une fonction",
+     "texte": "```c\nint multiplier(int x, int y)\n```\n\n| Partie | Rôle |\n|---|---|\n| `int` | **type de retour** : le type de la valeur renvoyée (`void` si rien) |\n| `multiplier` | le **nom** (`lower_snake_case`, qui décrit l'action) |\n| `(int x, int y)` | les **paramètres** : les données reçues, chacune avec son type |\n\nLes paramètres sont des variables locales qui n'existent que dans la fonction."
+    },
+    {
+     "titre": "La définition : le corps",
+     "texte": "```c\nint multiplier(int x, int y) {\n    return x * y;\n}\n```\n\nLe **corps** est le bloc entre accolades. `return` renvoie la valeur à celui qui a appelé la fonction et **termine** la fonction. Le type de la valeur doit correspondre au type de retour (`int` ici)."
+    },
+    {
+     "titre": "L'appel : arguments et paramètres",
+     "texte": "```c\nint produit = multiplier(5, 7);\n```\n\nLes valeurs `5` et `7` sont les **arguments**. À l'appel, elles sont **copiées** dans les paramètres : `x` reçoit 5, `y` reçoit 7. La fonction calcule `35`, le renvoie, et `produit` le reçoit.\n\nUn appel est une expression : tu peux l'écrire directement dans un `printf` ou un calcul."
+    },
+    {
+     "titre": "Le prototype",
+     "texte": "```c\nint multiplier(int x, int y);     // avec ; à la fin\n```\n\nLe compilateur lit le fichier de haut en bas. Si `multiplier` est définie **après** `main`, il ne la connaît pas encore quand `main` l'appelle. Le **prototype** (l'en-tête suivi d'un `;`) la lui annonce.\n\nAlternative : définir la fonction **avant** `main`, mais les prototypes en haut du fichier donnent une vue d'ensemble."
     }
    ],
    "check": {
@@ -67,16 +79,24 @@
    ],
    "ecrans": [
     {
-     "titre": "void",
-     "texte": "Ne renvoie rien : on l'appelle pour son effet (afficher, remplir)."
+     "titre": "Deux sortes de fonctions",
+     "texte": "- Certaines fonctions **font** quelque chose (afficher, remplir un tableau) sans produire de résultat : type `void`.\n- D'autres **calculent** une valeur et la renvoient : type `int`, `double`, `char`…\n\nLe type de retour dans l'en-tête dit dans quelle catégorie on est."
     },
     {
-     "titre": "Avec retour",
-     "texte": "```c\nint maximum(int a, int b) {\n    if (a > b) return a;\n    return b;\n}\n```"
+     "titre": "Sans valeur de retour : void",
+     "texte": "```c\nvoid afficher_ligne(int n) {\n    for (int i = 0; i < n; i++) printf(\"-\");\n    printf(\"\\n\");\n}\n\nafficher_ligne(10);     // ----------\n```\n\n`void` signifie « rien ». Pas de `return valeur;` (au plus un `return;` pour sortir plus tôt). On l'appelle comme une **instruction**, on n'en récupère rien."
     },
     {
-     "titre": "return arrête tout",
-     "texte": "Dès qu'un `return` s'exécute, la fonction est terminée."
+     "titre": "Avec valeur de retour",
+     "texte": "```c\nint maximum(int a, int b) {\n    if (a > b) return a;\n    return b;\n}\n\nint m = maximum(15, 23);          // m vaut 23\nprintf(\"%d\\n\", maximum(15, 23));  // l'appel est une expression\n```\n\nLe `return` est **obligatoire** et doit renvoyer une valeur du bon type. Comme l'appel vaut cette valeur, on peut l'affecter, l'afficher, l'utiliser dans un calcul."
+    },
+    {
+     "titre": "return termine la fonction",
+     "texte": "Dès qu'un `return` est exécuté, la fonction s'arrête et rend la main. Dans `maximum` :\n\n- si `a > b` → `return a;` et la ligne suivante n'est **jamais** lue ;\n- sinon, on passe à `return b;`.\n\nOn écrit donc souvent un `return` précoce pour les cas simples, ce qui évite des `else` inutiles."
+    },
+    {
+     "titre": "Le piège du return manquant",
+     "texte": "```c\nint signe(int n) {\n    if (n > 0) return 1;\n    if (n < 0) return -1;\n    // si n == 0 : aucun return !\n}\n```\n\nSi aucun `return` n'est atteint, la fonction renvoie **n'importe quoi**. Chaque chemin possible doit se terminer par un `return`. Ici, ajoute `return 0;` à la fin. L'éditeur du module te dira « Il manque un return »."
     }
    ],
    "check": {
@@ -107,16 +127,24 @@
    ],
    "ecrans": [
     {
-     "titre": "Locale",
-     "texte": "Déclarée dans une fonction, détruite à la sortie : invisible ailleurs."
+     "titre": "La portée",
+     "texte": "La **portée** d'une variable, c'est la zone du programme où l'on peut s'en servir. Il y a deux grandes familles : les variables **locales** et les variables **globales**."
     },
     {
-     "titre": "Globale",
-     "texte": "Déclarée hors de toute fonction : visible partout, mais à éviter."
+     "titre": "Variable locale",
+     "texte": "Une variable déclarée **dans une fonction** (ou dans un bloc `{ }`) est locale :\n\n- elle n'est visible que dans cette fonction ;\n- elle est **créée** à l'entrée de la fonction, **détruite** à la sortie ;\n- sans initialisation, elle contient une valeur quelconque.\n\nLes paramètres sont aussi des variables locales."
     },
     {
-     "titre": "Même nom, autre variable",
-     "texte": "Le `i` de `main` et le `i` d'une autre fonction n'ont rien à voir."
+     "titre": "Variable globale",
+     "texte": "Une variable déclarée **en dehors de toute fonction**, en haut du fichier, est globale :\n\n- elle est visible dans tout le fichier ;\n- elle existe pendant toute l'exécution ;\n- sans initialisation, elle vaut 0.\n\n```c\nint compteur = 0;      // GLOBALE\n```"
+    },
+    {
+     "titre": "Les deux ensemble, pas à pas",
+     "texte": "```c\nint compteur = 0;                  // globale\n\nvoid incrementer(void) {\n    int valeur = 5;                // locale à incrementer\n    compteur++;                    // OK : la globale est visible\n    valeur++;\n}\n\nint main(void) {\n    incrementer();\n    incrementer();\n    printf(\"%d\\n\", compteur);      // 2\n    // printf(\"%d\", valeur);       // ERREUR : valeur n'existe pas ici\n    return 0;\n}\n```\n\nChaque appel crée un nouveau `valeur` et le détruit à la fin ; `compteur` garde sa valeur d'un appel à l'autre."
+    },
+    {
+     "titre": "Que privilégier ?",
+     "texte": "Deux fonctions peuvent chacune avoir une variable `i` : ce sont **deux variables différentes**, sans conflit.\n\nLes globales sont à éviter : n'importe quelle fonction peut les modifier, donc on ne sait plus qui a changé quoi (« dépendances cachées »). Préfère passer les données en **paramètres** et récupérer le résultat avec **`return`**."
     }
    ],
    "check": {
@@ -148,16 +176,20 @@
    ],
    "ecrans": [
     {
-     "titre": "Une copie",
-     "texte": "Le paramètre reçoit la valeur de l'argument, dans une autre case mémoire."
+     "titre": "Une fonction reçoit une copie",
+     "texte": "Par défaut, quand tu appelles `f(n)`, la fonction ne reçoit pas `n` lui-même mais une **copie de sa valeur**. C'est le **passage par valeur**.\n\nConséquence : si la fonction modifie son paramètre, elle modifie la copie. La variable d'origine n'est pas touchée."
     },
     {
-     "titre": "Pas d'effet sur l'original",
-     "texte": "`doubler(nombre)` laisse `nombre` à 5."
+     "titre": "Un exemple",
+     "texte": "```c\nvoid doubler(int x) {\n    x = x * 2;                         // modifie la COPIE\n    printf(\"Dans la fonction : %d\\n\", x);\n}\n\nint main(void) {\n    int nombre = 5;\n    doubler(nombre);\n    printf(\"Après l'appel : %d\\n\", nombre);\n    return 0;\n}\n```"
     },
     {
-     "titre": "Récupérer le résultat",
-     "texte": "```c\nint doubler(int x) { return x * 2; }\nnombre = doubler(nombre);\n```"
+     "titre": "Ce qui se passe en mémoire",
+     "texte": "1. `nombre` vaut 5 dans `main`.\n2. À l'appel, une **nouvelle** variable `x` est créée et reçoit la valeur 5.\n3. `x = x * 2` : `x` devient 10. `nombre` n'a pas bougé.\n4. À la fin de `doubler`, `x` est détruite.\n\n```text\nDans la fonction : 10\nAprès l'appel : 5\n```"
+    },
+    {
+     "titre": "Avantages et limites",
+     "texte": "| Avantage | Inconvénient |\n|---|---|\n| tes données sont protégées : la fonction ne peut pas les abîmer | impossible de modifier la variable d'origine |\n\nPour **récupérer un résultat**, on utilise `return` :\n\n```c\nint doubler(int x) { return x * 2; }\nnombre = doubler(nombre);     // nombre vaut maintenant 10\n```"
     }
    ],
    "check": {
@@ -189,20 +221,28 @@
    ],
    "ecrans": [
     {
-     "titre": "Le paramètre pointeur",
-     "texte": "`void echanger(int *a, int *b)` reçoit deux adresses."
+     "titre": "Modifier la variable d'origine",
+     "texte": "Le passage par valeur ne permet pas de modifier une variable de l'appelant. Pour y arriver, on ne passe pas sa valeur mais son **adresse** : la fonction sait alors **où** elle est rangée, et peut y écrire."
     },
     {
-     "titre": "L'appel avec &",
-     "texte": "`echanger(&x, &y);` : on donne les adresses de `x` et `y`."
+     "titre": "Les trois étapes",
+     "texte": "| Étape | Syntaxe |\n|---|---|\n| 1. Le paramètre est un pointeur | `void incrementer(int *x)` |\n| 2. On passe l'adresse à l'appel | `incrementer(&n);` |\n| 3. On modifie la valeur pointée | `(*x)++;` ou `*x = …;` |\n\n`*x` désigne la variable de l'appelant, pas une copie."
     },
     {
-     "titre": "Modifier avec *",
-     "texte": "`*a = *b;` écrit dans la variable d'origine."
+     "titre": "Exemple : échanger deux valeurs",
+     "texte": "```c\nvoid echanger(int *a, int *b) {\n    int temp = *a;    // valeur pointée par a mise de côté\n    *a = *b;          // a reçoit la valeur de b\n    *b = temp;        // b reçoit l'ancienne valeur de a\n}\n\nint x = 10, y = 20;\nechanger(&x, &y);     // x = 20, y = 10\n```\n\nOn retrouve l'échange à trois variables, mais cette fois il agit sur les variables de `main`."
     },
     {
-     "titre": "Plusieurs résultats",
-     "texte": "`diviser(17, 5, &q, &r);` remplit `q` et `r`."
+     "titre": "Renvoyer plusieurs résultats",
+     "texte": "Un `return` ne renvoie qu'une valeur. Avec des adresses, on peut en « renvoyer » plusieurs :\n\n```c\nvoid diviser(int dividende, int diviseur, int *quotient, int *reste) {\n    *quotient = dividende / diviseur;\n    *reste = dividende % diviseur;\n}\n\nint q, r;\ndiviser(17, 5, &q, &r);     // q = 3, r = 2\n```\n\nLes deux derniers paramètres sont des **sorties**."
+    },
+    {
+     "titre": "Pourquoi aussi",
+     "texte": "Le passage par adresse sert à trois choses :\n\n- **modifier** des variables de l'appelant ;\n- **renvoyer plusieurs résultats** ;\n- **éviter de copier** de grosses données (tableaux, structures).\n\nC'est d'ailleurs ce que fait `scanf` avec le `&` : elle reçoit l'adresse de ta variable pour y écrire la valeur lue."
+    },
+    {
+     "titre": "Le piège des parenthèses",
+     "texte": "```c\n(*x)++;    // ✓ incrémente la valeur pointée\n*x++;      // ✗ incrémente le POINTEUR, puis lit\n```\n\nÀ cause des priorités, `*x++` ne fait pas ce qu'on croit. Mets les parenthèses autour de `*x` dès que tu modifies la valeur pointée."
     }
    ],
    "check": {
@@ -234,16 +274,24 @@
    ],
    "ecrans": [
     {
-     "titre": "Pas de copie",
-     "texte": "La fonction reçoit l'adresse du tableau : elle peut le modifier."
+     "titre": "Un tableau n'est pas copié",
+     "texte": "Quand on passe un tableau à une fonction, on **ne le copie pas** (ce serait lourd). La fonction reçoit l'**adresse de sa première case**.\n\nDeux conséquences :\n- la fonction peut **modifier le tableau d'origine** ;\n- elle ne connaît pas sa taille, donc on la lui passe **en plus**."
     },
     {
-     "titre": "La taille en plus",
-     "texte": "`void afficher(int arr[], int taille)` : la fonction ne connaît pas la taille toute seule."
+     "titre": "Écrire la fonction",
+     "texte": "```c\nvoid remplir_tableau(int arr[], int taille) {\n    for (int i = 0; i < taille; i++) {\n        scanf(\"%d\", &arr[i]);\n    }\n}\n```\n\nLe paramètre s'écrit `int arr[]` (sans taille) ou `int *arr` : les deux sont équivalents. À l'intérieur, on utilise `arr[i]` comme un tableau normal."
     },
     {
-     "titre": "L'appel",
-     "texte": "`afficher(t, 5);` : le nom, sans crochets."
+     "titre": "Appeler la fonction",
+     "texte": "```c\nint t[5];\nremplir_tableau(t, 5);\n```\n\nÀ l'appel, on écrit juste le **nom** du tableau : pas de crochets, pas de `&`. `t` désigne déjà l'adresse de la première case."
+    },
+    {
+     "titre": "Lire sans modifier",
+     "texte": "```c\nint somme_tableau(int arr[], int taille) {\n    int somme = 0;\n    for (int i = 0; i < taille; i++) somme += arr[i];\n    return somme;\n}\n```\n\nToujours le même schéma : un paramètre pour le tableau, un pour la taille, une boucle de `0` à `taille - 1`. La fonction renvoie le résultat avec `return`."
+    },
+    {
+     "titre": "Un tableau modifié par la fonction",
+     "texte": "Comme la fonction travaille sur le tableau d'origine, elle peut le modifier :\n\n```c\nvoid mettre_a_zero(int t[], int n) {\n    for (int i = 0; i < n; i++) t[i] = 0;\n}\n```\n\nAprès l'appel `mettre_a_zero(t, 5)`, **le tableau de `main` est à zéro**. Ce comportement est différent des variables simples (passées par valeur)."
     }
    ],
    "check": {
@@ -274,16 +322,20 @@
    ],
    "ecrans": [
     {
-     "titre": "math.h",
-     "texte": "`sqrt(x)`, `pow(x, y)` : des `double`."
+     "titre": "Des fonctions déjà écrites",
+     "texte": "Le C est livré avec une **bibliothèque standard** : des centaines de fonctions prêtes à l'emploi. Pour les utiliser, il faut inclure le **fichier d'en-tête** qui les déclare."
     },
     {
-     "titre": "string.h et stdlib.h",
-     "texte": "Chaînes (`strlen`…) et utilitaires (`abs`, `malloc`…)."
+     "titre": "Les quatre à connaître",
+     "texte": "| En-tête | Fonctions | Rôle |\n|---|---|---|\n| `stdio.h` | `printf`, `scanf`, `getchar`, `puts` | entrées / sorties |\n| `math.h` | `sqrt`, `pow`, `sin`, `cos`, `fabs` | mathématiques |\n| `string.h` | `strlen`, `strcpy`, `strcmp`, `strcat` | chaînes |\n| `stdlib.h` | `abs`, `rand`, `malloc`, `free`, `exit` | utilitaires généraux |"
     },
     {
-     "titre": "Le bon #include",
-     "texte": "Sans lui, la fonction est inconnue."
+     "titre": "Un exemple avec math.h",
+     "texte": "```c\n#include <stdio.h>\n#include <math.h>\n\nint main(void) {\n    double nombre = 16.0;\n    printf(\"%.2f\\n\", sqrt(nombre));     // 4.00\n    printf(\"%.0f\\n\", pow(2, 10));       // 1024\n    return 0;\n}\n```\n\n`sqrt` calcule la racine carrée, `pow(a, b)` calcule *a* puissance *b*."
+    },
+    {
+     "titre": "Réels en entrée et en sortie",
+     "texte": "Les fonctions de `math.h` travaillent sur des `double` et **renvoient un `double`**. Pour les afficher, utilise donc `%f` (ou `%.2f`), pas `%d`.\n\nAutre point : oublier le `#include` correspondant donne une fonction « inconnue » (erreur) ou un résultat faux, car le compilateur ne sait pas quels types elle manipule."
     }
    ],
    "check": {
@@ -314,16 +366,28 @@
    ],
    "ecrans": [
     {
-     "titre": "L'en-tête .h",
-     "texte": "Prototypes et constantes, entourés des gardes `#ifndef NOM_H / #define NOM_H / #endif`."
+     "titre": "Pourquoi découper en fichiers",
+     "texte": "Dans un vrai projet, on ne met pas tout dans un seul fichier. On regroupe les fonctions qui vont ensemble dans un **module**, par exemple tout ce qui concerne une calculatrice. Chaque module est réparti sur **deux fichiers**."
     },
     {
-     "titre": "Le source .c",
-     "texte": "Les corps des fonctions ; il inclut son propre `.h`."
+     "titre": "Le rôle de chaque fichier",
+     "texte": "| Fichier | Contient | Rôle |\n|---|---|---|\n| `calculatrice.h` | les **prototypes**, constantes, types | l'interface publique : le « contrat » |\n| `calculatrice.c` | les **définitions** des fonctions | l'implémentation : la « boîte noire » |\n| `main.c` | `#include \"calculatrice.h\"` + les appels | utilise le module |\n\nCelui qui utilise le module n'a besoin de lire que le `.h`."
     },
     {
-     "titre": "L'utilisation",
-     "texte": "`#include \"calculatrice.h\"` dans `main.c`, puis `gcc main.c calculatrice.c -o calc`."
+     "titre": "Le fichier d'en-tête",
+     "texte": "```c\n// calculatrice.h\n#ifndef CALCULATRICE_H\n#define CALCULATRICE_H\n\nint addition(int a, int b);\nint soustraction(int a, int b);\n\n#endif\n```\n\nUniquement des **déclarations** : pas de corps de fonction. Les trois lignes `#ifndef / #define / #endif` sont les **gardes d'en-tête**."
+    },
+    {
+     "titre": "À quoi servent les gardes",
+     "texte": "Si deux fichiers incluent chacun `calculatrice.h`, et qu'un troisième inclut ces deux fichiers, le contenu serait lu deux fois : erreur de « définition multiple ».\n\nLes gardes disent : « si `CALCULATRICE_H` n'est pas encore défini, définis-le et lis le contenu ; sinon, passe ». Résultat : le contenu n'est traité qu'**une seule fois**."
+    },
+    {
+     "titre": "Le fichier source et le main",
+     "texte": "```c\n// calculatrice.c\n#include \"calculatrice.h\"\nint addition(int a, int b) { return a + b; }\nint soustraction(int a, int b) { return a - b; }\n```\n```c\n// main.c\n#include <stdio.h>\n#include \"calculatrice.h\"\n\nint main(void) {\n    printf(\"%d\\n\", addition(10, 5));   // 15\n    return 0;\n}\n```\n\n`<…>` (chevrons) pour un en-tête du système, `\"…\"` (guillemets) pour un en-tête de **ton** projet."
+    },
+    {
+     "titre": "Compiler plusieurs fichiers",
+     "texte": "Chaque `.c` se compile séparément, puis le compilateur les assemble :\n\n```bash\ngcc main.c calculatrice.c -o calc\n```\n\n**À retenir** : le `.h` dit **quoi** (les prototypes), le `.c` dit **comment** (les corps). On peut modifier le corps d'une fonction sans toucher à ceux qui l'utilisent."
     }
    ],
    "check": {

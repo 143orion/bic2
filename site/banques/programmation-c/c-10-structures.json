@@ -26,16 +26,20 @@
    ],
    "ecrans": [
     {
-     "titre": "La syntaxe",
-     "texte": "`typedef type_existant nouveau_nom;`"
+     "titre": "Donner un autre nom à un type",
+     "texte": "`typedef` crée un **alias** : un nouveau nom pour un type qui existe déjà.\n\n```c\ntypedef type_existant nouveau_nom;\n```\n\nRien n'est créé en mémoire : on ajoute seulement un nom que le compilateur remplace par le type d'origine."
     },
     {
      "titre": "Des exemples",
-     "texte": "```c\ntypedef unsigned int uint;\ntypedef unsigned char byte;\n```"
+     "texte": "```c\ntypedef unsigned int uint;\ntypedef unsigned char byte;\ntypedef char *string;\n\nuint compteur = 0;       // = unsigned int\nbyte data = 255;         // = unsigned char\nstring nom = \"Programmation C\";\n```\n\nOn écrit `typedef` suivi de la déclaration habituelle du type, et le **dernier mot** devient le nouveau nom."
     },
     {
-     "titre": "Même type",
-     "texte": "L'alias est interchangeable avec le type d'origine."
+     "titre": "À quoi ça sert",
+     "texte": "| Avantage | Exemple |\n|---|---|\n| Lisibilité | `byte` dit mieux « un octet » que `unsigned char` |\n| Portabilité | si le type change selon la machine, on ne modifie qu'une ligne |\n| Simplicité | `Point p;` au lieu de `struct Point p;` |\n\nLe dernier point est le plus important, on le retrouve avec `struct` et `enum`."
+    },
+    {
+     "titre": "Ce que typedef ne fait pas",
+     "texte": "`typedef` ne crée **pas** de nouveau type : `uint` et `unsigned int` sont exactement le même type, on peut les mélanger sans problème.\n\nIl devient vraiment utile avec les **structures** et les **énumérations**, où il évite de répéter `struct` ou `enum` partout."
     }
    ],
    "check": {
@@ -67,16 +71,24 @@
    ],
    "ecrans": [
     {
-     "titre": "Les valeurs",
-     "texte": "`enum Color { RED, GREEN, BLUE };` : 0, 1, 2."
+     "titre": "Remplacer les nombres magiques",
+     "texte": "Que veut dire `couleur = 2;` ? Il faut se souvenir que 2 est le bleu. Une **énumération** donne un nom à chaque valeur : `couleur = BLUE;` se lit tout seul.\n\nUne `enum` est un ensemble de **constantes entières nommées**."
     },
     {
-     "titre": "Valeurs choisies",
-     "texte": "`ERROR = -1, SUCCESS = 0`."
+     "titre": "Déclarer une énumération",
+     "texte": "```c\nenum Color { RED, GREEN, BLUE, YELLOW };\n```\n\nPar défaut, la première valeur vaut **0** et chaque suivante **+1** : `RED` = 0, `GREEN` = 1, `BLUE` = 2, `YELLOW` = 3. Les noms s'écrivent en `UPPER_SNAKE_CASE`."
     },
     {
-     "titre": "Avec typedef",
-     "texte": "`typedef enum { LUNDI, MARDI } Jour;` puis `Jour j = LUNDI;`."
+     "titre": "Choisir ses valeurs",
+     "texte": "```c\nenum Status {\n    ERROR = -1,\n    SUCCESS = 0,\n    PENDING = 1,\n    COMPLETED = 100\n};\n```\n\nOn peut imposer une valeur ; ensuite, le comptage reprend à partir de là (`+1` à chaque nom suivant s'il n'est pas précisé)."
+    },
+    {
+     "titre": "Utiliser avec typedef",
+     "texte": "Sans `typedef`, il faut répéter le mot `enum` :\n\n```c\nenum Color couleur = RED;\n```\n\nAvec `typedef`, c'est plus court :\n\n```c\ntypedef enum { LUNDI, MARDI, MERCREDI, JEUDI, VENDREDI, SAMEDI, DIMANCHE } Jour;\nJour aujourd_hui = LUNDI;\n```\n\nLe nom du type (`Jour`) suit l'accolade fermante, en `PascalCase`."
+    },
+    {
+     "titre": "Enum et switch",
+     "texte": "Une énumération se marie très bien avec un `switch` :\n\n```c\nswitch (aujourd_hui) {\n    case SAMEDI:\n    case DIMANCHE:\n        printf(\"Week-end !\\n\");\n        break;\n    default:\n        printf(\"Au travail\\n\");\n        break;\n}\n```\n\nLes noms de constantes rendent le code lisible, là où des nombres 5 et 6 ne diraient rien."
     }
    ],
    "check": {
@@ -108,20 +120,28 @@
    ],
    "ecrans": [
     {
-     "titre": "Déclarer le type",
-     "texte": "```c\ntypedef struct {\n    int x;\n    int y;\n} Point;\n```"
+     "titre": "Regrouper des données différentes",
+     "texte": "Un tableau regroupe des éléments du **même type**. Pour décrire une personne, il faut un nom (texte), un âge (entier), une taille (réel)… des types différents. Une **structure** les rassemble sous un seul nom, comme une fiche.\n\nChaque élément de la structure est un **membre** (ou champ)."
     },
     {
-     "titre": "Créer et remplir",
-     "texte": "`Point p = {10, 20};` ou `p.x = 10; p.y = 20;`"
+     "titre": "Déclarer une structure",
+     "texte": "| Classique | Avec `typedef` (recommandé) |\n|---|---|\n| `struct Point { int x; int y; };` | `typedef struct { int x; int y; } Point;` |\n| `struct Point p1;` | `Point p1;` |\n\nAvec `typedef`, on n'a plus à écrire `struct` à chaque utilisation. Le nom du type est en `PascalCase`."
     },
     {
-     "titre": "Accéder",
-     "texte": "Le point : `p.x`."
+     "titre": "Un exemple complet",
+     "texte": "```c\ntypedef struct {\n    char nom[50];\n    char prenom[50];\n    int age;\n    float taille;\n} Personne;\n```\n\nOn a défini un **type** : pour l'instant, aucune variable, aucune mémoire réservée. Ensuite, `Personne etudiant;` crée une vraie variable de ce type."
     },
     {
-     "titre": "Les chaînes",
-     "texte": "`strcpy(e.nom, \"Martin\");`, pas `e.nom = …`."
+     "titre": "Initialiser",
+     "texte": "```c\nPersonne etudiant = {\"Dupont\", \"Marie\", 22, 1.68};\n```\n\nLes valeurs sont données **dans l'ordre des champs** : nom, prénom, âge, taille. Les chaînes se rangent dans les tableaux `char`, le reste dans les autres champs."
+    },
+    {
+     "titre": "Accéder à un membre : le point",
+     "texte": "```c\nprintf(\"%s %s, %d ans\\n\", etudiant.prenom, etudiant.nom, etudiant.age);\netudiant.age = 23;\n```\n\nOn écrit `variable.membre`. Chaque membre se comporte comme une variable de son type : on peut le lire, le modifier, le passer à `printf`."
+    },
+    {
+     "titre": "Copier et le piège des chaînes",
+     "texte": "Une structure peut être copiée d'un bloc : `Personne b = a;` copie **tous** les champs.\n\nMais un champ tableau `char` ne s'affecte pas avec `=` :\n\n```c\netudiant.nom = \"Martin\";            // ✗ refusé\nstrcpy(etudiant.nom, \"Martin\");     // ✓ on copie les caractères\n```"
     }
    ],
    "check": {
@@ -152,16 +172,24 @@
    ],
    "ecrans": [
     {
-     "titre": "Imbriquer",
-     "texte": "`Date date_naissance;` comme champ de `Personne`."
+     "titre": "Une structure dans une structure",
+     "texte": "Un membre peut lui-même être une structure : c'est la **composition**. Elle permet de modéliser des données hiérarchiques (une personne a une date de naissance et une adresse) en réutilisant des types déjà définis."
+    },
+    {
+     "titre": "Définir les petites briques",
+     "texte": "```c\ntypedef struct { int jour; int mois; int annee; } Date;\ntypedef struct { char rue[100]; char ville[50]; char code_postal[10]; } Adresse;\n```\n\nOn commence par les structures **simples**. Elles doivent être définies **avant** celles qui les utilisent."
+    },
+    {
+     "titre": "Les assembler",
+     "texte": "```c\ntypedef struct {\n    char nom[50];\n    char prenom[50];\n    Date date_naissance;\n    Adresse domicile;\n} Personne;\n```\n\n`date_naissance` est un membre de type `Date`, et `domicile` de type `Adresse`. `Personne` se compose maintenant de deux sous-structures."
     },
     {
      "titre": "Initialiser",
-     "texte": "Des accolades imbriquées : `{\"Martin\", \"Jean\", {12, 5, 1985}}`."
+     "texte": "```c\nPersonne employe = {\n    \"Martin\", \"Jean\",\n    {12, 5, 1985},\n    {\"123 Rue de la Paix\", \"Paris\", \"75001\"}\n};\n```\n\nChaque sous-structure reçoit ses propres accolades, avec ses valeurs dans l'ordre de ses champs."
     },
     {
-     "titre": "Descendre",
-     "texte": "`employe.date_naissance.annee`."
+     "titre": "Descendre avec les points",
+     "texte": "```c\nprintf(\"Né le %d/%d/%d\\n\", employe.date_naissance.jour,\n       employe.date_naissance.mois, employe.date_naissance.annee);\nprintf(\"Ville : %s\\n\", employe.domicile.ville);\n```\n\nOn **enchaîne les points** pour descendre : `employe.date_naissance.annee` se lit « l'année de la date de naissance de l'employé »."
     }
    ],
    "check": {
@@ -193,16 +221,24 @@
    ],
    "ecrans": [
     {
-     "titre": "L'adresse d'une structure",
-     "texte": "`Employe *ptr = &emp;`"
+     "titre": "Un pointeur sur une structure",
+     "texte": "Comme pour un `int`, on peut prendre l'adresse d'une structure (`&p1`) et la ranger dans un pointeur. Très utile pour la passer à une fonction sans la copier.\n\nComment accéder à un membre à travers ce pointeur ?"
     },
     {
-     "titre": "La flèche",
-     "texte": "`ptr->age = 25;` ⇔ `(*ptr).age = 25;`"
+     "titre": "Première écriture : (*ptr).champ",
+     "texte": "```c\nEmploye *ptr = &emp;\n(*ptr).age = 25;\n```\n\nOn déréférence d'abord (`*ptr` = la structure pointée), puis on prend le champ avec le point. Les **parenthèses sont indispensables** : `*ptr.age` se lirait `*(ptr.age)`, ce qui n'a pas de sens."
     },
     {
-     "titre": "En paramètre",
-     "texte": "`void augmenter_salaire(Employe *e, float pct)` modifie l'original : appel `augmenter_salaire(&emp, 10.0);`."
+     "titre": "La flèche ->",
+     "texte": "```c\nptr->age = 25;       // équivalent à (*ptr).age = 25;\n```\n\nL'opérateur `->` fait les deux en un : il suit le pointeur et accède au champ. C'est l'écriture **recommandée**.\n\nRègle : `p.champ` pour une **variable** structure, `ptr->champ` pour un **pointeur** de structure."
+    },
+    {
+     "titre": "Dans une fonction",
+     "texte": "```c\nvoid afficher_employe(Employe *e) {\n    printf(\"%s, %d ans, %.2f\\n\", e->nom, e->age, e->salaire);\n}\n\nvoid augmenter_salaire(Employe *e, float pourcentage) {\n    e->salaire += e->salaire * (pourcentage / 100.0);\n}\n```\n\nLa fonction reçoit l'adresse de la structure. Elle peut donc la **lire** et la **modifier** directement."
+    },
+    {
+     "titre": "Pourquoi passer un pointeur",
+     "texte": "```c\nEmploye emp = {\"Dubois\", 30, 35000.0};\nafficher_employe(&emp);\naugmenter_salaire(&emp, 10.0);\nafficher_employe(&emp);      // salaire : 38500.00\n```\n\n| Avantage | Pourquoi |\n|---|---|\n| Efficacité | on passe une adresse (8 octets) au lieu de copier toute la structure |\n| Modification directe | la fonction modifie la structure d'origine |"
     }
    ],
    "check": {
@@ -235,20 +271,24 @@
    ],
    "ecrans": [
     {
-     "titre": "Déclarer",
-     "texte": "`Etudiant classe[3] = {{\"Alice\", 18}, {\"Bob\", 15}, {\"Charlie\", 17}};`"
+     "titre": "Une collection de fiches",
+     "texte": "Pour gérer une classe, un annuaire ou un catalogue, il faut **plusieurs** structures du même type. On les range dans un **tableau de structures**, exactement comme un tableau d'entiers."
     },
     {
-     "titre": "Accéder",
-     "texte": "`classe[i].note` : indice puis champ."
+     "titre": "Déclarer et initialiser",
+     "texte": "```c\ntypedef struct { char nom[30]; int note; } Etudiant;\n\nEtudiant classe[3] = {\n    {\"Alice\", 18},\n    {\"Bob\", 15},\n    {\"Charlie\", 17}\n};\n```\n\nChaque case est un `Etudiant`, initialisé avec ses propres accolades."
     },
     {
-     "titre": "Parcourir",
-     "texte": "Une boucle `for` sur les indices, comme pour un tableau d'entiers."
+     "titre": "Lire un champ : indice puis point",
+     "texte": "```c\nprintf(\"%s a eu %d/20\\n\", classe[0].nom, classe[0].note);   // Alice a eu 18/20\n```\n\n`classe[0]` est la **première fiche** ; `.note` est le champ de cette fiche. D'abord l'indice (quel élève), puis le point (quel champ)."
     },
     {
-     "titre": "Dynamique",
-     "texte": "`malloc(n * sizeof(Etudiant))`, puis `free`."
+     "titre": "Parcourir avec une fonction",
+     "texte": "```c\nfloat calculer_moyenne(Etudiant etudiants[], int taille) {\n    float somme = 0;\n    for (int i = 0; i < taille; i++) {\n        somme += etudiants[i].note;\n    }\n    return somme / taille;\n}\n```\n\nC'est la même boucle que pour un tableau d'entiers, avec `etudiants[i].note` à la place de `t[i]`."
+    },
+    {
+     "titre": "La version dynamique",
+     "texte": "Quand le nombre d'éléments n'est connu qu'à l'exécution, on alloue :\n\n```c\nint n = 5;\nEtudiant *etudiants = malloc(n * sizeof(Etudiant));\nif (etudiants == NULL) return 1;\nfor (int i = 0; i < n; i++) {\n    sprintf(etudiants[i].nom, \"Etudiant %d\", i + 1);\n    etudiants[i].note = 10 + i;\n}\nfree(etudiants);\netudiants = NULL;\n```\n\nOn réserve `n * sizeof(Etudiant)` octets, on utilise comme un tableau, puis on libère."
     }
    ],
    "check": {
@@ -281,16 +321,24 @@
    ],
    "ecrans": [
     {
+     "titre": "Trois façons de passer une structure",
+     "texte": "Une structure peut être passée à une fonction de trois manières. Le choix dépend de deux questions : la fonction doit-elle la **modifier** ? La structure est-elle **grosse** ?"
+    },
+    {
      "titre": "Par valeur",
-     "texte": "`void afficher(Employe e)` : copie, original intact."
+     "texte": "```c\nvoid afficher_valeur(Employe e) {\n    printf(\"%s %d\\n\", e.nom, e.age);\n    e.age = 100;          // ne modifie PAS l'original\n}\n```\n\nLa fonction reçoit une **copie complète**. Elle ne peut pas abîmer l'original, mais copier une grosse structure coûte cher. Réservé aux petites structures qu'on ne modifie pas."
     },
     {
      "titre": "Par pointeur",
-     "texte": "`void vieillir(Employe *e) { e->age++; }` : appel `vieillir(&emp);`."
+     "texte": "```c\nvoid vieillir(Employe *e) {\n    e->age++;\n}\nvieillir(&emp);\n```\n\nOn passe l'adresse : une seule petite valeur à copier, et la fonction **modifie l'original**. C'est le choix quand on veut changer la structure."
     },
     {
-     "titre": "Par pointeur const",
-     "texte": "`void consulter(const Employe *e)` : lecture seule, sans copie."
+     "titre": "Par pointeur constant",
+     "texte": "```c\nvoid afficher_const(const Employe *e) {\n    printf(\"%s %d\\n\", e->nom, e->age);\n}\n```\n\nMême efficacité qu'un pointeur (pas de copie), mais le `const` **interdit la modification** : le compilateur le garantit. C'est le choix **recommandé pour lire** une grosse structure."
+    },
+    {
+     "titre": "Le tableau récapitulatif",
+     "texte": "| Mode | Prototype | Modifie l'original | Coût |\n|---|---|---|---|\n| Par valeur | `void f(Personne p)` | non (copie) | copie de la structure |\n| Par pointeur | `void f(Personne *p)` | **oui** | une adresse |\n| Pointeur constant | `void f(const Personne *p)` | non, garanti | une adresse |\n\n**À retenir** : pour **modifier** → pointeur ; pour **lire** → pointeur `const` ; par valeur seulement pour une petite structure qu'on ne modifie pas."
     }
    ],
    "check": {
