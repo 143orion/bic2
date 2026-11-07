@@ -642,11 +642,65 @@
    "origine": "td",
    "titre": "Minuscules et majuscules",
    "enonce": "**Il est interdit d'utiliser les fonctions prédéfinies** (`islower`, `isupper`, `ctype.h`…). Écris un programme qui lit une ligne de texte et affiche le nombre de **lettres minuscules** puis le nombre de **lettres majuscules** (Tableaux_chainex, intermédiaire ex. 12).\n\nExemple : `Bonjour ESILV` → `6 6`.",
-   "guidage": "Lis avec `fgets`. Une minuscule vérifie `c >= 'a' && c <= 'z'` ; une majuscule `c >= 'A' && c <= 'Z'`.",
+   "guidage": "**Plan** : 1. lire la ligne avec `fgets` → 2. parcourir jusqu'au `'\\0'` → 3. une minuscule vérifie `'a' <= c <= 'z'`, une majuscule `'A' <= c <= 'Z'` → 4. deux compteurs.\n\n**À retenir** : les lettres ont des codes consécutifs, on peut les comparer.",
    "duree": 6,
    "etapes": [
     {
-     "consigne": "Écris le programme complet.",
+     "consigne": "Combien de lettres **minuscules** contient `Bonjour ESILV` ?",
+     "question": "Minuscules dans `Bonjour ESILV` ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 6
+     },
+     "corrige": "`onjour` : 6 minuscules (le `B` et `ESILV` sont des majuscules).",
+     "indices": [
+      "Compte uniquement celles de `Bonjour`, sans le `B`.",
+      "6"
+     ],
+     "duree": 0.4
+    },
+    {
+     "consigne": "Écris la condition (sans `if`) qui est vraie quand le caractère `c` est une lettre **minuscule**, sans fonction prédéfinie.",
+     "question": "Condition « minuscule » ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "\\(?\\s*c\\s*>=\\s*'a'\\s*&&\\s*c\\s*<=\\s*'z'\\s*\\)?|\\(?\\s*'a'\\s*<=\\s*c\\s*&&\\s*c\\s*<=\\s*'z'\\s*\\)?",
+      "exemple": "c >= 'a' && c <= 'z'",
+      "flags": ""
+     },
+     "corrige": "Les minuscules ont des codes consécutifs : entre `'a'` et `'z'` inclus.",
+     "indices": [
+      "Deux comparaisons reliées par `&&`.",
+      "`c >= 'a' && c <= 'z'`"
+     ],
+     "duree": 0.7
+    },
+    {
+     "consigne": "Lis une ligne avec `fgets` et affiche seulement le nombre de lettres **minuscules** (sans fonction de `ctype.h`).",
+     "question": "Compte les minuscules.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "Bonjour ESILV\n",
+        "sortie": "6"
+       },
+       {
+        "entree": "abc\n",
+        "sortie": "3"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    char s[100];\n    fgets(s, sizeof(s), stdin);\n    int min = 0;\n    for (int i = 0; s[i] != '\\0'; i++) {\n        if (s[i] >= 'a' && s[i] <= 'z') min++;\n    }\n    printf(\"%d\\n\", min);\n    return 0;\n}"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    char s[100];\n    fgets(s, sizeof(s), stdin);\n    int min = 0;\n    for (int i = 0; s[i] != '\\0'; i++) {\n        if (s[i] >= 'a' && s[i] <= 'z') min++;\n    }\n    printf(\"%d\\n\", min);\n    return 0;\n}\n```",
+     "indices": [
+      "On parcourt jusqu'au `'\\0'` : `for (int i = 0; s[i] != '\\0'; i++)`.",
+      "`if (s[i] >= 'a' && s[i] <= 'z') min++;`"
+     ],
+     "duree": 1.8
+    },
+    {
+     "consigne": "Compte aussi les **majuscules** et affiche les deux nombres sur une ligne : `minuscules majuscules`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -675,10 +729,11 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char s[100];\n    fgets(s, sizeof(s), stdin);\n    s[strcspn(s, \"\\n\")] = '\\0';\n    int min = 0, maj = 0;\n    for (int i = 0; s[i] != '\\0'; i++) {\n        if (s[i] >= 'a' && s[i] <= 'z') min++;\n        else if (s[i] >= 'A' && s[i] <= 'Z') maj++;\n    }\n    printf(\"%d %d\\n\", min, maj);\n    return 0;\n}\n```",
      "indices": [
-      "Lis toute la ligne avec fgets.",
-      "Compare chaque caractère aux bornes 'a'…'z' et 'A'…'Z'."
+      "Un second compteur `maj` et un `else if (s[i] >= 'A' && s[i] <= 'Z') maj++;`.",
+      "`printf(\"%d %d\\n\", min, maj);`"
      ],
-     "duree": 6
+     "duree": 3.1,
+     "depart": "#include <stdio.h>\n\nint main(void) {\n    char s[100];\n    fgets(s, sizeof(s), stdin);\n    int min = 0;\n    for (int i = 0; s[i] != '\\0'; i++) {\n        if (s[i] >= 'a' && s[i] <= 'z') min++;\n    }\n    printf(\"%d\\n\", min);\n    return 0;\n}"
     }
    ]
   },
@@ -689,11 +744,74 @@
    "origine": "generee",
    "titre": "Longueur sans strlen",
    "enonce": "Écris un programme qui lit une ligne (avec `fgets`) et affiche sa longueur, **sans utiliser `strlen`** (le `'\\n'` final ne compte pas).",
-   "guidage": "Compte les caractères jusqu'au `'\\0'` ou au `'\\n'`.",
+   "guidage": "**Plan** : parcourir la chaîne en comptant, jusqu'au `'\\0'` **ou** au `'\\n'`.\n\n**Piège** : `fgets` range aussi le `'\\n'` dans la chaîne ; il ne doit pas être compté.",
    "duree": 4,
    "etapes": [
     {
-     "consigne": "Écris le programme complet.",
+     "consigne": "`fgets` lit `Bonjour` + Entrée. À quel indice se trouve le `'\\n'` dans la chaîne ?",
+     "question": "Indice du `'\\n'` ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 7
+     },
+     "corrige": "`Bonjour` occupe les indices 0 à 6 : le `'\\n'` est à l'indice 7, suivi du `'\\0'`.",
+     "indices": [
+      "Compte les 7 lettres, le `'\\n'` vient juste après.",
+      "7"
+     ],
+     "duree": 0.36
+    },
+    {
+     "consigne": "Écris la condition du `while` (indice `n`, chaîne `s`) qui continue tant qu'on n'a atteint ni le `'\\0'` ni le `'\\n'`.",
+     "question": "Condition du `while` ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "\\(?\\s*s\\[n\\]\\s*!=\\s*'\\\\0'\\s*&&\\s*s\\[n\\]\\s*!=\\s*'\\\\n'\\s*\\)?|\\(?\\s*s\\[n\\]\\s*!=\\s*'\\\\n'\\s*&&\\s*s\\[n\\]\\s*!=\\s*'\\\\0'\\s*\\)?",
+      "exemple": "s[n] != '\\0' && s[n] != '\\n'"
+     },
+     "corrige": "On s'arrête au premier des deux caractères de fin.",
+     "indices": [
+      "Deux tests reliés par `&&`.",
+      "`s[n] != '\\0' && s[n] != '\\n'`"
+     ],
+     "duree": 0.57
+    },
+    {
+     "consigne": "Lis une ligne avec `fgets` et affiche le nombre de caractères avant le `'\\0'` — attention, le `'\\n'` sera **compté** à ce stade.",
+     "question": "Compte jusqu'au `'\\0'`.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "Bonjour\n",
+        "sortie": "8"
+       },
+       {
+        "entree": "Le langage C\n",
+        "sortie": "13"
+       },
+       {
+        "entree": "\n",
+        "sortie": "1"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    char s[100];\n    fgets(s, sizeof(s), stdin);\n    int n = 0;\n    while (s[n] != '\\0') {\n        n++;\n    }\n    printf(\"%d\\n\", n);\n    return 0;\n}",
+      "interdit": [
+       {
+        "motif": "\\bstrlen\\b",
+        "msg": "strlen est interdit ici : compte toi-même jusqu'au '\\0'."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    char s[100];\n    fgets(s, sizeof(s), stdin);\n    int n = 0;\n    while (s[n] != '\\0') {\n        n++;\n    }\n    printf(\"%d\\n\", n);\n    return 0;\n}\n```",
+     "indices": [
+      "Un compteur `n` qui part de 0 et avance tant que `s[n] != '\\0'`.",
+      "`while (s[n] != '\\0') { n++; }`"
+     ],
+     "duree": 1.07
+    },
+    {
+     "consigne": "Ne compte plus le `'\\n'` final : arrête aussi la boucle sur `'\\n'`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -722,10 +840,11 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    char s[100];\n    fgets(s, sizeof(s), stdin);\n    int n = 0;\n    while (s[n] != '\\0' && s[n] != '\\n') {\n        n++;\n    }\n    printf(\"%d\\n\", n);\n    return 0;\n}\n```",
      "indices": [
-      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
-      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+      "Ajoute une seconde condition à la boucle, reliée par `&&`.",
+      "`while (s[n] != '\\0' && s[n] != '\\n')`"
      ],
-     "duree": 4
+     "duree": 2.0,
+     "depart": "#include <stdio.h>\n\nint main(void) {\n    char s[100];\n    fgets(s, sizeof(s), stdin);\n    int n = 0;\n    while (s[n] != '\\0') {\n        n++;\n    }\n    printf(\"%d\\n\", n);\n    return 0;\n}"
     }
    ]
   },
@@ -736,11 +855,70 @@
    "origine": "generee",
    "titre": "Lire une ligne proprement",
    "enonce": "Écris un programme qui lit une ligne avec `fgets`, **retire le `'\\n'` final**, puis l'affiche entre crochets.\n\nExemple : `Salut le monde` → `[Salut le monde]`.",
-   "guidage": "Sans retirer le `'\\n'`, le crochet fermant passerait à la ligne. Utilise `strcspn` (string.h).",
+   "guidage": "**Plan** : 1. `fgets` range le `'\\n'` dans la chaîne → 2. `strcspn(s, \"\\n\")` donne sa position → 3. on y met un `'\\0'` → 4. afficher entre crochets.",
    "duree": 4,
    "etapes": [
     {
-     "consigne": "Écris le programme complet.",
+     "consigne": "`fgets` lit `Salut le monde` + Entrée. À quel indice `strcspn(s, \"\\n\")` trouve-t-il le `'\\n'` ?",
+     "question": "Position du `'\\n'` ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 14
+     },
+     "corrige": "`Salut le monde` compte 14 caractères (indices 0 à 13) : le `'\\n'` est à l'indice 14.",
+     "indices": [
+      "Compte les caractères, espaces comprises.",
+      "14"
+     ],
+     "duree": 0.43
+    },
+    {
+     "consigne": "Écris l'instruction qui remplace le `'\\n'` de la chaîne `s` par un `'\\0'`, en utilisant `strcspn`.",
+     "question": "Retirer le `'\\n'` ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "s\\[\\s*strcspn\\(\\s*s\\s*,\\s*\\\"\\\\n\\\"\\s*\\)\\s*\\]\\s*=\\s*'\\\\0'\\s*;",
+      "exemple": "s[strcspn(s, \"\\n\")] = '\\0';"
+     },
+     "corrige": "`s[strcspn(s, \"\\n\")] = '\\0';` : la chaîne se termine là.",
+     "indices": [
+      "`strcspn` donne un indice : mets-le entre crochets après `s`.",
+      "`s[strcspn(s, \"\\n\")] = '\\0';`"
+     ],
+     "duree": 0.7
+    },
+    {
+     "consigne": "Lis une ligne avec `fgets` et affiche-la entre crochets **sans** retirer le `'\\n'` : constate où passe le `]`.",
+     "question": "Crochets sans retrait.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "Salut le monde\n",
+        "sortie": "[Salut le monde\n]"
+       },
+       {
+        "entree": "C\n",
+        "sortie": "[C\n]"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char s[100];\n    fgets(s, sizeof(s), stdin);\n    printf(\"[%s]\\n\", s);\n    return 0;\n}",
+      "exige": [
+       {
+        "motif": "fgets",
+        "msg": "Lis la ligne avec fgets."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char s[100];\n    fgets(s, sizeof(s), stdin);\n    printf(\"[%s]\\n\", s);\n    return 0;\n}\n```",
+     "indices": [
+      "`char s[100]; fgets(s, sizeof(s), stdin);`",
+      "`printf(\"[%s]\\n\", s);`"
+     ],
+     "duree": 0.87
+    },
+    {
+     "consigne": "Retire le `'\\n'` avant l'affichage pour que le `]` reste sur la même ligne : `[Salut le monde]`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -764,10 +942,11 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char s[100];\n    fgets(s, sizeof(s), stdin);\n    s[strcspn(s, \"\\n\")] = '\\0';\n    printf(\"[%s]\\n\", s);\n    return 0;\n}\n```",
      "indices": [
-      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
-      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+      "Une ligne à insérer entre `fgets` et `printf`.",
+      "`s[strcspn(s, \"\\n\")] = '\\0';`"
      ],
-     "duree": 4
+     "duree": 2.0,
+     "depart": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char s[100];\n    fgets(s, sizeof(s), stdin);\n    printf(\"[%s]\\n\", s);\n    return 0;\n}"
     }
    ]
   },
@@ -778,11 +957,85 @@
    "origine": "generee",
    "titre": "Nom complet",
    "enonce": "Écris un programme qui lit un prénom puis un nom (deux mots), construit dans un tableau `complet` la chaîne `Prénom Nom` avec `strcpy` et `strcat`, puis affiche `complet` et sa longueur.\n\nExemple : `Ada Lovelace` → `Ada Lovelace 12`.",
-   "guidage": "**Plan** : `strcpy(complet, prenom); strcat(complet, \" \"); strcat(complet, nom);` puis `strlen(complet)`.",
+   "guidage": "**Plan** : 1. `strcpy(complet, prenom)` → 2. `strcat(complet, \" \")` → 3. `strcat(complet, nom)` → 4. afficher `complet` et `strlen(complet)`.\n\n**À retenir** : `strcpy` écrase, `strcat` ajoute à la fin.",
    "duree": 5,
    "etapes": [
     {
-     "consigne": "Écris le programme complet.",
+     "consigne": "Écris l'instruction qui **copie** `prenom` dans le tableau `complet`.",
+     "question": "Copier `prenom` ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "strcpy\\(\\s*complet\\s*,\\s*prenom\\s*\\)\\s*;",
+      "exemple": "strcpy(complet, prenom);"
+     },
+     "corrige": "`strcpy(destination, source);`",
+     "indices": [
+      "Destination d'abord, source ensuite.",
+      "`strcpy(complet, prenom);`"
+     ],
+     "duree": 0.44
+    },
+    {
+     "consigne": "Écris l'instruction qui **ajoute** une espace à la fin de `complet`.",
+     "question": "Ajouter une espace ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "strcat\\(\\s*complet\\s*,\\s*\\\" \\\"\\s*\\)\\s*;",
+      "exemple": "strcat(complet, \" \");"
+     },
+     "corrige": "`strcat(complet, \" \");` : l'espace est une chaîne (guillemets).",
+     "indices": [
+      "`strcat` ajoute une chaîne à la fin.",
+      "`strcat(complet, \" \");`"
+     ],
+     "duree": 0.44
+    },
+    {
+     "consigne": "Pour `Ada` et `Lovelace`, quelle est la longueur de `Ada Lovelace` ?",
+     "question": "Longueur de `Ada Lovelace` ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 12
+     },
+     "corrige": "3 + 1 (espace) + 8 = 12.",
+     "indices": [
+      "N'oublie pas l'espace.",
+      "12"
+     ],
+     "duree": 0.29
+    },
+    {
+     "consigne": "Lis un prénom et un nom (`scanf`), construis `complet` avec `strcpy` et `strcat`, et affiche seulement `complet`.",
+     "question": "Construis la chaîne.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "Ada Lovelace",
+        "sortie": "Ada Lovelace"
+       },
+       {
+        "entree": "Dennis Ritchie",
+        "sortie": "Dennis Ritchie"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char prenom[30], nom[30], complet[70];\n    scanf(\"%29s %29s\", prenom, nom);\n    strcpy(complet, prenom);\n    strcat(complet, \" \");\n    strcat(complet, nom);\n    printf(\"%s\\n\", complet);\n    return 0;\n}",
+      "exige": [
+       {
+        "motif": "strcat",
+        "msg": "Construis la chaîne avec strcpy et strcat."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char prenom[30], nom[30], complet[70];\n    scanf(\"%29s %29s\", prenom, nom);\n    strcpy(complet, prenom);\n    strcat(complet, \" \");\n    strcat(complet, nom);\n    printf(\"%s\\n\", complet);\n    return 0;\n}\n```",
+     "indices": [
+      "Trois lignes : `strcpy`, `strcat` de l'espace, `strcat` du nom.",
+      "Affiche avec `printf(\"%s\\n\", complet);`"
+     ],
+     "duree": 1.32
+    },
+    {
+     "consigne": "Affiche aussi la **longueur** de `complet` après la chaîne : `Ada Lovelace 12`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -806,10 +1059,11 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char prenom[30], nom[30], complet[70];\n    scanf(\"%29s %29s\", prenom, nom);\n    strcpy(complet, prenom);\n    strcat(complet, \" \");\n    strcat(complet, nom);\n    printf(\"%s %d\\n\", complet, (int)strlen(complet));\n    return 0;\n}\n```",
      "indices": [
-      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
-      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+      "Un second format `%d` dans le `printf`, avec `strlen(complet)` converti en `int`.",
+      "`printf(\"%s %d\\n\", complet, (int)strlen(complet));`"
      ],
-     "duree": 5
+     "duree": 2.51,
+     "depart": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char prenom[30], nom[30], complet[70];\n    scanf(\"%29s %29s\", prenom, nom);\n    strcpy(complet, prenom);\n    strcat(complet, \" \");\n    strcat(complet, nom);\n    printf(\"%s\\n\", complet);\n    return 0;\n}"
     }
    ]
   },
@@ -820,11 +1074,71 @@
    "origine": "generee",
    "titre": "Ordre alphabétique",
    "enonce": "Écris un programme qui lit deux mots et affiche `avant` si le premier vient avant le second dans l'ordre alphabétique (au sens de `strcmp`), `apres` s'il vient après, `egal` s'ils sont identiques.",
-   "guidage": "`strcmp(a, b)` est négatif, nul ou positif.",
+   "guidage": "**Plan** : `strcmp(a, b)` renvoie un nombre négatif, nul ou positif → un `if / else if / else` pour les trois cas.",
    "duree": 4,
    "etapes": [
     {
-     "consigne": "Écris le programme complet.",
+     "consigne": "`strcmp(\"chat\", \"chien\")` est-il négatif, nul ou positif ? (« chat » est avant « chien » dans l'ordre alphabétique)",
+     "question": "Signe de `strcmp` ?",
+     "verif": {
+      "mode": "exact",
+      "attendu": [
+       "negatif"
+      ]
+     },
+     "corrige": "Premier mot avant le second : résultat **négatif**.",
+     "indices": [
+      "Le premier mot vient avant : le résultat est du côté « moins ».",
+      "negatif"
+     ],
+     "duree": 0.42
+    },
+    {
+     "consigne": "Que renvoie `strcmp` quand les deux chaînes sont identiques ?",
+     "question": "`strcmp` de deux chaînes égales ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 0
+     },
+     "corrige": "0 : c'est le test d'égalité des chaînes.",
+     "indices": [
+      "Ni négatif ni positif.",
+      "0"
+     ],
+     "duree": 0.33
+    },
+    {
+     "consigne": "Lis deux mots et affiche `egal` s'ils sont identiques, `different` sinon (avec `strcmp`).",
+     "question": "Égaux ou différents ?",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "c c",
+        "sortie": "egal"
+       },
+       {
+        "entree": "chat chien",
+        "sortie": "different"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char a[50], b[50];\n    scanf(\"%49s %49s\", a, b);\n    if (strcmp(a, b) == 0) {\n        printf(\"egal\\n\");\n    } else {\n        printf(\"different\\n\");\n    }\n    return 0;\n}",
+      "exige": [
+       {
+        "motif": "strcmp",
+        "msg": "Compare les mots avec strcmp."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char a[50], b[50];\n    scanf(\"%49s %49s\", a, b);\n    if (strcmp(a, b) == 0) {\n        printf(\"egal\\n\");\n    } else {\n        printf(\"different\\n\");\n    }\n    return 0;\n}\n```",
+     "indices": [
+      "`strcmp(a, b) == 0` signifie « égaux ».",
+      "`if (strcmp(a, b) == 0) … else …`"
+     ],
+     "duree": 1.25
+    },
+    {
+     "consigne": "Distingue maintenant `avant` (résultat négatif), `apres` (positif) et `egal` (nul).",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -852,10 +1166,11 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char a[50], b[50];\n    scanf(\"%49s %49s\", a, b);\n    int r = strcmp(a, b);\n    if (r < 0) printf(\"avant\\n\");\n    else if (r > 0) printf(\"apres\\n\");\n    else printf(\"egal\\n\");\n    return 0;\n}\n```",
      "indices": [
-      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
-      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+      "Stocke le résultat : `int r = strcmp(a, b);` puis un `if (r < 0) … else if (r > 0) … else …`.",
+      "`avant` si `r < 0`, `apres` si `r > 0`, `egal` sinon."
      ],
-     "duree": 4
+     "duree": 2.0,
+     "depart": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char a[50], b[50];\n    scanf(\"%49s %49s\", a, b);\n    if (strcmp(a, b) == 0) {\n        printf(\"egal\\n\");\n    } else {\n        printf(\"different\\n\");\n    }\n    return 0;\n}"
     }
    ]
   },
@@ -866,11 +1181,68 @@
    "origine": "generee",
    "titre": "Inverser un mot",
    "enonce": "Écris un programme qui lit un mot et l'affiche à l'envers.\n\nExemple : `Bonjour` → `ruojnoB`.",
-   "guidage": "Calcule la longueur `n`, puis affiche de `s[n - 1]` jusqu'à `s[0]`.",
+   "guidage": "**Plan** : 1. longueur `n` du mot → 2. boucle qui part du dernier indice (`n - 1`) et descend jusqu'à 0 → 3. afficher chaque caractère avec `%c`.",
    "duree": 4,
    "etapes": [
     {
-     "consigne": "Écris le programme complet.",
+     "consigne": "`Bonjour` a 7 lettres. Quel est l'indice de sa **dernière** lettre ?",
+     "question": "Indice de la dernière lettre ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 6
+     },
+     "corrige": "Les indices vont de 0 à `n - 1` : ici 6.",
+     "indices": [
+      "Longueur moins 1.",
+      "6"
+     ],
+     "duree": 0.4
+    },
+    {
+     "consigne": "Écris l'en-tête du `for` (variable `i`) qui **descend** de `n - 1` jusqu'à 0 inclus.",
+     "question": "Boucle descendante ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "for\\s*\\(\\s*(int\\s+)?i\\s*=\\s*n\\s*-\\s*1\\s*;\\s*i\\s*>=\\s*0\\s*;\\s*(i--|--i|i\\s*-=\\s*1|i\\s*=\\s*i\\s*-\\s*1)\\s*\\)\\s*\\{?",
+      "exemple": "for (int i = n - 1; i >= 0; i--)"
+     },
+     "corrige": "`for (int i = n - 1; i >= 0; i--)`",
+     "indices": [
+      "Départ `n - 1`, condition `i >= 0`, pas de -1.",
+      "`for (int i = n - 1; i >= 0; i--)`"
+     ],
+     "duree": 0.8
+    },
+    {
+     "consigne": "Lis un mot (`%99s`) et affiche sa **longueur** `n` (avec `strlen`).",
+     "question": "Affiche la longueur.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "Bonjour",
+        "sortie": "7"
+       },
+       {
+        "entree": "a",
+        "sortie": "1"
+       },
+       {
+        "entree": "ESILV",
+        "sortie": "5"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char s[100];\n    scanf(\"%99s\", s);\n    int n = strlen(s);\n    printf(\"%d\\n\", n);\n    return 0;\n}"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char s[100];\n    scanf(\"%99s\", s);\n    int n = strlen(s);\n    printf(\"%d\\n\", n);\n    return 0;\n}\n```",
+     "indices": [
+      "`scanf(\"%99s\", s);` puis `int n = strlen(s);`",
+      "`printf(\"%d\\n\", n);`"
+     ],
+     "duree": 0.8
+    },
+    {
+     "consigne": "Affiche maintenant le mot **à l'envers**, caractère par caractère, avec une boucle descendante, puis un retour à la ligne.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -892,10 +1264,11 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char s[100];\n    scanf(\"%99s\", s);\n    int n = strlen(s);\n    for (int i = n - 1; i >= 0; i--) {\n        printf(\"%c\", s[i]);\n    }\n    printf(\"\\n\");\n    return 0;\n}\n```",
      "indices": [
-      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
-      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+      "`for (int i = n - 1; i >= 0; i--) { printf(\"%c\", s[i]); }`",
+      "Termine par `printf(\"\\n\");`."
      ],
-     "duree": 4
+     "duree": 2.0,
+     "depart": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char s[100];\n    scanf(\"%99s\", s);\n    int n = strlen(s);\n    printf(\"%d\\n\", n);\n    return 0;\n}"
     }
    ]
   },
@@ -906,11 +1279,68 @@
    "origine": "generee",
    "titre": "Palindrome",
    "enonce": "Écris un programme qui lit un mot et affiche `oui` s'il se lit pareil dans les deux sens (palindrome), `non` sinon.\n\nExemple : `radar` → `oui`.",
-   "guidage": "Compare `s[i]` et `s[n - 1 - i]` pour `i` allant jusqu'au milieu.",
+   "guidage": "**Plan** : comparer `s[i]` avec son symétrique `s[n - 1 - i]` pour `i` allant jusqu'au milieu ; une seule différence suffit pour dire « non ».",
    "duree": 5,
    "etapes": [
     {
-     "consigne": "Écris le programme complet.",
+     "consigne": "Pour un mot de longueur `n`, avec quel caractère compare-t-on `s[i]` ? (écris l'expression)",
+     "question": "Caractère symétrique de `s[i]` ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "s\\[\\s*n\\s*-\\s*1\\s*-\\s*i\\s*\\]|s\\[\\s*n\\s*-\\s*\\(\\s*i\\s*\\+\\s*1\\s*\\)\\s*\\]|s\\[\\s*n\\s*-\\s*i\\s*-\\s*1\\s*\\]",
+      "exemple": "s[n - 1 - i]"
+     },
+     "corrige": "`s[n - 1 - i]` : `s[0]` ↔ `s[n - 1]`, `s[1]` ↔ `s[n - 2]`…",
+     "indices": [
+      "Le premier va avec le dernier, le deuxième avec l'avant-dernier.",
+      "`s[n - 1 - i]`"
+     ],
+     "duree": 0.7
+    },
+    {
+     "consigne": "Pour un mot de 5 lettres, combien de paires faut-il comparer (la lettre du milieu n'a pas de vis-à-vis) ?",
+     "question": "Nombre de comparaisons ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 2
+     },
+     "corrige": "`n / 2` en entiers : 5 / 2 = 2 paires.",
+     "indices": [
+      "Divise la longueur par 2 (entier).",
+      "2"
+     ],
+     "duree": 0.4
+    },
+    {
+     "consigne": "Lis un mot et affiche sa **première** et sa **dernière** lettre, séparées par une espace.",
+     "question": "Première et dernière lettre.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "radar",
+        "sortie": "r r"
+       },
+       {
+        "entree": "bonjour",
+        "sortie": "b r"
+       },
+       {
+        "entree": "ete",
+        "sortie": "e e"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char s[100];\n    scanf(\"%99s\", s);\n    int n = strlen(s);\n    printf(\"%c %c\\n\", s[0], s[n - 1]);\n    return 0;\n}"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char s[100];\n    scanf(\"%99s\", s);\n    int n = strlen(s);\n    printf(\"%c %c\\n\", s[0], s[n - 1]);\n    return 0;\n}\n```",
+     "indices": [
+      "`n = strlen(s)` ; la dernière lettre est `s[n - 1]`.",
+      "`printf(\"%c %c\\n\", s[0], s[n - 1]);`"
+     ],
+     "duree": 1.0
+    },
+    {
+     "consigne": "Compare toutes les paires `s[i]` / `s[n - 1 - i]` (jusqu'à `n / 2`) : affiche `oui` si elles sont toutes égales, `non` sinon.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -936,10 +1366,11 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char s[100];\n    scanf(\"%99s\", s);\n    int n = strlen(s), ok = 1;\n    for (int i = 0; i < n / 2; i++) {\n        if (s[i] != s[n - 1 - i]) {\n            ok = 0;\n            break;\n        }\n    }\n    if (ok) printf(\"oui\\n\");\n    else printf(\"non\\n\");\n    return 0;\n}\n```",
      "indices": [
-      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
-      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+      "Un indicateur `ok = 1`, mis à 0 dès que `s[i] != s[n - 1 - i]`.",
+      "`for (int i = 0; i < n / 2; i++) { if (…) ok = 0; }` puis `oui` ou `non`."
      ],
-     "duree": 5
+     "duree": 2.9,
+     "depart": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char s[100];\n    scanf(\"%99s\", s);\n    int n = strlen(s);\n    printf(\"%c %c\\n\", s[0], s[n - 1]);\n    return 0;\n}"
     }
    ]
   },
@@ -950,11 +1381,64 @@
    "origine": "generee",
    "titre": "Compter les voyelles",
    "enonce": "Écris un programme qui lit une ligne et affiche le nombre de **voyelles minuscules** (`a e i o u y`).",
-   "guidage": "Pour chaque caractère, teste s'il est l'une des six voyelles (un `switch` ou des `||`).",
+   "guidage": "**Plan** : parcourir la ligne ; pour chaque caractère, tester s'il vaut l'une des six voyelles (`||`) ; compter.",
    "duree": 4,
    "etapes": [
     {
-     "consigne": "Écris le programme complet.",
+     "consigne": "Combien de voyelles (`a e i o u y`) contient `bonjour` ?",
+     "question": "Voyelles de `bonjour` ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 3
+     },
+     "corrige": "`o`, `o`, `u` : trois voyelles.",
+     "indices": [
+      "Repère `o`, `o` et `u`.",
+      "3"
+     ],
+     "duree": 0.32
+    },
+    {
+     "consigne": "Écris la condition vraie quand le caractère `c` est la lettre `a` **ou** la lettre `e`.",
+     "question": "Condition `a` ou `e` ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "\\(?\\s*c\\s*==\\s*'a'\\s*\\|\\|\\s*c\\s*==\\s*'e'\\s*\\)?|\\(?\\s*c\\s*==\\s*'e'\\s*\\|\\|\\s*c\\s*==\\s*'a'\\s*\\)?",
+      "exemple": "c == 'a' || c == 'e'"
+     },
+     "corrige": "Deux égalités reliées par `||`.",
+     "indices": [
+      "Chaque lettre est entre apostrophes.",
+      "`c == 'a' || c == 'e'`"
+     ],
+     "duree": 0.48
+    },
+    {
+     "consigne": "Lis une ligne et affiche le nombre de lettres `e` qu'elle contient.",
+     "question": "Compte les `e`.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "bonjour le monde\n",
+        "sortie": "2"
+       },
+       {
+        "entree": "rythme\n",
+        "sortie": "1"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char s[100];\n    fgets(s, sizeof(s), stdin);\n    int nb = 0;\n    for (int i = 0; s[i] != '\\0'; i++) {\n        if (s[i] == 'e') nb++;\n    }\n    printf(\"%d\\n\", nb);\n    return 0;\n}"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char s[100];\n    fgets(s, sizeof(s), stdin);\n    int nb = 0;\n    for (int i = 0; s[i] != '\\0'; i++) {\n        if (s[i] == 'e') nb++;\n    }\n    printf(\"%d\\n\", nb);\n    return 0;\n}\n```",
+     "indices": [
+      "Une boucle jusqu'au `'\\0'` avec un `if (s[i] == 'e')`.",
+      "`nb++;` dans le `if`."
+     ],
+     "duree": 1.2
+    },
+    {
+     "consigne": "Compte toutes les voyelles minuscules `a e i o u y`, pas seulement les `e`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -977,10 +1461,11 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char s[100];\n    fgets(s, sizeof(s), stdin);\n    s[strcspn(s, \"\\n\")] = '\\0';\n    int nb = 0;\n    for (int i = 0; s[i] != '\\0'; i++) {\n        char c = s[i];\n        if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u' || c == 'y') nb++;\n    }\n    printf(\"%d\\n\", nb);\n    return 0;\n}\n```",
      "indices": [
-      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
-      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+      "Range le caractère courant dans `char c = s[i];` puis combine six égalités avec `||`.",
+      "`if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u' || c == 'y') nb++;`"
      ],
-     "duree": 4
+     "duree": 2.0,
+     "depart": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char s[100];\n    fgets(s, sizeof(s), stdin);\n    int nb = 0;\n    for (int i = 0; s[i] != '\\0'; i++) {\n        if (s[i] == 'e') nb++;\n    }\n    printf(\"%d\\n\", nb);\n    return 0;\n}"
     }
    ]
   },
@@ -991,11 +1476,65 @@
    "origine": "generee",
    "titre": "Tout en majuscules",
    "enonce": "Sans `toupper` : écris un programme qui lit une ligne et l'affiche **en majuscules** (seules les lettres minuscules changent).\n\nExemple : `Bonjour, C !` → `BONJOUR, C !`.",
-   "guidage": "Une minuscule `c` devient `c - 'a' + 'A'`.",
+   "guidage": "**Plan** : parcourir la ligne ; si `s[i]` est une minuscule, la transformer avec `s[i] - 'a' + 'A'` ; afficher la chaîne.\n\n**Astuce** : l'écart entre `'a'` et `'A'` est le même pour toutes les lettres.",
    "duree": 5,
    "etapes": [
     {
-     "consigne": "Écris le programme complet.",
+     "consigne": "Que vaut `'c' - 'a'` en C ?",
+     "question": "Valeur de `'c' - 'a'` ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 2
+     },
+     "corrige": "`'a'` est à la position 0, `'c'` à la position 2 de l'alphabet.",
+     "indices": [
+      "Les lettres ont des codes consécutifs.",
+      "2"
+     ],
+     "duree": 0.4
+    },
+    {
+     "consigne": "Écris l'expression qui donne la majuscule correspondant à la minuscule `s[i]`, sans `toupper`.",
+     "question": "Minuscule → majuscule ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "s\\[i\\]\\s*-\\s*'a'\\s*\\+\\s*'A'|'A'\\s*\\+\\s*s\\[i\\]\\s*-\\s*'a'|s\\[i\\]\\s*\\+\\s*'A'\\s*-\\s*'a'|s\\[i\\]\\s*-\\s*\\(\\s*'a'\\s*-\\s*'A'\\s*\\)|s\\[i\\]\\s*-\\s*32",
+      "exemple": "s[i] - 'a' + 'A'",
+      "flags": ""
+     },
+     "corrige": "On calcule le rang dans l'alphabet (`s[i] - 'a'`) puis on repart de `'A'`.",
+     "indices": [
+      "Retire `'a'`, ajoute `'A'`.",
+      "`s[i] - 'a' + 'A'`"
+     ],
+     "duree": 0.8
+    },
+    {
+     "consigne": "Lis une ligne (en retirant le `'\\n'`) et réaffiche-la **telle quelle**.",
+     "question": "Réaffiche la ligne.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "Bonjour, C !\n",
+        "sortie": "Bonjour, C !"
+       },
+       {
+        "entree": "esilv 2026\n",
+        "sortie": "esilv 2026"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char s[100];\n    fgets(s, sizeof(s), stdin);\n    s[strcspn(s, \"\\n\")] = '\\0';\n    printf(\"%s\\n\", s);\n    return 0;\n}"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char s[100];\n    fgets(s, sizeof(s), stdin);\n    s[strcspn(s, \"\\n\")] = '\\0';\n    printf(\"%s\\n\", s);\n    return 0;\n}\n```",
+     "indices": [
+      "`fgets` puis `s[strcspn(s, \"\\n\")] = '\\0';`",
+      "`printf(\"%s\\n\", s);`"
+     ],
+     "duree": 1.0
+    },
+    {
+     "consigne": "Avant l'affichage, **passe en majuscules** les lettres minuscules de la ligne (les autres caractères ne changent pas).",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -1019,10 +1558,11 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char s[100];\n    fgets(s, sizeof(s), stdin);\n    s[strcspn(s, \"\\n\")] = '\\0';\n    for (int i = 0; s[i] != '\\0'; i++) {\n        if (s[i] >= 'a' && s[i] <= 'z') {\n            s[i] = s[i] - 'a' + 'A';\n        }\n    }\n    printf(\"%s\\n\", s);\n    return 0;\n}\n```",
      "indices": [
-      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
-      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+      "Une boucle jusqu'au `'\\0'`, avec `if (s[i] >= 'a' && s[i] <= 'z')`.",
+      "`s[i] = s[i] - 'a' + 'A';` dans le `if`."
      ],
-     "duree": 5
+     "duree": 2.8,
+     "depart": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char s[100];\n    fgets(s, sizeof(s), stdin);\n    s[strcspn(s, \"\\n\")] = '\\0';\n    printf(\"%s\\n\", s);\n    return 0;\n}"
     }
    ]
   },
@@ -1033,11 +1573,56 @@
    "origine": "generee",
    "titre": "Le mot de passe jamais accepté",
    "enonce": "Ce programme lit un mot et doit afficher `ok` si c'est `secret`, `refuse` sinon. Il refuse toujours, même avec `secret`.",
-   "guidage": "Comment compare-t-on deux chaînes en C ?",
+   "guidage": "**Diagnostic** : 1. que compare `mot == \"secret\"` ? → 2. quelle fonction compare le **contenu** ? → 3. que renvoie-t-elle si les chaînes sont égales ?",
    "duree": 3,
    "etapes": [
     {
-     "consigne": "Corrige le programme ci-dessous pour qu'il fasse ce que dit l'énoncé, puis valide.",
+     "consigne": "Que compare `mot == \"secret\"` ? (réponse courte)",
+     "question": "Que compare `==` sur deux chaînes ?",
+     "verif": {
+      "mode": "regex",
+      "motif": ".*adresse.*",
+      "exemple": "les adresses"
+     },
+     "corrige": "`==` compare les **adresses** des deux chaînes, jamais leur contenu.",
+     "indices": [
+      "Pense à ce que représente un nom de tableau.",
+      "Les adresses."
+     ],
+     "duree": 0.5
+    },
+    {
+     "consigne": "Quelle fonction de `string.h` compare le **contenu** de deux chaînes ?",
+     "question": "Fonction de comparaison ?",
+     "verif": {
+      "mode": "exact",
+      "attendu": [
+       "strcmp"
+      ]
+     },
+     "corrige": "`strcmp(a, b)`.",
+     "indices": [
+      "Ses lettres : `str` + `cmp`.",
+      "strcmp"
+     ],
+     "duree": 0.4
+    },
+    {
+     "consigne": "Que renvoie `strcmp` quand les deux chaînes sont **égales** ?",
+     "question": "Valeur renvoyée si égales ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 0
+     },
+     "corrige": "0 : on teste donc `strcmp(…) == 0`.",
+     "indices": [
+      "Ni positif ni négatif.",
+      "0"
+     ],
+     "duree": 0.4
+    },
+    {
+     "consigne": "Corrige la condition pour que `secret` soit accepté (et lui seul).",
      "question": "Corrige le programme.",
      "verif": {
       "mode": "c",
@@ -1065,10 +1650,10 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char mot[50];\n    scanf(\"%49s\", mot);\n    if (strcmp(mot, \"secret\") == 0) {\n        printf(\"ok\\n\");\n    } else {\n        printf(\"refuse\\n\");\n    }\n    return 0;\n}\n```",
      "indices": [
-      "`==` compare l'adresse de `mot` et celle de la constante \"secret\".",
-      "`strcmp(mot, \"secret\") == 0`."
+      "Remplace `mot == \"secret\"` par un appel à la fonction de comparaison.",
+      "`if (strcmp(mot, \"secret\") == 0)`"
      ],
-     "duree": 3,
+     "duree": 1.7,
      "depart": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char mot[50];\n    scanf(\"%49s\", mot);\n    if (mot == \"secret\") {\n        printf(\"ok\\n\");\n    } else {\n        printf(\"refuse\\n\");\n    }\n    return 0;\n}"
     }
    ]
@@ -1080,11 +1665,65 @@
    "origine": "generee",
    "titre": "Compter un caractère",
    "enonce": "Écris un programme qui lit un caractère `c`, puis une ligne de texte (ligne suivante), et affiche le nombre d'occurrences de `c` dans la ligne.\n\nExemple : `o` puis `bonjour tout le monde` → `4`.",
-   "guidage": "Lis `c` avec `scanf(\" %c\", &c);`, puis le reste de la ligne : un `getchar()` pour consommer le `'\\n'`, puis `fgets`.",
+   "guidage": "**Plan** : 1. lire `c` avec `scanf(\" %c\", &c)` → 2. `getchar()` pour consommer le `'\\n'` resté → 3. `fgets` pour la ligne → 4. compter `s[i] == c`.\n\n**Piège** : sans le `getchar()`, `fgets` lirait une ligne vide.",
    "duree": 5,
    "etapes": [
     {
-     "consigne": "Écris le programme complet.",
+     "consigne": "Après `scanf(\" %c\", &c)`, quel caractère reste dans le tampon d'entrée (touche Entrée) ?",
+     "question": "Caractère resté dans le tampon ?",
+     "verif": {
+      "mode": "regex",
+      "motif": ".*(\\\\n|retour|saut|entr[ée]e|ligne).*",
+      "exemple": "\\n"
+     },
+     "corrige": "Le `'\\n'` de la touche Entrée n'est pas lu : `fgets` le lirait aussitôt et s'arrêterait.",
+     "indices": [
+      "Pense à la touche que tu as tapée après le caractère.",
+      "Le `'\\n'`."
+     ],
+     "duree": 0.5
+    },
+    {
+     "consigne": "Écris la condition (sans `if`) vraie quand le caractère `s[i]` est égal au caractère cherché `c`.",
+     "question": "Condition d'égalité ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "\\(?\\s*s\\[i\\]\\s*==\\s*c\\s*\\)?|\\(?\\s*c\\s*==\\s*s\\[i\\]\\s*\\)?",
+      "exemple": "s[i] == c"
+     },
+     "corrige": "`s[i] == c`",
+     "indices": [
+      "Compare deux `char` avec `==`.",
+      "`s[i] == c`"
+     ],
+     "duree": 0.4
+    },
+    {
+     "consigne": "Lis le caractère `c`, consomme le `'\\n'`, lis la ligne avec `fgets` et affiche simplement le **premier caractère de la ligne**.",
+     "question": "Lis `c` puis la ligne.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "o\nbonjour tout le monde\n",
+        "sortie": "b"
+       },
+       {
+        "entree": "z\nabc\n",
+        "sortie": "a"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    char c, s[200];\n    scanf(\" %c\", &c);\n    getchar();\n    fgets(s, sizeof(s), stdin);\n    printf(\"%c\\n\", s[0]);\n    return 0;\n}"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    char c, s[200];\n    scanf(\" %c\", &c);\n    getchar();\n    fgets(s, sizeof(s), stdin);\n    printf(\"%c\\n\", s[0]);\n    return 0;\n}\n```",
+     "indices": [
+      "`scanf(\" %c\", &c);` puis `getchar();` puis `fgets(s, sizeof(s), stdin);`",
+      "`printf(\"%c\\n\", s[0]);`"
+     ],
+     "duree": 1.3
+    },
+    {
+     "consigne": "Compte maintenant les **occurrences** de `c` dans la ligne (jusqu'au `'\\0'`) et affiche ce nombre.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -1103,10 +1742,11 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    char c, s[200];\n    scanf(\" %c\", &c);\n    getchar();\n    fgets(s, sizeof(s), stdin);\n    int nb = 0;\n    for (int i = 0; s[i] != '\\0'; i++) {\n        if (s[i] == c) nb++;\n    }\n    printf(\"%d\\n\", nb);\n    return 0;\n}\n```",
      "indices": [
-      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
-      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+      "`int nb = 0;` puis une boucle `for (int i = 0; s[i] != '\\0'; i++)` avec `if (s[i] == c) nb++;`.",
+      "`printf(\"%d\\n\", nb);` après la boucle."
      ],
-     "duree": 5
+     "duree": 2.8,
+     "depart": "#include <stdio.h>\n\nint main(void) {\n    char c, s[200];\n    scanf(\" %c\", &c);\n    getchar();\n    fgets(s, sizeof(s), stdin);\n    printf(\"%c\\n\", s[0]);\n    return 0;\n}"
     }
    ]
   }
