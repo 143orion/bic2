@@ -777,7 +777,8 @@
       "Type de retour, nom, puis le type du paramètre entre parenthèses.",
       "`int carre(int x);`"
      ],
-     "duree": 0.6
+     "duree": 0.6,
+     "guideSeul": true
     },
     {
      "consigne": "Écris l'instruction de la définition qui **renvoie** le carré de `x`.",
@@ -792,7 +793,8 @@
       "Le mot-clé qui renvoie une valeur.",
       "`return x * x;`"
      ],
-     "duree": 0.5
+     "duree": 0.5,
+     "guideSeul": true
     },
     {
      "consigne": "Sans fonction pour l'instant : lis `n` dans `main` et affiche directement son carré.",
@@ -819,7 +821,8 @@
      "indices": [
       "`scanf(\"%d\", &n);` puis `printf(\"%d\\n\", n * n);`"
      ],
-     "duree": 0.8
+     "duree": 0.8,
+     "guideSeul": true
     },
     {
      "consigne": "Transforme en **fonction** : écris le prototype `int carre(int x);` avant `main`, appelle `carre(n)` dans `main`, et place la définition après `main`.",
@@ -886,7 +889,8 @@
       "Type de retour, nom, puis deux paramètres typés séparés par une virgule.",
       "`int maximum(int a, int b)`"
      ],
-     "duree": 0.68
+     "duree": 0.68,
+     "guideSeul": true
     },
     {
      "consigne": "`afficher_ligne` affiche des tirets mais ne renvoie aucune valeur. Quel est son type de retour ?",
@@ -902,7 +906,8 @@
       "Le type « vide ».",
       "void"
      ],
-     "duree": 0.39
+     "duree": 0.39,
+     "guideSeul": true
     },
     {
      "consigne": "Sans fonctions : lis `a` et `b`, calcule le maximum `m`, affiche une ligne de `m` tirets (boucle `for`) puis `m`.",
@@ -930,7 +935,8 @@
       "Le maximum : `int m = a; if (b > m) m = b;`",
       "Une boucle de `m` tours avec `printf(\"-\");`, puis `\\n`."
      ],
-     "duree": 1.94
+     "duree": 1.94,
+     "guideSeul": true
     },
     {
      "consigne": "Extrais deux fonctions : `int maximum(int a, int b)` et `void afficher_ligne(int n)` (placées avant `main`). `main` ne fait plus que les appeler.",
@@ -996,7 +1002,8 @@
       "Type de retour, nom, paramètre typé.",
       "`int est_pair(int n)`"
      ],
-     "duree": 0.5
+     "duree": 0.5,
+     "guideSeul": true
     },
     {
      "consigne": "Écris l'instruction qui renvoie 1 si `n` est pair et 0 sinon, en une seule ligne.",
@@ -1011,7 +1018,8 @@
       "Une comparaison est une valeur : renvoie-la.",
       "`return n % 2 == 0;`"
      ],
-     "duree": 0.5
+     "duree": 0.5,
+     "guideSeul": true
     },
     {
      "consigne": "Sans fonction : lis `N` puis `N` entiers et affiche le nombre de pairs (test `x % 2 == 0` dans `main`).",
@@ -1039,7 +1047,8 @@
       "Une boucle de `n` tours avec un `scanf` et un `if`.",
       "`if (x % 2 == 0) nb++;`"
      ],
-     "duree": 1.5
+     "duree": 1.5,
+     "guideSeul": true
     },
     {
      "consigne": "Sors le test dans une fonction `int est_pair(int n)` (avant `main`) et appelle-la : `if (est_pair(x)) nb++;`.",
@@ -1106,7 +1115,8 @@
       "Pas à l'intérieur d'une fonction.",
       "En haut, hors de toute fonction."
      ],
-     "duree": 0.42
+     "duree": 0.42,
+     "guideSeul": true
     },
     {
      "consigne": "Si `main` appelle `saluer` 3 fois, que vaut la globale `appels` à la fin ?",
@@ -1120,7 +1130,8 @@
       "Un appel = une incrémentation.",
       "3"
      ],
-     "duree": 0.33
+     "duree": 0.33,
+     "guideSeul": true
     },
     {
      "consigne": "Sans fonction ni globale : lis `n`, affiche `Bonjour` `n` fois (une par ligne), puis le nombre de fois dans une variable locale `compteur`.",
@@ -1148,7 +1159,8 @@
       "Une boucle de `n` tours, un `printf(\"Bonjour\\n\");` et `compteur++;`.",
       "Affiche `compteur` après la boucle."
      ],
-     "duree": 1.25
+     "duree": 1.25,
+     "guideSeul": true
     },
     {
      "consigne": "Remplace le compteur local par une **globale** `int appels = 0;` (en haut du fichier) et mets l'affichage de `Bonjour` + `appels++` dans une fonction `void saluer(void)`.",
@@ -1211,7 +1223,8 @@
       "Pense à ce que reçoit `x` à l'appel.",
       "copie"
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Écris l'en-tête de `doubler` pour qu'elle reçoive l'**adresse** d'un entier `x`.",
@@ -1226,7 +1239,8 @@
       "Une étoile entre le type et le nom.",
       "`void doubler(int *x)`"
      ],
-     "duree": 0.6
+     "duree": 0.6,
+     "guideSeul": true
     },
     {
      "consigne": "Écris l'appel de `doubler` dans `main` qui transmet l'adresse de `n`.",
@@ -1241,7 +1255,8 @@
       "Le `&` donne l'adresse d'une variable.",
       "`doubler(&n);`"
      ],
-     "duree": 0.5
+     "duree": 0.5,
+     "guideSeul": true
     },
     {
      "consigne": "Corrige `doubler` et son appel : passe `n` **par adresse**, et modifie la valeur pointée.",
@@ -1299,7 +1314,8 @@
       "Une étoile devant chaque nom.",
       "`void echanger(int *a, int *b)`"
      ],
-     "duree": 0.62
+     "duree": 0.62,
+     "guideSeul": true
     },
     {
      "consigne": "Écris l'instruction qui met la valeur pointée par `a` de côté dans `temp` (déclarée au même moment).",
@@ -1314,7 +1330,8 @@
       "`*a` est la valeur pointée par `a`.",
       "`int temp = *a;`"
      ],
-     "duree": 0.54
+     "duree": 0.54,
+     "guideSeul": true
     },
     {
      "consigne": "Écris l'appel de `echanger` dans `main` pour échanger les variables `x` et `y`.",
@@ -1329,7 +1346,8 @@
       "On transmet les adresses.",
       "`echanger(&x, &y);`"
      ],
-     "duree": 0.45
+     "duree": 0.45,
+     "guideSeul": true
     },
     {
      "consigne": "Sans fonction : lis `x` et `y`, échange-les avec une variable `temp` dans `main`, et affiche-les.",
@@ -1353,7 +1371,8 @@
       "Trois lignes : `temp = x`, `x = y`, `y = temp`.",
       "Affiche `x` puis `y`."
      ],
-     "duree": 0.89
+     "duree": 0.89,
+     "guideSeul": true
     },
     {
      "consigne": "Sors l'échange dans `void echanger(int *a, int *b)` et appelle-la avec les adresses : `echanger(&x, &y);`.",
@@ -1416,7 +1435,8 @@
       "Le `*` à gauche désigne la variable pointée.",
       "`*quotient = dividende / diviseur;`"
      ],
-     "duree": 0.52
+     "duree": 0.52,
+     "guideSeul": true
     },
     {
      "consigne": "Écris l'instruction qui range le **reste** dans la variable pointée par `reste`.",
@@ -1431,7 +1451,8 @@
       "Le reste utilise l'opérateur `%`.",
       "`*reste = dividende % diviseur;`"
      ],
-     "duree": 0.52
+     "duree": 0.52,
+     "guideSeul": true
     },
     {
      "consigne": "Dans `main`, `a` et `b` sont les entrées, `q` et `r` recevront les résultats. Écris l'appel de `diviser`.",
@@ -1446,7 +1467,8 @@
       "Deux valeurs, puis deux adresses.",
       "`diviser(a, b, &q, &r);`"
      ],
-     "duree": 0.6
+     "duree": 0.6,
+     "guideSeul": true
     },
     {
      "consigne": "Sans fonction : lis `a` et `b`, calcule `q = a / b` et `r = a % b` dans `main`, et affiche `q r`.",
@@ -1474,7 +1496,8 @@
       "Deux calculs : `a / b` et `a % b`.",
       "`printf(\"%d %d\\n\", q, r);`"
      ],
-     "duree": 0.86
+     "duree": 0.86,
+     "guideSeul": true
     },
     {
      "consigne": "Place les deux calculs dans `void diviser(int dividende, int diviseur, int *quotient, int *reste)` et appelle-la depuis `main`.",
@@ -1541,7 +1564,8 @@
       "Les crochets vides après le nom signalent un tableau.",
       "`void remplir_tableau(int arr[], int taille);`"
      ],
-     "duree": 0.64
+     "duree": 0.64,
+     "guideSeul": true
     },
     {
      "consigne": "Dans `main`, le tableau est `t` et sa taille `n`. Écris l'appel de `remplir_tableau`.",
@@ -1556,7 +1580,8 @@
       "Le nom du tableau suffit.",
       "`remplir_tableau(t, n);`"
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Pour afficher `[10, 20, 30]` sans virgule après le dernier élément, quelle condition (indice `i`, `taille`) autorise l'affichage de la virgule ?",
@@ -1571,7 +1596,8 @@
       "Le dernier indice vaut `taille - 1`.",
       "`i < taille - 1`"
      ],
-     "duree": 0.56
+     "duree": 0.56,
+     "guideSeul": true
     },
     {
      "consigne": "Sans fonctions : lis `N` (≤ 100) puis `N` entiers, affiche le tableau au format `[10, 20, 30]`, puis la somme sur la ligne suivante.",
@@ -1595,7 +1621,8 @@
       "Une boucle de saisie (qui cumule la somme), une boucle d'affichage.",
       "Virgule seulement si `i < n - 1`."
      ],
-     "duree": 2.4
+     "duree": 2.4,
+     "guideSeul": true
     },
     {
      "consigne": "Découpe en trois fonctions `remplir_tableau`, `afficher_tableau` et `somme_tableau` (chacune reçoit `arr` et `taille`), puis appelle-les dans `main`.",
@@ -1660,7 +1687,8 @@
       "Compare chaque valeur à sa voisine de droite.",
       "1"
      ],
-     "duree": 0.28
+     "duree": 0.28,
+     "guideSeul": true
     },
     {
      "consigne": "Écris la condition (sans `if`) qui détecte un **désordre** entre `t[i]` et sa voisine de droite.",
@@ -1675,7 +1703,8 @@
       "Strictement supérieur : les égalités sont permises.",
       "`t[i] > t[i + 1]`"
      ],
-     "duree": 0.42
+     "duree": 0.42,
+     "guideSeul": true
     },
     {
      "consigne": "`t[i + 1]` doit rester dans le tableau de `n` cases : écris la condition de la boucle (indice `i`).",
@@ -1690,7 +1719,8 @@
       "`i + 1` doit rester inférieur à `n`.",
       "`i < n - 1`"
      ],
-     "duree": 0.42
+     "duree": 0.42,
+     "guideSeul": true
     },
     {
      "consigne": "Sans fonction : lis `N` puis `N` entiers et affiche `1` si le tableau est trié, `0` sinon (indicateur `trie`).",
@@ -1718,7 +1748,8 @@
       "`trie = 1` au départ, `trie = 0` à la moindre paire en désordre.",
       "Affiche `trie` après la boucle."
      ],
-     "duree": 1.39
+     "duree": 1.39,
+     "guideSeul": true
     },
     {
      "consigne": "Sors le test dans `int est_trie(int t[], int n)` : `return 0;` dès qu'une paire est en désordre, `return 1;` après la boucle. `main` affiche `est_trie(t, n)`.",
@@ -1780,7 +1811,8 @@
       "Compte à partir de 0.",
       "1"
      ],
-     "duree": 0.31
+     "duree": 0.31,
+     "guideSeul": true
     },
     {
      "consigne": "Écris l'instruction (dans le `if`) qui renvoie immédiatement la position courante `i`.",
@@ -1795,7 +1827,8 @@
       "Le `return` sort de la fonction, donc de la boucle.",
       "`return i;`"
      ],
-     "duree": 0.31
+     "duree": 0.31,
+     "guideSeul": true
     },
     {
      "consigne": "Écris l'instruction, **après** la boucle, qui signale que la valeur est absente.",
@@ -1810,7 +1843,8 @@
       "Une valeur impossible comme indice.",
       "`return -1;`"
      ],
-     "duree": 0.31
+     "duree": 0.31,
+     "guideSeul": true
     },
     {
      "consigne": "Sans fonction : lis `N`, `N` entiers puis `val`, et affiche l'indice de la première occurrence de `val` (ou `-1`).",
@@ -1834,7 +1868,8 @@
       "`pos = -1`, puis `pos = i; break;` à la première occurrence.",
       "`printf(\"%d\\n\", pos);`"
      ],
-     "duree": 1.56
+     "duree": 1.56,
+     "guideSeul": true
     },
     {
      "consigne": "Place la recherche dans `int recherche_position(int t[], int n, int val)` : `return i;` dès la première occurrence, `return -1;` après la boucle.",
@@ -1893,7 +1928,8 @@
       "Pense à ce qu'on transmet vraiment : l'adresse.",
       "Elle travaille sur l'original."
      ],
-     "duree": 0.43
+     "duree": 0.43,
+     "guideSeul": true
     },
     {
      "consigne": "Écris l'instruction qui remplace `t[i]` par 0.",
@@ -1908,7 +1944,8 @@
       "Une affectation.",
       "`t[i] = 0;`"
      ],
-     "duree": 0.34
+     "duree": 0.34,
+     "guideSeul": true
     },
     {
      "consigne": "Sans fonction : lis `N` entiers, remplace chaque négatif par 0 dans `main`, et affiche le tableau (valeurs séparées par une espace).",
@@ -1932,7 +1969,8 @@
       "Une boucle avec `if (t[i] < 0) t[i] = 0;`.",
       "Une dernière boucle pour afficher."
      ],
-     "duree": 1.72
+     "duree": 1.72,
+     "guideSeul": true
     },
     {
      "consigne": "Sors le remplacement dans `void sans_negatifs(int t[], int n)` et appelle-la depuis `main` avant l'affichage.",
@@ -1990,7 +2028,8 @@
       "Théorème de Pythagore.",
       "5"
      ],
-     "duree": 0.31
+     "duree": 0.31,
+     "guideSeul": true
     },
     {
      "consigne": "Écris la ligne qui inclut la bibliothèque mathématique.",
@@ -2005,7 +2044,8 @@
       "Comme `stdio.h`, mais pour les maths.",
       "`#include <math.h>`"
      ],
-     "duree": 0.31
+     "duree": 0.31,
+     "guideSeul": true
     },
     {
      "consigne": "Écris l'expression qui calcule $\\sqrt{a^2 + b^2}$ avec `sqrt` et `pow`.",
@@ -2020,7 +2060,8 @@
       "`pow(x, 2)` élève `x` au carré.",
       "`sqrt(pow(a, 2) + pow(b, 2))`"
      ],
-     "duree": 0.62
+     "duree": 0.62,
+     "guideSeul": true
     },
     {
      "consigne": "Sans fonction ni racine : lis `a` et `b` (réels) et affiche $a^2 + b^2$ avec 2 décimales.",
@@ -2048,7 +2089,8 @@
       "Deux `double`, `scanf(\"%lf %lf\", …)`.",
       "`printf(\"%.2f\\n\", a * a + b * b);`"
      ],
-     "duree": 0.77
+     "duree": 0.77,
+     "guideSeul": true
     },
     {
      "consigne": "Écris `double hypotenuse(double a, double b)` avec `sqrt` et `pow` (n'oublie pas `#include <math.h>`), et affiche `hypotenuse(a, b)` avec 2 décimales.",
@@ -2116,7 +2158,8 @@
       "Comme une définition, mais terminée par `;` et sans corps.",
       "`int addition(int a, int b);`"
      ],
-     "duree": 0.6
+     "duree": 0.6,
+     "guideSeul": true
     },
     {
      "consigne": "Dans un vrai projet, dans quel type de fichier mettrait-on ces prototypes ? (donne l'extension, par exemple `.c`)",
@@ -2131,7 +2174,8 @@
       "Un fichier d'en-tête (header).",
       "`.h`"
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Sans fonctions : lis deux entiers et affiche leur somme puis leur différence, sur une ligne.",
@@ -2155,7 +2199,8 @@
       "Un `scanf` de deux entiers.",
       "`printf(\"%d %d\\n\", a + b, a - b);`"
      ],
-     "duree": 0.8
+     "duree": 0.8,
+     "guideSeul": true
     },
     {
      "consigne": "Organise comme le module calculatrice : prototypes de `addition` et `soustraction` **avant** `main`, appels dans `main`, définitions **après** `main`.",

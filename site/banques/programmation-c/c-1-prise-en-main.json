@@ -451,7 +451,8 @@
       "`printf` fait partie de la bibliothèque des entrées/sorties standard (standard input/output).",
       "Le nom du fichier d'en-tête est `stdio.h`, entre chevrons."
      ],
-     "duree": 0.5
+     "duree": 0.5,
+     "guideSeul": true
     },
     {
      "consigne": "Dans `main`, affiche le texte suivi d'un retour à la ligne.",
@@ -466,7 +467,8 @@
       "La fonction d'affichage est `printf`, le texte va entre guillemets.",
       "`\\n` produit le retour à la ligne ; n'oublie pas le `;`."
      ],
-     "duree": 0.7
+     "duree": 0.7,
+     "guideSeul": true
     },
     {
      "consigne": "`main` doit signaler que tout s'est bien passé.",
@@ -481,7 +483,8 @@
       "On renvoie la valeur 0.",
       "`return` suivi de la valeur, puis `;`."
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Assemble les trois étapes : écris le programme complet qui affiche Hello World.",
@@ -612,7 +615,8 @@
       "Le message dit exactement ce qui manque.",
       "Le point-virgule."
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Quel est le nom **exact** de la fonction par où démarre tout programme C (attention à la casse) ?",
@@ -628,7 +632,8 @@
       "Tout en minuscules.",
       "`main`"
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Corrige les **deux** erreurs du programme pour qu'il affiche `Bonjour ESILV`.",
@@ -676,7 +681,8 @@
       "Un antislash suivi d'une lettre.",
       "`\\n`"
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Écris un programme qui affiche seulement les **deux premières** lignes : `BIC2.exe` puis `Programmation C`.",
@@ -696,7 +702,8 @@
       "Un `printf` par ligne, chacun terminé par `\\n`.",
       "`printf(\"BIC2.exe\\n\");` puis `printf(\"Programmation C\\n\");`"
      ],
-     "duree": 1.0
+     "duree": 1.0,
+     "guideSeul": true
     },
     {
      "consigne": "Ajoute la troisième ligne : `Chapitre 1 : prise en main` (copie le texte à l'identique).",
@@ -745,7 +752,8 @@
       "Deux barres obliques.",
       "//"
      ],
-     "duree": 0.32
+     "duree": 0.32,
+     "guideSeul": true
     },
     {
      "consigne": "Écris un commentaire de **bloc** contenant le mot `test`.",
@@ -760,7 +768,8 @@
       "Il se ferme comme il s'ouvre, avec les caractères dans l'autre sens.",
       "`/* test */`"
      ],
-     "duree": 0.39
+     "duree": 0.39,
+     "guideSeul": true
     },
     {
      "consigne": "Écris un programme qui affiche `42` et contient **un commentaire sur une ligne** (`//`).",
@@ -787,7 +796,8 @@
       "Un `printf(\"42\\n\");` dans `main`.",
       "Ajoute `// ...` à la fin de la ligne."
      ],
-     "duree": 0.79
+     "duree": 0.79,
+     "guideSeul": true
     },
     {
      "consigne": "Ajoute aussi **un commentaire de bloc** `/* … */` (par exemple au-dessus de `main`).",

@@ -247,11 +247,12 @@ const SCENARIOS = {
     await pg.click('[data-m="tab"][data-v="exos"]'); await attendre(200);
     await pg.click('[data-m="pk"][data-id="1.3"]'); await pg.click('[data-m="exsuiv"]');   /* 1.3 : un seul exo, de code */
     await pg.click('[data-m="mode"][data-v="classique"]'); await pg.click('[data-m="go"]'); await attendre(600);
-    /* l'exo 1.3 compte plusieurs étapes (Classique les montre toutes) : on les remplit depuis la banque */
+    /* l'exo 1.3 compte plusieurs étapes, mais Classique masque les étapes guideSeul (accompagnement) : seule l'étape finale doit s'afficher */
     const banque = JSON.parse(await readFile(join(SITE, "banques/programmation-c/c-1-prise-en-main.json"), "utf8"));
     const exo = banque.items.find(x => x.notion === "1.3" && x.etapes);
-    const etapes = exo.etapes, champs = await pg.$$(".mock-qs .entree");
-    if(champs.length !== etapes.length || !(await pg.$(".mock-qs .code-hl"))){ erreurs.push(`[${app}] éditeur C : éditeur coloré introuvable (${champs.length} champ(s) pour ${etapes.length} étape(s))`); return pg; }
+    const etapes = exo.etapes.filter(e => !e.guideSeul), champs = await pg.$$(".mock-qs .entree");
+    if(etapes.length !== 1) erreurs.push(`[${app}] éditeur C : l'exo 1.3 devrait n'avoir qu'une étape hors guideSeul (${etapes.length})`);
+    if(champs.length !== etapes.length || !(await pg.$(".mock-qs .code-hl"))){ erreurs.push(`[${app}] éditeur C : ${champs.length} champ(s) affiché(s) pour ${etapes.length} étape(s) attendue(s) en Classique, ou éditeur coloré introuvable`); return pg; }
     for(let i = 0; i < etapes.length; i++){
       const v = etapes[i].verif;
       await champs[i].fill(v.mode === "exact" ? v.attendu[0] : v.exemple);

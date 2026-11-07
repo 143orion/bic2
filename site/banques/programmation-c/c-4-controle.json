@@ -837,7 +837,8 @@
       "Majeur = au moins 18.",
       "Opérateur « supérieur ou égal » : `>=`."
      ],
-     "duree": 0.6
+     "duree": 0.6,
+     "guideSeul": true
     },
     {
      "consigne": "Pour `age = 18`, quelle branche s'exécute ?",
@@ -852,7 +853,8 @@
      "indices": [
       "Remplace `age` par 18 dans la condition."
      ],
-     "duree": 0.5
+     "duree": 0.5,
+     "guideSeul": true
     },
     {
      "consigne": "Pour `age = 17`, quelle branche s'exécute ?",
@@ -867,7 +869,8 @@
      "indices": [
       "17 >= 18 est faux."
      ],
-     "duree": 0.5
+     "duree": 0.5,
+     "guideSeul": true
     },
     {
      "consigne": "Écris le programme qui lit l'âge et affiche « majeur » ou « mineur » (en minuscules).",
@@ -920,7 +923,8 @@
      "indices": [
       "Pense aux trois situations possibles."
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Quel test place-t-on dans le premier `if` pour « positif » ?",
@@ -934,7 +938,8 @@
      "indices": [
       "Strictement supérieur à zéro."
      ],
-     "duree": 0.5
+     "duree": 0.5,
+     "guideSeul": true
     },
     {
      "consigne": "Pour `n = 0`, quelle branche s'exécute (positif / négatif / nul) ?",
@@ -949,7 +954,8 @@
      "indices": [
       "Teste 0 > 0, puis 0 < 0."
      ],
-     "duree": 0.5
+     "duree": 0.5,
+     "guideSeul": true
     },
     {
      "consigne": "Écris le programme qui lit un entier et affiche « positif », « negatif » ou « nul » (sans accent).",
@@ -1002,7 +1008,8 @@
      "indices": [
       "Compare b = 12 à max = 7."
      ],
-     "duree": 0.5
+     "duree": 0.5,
+     "guideSeul": true
     },
     {
      "consigne": "Puis `if (c > max) max = c;`.",
@@ -1015,7 +1022,8 @@
      "indices": [
       "Compare c = 4 à max = 12."
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Même méthode pour `min` : `min = a`, puis `if (b < min) …`, puis `if (c < min) …`.",
@@ -1029,7 +1037,8 @@
       "Compare avec `<`.",
       "c = 4 est la plus petite valeur."
      ],
-     "duree": 0.6
+     "duree": 0.6,
+     "guideSeul": true
     },
     {
      "consigne": "Écris le programme qui lit trois entiers et affiche, sur une ligne, le maximum puis le minimum.",
@@ -1083,7 +1092,8 @@
      "indices": [
       "Additionne les quatre notes."
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "La moyenne se calcule en réel : `somme / 4.0`.",
@@ -1096,7 +1106,8 @@
      "indices": [
       "Divise par le nombre de notes."
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Avec la grille « ≥ 16 : A, ≥ 12 : B, sinon C », quelle mention pour 15 ?",
@@ -1111,7 +1122,8 @@
      "indices": [
       "Teste dans l'ordre : d'abord ≥ 16, puis ≥ 12."
      ],
-     "duree": 0.5
+     "duree": 0.5,
+     "guideSeul": true
     },
     {
      "consigne": "Écris le programme qui lit 4 notes entières et affiche la moyenne avec 2 décimales, une espace, puis la mention : A si la moyenne est au moins 16, B si elle est au moins 12, C sinon.",
@@ -1166,7 +1178,8 @@
       "Multiple de 4 : `an % 4 == 0`.",
       "Multiple de 4 mais pas de 100, ou multiple de 400."
      ],
-     "duree": 1.5
+     "duree": 1.5,
+     "guideSeul": true
     },
     {
      "consigne": "1900 est-il bissextile ? (1 pour oui, 0 pour non)",
@@ -1179,7 +1192,8 @@
      "indices": [
       "Teste 1900 % 4, % 100, % 400."
      ],
-     "duree": 0.5
+     "duree": 0.5,
+     "guideSeul": true
     },
     {
      "consigne": "2000 est-il bissextile ? (1 pour oui, 0 pour non)",
@@ -1192,7 +1206,8 @@
      "indices": [
       "2000 % 400 = 0."
      ],
-     "duree": 0.5
+     "duree": 0.5,
+     "guideSeul": true
     },
     {
      "consigne": "Écris le programme qui lit une année et affiche 1 si elle est bissextile, 0 sinon.",
@@ -1252,7 +1267,8 @@
       "Format d'un caractère : `%c`.",
       "Une espace avant `%c`, et `&op`."
      ],
-     "duree": 0.8
+     "duree": 0.8,
+     "guideSeul": true
     },
     {
      "consigne": "Dans `switch (op)`, quelle est la ligne du cas « addition » ?",
@@ -1267,7 +1283,8 @@
       "`case`, puis la valeur, puis `:`.",
       "Le caractère `+` entre apostrophes."
      ],
-     "duree": 0.6
+     "duree": 0.6,
+     "guideSeul": true
     },
     {
      "consigne": "Avec a = 12, b = 4 et op = `/`, quel résultat entier affiche-t-on ?",
@@ -1280,7 +1297,8 @@
      "indices": [
       "12 divisé par 4."
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Que doit-on tester avant la division ?",
@@ -1294,7 +1312,8 @@
      "indices": [
       "On ne divise jamais par zéro."
      ],
-     "duree": 0.6
+     "duree": 0.6,
+     "guideSeul": true
     },
     {
      "consigne": "Écris le programme qui lit « a op b » (par exemple 12 + 4) et affiche le résultat entier ; pour une division par 0, affiche « erreur ».",
@@ -1355,7 +1374,8 @@
      "indices": [
       "Quelle valeur n'ajoute rien ?"
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Écris l'instruction du corps de la boucle qui ajoute `i`.",
@@ -1369,7 +1389,8 @@
      "indices": [
       "Ajoute `i` à `somme`."
      ],
-     "duree": 0.7
+     "duree": 0.7,
+     "guideSeul": true
     },
     {
      "consigne": "Que vaut `somme` pour N = 5 ?",
@@ -1382,7 +1403,8 @@
      "indices": [
       "Additionne de 1 à 5."
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Retrouve le même résultat avec $\\dfrac{N(N+1)}{2}$.",
@@ -1395,7 +1417,8 @@
      "indices": [
       "N × (N+1) / 2."
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Écris le programme qui lit N et affiche 1 + 2 + … + N.",
@@ -1453,7 +1476,8 @@
      "indices": [
       "Quelle valeur ne change pas un produit ?"
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Écris l'instruction du corps de la boucle.",
@@ -1467,7 +1491,8 @@
      "indices": [
       "Multiplie `fact` par `i`."
      ],
-     "duree": 0.7
+     "duree": 0.7,
+     "guideSeul": true
     },
     {
      "consigne": "Que vaut `fact` pour N = 5 ?",
@@ -1480,7 +1505,8 @@
      "indices": [
       "2 × 3 = 6, × 4 = 24, × 5 = 120."
      ],
-     "duree": 0.5
+     "duree": 0.5,
+     "guideSeul": true
     },
     {
      "consigne": "Écris le programme qui lit N et affiche N! (0! = 1).",
@@ -1534,7 +1560,8 @@
      "indices": [
       "Une multiplication par exposant."
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Quel en-tête de `for` fait n tours avec `i` à partir de 1 ?",
@@ -1548,7 +1575,8 @@
      "indices": [
       "`i <= n` pour inclure n."
      ],
-     "duree": 0.7
+     "duree": 0.7,
+     "guideSeul": true
     },
     {
      "consigne": "Que vaut 2^10 ?",
@@ -1561,7 +1589,8 @@
      "indices": [
       "Double dix fois à partir de 1."
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Écris le programme qui lit X et n puis affiche X puissance n, avec des multiplications successives.",
@@ -1616,7 +1645,8 @@
      "indices": [
       "De 1 à N inclus."
      ],
-     "duree": 0.8
+     "duree": 0.8,
+     "guideSeul": true
     },
     {
      "consigne": "Quelle condition pour la boucle intérieure (variable `c`, départ 1) ?",
@@ -1630,7 +1660,8 @@
      "indices": [
       "Combien de nombres sur la ligne l ?"
      ],
-     "duree": 0.6
+     "duree": 0.6,
+     "guideSeul": true
     },
     {
      "consigne": "Combien de nombres au total sont affichés pour N = 4 ?",
@@ -1643,7 +1674,8 @@
      "indices": [
       "Additionne le nombre de nombres de chaque ligne."
      ],
-     "duree": 0.5
+     "duree": 0.5,
+     "guideSeul": true
     },
     {
      "consigne": "Écris le programme qui lit N et affiche le triangle numérique : la ligne l contient les nombres de 1 à l, séparés par des espaces.",
@@ -1694,7 +1726,8 @@
      "indices": [
       "Une note négative arrête la boucle."
      ],
-     "duree": 0.7
+     "duree": 0.7,
+     "guideSeul": true
     },
     {
      "consigne": "Combien de notes sont comptées avec la saisie 12, 8, 15, -1 ?",
@@ -1707,7 +1740,8 @@
      "indices": [
       "Le -1 ne compte pas."
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Quelle est la moyenne des notes comptées ?",
@@ -1721,7 +1755,8 @@
      "indices": [
       "Somme = 35, divisée par 3, en réel."
      ],
-     "duree": 0.7
+     "duree": 0.7,
+     "guideSeul": true
     },
     {
      "consigne": "Combien d'admis (≥ 10) ?",
@@ -1734,7 +1769,8 @@
      "indices": [
       "Compte les notes ≥ 10."
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Écris le programme complet : il lit des notes jusqu'à une note négative, puis affiche sur une ligne le nombre de notes, la moyenne (2 décimales), la meilleure, la pire et le nombre d'admis (≥ 10). On suppose au moins une note valide.",
@@ -1788,7 +1824,8 @@
      "indices": [
       "Le modulo par 10 isole le dernier chiffre."
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Que vaut `1234 / 10` avec des entiers ?",
@@ -1801,7 +1838,8 @@
      "indices": [
       "Division entière."
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Quelle est la somme des chiffres de 1234 ?",
@@ -1814,7 +1852,8 @@
      "indices": [
       "Additionne les quatre chiffres."
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Le miroir se construit par `miroir = miroir * 10 + chiffre`. Que vaut le miroir de 1234 ?",
@@ -1827,7 +1866,8 @@
      "indices": [
       "On part de 0 : 0×10+4, puis ×10+3…"
      ],
-     "duree": 0.8
+     "duree": 0.8,
+     "guideSeul": true
     },
     {
      "consigne": "Écris le programme qui lit un entier positif et affiche la somme de ses chiffres.",
@@ -1883,7 +1923,8 @@
      "indices": [
       "Boucle à sortie conditionnelle."
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Quelle condition continue à demander tant que le mot de passe est faux ET qu'il reste des essais (variables `ok` valant 0/1 et `essais`) ?",
@@ -1897,7 +1938,8 @@
      "indices": [
       "Combine deux conditions avec `&&`."
      ],
-     "duree": 0.9
+     "duree": 0.9,
+     "guideSeul": true
     },
     {
      "consigne": "Combien de tentatives au maximum sont possibles ?",
@@ -1910,7 +1952,8 @@
      "indices": [
       "C'est dans l'énoncé."
      ],
-     "duree": 0.3
+     "duree": 0.3,
+     "guideSeul": true
     },
     {
      "consigne": "Version testable : le code secret est l'entier 1234. Écris le programme qui lit jusqu'à 3 codes et affiche « ok » dès que le bon code est saisi, ou « bloque » après 3 échecs.",
@@ -1964,7 +2007,8 @@
      "indices": [
       "Élève d au carré."
      ],
-     "duree": 0.7
+     "duree": 0.7,
+     "guideSeul": true
     },
     {
      "consigne": "29 a-t-il un diviseur entre 2 et 5 ? (1 oui, 0 non)",
@@ -1977,7 +2021,8 @@
      "indices": [
       "Teste 29 % 2, 29 % 3, 29 % 4, 29 % 5."
      ],
-     "duree": 0.6
+     "duree": 0.6,
+     "guideSeul": true
     },
     {
      "consigne": "Que fait-on dès qu'on trouve un diviseur ?",
@@ -1992,7 +2037,8 @@
      "indices": [
       "Sortir de la boucle immédiatement."
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Écris le programme qui lit n et affiche « premier » ou « non premier » (1 n'est pas premier).",
@@ -2049,7 +2095,8 @@
      "indices": [
       "48 - 36 = 12."
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Suite : (18, 12) → (12, 6) → (6, 0). Quel est le PGCD ?",
@@ -2062,7 +2109,8 @@
      "indices": [
       "La dernière valeur non nulle."
      ],
-     "duree": 0.5
+     "duree": 0.5,
+     "guideSeul": true
     },
     {
      "consigne": "Fibonacci avec 0 et 1 comme premiers termes : que vaut le 8e terme ? (0, 1, 1, 2, 3, 5, 8, …)",
@@ -2075,7 +2123,8 @@
      "indices": [
       "Continue la suite jusqu'au 8e terme."
      ],
-     "duree": 0.6
+     "duree": 0.6,
+     "guideSeul": true
     },
     {
      "consigne": "Écris le programme qui lit a et b (entiers positifs) et affiche leur PGCD (algorithme d'Euclide).",
@@ -2130,7 +2179,8 @@
      "indices": [
       "Quand reste-t-il assez pour retirer b ?"
      ],
-     "duree": 0.7
+     "duree": 0.7,
+     "guideSeul": true
     },
     {
      "consigne": "Combien de soustractions avec a = 17 et b = 5 ?",
@@ -2143,7 +2193,8 @@
      "indices": [
       "Retire 5 jusqu'à ce que ça ne soit plus possible."
      ],
-     "duree": 0.5
+     "duree": 0.5,
+     "guideSeul": true
     },
     {
      "consigne": "Que vaut `a` à la fin ?",
@@ -2156,7 +2207,8 @@
      "indices": [
       "Après 3 soustractions."
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Écris le programme qui lit a et b puis affiche le quotient et le reste de a par b, calculés avec des soustractions (sans / ni %).",
@@ -2211,7 +2263,8 @@
      "indices": [
       "Strictement positif."
      ],
-     "duree": 0.5
+     "duree": 0.5,
+     "guideSeul": true
     },
     {
      "consigne": "49 est-il un carré parfait ? (1 oui, 0 non)",
@@ -2224,7 +2277,8 @@
      "indices": [
       "Cherche y tel que y × y = 49."
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "50 est-il un carré parfait ? (1 oui, 0 non)",
@@ -2237,7 +2291,8 @@
      "indices": [
       "Teste 7 et 8."
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Écris le programme qui lit x et affiche « invalide » si x ≤ 0, sinon 1 si x est un carré parfait et 0 sinon (sans racine carrée).",
@@ -2372,7 +2427,8 @@
       "Teste les trois tarifs dans l'ordre.",
       "10"
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Écris la condition du tarif **réduit** (de 12 à 25 ans, **ou** 65 ans et plus), en supposant que `age < 12` est déjà traité plus haut.",
@@ -2387,7 +2443,8 @@
       "Deux conditions reliées par `||`.",
       "`age <= 25 || age >= 65`"
      ],
-     "duree": 0.7
+     "duree": 0.7,
+     "guideSeul": true
     },
     {
      "consigne": "Lis un âge et affiche `5` si l'âge est **inférieur à 12**, `10` sinon (un seul `if / else`).",
@@ -2415,7 +2472,8 @@
       "`if (age < 12) { … } else { … }`",
       "`printf(\"5\\n\");` dans le `if`, `printf(\"10\\n\");` dans le `else`."
      ],
-     "duree": 1.2
+     "duree": 1.2,
+     "guideSeul": true
     },
     {
      "consigne": "Intercale un `else if` pour le tarif réduit (`7`) entre le `if` et le `else`.",
@@ -2481,7 +2539,8 @@
       "Le mot anglais pour « par défaut ».",
       "default"
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Quelle instruction termine un `case` pour ne pas exécuter aussi le suivant ? (réponds par le mot-clé)",
@@ -2497,7 +2556,8 @@
       "Elle sort du `switch`.",
       "break"
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Lis un numéro et, avec un `switch`, affiche `lundi`, `mardi`, `mercredi` pour 1, 2, 3, et `invalide` sinon.",
@@ -2535,7 +2595,8 @@
       "`switch (j) { case 1: … break; … default: … }`",
       "`case 1: printf(\"lundi\\n\"); break;`"
      ],
-     "duree": 1.5
+     "duree": 1.5,
+     "guideSeul": true
     },
     {
      "consigne": "Complète avec les quatre autres jours (4 `jeudi`, 5 `vendredi`, 6 `samedi`, 7 `dimanche`).",
@@ -2604,7 +2665,8 @@
       "Une fois le bon `case` trouvé, tout ce qui suit s'exécute.",
       "3 (`deux`, `trois`, `autre`)"
      ],
-     "duree": 0.5
+     "duree": 0.5,
+     "guideSeul": true
     },
     {
      "consigne": "Quelle instruction faut-il ajouter à la fin de chaque `case` pour n'exécuter que lui ?",
@@ -2620,7 +2682,8 @@
       "Un mot-clé en cinq lettres.",
       "break"
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Corrige le programme pour qu'il affiche **un seul** mot (`un`, `deux`, `trois`, sinon `autre`).",
@@ -2680,7 +2743,8 @@
       "Un seul `=` n'est pas une comparaison.",
       "Il affecte 0 à `x`."
      ],
-     "duree": 0.5
+     "duree": 0.5,
+     "guideSeul": true
     },
     {
      "consigne": "Quel opérateur teste l'**égalité** de deux valeurs ?",
@@ -2696,7 +2760,8 @@
       "Deux signes égal.",
       "=="
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Corrige la condition du `if` pour que le programme affiche `nul` seulement quand `x` vaut 0.",
@@ -2751,7 +2816,8 @@
       "Table de 7.",
       "21"
      ],
-     "duree": 0.38
+     "duree": 0.38,
+     "guideSeul": true
     },
     {
      "consigne": "Écris l'en-tête du `for` (variable `i`) qui fait varier `i` de **1 à 10 inclus**.",
@@ -2766,7 +2832,8 @@
       "Départ à 1, condition `i <= 10`, pas de 1.",
       "`for (int i = 1; i <= 10; i++)`"
      ],
-     "duree": 0.67
+     "duree": 0.67,
+     "guideSeul": true
     },
     {
      "consigne": "Lis `n` et affiche, **sans boucle**, `n×1`, `n×2` et `n×3` : un résultat par ligne.",
@@ -2790,7 +2857,8 @@
       "Trois `printf` qui se ressemblent : seul le multiplicateur change.",
       "`printf(\"%d\\n\", n * 2);`"
      ],
-     "duree": 0.95
+     "duree": 0.95,
+     "guideSeul": true
     },
     {
      "consigne": "Remplace ces lignes répétitives par **une boucle `for`** qui affiche `n×1` jusqu'à `n×10`, un résultat par ligne.",
@@ -2842,7 +2910,8 @@
       "Liste-les.",
       "5"
      ],
-     "duree": 0.33
+     "duree": 0.33,
+     "guideSeul": true
     },
     {
      "consigne": "Écris la condition (sans `if`) qui est vraie quand `i` est pair.",
@@ -2857,7 +2926,8 @@
       "Reste nul dans la division par 2.",
       "`i % 2 == 0`"
      ],
-     "duree": 0.42
+     "duree": 0.42,
+     "guideSeul": true
     },
     {
      "consigne": "Lis `N` et affiche les entiers **pairs** de 1 à `N`, séparés par une espace.",
@@ -2885,7 +2955,8 @@
       "Une boucle de 1 à `n`, un `if` dedans.",
       "`if (i % 2 == 0) printf(\"%d \", i);`"
      ],
-     "duree": 1.25
+     "duree": 1.25,
+     "guideSeul": true
     },
     {
      "consigne": "Au lieu d'**afficher** chaque pair, **compte-les** dans `nb` et affiche seulement `nb` à la fin.",
@@ -2941,7 +3012,8 @@
       "Additionne les deux derniers termes.",
       "8"
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Écris l'instruction qui calcule le terme suivant dans une variable `suivant` (déclarée au même moment), à partir de `a` et `b`.",
@@ -2956,7 +3028,8 @@
       "La somme des deux derniers termes.",
       "`int suivant = a + b;`"
      ],
-     "duree": 0.6
+     "duree": 0.6,
+     "guideSeul": true
     },
     {
      "consigne": "Après avoir calculé `suivant`, écris les deux affectations (sur une ligne, dans le bon ordre) qui font avancer `a` et `b`.",
@@ -2971,7 +3044,8 @@
       "`a` doit récupérer `b` **avant** que `b` change.",
       "`a = b; b = suivant;`"
      ],
-     "duree": 0.8
+     "duree": 0.8,
+     "guideSeul": true
     },
     {
      "consigne": "Lis `n` et affiche les `n` premiers entiers naturels `0 1 2 …` en faisant **avancer la variable `a`** de 1 à chaque tour (une boucle de `n` tours).",
@@ -2995,7 +3069,8 @@
       "La boucle tourne `n` fois : `for (int i = 0; i < n; i++)`.",
       "Affiche `a`, puis avance-le : `a = a + 1;`."
      ],
-     "duree": 1.2
+     "duree": 1.2,
+     "guideSeul": true
     },
     {
      "consigne": "Remplace l'avancement de `a` par celui de la suite de Fibonacci : ajoute `b = 1`, calcule `suivant`, puis fais avancer `a` et `b`.",
@@ -3051,7 +3126,8 @@
       "Cherche un diviseur autre que 1 et 9.",
       "0"
      ],
-     "duree": 0.39
+     "duree": 0.39,
+     "guideSeul": true
     },
     {
      "consigne": "Écris la condition (sans `if`) qui est vraie quand `k` est divisible par `d`.",
@@ -3066,7 +3142,8 @@
       "Reste nul de la division de `k` par `d`.",
       "`k % d == 0`"
      ],
-     "duree": 0.49
+     "duree": 0.49,
+     "guideSeul": true
     },
     {
      "consigne": "Écris l'en-tête du `for` (variable `d`) qui teste les diviseurs de 2 jusqu'à ce que `d * d` dépasse `k`.",
@@ -3081,7 +3158,8 @@
       "Départ à 2, condition `d * d <= k`.",
       "`for (int d = 2; d * d <= k; d++)`"
      ],
-     "duree": 0.68
+     "duree": 0.68,
+     "guideSeul": true
     },
     {
      "consigne": "Lis `n` (au moins 2) et affiche `1` si `n` est premier, `0` sinon (indicateur `premier` et boucle sur les diviseurs `d`).",
@@ -3113,7 +3191,8 @@
       "`premier = 1` au départ ; `premier = 0` dès qu'un diviseur est trouvé.",
       "`for (int d = 2; d * d <= n; d++) { if (n % d == 0) premier = 0; }`"
      ],
-     "duree": 1.94
+     "duree": 1.94,
+     "guideSeul": true
     },
     {
      "consigne": "Généralise : teste **tous** les candidats `k` de 2 à `N` (boucle extérieure) et affiche ceux qui sont premiers, séparés par une espace.",
@@ -3169,7 +3248,8 @@
       "C'est le nombre par lequel on multiplie.",
       "3"
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Écris l'instruction qui ajoute `a` au total `res`.",
@@ -3184,7 +3264,8 @@
       "Le total grossit de `a`.",
       "`res += a;`"
      ],
-     "duree": 0.5
+     "duree": 0.5,
+     "guideSeul": true
     },
     {
      "consigne": "Lis `a` puis affiche `a + a + a` (la multiplication par 3, **sans** `*` ni boucle).",
@@ -3208,7 +3289,8 @@
       "Trois fois la même ligne `res += a;`.",
       "`res += a;` trois fois, puis affichage."
      ],
-     "duree": 0.8
+     "duree": 0.8,
+     "guideSeul": true
     },
     {
      "consigne": "Lis maintenant `a` **et** `b`, et répète l'addition `b` fois avec une boucle `for` (toujours sans `*`).",
@@ -3270,7 +3352,8 @@
       "0 ne compte pas.",
       "2"
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Écris la condition (sans `if`) vraie quand `x` est strictement positif.",
@@ -3285,7 +3368,8 @@
       "Strictement : sans le égal.",
       "`x > 0`"
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Lis `N`, puis `N` entiers, et affiche leur **somme**.",
@@ -3309,7 +3393,8 @@
       "Une boucle de `n` tours, un `scanf` à chaque tour.",
       "`s += x;` après chaque lecture."
      ],
-     "duree": 1.5
+     "duree": 1.5,
+     "guideSeul": true
     },
     {
      "consigne": "Au lieu de les additionner, **compte** les entiers strictement positifs.",
@@ -3365,7 +3450,8 @@
       "Reste de la division par 10.",
       "4"
      ],
-     "duree": 0.32
+     "duree": 0.32,
+     "guideSeul": true
     },
     {
      "consigne": "Que vaut `1234 / 10` (entiers) ?",
@@ -3379,7 +3465,8 @@
       "Division entière.",
       "123"
      ],
-     "duree": 0.32
+     "duree": 0.32,
+     "guideSeul": true
     },
     {
      "consigne": "Lis un entier positif et affiche ses chiffres **un par ligne**, en partant du dernier.",
@@ -3403,7 +3490,8 @@
       "`while (n > 0)` : tant qu'il reste des chiffres.",
       "`printf(\"%d\\n\", n % 10); n /= 10;`"
      ],
-     "duree": 1.21
+     "duree": 1.21,
+     "guideSeul": true
     },
     {
      "consigne": "Écris l'instruction qui ajoute le dernier chiffre de `n` à la **fin** de `miroir` (décaler d'un rang avec `* 10`).",
@@ -3418,7 +3506,8 @@
       "Multiplier par 10 décale tout d'un rang.",
       "`miroir = miroir * 10 + n % 10;`"
      ],
-     "duree": 0.65
+     "duree": 0.65,
+     "guideSeul": true
     },
     {
      "consigne": "Au lieu d'afficher chaque chiffre, construis le **nombre miroir** dans `miroir` (départ 0) et affiche-le à la fin.",
@@ -3474,7 +3563,8 @@
       "Fais les divisions jusqu'à passer sous 10.",
       "3"
      ],
-     "duree": 0.42
+     "duree": 0.42,
+     "guideSeul": true
     },
     {
      "consigne": "Un entier de 0 à 9 possède combien de chiffre(s) ? Quelle valeur de départ donne-t-on alors au compteur `nb` ?",
@@ -3488,7 +3578,8 @@
       "Pas de division nécessaire pour ces nombres.",
       "1"
      ],
-     "duree": 0.33
+     "duree": 0.33,
+     "guideSeul": true
     },
     {
      "consigne": "Lis un entier positif et affiche le **nombre de divisions par 10** nécessaires pour le ramener sous 10 (`while (n >= 10)`).",
@@ -3516,7 +3607,8 @@
       "Un compteur `nb` à 0, qui augmente à chaque division.",
       "`while (n >= 10) { nb++; n /= 10; }`"
      ],
-     "duree": 1.25
+     "duree": 1.25,
+     "guideSeul": true
     },
     {
      "consigne": "Le nombre de chiffres vaut une division de plus que ce compteur : corrige la valeur de départ de `nb` pour que `0` ait 1 chiffre et `1234` en ait 4.",
@@ -3578,7 +3670,8 @@
       "Regarde `while (…)`.",
       "i"
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Écris l'instruction qui fait avancer `i` de 1 à chaque tour.",
@@ -3593,7 +3686,8 @@
       "Elle augmente `i` de 1.",
       "`i++;`"
      ],
-     "duree": 0.5
+     "duree": 0.5,
+     "guideSeul": true
     },
     {
      "consigne": "Corrige le programme pour qu'il affiche les entiers de 1 à 5, un par ligne, puis s'arrête.",
@@ -3641,7 +3735,8 @@
       "Compte aussi la saisie acceptée.",
       "3"
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Écris la condition qui dit que `v` est **hors** de l'intervalle [1 ; 10] (celle qui fait recommencer).",
@@ -3656,7 +3751,8 @@
       "Deux conditions reliées par `||`.",
       "`v < 1 || v > 10`"
      ],
-     "duree": 0.6
+     "duree": 0.6,
+     "guideSeul": true
     },
     {
      "consigne": "Lis **une** valeur `v` et affiche `1` si elle est comprise entre 1 et 10 (inclus), `0` sinon.",
@@ -3688,7 +3784,8 @@
       "`if (v >= 1 && v <= 10)`",
       "`printf(\"1\\n\");` si oui, `printf(\"0\\n\");` sinon."
      ],
-     "duree": 1.0
+     "duree": 1.0,
+     "guideSeul": true
     },
     {
      "consigne": "Transforme en **`do-while`** : relis jusqu'à obtenir une valeur dans [1 ; 10], compte les essais, puis affiche `essais valeur`.",
@@ -3752,7 +3849,8 @@
       "Compare 50 à 42.",
       "moins"
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Écris la condition qui fait **recommencer** la boucle (proposition `p`, constante `SECRET`).",
@@ -3767,7 +3865,8 @@
       "On s'arrête quand la proposition est exacte.",
       "`p != SECRET`"
      ],
-     "duree": 0.5
+     "duree": 0.5,
+     "guideSeul": true
     },
     {
      "consigne": "Avec `#define SECRET 42`, lis **une** proposition et affiche `plus`, `moins` ou `trouve`.",
@@ -3795,7 +3894,8 @@
       "Trois cas : `p < SECRET`, `p > SECRET`, sinon.",
       "`if … else if … else …`"
      ],
-     "duree": 1.5
+     "duree": 1.5,
+     "guideSeul": true
     },
     {
      "consigne": "Mets le tout dans un `do-while` : redemande tant que `p != SECRET`, compte les `essais`, n'affiche `plus`/`moins` qu'en cas d'échec, et termine par `trouve <essais>`.",
@@ -3850,7 +3950,8 @@
       "Le négatif n'est pas compté, ni ce qui suit.",
       "7"
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Quelle instruction fait **sortir immédiatement** de la boucle ?",
@@ -3866,7 +3967,8 @@
       "Un mot-clé de cinq lettres.",
       "break"
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Lis **10** entiers et affiche leur somme (sans te préoccuper des négatifs pour l'instant).",
@@ -3890,7 +3992,8 @@
       "Une boucle de 10 tours avec un `scanf`.",
       "`somme += x;`"
      ],
-     "duree": 1.2
+     "duree": 1.2,
+     "guideSeul": true
     },
     {
      "consigne": "Arrête-toi **au premier négatif** : s'il y en a un, il n'est pas compté et on ne lit plus rien (utilise `break`).",
@@ -3954,7 +4057,8 @@
       "Différent de `break`, qui sort de la boucle.",
       "continue"
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Écris la condition vraie quand `i` est pair.",
@@ -3969,7 +4073,8 @@
       "Reste nul dans la division par 2.",
       "`i % 2 == 0`"
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Lis `N` et affiche la somme de **tous** les entiers de 1 à `N`.",
@@ -3997,7 +4102,8 @@
       "Une boucle de 1 à `n`, un cumul dans `somme`.",
       "`somme += i;`"
      ],
-     "duree": 1.0
+     "duree": 1.0,
+     "guideSeul": true
     },
     {
      "consigne": "Ne somme que les **impairs** : saute les pairs avec `continue`.",
@@ -4059,7 +4165,8 @@
       "Le numéro de la ligne donne le nombre d'étoiles.",
       "3"
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Écris l'en-tête du `for` (variable `c`) qui répète `l` fois, de `c = 0`.",
@@ -4074,7 +4181,8 @@
       "Départ à 0, condition `c < l`.",
       "`for (int c = 0; c < l; c++)`"
      ],
-     "duree": 0.6
+     "duree": 0.6,
+     "guideSeul": true
     },
     {
      "consigne": "Lis `n` et affiche **une seule ligne** de `n` étoiles.",
@@ -4102,7 +4210,8 @@
       "Une boucle de `n` tours qui fait `printf(\"*\");`.",
       "Termine par un `printf(\"\\n\");`."
      ],
-     "duree": 1.0
+     "duree": 1.0,
+     "guideSeul": true
     },
     {
      "consigne": "Répète cette ligne pour `l` de 1 à `n` : la ligne `l` contient `l` étoiles (boucle extérieure sur `l`).",

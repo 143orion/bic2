@@ -697,7 +697,8 @@
       "Variable, point, nom du champ.",
       "`p.x`"
      ],
-     "duree": 0.3
+     "duree": 0.3,
+     "guideSeul": true
     },
     {
      "consigne": "Écris l'argument de `scanf` qui donne l'**adresse du champ** `y` de `p`.",
@@ -712,7 +713,8 @@
       "Un `&` devant le champ.",
       "`&p.y`"
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Avec deux `double x, y` ordinaires (pas encore de struct) : lis deux réels et affiche `x * x + y * y` avec 2 décimales (le carré de la distance).",
@@ -736,7 +738,8 @@
       "`%lf` pour lire un `double`, `%.2f` pour l'afficher.",
       "`printf(\"%.2f\\n\", x * x + y * y);`"
      ],
-     "duree": 1.0
+     "duree": 1.0,
+     "guideSeul": true
     },
     {
      "consigne": "Regroupe `x` et `y` dans `typedef struct { double x; double y; } Point;`, lis dans `p.x` et `p.y`, et affiche la **distance** `sqrt(p.x * p.x + p.y * p.y)` avec 2 décimales (`<math.h>`).",
@@ -802,7 +805,8 @@
       "On compte à partir de 0.",
       "5"
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Écris les deux étiquettes (sur une même ligne) qui font partager le même bloc à `SAMEDI` et `DIMANCHE` dans le `switch`.",
@@ -817,7 +821,8 @@
       "Pas de `break` entre les deux.",
       "`case SAMEDI: case DIMANCHE:`"
      ],
-     "duree": 0.5
+     "duree": 0.5,
+     "guideSeul": true
     },
     {
      "consigne": "Sans `enum` : lis `n` (0 à 6) et affiche `week-end` si `n` vaut 5 ou 6, `semaine` sinon (un `if`).",
@@ -845,7 +850,8 @@
       "Un test sur 5 et 6.",
       "`if (n == 5 || n == 6)`"
      ],
-     "duree": 1.0
+     "duree": 1.0,
+     "guideSeul": true
     },
     {
      "consigne": "Remplace les nombres par l'énumération `Jour` et un `switch (j)` sur ses constantes (`case SAMEDI:` / `case DIMANCHE:` puis `default:`).",
@@ -916,7 +922,8 @@
       "Type puis nom, comme n'importe quel champ.",
       "`Date naissance;`"
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Écris l'expression qui désigne le **mois** de naissance de la `Personne p`.",
@@ -931,7 +938,8 @@
       "Deux points.",
       "`p.naissance.mois`"
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Avec seulement `Date` (sans `Personne`) : lis un nom, puis `jour mois annee` dans une `Date d` et affiche `nom j/m/a`.",
@@ -955,7 +963,8 @@
       "Les trois champs de `d` se lisent avec `&d.jour`, etc.",
       "`printf(\"%s %d/%d/%d\\n\", …);`"
      ],
-     "duree": 1.5
+     "duree": 1.5,
+     "guideSeul": true
     },
     {
      "consigne": "Ajoute `Personne` (nom + `Date naissance`), lis dans `p.nom` et `p.naissance.…`, et affiche en plus l'âge atteint en 2026 : `nom j/m/a age`.",
@@ -1013,7 +1022,8 @@
       "La flèche remplace le point pour un pointeur.",
       "`e->salaire`"
      ],
-     "duree": 0.3
+     "duree": 0.3,
+     "guideSeul": true
     },
     {
      "consigne": "Écris l'appel de `augmenter_salaire` pour l'employé `emp` avec le pourcentage `pct`.",
@@ -1028,7 +1038,8 @@
       "Un `&` devant `emp`.",
       "`augmenter_salaire(&emp, pct);`"
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Sans fonction : lis un nom, un âge, un salaire et un pourcentage dans un `Employe emp` et `double pct` ; augmente `emp.salaire` du pourcentage dans `main` et affiche-le (2 décimales).",
@@ -1052,7 +1063,8 @@
       "`emp.salaire` se modifie comme une variable ordinaire.",
       "`emp.salaire += emp.salaire * (pct / 100.0);`"
      ],
-     "duree": 2.0
+     "duree": 2.0,
+     "guideSeul": true
     },
     {
      "consigne": "Sors l'augmentation dans `void augmenter_salaire(Employe *e, double pourcentage)` (avec `e->salaire`) ; `main` l'appelle avec `&emp` puis affiche.",
@@ -1115,7 +1127,8 @@
       "Un seul des deux champs prend `&`.",
       "`scanf(\"%29s %d\", classe[i].nom, &classe[i].note);`"
      ],
-     "duree": 0.7
+     "duree": 0.7,
+     "guideSeul": true
     },
     {
      "consigne": "Écris la condition (sans `if`) qui détecte que l'étudiant `i` a une **meilleure** note que le meilleur actuel `best` (strictement).",
@@ -1130,7 +1143,8 @@
       "Compare deux champs `note`.",
       "`classe[i].note > classe[best].note`"
      ],
-     "duree": 0.5
+     "duree": 0.5,
+     "guideSeul": true
     },
     {
      "consigne": "Sans struct : lis `n` (≤ 50) puis `n` notes (entiers seuls), et affiche leur moyenne (2 décimales) et l'**indice** de la meilleure note (la première en cas d'égalité).",
@@ -1154,7 +1168,8 @@
       "`best` est un indice : il part de 0.",
       "`if (notes[i] > notes[best]) best = i;`"
      ],
-     "duree": 2.0
+     "duree": 2.0,
+     "guideSeul": true
     },
     {
      "consigne": "Range maintenant nom **et** note dans un tableau `Etudiant classe[50]` ; affiche la moyenne puis le **nom** du meilleur (`classe[best].nom`).",
@@ -1212,7 +1227,8 @@
       "`sizeof` fonctionne aussi sur un type struct.",
       "`Contact *annuaire = calloc(n, sizeof(Contact));`"
      ],
-     "duree": 0.53
+     "duree": 0.53,
+     "guideSeul": true
     },
     {
      "consigne": "Écris la condition (sans `if`) vraie quand le nom du contact `i` est **égal** à `cherche`.",
@@ -1227,7 +1243,8 @@
       "`strcmp` renvoie 0 si égales.",
       "`strcmp(annuaire[i].nom, cherche) == 0`"
      ],
-     "duree": 0.45
+     "duree": 0.45,
+     "guideSeul": true
     },
     {
      "consigne": "Avec un tableau **statique** `Contact annuaire[50]` : lis `n`, les `n` contacts (`nom tel`), le nom cherché, et affiche le téléphone du premier contact trouvé ou `inconnu`.",
@@ -1251,7 +1268,8 @@
       "Un drapeau `trouve` et un `break` à la première correspondance.",
       "`if (!trouve) printf(\"inconnu\\n\");`"
      ],
-     "duree": 3.02
+     "duree": 3.02,
+     "guideSeul": true
     },
     {
      "consigne": "Alloue l'annuaire **dynamiquement** avec `calloc` (test `NULL`) au lieu du tableau statique, et libère-le (`free`) à la fin.",
@@ -1317,7 +1335,8 @@
       "Pas de `*` dans le paramètre.",
       "Une copie."
      ],
-     "duree": 0.3
+     "duree": 0.3,
+     "guideSeul": true
     },
     {
      "consigne": "Écris l'accès au champ `age` à l'intérieur de `vieillir` une fois le paramètre devenu `Personne *p`, pour lui ajouter un an.",
@@ -1332,7 +1351,8 @@
       "Flèche, car `p` est un pointeur.",
       "`p->age++;`"
      ],
-     "duree": 0.5
+     "duree": 0.5,
+     "guideSeul": true
     },
     {
      "consigne": "Corrige `vieillir` pour qu'elle modifie la personne de `main` : paramètre par adresse, accès par `->`, appel avec `&`.",
@@ -1390,7 +1410,8 @@
       "Modifie le champ pointé.",
       "`p->stock -= quantite;`"
      ],
-     "duree": 0.43
+     "duree": 0.43,
+     "guideSeul": true
     },
     {
      "consigne": "Écris l'en-tête de `afficher` : elle ne fait que lire le produit, donc le pointeur est `const`.",
@@ -1405,7 +1426,8 @@
       "`const` avant le type pointé.",
       "`void afficher(const Produit *p)`"
      ],
-     "duree": 0.51
+     "duree": 0.51,
+     "guideSeul": true
     },
     {
      "consigne": "Sans fonction : lis un nom, un prix, un stock et une quantité dans un `Produit prod` ; si `prod.stock >= q`, diminue le stock et affiche `vendu`, sinon `stock insuffisant` ; puis affiche `nom stock`.",
@@ -1429,7 +1451,8 @@
       "Un `if` / `else` sur `prod.stock >= q`.",
       "L'affichage final est commun aux deux cas."
      ],
-     "duree": 2.56
+     "duree": 2.56,
+     "guideSeul": true
     },
     {
      "consigne": "Sors la vente dans `int vendre(Produit *p, int quantite)` (renvoie 1 ou 0) et l'affichage dans `void afficher(const Produit *p)` ; `main` appelle les deux avec `&prod`.",
@@ -1492,7 +1515,8 @@
       "Trois valeurs : `i + 1`, `.nom`, `.note`.",
       "`printf(\"%d. %s - Note : %d/20\\n\", i + 1, etudiants[i].nom, etudiants[i].note);`"
      ],
-     "duree": 0.77
+     "duree": 0.77,
+     "guideSeul": true
     },
     {
      "consigne": "Quelle est la moyenne de `18`, `15` et `17` arrondie à 2 décimales ? (un nombre)",
@@ -1506,7 +1530,8 @@
       "Somme 50 divisée par 3.",
       "16.67"
      ],
-     "duree": 0.29
+     "duree": 0.29,
+     "guideSeul": true
     },
     {
      "consigne": "Sans fonction : déclare `Etudiant classe[3]` initialisé comme dans l'énoncé et affiche la ligne de chaque étudiant (`i. nom - Note : note/20`) dans `main`.",
@@ -1526,7 +1551,8 @@
       "Les accolades internes initialisent chaque struct.",
       "`i + 1` pour la numérotation."
      ],
-     "duree": 1.94
+     "duree": 1.94,
+     "guideSeul": true
     },
     {
      "consigne": "Sors l'affichage dans `void afficher_classe(Etudiant etudiants[], int taille)` ; `main` l'appelle puis affiche la moyenne avec 2 décimales sur une dernière ligne.",

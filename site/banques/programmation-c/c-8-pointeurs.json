@@ -660,7 +660,8 @@
       "`&x` est l'adresse de `x` ; le type de `p` est `int *`.",
       "`int *p = &x;`"
      ],
-     "duree": 0.43
+     "duree": 0.43,
+     "guideSeul": true
     },
     {
      "consigne": "Écris l'instruction qui double `x` **en passant par `p`**.",
@@ -675,7 +676,8 @@
       "Le `*` devant `p` désigne la variable pointée.",
       "`*p = *p * 2;` (ou `*p *= 2;`)"
      ],
-     "duree": 0.5
+     "duree": 0.5,
+     "guideSeul": true
     },
     {
      "consigne": "Lis `x`, déclare `p` qui pointe sur `x`, et affiche `x` **en lisant à travers `p`** (`*p`), sans le modifier.",
@@ -698,7 +700,8 @@
      "indices": [
       "`int *p = &x;` puis `printf(\"%d\\n\", *p);`"
      ],
-     "duree": 0.57
+     "duree": 0.57,
+     "guideSeul": true
     },
     {
      "consigne": "Au lieu de lire `*p`, **double** `x` en écrivant à travers `p`, puis affiche `x`.",
@@ -767,7 +770,8 @@
       "Pas un entier ordinaire.",
       "Une adresse."
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Quel opérateur donne l'adresse de la variable `x` ?",
@@ -783,7 +787,8 @@
       "Un symbole qu'on met aussi dans `scanf`.",
       "&"
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Corrige l'initialisation de `p` pour que le programme compile et affiche `7`.",
@@ -839,7 +844,8 @@
       "C'est la valeur « pas d'adresse ».",
       "NULL"
      ],
-     "duree": 0.32
+     "duree": 0.32,
+     "guideSeul": true
     },
     {
      "consigne": "Écris l'instruction (dans le `if`) qui renvoie l'**adresse** de la case `t[i]`.",
@@ -854,7 +860,8 @@
       "Pas la valeur `t[i]`, son adresse.",
       "`return &t[i];`"
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Dans `main`, `r` reçoit le résultat. Écris la condition (sans `if`) qui vérifie que la valeur a été trouvée.",
@@ -869,7 +876,8 @@
       "Compare `r` à `NULL`.",
       "`r != NULL`"
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Sans fonction : lis `N`, `N` entiers puis `v`. Dans `main`, cherche `v` avec un pointeur `r` (`NULL` au départ, `&t[i]` à la première occurrence) ; si `r` n'est pas `NULL`, mets la case à 0 par `*r = 0` et affiche le tableau, sinon affiche `absent`.",
@@ -893,7 +901,8 @@
       "`int *r = NULL;` puis `r = &t[i]; break;` à la première occurrence.",
       "`if (r != NULL) { *r = 0; … } else { … }`"
      ],
-     "duree": 2.39
+     "duree": 2.39,
+     "guideSeul": true
     },
     {
      "consigne": "Sors la recherche dans `int *chercher(int t[], int n, int v)` : elle renvoie `&t[i]` ou `NULL`. `main` appelle `int *r = chercher(t, n, v);` puis teste `r != NULL`.",
@@ -955,7 +964,8 @@
       "Pas besoin de `&` devant `t`.",
       "`int *p = t;`"
      ],
-     "duree": 0.55
+     "duree": 0.55,
+     "guideSeul": true
     },
     {
      "consigne": "Si `p` pointe sur `t[0]`, vers quelle case (indice) pointe-t-il après un `p++` ?",
@@ -969,7 +979,8 @@
       "Il avance d'un élément, pas d'un octet.",
       "1"
      ],
-     "duree": 0.36
+     "duree": 0.36,
+     "guideSeul": true
     },
     {
      "consigne": "Lis `N` puis `N` entiers dans un tableau, et affiche-les (séparés par une espace) avec une boucle à indice `i` et `t[i]`.",
@@ -993,7 +1004,8 @@
       "Une boucle de saisie, une boucle d'affichage.",
       "`printf(\"%d \", t[i]);`"
      ],
-     "duree": 1.09
+     "duree": 1.09,
+     "guideSeul": true
     },
     {
      "consigne": "Réécris l'affichage avec un pointeur : `int *p = t;`, puis `n` fois affiche `*p` et fais avancer `p` avec `p++` (garde un compteur pour t'arrêter).",
@@ -1056,7 +1068,8 @@
       "Avance de `i` éléments, puis déréférence.",
       "`*(t + i)`"
      ],
-     "duree": 0.5
+     "duree": 0.5,
+     "guideSeul": true
     },
     {
      "consigne": "Si `t` pointe sur `{1, 2, 3, 4}`, que vaut `*(t + 2)` ?",
@@ -1070,7 +1083,8 @@
       "`*(t + 2)` est la même chose que `t[2]`.",
       "3"
      ],
-     "duree": 0.33
+     "duree": 0.33,
+     "guideSeul": true
     },
     {
      "consigne": "Écris `int somme(int t[], int n)` (notation à crochets) qui renvoie la somme ; `main` lit `N` puis `N` entiers et affiche `somme(t, n)`.",
@@ -1094,7 +1108,8 @@
       "Une boucle qui cumule `t[i]` dans `s`.",
       "`return s;` à la fin de la fonction."
      ],
-     "duree": 1.67
+     "duree": 1.67,
+     "guideSeul": true
     },
     {
      "consigne": "Réécris `somme` avec un paramètre `int *t` et la **notation pointeur** : remplace `t[i]` par `*(t + i)`.",
@@ -1153,7 +1168,8 @@
       "Un pointeur sur entier et une taille.",
       "`void modifier(int *tab, int taille)`"
      ],
-     "duree": 0.37
+     "duree": 0.37,
+     "guideSeul": true
     },
     {
      "consigne": "Écris l'instruction (dans la boucle d'indice `i`) qui double la case `i` de `tab`.",
@@ -1168,7 +1184,8 @@
       "Une affectation sur `tab[i]`.",
       "`tab[i] *= 2;`"
      ],
-     "duree": 0.37
+     "duree": 0.37,
+     "guideSeul": true
     },
     {
      "consigne": "Écris `void modifier(int tab[], int taille)` (crochets) qui double chaque case ; `main` lit `N` entiers, appelle `modifier` et affiche le tableau.",
@@ -1192,7 +1209,8 @@
       "La fonction modifie directement le tableau reçu.",
       "`tab[i] *= 2;` dans une boucle."
      ],
-     "duree": 1.25
+     "duree": 1.25,
+     "guideSeul": true
     },
     {
      "consigne": "Remplace le paramètre `int tab[]` par un **pointeur** `int *tab` (le reste du corps ne change pas : `tab[i]` fonctionne aussi avec un pointeur).",
@@ -1251,7 +1269,8 @@
       "Le `*` désigne la variable pointée.",
       "`*min = t[0];`"
      ],
-     "duree": 0.38
+     "duree": 0.38,
+     "guideSeul": true
     },
     {
      "consigne": "Écris la ligne (dans la boucle d'indice `i`) qui met à jour le minimum quand `t[i]` est plus petit.",
@@ -1266,7 +1285,8 @@
       "Compare avec la valeur pointée, `*min`.",
       "`if (t[i] < *min) *min = t[i];`"
      ],
-     "duree": 0.62
+     "duree": 0.62,
+     "guideSeul": true
     },
     {
      "consigne": "Dans `main`, les résultats iront dans `mi` et `ma`. Écris l'appel de `min_max` (tableau `t`, taille `n`).",
@@ -1281,7 +1301,8 @@
       "Tableau et taille par valeur, résultats par adresse.",
       "`min_max(t, n, &mi, &ma);`"
      ],
-     "duree": 0.46
+     "duree": 0.46,
+     "guideSeul": true
     },
     {
      "consigne": "Sans fonction : lis `N` puis `N` entiers et affiche le minimum puis le maximum (variables `mi` et `ma`).",
@@ -1305,7 +1326,8 @@
       "`mi` et `ma` partent de `t[0]`.",
       "Deux `if` dans la boucle qui démarre à `i = 1`."
      ],
-     "duree": 1.54
+     "duree": 1.54,
+     "guideSeul": true
     },
     {
      "consigne": "Sors le calcul dans `void min_max(int *t, int n, int *min, int *max)` : les résultats sortent par les pointeurs `min` et `max` ; `main` affiche `mi` puis `ma`.",
@@ -1368,7 +1390,8 @@
       "Le `*` lit le caractère pointé.",
       "`*s != '\\0'`"
      ],
-     "duree": 0.48
+     "duree": 0.48,
+     "guideSeul": true
     },
     {
      "consigne": "Écris l'instruction qui fait avancer le pointeur `s` d'un caractère.",
@@ -1383,7 +1406,8 @@
       "Une incrémentation du pointeur lui-même.",
       "`s++;`"
      ],
-     "duree": 0.32
+     "duree": 0.32,
+     "guideSeul": true
     },
     {
      "consigne": "Écris `int longueur(char s[])` avec un indice `n` : `while (s[n] != '\\0') n++;`. `main` lit un mot (`%99s`) et affiche `longueur(mot)`.",
@@ -1413,7 +1437,8 @@
       "Un indice `n` qui part de 0 et avance tant que `s[n] != '\\0'`.",
       "`return n;` à la fin."
      ],
-     "duree": 1.2
+     "duree": 1.2,
+     "guideSeul": true
     },
     {
      "consigne": "Réécris `longueur(char *s)` en faisant **avancer le pointeur** `s` lui-même (`s++`) au lieu d'utiliser un indice ; garde un compteur `n`.",
@@ -1478,7 +1503,8 @@
       "`const` se place avant le type pointé.",
       "`double moyenne(const int *t, int n)`"
      ],
-     "duree": 0.45
+     "duree": 0.45,
+     "guideSeul": true
     },
     {
      "consigne": "Si la fonction essaie d'écrire `t[0] = 0;` alors que `t` est `const int *`, que se passe-t-il ? (un mot)",
@@ -1493,7 +1519,8 @@
       "Le compilateur veille sur la promesse.",
       "Une erreur de compilation."
      ],
-     "duree": 0.26
+     "duree": 0.26,
+     "guideSeul": true
     },
     {
      "consigne": "Écris `double moyenne(int *t, int n)` (sans `const` pour l'instant) qui renvoie la moyenne réelle ; `main` lit `N` entiers et affiche la moyenne avec 2 décimales.",
@@ -1517,7 +1544,8 @@
       "Une somme entière, puis `(double)s / n`.",
       "`printf(\"%.2f\\n\", moyenne(t, n));`"
      ],
-     "duree": 1.29
+     "duree": 1.29,
+     "guideSeul": true
     },
     {
      "consigne": "Ajoute la promesse de lecture seule : déclare le paramètre `const int *t`.",
@@ -1576,7 +1604,8 @@
       "`*p` et `x` désignent la même case.",
       "5"
      ],
-     "duree": 0.35
+     "duree": 0.35,
+     "guideSeul": true
     },
     {
      "consigne": "Puis, avec `x = 5`, on exécute `*q = *q * 3;` (`q` pointe aussi sur `x`). Que vaut `x` ?",
@@ -1590,7 +1619,8 @@
       "Même case, autre pointeur.",
       "15"
      ],
-     "duree": 0.35
+     "duree": 0.35,
+     "guideSeul": true
     },
     {
      "consigne": "Écris la déclaration du second pointeur `q`, qui pointe aussi sur `x`.",
@@ -1605,7 +1635,8 @@
       "Même forme que `p`.",
       "`int *q = &x;`"
      ],
-     "duree": 0.43
+     "duree": 0.43,
+     "guideSeul": true
     },
     {
      "consigne": "Lis `x`, déclare `p` sur `x`, ajoute 1 à `x` à travers `p`, puis affiche `x`.",
@@ -1629,7 +1660,8 @@
       "`int *p = &x;` puis `*p = *p + 1;`",
       "`printf(\"%d\\n\", x);`"
      ],
-     "duree": 0.87
+     "duree": 0.87,
+     "guideSeul": true
     },
     {
      "consigne": "Ajoute le second pointeur `q` (aussi sur `x`) : multiplie `x` par 3 **à travers `q`**, puis affiche `x`, une espace, et `1` si `p == q` (`0` sinon).",
@@ -1688,7 +1720,8 @@
       "Départ `t`, test `p < t + n`, pas `p++`.",
       "`for (int *p = t; p < t + n; p++)`"
      ],
-     "duree": 0.69
+     "duree": 0.69,
+     "guideSeul": true
     },
     {
      "consigne": "Écris l'instruction qui lit un entier directement dans la case pointée par `p` (`p` est déjà une adresse).",
@@ -1703,7 +1736,8 @@
       "Pas de `&` devant `p`.",
       "`scanf(\"%d\", p);`"
      ],
-     "duree": 0.52
+     "duree": 0.52,
+     "guideSeul": true
     },
     {
      "consigne": "Même programme avec un **indice** : lis `n` (≤ 10) puis `n` entiers, et affiche leur somme (boucles `for (int i = 0; …)`).",
@@ -1731,7 +1765,8 @@
       "Une boucle de saisie, une boucle de cumul.",
       "`somme += t[i];`"
      ],
-     "duree": 1.29
+     "duree": 1.29,
+     "guideSeul": true
     },
     {
      "consigne": "Supprime l'indice `i` : parcours le tableau avec un pointeur `p` (de `t` à `t + n` exclu) pour la saisie **et** pour la somme.",
@@ -1797,7 +1832,8 @@
       "Combien de lettres avant le `'\\0'` ?",
       "8"
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Écris l'instruction de retour qui renvoie la longueur grâce à la différence des deux pointeurs.",
@@ -1812,7 +1848,8 @@
       "Pointeur d'arrivée moins pointeur de départ.",
       "`return q - s;`"
      ],
-     "duree": 0.5
+     "duree": 0.5,
+     "guideSeul": true
     },
     {
      "consigne": "Écris `int longueur(char *s)` : un pointeur `q` part de `s`, avance jusqu'au `'\\0'`, et un **compteur** `n` compte les pas ; la fonction renvoie `n`. `main` lit un mot et affiche sa longueur.",
@@ -1840,7 +1877,8 @@
       "`char *q = s;` puis `while (*q != '\\0') { q++; n++; }`",
       "`return n;`"
      ],
-     "duree": 1.5
+     "duree": 1.5,
+     "guideSeul": true
     },
     {
      "consigne": "Supprime le compteur `n` : renvoie directement **la différence des deux pointeurs** `q - s`.",

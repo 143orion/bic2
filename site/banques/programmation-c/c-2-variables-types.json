@@ -789,7 +789,8 @@
      "indices": [
       "Une simple addition."
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Soustrais b de a.",
@@ -802,7 +803,8 @@
      "indices": [
       "a moins b."
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Multiplie a par b.",
@@ -815,7 +817,8 @@
      "indices": [
       "17 fois 5."
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Divise a par b avec des entiers : le quotient est entier.",
@@ -829,7 +832,8 @@
       "Deux `int` donnent une division entière.",
       "5 × 3 = 15, il reste 2."
      ],
-     "duree": 0.6
+     "duree": 0.6,
+     "guideSeul": true
     },
     {
      "consigne": "Quel opérateur donne le reste de cette division ?",
@@ -843,7 +847,8 @@
       "Le modulo donne le reste.",
       "17 - 15 = 2."
      ],
-     "duree": 0.5
+     "duree": 0.5,
+     "guideSeul": true
     },
     {
      "consigne": "Écris le programme qui lit a et b puis affiche sur une seule ligne, séparés par des espaces : somme, différence, produit, quotient entier et reste.",
@@ -898,7 +903,8 @@
       "Calcule d'abord la parenthèse : `9 / 5`.",
       "Avec des entiers, 9 / 5 = 1."
      ],
-     "duree": 0.8
+     "duree": 0.8,
+     "guideSeul": true
     },
     {
      "consigne": "Corrige avec des réels : `c * 9.0 / 5 + 32`.",
@@ -912,7 +918,8 @@
       "Un opérande réel (9.0) rend le calcul réel.",
       "100 × 9 / 5 = 180."
      ],
-     "duree": 0.8
+     "duree": 0.8,
+     "guideSeul": true
     },
     {
      "consigne": "Le résultat doit être rangé dans une variable réelle.",
@@ -928,7 +935,8 @@
      "indices": [
       "Un réel : `float` ou `double`."
      ],
-     "duree": 0.5
+     "duree": 0.5,
+     "guideSeul": true
     },
     {
      "consigne": "Écris le programme qui lit une température entière en °C et affiche la valeur en °F avec 2 décimales.",
@@ -984,7 +992,8 @@
       "Une division réelle.",
       "10 / 1,6 ≈ 6,2."
      ],
-     "duree": 0.7
+     "duree": 0.7,
+     "guideSeul": true
     },
     {
      "consigne": "Pour afficher le résultat avec deux décimales, quelle partie du format écris-tu après `%` ?",
@@ -999,7 +1008,8 @@
       "`.N` fixe le nombre de décimales.",
       "Format d'un réel : `f`."
      ],
-     "duree": 0.6
+     "duree": 0.6,
+     "guideSeul": true
     },
     {
      "consigne": "Écris le programme qui lit une distance en km (réel) et affiche la distance en miles avec 2 décimales (1 mile = 1,609344 km).",
@@ -1152,7 +1162,8 @@
       "Suis les deux lignes l'une après l'autre.",
       "8 : le 3 a disparu."
      ],
-     "duree": 0.48
+     "duree": 0.48,
+     "guideSeul": true
     },
     {
      "consigne": "Écris l'instruction qui sauvegarde `a` dans une variable temporaire `tmp` (déclarée au même moment).",
@@ -1167,7 +1178,8 @@
       "Déclare `tmp` de type `int` et initialise-la.",
       "`int tmp = a;`"
      ],
-     "duree": 0.57
+     "duree": 0.57,
+     "guideSeul": true
     },
     {
      "consigne": "Lis deux entiers `a` et `b` et affiche-les **tels quels**, séparés par une espace.",
@@ -1191,7 +1203,8 @@
       "`int a, b;` puis `scanf(\"%d %d\", &a, &b);`",
       "Un seul `printf(\"%d %d\\n\", a, b);`"
      ],
-     "duree": 0.95
+     "duree": 0.95,
+     "guideSeul": true
     },
     {
      "consigne": "Insère l'échange entre la lecture et l'affichage, avec `tmp` : sauvegarde `a`, copie `b` dans `a`, puis remets `tmp` dans `b`.",
@@ -1254,7 +1267,8 @@
       "`#define`, le nom, la valeur.",
       "`#define PI 3.14159`"
      ],
-     "duree": 0.48
+     "duree": 0.48,
+     "guideSeul": true
     },
     {
      "consigne": "Quel format `scanf` lit un nombre réel dans une variable `double` ?",
@@ -1270,7 +1284,8 @@
       "Un `l` s'ajoute à `%f` pour `double`.",
       "%lf"
      ],
-     "duree": 0.32
+     "duree": 0.32,
+     "guideSeul": true
     },
     {
      "consigne": "Écris l'expression de l'aire d'un disque de rayon `r` avec la constante `PI` (sans fonction de puissance).",
@@ -1285,7 +1300,8 @@
       "Le rayon est multiplié deux fois.",
       "`PI * r * r`"
      ],
-     "duree": 0.48
+     "duree": 0.48,
+     "guideSeul": true
     },
     {
      "consigne": "Avec `#define PI 3.14159`, lis un rayon réel et affiche **seulement l'aire** avec 2 décimales.",
@@ -1320,7 +1336,8 @@
       "`double r;` puis `scanf(\"%lf\", &r);`",
       "`printf(\"%.2f\\n\", PI * r * r);`"
      ],
-     "duree": 1.21
+     "duree": 1.21,
+     "guideSeul": true
     },
     {
      "consigne": "Ajoute le **périmètre** (`2 * PI * r`) : il s'affiche sur la même ligne, après l'aire, avec 2 décimales.",
@@ -1383,7 +1400,8 @@
       "Rappelle-toi le tableau des types de base.",
       "4"
      ],
-     "duree": 0.32
+     "duree": 0.32,
+     "guideSeul": true
     },
     {
      "consigne": "Écris l'expression C qui donne la taille en octets du type `double`.",
@@ -1398,7 +1416,8 @@
       "`sizeof` suivi du type entre parenthèses.",
       "`sizeof(double)`"
      ],
-     "duree": 0.39
+     "duree": 0.39,
+     "guideSeul": true
     },
     {
      "consigne": "Affiche **seulement** la taille d'un `int`, obtenue avec `sizeof` (convertie en `int` pour le `%d`).",
@@ -1424,7 +1443,8 @@
       "Format `%d`, valeur `(int)sizeof(int)`.",
       "`printf(\"%d\\n\", (int)sizeof(int));`"
      ],
-     "duree": 0.79
+     "duree": 0.79,
+     "guideSeul": true
     },
     {
      "consigne": "Affiche maintenant les tailles de `char`, `int` et `double`, **sur une ligne**, séparées par une espace.",
@@ -1478,7 +1498,8 @@
       "Division entière : on jette la partie décimale.",
       "1"
      ],
-     "duree": 0.38
+     "duree": 0.38,
+     "guideSeul": true
     },
     {
      "consigne": "Quelle est la valeur de `3725 % 3600`, c'est-à-dire le nombre de secondes restantes après les heures ?",
@@ -1492,7 +1513,8 @@
       "Le modulo donne le reste de la division.",
       "125"
      ],
-     "duree": 0.38
+     "duree": 0.38,
+     "guideSeul": true
     },
     {
      "consigne": "Lis un nombre de secondes `s` et affiche le nombre d'**heures** puis de **minutes** (séparés par une espace).",
@@ -1520,7 +1542,8 @@
       "Les minutes se calculent sur le reste après les heures : `(s % 3600) / 60`.",
       "`int h = s / 3600; int m = (s % 3600) / 60;`"
      ],
-     "duree": 1.73
+     "duree": 1.73,
+     "guideSeul": true
     },
     {
      "consigne": "Ajoute les **secondes restantes** (`s % 60`) en troisième valeur : `heures minutes secondes`.",
@@ -1580,7 +1603,8 @@
       "5 divisé par 3, sans décimales.",
       "1"
      ],
-     "duree": 0.35
+     "duree": 0.35,
+     "guideSeul": true
     },
     {
      "consigne": "Écris l'expression de la moyenne **réelle** de `a`, `b`, `c` : au moins un opérande de la division doit être un réel.",
@@ -1595,7 +1619,8 @@
       "Si les deux opérandes sont des entiers, le résultat est entier.",
       "`(a + b + c) / 3.0`"
      ],
-     "duree": 0.61
+     "duree": 0.61,
+     "guideSeul": true
     },
     {
      "consigne": "Lis trois entiers et affiche leur **somme**.",
@@ -1619,7 +1644,8 @@
       "Trois variables, un seul `scanf` avec trois `%d`.",
       "`printf(\"%d\\n\", a + b + c);`"
      ],
-     "duree": 1.04
+     "duree": 1.04,
+     "guideSeul": true
     },
     {
      "consigne": "Affiche maintenant la **moyenne réelle** avec 2 décimales (au lieu de la somme).",
@@ -1675,7 +1701,8 @@
       "7 = 2 × 3 + 1.",
       "3"
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Quel opérateur de conversion, placé devant `a`, rend la division réelle ? (écris-le avec les parenthèses)",
@@ -1690,7 +1717,8 @@
       "Le type cible entre parenthèses.",
       "`(double)`"
      ],
-     "duree": 0.5
+     "duree": 0.5,
+     "guideSeul": true
     },
     {
      "consigne": "Corrige la ligne du calcul pour afficher `3.50`, **sans changer** les types de `a` et `b`.",
@@ -1745,7 +1773,8 @@
       "Utilise le modulo `%`.",
       "`n % 2 == 0`"
      ],
-     "duree": 0.44
+     "duree": 0.44,
+     "guideSeul": true
     },
     {
      "consigne": "Que vaut l'expression `(7 % 2 == 0)` ?",
@@ -1759,7 +1788,8 @@
       "7 % 2 vaut 1.",
       "0"
      ],
-     "duree": 0.35
+     "duree": 0.35,
+     "guideSeul": true
     },
     {
      "consigne": "Lis un entier `n` et affiche son reste dans la division par 2 (`0` ou `1`).",
@@ -1786,7 +1816,8 @@
      "indices": [
       "`scanf(\"%d\", &n);` puis `printf(\"%d\\n\", n % 2);`"
      ],
-     "duree": 0.71
+     "duree": 0.71,
+     "guideSeul": true
     },
     {
      "consigne": "Range dans une variable `est_pair` le résultat de la condition « `n` est pair », puis affiche `est_pair` (`1` si pair, `0` sinon).",

@@ -519,7 +519,8 @@
       "Écris les indices de 0 à 13 et barre les impairs.",
       "0, 2, 4, 6, 8, 10, 12 : compte-les."
      ],
-     "duree": 0.5
+     "duree": 0.5,
+     "guideSeul": true
     },
     {
      "consigne": "Écris un programme qui affiche les valeurs d'**indice pair** du tableau, séparées par un espace, sans accolades pour l'instant. Pour sauter une case sur deux, change le **pas** de la boucle.",
@@ -539,7 +540,8 @@
       "Une boucle `for` classique avance de 1 : `i++`. Ici, `i` doit avancer de 2.",
       "`for (int i = 0; i < 14; i += 2)` puis `printf(\"%d \", t[i]);`."
      ],
-     "duree": 1.2
+     "duree": 1.2,
+     "guideSeul": true
     },
     {
      "consigne": "Il ne reste qu'à entourer l'affichage : écris `{ ` avant la boucle et `}` après, le tout sur **une seule ligne** (`{ 12 34 23 -13 67 -32 29 }`).",
@@ -586,7 +588,8 @@
       "-3 = 2 × (-1) + (-1) : le reste est négatif.",
       "Le reste vaut -1."
      ],
-     "duree": 0.5
+     "duree": 0.5,
+     "guideSeul": true
     },
     {
      "consigne": "Écris la condition (sans `if`) qui est vraie pour **toutes** les valeurs impaires de `t[i]`, négatives comprises.",
@@ -601,7 +604,8 @@
       "Un nombre pair a un reste nul.",
       "Impair = reste **différent de 0**."
      ],
-     "duree": 0.6
+     "duree": 0.6,
+     "guideSeul": true
     },
     {
      "consigne": "Écris un programme qui affiche, séparées par un espace, les valeurs **impaires** de `{12, -1, 3, 9, 2, 15, -3, 11, 10, 7, -32, 17, 19, 20}`.",
@@ -621,7 +625,8 @@
       "Une boucle sur tout le tableau, avec un `if` dedans.",
       "`for (int i = 0; i < 14; i++) { if (t[i] % 2 != 0) { printf(\"%d \", t[i]); } }`"
      ],
-     "duree": 1.2
+     "duree": 1.2,
+     "guideSeul": true
     },
     {
      "consigne": "Au lieu d'afficher chaque valeur impaire, **multiplie-les** dans une variable `p` et affiche seulement `p` à la fin. Attention à sa valeur de départ : un produit qui démarre à 0 reste 0.",
@@ -668,7 +673,8 @@
      "indices": [
       "Remplace `i` par 7 dans `2 * i`."
      ],
-     "duree": 0.38
+     "duree": 0.38,
+     "guideSeul": true
     },
     {
      "consigne": "Le tableau a 25 cases. Écris la condition d'arrêt de la boucle (sans `for`) qui parcourt **toutes** les cases avec `i`, sans en sortir.",
@@ -683,7 +689,8 @@
       "Le dernier indice est 24, pas 25.",
       "`i < 25`."
      ],
-     "duree": 0.48
+     "duree": 0.48,
+     "guideSeul": true
     },
     {
      "consigne": "Déclare un tableau `t` de 25 entiers, mets **toutes les cases à 1** avec une boucle, puis affiche le tableau sur une ligne, valeurs séparées par un espace.",
@@ -703,7 +710,8 @@
       "Une boucle pour remplir (`t[i] = 1;`), une boucle pour afficher.",
       "Deux `for (int i = 0; i < 25; i++)` à la suite."
      ],
-     "duree": 1.14
+     "duree": 1.14,
+     "guideSeul": true
     },
     {
      "consigne": "Ajoute l'étape qui **multiplie** chaque case par le double de son indice : `t[i] = t[i] * (2 * i);`. Tu peux le faire dans la boucle de remplissage ou dans celle d'affichage.",
@@ -751,7 +759,8 @@
       "Compte à partir de 0 : janvier, février, mars.",
       "2"
      ],
-     "duree": 0.38
+     "duree": 0.38,
+     "guideSeul": true
     },
     {
      "consigne": "Dans « Mois 3 : 31 jours », quelle expression (avec `i`) donne le numéro à afficher pour la case d'indice `i` ?",
@@ -766,7 +775,8 @@
       "Indice 0 → mois 1, indice 1 → mois 2…",
       "`i + 1`"
      ],
-     "duree": 0.48
+     "duree": 0.48,
+     "guideSeul": true
     },
     {
      "consigne": "Déclare le tableau `jours` (12 entiers) et affiche les valeurs, **une par ligne**, sans texte pour l'instant.",
@@ -786,7 +796,8 @@
       "`int jours[12] = {31, 28, …};` puis une boucle de 0 à 11.",
       "`for (int i = 0; i < 12; i++) printf(\"%d\\n\", jours[i]);`"
      ],
-     "duree": 1.14
+     "duree": 1.14,
+     "guideSeul": true
     },
     {
      "consigne": "Ajoute le texte autour : chaque ligne doit être `Mois 1 : 31 jours`, `Mois 2 : 28 jours`… Il te faut maintenant **deux** valeurs dans le `printf`.",
@@ -834,7 +845,8 @@
       "`scanf` attend l'adresse de la variable : pense au `&`.",
       "`scanf(\"%d\", &t[i]);`"
      ],
-     "duree": 0.6
+     "duree": 0.6,
+     "guideSeul": true
     },
     {
      "consigne": "Si la somme `s` (un `int`) vaut 17, que vaut `s / 5` en C ?",
@@ -848,7 +860,8 @@
       "17 = 5 × 3 + 2.",
       "La partie décimale est perdue : 3."
      ],
-     "duree": 0.5
+     "duree": 0.5,
+     "guideSeul": true
     },
     {
      "consigne": "Déclare un tableau de 5 entiers, lis-les au clavier avec une boucle, puis affiche-les sur une ligne, séparés par un espace.",
@@ -872,7 +885,8 @@
       "Une boucle de saisie, puis une boucle d'affichage.",
       "`scanf(\"%d\", &t[i]);` dans la première, `printf(\"%d \", t[i]);` dans la seconde."
      ],
-     "duree": 1.3
+     "duree": 1.3,
+     "guideSeul": true
     },
     {
      "consigne": "Ajoute la **somme** (cumulée pendant l'affichage) et la **moyenne** à 2 décimales, sur la ligne suivante : `somme moyenne`.",
@@ -925,7 +939,8 @@
       "Si `tl` vaut 3, les cases 0, 1, 2 sont occupées.",
       "`t[tl] = x;`"
      ],
-     "duree": 0.58
+     "duree": 0.58,
+     "guideSeul": true
     },
     {
      "consigne": "Après avoir ajouté `x`, le tableau contient une valeur de plus. Écris l'instruction qui met à jour la taille logique.",
@@ -940,7 +955,8 @@
       "Une valeur de plus : `tl` doit augmenter.",
       "`tl++;`"
      ],
-     "duree": 0.49
+     "duree": 0.49,
+     "guideSeul": true
     },
     {
      "consigne": "Écris le début du programme : avec `#define TP 20`, lis `tl`, les `tl` entiers puis `x`, ajoute `x` à la fin **si `tl < TP`**, et affiche le tableau sur une ligne.",
@@ -964,7 +980,8 @@
       "Dans l'ordre : `scanf` de `tl`, boucle de saisie, `scanf` de `x`, ajout, affichage.",
       "L'ajout est protégé par `if (tl < TP)`."
      ],
-     "duree": 1.94
+     "duree": 1.94,
+     "guideSeul": true
     },
     {
      "consigne": "Pour **supprimer le dernier élément**, faut-il effacer la case ? Écris l'unique instruction qui suffit.",
@@ -979,7 +996,8 @@
       "Les cases au-delà de `tl` sont simplement ignorées.",
       "`tl--;`"
      ],
-     "duree": 0.49
+     "duree": 0.49,
+     "guideSeul": true
     },
     {
      "consigne": "Termine : si `tl > 0`, supprime le dernier élément, puis affiche de nouveau le tableau sur une **deuxième ligne**.",
@@ -1039,7 +1057,8 @@
       "Un nom de tableau seul n'est pas une valeur.",
       "C'est l'adresse du tableau."
      ],
-     "duree": 0.5
+     "duree": 0.5,
+     "guideSeul": true
     },
     {
      "consigne": "Écris l'en-tête de la boucle `for` (variable `i`) qui parcourt les 3 cases du tableau.",
@@ -1054,7 +1073,8 @@
       "3 cases : indices de 0 à 2.",
       "`for (int i = 0; i < 3; i++)`"
      ],
-     "duree": 0.6
+     "duree": 0.6,
+     "guideSeul": true
     },
     {
      "consigne": "Corrige le programme : affiche chaque case dans une boucle, avec une espace après chaque valeur, pour obtenir `4 8 15`.",
@@ -1103,7 +1123,8 @@
       "Pense à ce que représente un nom de tableau seul.",
       "Les adresses."
      ],
-     "duree": 0.5
+     "duree": 0.5,
+     "guideSeul": true
     },
     {
      "consigne": "On suppose les tableaux égaux avec `egaux = 1`. Dans la boucle, quand `t1[i] != t2[i]`, quelle instruction faut-il exécuter ?",
@@ -1118,7 +1139,8 @@
       "L'indicateur ne doit plus affirmer « égaux ».",
       "`egaux = 0;`"
      ],
-     "duree": 0.5
+     "duree": 0.5,
+     "guideSeul": true
     },
     {
      "consigne": "Corrige le programme : compare les tableaux **case par case** avec un indicateur `egaux`, puis affiche `egaux` ou `differents`.",
@@ -1180,7 +1202,8 @@
      "indices": [
       "Rien n'indique où se cache la valeur dans un tableau non trié."
      ],
-     "duree": 0.34
+     "duree": 0.34,
+     "guideSeul": true
     },
     {
      "consigne": "Écris la condition (sans `if`) qui teste si la case d'indice `i` contient la valeur cherchée `val`.",
@@ -1195,7 +1218,8 @@
       "Attention à l'opérateur d'égalité : `==`.",
       "`t[i] == val`"
      ],
-     "duree": 0.43
+     "duree": 0.43,
+     "guideSeul": true
     },
     {
      "consigne": "Lis `val`, parcours le tableau `{12, 45, -16, 5, 98, 122, 33, 9, -23, 65, 11, 66, 54, 52, 92, 71, 100, 21, 40}` avec un indicateur `trouve` (0 au départ, 1 si une case égale `val`, avec `break`), puis affiche **1 ou 0** seulement.",
@@ -1223,7 +1247,8 @@
       "Déclare `int val, trouve = 0;`, lis `val`, puis une boucle avec un `if`.",
       "Dans le `if` : `trouve = 1; break;`. Affiche `trouve` après la boucle."
      ],
-     "duree": 1.72
+     "duree": 1.72,
+     "guideSeul": true
     },
     {
      "consigne": "Au lieu d'afficher 1 ou 0, affiche le **mot** `trouve` ou `absent` selon l'indicateur.",
@@ -1283,7 +1308,8 @@
       "Le minimum doit être une valeur qui existe dans le tableau.",
       "La première case."
      ],
-     "duree": 0.48
+     "duree": 0.48,
+     "guideSeul": true
     },
     {
      "consigne": "Lis `n` (au plus 100) puis les `n` entiers dans un tableau de taille physique 100, et affiche le **minimum** (rien d'autre).",
@@ -1311,7 +1337,8 @@
       "Une boucle de saisie jusqu'à `n`, puis `min = t[0]` et une seconde boucle qui part de `i = 1`.",
       "`if (t[i] < min) min = t[i];`"
      ],
-     "duree": 1.94
+     "duree": 1.94,
+     "guideSeul": true
     },
     {
      "consigne": "Pour calculer la moyenne **réelle** de la somme `s` sur `n` valeurs (deux `int`), écris l'expression qui évite la division entière.",
@@ -1326,7 +1353,8 @@
       "Si les deux opérandes sont des `int`, le résultat est un `int`.",
       "`(double)s / n`"
      ],
-     "duree": 0.58
+     "duree": 0.58,
+     "guideSeul": true
     },
     {
      "consigne": "Complète le programme : cumule aussi la somme `s` (dans la boucle de saisie) et affiche sur une ligne `minimum moyenne`, la moyenne avec 2 décimales.",
@@ -1382,7 +1410,8 @@
       "Aucune occurrence = zéro occurrence.",
       "0, donc `nb` démarre à 0."
      ],
-     "duree": 0.36
+     "duree": 0.36,
+     "guideSeul": true
     },
     {
      "consigne": "Lis `N`, les `N` entiers puis `val`, et affiche les **indices** des cases égales à `val`, séparés par un espace.",
@@ -1406,7 +1435,8 @@
       "Lecture de `n`, des valeurs, puis de `val` ; une boucle avec `if (t[i] == val)`.",
       "Dans le `if` : `printf(\"%d \", i);`"
      ],
-     "duree": 1.79
+     "duree": 1.79,
+     "guideSeul": true
     },
     {
      "consigne": "À chaque case égale à `val`, quelle instruction augmente le compteur `nb` de 1 ?",
@@ -1421,7 +1451,8 @@
       "Un compteur augmente de 1 à chaque fois.",
       "`nb++;`"
      ],
-     "duree": 0.36
+     "duree": 0.36,
+     "guideSeul": true
     },
     {
      "consigne": "Au lieu d'afficher les positions, **compte** les occurrences dans `nb` et affiche seulement ce nombre à la fin.",
@@ -1477,7 +1508,8 @@
       "Le premier élément « boucle » vers la fin.",
       "1"
      ],
-     "duree": 0.33
+     "duree": 0.33,
+     "guideSeul": true
     },
     {
      "consigne": "Avant de décaler, on sauvegarde la première valeur dans une variable `premier`. Écris la déclaration complète.",
@@ -1492,7 +1524,8 @@
       "Une variable de type `int` initialisée avec la case d'indice 0.",
       "`int premier = t[0];`"
      ],
-     "duree": 0.5
+     "duree": 0.5,
+     "guideSeul": true
     },
     {
      "consigne": "Écris l'instruction (dans la boucle, indice `i`) qui recopie la case suivante dans la case courante.",
@@ -1507,7 +1540,8 @@
       "La valeur de droite va à gauche.",
       "`t[i] = t[i + 1];`"
      ],
-     "duree": 0.5
+     "duree": 0.5,
+     "guideSeul": true
     },
     {
      "consigne": "Lis `n` et les `n` entiers. Décale les valeurs vers la gauche (le premier est perdu, **sans** le remettre à la fin) et affiche les `n - 1` premières cases. Pour `4 / 1 2 3 4` : `2 3 4`.",
@@ -1531,7 +1565,8 @@
       "La boucle de décalage s'arrête à `n - 1` (exclu) : sinon `t[i + 1]` sort du tableau.",
       "`for (int i = 0; i < n - 1; i++) t[i] = t[i + 1];`"
      ],
-     "duree": 1.67
+     "duree": 1.67,
+     "guideSeul": true
     },
     {
      "consigne": "Rends le décalage **circulaire** : sauvegarde `premier` avant le décalage, remets-le en dernière case (`t[n - 1]`), puis affiche les **`n`** cases.",
@@ -1587,7 +1622,8 @@
       "Compte à partir de 0.",
       "1"
      ],
-     "duree": 0.36
+     "duree": 0.36,
+     "guideSeul": true
     },
     {
      "consigne": "L'indice 0 est valide. Quelle valeur de `pos` peut signifier « absent » sans jamais être un indice ?",
@@ -1601,7 +1637,8 @@
       "Un indice est toujours positif ou nul.",
       "-1"
      ],
-     "duree": 0.36
+     "duree": 0.36,
+     "guideSeul": true
     },
     {
      "consigne": "Lis `N`, les `N` entiers, puis `val`. Affiche l'indice de la **première** case égale à `val` (avec `break`) ; si elle est absente, le programme n'affiche rien pour l'instant.",
@@ -1625,7 +1662,8 @@
       "Une boucle avec `if (t[i] == val)` ; le `break` empêche d'afficher les occurrences suivantes.",
       "`printf(\"%d\\n\", i); break;` dans le `if`."
      ],
-     "duree": 1.79
+     "duree": 1.79,
+     "guideSeul": true
     },
     {
      "consigne": "Il faut aussi gérer l'absence : utilise une variable `pos` (départ : -1), qui mémorise l'indice trouvé, et affiche **toujours** `pos` à la fin.",
@@ -1681,7 +1719,8 @@
       "Chaque case à droite recule d'une place.",
       "1"
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Lis `N`, les `N` entiers, puis `val`. Affiche la position `pos` de la première occurrence de `val`, ou `-1` si elle est absente.",
@@ -1709,7 +1748,8 @@
       "Reprends la recherche de première occurrence : `pos = -1` au départ.",
       "`if (t[i] == val) { pos = i; break; }`"
      ],
-     "duree": 1.5
+     "duree": 1.5,
+     "guideSeul": true
     },
     {
      "consigne": "Écris l'en-tête de la boucle qui referme le trou : elle part de `pos` et s'arrête quand `i + 1` atteindrait `n` (pour ne pas lire hors du tableau). Variable `i`.",
@@ -1724,7 +1764,8 @@
       "`t[i + 1]` doit rester dans le tableau : `i + 1 < n`.",
       "`for (int i = pos; i < n - 1; i++)`"
      ],
-     "duree": 0.7
+     "duree": 0.7,
+     "guideSeul": true
     },
     {
      "consigne": "Une fois le trou refermé, le tableau contient une valeur de moins. Écris l'instruction qui l'enregistre.",
@@ -1739,7 +1780,8 @@
       "Une valeur de moins.",
       "`n--;`"
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Assemble le tout : **si** `pos != -1`, referme le trou avec la boucle puis fais `n--` ; ensuite affiche les `n` cases restantes sur une ligne (si `val` est absente, le tableau reste intact).",

@@ -657,7 +657,8 @@
       "Compte uniquement celles de `Bonjour`, sans le `B`.",
       "6"
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Écris la condition (sans `if`) qui est vraie quand le caractère `c` est une lettre **minuscule**, sans fonction prédéfinie.",
@@ -673,7 +674,8 @@
       "Deux comparaisons reliées par `&&`.",
       "`c >= 'a' && c <= 'z'`"
      ],
-     "duree": 0.7
+     "duree": 0.7,
+     "guideSeul": true
     },
     {
      "consigne": "Lis une ligne avec `fgets` et affiche seulement le nombre de lettres **minuscules** (sans fonction de `ctype.h`).",
@@ -697,7 +699,8 @@
       "On parcourt jusqu'au `'\\0'` : `for (int i = 0; s[i] != '\\0'; i++)`.",
       "`if (s[i] >= 'a' && s[i] <= 'z') min++;`"
      ],
-     "duree": 1.8
+     "duree": 1.8,
+     "guideSeul": true
     },
     {
      "consigne": "Compte aussi les **majuscules** et affiche les deux nombres sur une ligne : `minuscules majuscules`.",
@@ -759,7 +762,8 @@
       "Compte les 7 lettres, le `'\\n'` vient juste après.",
       "7"
      ],
-     "duree": 0.36
+     "duree": 0.36,
+     "guideSeul": true
     },
     {
      "consigne": "Écris la condition du `while` (indice `n`, chaîne `s`) qui continue tant qu'on n'a atteint ni le `'\\0'` ni le `'\\n'`.",
@@ -774,7 +778,8 @@
       "Deux tests reliés par `&&`.",
       "`s[n] != '\\0' && s[n] != '\\n'`"
      ],
-     "duree": 0.57
+     "duree": 0.57,
+     "guideSeul": true
     },
     {
      "consigne": "Lis une ligne avec `fgets` et affiche le nombre de caractères avant le `'\\0'` — attention, le `'\\n'` sera **compté** à ce stade.",
@@ -808,7 +813,8 @@
       "Un compteur `n` qui part de 0 et avance tant que `s[n] != '\\0'`.",
       "`while (s[n] != '\\0') { n++; }`"
      ],
-     "duree": 1.07
+     "duree": 1.07,
+     "guideSeul": true
     },
     {
      "consigne": "Ne compte plus le `'\\n'` final : arrête aussi la boucle sur `'\\n'`.",
@@ -870,7 +876,8 @@
       "Compte les caractères, espaces comprises.",
       "14"
      ],
-     "duree": 0.43
+     "duree": 0.43,
+     "guideSeul": true
     },
     {
      "consigne": "Écris l'instruction qui remplace le `'\\n'` de la chaîne `s` par un `'\\0'`, en utilisant `strcspn`.",
@@ -885,7 +892,8 @@
       "`strcspn` donne un indice : mets-le entre crochets après `s`.",
       "`s[strcspn(s, \"\\n\")] = '\\0';`"
      ],
-     "duree": 0.7
+     "duree": 0.7,
+     "guideSeul": true
     },
     {
      "consigne": "Lis une ligne avec `fgets` et affiche-la entre crochets **sans** retirer le `'\\n'` : constate où passe le `]`.",
@@ -915,7 +923,8 @@
       "`char s[100]; fgets(s, sizeof(s), stdin);`",
       "`printf(\"[%s]\\n\", s);`"
      ],
-     "duree": 0.87
+     "duree": 0.87,
+     "guideSeul": true
     },
     {
      "consigne": "Retire le `'\\n'` avant l'affichage pour que le `]` reste sur la même ligne : `[Salut le monde]`.",
@@ -973,7 +982,8 @@
       "Destination d'abord, source ensuite.",
       "`strcpy(complet, prenom);`"
      ],
-     "duree": 0.44
+     "duree": 0.44,
+     "guideSeul": true
     },
     {
      "consigne": "Écris l'instruction qui **ajoute** une espace à la fin de `complet`.",
@@ -988,7 +998,8 @@
       "`strcat` ajoute une chaîne à la fin.",
       "`strcat(complet, \" \");`"
      ],
-     "duree": 0.44
+     "duree": 0.44,
+     "guideSeul": true
     },
     {
      "consigne": "Pour `Ada` et `Lovelace`, quelle est la longueur de `Ada Lovelace` ?",
@@ -1002,7 +1013,8 @@
       "N'oublie pas l'espace.",
       "12"
      ],
-     "duree": 0.29
+     "duree": 0.29,
+     "guideSeul": true
     },
     {
      "consigne": "Lis un prénom et un nom (`scanf`), construis `complet` avec `strcpy` et `strcat`, et affiche seulement `complet`.",
@@ -1032,7 +1044,8 @@
       "Trois lignes : `strcpy`, `strcat` de l'espace, `strcat` du nom.",
       "Affiche avec `printf(\"%s\\n\", complet);`"
      ],
-     "duree": 1.32
+     "duree": 1.32,
+     "guideSeul": true
     },
     {
      "consigne": "Affiche aussi la **longueur** de `complet` après la chaîne : `Ada Lovelace 12`.",
@@ -1091,7 +1104,8 @@
       "Le premier mot vient avant : le résultat est du côté « moins ».",
       "negatif"
      ],
-     "duree": 0.42
+     "duree": 0.42,
+     "guideSeul": true
     },
     {
      "consigne": "Que renvoie `strcmp` quand les deux chaînes sont identiques ?",
@@ -1105,7 +1119,8 @@
       "Ni négatif ni positif.",
       "0"
      ],
-     "duree": 0.33
+     "duree": 0.33,
+     "guideSeul": true
     },
     {
      "consigne": "Lis deux mots et affiche `egal` s'ils sont identiques, `different` sinon (avec `strcmp`).",
@@ -1135,7 +1150,8 @@
       "`strcmp(a, b) == 0` signifie « égaux ».",
       "`if (strcmp(a, b) == 0) … else …`"
      ],
-     "duree": 1.25
+     "duree": 1.25,
+     "guideSeul": true
     },
     {
      "consigne": "Distingue maintenant `avant` (résultat négatif), `apres` (positif) et `egal` (nul).",
@@ -1196,7 +1212,8 @@
       "Longueur moins 1.",
       "6"
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Écris l'en-tête du `for` (variable `i`) qui **descend** de `n - 1` jusqu'à 0 inclus.",
@@ -1211,7 +1228,8 @@
       "Départ `n - 1`, condition `i >= 0`, pas de -1.",
       "`for (int i = n - 1; i >= 0; i--)`"
      ],
-     "duree": 0.8
+     "duree": 0.8,
+     "guideSeul": true
     },
     {
      "consigne": "Lis un mot (`%99s`) et affiche sa **longueur** `n` (avec `strlen`).",
@@ -1239,7 +1257,8 @@
       "`scanf(\"%99s\", s);` puis `int n = strlen(s);`",
       "`printf(\"%d\\n\", n);`"
      ],
-     "duree": 0.8
+     "duree": 0.8,
+     "guideSeul": true
     },
     {
      "consigne": "Affiche maintenant le mot **à l'envers**, caractère par caractère, avec une boucle descendante, puis un retour à la ligne.",
@@ -1295,7 +1314,8 @@
       "Le premier va avec le dernier, le deuxième avec l'avant-dernier.",
       "`s[n - 1 - i]`"
      ],
-     "duree": 0.7
+     "duree": 0.7,
+     "guideSeul": true
     },
     {
      "consigne": "Pour un mot de 5 lettres, combien de paires faut-il comparer (la lettre du milieu n'a pas de vis-à-vis) ?",
@@ -1309,7 +1329,8 @@
       "Divise la longueur par 2 (entier).",
       "2"
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Lis un mot et affiche sa **première** et sa **dernière** lettre, séparées par une espace.",
@@ -1337,7 +1358,8 @@
       "`n = strlen(s)` ; la dernière lettre est `s[n - 1]`.",
       "`printf(\"%c %c\\n\", s[0], s[n - 1]);`"
      ],
-     "duree": 1.0
+     "duree": 1.0,
+     "guideSeul": true
     },
     {
      "consigne": "Compare toutes les paires `s[i]` / `s[n - 1 - i]` (jusqu'à `n / 2`) : affiche `oui` si elles sont toutes égales, `non` sinon.",
@@ -1396,7 +1418,8 @@
       "Repère `o`, `o` et `u`.",
       "3"
      ],
-     "duree": 0.32
+     "duree": 0.32,
+     "guideSeul": true
     },
     {
      "consigne": "Écris la condition vraie quand le caractère `c` est la lettre `a` **ou** la lettre `e`.",
@@ -1411,7 +1434,8 @@
       "Chaque lettre est entre apostrophes.",
       "`c == 'a' || c == 'e'`"
      ],
-     "duree": 0.48
+     "duree": 0.48,
+     "guideSeul": true
     },
     {
      "consigne": "Lis une ligne et affiche le nombre de lettres `e` qu'elle contient.",
@@ -1435,7 +1459,8 @@
       "Une boucle jusqu'au `'\\0'` avec un `if (s[i] == 'e')`.",
       "`nb++;` dans le `if`."
      ],
-     "duree": 1.2
+     "duree": 1.2,
+     "guideSeul": true
     },
     {
      "consigne": "Compte toutes les voyelles minuscules `a e i o u y`, pas seulement les `e`.",
@@ -1491,7 +1516,8 @@
       "Les lettres ont des codes consécutifs.",
       "2"
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Écris l'expression qui donne la majuscule correspondant à la minuscule `s[i]`, sans `toupper`.",
@@ -1507,7 +1533,8 @@
       "Retire `'a'`, ajoute `'A'`.",
       "`s[i] - 'a' + 'A'`"
      ],
-     "duree": 0.8
+     "duree": 0.8,
+     "guideSeul": true
     },
     {
      "consigne": "Lis une ligne (en retirant le `'\\n'`) et réaffiche-la **telle quelle**.",
@@ -1531,7 +1558,8 @@
       "`fgets` puis `s[strcspn(s, \"\\n\")] = '\\0';`",
       "`printf(\"%s\\n\", s);`"
      ],
-     "duree": 1.0
+     "duree": 1.0,
+     "guideSeul": true
     },
     {
      "consigne": "Avant l'affichage, **passe en majuscules** les lettres minuscules de la ligne (les autres caractères ne changent pas).",
@@ -1589,7 +1617,8 @@
       "Pense à ce que représente un nom de tableau.",
       "Les adresses."
      ],
-     "duree": 0.5
+     "duree": 0.5,
+     "guideSeul": true
     },
     {
      "consigne": "Quelle fonction de `string.h` compare le **contenu** de deux chaînes ?",
@@ -1605,7 +1634,8 @@
       "Ses lettres : `str` + `cmp`.",
       "strcmp"
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Que renvoie `strcmp` quand les deux chaînes sont **égales** ?",
@@ -1619,7 +1649,8 @@
       "Ni positif ni négatif.",
       "0"
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Corrige la condition pour que `secret` soit accepté (et lui seul).",
@@ -1681,7 +1712,8 @@
       "Pense à la touche que tu as tapée après le caractère.",
       "Le `'\\n'`."
      ],
-     "duree": 0.5
+     "duree": 0.5,
+     "guideSeul": true
     },
     {
      "consigne": "Écris la condition (sans `if`) vraie quand le caractère `s[i]` est égal au caractère cherché `c`.",
@@ -1696,7 +1728,8 @@
       "Compare deux `char` avec `==`.",
       "`s[i] == c`"
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Lis le caractère `c`, consomme le `'\\n'`, lis la ligne avec `fgets` et affiche simplement le **premier caractère de la ligne**.",
@@ -1720,7 +1753,8 @@
       "`scanf(\" %c\", &c);` puis `getchar();` puis `fgets(s, sizeof(s), stdin);`",
       "`printf(\"%c\\n\", s[0]);`"
      ],
-     "duree": 1.3
+     "duree": 1.3,
+     "guideSeul": true
     },
     {
      "consigne": "Compte maintenant les **occurrences** de `c` dans la ligne (jusqu'au `'\\0'`) et affiche ce nombre.",

@@ -576,7 +576,8 @@
       "`malloc(taille en octets)`.",
       "`int *t = malloc(n * sizeof(int));`"
      ],
-     "duree": 0.8
+     "duree": 0.8,
+     "guideSeul": true
     },
     {
      "consigne": "Écris la condition (sans `if`) qui détecte un échec d'allocation.",
@@ -591,7 +592,8 @@
       "Compare `t` à `NULL`.",
       "`t == NULL`"
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Écris l'instruction qui libère la mémoire.",
@@ -606,7 +608,8 @@
       "Un `malloc` = un `free`.",
       "`free(t);`"
      ],
-     "duree": 0.3
+     "duree": 0.3,
+     "guideSeul": true
     },
     {
      "consigne": "Sans mémoire dynamique : lis `n` (≤ 20) puis `n` entiers dans un tableau **statique** `int t[20]` et affiche-les à l'envers.",
@@ -630,7 +633,8 @@
       "Saisie en boucle, affichage de `n - 1` jusqu'à 0.",
       "`for (int i = n - 1; i >= 0; i--)`"
      ],
-     "duree": 1.5
+     "duree": 1.5,
+     "guideSeul": true
     },
     {
      "consigne": "Remplace le tableau statique par un tableau **alloué** de `n` entiers (`malloc`, test `NULL`), puis libère-le (`free`) à la fin.",
@@ -701,7 +705,8 @@
       "Deux arguments, contrairement à `malloc`.",
       "`int *t = calloc(n, sizeof(int));`"
      ],
-     "duree": 0.7
+     "duree": 0.7,
+     "guideSeul": true
     },
     {
      "consigne": "Que contient `t[0]` juste après `calloc` ? (un nombre)",
@@ -715,7 +720,8 @@
       "C'est la différence avec `malloc`.",
       "0"
      ],
-     "duree": 0.3
+     "duree": 0.3,
+     "guideSeul": true
     },
     {
      "consigne": "Version statique : lis `n` (≤ 20), affiche `n` zéros séparés par des espaces (tableau `int t[20] = {0}`), puis mets `i * i` dans chaque case et affiche-les (deux lignes).",
@@ -739,7 +745,8 @@
       "`int t[20] = {0};` met tout à 0.",
       "Deux boucles : une de lecture, une d'écriture de `i * i`."
      ],
-     "duree": 1.5
+     "duree": 1.5,
+     "guideSeul": true
     },
     {
      "consigne": "Remplace le tableau statique par `calloc(n, sizeof(int))` (test `NULL`, puis `free` à la fin).",
@@ -802,7 +809,8 @@
       "Taille totale : `(n + m) * sizeof(int)`.",
       "`int *tmp = realloc(t, (n + m) * sizeof(int));`"
      ],
-     "duree": 0.72
+     "duree": 0.72,
+     "guideSeul": true
     },
     {
      "consigne": "Pourquoi passer par `tmp` plutôt que `t = realloc(t, …)` ? (idée en quelques mots)",
@@ -817,7 +825,8 @@
       "Que devient `t` si `realloc` renvoie `NULL` ?",
       "Pour ne pas perdre l'ancien bloc en cas d'échec."
      ],
-     "duree": 0.45
+     "duree": 0.45,
+     "guideSeul": true
     },
     {
      "consigne": "Écris la boucle (en-tête du `for`) qui lit les `m` **nouvelles** valeurs dans les cases `n` à `n + m - 1`.",
@@ -832,7 +841,8 @@
       "Départ à `n`, arrêt avant `n + m`.",
       "`for (int i = n; i < n + m; i++)`"
      ],
-     "duree": 0.54
+     "duree": 0.54,
+     "guideSeul": true
     },
     {
      "consigne": "Sans `realloc` : lis `n`, `n` entiers, `m`, `m` entiers dans un tableau statique `int t[100]` et affiche la somme des `n + m` valeurs.",
@@ -856,7 +866,8 @@
       "Les `m` nouvelles valeurs vont aux indices à partir de `n`.",
       "Une somme sur `n + m` cases."
      ],
-     "duree": 1.79
+     "duree": 1.79,
+     "guideSeul": true
     },
     {
      "consigne": "Passe en mémoire dynamique : `malloc` de `n` entiers, puis `realloc` (via `tmp`, avec test `NULL`) pour passer à `n + m`, et `free` à la fin.",
@@ -918,7 +929,8 @@
       "Chaque bloc alloué se rend une fois.",
       "1"
      ],
-     "duree": 0.3
+     "duree": 0.3,
+     "guideSeul": true
     },
     {
      "consigne": "Écris l'instruction qui évite un pointeur « fou » après la libération (`t` ne doit plus désigner le bloc rendu).",
@@ -933,7 +945,8 @@
       "On lui donne une valeur sûre.",
       "`t = NULL;`"
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Corrige la fuite : libère `t` avant la fin puis remets-le à `NULL`.",
@@ -996,7 +1009,8 @@
       "Pas en nombre d'éléments.",
       "Des octets."
      ],
-     "duree": 0.3
+     "duree": 0.3,
+     "guideSeul": true
     },
     {
      "consigne": "Combien d'octets faut-il pour 10 `int` si `sizeof(int)` vaut 4 ? (un nombre)",
@@ -1010,7 +1024,8 @@
       "Nombre d'éléments × taille d'un élément.",
       "40"
      ],
-     "duree": 0.3
+     "duree": 0.3,
+     "guideSeul": true
     },
     {
      "consigne": "Corrige l'allocation pour qu'elle réserve la place de `n` **entiers** (pas `n` octets).",
@@ -1069,7 +1084,8 @@
       "Longueur + une case pour la fin de chaîne.",
       "`char *copie = malloc(strlen(tampon) + 1);`"
      ],
-     "duree": 0.7
+     "duree": 0.7,
+     "guideSeul": true
     },
     {
      "consigne": "Écris la copie de `tampon` dans `copie` avec `strcpy`.",
@@ -1084,7 +1100,8 @@
       "Destination en premier.",
       "`strcpy(copie, tampon);`"
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Sans copie : lis un mot (`%99s`) et affiche-le suivi de sa longueur (`strlen`, converti en `int`).",
@@ -1108,7 +1125,8 @@
       "`strlen` est dans `<string.h>`.",
       "`printf(\"%s %d\\n\", tampon, (int)strlen(tampon));`"
      ],
-     "duree": 1.0
+     "duree": 1.0,
+     "guideSeul": true
     },
     {
      "consigne": "Alloue `copie` à la taille exacte, copie le mot avec `strcpy`, affiche la **copie** et sa longueur, puis libère (`free`).",
@@ -1170,7 +1188,8 @@
       "On renvoie l'adresse que `calloc` fournit.",
       "`return calloc(n, sizeof(int));`"
      ],
-     "duree": 0.6
+     "duree": 0.6,
+     "guideSeul": true
     },
     {
      "consigne": "Qui doit appeler `free` : `creer_tableau` ou `main` ? (un mot)",
@@ -1186,7 +1205,8 @@
       "Celui qui utilise le bloc jusqu'au bout.",
       "main"
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Sans fonction : lis `n` (≤ 20), mets `10 * (i + 1)` dans un tableau statique et affiche-le.",
@@ -1210,7 +1230,8 @@
       "Une seule boucle suffit : remplir et afficher.",
       "`t[i] = 10 * (i + 1);`"
      ],
-     "duree": 1.2
+     "duree": 1.2,
+     "guideSeul": true
     },
     {
      "consigne": "Écris `int *creer_tableau(int n)` (avec `calloc`) ; `main` l'appelle, teste `NULL`, remplit, affiche, puis fait le `free`.",
@@ -1273,7 +1294,8 @@
       "Quand connaît-on la moyenne ?",
       "Pour les comparer à la moyenne une fois calculée."
      ],
-     "duree": 0.37
+     "duree": 0.37,
+     "guideSeul": true
     },
     {
      "consigne": "Écris le calcul de la moyenne `moy` (réelle) à partir de la somme entière `s` et de `n`.",
@@ -1288,7 +1310,8 @@
       "`(double)` s'applique à `s`.",
       "`double moy = (double)s / n;`"
      ],
-     "duree": 0.44
+     "duree": 0.44,
+     "guideSeul": true
     },
     {
      "consigne": "Avec un tableau **statique** `int notes[100]` : lis `n` puis `n` notes, affiche la moyenne (2 décimales) puis le nombre de notes strictement supérieures à la moyenne.",
@@ -1312,7 +1335,8 @@
       "Une boucle de saisie qui cumule `s`, une boucle de comptage.",
       "`if (notes[i] > moy) nb++;`"
      ],
-     "duree": 2.2
+     "duree": 2.2,
+     "guideSeul": true
     },
     {
      "consigne": "La classe n'a plus de taille maximale : alloue `notes` dynamiquement (`n` entiers, test `NULL`) et libère-le à la fin.",

@@ -468,7 +468,8 @@
       "Un `char` par lettre, entre crochets la taille.",
       "Syntaxe : `char nom[taille];`"
      ],
-     "duree": 0.5
+     "duree": 0.5,
+     "guideSeul": true
     },
     {
      "consigne": "Lis le prénom en limitant à 19 caractères.",
@@ -483,7 +484,8 @@
       "Format d'une chaîne : `%s`, avec la limite : `%19s`.",
       "Pas de `&` pour un tableau."
      ],
-     "duree": 0.7
+     "duree": 0.7,
+     "guideSeul": true
     },
     {
      "consigne": "Affiche « Bonjour » suivi du prénom et d'un retour à la ligne.",
@@ -498,7 +500,8 @@
       "Le format d'une chaîne est `%s`.",
       "N'oublie pas `\\n` et le `;`."
      ],
-     "duree": 0.7
+     "duree": 0.7,
+     "guideSeul": true
     },
     {
      "consigne": "Écris le programme complet : il lit un prénom (un seul mot) et affiche « Bonjour » suivi du prénom.",
@@ -549,7 +552,8 @@
       "Deux entiers = deux `%d`.",
       "Chaque variable est précédée de `&`."
      ],
-     "duree": 0.8
+     "duree": 0.8,
+     "guideSeul": true
     },
     {
      "consigne": "`printf(\"%d\", a / b)` avec a = 17 et b = 5.",
@@ -562,7 +566,8 @@
      "indices": [
       "Deux `int` donnent une division entière."
      ],
-     "duree": 0.5
+     "duree": 0.5,
+     "guideSeul": true
     },
     {
      "consigne": "`printf(\"%.2f\", (double)a / b)`.",
@@ -576,7 +581,8 @@
       "Le cast agit sur `a` avant la division.",
       "17 / 5 = 3,4."
      ],
-     "duree": 0.7
+     "duree": 0.7,
+     "guideSeul": true
     },
     {
      "consigne": "Écris le programme qui lit a et b puis affiche sur une ligne : somme, différence, produit, puis le quotient réel avec 2 décimales.",
@@ -695,7 +701,8 @@
       "Prix × quantité.",
       "10"
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Pour un total HT de 10, quel est le montant de la TVA à 20 % ?",
@@ -709,7 +716,8 @@
       "20 % = 0,2.",
       "2"
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Lis le prix (réel) et la quantité (entier), et affiche **seulement le total HT** avec 2 décimales.",
@@ -737,7 +745,8 @@
       "`double prix; int qte;` puis un seul `scanf(\"%lf %d\", &prix, &qte);`",
       "`double ht = prix * qte;` puis `printf(\"%.2f\\n\", ht);`"
      ],
-     "duree": 1.5
+     "duree": 1.5,
+     "guideSeul": true
     },
     {
      "consigne": "Ajoute la **TVA** (HT × 0,2) et le **TTC** (HT + TVA) : affiche `HT TVA TTC` sur une ligne, chacun avec 2 décimales.",
@@ -794,7 +803,8 @@
       "Le caractère qui donne l'adresse d'une variable.",
       "`&`"
      ],
-     "duree": 0.5
+     "duree": 0.5,
+     "guideSeul": true
     },
     {
      "consigne": "Quel format `scanf` faut-il pour lire un `double` ?",
@@ -810,7 +820,8 @@
       "Un `l` s'ajoute à `%f`.",
       "%lf"
      ],
-     "duree": 0.4
+     "duree": 0.4,
+     "guideSeul": true
     },
     {
      "consigne": "Corrige les **deux** `scanf` pour que le programme lise bien l'âge et la taille.",
@@ -869,7 +880,8 @@
       "Les majuscules commencent à 65.",
       "65"
      ],
-     "duree": 0.33
+     "duree": 0.33,
+     "guideSeul": true
     },
     {
      "consigne": "Quel format `printf` affiche le **code** (le nombre) d'une variable `char` ?",
@@ -885,7 +897,8 @@
       "Le même format que pour un entier.",
       "%d"
      ],
-     "duree": 0.33
+     "duree": 0.33,
+     "guideSeul": true
     },
     {
      "consigne": "Lis **un caractère** et affiche-le seul.",
@@ -913,7 +926,8 @@
       "`char c;` puis `scanf(\" %c\", &c);`",
       "`printf(\"%c\\n\", c);`"
      ],
-     "duree": 0.83
+     "duree": 0.83,
+     "guideSeul": true
     },
     {
      "consigne": "Affiche le caractère **puis son code ASCII**, séparés par une espace (`A 65`).",
@@ -970,7 +984,8 @@
       "Le format d'une chaîne est `%s`, avec une limite en nombre.",
       "%19s"
      ],
-     "duree": 0.5
+     "duree": 0.5,
+     "guideSeul": true
     },
     {
      "consigne": "Lis un prénom (un mot) puis un âge, et affiche **seulement** `Prenom : <prénom>`.",
@@ -994,7 +1009,8 @@
       "`char prenom[20]; int age;` puis `scanf(\"%19s %d\", prenom, &age);`",
       "`printf(\"Prenom : %s\\n\", prenom);`"
      ],
-     "duree": 1.5
+     "duree": 1.5,
+     "guideSeul": true
     },
     {
      "consigne": "Ajoute la deuxième ligne : `Age : <âge> ans`.",
@@ -1046,7 +1062,8 @@
       "Un `%lf` par variable.",
       "`\"%lf %lf %lf\"`"
      ],
-     "duree": 0.39
+     "duree": 0.39,
+     "guideSeul": true
     },
     {
      "consigne": "Quel format `printf` affiche un réel avec **une seule** décimale ?",
@@ -1062,7 +1079,8 @@
       "`%f` précédé de `.1`.",
       "%.1f"
      ],
-     "duree": 0.32
+     "duree": 0.32,
+     "guideSeul": true
     },
     {
      "consigne": "Lis trois réels et affiche leur somme avec le format **par défaut** `%f` (6 décimales).",
@@ -1097,7 +1115,8 @@
       "Trois `double`, un seul `scanf` avec trois `%lf`.",
       "`printf(\"%f\\n\", a + b + c);`"
      ],
-     "duree": 0.79
+     "duree": 0.79,
+     "guideSeul": true
     },
     {
      "consigne": "Il suffit d'afficher la somme avec **une** décimale (`1.5 2.2 3` → `6.7`).",

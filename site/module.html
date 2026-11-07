@@ -315,7 +315,8 @@ function etats(){
     const d = det[e.i], it = S.items[e.q]; if(!it) continue;
     const s = st[e.q] || (st[e.q] = {ok:false, erreur:false, jours:new Set(), maitrise:false, auj:false, valide:false, runs:{}});
     if(it.type === "exo"){
-      if(d.ok){ const r = s.runs[e.r] || (s.runs[e.r] = new Set()); r.add(e.e || 0); if(r.size >= ((it.etapes && it.etapes.length) || 1)) s.valide = true; }
+      const et = it.etapes || [], gs = !!(et[e.e || 0] && et[e.e || 0].guideSeul);
+      if(d.ok && !gs){ const r = s.runs[e.r] || (s.runs[e.r] = new Set()); r.add(e.e || 0); if(r.size >= (et.filter(x => !x.guideSeul).length || 1)) s.valide = true; }   // validé = étapes non guideSeul
     } else if(d.ok){
       s.ok = true; s.erreur = false; s.jours.add(d.jour);
       if(s.jours.size >= v.maitriseJours) s.maitrise = true;
@@ -1040,7 +1041,8 @@ const titreNotion = id => { const n = S.notionParId[id]; return n ? `${id} ${n.t
 function erreursExos(){
   const res = M.etat(), det = (res && res.details) || {}, last = {}, out = {};
   const evs = M.evenements().filter(e => det[e.i] && S.items[e.q] && S.items[e.q].type === "exo").sort((a, b) => a.t - b.t);
-  for(const e of evs) (last[e.q] = last[e.q] || {})[e.e || 0] = det[e.i].ok;
+  for(const e of evs){ const st = (S.items[e.q].etapes || [])[e.e || 0]; if(st && st.guideSeul) continue;   // étape d'accompagnement : pas d'erreur à rattraper
+    (last[e.q] = last[e.q] || {})[e.e || 0] = det[e.i].ok; }
   for(const [q, m] of Object.entries(last)){ const bad = Object.entries(m).filter(([, ok]) => !ok).map(([k]) => +k); if(bad.length) out[q] = bad; }
   return out;
 }
@@ -1548,7 +1550,9 @@ function jouerMock(it, zone, opts = {}){
   return new Promise(resolve => {
     const run = M.debutExo(it.id);
     S.nettoyer = () => M.finExo(it.id);
-    const etapes = (it.etapes && it.etapes.length) ? it.etapes : [{question:"Réponse", verif:it.verif, corrige:it.corrige}];
+    const toutes = (it.etapes && it.etapes.length) ? it.etapes : [{question:"Réponse", verif:it.verif, corrige:it.corrige}];
+    /* Classique / Mock : les étapes guideSeul (accompagnement) sont masquées ; idx = indice d'origine (le journal y fait référence) */
+    const idx = toutes.map((e, k) => k).filter(k => !toutes[k].guideSeul), etapes = idx.map(k => toutes[k]);
     const n = etapes.length, ctx = {module:S.mod.id, chapitre:S.chapDe[it.id]}, dTot = dureeExo(it), t0 = Date.now();
     const mode = opts.mode || "mock", avecChrono = opts.chrono !== false && !opts.examen;
     zone.innerHTML = `<article class="q exo mock">
@@ -1561,7 +1565,7 @@ function jouerMock(it, zone, opts = {}){
       <div class="actions q-actions">${lienSignaler(it.id)}</div></article>`;
     const art = zone.firstElementChild, ol = art.querySelector(".mock-qs"), ret = art.querySelector(".q-retour"), chrono = art.querySelector(".chrono-mock");
     const champs = etapes.map((e, k) => {
-      const li = document.createElement("li"), rat = opts.aRattraper && opts.aRattraper.includes(k);
+      const li = document.createElement("li"), rat = opts.aRattraper && opts.aRattraper.includes(idx[k]);
       if(rat) li.classList.add("a-rattraper");
       li.innerHTML = `${rat ? `<span class="pastille todo">À rattraper · ×${fmt(V().rattrapage)}</span>` : ""}<div class="mq-lib">${md(e.question || e.consigne || `Question ${k+1}`)}</div><div class="q-corps"></div><div class="mq-ret"></div>`;
       ol.appendChild(li);
@@ -1579,8 +1583,8 @@ function jouerMock(it, zone, opts = {}){
       for(let k = 0; k < n; k++){
         const e = etapes[k], v = e.verif || {mode:"auto"}, ch = champs[k];
         const r = v.mode && v.mode !== "auto" ? await verifier(v, ch.lire(), ctx, ch) : {ok:false};
-        const d = M.reponse(it.id, !!r.ok, secs, {etape:k, indices:0, run, mode});
-        trace(it, k, ch.lire(), !!r.ok); if(opts.log) opts.log.push({it, etape:k, donnee:ch.lire(), ok:!!r.ok});
+        const d = M.reponse(it.id, !!r.ok, secs, {etape:idx[k], indices:0, run, mode});
+        trace(it, idx[k], ch.lire(), !!r.ok); if(opts.log) opts.log.push({it, etape:idx[k], donnee:ch.lire(), ok:!!r.ok});
         if(r.ok){ nOk++; if(d && d.ok) xp += d.xp + d.bonus; }
         ch.el.readOnly = true; ch.el.classList.add(r.ok ? "juste" : "faux");
         ol.children[k].querySelector(".mq-ret").innerHTML = r.ok ? `<b class="ok-txt">✓</b>` : `<div class="corrige"><small>Correction</small>${corrigeDe(e, v) || md(e.explication || "")}</div>${r.msg ? `<small class="aide">${esc(r.msg)}</small>` : ""}`;

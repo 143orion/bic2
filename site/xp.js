@@ -118,6 +118,11 @@ function calculer(evenements, ctx = {}){
       const it = cat[e.q]; if(!it) return null;
       x.ty = it.type; x.d = +it.duree || 0; x.m = it.module; x.c = it.chapitre; x.ne = it.etapes || 1; x.pos = Math.max(0, Math.min(1, +it.pos || 0));
       const sd = it.dureesEtapes && it.dureesEtapes[x.e]; if(sd != null) x.sd = +sd; else delete x.sd;
+      /* étapes guideSeul (accompagnement, affichées en Guidé seulement) : lues dans la banque */
+      if(it.seuls && it.seuls.some(Boolean)){
+        x.gs = !!it.seuls[x.e]; x.nv = it.seuls.filter(g => !g).length;
+        x.sv = it.seuls.reduce((a, g, k) => g ? a : a + (it.dureesEtapes[k] != null ? +it.dureesEtapes[k] : x.d/x.ne), 0);   // durée des étapes affichées en Classique / Mock
+      }
     } else { x.d = Math.min(x.d, 120); if(x.sd != null) x.sd = Math.min(x.sd, x.d); }
     if(!TYPES.includes(x.ty) || x.e >= x.ne) return null;
     if(x.ty === "exo"){ x.r = String(e.r || "?").slice(0,40); x.mo = (e.mo === "mock" || e.mo === "classique") && !x.h ? e.mo : "guide"; }  // classique / mock avec indices = guidé
@@ -125,6 +130,8 @@ function calculer(evenements, ctx = {}){
   };
   const vus = new Set();
   const liste = (evenements || []).map(propre).filter(e => e && !vus.has(e.i) && vus.add(e.i)).sort((a,b)=> a.t - b.t || (a.i < b.i ? -1 : 1));
+  /* passages d'exo qui contiennent une étape guideSeul (quel que soit l'ordre) : chaque étape y garde sa propre durée */
+  const runsAide = new Set(liste.filter(e => e.ty === "exo" && e.gs).map(e => e.q + "|" + e.r));
 
   const enEval = (e, jour, v) => evals.some(ev => ev.module === e.m && (!ev.chapitres || !ev.chapitres.length || ev.chapitres.includes(e.c)) && jour <= ev.date && ecartJours(jour, ev.date) <= v.evalFenetre);
   const neutre = j => { const w = new Date(j+"T12:00:00").getDay(); return w === 0 || w === 6 || vacances.some(p => j >= p.debut && j <= p.fin); };
@@ -142,7 +149,9 @@ function calculer(evenements, ctx = {}){
 
     if(e.ty === "exo"){
       const dOrig = e.d || 1, dTot = durees[e.q] != null ? +durees[e.q] : dOrig, ne = e.ne || 1;
-      const sd = (e.sd != null ? e.sd : dOrig/ne) * (dTot/dOrig);
+      let sd = (e.sd != null ? e.sd : dOrig/ne) * (dTot/dOrig);
+      /* passage sans étape guideSeul (Classique / Mock) : toute la durée de l'exo est répartie sur les étapes affichées */
+      if(e.sv > 0 && !e.gs && !runsAide.has(e.q + "|" + e.r)) sd *= dOrig / e.sv;
       effort = sd;
       const x = exos[e.q] || (exos[e.q] = {runs:[], ok:{}, err:new Set(), valide:false, m:e.m});
       if(!x.runs.includes(e.r)) x.runs.push(e.r);
@@ -159,8 +168,8 @@ function calculer(evenements, ctx = {}){
           if(dec[e.i] === "ok") f.push("contestation validée ✓");
           else { xp *= v.exoPenalite; f.push("trop rapide ×"+fmt(v.exoPenalite)); contestable = dec[e.i] !== "non"; }
         }
-        const s = x.ok[e.r] || (x.ok[e.r] = new Set()); s.add(e.e || 0);
-        if(s.size >= ne && !x.valide){ x.valide = true; m.exos.add(e.q); }
+        const s = x.ok[e.r] || (x.ok[e.r] = new Set()); if(!e.gs) s.add(e.e || 0);   // validé = étapes non guideSeul réussies dans un même passage
+        if(s.size >= (e.nv || ne) && !x.valide){ x.valide = true; m.exos.add(e.q); }
       } else x.err.add(e.e || 0);
     } else if(e.ty === "controle"){
       /* question de contrôle du cours (follow-along) : un peu d'XP, une seule fois à vie */
@@ -470,7 +479,7 @@ function ajouterAuCatalogue(cat, ch, moduleId){
   for(const it of (ch && ch.items) || []){
     if(!it || it.type === "examen" || !it.id) continue;
     const et = it.etapes || [];
-    cat[it.id] = {type:it.type, duree:it.duree, module:ch.module || moduleId, chapitre:ch.id, etapes:et.length || 1, dureesEtapes:et.map(s => s.duree), pos:(cat[it.id] && cat[it.id].pos) || 0};   // pos conservée si l'item est déjà au catalogue (charger() ne la connaît pas)
+    cat[it.id] = {type:it.type, duree:it.duree, module:ch.module || moduleId, chapitre:ch.id, etapes:et.length || 1, dureesEtapes:et.map(s => s.duree), seuls:et.map(s => !!(s && s.guideSeul)), pos:(cat[it.id] && cat[it.id].pos) || 0};   // pos conservée si l'item est déjà au catalogue (charger() ne la connaît pas)
   }
   /* checks de validation des notions : id = check.id, sinon <chapitre>-ctl-<n° de notion> */
   ((ch && ch.notions) || []).forEach((n, k) => {
