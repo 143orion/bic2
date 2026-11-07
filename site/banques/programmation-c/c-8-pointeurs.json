@@ -644,11 +644,64 @@
    "origine": "generee",
    "titre": "Modifier à travers un pointeur",
    "enonce": "Écris un programme qui lit un entier `x`, déclare un pointeur `p` vers `x`, **double `x` en passant uniquement par `p`**, puis affiche `x`.",
-   "guidage": "`int *p = &x;` puis `*p = *p * 2;` (ou `*p *= 2;`). N'écris pas `x = x * 2`.",
+   "guidage": "**Plan** : 1. `int *p = &x;` (le pointeur reçoit l'**adresse** de `x`) → 2. `*p` désigne `x` → 3. `*p = *p * 2;` modifie `x` à travers `p`.\n\n**Piège** : n'écris pas `x = x * 2` : l'énoncé impose de passer par `p`.",
    "duree": 3,
    "etapes": [
     {
-     "consigne": "Écris le programme complet.",
+     "consigne": "Écris la déclaration d'un pointeur `p` qui contient l'adresse de `x` (pointeur et initialisation sur la même ligne).",
+     "question": "Déclarer `p` sur `x` ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "int\\s*\\*\\s*p\\s*=\\s*&\\s*x\\s*;",
+      "exemple": "int *p = &x;"
+     },
+     "corrige": "`int *p = &x;` : `p` reçoit l'adresse de `x`.",
+     "indices": [
+      "`&x` est l'adresse de `x` ; le type de `p` est `int *`.",
+      "`int *p = &x;`"
+     ],
+     "duree": 0.43
+    },
+    {
+     "consigne": "Écris l'instruction qui double `x` **en passant par `p`**.",
+     "question": "Doubler via `p` ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "\\*\\s*p\\s*=\\s*\\*\\s*p\\s*\\*\\s*2\\s*;|\\*\\s*p\\s*\\*=\\s*2\\s*;|\\*\\s*p\\s*=\\s*2\\s*\\*\\s*\\*\\s*p\\s*;|\\*\\s*p\\s*=\\s*\\*\\s*p\\s*\\+\\s*\\*\\s*p\\s*;",
+      "exemple": "*p = *p * 2;"
+     },
+     "corrige": "`*p = *p * 2;` : `*p` désigne `x`.",
+     "indices": [
+      "Le `*` devant `p` désigne la variable pointée.",
+      "`*p = *p * 2;` (ou `*p *= 2;`)"
+     ],
+     "duree": 0.5
+    },
+    {
+     "consigne": "Lis `x`, déclare `p` qui pointe sur `x`, et affiche `x` **en lisant à travers `p`** (`*p`), sans le modifier.",
+     "question": "Lire à travers `p`.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "21",
+        "sortie": "21"
+       },
+       {
+        "entree": "-5",
+        "sortie": "-5"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int x;\n    scanf(\"%d\", &x);\n    int *p = &x;\n    printf(\"%d\\n\", *p);\n    return 0;\n}"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int x;\n    scanf(\"%d\", &x);\n    int *p = &x;\n    printf(\"%d\\n\", *p);\n    return 0;\n}\n```",
+     "indices": [
+      "`int *p = &x;` puis `printf(\"%d\\n\", *p);`"
+     ],
+     "duree": 0.57
+    },
+    {
+     "consigne": "Au lieu de lire `*p`, **double** `x` en écrivant à travers `p`, puis affiche `x`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -683,10 +736,11 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int x;\n    scanf(\"%d\", &x);\n    int *p = &x;\n    *p = *p * 2;\n    printf(\"%d\\n\", x);\n    return 0;\n}\n```",
      "indices": [
-      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
-      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+      "Une ligne entre la déclaration de `p` et l'affichage : une affectation sur `*p`.",
+      "`*p = *p * 2;` puis `printf(\"%d\\n\", x);`"
      ],
-     "duree": 3
+     "duree": 1.5,
+     "depart": "#include <stdio.h>\n\nint main(void) {\n    int x;\n    scanf(\"%d\", &x);\n    int *p = &x;\n    printf(\"%d\\n\", *p);\n    return 0;\n}"
     }
    ]
   },
@@ -697,11 +751,42 @@
    "origine": "generee",
    "titre": "Le pointeur mal initialisé",
    "enonce": "Ce programme doit afficher la valeur de `x` en passant par un pointeur. Il ne compile pas : le pointeur reçoit une valeur au lieu d'une adresse.",
-   "guidage": "Que doit contenir un pointeur ?",
+   "guidage": "**Diagnostic** : 1. que doit contenir un pointeur ? → 2. quel opérateur donne l'adresse d'une variable ? → 3. corriger l'initialisation.",
    "duree": 2,
    "etapes": [
     {
-     "consigne": "Corrige le programme ci-dessous pour qu'il fasse ce que dit l'énoncé, puis valide.",
+     "consigne": "Que doit contenir une variable de type `int *` ? (réponse courte)",
+     "question": "Contenu d'un pointeur ?",
+     "verif": {
+      "mode": "regex",
+      "motif": ".*adresse.*",
+      "exemple": "une adresse"
+     },
+     "corrige": "Un pointeur contient une **adresse** (ici, celle d'un `int`), pas une valeur.",
+     "indices": [
+      "Pas un entier ordinaire.",
+      "Une adresse."
+     ],
+     "duree": 0.4
+    },
+    {
+     "consigne": "Quel opérateur donne l'adresse de la variable `x` ?",
+     "question": "Opérateur d'adresse ?",
+     "verif": {
+      "mode": "exact",
+      "attendu": [
+       "&"
+      ]
+     },
+     "corrige": "`&x` est l'adresse de `x`.",
+     "indices": [
+      "Un symbole qu'on met aussi dans `scanf`.",
+      "&"
+     ],
+     "duree": 0.4
+    },
+    {
+     "consigne": "Corrige l'initialisation de `p` pour que le programme compile et affiche `7`.",
      "question": "Corrige le programme.",
      "verif": {
       "mode": "c",
@@ -722,10 +807,10 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int x = 7;\n    int *p = &x;\n    printf(\"%d\\n\", *p);\n    return 0;\n}\n```",
      "indices": [
-      "`p` doit contenir l'adresse de x.",
+      "`p` doit recevoir l'adresse de `x`, pas sa valeur.",
       "`int *p = &x;`"
      ],
-     "duree": 2,
+     "duree": 1.2,
      "depart": "#include <stdio.h>\n\nint main(void) {\n    int x = 7;\n    int *p = x;\n    printf(\"%d\\n\", *p);\n    return 0;\n}"
     }
    ]
@@ -736,12 +821,82 @@
    "notion": "8.3",
    "origine": "generee",
    "titre": "Chercher et renvoyer un pointeur",
-   "enonce": "Écris `int *chercher(int *t, int n, int v)` qui renvoie l'**adresse** de la première case qui vaut `v`, ou `NULL` si `v` est absente. `main` lit `N`, `N` entiers, puis `v` : si le résultat n'est pas `NULL`, il **met la case trouvée à 0 en passant par le pointeur** et affiche le tableau ; sinon il affiche `absent`.",
-   "guidage": "`return &t[i];` dans la boucle, `return NULL;` après. Dans `main` : `int *r = chercher(t, n, v); if (r != NULL) { *r = 0; … }`.",
+   "enonce": "Écris `int *chercher(int t[], int n, int v)` qui renvoie l'**adresse** de la première case qui vaut `v`, ou `NULL` si `v` est absente. `main` lit `N`, `N` entiers, puis `v` : si le résultat n'est pas `NULL`, il **met la case trouvée à 0 en passant par le pointeur** et affiche le tableau ; sinon il affiche `absent`.",
+   "guidage": "**Plan** : 1. la fonction parcourt le tableau → 2. à la première case égale à `v`, `return &t[i];` (l'**adresse** de la case) → 3. sinon `return NULL;` → 4. `main` teste `r != NULL` avant d'écrire `*r = 0`.\n\n**Piège** : écrire à travers un pointeur `NULL` plante le programme.",
    "duree": 7,
    "etapes": [
     {
-     "consigne": "Écris le programme complet.",
+     "consigne": "Que doit renvoyer la fonction quand `v` est absente ? (un mot)",
+     "question": "Valeur renvoyée si absente ?",
+     "verif": {
+      "mode": "exact",
+      "attendu": [
+       "NULL"
+      ]
+     },
+     "corrige": "`NULL` : le pointeur qui ne pointe vers rien.",
+     "indices": [
+      "C'est la valeur « pas d'adresse ».",
+      "NULL"
+     ],
+     "duree": 0.32
+    },
+    {
+     "consigne": "Écris l'instruction (dans le `if`) qui renvoie l'**adresse** de la case `t[i]`.",
+     "question": "Renvoyer l'adresse de `t[i]` ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "return\\s*&\\s*t\\[i\\]\\s*;",
+      "exemple": "return &t[i];"
+     },
+     "corrige": "`return &t[i];` : le `&` donne l'adresse de la case.",
+     "indices": [
+      "Pas la valeur `t[i]`, son adresse.",
+      "`return &t[i];`"
+     ],
+     "duree": 0.4
+    },
+    {
+     "consigne": "Dans `main`, `r` reçoit le résultat. Écris la condition (sans `if`) qui vérifie que la valeur a été trouvée.",
+     "question": "Condition « trouvé » ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "\\(?\\s*r\\s*!=\\s*NULL\\s*\\)?",
+      "exemple": "r != NULL"
+     },
+     "corrige": "`r != NULL` : on n'écrit à travers `r` que s'il pointe quelque part.",
+     "indices": [
+      "Compare `r` à `NULL`.",
+      "`r != NULL`"
+     ],
+     "duree": 0.4
+    },
+    {
+     "consigne": "Sans fonction : lis `N`, `N` entiers puis `v`. Dans `main`, cherche `v` avec un pointeur `r` (`NULL` au départ, `&t[i]` à la première occurrence) ; si `r` n'est pas `NULL`, mets la case à 0 par `*r = 0` et affiche le tableau, sinon affiche `absent`.",
+     "question": "Recherche avec pointeur dans `main`.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "4\n5 7 9 7\n7",
+        "sortie": "5 0 9 7"
+       },
+       {
+        "entree": "3\n1 2 3\n8",
+        "sortie": "absent"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[100], n, v;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    scanf(\"%d\", &v);\n    int *r = NULL;\n    for (int i = 0; i < n; i++) {\n        if (t[i] == v) {\n            r = &t[i];\n            break;\n        }\n    }\n    if (r != NULL) {\n        *r = 0;\n        for (int i = 0; i < n; i++) printf(\"%d \", t[i]);\n        printf(\"\\n\");\n    } else {\n        printf(\"absent\\n\");\n    }\n    return 0;\n}"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[100], n, v;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    scanf(\"%d\", &v);\n    int *r = NULL;\n    for (int i = 0; i < n; i++) {\n        if (t[i] == v) {\n            r = &t[i];\n            break;\n        }\n    }\n    if (r != NULL) {\n        *r = 0;\n        for (int i = 0; i < n; i++) printf(\"%d \", t[i]);\n        printf(\"\\n\");\n    } else {\n        printf(\"absent\\n\");\n    }\n    return 0;\n}\n```",
+     "indices": [
+      "`int *r = NULL;` puis `r = &t[i]; break;` à la première occurrence.",
+      "`if (r != NULL) { *r = 0; … } else { … }`"
+     ],
+     "duree": 2.39
+    },
+    {
+     "consigne": "Sors la recherche dans `int *chercher(int t[], int n, int v)` : elle renvoie `&t[i]` ou `NULL`. `main` appelle `int *r = chercher(t, n, v);` puis teste `r != NULL`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -755,7 +910,7 @@
         "sortie": "absent"
        }
       ],
-      "exemple": "#include <stdio.h>\n\nint *chercher(int *t, int n, int v) {\n    for (int i = 0; i < n; i++) {\n        if (t[i] == v) return &t[i];\n    }\n    return NULL;\n}\n\nint main(void) {\n    int t[100], n, v;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    scanf(\"%d\", &v);\n    int *r = chercher(t, n, v);\n    if (r != NULL) {\n        *r = 0;\n        for (int i = 0; i < n; i++) printf(\"%d \", t[i]);\n        printf(\"\\n\");\n    } else {\n        printf(\"absent\\n\");\n    }\n    return 0;\n}",
+      "exemple": "#include <stdio.h>\n\nint *chercher(int t[], int n, int v) {\n    for (int i = 0; i < n; i++) {\n        if (t[i] == v) return &t[i];\n    }\n    return NULL;\n}\n\nint main(void) {\n    int t[100], n, v;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    scanf(\"%d\", &v);\n    int *r = chercher(t, n, v);\n    if (r != NULL) {\n        *r = 0;\n        for (int i = 0; i < n; i++) printf(\"%d \", t[i]);\n        printf(\"\\n\");\n    } else {\n        printf(\"absent\\n\");\n    }\n    return 0;\n}",
       "exige": [
        {
         "motif": "int\\s*\\*\\s*chercher\\s*\\(",
@@ -767,12 +922,13 @@
        }
       ]
      },
-     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint *chercher(int *t, int n, int v) {\n    for (int i = 0; i < n; i++) {\n        if (t[i] == v) return &t[i];\n    }\n    return NULL;\n}\n\nint main(void) {\n    int t[100], n, v;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    scanf(\"%d\", &v);\n    int *r = chercher(t, n, v);\n    if (r != NULL) {\n        *r = 0;\n        for (int i = 0; i < n; i++) printf(\"%d \", t[i]);\n        printf(\"\\n\");\n    } else {\n        printf(\"absent\\n\");\n    }\n    return 0;\n}\n```",
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint *chercher(int t[], int n, int v) {\n    for (int i = 0; i < n; i++) {\n        if (t[i] == v) return &t[i];\n    }\n    return NULL;\n}\n\nint main(void) {\n    int t[100], n, v;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    scanf(\"%d\", &v);\n    int *r = chercher(t, n, v);\n    if (r != NULL) {\n        *r = 0;\n        for (int i = 0; i < n; i++) printf(\"%d \", t[i]);\n        printf(\"\\n\");\n    } else {\n        printf(\"absent\\n\");\n    }\n    return 0;\n}\n```",
      "indices": [
-      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
-      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+      "La boucle de recherche passe dans la fonction : `return &t[i];` dedans, `return NULL;` après.",
+      "`main` garde le test `if (r != NULL)` et l'affichage."
      ],
-     "duree": 7
+     "duree": 3.49,
+     "depart": "#include <stdio.h>\n\nint main(void) {\n    int t[100], n, v;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    scanf(\"%d\", &v);\n    int *r = NULL;\n    for (int i = 0; i < n; i++) {\n        if (t[i] == v) {\n            r = &t[i];\n            break;\n        }\n    }\n    if (r != NULL) {\n        *r = 0;\n        for (int i = 0; i < n; i++) printf(\"%d \", t[i]);\n        printf(\"\\n\");\n    } else {\n        printf(\"absent\\n\");\n    }\n    return 0;\n}"
     }
    ]
   },
@@ -783,11 +939,64 @@
    "origine": "generee",
    "titre": "Parcourir avec p++",
    "enonce": "Écris un programme qui lit `N` puis `N` entiers dans un tableau, puis affiche les éléments **en parcourant le tableau avec un pointeur** qui avance avec `p++` (utilise un compteur pour t'arrêter, sans comparer de pointeurs).",
-   "guidage": "`int *p = t;` puis, `n` fois : `printf(\"%d \", *p); p++;`.",
+   "guidage": "**Plan** : 1. `int *p = t;` (le nom du tableau est l'adresse de sa 1re case) → 2. `n` fois : afficher `*p` puis `p++` (le pointeur avance d'un **élément**).",
    "duree": 4,
    "etapes": [
     {
-     "consigne": "Écris le programme complet.",
+     "consigne": "Écris la déclaration d'un pointeur `p` qui pointe sur la **première case** du tableau `t`.",
+     "question": "`p` sur le début de `t` ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "int\\s*\\*\\s*p\\s*=\\s*t\\s*;|int\\s*\\*\\s*p\\s*=\\s*&\\s*t\\[\\s*0\\s*\\]\\s*;",
+      "exemple": "int *p = t;"
+     },
+     "corrige": "Le nom d'un tableau vaut l'adresse de sa première case : `int *p = t;`.",
+     "indices": [
+      "Pas besoin de `&` devant `t`.",
+      "`int *p = t;`"
+     ],
+     "duree": 0.55
+    },
+    {
+     "consigne": "Si `p` pointe sur `t[0]`, vers quelle case (indice) pointe-t-il après un `p++` ?",
+     "question": "Case pointée après `p++` ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 1
+     },
+     "corrige": "`p++` avance d'un **élément** : `p` pointe sur `t[1]`.",
+     "indices": [
+      "Il avance d'un élément, pas d'un octet.",
+      "1"
+     ],
+     "duree": 0.36
+    },
+    {
+     "consigne": "Lis `N` puis `N` entiers dans un tableau, et affiche-les (séparés par une espace) avec une boucle à indice `i` et `t[i]`.",
+     "question": "Affiche avec `t[i]`.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "4\n3 1 4 1",
+        "sortie": "3 1 4 1"
+       },
+       {
+        "entree": "1\n9",
+        "sortie": "9"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    for (int i = 0; i < n; i++) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    return 0;\n}"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    for (int i = 0; i < n; i++) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    return 0;\n}\n```",
+     "indices": [
+      "Une boucle de saisie, une boucle d'affichage.",
+      "`printf(\"%d \", t[i]);`"
+     ],
+     "duree": 1.09
+    },
+    {
+     "consigne": "Réécris l'affichage avec un pointeur : `int *p = t;`, puis `n` fois affiche `*p` et fais avancer `p` avec `p++` (garde un compteur pour t'arrêter).",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -816,10 +1025,11 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    int *p = t;\n    for (int k = 0; k < n; k++) {\n        printf(\"%d \", *p);\n        p++;\n    }\n    printf(\"\\n\");\n    return 0;\n}\n```",
      "indices": [
-      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
-      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+      "Plus de `t[i]` dans l'affichage : `*p` à la place.",
+      "`for (int k = 0; k < n; k++) { printf(\"%d \", *p); p++; }`"
      ],
-     "duree": 4
+     "duree": 2.0,
+     "depart": "#include <stdio.h>\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    for (int i = 0; i < n; i++) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    return 0;\n}"
     }
    ]
   },
@@ -830,11 +1040,64 @@
    "origine": "generee",
    "titre": "Somme en notation pointeur",
    "enonce": "Écris `int somme(int *t, int n)` qui calcule la somme **en notation pointeur** (`*(t + i)`, sans crochets). `main` lit `N` puis `N` entiers et affiche la somme.",
-   "guidage": "Dans la fonction, `t` est une variable pointeur : `s += *(t + i);`.",
+   "guidage": "**Plan** : 1. `somme` reçoit un pointeur `int *t` → 2. `t[i]` s'écrit aussi `*(t + i)` → 3. cumuler dans `s`.\n\n**À retenir** : `t + i` est l'adresse de la case `i` ; `*` lit ce qu'il y a dedans.",
    "duree": 5,
    "etapes": [
     {
-     "consigne": "Écris le programme complet.",
+     "consigne": "Écris l'expression, en notation pointeur (sans crochets), équivalente à `t[i]`.",
+     "question": "`t[i]` en notation pointeur ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "\\*\\s*\\(\\s*t\\s*\\+\\s*i\\s*\\)|\\*\\s*\\(\\s*i\\s*\\+\\s*t\\s*\\)",
+      "exemple": "*(t + i)"
+     },
+     "corrige": "`*(t + i)` : adresse de la case `i`, puis valeur pointée.",
+     "indices": [
+      "Avance de `i` éléments, puis déréférence.",
+      "`*(t + i)`"
+     ],
+     "duree": 0.5
+    },
+    {
+     "consigne": "Si `t` pointe sur `{1, 2, 3, 4}`, que vaut `*(t + 2)` ?",
+     "question": "Valeur de `*(t + 2)` ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 3
+     },
+     "corrige": "`t + 2` est l'adresse de `t[2]`, qui vaut 3.",
+     "indices": [
+      "`*(t + 2)` est la même chose que `t[2]`.",
+      "3"
+     ],
+     "duree": 0.33
+    },
+    {
+     "consigne": "Écris `int somme(int t[], int n)` (notation à crochets) qui renvoie la somme ; `main` lit `N` puis `N` entiers et affiche `somme(t, n)`.",
+     "question": "Somme avec des crochets.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "4\n1 2 3 4",
+        "sortie": "10"
+       },
+       {
+        "entree": "2\n-5 5",
+        "sortie": "0"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint somme(int t[], int n) {\n    int s = 0;\n    for (int i = 0; i < n; i++) {\n        s += t[i];\n    }\n    return s;\n}\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    printf(\"%d\\n\", somme(t, n));\n    return 0;\n}"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint somme(int t[], int n) {\n    int s = 0;\n    for (int i = 0; i < n; i++) {\n        s += t[i];\n    }\n    return s;\n}\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    printf(\"%d\\n\", somme(t, n));\n    return 0;\n}\n```",
+     "indices": [
+      "Une boucle qui cumule `t[i]` dans `s`.",
+      "`return s;` à la fin de la fonction."
+     ],
+     "duree": 1.67
+    },
+    {
+     "consigne": "Réécris `somme` avec un paramètre `int *t` et la **notation pointeur** : remplace `t[i]` par `*(t + i)`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -859,10 +1122,11 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint somme(int *t, int n) {\n    int s = 0;\n    for (int i = 0; i < n; i++) {\n        s += *(t + i);\n    }\n    return s;\n}\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    printf(\"%d\\n\", somme(t, n));\n    return 0;\n}\n```",
      "indices": [
-      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
-      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+      "L'en-tête devient `int somme(int *t, int n)`.",
+      "`s += *(t + i);`"
      ],
-     "duree": 5
+     "duree": 2.5,
+     "depart": "#include <stdio.h>\n\nint somme(int t[], int n) {\n    int s = 0;\n    for (int i = 0; i < n; i++) {\n        s += t[i];\n    }\n    return s;\n}\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    printf(\"%d\\n\", somme(t, n));\n    return 0;\n}"
     }
    ]
   },
@@ -873,11 +1137,65 @@
    "origine": "generee",
    "titre": "Doubler chaque élément",
    "enonce": "Écris `void modifier(int *tab, int taille)` (exemple du cours) qui **double** chaque élément du tableau. `main` lit `N` puis `N` entiers, appelle `modifier`, puis affiche le tableau.",
-   "guidage": "La fonction reçoit l'adresse du tableau : elle modifie l'original.",
+   "guidage": "**Plan** : `modifier` reçoit l'adresse du tableau (`int *tab`) et sa taille ; elle double chaque case ; comme elle travaille sur l'original, `main` affiche ensuite le tableau modifié.",
    "duree": 4,
    "etapes": [
     {
-     "consigne": "Écris le programme complet.",
+     "consigne": "Écris l'en-tête de `modifier` : un pointeur `int *tab`, une taille `taille`, aucune valeur renvoyée.",
+     "question": "En-tête de `modifier` ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "void\\s+modifier\\s*\\(\\s*int\\s*\\*\\s*tab\\s*,\\s*int\\s+taille\\s*\\)\\s*\\{?",
+      "exemple": "void modifier(int *tab, int taille)"
+     },
+     "corrige": "`void modifier(int *tab, int taille)`",
+     "indices": [
+      "Un pointeur sur entier et une taille.",
+      "`void modifier(int *tab, int taille)`"
+     ],
+     "duree": 0.37
+    },
+    {
+     "consigne": "Écris l'instruction (dans la boucle d'indice `i`) qui double la case `i` de `tab`.",
+     "question": "Doubler la case `i` ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "tab\\[i\\]\\s*\\*=\\s*2\\s*;|tab\\[i\\]\\s*=\\s*tab\\[i\\]\\s*\\*\\s*2\\s*;|tab\\[i\\]\\s*=\\s*2\\s*\\*\\s*tab\\[i\\]\\s*;|\\*\\s*\\(\\s*tab\\s*\\+\\s*i\\s*\\)\\s*\\*=\\s*2\\s*;|tab\\[i\\]\\s*\\+=\\s*tab\\[i\\]\\s*;",
+      "exemple": "tab[i] *= 2;"
+     },
+     "corrige": "`tab[i] *= 2;`",
+     "indices": [
+      "Une affectation sur `tab[i]`.",
+      "`tab[i] *= 2;`"
+     ],
+     "duree": 0.37
+    },
+    {
+     "consigne": "Écris `void modifier(int tab[], int taille)` (crochets) qui double chaque case ; `main` lit `N` entiers, appelle `modifier` et affiche le tableau.",
+     "question": "Doubler avec des crochets.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "5\n10 20 30 40 50",
+        "sortie": "20 40 60 80 100"
+       },
+       {
+        "entree": "2\n-1 0",
+        "sortie": "-2 0"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nvoid modifier(int tab[], int taille) {\n    for (int i = 0; i < taille; i++) {\n        tab[i] *= 2;\n    }\n}\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    modifier(t, n);\n    for (int i = 0; i < n; i++) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    return 0;\n}"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nvoid modifier(int tab[], int taille) {\n    for (int i = 0; i < taille; i++) {\n        tab[i] *= 2;\n    }\n}\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    modifier(t, n);\n    for (int i = 0; i < n; i++) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    return 0;\n}\n```",
+     "indices": [
+      "La fonction modifie directement le tableau reçu.",
+      "`tab[i] *= 2;` dans une boucle."
+     ],
+     "duree": 1.25
+    },
+    {
+     "consigne": "Remplace le paramètre `int tab[]` par un **pointeur** `int *tab` (le reste du corps ne change pas : `tab[i]` fonctionne aussi avec un pointeur).",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -902,10 +1220,11 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nvoid modifier(int *tab, int taille) {\n    for (int i = 0; i < taille; i++) {\n        tab[i] *= 2;\n    }\n}\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    modifier(t, n);\n    for (int i = 0; i < n; i++) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    return 0;\n}\n```",
      "indices": [
-      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
-      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+      "Un seul changement dans l'en-tête de la fonction.",
+      "`void modifier(int *tab, int taille)`"
      ],
-     "duree": 4
+     "duree": 2.01,
+     "depart": "#include <stdio.h>\n\nvoid modifier(int tab[], int taille) {\n    for (int i = 0; i < taille; i++) {\n        tab[i] *= 2;\n    }\n}\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    modifier(t, n);\n    for (int i = 0; i < n; i++) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    return 0;\n}"
     }
    ]
   },
@@ -916,11 +1235,80 @@
    "origine": "generee",
    "titre": "Minimum et maximum par pointeurs",
    "enonce": "Écris `void min_max(int *t, int n, int *min, int *max)` qui range le minimum et le maximum du tableau dans les variables pointées par `min` et `max`. `main` lit `N` puis `N` entiers et affiche le minimum puis le maximum.",
-   "guidage": "Deux résultats : deux paramètres pointeurs (voir {{7.5}}). Initialise `*min` et `*max` avec `t[0]`.",
+   "guidage": "**Plan** : `min_max` produit **deux** résultats : deux paramètres pointeurs `min` et `max`. On les initialise avec `t[0]` puis on les met à jour en parcourant le reste du tableau.",
    "duree": 6,
    "etapes": [
     {
-     "consigne": "Écris le programme complet.",
+     "consigne": "Écris l'instruction qui initialise le minimum (variable pointée par `min`) avec la première case du tableau.",
+     "question": "Initialiser `*min` ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "\\*\\s*min\\s*=\\s*t\\[\\s*0\\s*\\]\\s*;",
+      "exemple": "*min = t[0];"
+     },
+     "corrige": "`*min = t[0];` : on écrit dans la variable pointée.",
+     "indices": [
+      "Le `*` désigne la variable pointée.",
+      "`*min = t[0];`"
+     ],
+     "duree": 0.38
+    },
+    {
+     "consigne": "Écris la ligne (dans la boucle d'indice `i`) qui met à jour le minimum quand `t[i]` est plus petit.",
+     "question": "Mise à jour du minimum ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "if\\s*\\(\\s*t\\[i\\]\\s*<\\s*\\*\\s*min\\s*\\)\\s*\\{?\\s*\\*\\s*min\\s*=\\s*t\\[i\\]\\s*;\\s*\\}?",
+      "exemple": "if (t[i] < *min) *min = t[i];"
+     },
+     "corrige": "`if (t[i] < *min) *min = t[i];`",
+     "indices": [
+      "Compare avec la valeur pointée, `*min`.",
+      "`if (t[i] < *min) *min = t[i];`"
+     ],
+     "duree": 0.62
+    },
+    {
+     "consigne": "Dans `main`, les résultats iront dans `mi` et `ma`. Écris l'appel de `min_max` (tableau `t`, taille `n`).",
+     "question": "Appel de `min_max` ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "min_max\\s*\\(\\s*t\\s*,\\s*n\\s*,\\s*&\\s*mi\\s*,\\s*&\\s*ma\\s*\\)\\s*;",
+      "exemple": "min_max(t, n, &mi, &ma);"
+     },
+     "corrige": "`min_max(t, n, &mi, &ma);` : les adresses des deux résultats.",
+     "indices": [
+      "Tableau et taille par valeur, résultats par adresse.",
+      "`min_max(t, n, &mi, &ma);`"
+     ],
+     "duree": 0.46
+    },
+    {
+     "consigne": "Sans fonction : lis `N` puis `N` entiers et affiche le minimum puis le maximum (variables `mi` et `ma`).",
+     "question": "Min et max dans `main`.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "5\n4 -2 9 0 3",
+        "sortie": "-2 9"
+       },
+       {
+        "entree": "1\n7",
+        "sortie": "7 7"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    int mi = t[0], ma = t[0];\n    for (int i = 1; i < n; i++) {\n        if (t[i] < mi) mi = t[i];\n        if (t[i] > ma) ma = t[i];\n    }\n    printf(\"%d %d\\n\", mi, ma);\n    return 0;\n}"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    int mi = t[0], ma = t[0];\n    for (int i = 1; i < n; i++) {\n        if (t[i] < mi) mi = t[i];\n        if (t[i] > ma) ma = t[i];\n    }\n    printf(\"%d %d\\n\", mi, ma);\n    return 0;\n}\n```",
+     "indices": [
+      "`mi` et `ma` partent de `t[0]`.",
+      "Deux `if` dans la boucle qui démarre à `i = 1`."
+     ],
+     "duree": 1.54
+    },
+    {
+     "consigne": "Sors le calcul dans `void min_max(int *t, int n, int *min, int *max)` : les résultats sortent par les pointeurs `min` et `max` ; `main` affiche `mi` puis `ma`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -949,10 +1337,11 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nvoid min_max(int *t, int n, int *min, int *max) {\n    *min = t[0];\n    *max = t[0];\n    for (int i = 1; i < n; i++) {\n        if (t[i] < *min) *min = t[i];\n        if (t[i] > *max) *max = t[i];\n    }\n}\n\nint main(void) {\n    int t[100], n, mi, ma;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    min_max(t, n, &mi, &ma);\n    printf(\"%d %d\\n\", mi, ma);\n    return 0;\n}\n```",
      "indices": [
-      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
-      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+      "Dans la fonction, `mi` devient `*min` et `ma` devient `*max`.",
+      "`min_max(t, n, &mi, &ma);` puis `printf(\"%d %d\\n\", mi, ma);`"
      ],
-     "duree": 6
+     "duree": 3.0,
+     "depart": "#include <stdio.h>\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    int mi = t[0], ma = t[0];\n    for (int i = 1; i < n; i++) {\n        if (t[i] < mi) mi = t[i];\n        if (t[i] > ma) ma = t[i];\n    }\n    printf(\"%d %d\\n\", mi, ma);\n    return 0;\n}"
     }
    ]
   },
@@ -963,11 +1352,71 @@
    "origine": "generee",
    "titre": "Longueur d'une chaîne avec un pointeur",
    "enonce": "Écris `int longueur(char *s)` qui compte les caractères **en faisant avancer le pointeur** `s` jusqu'au `'\\0'`. `main` lit un mot et affiche sa longueur.",
-   "guidage": "`while (*s != '\\0') { n++; s++; }`.",
+   "guidage": "**Plan** : `longueur(char *s)` fait **avancer le pointeur** `s` jusqu'au `'\\0'` en comptant les pas : `while (*s != '\\0') { n++; s++; }`.",
    "duree": 4,
    "etapes": [
     {
-     "consigne": "Écris le programme complet.",
+     "consigne": "Écris la condition du `while` (sans `while`) qui continue tant que le caractère **pointé** par `s` n'est pas le `'\\0'`.",
+     "question": "Condition du `while` ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "\\(?\\s*\\*\\s*s\\s*!=\\s*'\\\\0'\\s*\\)?|\\(?\\s*\\*\\s*s\\s*\\)?",
+      "exemple": "*s != '\\0'"
+     },
+     "corrige": "`*s != '\\0'` : `*s` est le caractère courant.",
+     "indices": [
+      "Le `*` lit le caractère pointé.",
+      "`*s != '\\0'`"
+     ],
+     "duree": 0.48
+    },
+    {
+     "consigne": "Écris l'instruction qui fait avancer le pointeur `s` d'un caractère.",
+     "question": "Avancer le pointeur ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "s\\s*\\+\\+\\s*;|\\+\\+\\s*s\\s*;|s\\s*\\+=\\s*1\\s*;|s\\s*=\\s*s\\s*\\+\\s*1\\s*;",
+      "exemple": "s++;"
+     },
+     "corrige": "`s++;` : `s` pointe sur le caractère suivant.",
+     "indices": [
+      "Une incrémentation du pointeur lui-même.",
+      "`s++;`"
+     ],
+     "duree": 0.32
+    },
+    {
+     "consigne": "Écris `int longueur(char s[])` avec un indice `n` : `while (s[n] != '\\0') n++;`. `main` lit un mot (`%99s`) et affiche `longueur(mot)`.",
+     "question": "Longueur avec un indice.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "Bonjour",
+        "sortie": "7"
+       },
+       {
+        "entree": "C",
+        "sortie": "1"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint longueur(char s[]) {\n    int n = 0;\n    while (s[n] != '\\0') {\n        n++;\n    }\n    return n;\n}\n\nint main(void) {\n    char mot[100];\n    scanf(\"%99s\", mot);\n    printf(\"%d\\n\", longueur(mot));\n    return 0;\n}",
+      "interdit": [
+       {
+        "motif": "\\bstrlen\\b",
+        "msg": "N'utilise pas strlen ici."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint longueur(char s[]) {\n    int n = 0;\n    while (s[n] != '\\0') {\n        n++;\n    }\n    return n;\n}\n\nint main(void) {\n    char mot[100];\n    scanf(\"%99s\", mot);\n    printf(\"%d\\n\", longueur(mot));\n    return 0;\n}\n```",
+     "indices": [
+      "Un indice `n` qui part de 0 et avance tant que `s[n] != '\\0'`.",
+      "`return n;` à la fin."
+     ],
+     "duree": 1.2
+    },
+    {
+     "consigne": "Réécris `longueur(char *s)` en faisant **avancer le pointeur** `s` lui-même (`s++`) au lieu d'utiliser un indice ; garde un compteur `n`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -998,10 +1447,11 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint longueur(char *s) {\n    int n = 0;\n    while (*s != '\\0') {\n        n++;\n        s++;\n    }\n    return n;\n}\n\nint main(void) {\n    char mot[100];\n    scanf(\"%99s\", mot);\n    printf(\"%d\\n\", longueur(mot));\n    return 0;\n}\n```",
      "indices": [
-      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
-      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+      "`while (*s != '\\0') { n++; s++; }`",
+      "L'en-tête devient `int longueur(char *s)`."
      ],
-     "duree": 4
+     "duree": 2.0,
+     "depart": "#include <stdio.h>\n\nint longueur(char s[]) {\n    int n = 0;\n    while (s[n] != '\\0') {\n        n++;\n    }\n    return n;\n}\n\nint main(void) {\n    char mot[100];\n    scanf(\"%99s\", mot);\n    printf(\"%d\\n\", longueur(mot));\n    return 0;\n}"
     }
    ]
   },
@@ -1012,11 +1462,65 @@
    "origine": "generee",
    "titre": "Moyenne en lecture seule",
    "enonce": "Écris `double moyenne(const int *t, int n)` : le paramètre est déclaré `const`, car la fonction ne fait que **lire** le tableau. `main` lit `N` puis `N` entiers et affiche la moyenne avec 2 décimales.",
-   "guidage": "`const int *t` : promesse de ne pas modifier le tableau. Divise en réel.",
+   "guidage": "**Plan** : 1. `const int *t` : promesse de ne pas modifier le tableau → 2. cumuler la somme → 3. diviser en **réel**.",
    "duree": 4,
    "etapes": [
     {
-     "consigne": "Écris le programme complet.",
+     "consigne": "Écris l'en-tête de `moyenne` avec le paramètre `t` déclaré `const` (lecture seule) et la taille `n`.",
+     "question": "En-tête avec `const` ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "double\\s+moyenne\\s*\\(\\s*const\\s+int\\s*\\*\\s*t\\s*,\\s*int\\s+n\\s*\\)\\s*\\{?",
+      "exemple": "double moyenne(const int *t, int n)"
+     },
+     "corrige": "`double moyenne(const int *t, int n)`",
+     "indices": [
+      "`const` se place avant le type pointé.",
+      "`double moyenne(const int *t, int n)`"
+     ],
+     "duree": 0.45
+    },
+    {
+     "consigne": "Si la fonction essaie d'écrire `t[0] = 0;` alors que `t` est `const int *`, que se passe-t-il ? (un mot)",
+     "question": "Écrire dans un `const` ?",
+     "verif": {
+      "mode": "regex",
+      "motif": ".*(erreur|refus|interdit|impossible|compil).*",
+      "exemple": "erreur de compilation"
+     },
+     "corrige": "Le compilateur refuse : c'est tout l'intérêt de `const`.",
+     "indices": [
+      "Le compilateur veille sur la promesse.",
+      "Une erreur de compilation."
+     ],
+     "duree": 0.26
+    },
+    {
+     "consigne": "Écris `double moyenne(int *t, int n)` (sans `const` pour l'instant) qui renvoie la moyenne réelle ; `main` lit `N` entiers et affiche la moyenne avec 2 décimales.",
+     "question": "Moyenne sans `const`.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "3\n10 11 12",
+        "sortie": "11.00"
+       },
+       {
+        "entree": "4\n1 2 2 2",
+        "sortie": "1.75"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\ndouble moyenne(int *t, int n) {\n    int s = 0;\n    for (int i = 0; i < n; i++) s += t[i];\n    return (double)s / n;\n}\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    printf(\"%.2f\\n\", moyenne(t, n));\n    return 0;\n}"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\ndouble moyenne(int *t, int n) {\n    int s = 0;\n    for (int i = 0; i < n; i++) s += t[i];\n    return (double)s / n;\n}\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    printf(\"%.2f\\n\", moyenne(t, n));\n    return 0;\n}\n```",
+     "indices": [
+      "Une somme entière, puis `(double)s / n`.",
+      "`printf(\"%.2f\\n\", moyenne(t, n));`"
+     ],
+     "duree": 1.29
+    },
+    {
+     "consigne": "Ajoute la promesse de lecture seule : déclare le paramètre `const int *t`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -1042,10 +1546,11 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\ndouble moyenne(const int *t, int n) {\n    int s = 0;\n    for (int i = 0; i < n; i++) s += t[i];\n    return (double)s / n;\n}\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    printf(\"%.2f\\n\", moyenne(t, n));\n    return 0;\n}\n```",
      "indices": [
-      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
-      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+      "Un seul mot à ajouter dans l'en-tête de la fonction.",
+      "`double moyenne(const int *t, int n)`"
      ],
-     "duree": 4
+     "duree": 2.0,
+     "depart": "#include <stdio.h>\n\ndouble moyenne(int *t, int n) {\n    int s = 0;\n    for (int i = 0; i < n; i++) s += t[i];\n    return (double)s / n;\n}\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    printf(\"%.2f\\n\", moyenne(t, n));\n    return 0;\n}"
     }
    ]
   },
@@ -1056,11 +1561,78 @@
    "origine": "generee",
    "titre": "Deux pointeurs, une variable",
    "enonce": "Écris un programme qui lit un entier `x`, déclare **deux** pointeurs `p` et `q` vers `x`, ajoute 1 à `x` par `p`, multiplie `x` par 3 par `q`, puis affiche `x`, puis `1` si `p == q` (ils contiennent la même adresse), `0` sinon.",
-   "guidage": "Les deux pointeurs contiennent la même adresse : chaque modification touche la même case.",
+   "guidage": "**Plan** : 1. deux pointeurs `p` et `q` qui reçoivent la **même** adresse `&x` → 2. `*p` et `*q` désignent la même case → 3. comparer `p == q` (adresses).",
    "duree": 4,
    "etapes": [
     {
-     "consigne": "Écris le programme complet.",
+     "consigne": "Avec `x = 4`, on exécute `*p = *p + 1;`. Que vaut `x` ensuite ?",
+     "question": "Valeur de `x` ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 5
+     },
+     "corrige": "`*p` est `x` : 4 + 1 = 5.",
+     "indices": [
+      "`*p` et `x` désignent la même case.",
+      "5"
+     ],
+     "duree": 0.35
+    },
+    {
+     "consigne": "Puis, avec `x = 5`, on exécute `*q = *q * 3;` (`q` pointe aussi sur `x`). Que vaut `x` ?",
+     "question": "Valeur de `x` ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 15
+     },
+     "corrige": "`*q` est aussi `x` : 5 × 3 = 15.",
+     "indices": [
+      "Même case, autre pointeur.",
+      "15"
+     ],
+     "duree": 0.35
+    },
+    {
+     "consigne": "Écris la déclaration du second pointeur `q`, qui pointe aussi sur `x`.",
+     "question": "Déclarer `q` ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "int\\s*\\*\\s*q\\s*=\\s*&\\s*x\\s*;",
+      "exemple": "int *q = &x;"
+     },
+     "corrige": "`int *q = &x;`",
+     "indices": [
+      "Même forme que `p`.",
+      "`int *q = &x;`"
+     ],
+     "duree": 0.43
+    },
+    {
+     "consigne": "Lis `x`, déclare `p` sur `x`, ajoute 1 à `x` à travers `p`, puis affiche `x`.",
+     "question": "Ajouter 1 par `p`.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "4",
+        "sortie": "5"
+       },
+       {
+        "entree": "0",
+        "sortie": "1"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int x;\n    scanf(\"%d\", &x);\n    int *p = &x;\n    *p = *p + 1;\n    printf(\"%d\\n\", x);\n    return 0;\n}"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int x;\n    scanf(\"%d\", &x);\n    int *p = &x;\n    *p = *p + 1;\n    printf(\"%d\\n\", x);\n    return 0;\n}\n```",
+     "indices": [
+      "`int *p = &x;` puis `*p = *p + 1;`",
+      "`printf(\"%d\\n\", x);`"
+     ],
+     "duree": 0.87
+    },
+    {
+     "consigne": "Ajoute le second pointeur `q` (aussi sur `x`) : multiplie `x` par 3 **à travers `q`**, puis affiche `x`, une espace, et `1` si `p == q` (`0` sinon).",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -1085,10 +1657,11 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int x;\n    scanf(\"%d\", &x);\n    int *p = &x;\n    int *q = &x;\n    *p = *p + 1;\n    *q = *q * 3;\n    printf(\"%d %d\\n\", x, p == q);\n    return 0;\n}\n```",
      "indices": [
-      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
-      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+      "`int *q = &x;` puis `*q = *q * 3;`",
+      "`printf(\"%d %d\\n\", x, p == q);` : la comparaison vaut 1 ou 0."
      ],
-     "duree": 4
+     "duree": 2.0,
+     "depart": "#include <stdio.h>\n\nint main(void) {\n    int x;\n    scanf(\"%d\", &x);\n    int *p = &x;\n    *p = *p + 1;\n    printf(\"%d\\n\", x);\n    return 0;\n}"
     }
    ]
   },
@@ -1099,11 +1672,69 @@
    "origine": "generee",
    "titre": "Parcours sans compteur",
    "enonce": "Écris un programme qui lit un entier `n` (au plus 10), puis `n` entiers rangés dans un tableau `t`, et affiche leur somme. **Sans indice `i`** : parcours le tableau avec un pointeur `p`, de `t` jusqu'à `t + n` exclu.",
-   "guidage": "La boucle s'écrit `for (int *p = t; p < t + n; p++)`. Pour lire dans la case pointée, `scanf(\"%d\", p)` : `p` est déjà une adresse.",
+   "guidage": "**Plan** : une boucle `for (int *p = t; p < t + n; p++)` : `p` parcourt les adresses des cases, de `t` jusqu'à `t + n` **exclu**. Dans la saisie, `scanf(\"%d\", p)` : `p` est déjà une adresse.",
    "duree": 5,
    "etapes": [
     {
-     "consigne": "Écris le programme complet.",
+     "consigne": "Écris l'en-tête du `for` qui fait parcourir le tableau `t` (de `n` cases) par un pointeur `p`, de `t` jusqu'à `t + n` exclu.",
+     "question": "En-tête avec pointeur ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "for\\s*\\(\\s*int\\s*\\*\\s*p\\s*=\\s*t\\s*;\\s*p\\s*<\\s*t\\s*\\+\\s*n\\s*;\\s*(p\\+\\+|\\+\\+p|p\\s*\\+=\\s*1)\\s*\\)\\s*\\{?",
+      "exemple": "for (int *p = t; p < t + n; p++)"
+     },
+     "corrige": "`for (int *p = t; p < t + n; p++)`",
+     "indices": [
+      "Départ `t`, test `p < t + n`, pas `p++`.",
+      "`for (int *p = t; p < t + n; p++)`"
+     ],
+     "duree": 0.69
+    },
+    {
+     "consigne": "Écris l'instruction qui lit un entier directement dans la case pointée par `p` (`p` est déjà une adresse).",
+     "question": "Lire dans la case pointée ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "scanf\\s*\\(\\s*\\\"%d\\\"\\s*,\\s*p\\s*\\)\\s*;",
+      "exemple": "scanf(\"%d\", p);"
+     },
+     "corrige": "`scanf(\"%d\", p);` : pas de `&`, `p` est une adresse.",
+     "indices": [
+      "Pas de `&` devant `p`.",
+      "`scanf(\"%d\", p);`"
+     ],
+     "duree": 0.52
+    },
+    {
+     "consigne": "Même programme avec un **indice** : lis `n` (≤ 10) puis `n` entiers, et affiche leur somme (boucles `for (int i = 0; …)`).",
+     "question": "Somme avec indices.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "4\n1 2 3 4",
+        "sortie": "10"
+       },
+       {
+        "entree": "1\n-7",
+        "sortie": "-7"
+       },
+       {
+        "entree": "0",
+        "sortie": "0"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[10], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        scanf(\"%d\", &t[i]);\n    }\n    int somme = 0;\n    for (int i = 0; i < n; i++) {\n        somme += t[i];\n    }\n    printf(\"%d\\n\", somme);\n    return 0;\n}"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[10], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        scanf(\"%d\", &t[i]);\n    }\n    int somme = 0;\n    for (int i = 0; i < n; i++) {\n        somme += t[i];\n    }\n    printf(\"%d\\n\", somme);\n    return 0;\n}\n```",
+     "indices": [
+      "Une boucle de saisie, une boucle de cumul.",
+      "`somme += t[i];`"
+     ],
+     "duree": 1.29
+    },
+    {
+     "consigne": "Supprime l'indice `i` : parcours le tableau avec un pointeur `p` (de `t` à `t + n` exclu) pour la saisie **et** pour la somme.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -1136,10 +1767,11 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[10];\n    int n;\n    scanf(\"%d\", &n);\n    for (int *p = t; p < t + n; p++) {\n        scanf(\"%d\", p);\n    }\n    int somme = 0;\n    for (int *p = t; p < t + n; p++) {\n        somme += *p;\n    }\n    printf(\"%d\\n\", somme);\n    return 0;\n}\n```",
      "indices": [
-      "`t + n` est l'adresse juste après la dernière case remplie.",
-      "`scanf(\"%d\", p)` sans & : p contient déjà l'adresse de la case."
+      "`for (int *p = t; p < t + n; p++)` dans les deux boucles.",
+      "`scanf(\"%d\", p);` et `somme += *p;`"
      ],
-     "duree": 5
+     "duree": 2.5,
+     "depart": "#include <stdio.h>\n\nint main(void) {\n    int t[10], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        scanf(\"%d\", &t[i]);\n    }\n    int somme = 0;\n    for (int i = 0; i < n; i++) {\n        somme += t[i];\n    }\n    printf(\"%d\\n\", somme);\n    return 0;\n}"
     }
    ]
   },
@@ -1150,11 +1782,68 @@
    "origine": "generee",
    "titre": "Longueur par soustraction",
    "enonce": "Écris une fonction `int longueur(char *s)` qui renvoie la longueur d'une chaîne **sans compteur** : avance un pointeur `q` jusqu'au `'\\0'`, puis renvoie `q - s`. Dans `main`, lis un mot et affiche sa longueur.",
-   "guidage": "La différence de deux pointeurs sur le même tableau donne le nombre d'éléments qui les séparent.",
+   "guidage": "**Plan** : 1. un pointeur `q` part de `s` → 2. il avance jusqu'au `'\\0'` → 3. `q - s` donne le **nombre d'éléments** entre les deux adresses = la longueur.",
    "duree": 5,
    "etapes": [
     {
-     "consigne": "Écris le programme complet.",
+     "consigne": "Pour `s = \"pointeur\"` (8 lettres), `q` s'arrête sur le `'\\0'`. Que vaut `q - s` ?",
+     "question": "Valeur de `q - s` ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 8
+     },
+     "corrige": "La différence de deux pointeurs est un nombre d'**éléments** : 8 caractères séparent le début du `'\\0'`.",
+     "indices": [
+      "Combien de lettres avant le `'\\0'` ?",
+      "8"
+     ],
+     "duree": 0.4
+    },
+    {
+     "consigne": "Écris l'instruction de retour qui renvoie la longueur grâce à la différence des deux pointeurs.",
+     "question": "Instruction de retour ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "return\\s+q\\s*-\\s*s\\s*;|return\\s*\\(\\s*q\\s*-\\s*s\\s*\\)\\s*;",
+      "exemple": "return q - s;"
+     },
+     "corrige": "`return q - s;`",
+     "indices": [
+      "Pointeur d'arrivée moins pointeur de départ.",
+      "`return q - s;`"
+     ],
+     "duree": 0.5
+    },
+    {
+     "consigne": "Écris `int longueur(char *s)` : un pointeur `q` part de `s`, avance jusqu'au `'\\0'`, et un **compteur** `n` compte les pas ; la fonction renvoie `n`. `main` lit un mot et affiche sa longueur.",
+     "question": "Longueur avec `q` et un compteur.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "pointeur",
+        "sortie": "8"
+       },
+       {
+        "entree": "C",
+        "sortie": "1"
+       },
+       {
+        "entree": "esilv",
+        "sortie": "5"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint longueur(char *s) {\n    char *q = s;\n    int n = 0;\n    while (*q != '\\0') {\n        q++;\n        n++;\n    }\n    return n;\n}\n\nint main(void) {\n    char mot[50];\n    scanf(\"%49s\", mot);\n    printf(\"%d\\n\", longueur(mot));\n    return 0;\n}"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint longueur(char *s) {\n    char *q = s;\n    int n = 0;\n    while (*q != '\\0') {\n        q++;\n        n++;\n    }\n    return n;\n}\n\nint main(void) {\n    char mot[50];\n    scanf(\"%49s\", mot);\n    printf(\"%d\\n\", longueur(mot));\n    return 0;\n}\n```",
+     "indices": [
+      "`char *q = s;` puis `while (*q != '\\0') { q++; n++; }`",
+      "`return n;`"
+     ],
+     "duree": 1.5
+    },
+    {
+     "consigne": "Supprime le compteur `n` : renvoie directement **la différence des deux pointeurs** `q - s`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -1183,10 +1872,11 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint longueur(char *s) {\n    char *q = s;\n    while (*q != '\\0') {\n        q++;\n    }\n    return q - s;\n}\n\nint main(void) {\n    char mot[50];\n    scanf(\"%s\", mot);\n    printf(\"%d\\n\", longueur(mot));\n    return 0;\n}\n```",
      "indices": [
-      "Commence avec `char *q = s;` puis `while (*q != '\\0') q++;`.",
-      "À la fin, `q` pointe sur le `'\\0'` : `q - s` est le nombre de caractères avant lui."
+      "La boucle se réduit à `while (*q != '\\0') { q++; }`.",
+      "`return q - s;`"
      ],
-     "duree": 5
+     "duree": 2.6,
+     "depart": "#include <stdio.h>\n\nint longueur(char *s) {\n    char *q = s;\n    int n = 0;\n    while (*q != '\\0') {\n        q++;\n        n++;\n    }\n    return n;\n}\n\nint main(void) {\n    char mot[50];\n    scanf(\"%49s\", mot);\n    printf(\"%d\\n\", longueur(mot));\n    return 0;\n}"
     }
    ]
   }
