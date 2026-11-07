@@ -802,7 +802,7 @@
   {
    "id": "c3-106",
    "type": "exo",
-   "notion": "3.1",
+   "notion": "3.3",
    "origine": "generee",
    "titre": "Fiche d'identité",
    "enonce": "Écris un programme qui lit un prénom (un mot) puis un âge, et affiche exactement :\n```text\nPrenom : <prénom>\nAge : <âge> ans\n```\nExemple : `Lea 19` → `Prenom : Lea` puis `Age : 19 ans`.",

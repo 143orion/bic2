@@ -395,7 +395,7 @@
    "type": "trous",
    "notion": "4.1",
    "origine": "cours",
-   "enonce": "int age = 20;\nchar *statut = (age [_] 18) [_] \"majeur\" : \"mineur\";",
+   "enonce": "int age = 20;\nint majeur = (age [_] 18) [_] 1 : 0;",
    "fragments": [
     ">=",
     "?",
@@ -653,22 +653,22 @@
    "type": "trous",
    "notion": "4.4",
    "origine": "cours",
-   "enonce": "char mot[] = \"Bonjour\";\nint i = 0;\nwhile (mot[i] [_] '\\0') {\n    printf(\"%c\", mot[i]);\n    [_];\n}",
+   "enonce": "int n = 3;\nwhile (n [_] 0) {\n    printf(\"%d \", n);\n    [_];\n}",
    "fragments": [
-    "!=",
-    "==",
-    "i++",
-    "i--"
+    ">",
+    "<",
+    "n--",
+    "n++"
    ],
    "verif": {
     "mode": "trous",
     "attendu": [
-     "!=",
-     "i++"
+     ">",
+     "n--"
     ]
    },
    "duree": 0.5,
-   "explication": "On avance tant que le caractère n'est pas le caractère nul."
+   "explication": "On continue tant que `n` est strictement positif ; `n--` le rapproche de 0 à chaque tour."
   },
   {
    "id": "c4-020",
@@ -2196,7 +2196,7 @@
    "origine": "td",
    "titre": "Carré parfait",
    "enonce": "Un entier x est un carré parfait s'il existe y < x/2 tel que y × y = x ; le programme le vérifie sans racine carrée (Tableaux_chainex, exercice 5). On teste x = 49 puis x = 50.",
-   "guidage": "**Plan** : boucle sur y de 1 jusqu'à x/2 ; `break` dès que `y * y == x`.\n\n**Piège** : un entier positif est requis : le programme le vérifie d'abord.",
+   "guidage": "**Plan** : boucle sur `y` tant que `y * y <= x` ; `carre = 1` dès que `y * y == x`.\n\n**Piège** : un entier positif est requis : le programme le vérifie d'abord.",
    "duree": 7.3,
    "etapes": [
     {
@@ -2262,9 +2262,9 @@
         "sortie": "invalide"
        }
       ],
-      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int x;\n    scanf(\"%d\", &x);\n    if (x <= 0) {\n        printf(\"invalide\\n\");\n    } else {\n        int carre = 0;\n        for (int y = 1; y * y <= x; y++) {\n            if (y * y == x) {\n                carre = 1;\n                break;\n            }\n        }\n        printf(\"%d\\n\", carre);\n    }\n    return 0;\n}"
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int x;\n    scanf(\"%d\", &x);\n    if (x <= 0) {\n        printf(\"invalide\\n\");\n    } else {\n        int carre = 0;\n        for (int y = 1; y * y <= x; y++) {\n            if (y * y == x) {\n                carre = 1;\n            }\n        }\n        printf(\"%d\\n\", carre);\n    }\n    return 0;\n}"
      },
-     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int x;\n    scanf(\"%d\", &x);\n    if (x <= 0) {\n        printf(\"invalide\\n\");\n    } else {\n        int carre = 0;\n        for (int y = 1; y * y <= x; y++) {\n            if (y * y == x) {\n                carre = 1;\n                break;\n            }\n        }\n        printf(\"%d\\n\", carre);\n    }\n    return 0;\n}\n```",
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int x;\n    scanf(\"%d\", &x);\n    if (x <= 0) {\n        printf(\"invalide\\n\");\n    } else {\n        int carre = 0;\n        for (int y = 1; y * y <= x; y++) {\n            if (y * y == x) {\n                carre = 1;\n            }\n        }\n        printf(\"%d\\n\", carre);\n    }\n    return 0;\n}\n```",
      "indices": [
       "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
       "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
@@ -2687,10 +2687,10 @@
         "sortie": "2 3 5 7 11 13 17 19 23 29"
        }
       ],
-      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    for (int k = 2; k <= n; k++) {\n        int premier = 1;\n        for (int d = 2; d * d <= k; d++) {\n            if (k % d == 0) {\n                premier = 0;\n                break;\n            }\n        }\n        if (premier) {\n            printf(\"%d \", k);\n        }\n    }\n    printf(\"\\n\");\n    return 0;\n}",
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    for (int k = 2; k <= n; k++) {\n        int premier = 1;\n        for (int d = 2; d * d <= k; d++) {\n            if (k % d == 0) {\n                premier = 0;\n            }\n        }\n        if (premier) {\n            printf(\"%d \", k);\n        }\n    }\n    printf(\"\\n\");\n    return 0;\n}",
       "nombres": true
      },
-     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    for (int k = 2; k <= n; k++) {\n        int premier = 1;\n        for (int d = 2; d * d <= k; d++) {\n            if (k % d == 0) {\n                premier = 0;\n                break;\n            }\n        }\n        if (premier) {\n            printf(\"%d \", k);\n        }\n    }\n    printf(\"\\n\");\n    return 0;\n}\n```",
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    for (int k = 2; k <= n; k++) {\n        int premier = 1;\n        for (int d = 2; d * d <= k; d++) {\n            if (k % d == 0) {\n                premier = 0;\n            }\n        }\n        if (premier) {\n            printf(\"%d \", k);\n        }\n    }\n    printf(\"\\n\");\n    return 0;\n}\n```",
      "indices": [
       "Réutilise le test de primalité pour chaque `k`.",
       "Remets `premier = 1` au début de chaque candidat."
@@ -2835,7 +2835,7 @@
    "origine": "td",
    "titre": "Nombre de chiffres",
    "enonce": "Écris un programme qui lit un entier positif et affiche son nombre de chiffres, **sans le convertir en chaîne** (TD Premiers pas, exercice 11). On considère que 0 a 1 chiffre.",
-   "guidage": "Divise par 10 jusqu'à tomber à 0, en comptant les divisions. Attention au cas 0.",
+   "guidage": "Un nombre a **au moins un chiffre** : le compteur part de 1. Tant que `n >= 10`, retire un chiffre en divisant par 10 et compte-le.",
    "duree": 4,
    "etapes": [
     {
@@ -2861,13 +2861,13 @@
         "sortie": "1"
        }
       ],
-      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int n, nb = 0;\n    scanf(\"%d\", &n);\n    do {\n        nb++;\n        n /= 10;\n    } while (n > 0);\n    printf(\"%d\\n\", nb);\n    return 0;\n}",
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int n, nb = 1;\n    scanf(\"%d\", &n);\n    while (n >= 10) {\n        nb++;\n        n /= 10;\n    }\n    printf(\"%d\\n\", nb);\n    return 0;\n}",
       "nombres": true
      },
-     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int n, nb = 0;\n    scanf(\"%d\", &n);\n    do {\n        nb++;\n        n /= 10;\n    } while (n > 0);\n    printf(\"%d\\n\", nb);\n    return 0;\n}\n```",
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int n, nb = 1;\n    scanf(\"%d\", &n);\n    while (n >= 10) {\n        nb++;\n        n /= 10;\n    }\n    printf(\"%d\\n\", nb);\n    return 0;\n}\n```",
      "indices": [
-      "Un `do-while` compte au moins un chiffre, ce qui règle le cas 0.",
-      "`nb++` puis `n /= 10`, tant que `n > 0`."
+      "Le compteur `nb` part de 1 (même 0 a un chiffre).",
+      "`while (n >= 10) { nb++; n /= 10; }`"
      ],
      "duree": 4
     }

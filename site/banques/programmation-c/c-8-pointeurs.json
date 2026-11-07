@@ -1052,7 +1052,7 @@
   {
    "id": "c8-110",
    "type": "exo",
-   "notion": "8.1",
+   "notion": "8.3",
    "origine": "generee",
    "titre": "Deux pointeurs, une variable",
    "enonce": "Écris un programme qui lit un entier `x`, déclare **deux** pointeurs `p` et `q` vers `x`, ajoute 1 à `x` par `p`, multiplie `x` par 3 par `q`, puis affiche `x`, puis `1` si `p == q` (ils contiennent la même adresse), `0` sinon.",

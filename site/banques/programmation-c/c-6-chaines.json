@@ -361,7 +361,7 @@
   {
    "id": "c6-006",
    "type": "qcm",
-   "notion": "6.2",
+   "notion": "6.5",
    "origine": "cours",
    "enonce": "Comment mettre « Lyon » dans `char ville[30];` déjà déclaré ?",
    "choix": [

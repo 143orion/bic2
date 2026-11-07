@@ -504,11 +504,45 @@
    "origine": "td",
    "titre": "Indices pairs entre accolades",
    "enonce": "On a le tableau `{12, -1, 34, 91, 23, 55, -13, 11, 67, 70, -32, 17, 29, 20}`.\n\nÉcris un programme qui affiche, sur une ligne, les valeurs d'**indice pair** entre accolades, séparées par des espaces : `{ 12 34 23 -13 67 -32 29 }` (Tableaux_chainex, intermédiaire ex. 1).",
-   "guidage": "Parcours avec un pas de 2 : `for (int i = 0; i < 14; i += 2)`.",
+   "guidage": "**Plan** : 1. repérer les indices pairs → 2. les parcourir avec un pas de 2 → 3. entourer l'affichage d'accolades.\n\n**Piège** : on parle d'**indice** pair, pas de valeur paire.",
    "duree": 4,
    "etapes": [
     {
-     "consigne": "Écris le programme complet.",
+     "consigne": "Les 14 cases sont numérotées de 0 à 13. Combien de cases ont un **indice pair** (0, 2, 4…) ?",
+     "question": "Combien de valeurs va-t-on afficher ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 7
+     },
+     "corrige": "Indices pairs : 0, 2, 4, 6, 8, 10, 12, donc 7 valeurs.",
+     "indices": [
+      "Écris les indices de 0 à 13 et barre les impairs.",
+      "0, 2, 4, 6, 8, 10, 12 : compte-les."
+     ],
+     "duree": 0.5
+    },
+    {
+     "consigne": "Écris un programme qui affiche les valeurs d'**indice pair** du tableau, séparées par un espace, sans accolades pour l'instant. Pour sauter une case sur deux, change le **pas** de la boucle.",
+     "question": "Affiche les valeurs d'indice pair.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "",
+        "sortie": "12 34 23 -13 67 -32 29"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[14] = {12, -1, 34, 91, 23, 55, -13, 11, 67, 70, -32, 17, 29, 20};\n    for (int i = 0; i < 14; i += 2) {\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    return 0;\n}"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[14] = {12, -1, 34, 91, 23, 55, -13, 11, 67, 70, -32, 17, 29, 20};\n    for (int i = 0; i < 14; i += 2) {\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    return 0;\n}\n```",
+     "indices": [
+      "Une boucle `for` classique avance de 1 : `i++`. Ici, `i` doit avancer de 2.",
+      "`for (int i = 0; i < 14; i += 2)` puis `printf(\"%d \", t[i]);`."
+     ],
+     "duree": 1.2
+    },
+    {
+     "consigne": "Il ne reste qu'à entourer l'affichage : écris `{ ` avant la boucle et `}` après, le tout sur **une seule ligne** (`{ 12 34 23 -13 67 -32 29 }`).",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -522,10 +556,11 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[14] = {12, -1, 34, 91, 23, 55, -13, 11, 67, 70, -32, 17, 29, 20};\n    printf(\"{ \");\n    for (int i = 0; i < 14; i += 2) {\n        printf(\"%d \", t[i]);\n    }\n    printf(\"}\\n\");\n    return 0;\n}\n```",
      "indices": [
-      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
-      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+      "Un `printf(\"{ \");` avant la boucle, un `printf(\"}\\n\");` après.",
+      "Chaque valeur est déjà suivie d'une espace : le `}` final tombe donc au bon endroit."
      ],
-     "duree": 4
+     "duree": 2.3,
+     "depart": "#include <stdio.h>\n\nint main(void) {\n    int t[14] = {12, -1, 34, 91, 23, 55, -13, 11, 67, 70, -32, 17, 29, 20};\n    for (int i = 0; i < 14; i += 2) {\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    return 0;\n}"
     }
    ]
   },
@@ -536,11 +571,60 @@
    "origine": "td",
    "titre": "Produit des valeurs impaires",
    "enonce": "On a le tableau `{12, -1, 3, 9, 2, 15, -3, 11, 10, 7, -32, 17, 19, 20}`.\n\nÉcris un programme qui calcule et affiche le **produit des valeurs impaires** (Tableaux_chainex, intermédiaire ex. 2).",
-   "guidage": "**Piège** : une valeur négative impaire a un reste `-1` : teste `t[i] % 2 != 0` plutôt que `== 1`. Le produit part de 1.",
+   "guidage": "**Plan** : 1. savoir reconnaître un entier impair, y compris négatif → 2. ne retenir que ces valeurs → 3. les multiplier dans un produit qui part de 1.\n\n**Piège** : `-3 % 2` vaut `-1` en C, pas `1`.",
    "duree": 5,
    "etapes": [
     {
-     "consigne": "Écris le programme complet.",
+     "consigne": "En C, le reste de la division entière garde le **signe** du dividende. Que vaut `-3 % 2` ?",
+     "question": "Que vaut `-3 % 2` ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": -1
+     },
+     "corrige": "Le reste a le signe de -3 : `-3 % 2` vaut `-1`. Tester `% 2 == 1` raterait donc les impairs négatifs.",
+     "indices": [
+      "-3 = 2 × (-1) + (-1) : le reste est négatif.",
+      "Le reste vaut -1."
+     ],
+     "duree": 0.5
+    },
+    {
+     "consigne": "Écris la condition (sans `if`) qui est vraie pour **toutes** les valeurs impaires de `t[i]`, négatives comprises.",
+     "question": "Condition « t[i] est impair » ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "\\(?\\s*t\\[i\\]\\s*%\\s*2\\s*(!=\\s*0)?\\s*\\)?|\\(?\\s*t\\[i\\]\\s*%\\s*2\\s*==\\s*1\\s*\\|\\|\\s*t\\[i\\]\\s*%\\s*2\\s*==\\s*-\\s*1\\s*\\)?",
+      "exemple": "t[i] % 2 != 0"
+     },
+     "corrige": "`t[i] % 2 != 0` : le reste est 1 ou -1, donc différent de 0.",
+     "indices": [
+      "Un nombre pair a un reste nul.",
+      "Impair = reste **différent de 0**."
+     ],
+     "duree": 0.6
+    },
+    {
+     "consigne": "Écris un programme qui affiche, séparées par un espace, les valeurs **impaires** de `{12, -1, 3, 9, 2, 15, -3, 11, 10, 7, -32, 17, 19, 20}`.",
+     "question": "Affiche les valeurs impaires.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "",
+        "sortie": "-1 3 9 15 -3 11 7 17 19"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[14] = {12, -1, 3, 9, 2, 15, -3, 11, 10, 7, -32, 17, 19, 20};\n    for (int i = 0; i < 14; i++) {\n        if (t[i] % 2 != 0) {\n            printf(\"%d \", t[i]);\n        }\n    }\n    printf(\"\\n\");\n    return 0;\n}"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[14] = {12, -1, 3, 9, 2, 15, -3, 11, 10, 7, -32, 17, 19, 20};\n    for (int i = 0; i < 14; i++) {\n        if (t[i] % 2 != 0) {\n            printf(\"%d \", t[i]);\n        }\n    }\n    printf(\"\\n\");\n    return 0;\n}\n```",
+     "indices": [
+      "Une boucle sur tout le tableau, avec un `if` dedans.",
+      "`for (int i = 0; i < 14; i++) { if (t[i] % 2 != 0) { printf(\"%d \", t[i]); } }`"
+     ],
+     "duree": 1.2
+    },
+    {
+     "consigne": "Au lieu d'afficher chaque valeur impaire, **multiplie-les** dans une variable `p` et affiche seulement `p` à la fin. Attention à sa valeur de départ : un produit qui démarre à 0 reste 0.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -555,10 +639,11 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[14] = {12, -1, 3, 9, 2, 15, -3, 11, 10, 7, -32, 17, 19, 20};\n    int p = 1;\n    for (int i = 0; i < 14; i++) {\n        if (t[i] % 2 != 0) {\n            p *= t[i];\n        }\n    }\n    printf(\"%d\\n\", p);\n    return 0;\n}\n```",
      "indices": [
-      "Le produit commence à 1.",
-      "Impair : `t[i] % 2 != 0` (marche aussi pour −1 et −3)."
+      "Déclare `int p = 1;` avant la boucle, puis `p *= t[i];` à la place du `printf`.",
+      "Le `printf(\"%d\\n\", p);` se place **après** la boucle."
      ],
-     "duree": 5
+     "duree": 2.7,
+     "depart": "#include <stdio.h>\n\nint main(void) {\n    int t[14] = {12, -1, 3, 9, 2, 15, -3, 11, 10, 7, -32, 17, 19, 20};\n    for (int i = 0; i < 14; i++) {\n        if (t[i] % 2 != 0) {\n            printf(\"%d \", t[i]);\n        }\n    }\n    printf(\"\\n\");\n    return 0;\n}"
     }
    ]
   },
@@ -569,11 +654,59 @@
    "origine": "td",
    "titre": "Tableau de 25 cases",
    "enonce": "Écris un programme qui initialise un tableau de 25 éléments à 1, multiplie chaque valeur par **le double de l'indice de sa case**, puis affiche le tableau sur une ligne (Tableaux_chainex, intermédiaire ex. 3).",
-   "guidage": "Deux boucles (ou une seule) : `t[i] = 1;` puis `t[i] = t[i] * (2 * i);`.",
+   "guidage": "**Plan** : 1. déclarer 25 cases → 2. les mettre toutes à 1 → 3. multiplier chacune par `2 * i` → 4. afficher.\n\n**Piège** : les indices vont de 0 à **24**.",
    "duree": 4,
    "etapes": [
     {
-     "consigne": "Écris le programme complet.",
+     "consigne": "Dans la case d'indice `i`, on multiplie 1 par `2 * i`. Que contient la case d'indice 7 à la fin ?",
+     "question": "Valeur de `t[7]` ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 14
+     },
+     "corrige": "1 × (2 × 7) = 14.",
+     "indices": [
+      "Remplace `i` par 7 dans `2 * i`."
+     ],
+     "duree": 0.38
+    },
+    {
+     "consigne": "Le tableau a 25 cases. Écris la condition d'arrêt de la boucle (sans `for`) qui parcourt **toutes** les cases avec `i`, sans en sortir.",
+     "question": "Condition d'arrêt ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "\\(?\\s*i\\s*<\\s*25\\s*\\)?|\\(?\\s*i\\s*<=\\s*24\\s*\\)?",
+      "exemple": "i < 25"
+     },
+     "corrige": "Les indices valides sont 0 à 24 : `i < 25` (ou `i <= 24`).",
+     "indices": [
+      "Le dernier indice est 24, pas 25.",
+      "`i < 25`."
+     ],
+     "duree": 0.48
+    },
+    {
+     "consigne": "Déclare un tableau `t` de 25 entiers, mets **toutes les cases à 1** avec une boucle, puis affiche le tableau sur une ligne, valeurs séparées par un espace.",
+     "question": "Initialise à 1 et affiche.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "",
+        "sortie": "1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[25];\n    for (int i = 0; i < 25; i++) {\n        t[i] = 1;\n    }\n    for (int i = 0; i < 25; i++) {\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    return 0;\n}"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[25];\n    for (int i = 0; i < 25; i++) {\n        t[i] = 1;\n    }\n    for (int i = 0; i < 25; i++) {\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    return 0;\n}\n```",
+     "indices": [
+      "Une boucle pour remplir (`t[i] = 1;`), une boucle pour afficher.",
+      "Deux `for (int i = 0; i < 25; i++)` à la suite."
+     ],
+     "duree": 1.14
+    },
+    {
+     "consigne": "Ajoute l'étape qui **multiplie** chaque case par le double de son indice : `t[i] = t[i] * (2 * i);`. Tu peux le faire dans la boucle de remplissage ou dans celle d'affichage.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -588,10 +721,11 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[25];\n    for (int i = 0; i < 25; i++) {\n        t[i] = 1;\n    }\n    for (int i = 0; i < 25; i++) {\n        t[i] = t[i] * (2 * i);\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    return 0;\n}\n```",
      "indices": [
-      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
-      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+      "Une ligne à ajouter : `t[i] = t[i] * (2 * i);`, placée avant le `printf` de cette case.",
+      "La case 0 vaut 1 × 0 = 0 : l'affichage doit commencer par `0 2 4 6 …`."
      ],
-     "duree": 4
+     "duree": 2.0,
+     "depart": "#include <stdio.h>\n\nint main(void) {\n    int t[25];\n    for (int i = 0; i < 25; i++) {\n        t[i] = 1;\n    }\n    for (int i = 0; i < 25; i++) {\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    return 0;\n}"
     }
    ]
   },
@@ -600,30 +734,80 @@
    "type": "exo",
    "notion": "5.1",
    "origine": "td",
-   "titre": "Les jours de la semaine",
-   "enonce": "Écris un programme qui définit un tableau `semaine` contenant les 7 jours (`lundi` … `dimanche`) et affiche :\n```text\nJour 1 : lundi\nJour 2 : mardi\n…\nJour 7 : dimanche\n```\n(Tableaux_chainex, intermédiaire ex. 4)",
-   "guidage": "Un tableau de chaînes : `char *semaine[7] = {\"lundi\", …};`. Le numéro affiché est `i + 1`.",
+   "titre": "Les jours de chaque mois",
+   "enonce": "Écris un programme qui définit un tableau `jours` contenant le nombre de jours de chacun des 12 mois d'une année non bissextile (`31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31`) et affiche :\n```text\nMois 1 : 31 jours\nMois 2 : 28 jours\n…\nMois 12 : 31 jours\n```\n(Tableaux_chainex, intermédiaire ex. 4, adapté)",
+   "guidage": "**Plan** : 1. un tableau de 12 entiers → 2. une boucle sur les 12 cases → 3. afficher `i + 1` (le numéro du mois) et `jours[i]` (sa durée).\n\n**Piège** : janvier est à l'indice 0, mais s'affiche « Mois 1 ».",
    "duree": 4,
    "etapes": [
     {
-     "consigne": "Écris le programme complet.",
+     "consigne": "Le tableau `jours` commence par `31` (janvier), `28` (février), `31` (mars)… Quel est l'indice de la case de **mars** ?",
+     "question": "Indice de mars ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 2
+     },
+     "corrige": "Les indices commencent à 0 : janvier 0, février 1, mars 2.",
+     "indices": [
+      "Compte à partir de 0 : janvier, février, mars.",
+      "2"
+     ],
+     "duree": 0.38
+    },
+    {
+     "consigne": "Dans « Mois 3 : 31 jours », quelle expression (avec `i`) donne le numéro à afficher pour la case d'indice `i` ?",
+     "question": "Numéro affiché ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "i\\s*\\+\\s*1|1\\s*\\+\\s*i",
+      "exemple": "i + 1"
+     },
+     "corrige": "Pour `i = 0` on affiche 1 : le numéro vaut `i + 1`.",
+     "indices": [
+      "Indice 0 → mois 1, indice 1 → mois 2…",
+      "`i + 1`"
+     ],
+     "duree": 0.48
+    },
+    {
+     "consigne": "Déclare le tableau `jours` (12 entiers) et affiche les valeurs, **une par ligne**, sans texte pour l'instant.",
+     "question": "Affiche les 12 durées.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "",
+        "sortie": "31\n28\n31\n30\n31\n30\n31\n31\n30\n31\n30\n31"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int jours[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};\n    for (int i = 0; i < 12; i++) {\n        printf(\"%d\\n\", jours[i]);\n    }\n    return 0;\n}"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int jours[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};\n    for (int i = 0; i < 12; i++) {\n        printf(\"%d\\n\", jours[i]);\n    }\n    return 0;\n}\n```",
+     "indices": [
+      "`int jours[12] = {31, 28, …};` puis une boucle de 0 à 11.",
+      "`for (int i = 0; i < 12; i++) printf(\"%d\\n\", jours[i]);`"
+     ],
+     "duree": 1.14
+    },
+    {
+     "consigne": "Ajoute le texte autour : chaque ligne doit être `Mois 1 : 31 jours`, `Mois 2 : 28 jours`… Il te faut maintenant **deux** valeurs dans le `printf`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
       "tests": [
        {
         "entree": "",
-        "sortie": "Jour 1 : lundi\nJour 2 : mardi\nJour 3 : mercredi\nJour 4 : jeudi\nJour 5 : vendredi\nJour 6 : samedi\nJour 7 : dimanche"
+        "sortie": "Mois 1 : 31 jours\nMois 2 : 28 jours\nMois 3 : 31 jours\nMois 4 : 30 jours\nMois 5 : 31 jours\nMois 6 : 30 jours\nMois 7 : 31 jours\nMois 8 : 31 jours\nMois 9 : 30 jours\nMois 10 : 31 jours\nMois 11 : 30 jours\nMois 12 : 31 jours"
        }
       ],
-      "exemple": "#include <stdio.h>\n\nint main(void) {\n    char *semaine[7] = {\"lundi\", \"mardi\", \"mercredi\", \"jeudi\",\n                        \"vendredi\", \"samedi\", \"dimanche\"};\n    for (int i = 0; i < 7; i++) {\n        printf(\"Jour %d : %s\\n\", i + 1, semaine[i]);\n    }\n    return 0;\n}"
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int jours[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};\n    for (int i = 0; i < 12; i++) {\n        printf(\"Mois %d : %d jours\\n\", i + 1, jours[i]);\n    }\n    return 0;\n}"
      },
-     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    char *semaine[7] = {\"lundi\", \"mardi\", \"mercredi\", \"jeudi\",\n                        \"vendredi\", \"samedi\", \"dimanche\"};\n    for (int i = 0; i < 7; i++) {\n        printf(\"Jour %d : %s\\n\", i + 1, semaine[i]);\n    }\n    return 0;\n}\n```",
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int jours[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};\n    for (int i = 0; i < 12; i++) {\n        printf(\"Mois %d : %d jours\\n\", i + 1, jours[i]);\n    }\n    return 0;\n}\n```",
      "indices": [
-      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
-      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+      "Le format devient `\"Mois %d : %d jours\\n\"`, avec `i + 1` puis `jours[i]`.",
+      "`printf(\"Mois %d : %d jours\\n\", i + 1, jours[i]);`"
      ],
-     "duree": 4
+     "duree": 2.0,
+     "depart": "#include <stdio.h>\n\nint main(void) {\n    int jours[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};\n    for (int i = 0; i < 12; i++) {\n        printf(\"%d\\n\", jours[i]);\n    }\n    return 0;\n}"
     }
    ]
   },
@@ -634,11 +818,64 @@
    "origine": "td",
    "titre": "Saisie, somme et moyenne",
    "enonce": "Écris un programme qui déclare un tableau de 5 entiers, les fait saisir, affiche le tableau sur une ligne, puis sur la ligne suivante la somme et la moyenne (2 décimales) (exercice du cours Tableaux).",
-   "guidage": "Une boucle de saisie, une boucle d'affichage (qui peut aussi calculer la somme), puis une moyenne réelle.",
+   "guidage": "**Plan** : 1. remplir le tableau avec `scanf` dans une boucle → 2. l'afficher (en cumulant la somme au passage) → 3. calculer la moyenne **réelle**.\n\n**Piège** : `s / 5` est une division entière.",
    "duree": 5,
    "etapes": [
     {
-     "consigne": "Écris le programme complet.",
+     "consigne": "Écris l'instruction qui lit un entier dans la case d'indice `i` du tableau `t`.",
+     "question": "Lecture de `t[i]` ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "scanf\\(\\s*\\\"%d\\\"\\s*,\\s*&\\s*t\\[i\\]\\s*\\)\\s*;",
+      "exemple": "scanf(\"%d\", &t[i]);"
+     },
+     "corrige": "On passe l'**adresse** de la case : `scanf(\"%d\", &t[i]);`.",
+     "indices": [
+      "`scanf` attend l'adresse de la variable : pense au `&`.",
+      "`scanf(\"%d\", &t[i]);`"
+     ],
+     "duree": 0.6
+    },
+    {
+     "consigne": "Si la somme `s` (un `int`) vaut 17, que vaut `s / 5` en C ?",
+     "question": "Valeur de `s / 5` ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 3
+     },
+     "corrige": "Deux entiers : la division est **entière**, le résultat est 3 (pas 3,4). Pour garder les décimales : `s / 5.0`.",
+     "indices": [
+      "17 = 5 × 3 + 2.",
+      "La partie décimale est perdue : 3."
+     ],
+     "duree": 0.5
+    },
+    {
+     "consigne": "Déclare un tableau de 5 entiers, lis-les au clavier avec une boucle, puis affiche-les sur une ligne, séparés par un espace.",
+     "question": "Saisis et affiche le tableau.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "1 2 3 4 5",
+        "sortie": "1 2 3 4 5"
+       },
+       {
+        "entree": "10 0 -4 7 8",
+        "sortie": "10 0 -4 7 8"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[5];\n    for (int i = 0; i < 5; i++) {\n        scanf(\"%d\", &t[i]);\n    }\n    for (int i = 0; i < 5; i++) {\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    return 0;\n}"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[5];\n    for (int i = 0; i < 5; i++) {\n        scanf(\"%d\", &t[i]);\n    }\n    for (int i = 0; i < 5; i++) {\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    return 0;\n}\n```",
+     "indices": [
+      "Une boucle de saisie, puis une boucle d'affichage.",
+      "`scanf(\"%d\", &t[i]);` dans la première, `printf(\"%d \", t[i]);` dans la seconde."
+     ],
+     "duree": 1.3
+    },
+    {
+     "consigne": "Ajoute la **somme** (cumulée pendant l'affichage) et la **moyenne** à 2 décimales, sur la ligne suivante : `somme moyenne`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -657,10 +894,11 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[5], s = 0;\n    for (int i = 0; i < 5; i++) {\n        scanf(\"%d\", &t[i]);\n    }\n    for (int i = 0; i < 5; i++) {\n        printf(\"%d \", t[i]);\n        s += t[i];\n    }\n    printf(\"\\n%d %.2f\\n\", s, s / 5.0);\n    return 0;\n}\n```",
      "indices": [
-      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
-      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+      "`int s = 0;` avant la boucle, `s += t[i];` dedans. Après : `printf(\"\\n%d %.2f\\n\", s, s / 5.0);`",
+      "`%.2f` affiche 2 décimales ; `5.0` (réel) évite la division entière."
      ],
-     "duree": 5
+     "duree": 2.6,
+     "depart": "#include <stdio.h>\n\nint main(void) {\n    int t[5];\n    for (int i = 0; i < 5; i++) {\n        scanf(\"%d\", &t[i]);\n    }\n    for (int i = 0; i < 5; i++) {\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    return 0;\n}"
     }
    ]
   },
@@ -671,11 +909,80 @@
    "origine": "td",
    "titre": "Ajouter puis supprimer",
    "enonce": "Taille physique `TP = 20`. Le programme lit la taille logique `TL` (≤ TP), puis `TL` entiers, puis un entier `x`.\n\nIl ajoute `x` à la fin (si `TL < TP`) et affiche le tableau, puis supprime le dernier élément (si `TL > 0`) et affiche de nouveau le tableau. Un affichage par ligne (exercice du cours Tableaux).",
-   "guidage": "**Plan** : `t[tl] = x; tl++;` pour ajouter, `tl--;` pour supprimer. Les boucles d'affichage vont jusqu'à `tl`.",
+   "guidage": "**Plan** : 1. lire `tl`, les `tl` valeurs, puis `x` → 2. ajouter : écrire `x` dans `t[tl]` puis `tl++` (seulement si `tl < TP`) → 3. afficher → 4. supprimer : un simple `tl--` (si `tl > 0`) → 5. afficher.\n\n**À retenir** : on ne touche jamais à la taille physique ; seule la taille **logique** change.",
    "duree": 7,
    "etapes": [
     {
-     "consigne": "Écris le programme complet.",
+     "consigne": "Le tableau contient `tl` valeurs, dans les cases 0 à `tl - 1`. Écris l'instruction qui place `x` dans la **première case libre**.",
+     "question": "Où écrire `x` ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "t\\[tl\\]\\s*=\\s*x\\s*;",
+      "exemple": "t[tl] = x;"
+     },
+     "corrige": "La première case libre est `t[tl]` : `t[tl] = x;`.",
+     "indices": [
+      "Si `tl` vaut 3, les cases 0, 1, 2 sont occupées.",
+      "`t[tl] = x;`"
+     ],
+     "duree": 0.58
+    },
+    {
+     "consigne": "Après avoir ajouté `x`, le tableau contient une valeur de plus. Écris l'instruction qui met à jour la taille logique.",
+     "question": "Mise à jour de `tl` ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "tl\\s*\\+\\+\\s*;|\\+\\+\\s*tl\\s*;|tl\\s*\\+=\\s*1\\s*;|tl\\s*=\\s*tl\\s*\\+\\s*1\\s*;",
+      "exemple": "tl++;"
+     },
+     "corrige": "`tl++;` : la taille logique augmente de 1.",
+     "indices": [
+      "Une valeur de plus : `tl` doit augmenter.",
+      "`tl++;`"
+     ],
+     "duree": 0.49
+    },
+    {
+     "consigne": "Écris le début du programme : avec `#define TP 20`, lis `tl`, les `tl` entiers puis `x`, ajoute `x` à la fin **si `tl < TP`**, et affiche le tableau sur une ligne.",
+     "question": "Lis, ajoute et affiche.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "3\n1 2 3\n9",
+        "sortie": "1 2 3 9"
+       },
+       {
+        "entree": "1\n5\n6",
+        "sortie": "5 6"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\n#define TP 20\n\nint main(void) {\n    int t[TP], tl, x;\n    scanf(\"%d\", &tl);\n    for (int i = 0; i < tl; i++) {\n        scanf(\"%d\", &t[i]);\n    }\n    scanf(\"%d\", &x);\n    if (tl < TP) {\n        t[tl] = x;\n        tl++;\n    }\n    for (int i = 0; i < tl; i++) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    return 0;\n}"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\n#define TP 20\n\nint main(void) {\n    int t[TP], tl, x;\n    scanf(\"%d\", &tl);\n    for (int i = 0; i < tl; i++) {\n        scanf(\"%d\", &t[i]);\n    }\n    scanf(\"%d\", &x);\n    if (tl < TP) {\n        t[tl] = x;\n        tl++;\n    }\n    for (int i = 0; i < tl; i++) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    return 0;\n}\n```",
+     "indices": [
+      "Dans l'ordre : `scanf` de `tl`, boucle de saisie, `scanf` de `x`, ajout, affichage.",
+      "L'ajout est protégé par `if (tl < TP)`."
+     ],
+     "duree": 1.94
+    },
+    {
+     "consigne": "Pour **supprimer le dernier élément**, faut-il effacer la case ? Écris l'unique instruction qui suffit.",
+     "question": "Suppression du dernier ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "tl\\s*--\\s*;|--\\s*tl\\s*;|tl\\s*-=\\s*1\\s*;|tl\\s*=\\s*tl\\s*-\\s*1\\s*;",
+      "exemple": "tl--;"
+     },
+     "corrige": "`tl--;` : la case existe toujours, mais elle sort de la partie utilisée.",
+     "indices": [
+      "Les cases au-delà de `tl` sont simplement ignorées.",
+      "`tl--;`"
+     ],
+     "duree": 0.49
+    },
+    {
+     "consigne": "Termine : si `tl > 0`, supprime le dernier élément, puis affiche de nouveau le tableau sur une **deuxième ligne**.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -701,10 +1008,11 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\n#define TP 20\n\nint main(void) {\n    int t[TP], tl, x;\n    scanf(\"%d\", &tl);\n    for (int i = 0; i < tl; i++) {\n        scanf(\"%d\", &t[i]);\n    }\n    scanf(\"%d\", &x);\n    if (tl < TP) {\n        t[tl] = x;\n        tl++;\n    }\n    for (int i = 0; i < tl; i++) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    if (tl > 0) {\n        tl--;\n    }\n    for (int i = 0; i < tl; i++) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    return 0;\n}\n```",
      "indices": [
-      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
-      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+      "Après le premier affichage : `if (tl > 0) { tl--; }` puis la même boucle d'affichage.",
+      "Deux lignes en sortie : `1 2 3 9` puis `1 2 3`."
      ],
-     "duree": 7
+     "duree": 3.5,
+     "depart": "#include <stdio.h>\n\n#define TP 20\n\nint main(void) {\n    int t[TP], tl, x;\n    scanf(\"%d\", &tl);\n    for (int i = 0; i < tl; i++) {\n        scanf(\"%d\", &t[i]);\n    }\n    scanf(\"%d\", &x);\n    if (tl < TP) {\n        t[tl] = x;\n        tl++;\n    }\n    for (int i = 0; i < tl; i++) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    return 0;\n}"
     }
    ]
   },
@@ -715,11 +1023,41 @@
    "origine": "generee",
    "titre": "Afficher un tableau",
    "enonce": "Ce programme doit afficher les trois valeurs du tableau, séparées par des espaces : `4 8 15`. Il affiche autre chose.",
-   "guidage": "Un tableau ne s'affiche pas d'un coup.",
+   "guidage": "**Diagnostic** : 1. que fait vraiment `printf(\"%d\\n\", t)` ? → 2. quel mécanisme affiche chaque case ? → 3. corriger.\n\n**À retenir** : en C, on n'affiche jamais un tableau d'un coup, case par case.",
    "duree": 3,
    "etapes": [
     {
-     "consigne": "Corrige le programme ci-dessous pour qu'il fasse ce que dit l'énoncé, puis valide.",
+     "consigne": "Dans `printf(\"%d\\n\", t);`, le nom `t` seul désigne… quoi ? (réponds en une expression courte)",
+     "question": "Que désigne `t` seul ?",
+     "verif": {
+      "mode": "regex",
+      "motif": ".*adresse.*",
+      "exemple": "l'adresse du tableau"
+     },
+     "corrige": "`t` seul est l'**adresse** de la première case, pas son contenu : `%d` affiche donc un nombre sans rapport avec 4 8 15.",
+     "indices": [
+      "Un nom de tableau seul n'est pas une valeur.",
+      "C'est l'adresse du tableau."
+     ],
+     "duree": 0.5
+    },
+    {
+     "consigne": "Écris l'en-tête de la boucle `for` (variable `i`) qui parcourt les 3 cases du tableau.",
+     "question": "En-tête de la boucle ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "for\\s*\\(\\s*(int\\s+)?i\\s*=\\s*0\\s*;\\s*i\\s*(<\\s*3|<=\\s*2)\\s*;\\s*(i\\+\\+|\\+\\+i|i\\s*\\+=\\s*1|i\\s*=\\s*i\\s*\\+\\s*1)\\s*\\)\\s*\\{?",
+      "exemple": "for (int i = 0; i < 3; i++)"
+     },
+     "corrige": "`for (int i = 0; i < 3; i++)` : indices 0, 1, 2.",
+     "indices": [
+      "3 cases : indices de 0 à 2.",
+      "`for (int i = 0; i < 3; i++)`"
+     ],
+     "duree": 0.6
+    },
+    {
+     "consigne": "Corrige le programme : affiche chaque case dans une boucle, avec une espace après chaque valeur, pour obtenir `4 8 15`.",
      "question": "Corrige le programme.",
      "verif": {
       "mode": "c",
@@ -734,10 +1072,10 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[3] = {4, 8, 15};\n    for (int i = 0; i < 3; i++) {\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    return 0;\n}\n```",
      "indices": [
-      "`t` seul désigne l'adresse du tableau.",
-      "Une boucle `for` qui affiche `t[i]`."
+      "Remplace le `printf` actuel par une boucle qui affiche `t[i]`.",
+      "`for (int i = 0; i < 3; i++) { printf(\"%d \", t[i]); }` puis `printf(\"\\n\");`"
      ],
-     "duree": 3,
+     "duree": 1.9,
      "depart": "#include <stdio.h>\n\nint main(void) {\n    int t[3] = {4, 8, 15};\n    printf(\"%d\\n\", t);\n    return 0;\n}"
     }
    ]
@@ -749,11 +1087,41 @@
    "origine": "generee",
    "titre": "Deux tableaux égaux ?",
    "enonce": "Ce programme lit deux tableaux de 3 entiers et doit afficher `egaux` s'ils contiennent les mêmes valeurs dans le même ordre, `differents` sinon. Il répond toujours `differents`.",
-   "guidage": "Que compare vraiment `t1 == t2` ?",
+   "guidage": "**Diagnostic** : 1. que compare `t1 == t2` ? → 2. quelle stratégie pour comparer des valeurs ? → 3. corriger.\n\n**Astuce** : part du principe « égaux », et change d'avis dès qu'une case diffère.",
    "duree": 5,
    "etapes": [
     {
-     "consigne": "Corrige le programme ci-dessous pour qu'il fasse ce que dit l'énoncé, puis valide.",
+     "consigne": "Que compare l'expression `t1 == t2` quand `t1` et `t2` sont des tableaux ? (réponse courte)",
+     "question": "Que compare `t1 == t2` ?",
+     "verif": {
+      "mode": "regex",
+      "motif": ".*adresse.*",
+      "exemple": "les adresses"
+     },
+     "corrige": "Elle compare les **adresses** des deux tableaux : deux tableaux distincts ont toujours des adresses différentes, d'où le `differents` systématique.",
+     "indices": [
+      "Pense à ce que représente un nom de tableau seul.",
+      "Les adresses."
+     ],
+     "duree": 0.5
+    },
+    {
+     "consigne": "On suppose les tableaux égaux avec `egaux = 1`. Dans la boucle, quand `t1[i] != t2[i]`, quelle instruction faut-il exécuter ?",
+     "question": "Que faire quand une case diffère ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "egaux\\s*=\\s*0\\s*;",
+      "exemple": "egaux = 0;"
+     },
+     "corrige": "`egaux = 0;` : une seule différence suffit à les rendre différents.",
+     "indices": [
+      "L'indicateur ne doit plus affirmer « égaux ».",
+      "`egaux = 0;`"
+     ],
+     "duree": 0.5
+    },
+    {
+     "consigne": "Corrige le programme : compare les tableaux **case par case** avec un indicateur `egaux`, puis affiche `egaux` ou `differents`.",
      "question": "Corrige le programme.",
      "verif": {
       "mode": "c",
@@ -781,10 +1149,10 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t1[3], t2[3], egaux = 1;\n    for (int i = 0; i < 3; i++) scanf(\"%d\", &t1[i]);\n    for (int i = 0; i < 3; i++) scanf(\"%d\", &t2[i]);\n    for (int i = 0; i < 3; i++) {\n        if (t1[i] != t2[i]) {\n            egaux = 0;\n        }\n    }\n    if (egaux) {\n        printf(\"egaux\\n\");\n    } else {\n        printf(\"differents\\n\");\n    }\n    return 0;\n}\n```",
      "indices": [
-      "`t1 == t2` compare les adresses des tableaux.",
-      "Une variable `egaux = 1`, mise à 0 dès qu'une case diffère."
+      "`int egaux = 1;`, une boucle sur les 3 cases, et `if (t1[i] != t2[i]) egaux = 0;`.",
+      "Après la boucle : `if (egaux) printf(\"egaux\\n\"); else printf(\"differents\\n\");`"
      ],
-     "duree": 5,
+     "duree": 4.0,
      "depart": "#include <stdio.h>\n\nint main(void) {\n    int t1[3], t2[3];\n    for (int i = 0; i < 3; i++) scanf(\"%d\", &t1[i]);\n    for (int i = 0; i < 3; i++) scanf(\"%d\", &t2[i]);\n    if (t1 == t2) {\n        printf(\"egaux\\n\");\n    } else {\n        printf(\"differents\\n\");\n    }\n    return 0;\n}"
     }
    ]
@@ -796,11 +1164,69 @@
    "origine": "td",
    "titre": "Recherche dans un tableau non trié",
    "enonce": "Le tableau est `{12, 45, -16, 5, 98, 122, 33, 9, -23, 65, 11, 66, 54, 52, 92, 71, 100, 21, 40}`. Écris un programme qui lit `val` et affiche `trouve` si `val` est dans le tableau, `absent` sinon (Tableaux_chainex, intermédiaire ex. 5).",
-   "guidage": "Parcours avec un indicateur `trouve = 0`, mis à 1 (et `break`) dès qu'on rencontre `val`.",
+   "guidage": "**Plan** : 1. un indicateur `trouve = 0` → 2. parcourir **tout** le tableau, `trouve = 1` si `t[i] == val` → 3. afficher selon l'indicateur.\n\n**Piège** : on ne peut dire « absent » qu'après avoir regardé **toutes** les cases.",
    "duree": 5,
    "etapes": [
     {
-     "consigne": "Écris le programme complet.",
+     "consigne": "Le tableau n'est pas trié. Après avoir comparé `val` à la première case seulement, sans succès, peut-on conclure « absent » ? (oui / non)",
+     "question": "Peut-on conclure ?",
+     "verif": {
+      "mode": "exact",
+      "attendu": [
+       "non"
+      ]
+     },
+     "corrige": "Non : la valeur peut se trouver dans n'importe quelle autre case. Il faut les parcourir toutes (on peut s'arrêter dès qu'on trouve).",
+     "indices": [
+      "Rien n'indique où se cache la valeur dans un tableau non trié."
+     ],
+     "duree": 0.34
+    },
+    {
+     "consigne": "Écris la condition (sans `if`) qui teste si la case d'indice `i` contient la valeur cherchée `val`.",
+     "question": "Test de la case `i` ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "\\(?\\s*t\\[i\\]\\s*==\\s*val\\s*\\)?|\\(?\\s*val\\s*==\\s*t\\[i\\]\\s*\\)?",
+      "exemple": "t[i] == val"
+     },
+     "corrige": "On compare avec `==` (pas `=`) : `t[i] == val`.",
+     "indices": [
+      "Attention à l'opérateur d'égalité : `==`.",
+      "`t[i] == val`"
+     ],
+     "duree": 0.43
+    },
+    {
+     "consigne": "Lis `val`, parcours le tableau `{12, 45, -16, 5, 98, 122, 33, 9, -23, 65, 11, 66, 54, 52, 92, 71, 100, 21, 40}` avec un indicateur `trouve` (0 au départ, 1 si une case égale `val`, avec `break`), puis affiche **1 ou 0** seulement.",
+     "question": "Indicateur 1 / 0.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "98",
+        "sortie": "1"
+       },
+       {
+        "entree": "7",
+        "sortie": "0"
+       },
+       {
+        "entree": "40",
+        "sortie": "1"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[19] = {12, 45, -16, 5, 98, 122, 33, 9, -23, 65, 11, 66, 54, 52, 92, 71, 100, 21, 40};\n    int val, trouve = 0;\n    scanf(\"%d\", &val);\n    for (int i = 0; i < 19; i++) {\n        if (t[i] == val) {\n            trouve = 1;\n            break;\n        }\n    }\n    printf(\"%d\\n\", trouve);\n    return 0;\n}"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[19] = {12, 45, -16, 5, 98, 122, 33, 9, -23, 65, 11, 66, 54, 52, 92, 71, 100, 21, 40};\n    int val, trouve = 0;\n    scanf(\"%d\", &val);\n    for (int i = 0; i < 19; i++) {\n        if (t[i] == val) {\n            trouve = 1;\n            break;\n        }\n    }\n    printf(\"%d\\n\", trouve);\n    return 0;\n}\n```",
+     "indices": [
+      "Déclare `int val, trouve = 0;`, lis `val`, puis une boucle avec un `if`.",
+      "Dans le `if` : `trouve = 1; break;`. Affiche `trouve` après la boucle."
+     ],
+     "duree": 1.72
+    },
+    {
+     "consigne": "Au lieu d'afficher 1 ou 0, affiche le **mot** `trouve` ou `absent` selon l'indicateur.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -826,10 +1252,11 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[19] = {12, 45, -16, 5, 98, 122, 33, 9, -23, 65, 11, 66, 54, 52, 92, 71, 100, 21, 40};\n    int val, trouve = 0;\n    scanf(\"%d\", &val);\n    for (int i = 0; i < 19; i++) {\n        if (t[i] == val) {\n            trouve = 1;\n            break;\n        }\n    }\n    if (trouve) printf(\"trouve\\n\");\n    else printf(\"absent\\n\");\n    return 0;\n}\n```",
      "indices": [
-      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
-      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+      "Remplace le dernier `printf` par un `if (trouve) … else …`.",
+      "`if (trouve) printf(\"trouve\\n\"); else printf(\"absent\\n\");`"
      ],
-     "duree": 5
+     "duree": 2.51,
+     "depart": "#include <stdio.h>\n\nint main(void) {\n    int t[19] = {12, 45, -16, 5, 98, 122, 33, 9, -23, 65, 11, 66, 54, 52, 92, 71, 100, 21, 40};\n    int val, trouve = 0;\n    scanf(\"%d\", &val);\n    for (int i = 0; i < 19; i++) {\n        if (t[i] == val) {\n            trouve = 1;\n            break;\n        }\n    }\n    printf(\"%d\\n\", trouve);\n    return 0;\n}"
     }
    ]
   },
@@ -840,11 +1267,69 @@
    "origine": "td",
    "titre": "Minimum et moyenne de N valeurs",
    "enonce": "Écris un programme qui lit `N` (au plus 100), remplit un tableau de `N` entiers saisis, puis affiche le **minimum** et la **moyenne** (2 décimales) (Tableaux_chainex, intermédiaire ex. 6 et 7).",
-   "guidage": "Taille physique 100, taille logique N. Le minimum part de `t[0]` ; la moyenne est une division réelle.",
+   "guidage": "**Plan** : 1. lire `n` puis `n` valeurs (taille physique 100) → 2. cumuler la somme pendant la saisie → 3. minimum : partir de `t[0]` puis comparer avec les autres cases → 4. moyenne **réelle**.\n\n**Pièges** : initialiser `min` à 0 fausse le résultat s'il n'y a que des valeurs positives ; `s / n` est une division entière.",
    "duree": 6,
    "etapes": [
     {
-     "consigne": "Écris le programme complet.",
+     "consigne": "Pourquoi ne pas initialiser `min` à 0 ? Avec quelle valeur du tableau l'initialise-t-on le plus sûrement ? (écris l'expression)",
+     "question": "Valeur de départ du minimum ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "t\\[0\\]",
+      "exemple": "t[0]"
+     },
+     "corrige": "Avec `t[0]` : c'est une valeur réelle du tableau. Partir de 0 donnerait 0 pour `7 9 12`.",
+     "indices": [
+      "Le minimum doit être une valeur qui existe dans le tableau.",
+      "La première case."
+     ],
+     "duree": 0.48
+    },
+    {
+     "consigne": "Lis `n` (au plus 100) puis les `n` entiers dans un tableau de taille physique 100, et affiche le **minimum** (rien d'autre).",
+     "question": "Lis et cherche le minimum.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "5\n4 -2 9 0 3",
+        "sortie": "-2"
+       },
+       {
+        "entree": "1\n7",
+        "sortie": "7"
+       },
+       {
+        "entree": "4\n10 20 30 40",
+        "sortie": "10"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        scanf(\"%d\", &t[i]);\n    }\n    int min = t[0];\n    for (int i = 1; i < n; i++) {\n        if (t[i] < min) min = t[i];\n    }\n    printf(\"%d\\n\", min);\n    return 0;\n}"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        scanf(\"%d\", &t[i]);\n    }\n    int min = t[0];\n    for (int i = 1; i < n; i++) {\n        if (t[i] < min) min = t[i];\n    }\n    printf(\"%d\\n\", min);\n    return 0;\n}\n```",
+     "indices": [
+      "Une boucle de saisie jusqu'à `n`, puis `min = t[0]` et une seconde boucle qui part de `i = 1`.",
+      "`if (t[i] < min) min = t[i];`"
+     ],
+     "duree": 1.94
+    },
+    {
+     "consigne": "Pour calculer la moyenne **réelle** de la somme `s` sur `n` valeurs (deux `int`), écris l'expression qui évite la division entière.",
+     "question": "Expression de la moyenne ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "\\(\\s*(double|float)\\s*\\)\\s*s\\s*/\\s*n|s\\s*/\\s*\\(\\s*(double|float)\\s*\\)\\s*n|1\\.0\\s*\\*\\s*s\\s*/\\s*n|s\\s*\\*\\s*1\\.0\\s*/\\s*n|s\\s*/\\s*\\(\\s*n\\s*\\*\\s*1\\.0\\s*\\)",
+      "exemple": "(double)s / n"
+     },
+     "corrige": "Convertis au moins un des deux opérandes en réel : `(double)s / n`.",
+     "indices": [
+      "Si les deux opérandes sont des `int`, le résultat est un `int`.",
+      "`(double)s / n`"
+     ],
+     "duree": 0.58
+    },
+    {
+     "consigne": "Complète le programme : cumule aussi la somme `s` (dans la boucle de saisie) et affiche sur une ligne `minimum moyenne`, la moyenne avec 2 décimales.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -867,10 +1352,11 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[100], n, s = 0;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        scanf(\"%d\", &t[i]);\n        s += t[i];\n    }\n    int min = t[0];\n    for (int i = 1; i < n; i++) {\n        if (t[i] < min) min = t[i];\n    }\n    printf(\"%d %.2f\\n\", min, (double)s / n);\n    return 0;\n}\n```",
      "indices": [
-      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
-      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+      "`int s = 0;`, puis `s += t[i];` juste après chaque `scanf`.",
+      "`printf(\"%d %.2f\\n\", min, (double)s / n);`"
      ],
-     "duree": 6
+     "duree": 3.0,
+     "depart": "#include <stdio.h>\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        scanf(\"%d\", &t[i]);\n    }\n    int min = t[0];\n    for (int i = 1; i < n; i++) {\n        if (t[i] < min) min = t[i];\n    }\n    printf(\"%d\\n\", min);\n    return 0;\n}"
     }
    ]
   },
@@ -881,11 +1367,64 @@
    "origine": "td",
    "titre": "Nombre d'occurrences",
    "enonce": "Écris un programme qui lit `N`, puis `N` entiers, puis une valeur `val`, et affiche le **nombre d'occurrences** de `val` dans le tableau (Tableaux_chainex, intermédiaire ex. 8).",
-   "guidage": "Un compteur `nb` qu'on augmente quand `t[i] == val`.",
+   "guidage": "**Plan** : 1. un compteur `nb` à 0 → 2. parcourir **toutes** les cases → 3. `nb++` à chaque case égale à `val` → 4. afficher `nb`.\n\n**Différence avec la recherche** : ici on ne s'arrête jamais avant la fin.",
    "duree": 5,
    "etapes": [
     {
-     "consigne": "Écris le programme complet.",
+     "consigne": "Si `val` n'apparaît **jamais** dans le tableau, que doit afficher le programme ?",
+     "question": "Résultat si `val` est absente ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 0
+     },
+     "corrige": "0 : le compteur n'a jamais bougé, donc il doit partir de 0.",
+     "indices": [
+      "Aucune occurrence = zéro occurrence.",
+      "0, donc `nb` démarre à 0."
+     ],
+     "duree": 0.36
+    },
+    {
+     "consigne": "Lis `N`, les `N` entiers puis `val`, et affiche les **indices** des cases égales à `val`, séparés par un espace.",
+     "question": "Affiche les positions de `val`.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "6\n2 7 2 2 9 7\n2",
+        "sortie": "0 2 3"
+       },
+       {
+        "entree": "4\n5 6 5 6\n6",
+        "sortie": "1 3"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[100], n, val;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    scanf(\"%d\", &val);\n    for (int i = 0; i < n; i++) {\n        if (t[i] == val) printf(\"%d \", i);\n    }\n    printf(\"\\n\");\n    return 0;\n}"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[100], n, val;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    scanf(\"%d\", &val);\n    for (int i = 0; i < n; i++) {\n        if (t[i] == val) printf(\"%d \", i);\n    }\n    printf(\"\\n\");\n    return 0;\n}\n```",
+     "indices": [
+      "Lecture de `n`, des valeurs, puis de `val` ; une boucle avec `if (t[i] == val)`.",
+      "Dans le `if` : `printf(\"%d \", i);`"
+     ],
+     "duree": 1.79
+    },
+    {
+     "consigne": "À chaque case égale à `val`, quelle instruction augmente le compteur `nb` de 1 ?",
+     "question": "Incrément du compteur ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "nb\\s*\\+\\+\\s*;|\\+\\+\\s*nb\\s*;|nb\\s*\\+=\\s*1\\s*;|nb\\s*=\\s*nb\\s*\\+\\s*1\\s*;",
+      "exemple": "nb++;"
+     },
+     "corrige": "`nb++;` à l'intérieur du `if`.",
+     "indices": [
+      "Un compteur augmente de 1 à chaque fois.",
+      "`nb++;`"
+     ],
+     "duree": 0.36
+    },
+    {
+     "consigne": "Au lieu d'afficher les positions, **compte** les occurrences dans `nb` et affiche seulement ce nombre à la fin.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -908,10 +1447,11 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[100], n, val, nb = 0;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    scanf(\"%d\", &val);\n    for (int i = 0; i < n; i++) {\n        if (t[i] == val) nb++;\n    }\n    printf(\"%d\\n\", nb);\n    return 0;\n}\n```",
      "indices": [
-      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
-      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+      "`int nb = 0;` avant la boucle ; dans le `if`, `nb++;` remplace le `printf`.",
+      "Un seul `printf(\"%d\\n\", nb);` après la boucle."
      ],
-     "duree": 5
+     "duree": 2.49,
+     "depart": "#include <stdio.h>\n\nint main(void) {\n    int t[100], n, val;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    scanf(\"%d\", &val);\n    for (int i = 0; i < n; i++) {\n        if (t[i] == val) printf(\"%d \", i);\n    }\n    printf(\"\\n\");\n    return 0;\n}"
     }
    ]
   },
@@ -922,11 +1462,79 @@
    "origine": "td",
    "titre": "Décalage circulaire à gauche",
    "enonce": "Écris un programme qui lit `N`, puis `N` entiers, décale les éléments **vers la gauche de façon circulaire** (le premier passe à la fin), puis affiche le tableau (Tableaux_chainex, intermédiaire ex. 9).",
-   "guidage": "Mets `t[0]` de côté, décale chaque case vers la gauche (`t[i] = t[i + 1]`), puis place l'ancien premier en dernière position.",
+   "guidage": "**Plan** : 1. mettre `t[0]` de côté → 2. décaler chaque case vers la gauche (`t[i] = t[i + 1]`, de 0 à n-2) → 3. replacer l'ancien premier en dernière case → 4. afficher.\n\n**Piège** : sans la sauvegarde, la première valeur est écrasée et perdue.",
    "duree": 6,
    "etapes": [
     {
-     "consigne": "Écris le programme complet.",
+     "consigne": "Un décalage circulaire à gauche de `{1, 2, 3, 4}` donne `{2, 3, 4, 1}`. Que vaut la **dernière** case du résultat ?",
+     "question": "Dernière valeur du résultat ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 1
+     },
+     "corrige": "C'est l'ancien premier élément, passé à la fin : 1.",
+     "indices": [
+      "Le premier élément « boucle » vers la fin.",
+      "1"
+     ],
+     "duree": 0.33
+    },
+    {
+     "consigne": "Avant de décaler, on sauvegarde la première valeur dans une variable `premier`. Écris la déclaration complète.",
+     "question": "Sauvegarde du premier ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "int\\s+premier\\s*=\\s*t\\[0\\]\\s*;",
+      "exemple": "int premier = t[0];"
+     },
+     "corrige": "`int premier = t[0];` : sinon `t[0]` serait écrasée par le décalage.",
+     "indices": [
+      "Une variable de type `int` initialisée avec la case d'indice 0.",
+      "`int premier = t[0];`"
+     ],
+     "duree": 0.5
+    },
+    {
+     "consigne": "Écris l'instruction (dans la boucle, indice `i`) qui recopie la case suivante dans la case courante.",
+     "question": "Une étape du décalage ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "t\\[i\\]\\s*=\\s*t\\[\\s*i\\s*\\+\\s*1\\s*\\]\\s*;",
+      "exemple": "t[i] = t[i + 1];"
+     },
+     "corrige": "`t[i] = t[i + 1];` : chaque case reprend la valeur de sa voisine de droite.",
+     "indices": [
+      "La valeur de droite va à gauche.",
+      "`t[i] = t[i + 1];`"
+     ],
+     "duree": 0.5
+    },
+    {
+     "consigne": "Lis `n` et les `n` entiers. Décale les valeurs vers la gauche (le premier est perdu, **sans** le remettre à la fin) et affiche les `n - 1` premières cases. Pour `4 / 1 2 3 4` : `2 3 4`.",
+     "question": "Décale sans circularité.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "4\n1 2 3 4",
+        "sortie": "2 3 4"
+       },
+       {
+        "entree": "5\n5 4 3 2 1",
+        "sortie": "4 3 2 1"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    for (int i = 0; i < n - 1; i++) {\n        t[i] = t[i + 1];\n    }\n    for (int i = 0; i < n - 1; i++) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    return 0;\n}"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    for (int i = 0; i < n - 1; i++) {\n        t[i] = t[i + 1];\n    }\n    for (int i = 0; i < n - 1; i++) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    return 0;\n}\n```",
+     "indices": [
+      "La boucle de décalage s'arrête à `n - 1` (exclu) : sinon `t[i + 1]` sort du tableau.",
+      "`for (int i = 0; i < n - 1; i++) t[i] = t[i + 1];`"
+     ],
+     "duree": 1.67
+    },
+    {
+     "consigne": "Rends le décalage **circulaire** : sauvegarde `premier` avant le décalage, remets-le en dernière case (`t[n - 1]`), puis affiche les **`n`** cases.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -949,10 +1557,11 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    int premier = t[0];\n    for (int i = 0; i < n - 1; i++) {\n        t[i] = t[i + 1];\n    }\n    t[n - 1] = premier;\n    for (int i = 0; i < n; i++) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    return 0;\n}\n```",
      "indices": [
-      "`int premier = t[0];` avant de décaler.",
-      "La boucle va jusqu'à `n - 1` (exclu) : `t[i] = t[i + 1];`."
+      "`int premier = t[0];` avant la boucle de décalage, `t[n - 1] = premier;` juste après.",
+      "La boucle d'affichage va maintenant jusqu'à `n` (exclu)."
      ],
-     "duree": 6
+     "duree": 3.0,
+     "depart": "#include <stdio.h>\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    for (int i = 0; i < n - 1; i++) {\n        t[i] = t[i + 1];\n    }\n    for (int i = 0; i < n - 1; i++) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    return 0;\n}"
     }
    ]
   },
@@ -963,11 +1572,63 @@
    "origine": "td",
    "titre": "Position de la première occurrence",
    "enonce": "Écris un programme qui lit `N`, puis `N` entiers, puis `val`, et affiche l'**indice de la première occurrence** de `val`, ou `-1` si elle est absente (Tableaux_chainex, intermédiaire ex. 10).",
-   "guidage": "`pos = -1` au départ ; dès que `t[i] == val`, `pos = i` et `break`.",
+   "guidage": "**Plan** : 1. `pos = -1` (valeur « absent ») → 2. parcourir, et à la première case égale à `val`, `pos = i` puis `break` → 3. afficher `pos`.\n\n**Piège** : l'indice 0 est valide, donc 0 ne peut pas signifier « absent ».",
    "duree": 5,
    "etapes": [
     {
-     "consigne": "Écris le programme complet.",
+     "consigne": "Dans `{4, 9, 1, 9, 3}`, quel est l'**indice** de la première occurrence de 9 ?",
+     "question": "Indice de la 1re occurrence ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 1
+     },
+     "corrige": "Les indices commencent à 0 : 4 est en 0, 9 en 1.",
+     "indices": [
+      "Compte à partir de 0.",
+      "1"
+     ],
+     "duree": 0.36
+    },
+    {
+     "consigne": "L'indice 0 est valide. Quelle valeur de `pos` peut signifier « absent » sans jamais être un indice ?",
+     "question": "Valeur « absent » ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": -1
+     },
+     "corrige": "`-1` : jamais un indice de tableau valide. C'est la valeur de départ de `pos`.",
+     "indices": [
+      "Un indice est toujours positif ou nul.",
+      "-1"
+     ],
+     "duree": 0.36
+    },
+    {
+     "consigne": "Lis `N`, les `N` entiers, puis `val`. Affiche l'indice de la **première** case égale à `val` (avec `break`) ; si elle est absente, le programme n'affiche rien pour l'instant.",
+     "question": "Indice de la première occurrence.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "5\n4 9 1 9 3\n9",
+        "sortie": "1"
+       },
+       {
+        "entree": "2\n6 6\n6",
+        "sortie": "0"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[100], n, val;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    scanf(\"%d\", &val);\n    for (int i = 0; i < n; i++) {\n        if (t[i] == val) {\n            printf(\"%d\\n\", i);\n            break;\n        }\n    }\n    return 0;\n}"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[100], n, val;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    scanf(\"%d\", &val);\n    for (int i = 0; i < n; i++) {\n        if (t[i] == val) {\n            printf(\"%d\\n\", i);\n            break;\n        }\n    }\n    return 0;\n}\n```",
+     "indices": [
+      "Une boucle avec `if (t[i] == val)` ; le `break` empêche d'afficher les occurrences suivantes.",
+      "`printf(\"%d\\n\", i); break;` dans le `if`."
+     ],
+     "duree": 1.79
+    },
+    {
+     "consigne": "Il faut aussi gérer l'absence : utilise une variable `pos` (départ : -1), qui mémorise l'indice trouvé, et affiche **toujours** `pos` à la fin.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -990,10 +1651,11 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[100], n, val, pos = -1;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    scanf(\"%d\", &val);\n    for (int i = 0; i < n; i++) {\n        if (t[i] == val) {\n            pos = i;\n            break;\n        }\n    }\n    printf(\"%d\\n\", pos);\n    return 0;\n}\n```",
      "indices": [
-      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
-      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+      "`int pos = -1;` avant la boucle ; dans le `if` : `pos = i; break;` au lieu du `printf`.",
+      "Un seul `printf(\"%d\\n\", pos);` après la boucle."
      ],
-     "duree": 5
+     "duree": 2.49,
+     "depart": "#include <stdio.h>\n\nint main(void) {\n    int t[100], n, val;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    scanf(\"%d\", &val);\n    for (int i = 0; i < n; i++) {\n        if (t[i] == val) {\n            printf(\"%d\\n\", i);\n            break;\n        }\n    }\n    return 0;\n}"
     }
    ]
   },
@@ -1004,11 +1666,83 @@
    "origine": "td",
    "titre": "Supprimer la première occurrence",
    "enonce": "Sans fonction prédéfinie : le programme lit `N`, `N` entiers, puis `val`. Il **supprime la première occurrence** de `val` (en décalant les éléments suivants) et affiche le tableau restant. Si `val` est absente, le tableau est affiché tel quel (Tableaux_chainex, intermédiaire ex. 11).",
-   "guidage": "**Plan** : chercher la position, puis refermer le trou (`t[i] = t[i + 1]` depuis la position) et faire `n--`.",
+   "guidage": "**Plan** : 1. trouver `pos` (comme à l'exo précédent) → 2. si `pos != -1`, refermer le trou : `t[i] = t[i + 1]` de `pos` à `n - 2` → 3. `n--` → 4. afficher les `n` cases restantes.\n\n**Piège** : ne décale que si la valeur a été trouvée.",
    "duree": 7,
    "etapes": [
     {
-     "consigne": "Écris le programme complet.",
+     "consigne": "On supprime la première occurrence de 9 dans `{4, 9, 1, 9, 3}` (indice 1) : on obtient `{4, 1, 9, 3}`. Que contient alors la case d'indice 1 ?",
+     "question": "Contenu de la case 1 après suppression ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 1
+     },
+     "corrige": "Les cases à droite de la suppression glissent d'un cran vers la gauche : `t[1]` reprend la valeur de `t[2]`, soit 1.",
+     "indices": [
+      "Chaque case à droite recule d'une place.",
+      "1"
+     ],
+     "duree": 0.4
+    },
+    {
+     "consigne": "Lis `N`, les `N` entiers, puis `val`. Affiche la position `pos` de la première occurrence de `val`, ou `-1` si elle est absente.",
+     "question": "Trouve `pos`.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "5\n4 9 1 9 3\n9",
+        "sortie": "1"
+       },
+       {
+        "entree": "3\n1 2 3\n7",
+        "sortie": "-1"
+       },
+       {
+        "entree": "3\n8 1 2\n8",
+        "sortie": "0"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[100], n, val, pos = -1;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    scanf(\"%d\", &val);\n    for (int i = 0; i < n; i++) {\n        if (t[i] == val) { pos = i; break; }\n    }\n    printf(\"%d\\n\", pos);\n    return 0;\n}"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[100], n, val, pos = -1;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    scanf(\"%d\", &val);\n    for (int i = 0; i < n; i++) {\n        if (t[i] == val) { pos = i; break; }\n    }\n    printf(\"%d\\n\", pos);\n    return 0;\n}\n```",
+     "indices": [
+      "Reprends la recherche de première occurrence : `pos = -1` au départ.",
+      "`if (t[i] == val) { pos = i; break; }`"
+     ],
+     "duree": 1.5
+    },
+    {
+     "consigne": "Écris l'en-tête de la boucle qui referme le trou : elle part de `pos` et s'arrête quand `i + 1` atteindrait `n` (pour ne pas lire hors du tableau). Variable `i`.",
+     "question": "En-tête de la boucle de décalage ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "for\\s*\\(\\s*(int\\s+)?i\\s*=\\s*pos\\s*;\\s*i\\s*(<\\s*n\\s*-\\s*1|<=\\s*n\\s*-\\s*2)\\s*;\\s*(i\\+\\+|\\+\\+i|i\\s*\\+=\\s*1|i\\s*=\\s*i\\s*\\+\\s*1)\\s*\\)\\s*\\{?",
+      "exemple": "for (int i = pos; i < n - 1; i++)"
+     },
+     "corrige": "`for (int i = pos; i < n - 1; i++)` : la dernière case lue est `t[n - 1]`.",
+     "indices": [
+      "`t[i + 1]` doit rester dans le tableau : `i + 1 < n`.",
+      "`for (int i = pos; i < n - 1; i++)`"
+     ],
+     "duree": 0.7
+    },
+    {
+     "consigne": "Une fois le trou refermé, le tableau contient une valeur de moins. Écris l'instruction qui l'enregistre.",
+     "question": "Mise à jour de `n` ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "n\\s*--\\s*;|--\\s*n\\s*;|n\\s*-=\\s*1\\s*;|n\\s*=\\s*n\\s*-\\s*1\\s*;",
+      "exemple": "n--;"
+     },
+     "corrige": "`n--;` : la taille logique diminue de 1.",
+     "indices": [
+      "Une valeur de moins.",
+      "`n--;`"
+     ],
+     "duree": 0.4
+    },
+    {
+     "consigne": "Assemble le tout : **si** `pos != -1`, referme le trou avec la boucle puis fais `n--` ; ensuite affiche les `n` cases restantes sur une ligne (si `val` est absente, le tableau reste intact).",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -1031,10 +1765,11 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[100], n, val, pos = -1;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    scanf(\"%d\", &val);\n    for (int i = 0; i < n; i++) {\n        if (t[i] == val) { pos = i; break; }\n    }\n    if (pos != -1) {\n        for (int i = pos; i < n - 1; i++) {\n            t[i] = t[i + 1];\n        }\n        n--;\n    }\n    for (int i = 0; i < n; i++) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    return 0;\n}\n```",
      "indices": [
-      "Trouve d'abord `pos`, comme dans l'exercice précédent.",
-      "Puis `for (i = pos; i < n - 1; i++) t[i] = t[i + 1];` et `n--`."
+      "`if (pos != -1) { for (…) t[i] = t[i + 1]; n--; }`",
+      "Termine par la boucle d'affichage jusqu'à `n` : `for (int i = 0; i < n; i++) printf(\"%d \", t[i]);`"
      ],
-     "duree": 7
+     "duree": 4.0,
+     "depart": "#include <stdio.h>\n\nint main(void) {\n    int t[100], n, val, pos = -1;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    scanf(\"%d\", &val);\n    for (int i = 0; i < n; i++) {\n        if (t[i] == val) { pos = i; break; }\n    }\n    printf(\"%d\\n\", pos);\n    return 0;\n}"
     }
    ]
   }

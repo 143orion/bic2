@@ -890,7 +890,7 @@
   {
    "id": "c9-108",
    "type": "exo",
-   "notion": "9.1",
+   "notion": "9.5",
    "origine": "generee",
    "titre": "Notes d'une classe de taille variable",
    "enonce": "Écris un programme qui lit le nombre d'élèves `n`, puis leurs `n` notes (entiers), et affiche la moyenne (2 décimales) puis le nombre de notes au-dessus de la moyenne. Le tableau de notes est alloué **dynamiquement** (on ne connaît pas `n` à l'avance).",

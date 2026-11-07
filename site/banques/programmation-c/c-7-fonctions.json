@@ -955,7 +955,7 @@
   {
    "id": "c7-105",
    "type": "exo",
-   "notion": "7.4",
+   "notion": "7.5",
    "origine": "generee",
    "titre": "La fonction qui ne double rien",
    "enonce": "Ce programme doit doubler `n` grâce à la fonction `doubler`, puis l'afficher : avec `5`, il doit afficher `10`. Il affiche `5`. Corrige `doubler` (et son appel) en passant **par adresse**.",
