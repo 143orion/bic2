@@ -596,11 +596,42 @@
    "origine": "generee",
    "titre": "Programme cassé",
    "enonce": "Ce programme devrait afficher `Bonjour ESILV`, mais il ne compile pas : il contient **deux** erreurs de base.",
-   "guidage": "**Méthode** : lis le message d'erreur, regarde la ligne indiquée **et celle d'avant**. Vérifie la casse des noms et les `;`.",
+   "guidage": "**Diagnostic** : 1. lire le message du compilateur → 2. regarder la ligne indiquée **et celle d'avant** → 3. corriger chaque erreur, une à la fois.\n\n**À retenir** : C distingue majuscules et minuscules ; chaque instruction se termine par `;`.",
    "duree": 3,
    "etapes": [
     {
-     "consigne": "Corrige le programme ci-dessous pour qu'il fasse ce que dit l'énoncé, puis valide.",
+     "consigne": "Le compilateur râle sur le `printf` : « expected ';' ». Quel caractère manque à la fin de la ligne `printf(\"Bonjour ESILV\\n\")` ?",
+     "question": "Caractère manquant ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "(le\\s+)?;|point[- ]virgule|le\\s+point[- ]virgule",
+      "exemple": ";"
+     },
+     "corrige": "Une instruction C se termine toujours par `;`.",
+     "indices": [
+      "Le message dit exactement ce qui manque.",
+      "Le point-virgule."
+     ],
+     "duree": 0.4
+    },
+    {
+     "consigne": "Quel est le nom **exact** de la fonction par où démarre tout programme C (attention à la casse) ?",
+     "question": "Nom de la fonction principale ?",
+     "verif": {
+      "mode": "exact",
+      "attendu": [
+       "main"
+      ]
+     },
+     "corrige": "C'est `main` en minuscules : `Main` est une autre fonction, que le programme ne trouve pas.",
+     "indices": [
+      "Tout en minuscules.",
+      "`main`"
+     ],
+     "duree": 0.4
+    },
+    {
+     "consigne": "Corrige les **deux** erreurs du programme pour qu'il affiche `Bonjour ESILV`.",
      "question": "Corrige le programme.",
      "verif": {
       "mode": "c",
@@ -614,10 +645,10 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    printf(\"Bonjour ESILV\\n\");\n    return 0;\n}\n```",
      "indices": [
-      "Le C est sensible à la casse : comment s'écrit la fonction principale ?",
-      "`main` en minuscules, et un `;` à la fin de l'appel à `printf`."
+      "Une erreur est dans le nom `Main`, l'autre au bout de la ligne du `printf`.",
+      "`int main(void)` et `printf(\"Bonjour ESILV\\n\");`"
      ],
-     "duree": 3,
+     "duree": 2.2,
      "depart": "#include <stdio.h>\n\nint Main(void) {\n    printf(\"Bonjour ESILV\\n\")\n    return 0;\n}"
     }
    ]
@@ -633,7 +664,42 @@
    "duree": 3,
    "etapes": [
     {
-     "consigne": "Écris le programme complet.",
+     "consigne": "Quelle séquence de deux caractères, écrite à la fin du texte d'un `printf`, fait passer à la ligne suivante ?",
+     "question": "Séquence de saut de ligne ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "\\\\n|\\\\n\\s*",
+      "exemple": "\\n"
+     },
+     "corrige": "`\\n` : retour à la ligne.",
+     "indices": [
+      "Un antislash suivi d'une lettre.",
+      "`\\n`"
+     ],
+     "duree": 0.4
+    },
+    {
+     "consigne": "Écris un programme qui affiche seulement les **deux premières** lignes : `BIC2.exe` puis `Programmation C`.",
+     "question": "Deux premières lignes.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "",
+        "sortie": "BIC2.exe\nProgrammation C"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    printf(\"BIC2.exe\\n\");\n    printf(\"Programmation C\\n\");\n    return 0;\n}"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    printf(\"BIC2.exe\\n\");\n    printf(\"Programmation C\\n\");\n    return 0;\n}\n```",
+     "indices": [
+      "Un `printf` par ligne, chacun terminé par `\\n`.",
+      "`printf(\"BIC2.exe\\n\");` puis `printf(\"Programmation C\\n\");`"
+     ],
+     "duree": 1.0
+    },
+    {
+     "consigne": "Ajoute la troisième ligne : `Chapitre 1 : prise en main` (copie le texte à l'identique).",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -647,10 +713,11 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    printf(\"BIC2.exe\\n\");\n    printf(\"Programmation C\\n\");\n    printf(\"Chapitre 1 : prise en main\\n\");\n    return 0;\n}\n```",
      "indices": [
-      "Trois appels à `printf`, un par ligne.",
-      "N'oublie pas le `\\n` à la fin de chaque texte."
+      "Encore un `printf`, avec son `\\n`.",
+      "`printf(\"Chapitre 1 : prise en main\\n\");`"
      ],
-     "duree": 3
+     "duree": 1.6,
+     "depart": "#include <stdio.h>\n\nint main(void) {\n    printf(\"BIC2.exe\\n\");\n    printf(\"Programmation C\\n\");\n    return 0;\n}"
     }
    ]
   },
@@ -661,11 +728,69 @@
    "origine": "generee",
    "titre": "Programme commenté",
    "enonce": "Écris un programme qui affiche `42`, et qui contient **au moins un commentaire sur une ligne** (`//`) **et un commentaire de bloc** (`/* … */`).",
-   "guidage": "Les commentaires n'ont aucun effet sur l'exécution : le correcteur vérifie la sortie **et** la présence des deux types de commentaires.",
+   "guidage": "**Plan** : 1. un commentaire `//` (jusqu'à la fin de la ligne) → 2. un commentaire `/* … */` (peut couvrir plusieurs lignes) → 3. le `printf` de `42`.\n\n**À retenir** : le compilateur ignore les commentaires.",
    "duree": 3,
    "etapes": [
     {
-     "consigne": "Écris le programme complet.",
+     "consigne": "Quels deux caractères ouvrent un commentaire **sur une ligne** ?",
+     "question": "Commentaire d'une ligne ?",
+     "verif": {
+      "mode": "exact",
+      "attendu": [
+       "//"
+      ]
+     },
+     "corrige": "`//` commente jusqu'à la fin de la ligne.",
+     "indices": [
+      "Deux barres obliques.",
+      "//"
+     ],
+     "duree": 0.32
+    },
+    {
+     "consigne": "Écris un commentaire de **bloc** contenant le mot `test`.",
+     "question": "Commentaire de bloc ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "/\\*\\s*test\\s*\\*/",
+      "exemple": "/* test */"
+     },
+     "corrige": "Un bloc s'ouvre par `/*` et se ferme par `*/`.",
+     "indices": [
+      "Il se ferme comme il s'ouvre, avec les caractères dans l'autre sens.",
+      "`/* test */`"
+     ],
+     "duree": 0.39
+    },
+    {
+     "consigne": "Écris un programme qui affiche `42` et contient **un commentaire sur une ligne** (`//`).",
+     "question": "Affiche 42 avec un `//`.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "",
+        "sortie": "42"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    printf(\"42\\n\"); // la réponse\n    return 0;\n}",
+      "exige": [
+       {
+        "motif": "//",
+        "brut": true,
+        "msg": "Il manque un commentaire sur une ligne (//)."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    printf(\"42\\n\"); // la réponse\n    return 0;\n}\n```",
+     "indices": [
+      "Un `printf(\"42\\n\");` dans `main`.",
+      "Ajoute `// ...` à la fin de la ligne."
+     ],
+     "duree": 0.79
+    },
+    {
+     "consigne": "Ajoute aussi **un commentaire de bloc** `/* … */` (par exemple au-dessus de `main`).",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -691,10 +816,11 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\n/* Affiche la réponse à la grande question */\nint main(void) {\n    printf(\"42\\n\"); // la réponse\n    return 0;\n}\n```",
      "indices": [
-      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
-      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+      "Un commentaire de bloc se place n'importe où entre deux instructions.",
+      "`/* Affiche la réponse à la grande question */`"
      ],
-     "duree": 3
+     "duree": 1.5,
+     "depart": "#include <stdio.h>\n\nint main(void) {\n    printf(\"42\\n\"); // la réponse\n    return 0;\n}"
     }
    ]
   }

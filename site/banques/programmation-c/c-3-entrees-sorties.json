@@ -680,11 +680,67 @@
    "origine": "generee",
    "titre": "Ticket de caisse",
    "enonce": "Écris un programme qui lit un prix unitaire (réel) puis une quantité (entier), et affiche sur une ligne : le total HT, la TVA à 20 %, puis le total TTC, chacun avec 2 décimales.\n\nExemple : `2.5 4` → `10.00 2.00 12.00`.",
-   "guidage": "**Plan** : lire avec `%lf` puis `%d` ; HT = prix × quantité ; TVA = HT × 0,2 ; TTC = HT + TVA ; afficher avec `%.2f`.",
+   "guidage": "**Plan** : 1. lire le prix (`%lf`) et la quantité (`%d`) → 2. HT = prix × quantité → 3. TVA = HT × 0,2 → 4. TTC = HT + TVA → 5. afficher avec `%.2f`.",
    "duree": 5,
    "etapes": [
     {
-     "consigne": "Écris le programme complet.",
+     "consigne": "Pour un prix de 2.5 et une quantité de 4, quel est le total HT ?",
+     "question": "Total HT ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 10
+     },
+     "corrige": "2,5 × 4 = 10.",
+     "indices": [
+      "Prix × quantité.",
+      "10"
+     ],
+     "duree": 0.4
+    },
+    {
+     "consigne": "Pour un total HT de 10, quel est le montant de la TVA à 20 % ?",
+     "question": "Montant de la TVA ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 2
+     },
+     "corrige": "10 × 0,2 = 2.",
+     "indices": [
+      "20 % = 0,2.",
+      "2"
+     ],
+     "duree": 0.4
+    },
+    {
+     "consigne": "Lis le prix (réel) et la quantité (entier), et affiche **seulement le total HT** avec 2 décimales.",
+     "question": "Affiche le total HT.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "2.5 4",
+        "sortie": "10.00"
+       },
+       {
+        "entree": "19.99 3",
+        "sortie": "59.97"
+       },
+       {
+        "entree": "100 1",
+        "sortie": "100.00"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    double prix;\n    int qte;\n    scanf(\"%lf %d\", &prix, &qte);\n    double ht = prix * qte;\n    printf(\"%.2f\\n\", ht);\n    return 0;\n}"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    double prix;\n    int qte;\n    scanf(\"%lf %d\", &prix, &qte);\n    double ht = prix * qte;\n    printf(\"%.2f\\n\", ht);\n    return 0;\n}\n```",
+     "indices": [
+      "`double prix; int qte;` puis un seul `scanf(\"%lf %d\", &prix, &qte);`",
+      "`double ht = prix * qte;` puis `printf(\"%.2f\\n\", ht);`"
+     ],
+     "duree": 1.5
+    },
+    {
+     "consigne": "Ajoute la **TVA** (HT × 0,2) et le **TTC** (HT + TVA) : affiche `HT TVA TTC` sur une ligne, chacun avec 2 décimales.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -707,10 +763,11 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    double prix;\n    int qte;\n    scanf(\"%lf %d\", &prix, &qte);\n    double ht = prix * qte;\n    double tva = ht * 0.2;\n    printf(\"%.2f %.2f %.2f\\n\", ht, tva, ht + tva);\n    return 0;\n}\n```",
      "indices": [
-      "Le prix est un `double` : `%lf` dans `scanf`.",
+      "`double tva = ht * 0.2;` puis le TTC vaut `ht + tva`.",
       "`printf(\"%.2f %.2f %.2f\\n\", ht, tva, ht + tva);`"
      ],
-     "duree": 5
+     "duree": 2.7,
+     "depart": "#include <stdio.h>\n\nint main(void) {\n    double prix;\n    int qte;\n    scanf(\"%lf %d\", &prix, &qte);\n    double ht = prix * qte;\n    printf(\"%.2f\\n\", ht);\n    return 0;\n}"
     }
    ]
   },
@@ -721,11 +778,42 @@
    "origine": "generee",
    "titre": "Le scanf qui ne lit rien",
    "enonce": "Ce programme doit lire un âge (entier) et une taille (réel), puis les afficher. Il contient **deux** erreurs dans les `scanf`.\n\nExemple : `20 1.75` → `20 1.75`.",
-   "guidage": "Regarde ce que reçoit chaque `scanf` : une adresse ? le bon format pour un `double` ?",
+   "guidage": "**Diagnostic** : 1. que reçoit `scanf` pour une variable ? → 2. quel format pour un `double` ? → 3. corriger les deux lignes.\n\n**À retenir** : `scanf` écrit dans la variable, il lui faut donc son **adresse** (`&`).",
    "duree": 3,
    "etapes": [
     {
-     "consigne": "Corrige le programme ci-dessous pour qu'il fasse ce que dit l'énoncé, puis valide.",
+     "consigne": "Dans `scanf(\"%d\", age);`, que manque-t-il devant `age` ?",
+     "question": "Que manque-t-il devant `age` ?",
+     "verif": {
+      "mode": "regex",
+      "motif": ".*(&|esperluette|adresse).*",
+      "exemple": "&"
+     },
+     "corrige": "`scanf` doit écrire dans `age` : il lui faut son adresse, donc `&age`.",
+     "indices": [
+      "Le caractère qui donne l'adresse d'une variable.",
+      "`&`"
+     ],
+     "duree": 0.5
+    },
+    {
+     "consigne": "Quel format `scanf` faut-il pour lire un `double` ?",
+     "question": "Format `scanf` d'un `double` ?",
+     "verif": {
+      "mode": "exact",
+      "attendu": [
+       "%lf"
+      ]
+     },
+     "corrige": "`%lf` dans `scanf` (`%f` lit un `float`).",
+     "indices": [
+      "Un `l` s'ajoute à `%f`.",
+      "%lf"
+     ],
+     "duree": 0.4
+    },
+    {
+     "consigne": "Corrige les **deux** `scanf` pour que le programme lise bien l'âge et la taille.",
      "question": "Corrige le programme.",
      "verif": {
       "mode": "c",
@@ -751,10 +839,10 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int age;\n    double taille;\n    scanf(\"%d\", &age);\n    scanf(\"%lf\", &taille);\n    printf(\"%d %.2f\\n\", age, taille);\n    return 0;\n}\n```",
      "indices": [
-      "`scanf` a besoin de l'adresse de `age`.",
-      "Un `double` se lit avec `%lf`, pas `%f`."
+      "Le premier `scanf` oublie le `&` ; le second utilise le mauvais format.",
+      "`scanf(\"%d\", &age);` et `scanf(\"%lf\", &taille);`"
      ],
-     "duree": 3,
+     "duree": 2.1,
      "depart": "#include <stdio.h>\n\nint main(void) {\n    int age;\n    double taille;\n    scanf(\"%d\", age);\n    scanf(\"%f\", &taille);\n    printf(\"%d %.2f\\n\", age, taille);\n    return 0;\n}"
     }
    ]
@@ -766,11 +854,69 @@
    "origine": "generee",
    "titre": "Caractère et code ASCII",
    "enonce": "Écris un programme qui lit **un caractère** et affiche ce caractère, une espace, puis son code ASCII.\n\nExemple : `A` → `A 65`.",
-   "guidage": "Un `char` est un petit entier : le même `char` s'affiche comme caractère avec `%c` et comme nombre avec `%d`.",
+   "guidage": "**Plan** : 1. lire un `char` avec `%c` → 2. l'afficher deux fois : en caractère (`%c`) puis en nombre (`%d`).\n\n**À retenir** : un `char` est un petit entier, son code ASCII.",
    "duree": 3,
    "etapes": [
     {
-     "consigne": "Écris le programme complet.",
+     "consigne": "Quel est le code ASCII du caractère `A` ?",
+     "question": "Code ASCII de `A` ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 65
+     },
+     "corrige": "`'A'` vaut 65 (`'a'` vaut 97).",
+     "indices": [
+      "Les majuscules commencent à 65.",
+      "65"
+     ],
+     "duree": 0.33
+    },
+    {
+     "consigne": "Quel format `printf` affiche le **code** (le nombre) d'une variable `char` ?",
+     "question": "Format du code ASCII ?",
+     "verif": {
+      "mode": "exact",
+      "attendu": [
+       "%d"
+      ]
+     },
+     "corrige": "Avec `%d`, le `char` est affiché comme un entier ; avec `%c`, comme un caractère.",
+     "indices": [
+      "Le même format que pour un entier.",
+      "%d"
+     ],
+     "duree": 0.33
+    },
+    {
+     "consigne": "Lis **un caractère** et affiche-le seul.",
+     "question": "Lis et affiche le caractère.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "A",
+        "sortie": "A"
+       },
+       {
+        "entree": "z",
+        "sortie": "z"
+       },
+       {
+        "entree": "0",
+        "sortie": "0"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    char c;\n    scanf(\" %c\", &c);\n    printf(\"%c\\n\", c);\n    return 0;\n}"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    char c;\n    scanf(\" %c\", &c);\n    printf(\"%c\\n\", c);\n    return 0;\n}\n```",
+     "indices": [
+      "`char c;` puis `scanf(\" %c\", &c);`",
+      "`printf(\"%c\\n\", c);`"
+     ],
+     "duree": 0.83
+    },
+    {
+     "consigne": "Affiche le caractère **puis son code ASCII**, séparés par une espace (`A 65`).",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -792,10 +938,11 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    char c;\n    scanf(\" %c\", &c);\n    printf(\"%c %d\\n\", c, c);\n    return 0;\n}\n```",
      "indices": [
-      "Lis avec `scanf(\" %c\", &c);`.",
-      "Affiche deux fois la même variable : `printf(\"%c %d\\n\", c, c);`"
+      "Deux formats dans le `printf` : `%c` puis `%d`, avec la même variable.",
+      "`printf(\"%c %d\\n\", c, c);`"
      ],
-     "duree": 3
+     "duree": 1.51,
+     "depart": "#include <stdio.h>\n\nint main(void) {\n    char c;\n    scanf(\" %c\", &c);\n    printf(\"%c\\n\", c);\n    return 0;\n}"
     }
    ]
   },
@@ -806,11 +953,51 @@
    "origine": "generee",
    "titre": "Fiche d'identité",
    "enonce": "Écris un programme qui lit un prénom (un mot) puis un âge, et affiche exactement :\n```text\nPrenom : <prénom>\nAge : <âge> ans\n```\nExemple : `Lea 19` → `Prenom : Lea` puis `Age : 19 ans`.",
-   "guidage": "**Plan** : un tableau `char prenom[20]`, un `int age`, un seul `scanf(\"%19s %d\", …)`, puis deux `printf`.",
+   "guidage": "**Plan** : 1. un tableau `char prenom[20]` et un `int age` → 2. un seul `scanf` (`%19s %d`) → 3. deux `printf`.\n\n**À retenir** : pas de `&` devant `prenom` ; `%19s` limite la saisie à 19 caractères.",
    "duree": 4,
    "etapes": [
     {
-     "consigne": "Écris le programme complet.",
+     "consigne": "Quel format `scanf` lit un mot dans un tableau `char prenom[20]` sans jamais dépasser sa taille ?",
+     "question": "Format de lecture d'un mot ?",
+     "verif": {
+      "mode": "exact",
+      "attendu": [
+       "%19s"
+      ]
+     },
+     "corrige": "`%19s` : 19 caractères au plus, la 20e case reçoit le `'\\0'`.",
+     "indices": [
+      "Le format d'une chaîne est `%s`, avec une limite en nombre.",
+      "%19s"
+     ],
+     "duree": 0.5
+    },
+    {
+     "consigne": "Lis un prénom (un mot) puis un âge, et affiche **seulement** `Prenom : <prénom>`.",
+     "question": "Affiche la ligne du prénom.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "Lea 19",
+        "sortie": "Prenom : Lea"
+       },
+       {
+        "entree": "Adam 20",
+        "sortie": "Prenom : Adam"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    char prenom[20];\n    int age;\n    scanf(\"%19s %d\", prenom, &age);\n    printf(\"Prenom : %s\\n\", prenom);\n    return 0;\n}"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    char prenom[20];\n    int age;\n    scanf(\"%19s %d\", prenom, &age);\n    printf(\"Prenom : %s\\n\", prenom);\n    return 0;\n}\n```",
+     "indices": [
+      "`char prenom[20]; int age;` puis `scanf(\"%19s %d\", prenom, &age);`",
+      "`printf(\"Prenom : %s\\n\", prenom);`"
+     ],
+     "duree": 1.5
+    },
+    {
+     "consigne": "Ajoute la deuxième ligne : `Age : <âge> ans`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -828,10 +1015,11 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    char prenom[20];\n    int age;\n    scanf(\"%19s %d\", prenom, &age);\n    printf(\"Prenom : %s\\n\", prenom);\n    printf(\"Age : %d ans\\n\", age);\n    return 0;\n}\n```",
      "indices": [
-      "Pas de `&` devant le tableau `prenom`, mais un `&` devant `age`.",
-      "Deux `printf`, chacun terminé par `\\n`."
+      "Un second `printf` avec `%d`.",
+      "`printf(\"Age : %d ans\\n\", age);`"
      ],
-     "duree": 4
+     "duree": 2.0,
+     "depart": "#include <stdio.h>\n\nint main(void) {\n    char prenom[20];\n    int age;\n    scanf(\"%19s %d\", prenom, &age);\n    printf(\"Prenom : %s\\n\", prenom);\n    return 0;\n}"
     }
    ]
   },
@@ -842,11 +1030,77 @@
    "origine": "generee",
    "titre": "Somme de trois réels",
    "enonce": "Écris un programme qui lit trois nombres réels et affiche leur somme avec **une** décimale.\n\nExemple : `1.5 2.2 3` → `6.7`.",
-   "guidage": "Trois `double`, un seul `scanf` avec trois `%lf`, un `printf` avec `%.1f`.",
+   "guidage": "**Plan** : 1. trois `double` → 2. un seul `scanf` avec trois `%lf` → 3. additionner → 4. afficher avec `%.1f`.",
    "duree": 3,
    "etapes": [
     {
-     "consigne": "Écris le programme complet.",
+     "consigne": "Écris le **format** (entre guillemets) d'un `scanf` qui lit trois `double` séparés par des espaces.",
+     "question": "Format de lecture ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "\\\"?\\s*%lf\\s*%lf\\s*%lf\\s*\\\"?",
+      "exemple": "\"%lf %lf %lf\""
+     },
+     "corrige": "Trois fois `%lf`, séparés par des espaces.",
+     "indices": [
+      "Un `%lf` par variable.",
+      "`\"%lf %lf %lf\"`"
+     ],
+     "duree": 0.39
+    },
+    {
+     "consigne": "Quel format `printf` affiche un réel avec **une seule** décimale ?",
+     "question": "Format 1 décimale ?",
+     "verif": {
+      "mode": "exact",
+      "attendu": [
+       "%.1f"
+      ]
+     },
+     "corrige": "`%.1f` : un chiffre après la virgule.",
+     "indices": [
+      "`%f` précédé de `.1`.",
+      "%.1f"
+     ],
+     "duree": 0.32
+    },
+    {
+     "consigne": "Lis trois réels et affiche leur somme avec le format **par défaut** `%f` (6 décimales).",
+     "question": "Somme avec `%f`.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "1.5 2.2 3",
+        "sortie": "6.700000"
+       },
+       {
+        "entree": "0.1 0.2 0.3",
+        "sortie": "0.600000"
+       },
+       {
+        "entree": "-1 -2.5 10",
+        "sortie": "6.500000"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    double a, b, c;\n    scanf(\"%lf %lf %lf\", &a, &b, &c);\n    printf(\"%f\\n\", a + b + c);\n    return 0;\n}",
+      "exige": [
+       {
+        "motif": "%lf",
+        "brut": true,
+        "msg": "Lis des double avec %lf."
+       }
+      ]
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    double a, b, c;\n    scanf(\"%lf %lf %lf\", &a, &b, &c);\n    printf(\"%f\\n\", a + b + c);\n    return 0;\n}\n```",
+     "indices": [
+      "Trois `double`, un seul `scanf` avec trois `%lf`.",
+      "`printf(\"%f\\n\", a + b + c);`"
+     ],
+     "duree": 0.79
+    },
+    {
+     "consigne": "Il suffit d'afficher la somme avec **une** décimale (`1.5 2.2 3` → `6.7`).",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -877,10 +1131,11 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    double a, b, c;\n    scanf(\"%lf %lf %lf\", &a, &b, &c);\n    printf(\"%.1f\\n\", a + b + c);\n    return 0;\n}\n```",
      "indices": [
-      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
-      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+      "Remplace `%f` par un format à une décimale.",
+      "`printf(\"%.1f\\n\", a + b + c);`"
      ],
-     "duree": 3
+     "duree": 1.5,
+     "depart": "#include <stdio.h>\n\nint main(void) {\n    double a, b, c;\n    scanf(\"%lf %lf %lf\", &a, &b, &c);\n    printf(\"%f\\n\", a + b + c);\n    return 0;\n}"
     }
    ]
   }
