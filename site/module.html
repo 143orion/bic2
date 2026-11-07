@@ -1313,13 +1313,34 @@ function rendreCarteFa(box){
   const tete = `<p class="fl-k">Follow-along</p><h2 class="fl-h2">Quelle notion veux-tu comprendre ?</h2>
     <p class="fa3-leg"><span><i class="l-pre"></i>prérequis</span><span><i class="l-post"></i>ce que ça prépare</span><span><i class="l-ok"></i>validée</span></p>`;
   if(petitEcran()){ rendreCarteFaTel(box, I, tete); return; }
-  box.innerHTML = `<div class="fa3">${tete}<div class="fa3-wrap" id="fa3-wrap"><div class="fa3-grille">${S.chapitres.map(c => `<div class="fa3-col"><h4>Chapitre ${esc(String(c.ordre ?? 0))}<br><span>${esc(c.titre || c.id)}</span></h4>${c.notions.map(n => `<button type="button" class="fa3-n${faCls(n, I)}" data-m="ffoc" data-id="${esc(n.id)}"><span class="id">${esc(n.id)}</span> ${mdInline(n.titre)}</button>`).join("")}</div>`).join("")}</div><svg class="fa3-liens" aria-hidden="true"></svg></div>
+  box.innerHTML = `<div class="fa3">${tete}<div class="fa3-rail"><button type="button" class="fa3-r" data-fr="-1" aria-label="Chapitres précédents"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button><div class="fa3-piste"><span class="fa3-pilule" title="Glisse pour parcourir les chapitres"><i></i><i></i><i></i></span></div><button type="button" class="fa3-r" data-fr="1" aria-label="Chapitres suivants"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button></div>
+    <div class="fa3-wrap" id="fa3-wrap"><div class="fa3-grille">${S.chapitres.map(c => `<div class="fa3-col"><h4>Chapitre ${esc(String(c.ordre ?? 0))}<br><span>${esc(c.titre || c.id)}</span></h4>${c.notions.map(n => `<button type="button" class="fa3-n${faCls(n, I)}" data-m="ffoc" data-id="${esc(n.id)}"><span class="id">${esc(n.id)}</span> ${mdInline(n.titre)}</button>`).join("")}</div>`).join("")}</div><svg class="fa3-liens" aria-hidden="true"></svg></div>
     <div id="fa3-fiche"></div><p class="vide-txt fa3-aide">Survole une notion pour voir ses liens · clic pour la garder affichée.</p></div>`;
   const w = box.querySelector("#fa3-wrap");
   w.addEventListener("mouseover", e => { const b = e.target.closest(".fa3-n"); if(b) faFocus(b.dataset.id, false); });
   w.addEventListener("mouseleave", () => faFocus(S2.ffoc, false));
+  faRail(box, w);
   requestAnimationFrame(() => { faFocus(S2.ffoc, false); const b = w.querySelector(`.fa3-n[data-id="${CSS.escape(S2.ffoc)}"]`); if(b) w.scrollLeft = Math.max(0, b.parentNode.offsetLeft - 40); });
 }
+/* rail au-dessus de la carte : ‹ › aux bouts (un chapitre), pilule à crans qu'on glisse, clic sur la piste = on y va */
+function faRail(box, w){
+  const rail = box.querySelector(".fa3-rail"), piste = rail.querySelector(".fa3-piste"), pil = rail.querySelector(".fa3-pilule"), [bg, bd] = rail.querySelectorAll(".fa3-r");
+  const pas = () => { const c = w.querySelector(".fa3-col"); return c ? c.offsetWidth + 34 : 240; }, max = () => w.scrollWidth - w.clientWidth;
+  const aller = x => w.scrollTo({left:x, behavior:reduit ? "auto" : "smooth"});
+  const maj = () => { const m = max(), W = piste.clientWidth, tw = Math.max(46, W * w.clientWidth / Math.max(1, w.scrollWidth));
+    rail.hidden = m < 4; pil.style.width = tw + "px"; pil.style.left = (m ? w.scrollLeft / m : 0) * (W - tw) + "px"; bg.disabled = w.scrollLeft < 4; bd.disabled = w.scrollLeft > m - 4; };
+  w.addEventListener("scroll", maj, {passive:true});
+  rail.addEventListener("click", e => { const b = e.target.closest("[data-fr]"); if(b) aller(w.scrollLeft + +b.dataset.fr * pas()); });
+  let drag = null;
+  pil.addEventListener("pointerdown", e => { e.preventDefault(); drag = {x:e.clientX, s:w.scrollLeft}; pil.classList.add("drag"); pil.setPointerCapture(e.pointerId); });
+  pil.addEventListener("pointermove", e => { if(drag) w.scrollLeft = drag.s + (e.clientX - drag.x) * max() / Math.max(1, piste.clientWidth - pil.offsetWidth); });
+  const fin = () => { drag = null; pil.classList.remove("drag"); };
+  pil.addEventListener("pointerup", fin); pil.addEventListener("pointercancel", fin);
+  piste.addEventListener("pointerdown", e => { if(e.target !== piste) return; const r = piste.getBoundingClientRect(); aller((e.clientX - r.left) / r.width * w.scrollWidth - w.clientWidth / 2); });
+  S.touches = e => { if(e.key === "ArrowRight" || e.key === "ArrowLeft"){ e.preventDefault(); aller(w.scrollLeft + (e.key === "ArrowRight" ? 1 : -1) * pas()); } };
+  maj(); requestAnimationFrame(maj);
+}
+addEventListener("resize", () => { const w = $("fa3-wrap"); if(w) w.dispatchEvent(new Event("scroll")); });
 function faFocus(id, garder){
   const w = $("fa3-wrap"); if(!w) return;
   if(garder) S2.ffoc = id;

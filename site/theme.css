@@ -1200,7 +1200,16 @@ body.voile-on .notion:has(.check-carte.actif)>*:not(.check-carte.actif):not(.apr
 .fa3{display:grid;gap:10px;max-width:1200px;margin:0 auto}
 .fa3-leg{display:flex;flex-wrap:wrap;gap:16px;margin:0;font-size:11.5px;color:var(--gris-2)}.fa3-leg i{display:inline-block;width:18px;height:3px;border-radius:2px;vertical-align:middle;margin-right:6px}
 .fa3-leg .l-pre{background:var(--braise-3)}.fa3-leg .l-post{background:var(--violet-clair)}.fa3-leg .l-ok{background:var(--ok)}
-.fa3-wrap{position:relative;overflow-x:auto;padding:4px 2px 10px;scrollbar-width:thin}
+.fa3-wrap{position:relative;overflow-x:auto;padding:4px 2px 10px;scrollbar-width:none}.fa3-wrap::-webkit-scrollbar{display:none}
+/* rail au-dessus de la carte (remplace la barre de défilement) */
+.fa3-rail{display:flex;align-items:stretch;height:30px;margin:4px 0 6px;border:1px solid var(--verre-bord);border-radius:15px;background:rgba(0,0,0,.25);overflow:hidden}.fa3-rail[hidden]{display:none}
+.fa3-r{all:unset;flex:none;width:34px;display:grid;place-items:center;cursor:pointer;color:var(--m-fg);transition:background-color var(--t-court)}
+.fa3-r svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.fa3-r:hover:not(:disabled){background:color-mix(in srgb,var(--m-ac) 18%,transparent)}.fa3-r:disabled{opacity:.25;cursor:default}.fa3-r:focus-visible{outline:2px solid var(--violet-pale);outline-offset:-2px}
+.fa3-piste{position:relative;flex:1;cursor:pointer}
+.fa3-pilule{position:absolute;top:4px;bottom:4px;border-radius:99px;border:1.5px solid var(--m-ac);background:color-mix(in srgb,var(--m-bg) 92%,#000);display:flex;align-items:center;justify-content:center;gap:4px;cursor:grab;touch-action:none;transition:background-color var(--t-court)}
+.fa3-pilule i{width:2px;height:10px;border-radius:2px;background:var(--m-ac);opacity:.8}
+.fa3-pilule:hover,.fa3-pilule.drag{background:color-mix(in srgb,var(--m-ac) 22%,transparent)}.fa3-pilule.drag{cursor:grabbing}
 .fa3-grille{position:relative;z-index:2;display:grid;grid-auto-flow:column;grid-auto-columns:210px;gap:34px;width:max-content}
 .fa3-col h4{margin:0 0 10px;min-height:34px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--gris-2)}.fa3-col h4 span{color:var(--blanc)}
 .fa3-n{all:unset;box-sizing:border-box;display:block;width:100%;cursor:pointer;margin:0 0 10px;padding:8px 10px;border-radius:8px;border:1px solid var(--verre-bord);background:color-mix(in srgb,var(--m-bg) 92%,#000);color:var(--m-fg);font-size:12.5px;line-height:1.3;transition:opacity .2s,border-color .2s,transform .2s}
