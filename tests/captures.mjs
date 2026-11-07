@@ -88,6 +88,9 @@ const SCENARIOS = {
     if(!v.svg) erreurs.push(`[${app}] explicatif : pas de schéma de circuit`);
     await pg.click('[data-m="sub"][data-v="tldr"]'); await attendre(500); await verifier("tldr");
     await pg.click('[data-m="sub"][data-v="follow"]'); await attendre(300);
+    if(await pg.$(".fa3-nav")){ await pg.click('.fa3-nav [data-m="fch"][data-v="3"]'); await attendre(200); }   // téléphone : un chapitre à la fois
+    await pg.click('[data-m="ffoc"][data-id="3.3"]'); await attendre(200);
+    await capture(pg, `follow-carte-${app}`);
     await pg.click('[data-m="fa"][data-id="3.3"]'); await attendre(600);
     v = await verifier("follow"); if(!v.svg) erreurs.push(`[${app}] follow : pas de schéma de circuit`);
     await pg.click('[data-m="tab"][data-v="exos"]'); await pg.click('[data-m="pch"][data-id="elec-4-thevenin-norton"]'); await pg.click('[data-m="exsuiv"]');

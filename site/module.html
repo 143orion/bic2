@@ -1081,7 +1081,7 @@ function vue(nom, rendu){
   rendu(); scrollTo(0, 0);
 }
 const estCourt = it => it.type === "qcm" || it.type === "qcm-multi" || it.type === "trous" || (it.type === "saisie" && (it.duree == null || +it.duree <= 1));
-const S2 = {tab:"cours", sub:"expl", cur:0, eng:null, chkV:{}, ord:{}, fa:null, fs:0,
+const S2 = {tab:"cours", sub:"expl", cur:0, eng:null, chkV:{}, ord:{}, fa:null, fs:0, ffoc:null, fch:null,
   fl:{etape:1, pick:new Set(), mode:"express", guide:false, annale:null}, sess:null,
   pan:{tab:"fiche", code:null, note:"", vu:null}};
 
@@ -1287,14 +1287,85 @@ function repondreCheck(n, i){
   if(S2.sub === "follow") vueModule();
 }
 
+/* ---------- Follow-along · carte des prérequis (choix de la notion) ----------
+   Ordi : une colonne par chapitre ; survol / clic d'une notion → prérequis (orange) et ce qu'elle prépare (violet), reliés par des traits.
+   Téléphone : un chapitre à la fois (barre de chapitres collante, ‹ ›, glisser) ; liens en ids cliquables qui sautent au bon chapitre.
+   Tout est calculé depuis `pre` (le « prépare » est déduit). */
+function faInfos(){
+  const ctl = controles(), ids = new Set(S.notions.map(n => n.id)), post = {};
+  S.notions.forEach(n => n.pre.forEach(p => (post[p] = post[p] || []).push(n.id)));
+  const ok = n => lue(n, ctl), suiv = S.notions.find(n => n.ecrans.length && !ok(n));
+  return {ok, suiv, post:id => post[id] || [], pre:n => n.pre.filter(p => ids.has(p)), byId:id => S.notions.find(n => n.id === id)};
+}
+const faDuree = n => `${n.ecrans.length} écran${n.ecrans.length > 1 ? "s" : ""} · ≈ ${Math.max(1, Math.round(n.ecrans.length * 40 / 60))} min`;
+function faEtat(n, I){ return !n.ecrans.length ? `<span class="pastille">pas de pas-à-pas</span>` : I.ok(n) ? `<span class="pastille ok">validée</span>` : n === I.suiv ? `<span class="pastille ici">▶ tu es ici</span>` : `<span class="pastille">à lire</span>`; }
+function faCls(n, I){ return (I.ok(n) ? " ok" : "") + (n === I.suiv ? " ici" : "") + (n.ecrans.length ? "" : " vide"); }
+function faFiche(n, I){
+  const pre = I.pre(n), post = I.post(n.id), manque = pre.filter(p => { const x = I.byId(p); return x && !I.ok(x); });
+  return `<section class="fenetre fa3-fiche" data-titre="${esc(n.id)}.exe"><div class="fa3-fiche-in"><div><b>${esc(n.id)} ${mdInline(n.titre)}</b>
+    <div class="fa3-meta">${faEtat(n, I)}${n.ecrans.length ? `<span class="pastille">${faDuree(n)}</span>` : ""}${pre.length ? `<span class="pastille pre">${pre.length} prérequis</span>` : ""}${post.length ? `<span class="pastille post">prépare ${post.length}</span>` : ""}</div>
+    ${manque.length ? `<p class="fa3-manque">Prérequis pas encore validé${manque.length > 1 ? "s" : ""} : ${manque.map(esc).join(", ")}</p>` : ""}</div>
+    ${n.ecrans.length ? `<button type="button" class="btn plein" data-m="fa" data-id="${esc(n.id)}">Lancer</button>` : ""}</div></section>`;
+}
+function rendreCarteFa(box){
+  const I = faInfos();
+  if(!S2.ffoc || !I.byId(S2.ffoc)) S2.ffoc = (I.suiv || S.notions[0]).id;
+  const tete = `<p class="fl-k">Follow-along</p><h2 class="fl-h2">Quelle notion veux-tu comprendre ?</h2>
+    <p class="fa3-leg"><span><i class="l-pre"></i>prérequis</span><span><i class="l-post"></i>ce que ça prépare</span><span><i class="l-ok"></i>validée</span></p>`;
+  if(petitEcran()){ rendreCarteFaTel(box, I, tete); return; }
+  box.innerHTML = `<div class="fa3">${tete}<div class="fa3-wrap" id="fa3-wrap"><div class="fa3-grille">${S.chapitres.map(c => `<div class="fa3-col"><h4>Chapitre ${esc(String(c.ordre ?? 0))}<br><span>${esc(c.titre || c.id)}</span></h4>${c.notions.map(n => `<button type="button" class="fa3-n${faCls(n, I)}" data-m="ffoc" data-id="${esc(n.id)}"><span class="id">${esc(n.id)}</span> ${mdInline(n.titre)}</button>`).join("")}</div>`).join("")}</div><svg class="fa3-liens" aria-hidden="true"></svg></div>
+    <div id="fa3-fiche"></div><p class="vide-txt fa3-aide">Survole une notion pour voir ses liens · clic pour la garder affichée.</p></div>`;
+  const w = box.querySelector("#fa3-wrap");
+  w.addEventListener("mouseover", e => { const b = e.target.closest(".fa3-n"); if(b) faFocus(b.dataset.id, false); });
+  w.addEventListener("mouseleave", () => faFocus(S2.ffoc, false));
+  requestAnimationFrame(() => { faFocus(S2.ffoc, false); const b = w.querySelector(`.fa3-n[data-id="${CSS.escape(S2.ffoc)}"]`); if(b) w.scrollLeft = Math.max(0, b.parentNode.offsetLeft - 40); });
+}
+function faFocus(id, garder){
+  const w = $("fa3-wrap"); if(!w) return;
+  if(garder) S2.ffoc = id;
+  const I = faInfos(), n = I.byId(id); if(!n) return;
+  const svg = w.querySelector(".fa3-liens"), g = w.querySelector(".fa3-grille"), box = g.getBoundingClientRect();
+  svg.setAttribute("width", g.scrollWidth); svg.setAttribute("height", g.scrollHeight);
+  w.classList.add("foc");
+  w.querySelectorAll(".fa3-n").forEach(b => b.classList.remove("on", "pre", "post"));
+  const el = x => w.querySelector(`.fa3-n[data-id="${CSS.escape(x)}"]`);
+  const pt = (x, droite) => { const r = el(x).getBoundingClientRect(); return [(droite ? r.right : r.left) - box.left, r.top - box.top + r.height / 2]; };
+  const trait = (a, b, cls) => { const [x1, y1] = pt(a, true), [x2, y2] = pt(b, false);
+    if(x2 > x1){ const d = Math.max(30, (x2 - x1) / 2); return `<path class="${cls}" d="M${x1},${y1} C${x1 + d},${y1} ${x2 - d},${y2} ${x2},${y2}"/>`; }
+    const [a1, b1] = pt(a, false); return `<path class="${cls}" d="M${a1},${b1} C${a1 - 26},${b1} ${x2 - 26},${y2} ${x2},${y2}"/>`; };
+  el(id).classList.add("on");
+  let h = "";
+  I.pre(n).forEach(p => { if(el(p)){ el(p).classList.add("pre"); h += trait(p, id, "l-pre"); } });
+  I.post(id).forEach(p => { if(el(p)){ el(p).classList.add("post"); h += trait(id, p, "l-post"); } });
+  svg.innerHTML = h;
+  $("fa3-fiche").innerHTML = faFiche(n, I);
+}
+function rendreCarteFaTel(box, I, tete){
+  const cour = I.byId(S2.ffoc);
+  if(S2.fch == null || !S.chapitres[S2.fch]) S2.fch = Math.max(0, S.chapitres.findIndex(c => c.id === cour.ch));
+  const ci = S2.fch, c = S.chapitres[ci], nb = x => x.notions.filter(n => I.ok(n)).length;
+  const lien = (id, cls) => `<button type="button" class="fa3-lien ${cls}" data-m="fsaut" data-id="${esc(id)}">${esc(id)}</button>`;
+  box.innerHTML = `<div class="fa3 tel">${tete}
+    <nav class="fa3-nav">${S.chapitres.map((x, i) => `<button type="button" class="${i === ci ? "cur" : ""}${nb(x) === x.notions.length ? " fini" : ""}${I.suiv && x.notions.includes(I.suiv) ? " ici" : ""}" data-m="fch" data-v="${i}" aria-label="Chapitre ${esc(String(x.ordre ?? 0))}"><b>${esc(String(x.ordre ?? 0))}</b><i style="width:${x.notions.length ? nb(x) / x.notions.length * 100 : 0}%"></i></button>`).join("")}</nav>
+    <div class="fa3-tete"><button type="button" class="fa3-fl" data-m="fch" data-v="${ci - 1}" ${ci ? "" : "disabled"} aria-label="Chapitre précédent">‹</button><div><span>Chapitre ${esc(String(c.ordre ?? 0))} · ${nb(c)}/${c.notions.length}</span><b>${esc(c.titre || c.id)}</b></div><button type="button" class="fa3-fl" data-m="fch" data-v="${ci + 1}" ${ci < S.chapitres.length - 1 ? "" : "disabled"} aria-label="Chapitre suivant">›</button></div>
+    <div class="fa3-liste">${c.notions.map(n => { const pre = I.pre(n), post = I.post(n.id);
+      return `<div class="fa3-c${faCls(n, I)}${n.id === S2.ffoc ? " on" : ""}" id="fa3-${esc(n.id)}">
+        <button type="button" class="fa3-h" data-m="ffoc" data-id="${esc(n.id)}"><span class="id">${esc(n.id)}</span><span class="t">${mdInline(n.titre)}</span>${faEtat(n, I)}</button>
+        <div class="fa3-l"><span>après</span>${pre.length ? pre.map(p => lien(p, I.ok(I.byId(p)) ? "ok" : "pre")).join("") : `<span>rien</span>`}</div>
+        ${post.length ? `<div class="fa3-l"><span>prépare</span>${post.map(p => lien(p, "post")).join("")}</div>` : ""}
+        ${n.id === S2.ffoc && n.ecrans.length ? `<div class="fa3-go"><span class="vide-txt">${faDuree(n)}</span><button type="button" class="btn plein" data-m="fa" data-id="${esc(n.id)}">Lancer</button></div>` : ""}</div>`; }).join("")}</div>
+    <p class="vide-txt fa3-aide">Touche un id pour y sauter, même dans un autre chapitre · glisse pour changer de chapitre.</p></div>`;
+  const nav = box.querySelector(".fa3-nav"), cur = nav.querySelector(".cur"); if(cur) nav.scrollLeft = cur.offsetLeft - nav.clientWidth / 2;
+  const l = box.querySelector(".fa3-liste"); let x0 = null, y0 = 0;
+  l.addEventListener("touchstart", e => { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, {passive:true});
+  l.addEventListener("touchend", e => { if(x0 === null) return; const dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0; x0 = null;
+    if(Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5){ const k = ci + (dx < 0 ? 1 : -1); if(k >= 0 && k < S.chapitres.length){ S2.fch = k; vueModule(); } } });
+}
+addEventListener("resize", () => { if($("fa3-wrap")) faFocus(S2.ffoc, false); });
+
 /* ---------- Cours · Follow-along : on choisit une notion, explication écran par écran ---------- */
 function rendreFollow(box){
-  if(S2.fa === null){
-    const ctl = controles();
-    box.innerHTML = `<div class="fa2-pick"><p class="fl-k">Follow-along</p><h2 class="fl-h2">Quelle notion veux-tu comprendre ?</h2><p class="vide-txt">On t'explique pas à pas, avec un schéma qui s'allume.</p>
-      ${S.chapitres.map(c => `<p class="som-ch">Chapitre ${esc(String(c.ordre ?? 0))} · ${esc(c.titre || c.id)}</p><div class="fa2-grille">${c.notions.map(n => `<button type="button" class="fa2-carte" ${n.ecrans.length ? "" : "disabled"} data-m="fa" data-id="${esc(n.id)}"><b>${esc(n.id)} ${mdInline(n.titre)}</b><span class="pastille">${n.ecrans.length ? (lue(n, ctl) ? "validée" : "à lire") : "pas encore de pas-à-pas"}</span></button>`).join("")}</div>`).join("")}</div>`;
-    return;
-  }
+  if(S2.fa === null){ rendreCarteFa(box); return; }
   const n = S.notions[S2.fa], ec = n.ecrans, t = ec.length, i = Math.min(S2.fs, t), suiv = S.notions[S2.fa + 1];
   let h = `<div class="fa2"><div class="fa2-top"><button type="button" class="retour" data-m="fback">← Choisir une autre notion</button><span class="vide-txt">${esc(n.id)} ${mdInline(n.titre)}</span><span class="fa2-points">${Array.from({length:t + (n.check ? 1 : 0)}, (_, k) => `<i class="${k < i ? "done" : k === i ? "cur" : ""}"></i>`).join("")}</span></div>`;
   if(i < t){
@@ -1517,6 +1588,10 @@ const ACT = {
   fnext: () => { S2.fs++; vueModule(); },
   fprev: () => { S2.fs = Math.max(0, S2.fs - 1); vueModule(); },
   fback: () => { S2.fa = null; vueModule(); },
+  ffoc: b => { if($("fa3-wrap")) faFocus(b.dataset.id, true); else { S2.ffoc = b.dataset.id; vueModule(); } },
+  fch: b => { S2.fch = +b.dataset.v; vueModule(); scrollTo(0, 0); },
+  fsaut: b => { const n = S.notions.find(x => x.id === b.dataset.id); if(!n) return; S2.ffoc = n.id; S2.fch = S.chapitres.findIndex(c => c.id === n.ch); vueModule();
+    const el = $("fa3-" + n.id); if(el){ el.scrollIntoView({block:"center", behavior:reduit ? "auto" : "smooth"}); el.classList.add("flash"); } },
   pk: b => { const p = S2.fl.pick, id = b.dataset.id; p.has(id) ? p.delete(id) : p.add(id); rendreExos($("m-corps")); },
   pch: b => { const c = S.chapitres.find(x => x.id === b.dataset.id), ids = c.notions.map(n => n.id), tout = ids.every(i => S2.fl.pick.has(i)); ids.forEach(i => tout ? S2.fl.pick.delete(i) : S2.fl.pick.add(i)); rendreExos($("m-corps")); },
   pall: () => { S.notions.forEach(n => S2.fl.pick.add(n.id)); rendreExos($("m-corps")); },
