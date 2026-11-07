@@ -681,11 +681,65 @@
    "origine": "generee",
    "titre": "Distance d'un point à l'origine",
    "enonce": "Définis `typedef struct { double x; double y; } Point;`. Écris un programme qui lit les coordonnées d'un point dans une variable `Point`, puis affiche sa distance à l'origine, $\\sqrt{x^2 + y^2}$, avec 2 décimales.",
-   "guidage": "`scanf(\"%lf %lf\", &p.x, &p.y);` : l'adresse d'un champ s'écrit `&p.x`.",
+   "guidage": "**Plan** : 1. `typedef struct { double x; double y; } Point;` → 2. `Point p;` → 3. `scanf(\"%lf %lf\", &p.x, &p.y);` (on prend l'adresse **du champ**) → 4. `sqrt(p.x * p.x + p.y * p.y)` (`<math.h>`).",
    "duree": 5,
    "etapes": [
     {
-     "consigne": "Écris le programme complet.",
+     "consigne": "Pour une variable `p` de type `Point`, écris l'expression qui désigne son champ `x`.",
+     "question": "Désigner le champ `x` de `p` ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "p\\s*\\.\\s*x",
+      "exemple": "p.x"
+     },
+     "corrige": "On accède à un champ avec le point : `p.x`.",
+     "indices": [
+      "Variable, point, nom du champ.",
+      "`p.x`"
+     ],
+     "duree": 0.3
+    },
+    {
+     "consigne": "Écris l'argument de `scanf` qui donne l'**adresse du champ** `y` de `p`.",
+     "question": "Adresse du champ `y` ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "&\\s*p\\s*\\.\\s*y",
+      "exemple": "&p.y"
+     },
+     "corrige": "`&p.y` : `.` est évalué avant `&`, donc c'est bien l'adresse du champ.",
+     "indices": [
+      "Un `&` devant le champ.",
+      "`&p.y`"
+     ],
+     "duree": 0.4
+    },
+    {
+     "consigne": "Avec deux `double x, y` ordinaires (pas encore de struct) : lis deux réels et affiche `x * x + y * y` avec 2 décimales (le carré de la distance).",
+     "question": "Distance au carré.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "3 4",
+        "sortie": "25.00"
+       },
+       {
+        "entree": "1 1",
+        "sortie": "2.00"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    double x, y;\n    scanf(\"%lf %lf\", &x, &y);\n    printf(\"%.2f\\n\", x * x + y * y);\n    return 0;\n}\n"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    double x, y;\n    scanf(\"%lf %lf\", &x, &y);\n    printf(\"%.2f\\n\", x * x + y * y);\n    return 0;\n}\n\n```",
+     "indices": [
+      "`%lf` pour lire un `double`, `%.2f` pour l'afficher.",
+      "`printf(\"%.2f\\n\", x * x + y * y);`"
+     ],
+     "duree": 1.0
+    },
+    {
+     "consigne": "Regroupe `x` et `y` dans `typedef struct { double x; double y; } Point;`, lis dans `p.x` et `p.y`, et affiche la **distance** `sqrt(p.x * p.x + p.y * p.y)` avec 2 décimales (`<math.h>`).",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -718,10 +772,11 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n#include <math.h>\n\ntypedef struct {\n    double x;\n    double y;\n} Point;\n\nint main(void) {\n    Point p;\n    scanf(\"%lf %lf\", &p.x, &p.y);\n    printf(\"%.2f\\n\", sqrt(p.x * p.x + p.y * p.y));\n    return 0;\n}\n```",
      "indices": [
-      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
-      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+      "Le `typedef struct` se place avant `main` ; ajoute `#include <math.h>`.",
+      "`scanf(\"%lf %lf\", &p.x, &p.y);` puis `printf(\"%.2f\\n\", sqrt(p.x * p.x + p.y * p.y));`"
      ],
-     "duree": 5
+     "duree": 3.3,
+     "depart": "#include <stdio.h>\n\nint main(void) {\n    double x, y;\n    scanf(\"%lf %lf\", &x, &y);\n    printf(\"%.2f\\n\", x * x + y * y);\n    return 0;\n}\n"
     }
    ]
   },
@@ -732,11 +787,68 @@
    "origine": "generee",
    "titre": "Week-end ou pas",
    "enonce": "Définis `typedef enum { LUNDI, MARDI, MERCREDI, JEUDI, VENDREDI, SAMEDI, DIMANCHE } Jour;`. Le programme lit un numéro de jour (0 à 6) dans une variable `Jour` et affiche `week-end` pour `SAMEDI` et `DIMANCHE`, `semaine` sinon, avec un `switch` sur les constantes de l'énumération.",
-   "guidage": "`case SAMEDI: case DIMANCHE:` partagent le même bloc ; `default:` pour les autres jours.",
+   "guidage": "**Plan** : 1. `typedef enum { LUNDI, …, DIMANCHE } Jour;` (les constantes valent 0, 1, …, 6) → 2. lire `n`, `Jour j = n;` → 3. `switch (j)` : `case SAMEDI: case DIMANCHE:` partagent un bloc, `default:` pour le reste.",
    "duree": 5,
    "etapes": [
     {
-     "consigne": "Écris le programme complet.",
+     "consigne": "Quelle valeur entière a la constante `SAMEDI` dans `enum { LUNDI, MARDI, MERCREDI, JEUDI, VENDREDI, SAMEDI, DIMANCHE }` ? (un nombre)",
+     "question": "Valeur de `SAMEDI` ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 5
+     },
+     "corrige": "Les constantes numérotent à partir de 0 : `LUNDI`=0 … `SAMEDI`=5.",
+     "indices": [
+      "On compte à partir de 0.",
+      "5"
+     ],
+     "duree": 0.4
+    },
+    {
+     "consigne": "Écris les deux étiquettes (sur une même ligne) qui font partager le même bloc à `SAMEDI` et `DIMANCHE` dans le `switch`.",
+     "question": "Deux `case` partagés ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "case\\s+SAMEDI\\s*:\\s*case\\s+DIMANCHE\\s*:",
+      "exemple": "case SAMEDI: case DIMANCHE:"
+     },
+     "corrige": "Sans `break` entre les deux `case`, l'exécution « tombe » dans le bloc commun.",
+     "indices": [
+      "Pas de `break` entre les deux.",
+      "`case SAMEDI: case DIMANCHE:`"
+     ],
+     "duree": 0.5
+    },
+    {
+     "consigne": "Sans `enum` : lis `n` (0 à 6) et affiche `week-end` si `n` vaut 5 ou 6, `semaine` sinon (un `if`).",
+     "question": "Version avec `if`.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "5",
+        "sortie": "week-end"
+       },
+       {
+        "entree": "6",
+        "sortie": "week-end"
+       },
+       {
+        "entree": "0",
+        "sortie": "semaine"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    if (n == 5 || n == 6) {\n        printf(\"week-end\\n\");\n    } else {\n        printf(\"semaine\\n\");\n    }\n    return 0;\n}\n"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    if (n == 5 || n == 6) {\n        printf(\"week-end\\n\");\n    } else {\n        printf(\"semaine\\n\");\n    }\n    return 0;\n}\n\n```",
+     "indices": [
+      "Un test sur 5 et 6.",
+      "`if (n == 5 || n == 6)`"
+     ],
+     "duree": 1.0
+    },
+    {
+     "consigne": "Remplace les nombres par l'énumération `Jour` et un `switch (j)` sur ses constantes (`case SAMEDI:` / `case DIMANCHE:` puis `default:`).",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -772,10 +884,11 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\ntypedef enum { LUNDI, MARDI, MERCREDI, JEUDI, VENDREDI, SAMEDI, DIMANCHE } Jour;\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    Jour j = n;\n    switch (j) {\n        case SAMEDI:\n        case DIMANCHE:\n            printf(\"week-end\\n\");\n            break;\n        default:\n            printf(\"semaine\\n\");\n    }\n    return 0;\n}\n```",
      "indices": [
-      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
-      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+      "Déclare `typedef enum { LUNDI, MARDI, MERCREDI, JEUDI, VENDREDI, SAMEDI, DIMANCHE } Jour;` puis `Jour j = n;`.",
+      "`default:` gère les cinq autres jours ; pense aux `break`."
      ],
-     "duree": 5
+     "duree": 3.1,
+     "depart": "#include <stdio.h>\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    if (n == 5 || n == 6) {\n        printf(\"week-end\\n\");\n    } else {\n        printf(\"semaine\\n\");\n    }\n    return 0;\n}\n"
     }
    ]
   },
@@ -786,11 +899,66 @@
    "origine": "generee",
    "titre": "Fiche avec date de naissance",
    "enonce": "Définis `Date` (jour, mois, annee) puis `Personne` (nom de 30 caractères et un champ `Date naissance`). Le programme lit un nom puis une date (`jour mois annee`) et affiche `nom jj/mm/aaaa age`, où `age` est l'âge atteint en 2026 (2026 − année).",
-   "guidage": "Lecture : `scanf(\"%29s %d %d %d\", p.nom, &p.naissance.jour, &p.naissance.mois, &p.naissance.annee);`.",
+   "guidage": "**Plan** : 1. `Date` (3 `int`) → 2. `Personne` avec `char nom[30]` et `Date naissance;` (une struct **dans** une struct) → 3. lire avec `p.naissance.jour` (deux points enchaînés) → 4. âge = `2026 - p.naissance.annee`.",
    "duree": 6,
    "etapes": [
     {
-     "consigne": "Écris le programme complet.",
+     "consigne": "Écris le champ de `Personne` qui contient la date de naissance (type `Date`, nom `naissance`).",
+     "question": "Champ date de naissance ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "Date\\s+naissance\\s*;",
+      "exemple": "Date naissance;",
+      "flags": ""
+     },
+     "corrige": "Une struct peut contenir une autre struct : `Date naissance;`.",
+     "indices": [
+      "Type puis nom, comme n'importe quel champ.",
+      "`Date naissance;`"
+     ],
+     "duree": 0.4
+    },
+    {
+     "consigne": "Écris l'expression qui désigne le **mois** de naissance de la `Personne p`.",
+     "question": "Mois de naissance de `p` ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "p\\s*\\.\\s*naissance\\s*\\.\\s*mois",
+      "exemple": "p.naissance.mois"
+     },
+     "corrige": "On enchaîne les accès : d'abord `naissance`, puis `mois`.",
+     "indices": [
+      "Deux points.",
+      "`p.naissance.mois`"
+     ],
+     "duree": 0.4
+    },
+    {
+     "consigne": "Avec seulement `Date` (sans `Personne`) : lis un nom, puis `jour mois annee` dans une `Date d` et affiche `nom j/m/a`.",
+     "question": "Date seule.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "Martin 12 5 1985",
+        "sortie": "Martin 12/5/1985"
+       },
+       {
+        "entree": "Lea 1 1 2006",
+        "sortie": "Lea 1/1/2006"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\ntypedef struct {\n    int jour;\n    int mois;\n    int annee;\n} Date;\n\nint main(void) {\n    char nom[30];\n    Date d;\n    scanf(\"%29s %d %d %d\", nom, &d.jour, &d.mois, &d.annee);\n    printf(\"%s %d/%d/%d\\n\", nom, d.jour, d.mois, d.annee);\n    return 0;\n}\n"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\ntypedef struct {\n    int jour;\n    int mois;\n    int annee;\n} Date;\n\nint main(void) {\n    char nom[30];\n    Date d;\n    scanf(\"%29s %d %d %d\", nom, &d.jour, &d.mois, &d.annee);\n    printf(\"%s %d/%d/%d\\n\", nom, d.jour, d.mois, d.annee);\n    return 0;\n}\n\n```",
+     "indices": [
+      "Les trois champs de `d` se lisent avec `&d.jour`, etc.",
+      "`printf(\"%s %d/%d/%d\\n\", …);`"
+     ],
+     "duree": 1.5
+    },
+    {
+     "consigne": "Ajoute `Personne` (nom + `Date naissance`), lis dans `p.nom` et `p.naissance.…`, et affiche en plus l'âge atteint en 2026 : `nom j/m/a age`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -814,10 +982,11 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\ntypedef struct {\n    int jour;\n    int mois;\n    int annee;\n} Date;\n\ntypedef struct {\n    char nom[30];\n    Date naissance;\n} Personne;\n\nint main(void) {\n    Personne p;\n    scanf(\"%29s %d %d %d\", p.nom, &p.naissance.jour, &p.naissance.mois, &p.naissance.annee);\n    printf(\"%s %d/%d/%d %d\\n\", p.nom, p.naissance.jour, p.naissance.mois,\n           p.naissance.annee, 2026 - p.naissance.annee);\n    return 0;\n}\n```",
      "indices": [
-      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
-      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+      "`typedef struct { char nom[30]; Date naissance; } Personne;` après `Date`.",
+      "`2026 - p.naissance.annee` en dernier argument du `printf`."
      ],
-     "duree": 6
+     "duree": 3.7,
+     "depart": "#include <stdio.h>\n\ntypedef struct {\n    int jour;\n    int mois;\n    int annee;\n} Date;\n\nint main(void) {\n    char nom[30];\n    Date d;\n    scanf(\"%29s %d %d %d\", nom, &d.jour, &d.mois, &d.annee);\n    printf(\"%s %d/%d/%d\\n\", nom, d.jour, d.mois, d.annee);\n    return 0;\n}\n"
     }
    ]
   },
@@ -828,11 +997,65 @@
    "origine": "generee",
    "titre": "Augmenter un salaire",
    "enonce": "Reprends l'exemple du cours : `typedef struct { char nom[50]; int age; double salaire; } Employe;` et `void augmenter_salaire(Employe *e, double pourcentage)`. `main` lit un nom, un âge, un salaire et un pourcentage, appelle la fonction **avec l'adresse** de l'employé, puis affiche le nouveau salaire avec 2 décimales.",
-   "guidage": "Dans la fonction : `e->salaire += e->salaire * (pourcentage / 100.0);`.",
+   "guidage": "**Plan** : 1. la fonction reçoit `Employe *e` (une **adresse**) → 2. avec un pointeur on accède aux champs par `->` : `e->salaire` → 3. `main` appelle `augmenter_salaire(&emp, pct)`.",
    "duree": 6,
    "etapes": [
     {
-     "consigne": "Écris le programme complet.",
+     "consigne": "Écris, avec la flèche, l'accès au champ `salaire` d'un pointeur `e` sur `Employe`.",
+     "question": "Champ `salaire` via `e` ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "e\\s*->\\s*salaire",
+      "exemple": "e->salaire"
+     },
+     "corrige": "`e->salaire` est la forme abrégée de `(*e).salaire`.",
+     "indices": [
+      "La flèche remplace le point pour un pointeur.",
+      "`e->salaire`"
+     ],
+     "duree": 0.3
+    },
+    {
+     "consigne": "Écris l'appel de `augmenter_salaire` pour l'employé `emp` avec le pourcentage `pct`.",
+     "question": "Appel de la fonction ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "augmenter_salaire\\s*\\(\\s*&\\s*emp\\s*,\\s*pct\\s*\\)\\s*;",
+      "exemple": "augmenter_salaire(&emp, pct);"
+     },
+     "corrige": "On passe l'**adresse** de `emp` pour que la fonction le modifie.",
+     "indices": [
+      "Un `&` devant `emp`.",
+      "`augmenter_salaire(&emp, pct);`"
+     ],
+     "duree": 0.4
+    },
+    {
+     "consigne": "Sans fonction : lis un nom, un âge, un salaire et un pourcentage dans un `Employe emp` et `double pct` ; augmente `emp.salaire` du pourcentage dans `main` et affiche-le (2 décimales).",
+     "question": "Augmentation dans `main`.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "Dubois 30 35000 10",
+        "sortie": "38500.00"
+       },
+       {
+        "entree": "Lea 25 2000 2.5",
+        "sortie": "2050.00"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\ntypedef struct {\n    char nom[50];\n    int age;\n    double salaire;\n} Employe;\n\nint main(void) {\n    Employe emp;\n    double pct;\n    scanf(\"%49s %d %lf %lf\", emp.nom, &emp.age, &emp.salaire, &pct);\n    emp.salaire += emp.salaire * (pct / 100.0);\n    printf(\"%.2f\\n\", emp.salaire);\n    return 0;\n}\n"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\ntypedef struct {\n    char nom[50];\n    int age;\n    double salaire;\n} Employe;\n\nint main(void) {\n    Employe emp;\n    double pct;\n    scanf(\"%49s %d %lf %lf\", emp.nom, &emp.age, &emp.salaire, &pct);\n    emp.salaire += emp.salaire * (pct / 100.0);\n    printf(\"%.2f\\n\", emp.salaire);\n    return 0;\n}\n\n```",
+     "indices": [
+      "`emp.salaire` se modifie comme une variable ordinaire.",
+      "`emp.salaire += emp.salaire * (pct / 100.0);`"
+     ],
+     "duree": 2.0
+    },
+    {
+     "consigne": "Sors l'augmentation dans `void augmenter_salaire(Employe *e, double pourcentage)` (avec `e->salaire`) ; `main` l'appelle avec `&emp` puis affiche.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -861,10 +1084,11 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\ntypedef struct {\n    char nom[50];\n    int age;\n    double salaire;\n} Employe;\n\nvoid augmenter_salaire(Employe *e, double pourcentage) {\n    e->salaire += e->salaire * (pourcentage / 100.0);\n}\n\nint main(void) {\n    Employe emp;\n    double pct;\n    scanf(\"%49s %d %lf %lf\", emp.nom, &emp.age, &emp.salaire, &pct);\n    augmenter_salaire(&emp, pct);\n    printf(\"%.2f\\n\", emp.salaire);\n    return 0;\n}\n```",
      "indices": [
-      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
-      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+      "Dans la fonction, `emp.salaire` devient `e->salaire`.",
+      "Appel : `augmenter_salaire(&emp, pct);`"
      ],
-     "duree": 6
+     "duree": 3.3,
+     "depart": "#include <stdio.h>\n\ntypedef struct {\n    char nom[50];\n    int age;\n    double salaire;\n} Employe;\n\nint main(void) {\n    Employe emp;\n    double pct;\n    scanf(\"%49s %d %lf %lf\", emp.nom, &emp.age, &emp.salaire, &pct);\n    emp.salaire += emp.salaire * (pct / 100.0);\n    printf(\"%.2f\\n\", emp.salaire);\n    return 0;\n}\n"
     }
    ]
   },
@@ -875,11 +1099,65 @@
    "origine": "generee",
    "titre": "La classe",
    "enonce": "Définis `typedef struct { char nom[30]; int note; } Etudiant;`. Le programme lit `n` (≤ 50), puis `n` lignes `nom note`, dans un **tableau d'Etudiant**. Il affiche la moyenne (2 décimales) puis le nom du meilleur étudiant (le premier en cas d'égalité).",
-   "guidage": "Le meilleur : garde l'**indice** du meilleur (`best`), et compare `classe[i].note > classe[best].note`.",
+   "guidage": "**Plan** : 1. `Etudiant classe[50];` → 2. à chaque tour lire `classe[i].nom` et `&classe[i].note` → 3. cumuler la somme → 4. garder l'**indice** `best` du meilleur → 5. `(double)s / n`.",
    "duree": 7,
    "etapes": [
     {
-     "consigne": "Écris le programme complet.",
+     "consigne": "Écris le `scanf` qui lit le nom et la note de l'étudiant d'indice `i` (`nom note`, nom borné à 29 caractères).",
+     "question": "Lecture de l'étudiant `i` ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "scanf\\s*\\(\\s*\\\"%29s\\s+%d\\\"\\s*,\\s*classe\\[i\\]\\.nom\\s*,\\s*&\\s*classe\\[i\\]\\.note\\s*\\)\\s*;",
+      "exemple": "scanf(\"%29s %d\", classe[i].nom, &classe[i].note);"
+     },
+     "corrige": "Le nom est un tableau (pas de `&`), la note est un entier (avec `&`).",
+     "indices": [
+      "Un seul des deux champs prend `&`.",
+      "`scanf(\"%29s %d\", classe[i].nom, &classe[i].note);`"
+     ],
+     "duree": 0.7
+    },
+    {
+     "consigne": "Écris la condition (sans `if`) qui détecte que l'étudiant `i` a une **meilleure** note que le meilleur actuel `best` (strictement).",
+     "question": "Condition « meilleur » ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "\\(?\\s*classe\\[i\\]\\.note\\s*>\\s*classe\\[best\\]\\.note\\s*\\)?",
+      "exemple": "classe[i].note > classe[best].note"
+     },
+     "corrige": "`>` strict : le premier gagne en cas d'égalité.",
+     "indices": [
+      "Compare deux champs `note`.",
+      "`classe[i].note > classe[best].note`"
+     ],
+     "duree": 0.5
+    },
+    {
+     "consigne": "Sans struct : lis `n` (≤ 50) puis `n` notes (entiers seuls), et affiche leur moyenne (2 décimales) et l'**indice** de la meilleure note (la première en cas d'égalité).",
+     "question": "Moyenne et indice du meilleur.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "3\n18\n15\n17",
+        "sortie": "16.67 0"
+       },
+       {
+        "entree": "2\n9\n12",
+        "sortie": "10.50 1"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int notes[50], n, s = 0, best = 0;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        scanf(\"%d\", &notes[i]);\n        s += notes[i];\n        if (notes[i] > notes[best]) best = i;\n    }\n    printf(\"%.2f %d\\n\", (double)s / n, best);\n    return 0;\n}\n"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int notes[50], n, s = 0, best = 0;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        scanf(\"%d\", &notes[i]);\n        s += notes[i];\n        if (notes[i] > notes[best]) best = i;\n    }\n    printf(\"%.2f %d\\n\", (double)s / n, best);\n    return 0;\n}\n\n```",
+     "indices": [
+      "`best` est un indice : il part de 0.",
+      "`if (notes[i] > notes[best]) best = i;`"
+     ],
+     "duree": 2.0
+    },
+    {
+     "consigne": "Range maintenant nom **et** note dans un tableau `Etudiant classe[50]` ; affiche la moyenne puis le **nom** du meilleur (`classe[best].nom`).",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -903,10 +1181,11 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\ntypedef struct {\n    char nom[30];\n    int note;\n} Etudiant;\n\nint main(void) {\n    Etudiant classe[50];\n    int n, s = 0, best = 0;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        scanf(\"%29s %d\", classe[i].nom, &classe[i].note);\n        s += classe[i].note;\n        if (classe[i].note > classe[best].note) best = i;\n    }\n    printf(\"%.2f %s\\n\", (double)s / n, classe[best].nom);\n    return 0;\n}\n```",
      "indices": [
-      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
-      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+      "Définis `Etudiant` (nom + note) avant `main` et remplace `notes[i]` par `classe[i].note`.",
+      "`printf(\"%.2f %s\\n\", (double)s / n, classe[best].nom);`"
      ],
-     "duree": 7
+     "duree": 3.8,
+     "depart": "#include <stdio.h>\n\nint main(void) {\n    int notes[50], n, s = 0, best = 0;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        scanf(\"%d\", &notes[i]);\n        s += notes[i];\n        if (notes[i] > notes[best]) best = i;\n    }\n    printf(\"%.2f %d\\n\", (double)s / n, best);\n    return 0;\n}\n"
     }
    ]
   },
@@ -917,11 +1196,65 @@
    "origine": "generee",
    "titre": "Annuaire dynamique",
    "enonce": "Définis `typedef struct { char nom[30]; char tel[15]; } Contact;`. Le programme lit `n`, alloue un annuaire de `n` contacts avec `calloc`, lit les `n` lignes `nom tel`, puis lit un nom à chercher et affiche son téléphone, ou `inconnu`. Libère l'annuaire à la fin.",
-   "guidage": "Comparaison de chaînes avec `strcmp(annuaire[i].nom, cherche) == 0` (string.h).",
+   "guidage": "**Plan** : 1. `Contact *annuaire = calloc(n, sizeof(Contact));` (taille d'une **struct**) → 2. test `NULL`, lecture de `n` contacts → 3. lire le nom cherché → 4. parcourir avec `strcmp(annuaire[i].nom, cherche) == 0` → 5. afficher le téléphone ou `inconnu` → 6. `free`.",
    "duree": 8,
    "etapes": [
     {
-     "consigne": "Écris le programme complet.",
+     "consigne": "Écris l'allocation de `n` contacts avec `calloc`, dans `Contact *annuaire`.",
+     "question": "Allocation de l'annuaire ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "Contact\\s*\\*\\s*annuaire\\s*=\\s*(\\(\\s*Contact\\s*\\*\\s*\\)\\s*)?calloc\\s*\\(\\s*n\\s*,\\s*sizeof\\s*\\(\\s*Contact\\s*\\)\\s*\\)\\s*;",
+      "exemple": "Contact *annuaire = calloc(n, sizeof(Contact));"
+     },
+     "corrige": "On alloue `n` éléments de la taille d'un `Contact`.",
+     "indices": [
+      "`sizeof` fonctionne aussi sur un type struct.",
+      "`Contact *annuaire = calloc(n, sizeof(Contact));`"
+     ],
+     "duree": 0.53
+    },
+    {
+     "consigne": "Écris la condition (sans `if`) vraie quand le nom du contact `i` est **égal** à `cherche`.",
+     "question": "Comparer deux noms ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "\\(?\\s*strcmp\\s*\\(\\s*annuaire\\[i\\]\\.nom\\s*,\\s*cherche\\s*\\)\\s*==\\s*0\\s*\\)?",
+      "exemple": "strcmp(annuaire[i].nom, cherche) == 0"
+     },
+     "corrige": "`strcmp` renvoie 0 quand les chaînes sont égales (on ne compare pas des chaînes avec `==`).",
+     "indices": [
+      "`strcmp` renvoie 0 si égales.",
+      "`strcmp(annuaire[i].nom, cherche) == 0`"
+     ],
+     "duree": 0.45
+    },
+    {
+     "consigne": "Avec un tableau **statique** `Contact annuaire[50]` : lis `n`, les `n` contacts (`nom tel`), le nom cherché, et affiche le téléphone du premier contact trouvé ou `inconnu`.",
+     "question": "Annuaire statique.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "3\nMartin 0601020304\nDurand 0605060708\nBernard 0609101112\nDurand",
+        "sortie": "0605060708"
+       },
+       {
+        "entree": "1\nLea 0700000000\nZoe",
+        "sortie": "inconnu"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n#include <string.h>\n\ntypedef struct {\n    char nom[30];\n    char tel[15];\n} Contact;\n\nint main(void) {\n    Contact annuaire[50];\n    int n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        scanf(\"%29s %14s\", annuaire[i].nom, annuaire[i].tel);\n    }\n    char cherche[30];\n    scanf(\"%29s\", cherche);\n    int trouve = 0;\n    for (int i = 0; i < n; i++) {\n        if (strcmp(annuaire[i].nom, cherche) == 0) {\n            printf(\"%s\\n\", annuaire[i].tel);\n            trouve = 1;\n            break;\n        }\n    }\n    if (!trouve) printf(\"inconnu\\n\");\n    return 0;\n}\n"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n#include <string.h>\n\ntypedef struct {\n    char nom[30];\n    char tel[15];\n} Contact;\n\nint main(void) {\n    Contact annuaire[50];\n    int n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        scanf(\"%29s %14s\", annuaire[i].nom, annuaire[i].tel);\n    }\n    char cherche[30];\n    scanf(\"%29s\", cherche);\n    int trouve = 0;\n    for (int i = 0; i < n; i++) {\n        if (strcmp(annuaire[i].nom, cherche) == 0) {\n            printf(\"%s\\n\", annuaire[i].tel);\n            trouve = 1;\n            break;\n        }\n    }\n    if (!trouve) printf(\"inconnu\\n\");\n    return 0;\n}\n\n```",
+     "indices": [
+      "Un drapeau `trouve` et un `break` à la première correspondance.",
+      "`if (!trouve) printf(\"inconnu\\n\");`"
+     ],
+     "duree": 3.02
+    },
+    {
+     "consigne": "Alloue l'annuaire **dynamiquement** avec `calloc` (test `NULL`) au lieu du tableau statique, et libère-le (`free`) à la fin.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -953,10 +1286,11 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\n\ntypedef struct {\n    char nom[30];\n    char tel[15];\n} Contact;\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    Contact *annuaire = calloc(n, sizeof(Contact));\n    if (annuaire == NULL) return 1;\n    for (int i = 0; i < n; i++) {\n        scanf(\"%29s %14s\", annuaire[i].nom, annuaire[i].tel);\n    }\n    char cherche[30];\n    scanf(\"%29s\", cherche);\n    int trouve = 0;\n    for (int i = 0; i < n; i++) {\n        if (strcmp(annuaire[i].nom, cherche) == 0) {\n            printf(\"%s\\n\", annuaire[i].tel);\n            trouve = 1;\n            break;\n        }\n    }\n    if (!trouve) printf(\"inconnu\\n\");\n    free(annuaire);\n    return 0;\n}\n```",
      "indices": [
-      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
-      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+      "Remplace `Contact annuaire[50];` par un pointeur ; il faut `<stdlib.h>`.",
+      "`Contact *annuaire = calloc(n, sizeof(Contact));` après la lecture de `n`, `free(annuaire);` avant `return 0;`."
      ],
-     "duree": 8
+     "duree": 4.0,
+     "depart": "#include <stdio.h>\n#include <string.h>\n\ntypedef struct {\n    char nom[30];\n    char tel[15];\n} Contact;\n\nint main(void) {\n    Contact annuaire[50];\n    int n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        scanf(\"%29s %14s\", annuaire[i].nom, annuaire[i].tel);\n    }\n    char cherche[30];\n    scanf(\"%29s\", cherche);\n    int trouve = 0;\n    for (int i = 0; i < n; i++) {\n        if (strcmp(annuaire[i].nom, cherche) == 0) {\n            printf(\"%s\\n\", annuaire[i].tel);\n            trouve = 1;\n            break;\n        }\n    }\n    if (!trouve) printf(\"inconnu\\n\");\n    return 0;\n}\n"
     }
    ]
   },
@@ -967,11 +1301,41 @@
    "origine": "generee",
    "titre": "L'anniversaire qui ne compte pas",
    "enonce": "La fonction `vieillir` doit ajouter un an à la personne. Avec `Lea 19`, le programme doit afficher `20`, mais il affiche `19`. Corrige la fonction (et son appel).",
-   "guidage": "Passage par valeur ou par adresse ?",
+   "guidage": "**Diagnostic** : 1. `vieillir(Personne p)` reçoit une **copie** → 2. il faut l'adresse : `Personne *p` → 3. `p->age++` → 4. appel `vieillir(&moi)`.",
    "duree": 4,
    "etapes": [
     {
-     "consigne": "Corrige le programme ci-dessous pour qu'il fasse ce que dit l'énoncé, puis valide.",
+     "consigne": "Que modifie `p.age++` dans `void vieillir(Personne p)` : la variable de `main` ou une copie ? (un mot)",
+     "question": "Variable ou copie ?",
+     "verif": {
+      "mode": "regex",
+      "motif": ".*copie.*",
+      "exemple": "une copie"
+     },
+     "corrige": "Passage par valeur : la fonction travaille sur une **copie** de la struct entière.",
+     "indices": [
+      "Pas de `*` dans le paramètre.",
+      "Une copie."
+     ],
+     "duree": 0.3
+    },
+    {
+     "consigne": "Écris l'accès au champ `age` à l'intérieur de `vieillir` une fois le paramètre devenu `Personne *p`, pour lui ajouter un an.",
+     "question": "Ajouter un an via le pointeur ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "p\\s*->\\s*age\\s*(\\+\\+|\\+=\\s*1|=\\s*p\\s*->\\s*age\\s*\\+\\s*1)\\s*;|\\+\\+\\s*p\\s*->\\s*age\\s*;",
+      "exemple": "p->age++;"
+     },
+     "corrige": "`p->age++;`",
+     "indices": [
+      "Flèche, car `p` est un pointeur.",
+      "`p->age++;`"
+     ],
+     "duree": 0.5
+    },
+    {
+     "consigne": "Corrige `vieillir` pour qu'elle modifie la personne de `main` : paramètre par adresse, accès par `->`, appel avec `&`.",
      "question": "Corrige le programme.",
      "verif": {
       "mode": "c",
@@ -995,10 +1359,10 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\ntypedef struct {\n    char nom[30];\n    int age;\n} Personne;\n\nvoid vieillir(Personne *p) {\n    p->age++;\n}\n\nint main(void) {\n    Personne moi;\n    scanf(\"%29s %d\", moi.nom, &moi.age);\n    vieillir(&moi);\n    printf(\"%d\\n\", moi.age);\n    return 0;\n}\n```",
      "indices": [
-      "`vieillir` reçoit une copie de `moi`.",
-      "`void vieillir(Personne *p) { p->age++; }` et l'appel `vieillir(&moi);`."
+      "Deux endroits à changer : l'en-tête de la fonction et l'appel dans `main`.",
+      "`void vieillir(Personne *p) { p->age++; }` et `vieillir(&moi);`"
      ],
-     "duree": 4,
+     "duree": 3.2,
      "depart": "#include <stdio.h>\n\ntypedef struct {\n    char nom[30];\n    int age;\n} Personne;\n\nvoid vieillir(Personne p) {\n    p.age++;\n}\n\nint main(void) {\n    Personne moi;\n    scanf(\"%29s %d\", moi.nom, &moi.age);\n    vieillir(moi);\n    printf(\"%d\\n\", moi.age);\n    return 0;\n}"
     }
    ]
@@ -1010,11 +1374,65 @@
    "origine": "generee",
    "titre": "Vendre un produit",
    "enonce": "Définis `typedef struct { char nom[30]; double prix; int stock; } Produit;` et `int vendre(Produit *p, int quantite)` : si le stock suffit, il le diminue et renvoie 1, sinon il ne change rien et renvoie 0. Écris aussi `void afficher(const Produit *p)` qui affiche `nom stock`. `main` lit un nom, un prix, un stock, puis une quantité : il affiche `vendu` ou `stock insuffisant`, puis appelle `afficher`.",
-   "guidage": "Modifier → `Produit *` ; lire → `const Produit *`.",
+   "guidage": "**Plan** : 1. `int vendre(Produit *p, int quantite)` : modifie → pointeur simple → 2. si `p->stock < quantite` renvoyer 0, sinon diminuer et renvoyer 1 → 3. `void afficher(const Produit *p)` : lit seulement → `const` → 4. `main` : `if (vendre(&prod, q))` puis `afficher(&prod)`.",
    "duree": 7,
    "etapes": [
     {
-     "consigne": "Écris le programme complet.",
+     "consigne": "Écris l'instruction (dans `vendre`, cas où le stock suffit) qui retire `quantite` du stock.",
+     "question": "Diminuer le stock ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "p\\s*->\\s*stock\\s*-=\\s*quantite\\s*;|p\\s*->\\s*stock\\s*=\\s*p\\s*->\\s*stock\\s*-\\s*quantite\\s*;",
+      "exemple": "p->stock -= quantite;"
+     },
+     "corrige": "`p->stock -= quantite;`",
+     "indices": [
+      "Modifie le champ pointé.",
+      "`p->stock -= quantite;`"
+     ],
+     "duree": 0.43
+    },
+    {
+     "consigne": "Écris l'en-tête de `afficher` : elle ne fait que lire le produit, donc le pointeur est `const`.",
+     "question": "En-tête de `afficher` ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "void\\s+afficher\\s*\\(\\s*const\\s+Produit\\s*\\*\\s*p\\s*\\)\\s*\\{?",
+      "exemple": "void afficher(const Produit *p)"
+     },
+     "corrige": "`const Produit *p` : le compilateur interdit toute modification à travers `p`.",
+     "indices": [
+      "`const` avant le type pointé.",
+      "`void afficher(const Produit *p)`"
+     ],
+     "duree": 0.51
+    },
+    {
+     "consigne": "Sans fonction : lis un nom, un prix, un stock et une quantité dans un `Produit prod` ; si `prod.stock >= q`, diminue le stock et affiche `vendu`, sinon `stock insuffisant` ; puis affiche `nom stock`.",
+     "question": "Vente dans `main`.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "Stylo 1.5 10 3",
+        "sortie": "vendu\nStylo 7"
+       },
+       {
+        "entree": "Cahier 3 2 5",
+        "sortie": "stock insuffisant\nCahier 2"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\ntypedef struct {\n    char nom[30];\n    double prix;\n    int stock;\n} Produit;\n\nint main(void) {\n    Produit prod;\n    int q;\n    scanf(\"%29s %lf %d %d\", prod.nom, &prod.prix, &prod.stock, &q);\n    if (prod.stock >= q) {\n        prod.stock -= q;\n        printf(\"vendu\\n\");\n    } else {\n        printf(\"stock insuffisant\\n\");\n    }\n    printf(\"%s %d\\n\", prod.nom, prod.stock);\n    return 0;\n}\n"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\ntypedef struct {\n    char nom[30];\n    double prix;\n    int stock;\n} Produit;\n\nint main(void) {\n    Produit prod;\n    int q;\n    scanf(\"%29s %lf %d %d\", prod.nom, &prod.prix, &prod.stock, &q);\n    if (prod.stock >= q) {\n        prod.stock -= q;\n        printf(\"vendu\\n\");\n    } else {\n        printf(\"stock insuffisant\\n\");\n    }\n    printf(\"%s %d\\n\", prod.nom, prod.stock);\n    return 0;\n}\n\n```",
+     "indices": [
+      "Un `if` / `else` sur `prod.stock >= q`.",
+      "L'affichage final est commun aux deux cas."
+     ],
+     "duree": 2.56
+    },
+    {
+     "consigne": "Sors la vente dans `int vendre(Produit *p, int quantite)` (renvoie 1 ou 0) et l'affichage dans `void afficher(const Produit *p)` ; `main` appelle les deux avec `&prod`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -1043,10 +1461,11 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\ntypedef struct {\n    char nom[30];\n    double prix;\n    int stock;\n} Produit;\n\nint vendre(Produit *p, int quantite) {\n    if (p->stock < quantite) return 0;\n    p->stock -= quantite;\n    return 1;\n}\n\nvoid afficher(const Produit *p) {\n    printf(\"%s %d\\n\", p->nom, p->stock);\n}\n\nint main(void) {\n    Produit prod;\n    int q;\n    scanf(\"%29s %lf %d %d\", prod.nom, &prod.prix, &prod.stock, &q);\n    if (vendre(&prod, q)) printf(\"vendu\\n\");\n    else printf(\"stock insuffisant\\n\");\n    afficher(&prod);\n    return 0;\n}\n```",
      "indices": [
-      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
-      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+      "`vendre` : `if (p->stock < quantite) return 0;` puis la diminution et `return 1;`.",
+      "`if (vendre(&prod, q)) … else …` puis `afficher(&prod);`"
      ],
-     "duree": 7
+     "duree": 3.5,
+     "depart": "#include <stdio.h>\n\ntypedef struct {\n    char nom[30];\n    double prix;\n    int stock;\n} Produit;\n\nint main(void) {\n    Produit prod;\n    int q;\n    scanf(\"%29s %lf %d %d\", prod.nom, &prod.prix, &prod.stock, &q);\n    if (prod.stock >= q) {\n        prod.stock -= q;\n        printf(\"vendu\\n\");\n    } else {\n        printf(\"stock insuffisant\\n\");\n    }\n    printf(\"%s %d\\n\", prod.nom, prod.stock);\n    return 0;\n}\n"
     }
    ]
   },
@@ -1057,11 +1476,60 @@
    "origine": "generee",
    "titre": "Classe initialisée",
    "enonce": "Recopie la classe du cours, **initialisée à la déclaration** :\n```c\nEtudiant classe[3] = {\n    {\"Alice\", 18},\n    {\"Bob\", 15},\n    {\"Charlie\", 17}\n};\n```\npuis écris `void afficher_classe(Etudiant etudiants[], int taille)` qui affiche `i. nom - Note : note/20` (numéros à partir de 1), et affiche ensuite la moyenne avec 2 décimales.",
-   "guidage": "Exemple de ligne : `1. Alice - Note : 18/20`.",
+   "guidage": "**Plan** : 1. `Etudiant classe[3] = { {\"Alice\", 18}, … };` → 2. `afficher_classe(etudiants[], taille)` : boucle avec `i + 1` → 3. moyenne en réel → 4. `main` appelle la fonction puis calcule la moyenne.",
    "duree": 6,
    "etapes": [
     {
-     "consigne": "Écris le programme complet.",
+     "consigne": "Écris le `printf` (dans la boucle d'indice `i`) qui affiche `1. Alice - Note : 18/20` pour l'étudiant `i` (numéro à partir de 1).",
+     "question": "Ligne d'affichage ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "printf\\s*\\(\\s*\\\"%d\\.\\s*%s\\s*-\\s*Note\\s*:\\s*%d/20\\\\n\\\"\\s*,\\s*i\\s*\\+\\s*1\\s*,\\s*etudiants\\[i\\]\\.nom\\s*,\\s*etudiants\\[i\\]\\.note\\s*\\)\\s*;",
+      "exemple": "printf(\"%d. %s - Note : %d/20\\n\", i + 1, etudiants[i].nom, etudiants[i].note);"
+     },
+     "corrige": "Numéro `i + 1`, puis nom, puis note.",
+     "indices": [
+      "Trois valeurs : `i + 1`, `.nom`, `.note`.",
+      "`printf(\"%d. %s - Note : %d/20\\n\", i + 1, etudiants[i].nom, etudiants[i].note);`"
+     ],
+     "duree": 0.77
+    },
+    {
+     "consigne": "Quelle est la moyenne de `18`, `15` et `17` arrondie à 2 décimales ? (un nombre)",
+     "question": "Moyenne attendue ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 16.67
+     },
+     "corrige": "(18 + 15 + 17) / 3 = 16,666… → 16.67.",
+     "indices": [
+      "Somme 50 divisée par 3.",
+      "16.67"
+     ],
+     "duree": 0.29
+    },
+    {
+     "consigne": "Sans fonction : déclare `Etudiant classe[3]` initialisé comme dans l'énoncé et affiche la ligne de chaque étudiant (`i. nom - Note : note/20`) dans `main`.",
+     "question": "Affichage dans `main`.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "",
+        "sortie": "1. Alice - Note : 18/20\n2. Bob - Note : 15/20\n3. Charlie - Note : 17/20"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\ntypedef struct {\n    char nom[30];\n    int note;\n} Etudiant;\n\nint main(void) {\n    Etudiant classe[3] = {\n        {\"Alice\", 18},\n        {\"Bob\", 15},\n        {\"Charlie\", 17}\n    };\n    for (int i = 0; i < 3; i++) {\n        printf(\"%d. %s - Note : %d/20\\n\", i + 1, classe[i].nom, classe[i].note);\n    }\n    return 0;\n}\n"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\ntypedef struct {\n    char nom[30];\n    int note;\n} Etudiant;\n\nint main(void) {\n    Etudiant classe[3] = {\n        {\"Alice\", 18},\n        {\"Bob\", 15},\n        {\"Charlie\", 17}\n    };\n    for (int i = 0; i < 3; i++) {\n        printf(\"%d. %s - Note : %d/20\\n\", i + 1, classe[i].nom, classe[i].note);\n    }\n    return 0;\n}\n\n```",
+     "indices": [
+      "Les accolades internes initialisent chaque struct.",
+      "`i + 1` pour la numérotation."
+     ],
+     "duree": 1.94
+    },
+    {
+     "consigne": "Sors l'affichage dans `void afficher_classe(Etudiant etudiants[], int taille)` ; `main` l'appelle puis affiche la moyenne avec 2 décimales sur une dernière ligne.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -1081,10 +1549,11 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\ntypedef struct {\n    char nom[30];\n    int note;\n} Etudiant;\n\nvoid afficher_classe(Etudiant etudiants[], int taille) {\n    for (int i = 0; i < taille; i++) {\n        printf(\"%d. %s - Note : %d/20\\n\", i + 1, etudiants[i].nom, etudiants[i].note);\n    }\n}\n\nint main(void) {\n    Etudiant classe[3] = {\n        {\"Alice\", 18},\n        {\"Bob\", 15},\n        {\"Charlie\", 17}\n    };\n    afficher_classe(classe, 3);\n    int s = 0;\n    for (int i = 0; i < 3; i++) s += classe[i].note;\n    printf(\"%.2f\\n\", s / 3.0);\n    return 0;\n}\n```",
      "indices": [
-      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
-      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+      "La boucle d'affichage passe dans la fonction, `classe[i]` devient `etudiants[i]`.",
+      "Moyenne : `s / 3.0` avec `s` cumulé sur les notes."
      ],
-     "duree": 6
+     "duree": 3.0,
+     "depart": "#include <stdio.h>\n\ntypedef struct {\n    char nom[30];\n    int note;\n} Etudiant;\n\nint main(void) {\n    Etudiant classe[3] = {\n        {\"Alice\", 18},\n        {\"Bob\", 15},\n        {\"Charlie\", 17}\n    };\n    for (int i = 0; i < 3; i++) {\n        printf(\"%d. %s - Note : %d/20\\n\", i + 1, classe[i].nom, classe[i].note);\n    }\n    return 0;\n}\n"
     }
    ]
   }

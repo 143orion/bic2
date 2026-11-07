@@ -560,11 +560,80 @@
    "origine": "generee",
    "titre": "Tableau dynamique à l'envers",
    "enonce": "Écris un programme qui lit `N`, **alloue dynamiquement** un tableau de `N` entiers, le remplit avec les `N` valeurs saisies, l'affiche **à l'envers**, puis libère la mémoire.",
-   "guidage": "Les 5 temps : taille → `malloc(n * sizeof(int))` → test `NULL` → boucles → `free`.",
+   "guidage": "**Plan** : 1. lire `n` → 2. `int *t = malloc(n * sizeof(int));` → 3. tester `t == NULL` → 4. remplir puis afficher à l'envers → 5. `free(t);`.",
    "duree": 6,
    "etapes": [
     {
-     "consigne": "Écris le programme complet.",
+     "consigne": "Écris l'allocation de `n` entiers dans `int *t`.",
+     "question": "Allocation de `n` entiers ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "int\\s*\\*\\s*t\\s*=\\s*(\\(\\s*int\\s*\\*\\s*\\)\\s*)?malloc\\s*\\(\\s*(n\\s*\\*\\s*sizeof\\s*\\(\\s*int\\s*\\)|sizeof\\s*\\(\\s*int\\s*\\)\\s*\\*\\s*n)\\s*\\)\\s*;",
+      "exemple": "int *t = malloc(n * sizeof(int));"
+     },
+     "corrige": "`malloc` attend des **octets** : `n * sizeof(int)`.",
+     "indices": [
+      "`malloc(taille en octets)`.",
+      "`int *t = malloc(n * sizeof(int));`"
+     ],
+     "duree": 0.8
+    },
+    {
+     "consigne": "Écris la condition (sans `if`) qui détecte un échec d'allocation.",
+     "question": "Condition d'échec ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "\\(?\\s*t\\s*==\\s*NULL\\s*\\)?|\\(?\\s*!\\s*t\\s*\\)?",
+      "exemple": "t == NULL"
+     },
+     "corrige": "`t == NULL` : `malloc` renvoie `NULL` s'il n'y a plus de place.",
+     "indices": [
+      "Compare `t` à `NULL`.",
+      "`t == NULL`"
+     ],
+     "duree": 0.4
+    },
+    {
+     "consigne": "Écris l'instruction qui libère la mémoire.",
+     "question": "Libérer le bloc ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "free\\s*\\(\\s*t\\s*\\)\\s*;",
+      "exemple": "free(t);"
+     },
+     "corrige": "`free(t);`",
+     "indices": [
+      "Un `malloc` = un `free`.",
+      "`free(t);`"
+     ],
+     "duree": 0.3
+    },
+    {
+     "consigne": "Sans mémoire dynamique : lis `n` (≤ 20) puis `n` entiers dans un tableau **statique** `int t[20]` et affiche-les à l'envers.",
+     "question": "Version statique.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "4\n1 2 3 4",
+        "sortie": "4 3 2 1"
+       },
+       {
+        "entree": "1\n9",
+        "sortie": "9"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[20], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    for (int i = n - 1; i >= 0; i--) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    return 0;\n}"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[20], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    for (int i = n - 1; i >= 0; i--) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    return 0;\n}\n```",
+     "indices": [
+      "Saisie en boucle, affichage de `n - 1` jusqu'à 0.",
+      "`for (int i = n - 1; i >= 0; i--)`"
+     ],
+     "duree": 1.5
+    },
+    {
+     "consigne": "Remplace le tableau statique par un tableau **alloué** de `n` entiers (`malloc`, test `NULL`), puis libère-le (`free`) à la fin.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -601,25 +670,79 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    int *t = malloc(n * sizeof(int));\n    if (t == NULL) return 1;\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    for (int i = n - 1; i >= 0; i--) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    free(t);\n    t = NULL;\n    return 0;\n}\n```",
      "indices": [
-      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
-      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+      "`int *t = malloc(n * sizeof(int));` suivi de `if (t == NULL) return 1;`.",
+      "`free(t);` juste avant `return 0;`."
      ],
-     "duree": 6
+     "duree": 3.0,
+     "depart": "#include <stdio.h>\n\nint main(void) {\n    int t[20], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    for (int i = n - 1; i >= 0; i--) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    return 0;\n}"
     }
    ]
   },
   {
    "id": "c9-102",
    "type": "exo",
-   "notion": "9.2",
+   "notion": "9.4",
    "origine": "generee",
    "titre": "Carrés avec calloc",
    "enonce": "Écris un programme qui lit `N`, alloue avec **`calloc`** un tableau de `N` entiers (tous à 0), affiche le tableau, puis range `i * i` dans chaque case et l'affiche de nouveau. Libère la mémoire à la fin.",
-   "guidage": "Le premier affichage montre que calloc met tout à 0.",
+   "guidage": "**Plan** : 1. `calloc(n, sizeof(int))` : `n` cases **déjà à 0** → 2. afficher (que des 0) → 3. remplir avec `i * i` → 4. afficher → 5. `free`.",
    "duree": 5,
    "etapes": [
     {
-     "consigne": "Écris le programme complet.",
+     "consigne": "Écris l'allocation avec `calloc` de `n` entiers dans `int *t`.",
+     "question": "Allocation avec `calloc` ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "int\\s*\\*\\s*t\\s*=\\s*(\\(\\s*int\\s*\\*\\s*\\)\\s*)?calloc\\s*\\(\\s*n\\s*,\\s*sizeof\\s*\\(\\s*int\\s*\\)\\s*\\)\\s*;",
+      "exemple": "int *t = calloc(n, sizeof(int));"
+     },
+     "corrige": "`calloc(nombre, taille d'un élément)`.",
+     "indices": [
+      "Deux arguments, contrairement à `malloc`.",
+      "`int *t = calloc(n, sizeof(int));`"
+     ],
+     "duree": 0.7
+    },
+    {
+     "consigne": "Que contient `t[0]` juste après `calloc` ? (un nombre)",
+     "question": "Contenu juste après `calloc` ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 0
+     },
+     "corrige": "`calloc` met toutes les cases à **0** (pas `malloc`).",
+     "indices": [
+      "C'est la différence avec `malloc`.",
+      "0"
+     ],
+     "duree": 0.3
+    },
+    {
+     "consigne": "Version statique : lis `n` (≤ 20), affiche `n` zéros séparés par des espaces (tableau `int t[20] = {0}`), puis mets `i * i` dans chaque case et affiche-les (deux lignes).",
+     "question": "Version statique.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "4",
+        "sortie": "0 0 0 0\n0 1 4 9"
+       },
+       {
+        "entree": "1",
+        "sortie": "0\n0"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[20] = {0}, n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    for (int i = 0; i < n; i++) {\n        t[i] = i * i;\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    return 0;\n}"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[20] = {0}, n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    for (int i = 0; i < n; i++) {\n        t[i] = i * i;\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    return 0;\n}\n```",
+     "indices": [
+      "`int t[20] = {0};` met tout à 0.",
+      "Deux boucles : une de lecture, une d'écriture de `i * i`."
+     ],
+     "duree": 1.5
+    },
+    {
+     "consigne": "Remplace le tableau statique par `calloc(n, sizeof(int))` (test `NULL`, puis `free` à la fin).",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -648,25 +771,95 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    int *t = calloc(n, sizeof(int));\n    if (t == NULL) return 1;\n    for (int i = 0; i < n; i++) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    for (int i = 0; i < n; i++) {\n        t[i] = i * i;\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    free(t);\n    return 0;\n}\n```",
      "indices": [
-      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
-      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+      "`int *t = calloc(n, sizeof(int));` : plus besoin d'initialiser à 0.",
+      "`free(t);` avant `return 0;`."
      ],
-     "duree": 5
+     "duree": 2.5,
+     "depart": "#include <stdio.h>\n\nint main(void) {\n    int t[20] = {0}, n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    for (int i = 0; i < n; i++) {\n        t[i] = i * i;\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    return 0;\n}"
     }
    ]
   },
   {
    "id": "c9-103",
    "type": "exo",
-   "notion": "9.3",
+   "notion": "9.4",
    "origine": "generee",
    "titre": "Agrandir avec realloc",
    "enonce": "Écris un programme qui lit `N` puis `N` entiers dans un bloc alloué avec `malloc`, puis lit `M` et `M` entiers supplémentaires : il **agrandit le bloc avec `realloc`** (via un pointeur temporaire) pour y ranger les `N + M` valeurs, affiche la somme de toutes les valeurs, puis libère.",
-   "guidage": "`int *tmp = realloc(t, (n + m) * sizeof(int)); if (tmp == NULL) { free(t); return 1; } t = tmp;` puis lis les nouvelles valeurs à partir de l'indice `n`.",
+   "guidage": "**Plan** : 1. `malloc` de `n` entiers, saisie → 2. lire `m` → 3. `int *tmp = realloc(t, (n + m) * sizeof(int));` → 4. si `tmp == NULL` : `free(t)` et quitter, sinon `t = tmp;` → 5. lire les `m` nouvelles valeurs aux indices `n` à `n + m - 1` → 6. somme, `free`.",
    "duree": 7,
    "etapes": [
     {
-     "consigne": "Écris le programme complet.",
+     "consigne": "Écris l'agrandissement du bloc `t` pour `n + m` entiers, avec un pointeur temporaire `tmp`.",
+     "question": "Agrandir avec `realloc` ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "int\\s*\\*\\s*tmp\\s*=\\s*(\\(\\s*int\\s*\\*\\s*\\)\\s*)?realloc\\s*\\(\\s*t\\s*,\\s*\\(\\s*n\\s*\\+\\s*m\\s*\\)\\s*\\*\\s*sizeof\\s*\\(\\s*int\\s*\\)\\s*\\)\\s*;",
+      "exemple": "int *tmp = realloc(t, (n + m) * sizeof(int));"
+     },
+     "corrige": "`realloc(ancien, nouvelle taille en octets)`.",
+     "indices": [
+      "Taille totale : `(n + m) * sizeof(int)`.",
+      "`int *tmp = realloc(t, (n + m) * sizeof(int));`"
+     ],
+     "duree": 0.72
+    },
+    {
+     "consigne": "Pourquoi passer par `tmp` plutôt que `t = realloc(t, …)` ? (idée en quelques mots)",
+     "question": "Pourquoi `tmp` ?",
+     "verif": {
+      "mode": "regex",
+      "motif": ".*(null|échec|echec|perd|fuite|ancien|original).*",
+      "exemple": "pour ne pas perdre l'ancien bloc"
+     },
+     "corrige": "Si `realloc` échoue il renvoie `NULL` : en écrasant `t` on perdrait l'ancien bloc (fuite).",
+     "indices": [
+      "Que devient `t` si `realloc` renvoie `NULL` ?",
+      "Pour ne pas perdre l'ancien bloc en cas d'échec."
+     ],
+     "duree": 0.45
+    },
+    {
+     "consigne": "Écris la boucle (en-tête du `for`) qui lit les `m` **nouvelles** valeurs dans les cases `n` à `n + m - 1`.",
+     "question": "Boucle des nouvelles valeurs ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "for\\s*\\(\\s*int\\s+i\\s*=\\s*n\\s*;\\s*i\\s*<\\s*n\\s*\\+\\s*m\\s*;\\s*i\\+\\+\\s*\\)\\s*\\{?",
+      "exemple": "for (int i = n; i < n + m; i++)"
+     },
+     "corrige": "On commence à l'indice `n` : les `n` premières cases sont déjà remplies.",
+     "indices": [
+      "Départ à `n`, arrêt avant `n + m`.",
+      "`for (int i = n; i < n + m; i++)`"
+     ],
+     "duree": 0.54
+    },
+    {
+     "consigne": "Sans `realloc` : lis `n`, `n` entiers, `m`, `m` entiers dans un tableau statique `int t[100]` et affiche la somme des `n + m` valeurs.",
+     "question": "Somme sans `realloc`.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "3\n1 2 3\n2\n4 5",
+        "sortie": "15"
+       },
+       {
+        "entree": "1\n10\n1\n-10",
+        "sortie": "0"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[100], n, m;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    scanf(\"%d\", &m);\n    for (int i = n; i < n + m; i++) scanf(\"%d\", &t[i]);\n    int s = 0;\n    for (int i = 0; i < n + m; i++) s += t[i];\n    printf(\"%d\\n\", s);\n    return 0;\n}"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[100], n, m;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    scanf(\"%d\", &m);\n    for (int i = n; i < n + m; i++) scanf(\"%d\", &t[i]);\n    int s = 0;\n    for (int i = 0; i < n + m; i++) s += t[i];\n    printf(\"%d\\n\", s);\n    return 0;\n}\n```",
+     "indices": [
+      "Les `m` nouvelles valeurs vont aux indices à partir de `n`.",
+      "Une somme sur `n + m` cases."
+     ],
+     "duree": 1.79
+    },
+    {
+     "consigne": "Passe en mémoire dynamique : `malloc` de `n` entiers, puis `realloc` (via `tmp`, avec test `NULL`) pour passer à `n + m`, et `free` à la fin.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -695,10 +888,11 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int n, m;\n    scanf(\"%d\", &n);\n    int *t = malloc(n * sizeof(int));\n    if (t == NULL) return 1;\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    scanf(\"%d\", &m);\n    int *tmp = realloc(t, (n + m) * sizeof(int));\n    if (tmp == NULL) {\n        free(t);\n        return 1;\n    }\n    t = tmp;\n    for (int i = n; i < n + m; i++) scanf(\"%d\", &t[i]);\n    int s = 0;\n    for (int i = 0; i < n + m; i++) s += t[i];\n    printf(\"%d\\n\", s);\n    free(t);\n    return 0;\n}\n```",
      "indices": [
-      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
-      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+      "`int *t = malloc(n * sizeof(int));` en début de programme, `realloc` juste après la lecture de `m`.",
+      "`if (tmp == NULL) { free(t); return 1; }` puis `t = tmp;`."
      ],
-     "duree": 7
+     "duree": 3.5,
+     "depart": "#include <stdio.h>\n\nint main(void) {\n    int t[100], n, m;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    scanf(\"%d\", &m);\n    for (int i = n; i < n + m; i++) scanf(\"%d\", &t[i]);\n    int s = 0;\n    for (int i = 0; i < n + m; i++) s += t[i];\n    printf(\"%d\\n\", s);\n    return 0;\n}"
     }
    ]
   },
@@ -709,11 +903,40 @@
    "origine": "generee",
    "titre": "La fuite",
    "enonce": "Ce programme fonctionne… mais il a une **fuite de mémoire** : un bloc est alloué et jamais rendu. Corrige-le (et remets le pointeur à `NULL` après la libération).",
-   "guidage": "Un malloc = un free.",
+   "guidage": "**Diagnostic** : 1. repère le `malloc` → 2. cherche le `free` correspondant (il n'y en a pas) → 3. ajoute `free(t);` puis `t = NULL;` avant `return 0;`.",
    "duree": 3,
    "etapes": [
     {
-     "consigne": "Corrige le programme ci-dessous pour qu'il fasse ce que dit l'énoncé, puis valide.",
+     "consigne": "Combien de `free` faut-il pour un `malloc` ? (un nombre)",
+     "question": "Combien de `free` ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 1
+     },
+     "corrige": "Un `malloc` = un `free`.",
+     "indices": [
+      "Chaque bloc alloué se rend une fois.",
+      "1"
+     ],
+     "duree": 0.3
+    },
+    {
+     "consigne": "Écris l'instruction qui évite un pointeur « fou » après la libération (`t` ne doit plus désigner le bloc rendu).",
+     "question": "Après `free(t)` ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "t\\s*=\\s*NULL\\s*;",
+      "exemple": "t = NULL;"
+     },
+     "corrige": "`t = NULL;` : un pointeur nul est facile à tester, un pointeur fou non.",
+     "indices": [
+      "On lui donne une valeur sûre.",
+      "`t = NULL;`"
+     ],
+     "duree": 0.4
+    },
+    {
+     "consigne": "Corrige la fuite : libère `t` avant la fin puis remets-le à `NULL`.",
      "question": "Corrige le programme.",
      "verif": {
       "mode": "c",
@@ -742,10 +965,10 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    int *t = malloc(n * sizeof(int));\n    if (t == NULL) return 1;\n    for (int i = 0; i < n; i++) t[i] = 2 * i;\n    printf(\"%d\\n\", t[n - 1]);\n    free(t);\n    t = NULL;\n    return 0;\n}\n```",
      "indices": [
-      "Le bloc alloué par malloc n'est jamais libéré.",
-      "Ajoute `free(t);` puis `t = NULL;` avant `return 0;`."
+      "Deux lignes à ajouter juste avant `return 0;`.",
+      "`free(t);` puis `t = NULL;`"
      ],
-     "duree": 3,
+     "duree": 2.3,
      "depart": "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    int *t = malloc(n * sizeof(int));\n    if (t == NULL) return 1;\n    for (int i = 0; i < n; i++) t[i] = 2 * i;\n    printf(\"%d\\n\", t[n - 1]);\n    return 0;\n}"
     }
    ]
@@ -753,15 +976,44 @@
   {
    "id": "c9-105",
    "type": "exo",
-   "notion": "9.2",
+   "notion": "9.4",
    "origine": "generee",
    "titre": "Pas assez de place",
    "enonce": "Ce programme alloue un tableau de `n` entiers… mais réserve `n` **octets** au lieu de `n` entiers. Corrige l'allocation.",
-   "guidage": "malloc attend une taille en octets.",
+   "guidage": "**Diagnostic** : 1. `malloc` compte en **octets** → 2. un `int` en occupe `sizeof(int)` (4) → 3. il faut `n * sizeof(int)` octets.",
    "duree": 3,
    "etapes": [
     {
-     "consigne": "Corrige le programme ci-dessous pour qu'il fasse ce que dit l'énoncé, puis valide.",
+     "consigne": "En quelle unité `malloc` attend-il sa taille ? (un mot)",
+     "question": "Unité de `malloc` ?",
+     "verif": {
+      "mode": "regex",
+      "motif": ".*octet.*|.*byte.*",
+      "exemple": "octets"
+     },
+     "corrige": "`malloc(taille)` : la taille est en **octets**.",
+     "indices": [
+      "Pas en nombre d'éléments.",
+      "Des octets."
+     ],
+     "duree": 0.3
+    },
+    {
+     "consigne": "Combien d'octets faut-il pour 10 `int` si `sizeof(int)` vaut 4 ? (un nombre)",
+     "question": "Octets pour 10 `int` ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 40
+     },
+     "corrige": "10 × 4 = 40 octets.",
+     "indices": [
+      "Nombre d'éléments × taille d'un élément.",
+      "40"
+     ],
+     "duree": 0.3
+    },
+    {
+     "consigne": "Corrige l'allocation pour qu'elle réserve la place de `n` **entiers** (pas `n` octets).",
      "question": "Corrige le programme.",
      "verif": {
       "mode": "c",
@@ -786,10 +1038,10 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    int *t = malloc(n * sizeof(int));\n    if (t == NULL) return 1;\n    for (int i = 0; i < n; i++) t[i] = i + 1;\n    int s = 0;\n    for (int i = 0; i < n; i++) s += t[i];\n    printf(\"%d\\n\", s);\n    free(t);\n    return 0;\n}\n```",
      "indices": [
-      "`malloc(n)` réserve n octets ; un int en prend 4.",
-      "`malloc(n * sizeof(int))`."
+      "Multiplie par la taille d'un entier.",
+      "`malloc(n * sizeof(int))`"
      ],
-     "duree": 3,
+     "duree": 2.4,
      "depart": "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    int *t = malloc(n);\n    if (t == NULL) return 1;\n    for (int i = 0; i < n; i++) t[i] = i + 1;\n    int s = 0;\n    for (int i = 0; i < n; i++) s += t[i];\n    printf(\"%d\\n\", s);\n    free(t);\n    return 0;\n}"
     }
    ]
@@ -801,11 +1053,65 @@
    "origine": "generee",
    "titre": "Copie d'un mot à la bonne taille",
    "enonce": "Écris un programme qui lit un mot dans un tampon de 100 caractères, alloue **exactement** la place nécessaire pour le copier (`strlen + 1`), le copie avec `strcpy`, affiche la copie et sa longueur, puis libère la mémoire.",
-   "guidage": "`char *copie = malloc(strlen(tampon) + 1);` puis `strcpy(copie, tampon);`.",
+   "guidage": "**Plan** : 1. lire dans `tampon[100]` → 2. `malloc(strlen(tampon) + 1)` (le `+ 1` est pour le `'\\0'`) → 3. `strcpy(copie, tampon)` → 4. afficher copie et longueur → 5. `free`.",
    "duree": 5,
    "etapes": [
     {
-     "consigne": "Écris le programme complet.",
+     "consigne": "Écris l'allocation de `copie` pour contenir exactement le mot de `tampon`, `'\\0'` compris.",
+     "question": "Allocation de la copie ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "char\\s*\\*\\s*copie\\s*=\\s*(\\(\\s*char\\s*\\*\\s*\\)\\s*)?malloc\\s*\\(\\s*strlen\\s*\\(\\s*tampon\\s*\\)\\s*\\+\\s*1\\s*\\)\\s*;",
+      "exemple": "char *copie = malloc(strlen(tampon) + 1);"
+     },
+     "corrige": "`strlen` ne compte pas le `'\\0'` : d'où le `+ 1`.",
+     "indices": [
+      "Longueur + une case pour la fin de chaîne.",
+      "`char *copie = malloc(strlen(tampon) + 1);`"
+     ],
+     "duree": 0.7
+    },
+    {
+     "consigne": "Écris la copie de `tampon` dans `copie` avec `strcpy`.",
+     "question": "Copier avec `strcpy` ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "strcpy\\s*\\(\\s*copie\\s*,\\s*tampon\\s*\\)\\s*;",
+      "exemple": "strcpy(copie, tampon);"
+     },
+     "corrige": "`strcpy(destination, source);`",
+     "indices": [
+      "Destination en premier.",
+      "`strcpy(copie, tampon);`"
+     ],
+     "duree": 0.4
+    },
+    {
+     "consigne": "Sans copie : lis un mot (`%99s`) et affiche-le suivi de sa longueur (`strlen`, converti en `int`).",
+     "question": "Mot et longueur.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "Bonjour",
+        "sortie": "Bonjour 7"
+       },
+       {
+        "entree": "C",
+        "sortie": "C 1"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char tampon[100];\n    scanf(\"%99s\", tampon);\n    printf(\"%s %d\\n\", tampon, (int)strlen(tampon));\n    return 0;\n}\n"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char tampon[100];\n    scanf(\"%99s\", tampon);\n    printf(\"%s %d\\n\", tampon, (int)strlen(tampon));\n    return 0;\n}\n\n```",
+     "indices": [
+      "`strlen` est dans `<string.h>`.",
+      "`printf(\"%s %d\\n\", tampon, (int)strlen(tampon));`"
+     ],
+     "duree": 1.0
+    },
+    {
+     "consigne": "Alloue `copie` à la taille exacte, copie le mot avec `strcpy`, affiche la **copie** et sa longueur, puis libère (`free`).",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -833,10 +1139,11 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n#include <stdlib.h>\n\n#include <string.h>\n\nint main(void) {\n    char tampon[100];\n    scanf(\"%99s\", tampon);\n    char *copie = malloc(strlen(tampon) + 1);\n    if (copie == NULL) return 1;\n    strcpy(copie, tampon);\n    printf(\"%s %d\\n\", copie, (int)strlen(copie));\n    free(copie);\n    copie = NULL;\n    return 0;\n}\n```",
      "indices": [
-      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
-      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+      "N'oublie pas `#include <stdlib.h>` pour `malloc` et `free`.",
+      "`char *copie = malloc(strlen(tampon) + 1);` puis `strcpy(copie, tampon);`"
      ],
-     "duree": 5
+     "duree": 2.9,
+     "depart": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char tampon[100];\n    scanf(\"%99s\", tampon);\n    printf(\"%s %d\\n\", tampon, (int)strlen(tampon));\n    return 0;\n}\n"
     }
    ]
   },
@@ -847,11 +1154,66 @@
    "origine": "generee",
    "titre": "Une fonction qui crée un tableau",
    "enonce": "Écris `int *creer_tableau(int n)` qui alloue avec `calloc` un tableau de `n` entiers et le renvoie (ou `NULL` en cas d'échec). `main` lit `n`, appelle `creer_tableau`, remplit chaque case avec `10 * (i + 1)`, affiche le tableau, puis **libère** le bloc.",
-   "guidage": "La fonction renvoie le pointeur ; c'est `main` qui fait le `free`.",
+   "guidage": "**Plan** : 1. `int *creer_tableau(int n)` : `return calloc(n, sizeof(int));` → 2. `main` : `t = creer_tableau(n)`, test `NULL` → 3. remplir (`10 * (i + 1)`) et afficher → 4. `free(t)` dans `main` (celui qui reçoit le bloc le libère).",
    "duree": 5,
    "etapes": [
     {
-     "consigne": "Écris le programme complet.",
+     "consigne": "Écris la ligne qui fait renvoyer à `creer_tableau` un bloc de `n` entiers initialisés à 0.",
+     "question": "Corps de `creer_tableau` ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "return\\s+(\\(\\s*int\\s*\\*\\s*\\)\\s*)?calloc\\s*\\(\\s*n\\s*,\\s*sizeof\\s*\\(\\s*int\\s*\\)\\s*\\)\\s*;",
+      "exemple": "return calloc(n, sizeof(int));"
+     },
+     "corrige": "`return calloc(n, sizeof(int));` : le bloc survit à la fonction.",
+     "indices": [
+      "On renvoie l'adresse que `calloc` fournit.",
+      "`return calloc(n, sizeof(int));`"
+     ],
+     "duree": 0.6
+    },
+    {
+     "consigne": "Qui doit appeler `free` : `creer_tableau` ou `main` ? (un mot)",
+     "question": "Qui libère ?",
+     "verif": {
+      "mode": "exact",
+      "attendu": [
+       "main"
+      ]
+     },
+     "corrige": "`main` : la fonction a renvoyé le bloc, elle ne peut plus le libérer (il serait détruit avant usage).",
+     "indices": [
+      "Celui qui utilise le bloc jusqu'au bout.",
+      "main"
+     ],
+     "duree": 0.4
+    },
+    {
+     "consigne": "Sans fonction : lis `n` (≤ 20), mets `10 * (i + 1)` dans un tableau statique et affiche-le.",
+     "question": "Remplissage sans fonction.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "3",
+        "sortie": "10 20 30"
+       },
+       {
+        "entree": "1",
+        "sortie": "10"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[20], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        t[i] = 10 * (i + 1);\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    return 0;\n}"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[20], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        t[i] = 10 * (i + 1);\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    return 0;\n}\n```",
+     "indices": [
+      "Une seule boucle suffit : remplir et afficher.",
+      "`t[i] = 10 * (i + 1);`"
+     ],
+     "duree": 1.2
+    },
+    {
+     "consigne": "Écris `int *creer_tableau(int n)` (avec `calloc`) ; `main` l'appelle, teste `NULL`, remplit, affiche, puis fait le `free`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -880,10 +1242,11 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n#include <stdlib.h>\n\nint *creer_tableau(int n) {\n    return calloc(n, sizeof(int));\n}\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    int *t = creer_tableau(n);\n    if (t == NULL) return 1;\n    for (int i = 0; i < n; i++) {\n        t[i] = 10 * (i + 1);\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    free(t);\n    return 0;\n}\n```",
      "indices": [
-      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
-      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+      "La fonction tient en une ligne : `return calloc(n, sizeof(int));`.",
+      "`int *t = creer_tableau(n); if (t == NULL) return 1;` puis `free(t);` en fin de `main`."
      ],
-     "duree": 5
+     "duree": 2.8,
+     "depart": "#include <stdio.h>\n\nint main(void) {\n    int t[20], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        t[i] = 10 * (i + 1);\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    return 0;\n}"
     }
    ]
   },
@@ -894,11 +1257,65 @@
    "origine": "generee",
    "titre": "Notes d'une classe de taille variable",
    "enonce": "Écris un programme qui lit le nombre d'élèves `n`, puis leurs `n` notes (entiers), et affiche la moyenne (2 décimales) puis le nombre de notes au-dessus de la moyenne. Le tableau de notes est alloué **dynamiquement** (on ne connaît pas `n` à l'avance).",
-   "guidage": "Il faut garder les notes : la moyenne se calcule d'abord, puis on reparcourt le tableau pour compter.",
+   "guidage": "**Plan** : 1. lire `n`, `malloc` du tableau de notes → 2. lire les notes en cumulant la somme → 3. moyenne `(double)s / n` → 4. **reparcourir** le tableau pour compter `notes[i] > moy` → 5. afficher, `free`.\n\n**Pourquoi un tableau ?** La moyenne n'est connue qu'à la fin de la saisie : il faut garder les notes pour les recomparer.",
    "duree": 6,
    "etapes": [
     {
-     "consigne": "Écris le programme complet.",
+     "consigne": "Pourquoi faut-il **conserver** les notes au lieu de seulement cumuler la somme ? (idée en quelques mots)",
+     "question": "Pourquoi garder les notes ?",
+     "verif": {
+      "mode": "regex",
+      "motif": ".*(moyenne|comparer|recompar|reparcour|apr[eè]s|fin).*",
+      "exemple": "pour comparer à la moyenne ensuite"
+     },
+     "corrige": "La moyenne n'est connue qu'après la dernière note ; il faut ensuite recomparer chaque note.",
+     "indices": [
+      "Quand connaît-on la moyenne ?",
+      "Pour les comparer à la moyenne une fois calculée."
+     ],
+     "duree": 0.37
+    },
+    {
+     "consigne": "Écris le calcul de la moyenne `moy` (réelle) à partir de la somme entière `s` et de `n`.",
+     "question": "Calcul de `moy` ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "double\\s+moy\\s*=\\s*\\(\\s*double\\s*\\)\\s*s\\s*/\\s*n\\s*;|double\\s+moy\\s*=\\s*s\\s*/\\s*\\(\\s*double\\s*\\)\\s*n\\s*;|double\\s+moy\\s*=\\s*1\\.0\\s*\\*\\s*s\\s*/\\s*n\\s*;",
+      "exemple": "double moy = (double)s / n;"
+     },
+     "corrige": "On convertit **avant** de diviser, sinon la division est entière.",
+     "indices": [
+      "`(double)` s'applique à `s`.",
+      "`double moy = (double)s / n;`"
+     ],
+     "duree": 0.44
+    },
+    {
+     "consigne": "Avec un tableau **statique** `int notes[100]` : lis `n` puis `n` notes, affiche la moyenne (2 décimales) puis le nombre de notes strictement supérieures à la moyenne.",
+     "question": "Version statique.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "4\n10 12 14 16",
+        "sortie": "13.00 2"
+       },
+       {
+        "entree": "3\n5 5 20",
+        "sortie": "10.00 1"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int notes[100], n, s = 0, nb = 0;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        scanf(\"%d\", &notes[i]);\n        s += notes[i];\n    }\n    double moy = (double)s / n;\n    for (int i = 0; i < n; i++) {\n        if (notes[i] > moy) nb++;\n    }\n    printf(\"%.2f %d\\n\", moy, nb);\n    return 0;\n}"
+     },
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int notes[100], n, s = 0, nb = 0;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        scanf(\"%d\", &notes[i]);\n        s += notes[i];\n    }\n    double moy = (double)s / n;\n    for (int i = 0; i < n; i++) {\n        if (notes[i] > moy) nb++;\n    }\n    printf(\"%.2f %d\\n\", moy, nb);\n    return 0;\n}\n```",
+     "indices": [
+      "Une boucle de saisie qui cumule `s`, une boucle de comptage.",
+      "`if (notes[i] > moy) nb++;`"
+     ],
+     "duree": 2.2
+    },
+    {
+     "consigne": "La classe n'a plus de taille maximale : alloue `notes` dynamiquement (`n` entiers, test `NULL`) et libère-le à la fin.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -927,10 +1344,11 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int n, s = 0, nb = 0;\n    scanf(\"%d\", &n);\n    int *notes = malloc(n * sizeof(int));\n    if (notes == NULL) return 1;\n    for (int i = 0; i < n; i++) {\n        scanf(\"%d\", &notes[i]);\n        s += notes[i];\n    }\n    double moy = (double)s / n;\n    for (int i = 0; i < n; i++) {\n        if (notes[i] > moy) nb++;\n    }\n    printf(\"%.2f %d\\n\", moy, nb);\n    free(notes);\n    return 0;\n}\n```",
      "indices": [
-      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
-      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+      "Remplace la déclaration `int notes[100]` par un pointeur.",
+      "`int *notes = malloc(n * sizeof(int));` après la lecture de `n`, `free(notes);` avant `return 0;`."
      ],
-     "duree": 6
+     "duree": 2.99,
+     "depart": "#include <stdio.h>\n\nint main(void) {\n    int notes[100], n, s = 0, nb = 0;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        scanf(\"%d\", &notes[i]);\n        s += notes[i];\n    }\n    double moy = (double)s / n;\n    for (int i = 0; i < n; i++) {\n        if (notes[i] > moy) nb++;\n    }\n    printf(\"%.2f %d\\n\", moy, nb);\n    return 0;\n}"
     }
    ]
   }
