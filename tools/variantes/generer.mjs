@@ -42,6 +42,7 @@ for(const [id, s] of Object.entries(spec.items)){
   const autos = [];
   const marquer = (v, k) => (v && v.mode === "c" ? v.tests || [] : []).forEach((t, j) => { if(t.sortie === "@auto" || t.sortie === `[[S${k}_${j}]]`){ t.sortie = `[[S${k}_${j}]]`; autos.push({k, j}); } });
   marquer(it.verif, "x"); (it.etapes || []).forEach((e, k) => marquer(e.verif, k));
+  if(!s.tirer){ console.log(`${id} : texte mis à jour`); continue; }   /* réécriture seule, sans variantes */
   const n = s.n || spec.n || 6, jeux = [], vus = new Set();
   for(let essai = 0; jeux.length < n && essai < 500; essai++){
     let v = s.tirer(R); if(s.deriver) v = Object.assign(v, s.deriver(v, R));

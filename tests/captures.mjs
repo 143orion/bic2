@@ -256,14 +256,19 @@ const SCENARIOS = {
     const etapes = exo.etapes.filter(e => !e.guideSeul), champs = await pg.$$(".mock-qs .entree");
     if(etapes.length !== 1) erreurs.push(`[${app}] éditeur C : l'exo 1.3 devrait n'avoir qu'une étape hors guideSeul (${etapes.length})`);
     if(champs.length !== etapes.length || !(await pg.$(".mock-qs .code-hl"))){ erreurs.push(`[${app}] éditeur C : ${champs.length} champ(s) affiché(s) pour ${etapes.length} étape(s) attendue(s) en Classique, ou éditeur coloré introuvable`); return pg; }
+    /* l'exo peut avoir des variantes : on retrouve celle qui est affichée (toutes ses valeurs sont dans l'énoncé) */
+    const texte = await pg.evaluate(() => document.body.innerText);
+    const vals = (exo.variantes || []).find(v => Object.values(v).every(x => texte.includes(String(x).split("\n")[0]))) || exo.vals || {};
+    const sub = x => typeof x === "string" ? x.replace(/\[\[(\w+)\]\]/g, (m, k) => vals[k] ?? m) : x;
+    const attenduSortie = sub(etapes.at(-1).verif.tests[0].sortie);
     for(let i = 0; i < etapes.length; i++){
       const v = etapes[i].verif;
-      await champs[i].fill(v.mode === "exact" ? v.attendu[0] : v.exemple);
+      await champs[i].fill(sub(v.mode === "exact" ? v.attendu[0] : v.exemple));
     }
     if(!(await pg.$(".mock-qs .code-hl .tk-k"))) erreurs.push(`[${app}] éditeur C : pas de coloration syntaxique`);
     await pg.click(`.mock-qs [data-a="executer"] >> nth=0`);
     await pg.waitForSelector(".mock-qs .c-sortie", {timeout:8000});
-    if(!(await pg.textContent(".mock-qs .c-sortie")).includes("42")) erreurs.push(`[${app}] éditeur C : la sortie du programme n'est pas affichée`);
+    if(!(await pg.textContent(".mock-qs .c-sortie")).includes(attenduSortie)) erreurs.push(`[${app}] éditeur C : la sortie du programme n'est pas affichée`);
     await capture(pg, `editeur-c-${app}`);
     await pg.click('[data-a="rendre"]'); await attendre(2500);
     const verdict = await pg.textContent(".q-retour");

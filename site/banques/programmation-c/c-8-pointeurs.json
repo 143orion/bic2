@@ -379,26 +379,120 @@
    "type": "saisie",
    "notion": "8.2",
    "origine": "cours",
-   "enonce": "Que vaut `x` ?\n```c\nint x = 3;\nint *p = &x;\n*p = *p + 4;\n```",
+   "enonce": "Que vaut `x` ?\n```c\nint x = [[A]];\nint *p = &x;\n*p = *p + [[B]];\n```",
    "verif": {
     "mode": "numerique",
-    "attendu": 7
+    "attendu": "[[R]]"
    },
    "duree": 0.67,
-   "explication": "*p désigne x : 3 + 4 = 7."
+   "explication": "`p` pointe sur `x`, donc `*p` **est** `x` : [[A]] + [[B]] = **[[R]]**.",
+   "vals": {
+    "A": "7",
+    "B": "6",
+    "R": "13"
+   },
+   "variantes": [
+    {
+     "A": "7",
+     "B": "6",
+     "R": "13"
+    },
+    {
+     "A": "13",
+     "B": "8",
+     "R": "21"
+    },
+    {
+     "A": "19",
+     "B": "2",
+     "R": "21"
+    },
+    {
+     "A": "2",
+     "B": "2",
+     "R": "4"
+    },
+    {
+     "A": "17",
+     "B": "9",
+     "R": "26"
+    },
+    {
+     "A": "14",
+     "B": "9",
+     "R": "23"
+    },
+    {
+     "A": "4",
+     "B": "3",
+     "R": "7"
+    },
+    {
+     "A": "11",
+     "B": "4",
+     "R": "15"
+    }
+   ]
   },
   {
    "id": "c8-005",
    "type": "saisie",
    "notion": "8.2",
    "origine": "cours",
-   "enonce": "Qu'affiche ce code ?\n```c\nint a = 2, b = 9;\nint *p = &a;\np = &b;\n*p = 1;\nprintf(\"%d %d\", a, b);\n```\n(réponds par la valeur de b)",
+   "enonce": "Qu'affiche ce code ?\n```c\nint a = [[A]], b = [[B]];\nint *p = &a;\np = &b;\n*p = [[C]];\nprintf(\"%d %d\", a, b);\n```\n(réponds par la valeur de b)",
    "verif": {
     "mode": "numerique",
-    "attendu": 1
+    "attendu": "[[C]]"
    },
    "duree": 0.67,
-   "explication": "p pointe sur b au moment de `*p = 1` : b vaut 1, a reste 2."
+   "explication": "Au moment de `*p = [[C]]`, `p` pointe sur `b` (il a été redirigé) : `b` vaut **[[C]]**, et `a` garde [[A]].",
+   "vals": {
+    "A": "9",
+    "B": "7",
+    "C": "6"
+   },
+   "variantes": [
+    {
+     "A": "9",
+     "B": "7",
+     "C": "6"
+    },
+    {
+     "A": "2",
+     "B": "1",
+     "C": "3"
+    },
+    {
+     "A": "2",
+     "B": "9",
+     "C": "4"
+    },
+    {
+     "A": "4",
+     "B": "5",
+     "C": "2"
+    },
+    {
+     "A": "8",
+     "B": "1",
+     "C": "9"
+    },
+    {
+     "A": "4",
+     "B": "7",
+     "C": "9"
+    },
+    {
+     "A": "2",
+     "B": "3",
+     "C": "8"
+    },
+    {
+     "A": "1",
+     "B": "7",
+     "C": "8"
+    }
+   ]
   },
   {
    "id": "c8-006",
@@ -512,52 +606,267 @@
    "type": "saisie",
    "notion": "8.4",
    "origine": "cours",
-   "enonce": "Qu'affiche ce code ?\n```c\nint t[5] = {10, 20, 30, 40, 50};\nint *p = t;\np++;\np = p + 2;\nprintf(\"%d\", *p);\n```",
+   "enonce": "Qu'affiche ce code ?\n```c\nint t[5] = [[TAB]];\nint *p = t;\np++;\np = p + [[K]];\nprintf(\"%d\", *p);\n```",
    "verif": {
     "mode": "numerique",
-    "attendu": 40
+    "attendu": "[[R]]"
    },
    "duree": 0.67,
-   "explication": "p avance d'un élément (20), puis de deux (40)."
+   "explication": "`p` part de `t[0]`, avance d'une case (`t[1]`), puis de [[K]] cases : il pointe sur `t[[[I]]]`, qui vaut **[[R]]**.",
+   "vals": {
+    "TAB": "{10, 30, 20, 80, 90}",
+    "K": "1",
+    "I": "2",
+    "R": "20"
+   },
+   "variantes": [
+    {
+     "TAB": "{10, 30, 20, 80, 90}",
+     "K": "1",
+     "I": "2",
+     "R": "20"
+    },
+    {
+     "TAB": "{20, 10, 50, 40, 90}",
+     "K": "1",
+     "I": "2",
+     "R": "50"
+    },
+    {
+     "TAB": "{20, 40, 70, 30, 50}",
+     "K": "1",
+     "I": "2",
+     "R": "70"
+    },
+    {
+     "TAB": "{10, 40, 90, 80, 30}",
+     "K": "3",
+     "I": "4",
+     "R": "30"
+    },
+    {
+     "TAB": "{30, 50, 60, 80, 90}",
+     "K": "1",
+     "I": "2",
+     "R": "60"
+    },
+    {
+     "TAB": "{60, 80, 50, 30, 20}",
+     "K": "3",
+     "I": "4",
+     "R": "20"
+    },
+    {
+     "TAB": "{10, 50, 60, 90, 30}",
+     "K": "3",
+     "I": "4",
+     "R": "30"
+    },
+    {
+     "TAB": "{50, 10, 60, 40, 90}",
+     "K": "3",
+     "I": "4",
+     "R": "90"
+    }
+   ]
   },
   {
    "id": "c8-012",
    "type": "saisie",
    "notion": "8.4",
    "origine": "cours",
-   "enonce": "Un `double *p` vaut 2000. Quelle adresse vaut `p + 1` ? (un double = 8 octets)",
+   "enonce": "Un `[[TY]] *p` vaut [[AD]]. Quelle adresse vaut `p + [[K]]` ? (un `[[TY]]` occupe [[O]] octets)",
    "verif": {
     "mode": "numerique",
-    "attendu": 2008
+    "attendu": "[[R]]"
    },
    "duree": 0.67,
-   "explication": "On avance d'un élément de 8 octets."
+   "explication": "`p + [[K]]` avance de [[K]] **éléments**, pas de [[K]] octets : [[AD]] + [[K]] × [[O]] = **[[R]]**.",
+   "vals": {
+    "TY": "int",
+    "O": "4",
+    "AD": "4000",
+    "K": "2",
+    "R": "4008"
+   },
+   "variantes": [
+    {
+     "TY": "int",
+     "O": "4",
+     "AD": "4000",
+     "K": "2",
+     "R": "4008"
+    },
+    {
+     "TY": "double",
+     "O": "8",
+     "AD": "2000",
+     "K": "4",
+     "R": "2032"
+    },
+    {
+     "TY": "int",
+     "O": "4",
+     "AD": "1000",
+     "K": "3",
+     "R": "1012"
+    },
+    {
+     "TY": "int",
+     "O": "4",
+     "AD": "4000",
+     "K": "1",
+     "R": "4004"
+    },
+    {
+     "TY": "int",
+     "O": "4",
+     "AD": "2000",
+     "K": "4",
+     "R": "2016"
+    },
+    {
+     "TY": "char",
+     "O": "1",
+     "AD": "4000",
+     "K": "3",
+     "R": "4003"
+    },
+    {
+     "TY": "double",
+     "O": "8",
+     "AD": "5000",
+     "K": "2",
+     "R": "5016"
+    },
+    {
+     "TY": "char",
+     "O": "1",
+     "AD": "1000",
+     "K": "5",
+     "R": "1005"
+    }
+   ]
   },
   {
    "id": "c8-013",
    "type": "saisie",
    "notion": "8.4",
    "origine": "cours",
-   "enonce": "Pour `int t[10]`, `int *a = &t[2]` et `int *b = &t[7]`, que vaut `b - a` ?",
+   "enonce": "Pour `int t[10]`, `int *a = &t[[[I]]]` et `int *b = &t[[[J]]]`, que vaut `b - a` ?",
    "verif": {
     "mode": "numerique",
-    "attendu": 5
+    "attendu": "[[R]]"
    },
    "duree": 0.67,
-   "explication": "La différence de deux pointeurs compte les éléments : 7 − 2 = 5."
+   "explication": "La différence de deux pointeurs compte les **éléments** qui les séparent (pas les octets) : [[J]] − [[I]] = **[[R]]**.",
+   "vals": {
+    "I": "1",
+    "J": "5",
+    "R": "4"
+   },
+   "variantes": [
+    {
+     "I": "1",
+     "J": "5",
+     "R": "4"
+    },
+    {
+     "I": "0",
+     "J": "1",
+     "R": "1"
+    },
+    {
+     "I": "3",
+     "J": "5",
+     "R": "2"
+    },
+    {
+     "I": "0",
+     "J": "2",
+     "R": "2"
+    },
+    {
+     "I": "2",
+     "J": "8",
+     "R": "6"
+    },
+    {
+     "I": "4",
+     "J": "9",
+     "R": "5"
+    },
+    {
+     "I": "1",
+     "J": "2",
+     "R": "1"
+    },
+    {
+     "I": "4",
+     "J": "8",
+     "R": "4"
+    }
+   ]
   },
   {
    "id": "c8-014",
    "type": "saisie",
    "notion": "8.5",
    "origine": "cours",
-   "enonce": "Qu'affiche `printf(\"%d\", *(tab + 1));` avec `int tab[3] = {7, 8, 9};` ?",
+   "enonce": "Qu'affiche `printf(\"%d\", *(tab + [[K]]));` avec `int tab[4] = [[TAB]];` ?",
    "verif": {
     "mode": "numerique",
-    "attendu": 8
+    "attendu": "[[R]]"
    },
    "duree": 0.67,
-   "explication": "*(tab + 1) est tab[1]."
+   "explication": "`*(tab + [[K]])` est exactement `tab[[[K]]]` : **[[R]]**.",
+   "vals": {
+    "TAB": "{10, 24, 25, 18}",
+    "K": "2",
+    "R": "25"
+   },
+   "variantes": [
+    {
+     "TAB": "{10, 24, 25, 18}",
+     "K": "2",
+     "R": "25"
+    },
+    {
+     "TAB": "{14, 12, 8, 23}",
+     "K": "2",
+     "R": "8"
+    },
+    {
+     "TAB": "{18, 14, 11, 24}",
+     "K": "1",
+     "R": "14"
+    },
+    {
+     "TAB": "{29, 6, 22, 4}",
+     "K": "0",
+     "R": "29"
+    },
+    {
+     "TAB": "{19, 5, 10, 6}",
+     "K": "3",
+     "R": "6"
+    },
+    {
+     "TAB": "{11, 19, 7, 8}",
+     "K": "3",
+     "R": "8"
+    },
+    {
+     "TAB": "{12, 5, 28, 7}",
+     "K": "3",
+     "R": "7"
+    },
+    {
+     "TAB": "{21, 3, 28, 15}",
+     "K": "0",
+     "R": "21"
+    }
+   ]
   },
   {
    "id": "c8-015",
@@ -585,15 +894,80 @@
    "type": "saisie",
    "notion": "8.5",
    "origine": "cours",
-   "enonce": "Qu'affiche `printf(\"%s\", jours[1]);` avec `char *jours[] = {\"Lundi\", \"Mardi\", \"Mercredi\"};` ?",
+   "enonce": "Qu'affiche `printf(\"%s\", [[NOM]][[[K]]]);` avec `char *[[NOM]][] = [[TAB]];` ?",
    "verif": {
     "mode": "exact",
     "attendu": [
-     "Mardi"
+     "[[R]]"
     ]
    },
    "duree": 0.67,
-   "explication": "Les indices commencent à 0."
+   "explication": "Les indices commencent à 0 : `[[NOM]][[[K]]]` est la chaîne n° [[K1]], soit **[[R]]**.",
+   "vals": {
+    "NOM": "couleurs",
+    "K": "1",
+    "K1": "2",
+    "R": "Vert",
+    "TAB": "{\"Rouge\", \"Vert\", \"Bleu\", \"Jaune\"}"
+   },
+   "variantes": [
+    {
+     "NOM": "couleurs",
+     "K": "1",
+     "K1": "2",
+     "R": "Vert",
+     "TAB": "{\"Rouge\", \"Vert\", \"Bleu\", \"Jaune\"}"
+    },
+    {
+     "NOM": "villes",
+     "K": "1",
+     "K1": "2",
+     "R": "Lyon",
+     "TAB": "{\"Paris\", \"Lyon\", \"Lille\", \"Nantes\"}"
+    },
+    {
+     "NOM": "villes",
+     "K": "2",
+     "K1": "3",
+     "R": "Lille",
+     "TAB": "{\"Paris\", \"Lyon\", \"Lille\", \"Nantes\"}"
+    },
+    {
+     "NOM": "jours",
+     "K": "2",
+     "K1": "3",
+     "R": "Mercredi",
+     "TAB": "{\"Lundi\", \"Mardi\", \"Mercredi\", \"Jeudi\"}"
+    },
+    {
+     "NOM": "couleurs",
+     "K": "3",
+     "K1": "4",
+     "R": "Jaune",
+     "TAB": "{\"Rouge\", \"Vert\", \"Bleu\", \"Jaune\"}"
+    },
+    {
+     "NOM": "villes",
+     "K": "3",
+     "K1": "4",
+     "R": "Nantes",
+     "TAB": "{\"Paris\", \"Lyon\", \"Lille\", \"Nantes\"}"
+    },
+    {
+     "NOM": "jours",
+     "K": "1",
+     "K1": "2",
+     "R": "Mardi",
+     "TAB": "{\"Lundi\", \"Mardi\", \"Mercredi\", \"Jeudi\"}"
+    },
+    {
+     "NOM": "mois",
+     "K": "2",
+     "K1": "3",
+     "R": "Mars",
+     "TAB": "{\"Janvier\", \"Fevrier\", \"Mars\", \"Avril\"}"
+    }
+   ]
   },
   {
    "id": "c8-017",
@@ -643,12 +1017,12 @@
    "notion": "8.2",
    "origine": "generee",
    "titre": "Modifier à travers un pointeur",
-   "enonce": "Écris un programme qui lit un entier `x`, déclare un pointeur `p` vers `x`, **double `x` en passant uniquement par `p`**, puis affiche `x`.",
-   "guidage": "**Plan** : 1. `int *p = &x;` (le pointeur reçoit l'**adresse** de `x`) → 2. `*p` désigne `x` → 3. `*p = *p * 2;` modifie `x` à travers `p`.\n\n**Piège** : n'écris pas `x = x * 2` : l'énoncé impose de passer par `p`.",
+   "enonce": "Écris un programme qui lit un entier `x`, déclare un pointeur `p` vers `x`, puis **double `x` en passant uniquement par `p`**, et enfin affiche `x`.\n\n**Exemple**\n```text\nEntrée :\n[[X]]\nSortie :\n[[X2]]\n```",
+   "guidage": "**Plan** : 1. `p` reçoit l'**adresse** de `x` → 2. `*p` désigne alors `x` lui-même → 3. modifier `*p`, c'est modifier `x`.\n\n**Piège** : n'écris pas `x = x * 2` : l'énoncé impose de passer par `p`.",
    "duree": 3,
    "etapes": [
     {
-     "consigne": "Écris la déclaration d'un pointeur `p` qui contient l'adresse de `x` (pointeur et initialisation sur la même ligne).",
+     "consigne": "Un pointeur vers un `int` se déclare avec le type `int *`, et on lui donne l'**adresse** de la variable visée (avec `&`). Écris, sur une seule ligne, la déclaration de `p` qui pointe sur `x`.",
      "question": "Déclarer `p` sur `x` ?",
      "verif": {
       "mode": "regex",
@@ -664,7 +1038,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Écris l'instruction qui double `x` **en passant par `p`**.",
+     "consigne": "`*p` (avec l'étoile) désigne la variable sur laquelle `p` pointe, ici `x`. Écris l'instruction qui double `x` **en n'écrivant que `*p`** (jamais `x`).",
      "question": "Doubler via `p` ?",
      "verif": {
       "mode": "regex",
@@ -680,18 +1054,18 @@
      "guideSeul": true
     },
     {
-     "consigne": "Lis `x`, déclare `p` qui pointe sur `x`, et affiche `x` **en lisant à travers `p`** (`*p`), sans le modifier.",
+     "consigne": "Premier jalon : lis `x`, déclare `p` qui pointe sur `x`, et affiche `x` **en le lisant à travers `p`** (`*p`), sans le modifier.",
      "question": "Lire à travers `p`.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "21",
-        "sortie": "21"
+        "entree": "[[X]]",
+        "sortie": "[[S2_0]]"
        },
        {
-        "entree": "-5",
-        "sortie": "-5"
+        "entree": "[[Y]]",
+        "sortie": "[[S2_1]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint main(void) {\n    int x;\n    scanf(\"%d\", &x);\n    int *p = &x;\n    printf(\"%d\\n\", *p);\n    return 0;\n}"
@@ -704,18 +1078,22 @@
      "guideSeul": true
     },
     {
-     "consigne": "Au lieu de lire `*p`, **double** `x` en écrivant à travers `p`, puis affiche `x`.",
+     "consigne": "Au lieu de seulement lire `*p`, **double** `x` en écrivant à travers `p`, puis affiche `x` (le vrai `x`, pour vérifier qu'il a bien changé).",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "21",
-        "sortie": "42"
+        "entree": "[[X]]",
+        "sortie": "[[S3_0]]"
        },
        {
-        "entree": "-5",
-        "sortie": "-10"
+        "entree": "[[Y]]",
+        "sortie": "[[S3_1]]"
+       },
+       {
+        "entree": "0",
+        "sortie": "[[S3_2]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint main(void) {\n    int x;\n    scanf(\"%d\", &x);\n    int *p = &x;\n    *p = *p * 2;\n    printf(\"%d\\n\", x);\n    return 0;\n}",
@@ -745,6 +1123,98 @@
      "duree": 1.5,
      "depart": "#include <stdio.h>\n\nint main(void) {\n    int x;\n    scanf(\"%d\", &x);\n    int *p = &x;\n    printf(\"%d\\n\", *p);\n    return 0;\n}"
     }
+   ],
+   "vals": {
+    "X": "51",
+    "Y": "-15",
+    "X2": "102",
+    "S2_0": "51",
+    "S2_1": "-15",
+    "S3_0": "102",
+    "S3_1": "-30",
+    "S3_2": "0"
+   },
+   "variantes": [
+    {
+     "X": "51",
+     "Y": "-15",
+     "X2": "102",
+     "S2_0": "51",
+     "S2_1": "-15",
+     "S3_0": "102",
+     "S3_1": "-30",
+     "S3_2": "0"
+    },
+    {
+     "X": "26",
+     "Y": "-13",
+     "X2": "52",
+     "S2_0": "26",
+     "S2_1": "-13",
+     "S3_0": "52",
+     "S3_1": "-26",
+     "S3_2": "0"
+    },
+    {
+     "X": "45",
+     "Y": "-25",
+     "X2": "90",
+     "S2_0": "45",
+     "S2_1": "-25",
+     "S3_0": "90",
+     "S3_1": "-50",
+     "S3_2": "0"
+    },
+    {
+     "X": "53",
+     "Y": "-14",
+     "X2": "106",
+     "S2_0": "53",
+     "S2_1": "-14",
+     "S3_0": "106",
+     "S3_1": "-28",
+     "S3_2": "0"
+    },
+    {
+     "X": "45",
+     "Y": "-30",
+     "X2": "90",
+     "S2_0": "45",
+     "S2_1": "-30",
+     "S3_0": "90",
+     "S3_1": "-60",
+     "S3_2": "0"
+    },
+    {
+     "X": "3",
+     "Y": "-15",
+     "X2": "6",
+     "S2_0": "3",
+     "S2_1": "-15",
+     "S3_0": "6",
+     "S3_1": "-30",
+     "S3_2": "0"
+    },
+    {
+     "X": "36",
+     "Y": "-17",
+     "X2": "72",
+     "S2_0": "36",
+     "S2_1": "-17",
+     "S3_0": "72",
+     "S3_1": "-34",
+     "S3_2": "0"
+    },
+    {
+     "X": "11",
+     "Y": "-12",
+     "X2": "22",
+     "S2_0": "11",
+     "S2_1": "-12",
+     "S3_0": "22",
+     "S3_1": "-24",
+     "S3_2": "0"
+    }
    ]
   },
   {
@@ -753,12 +1223,12 @@
    "notion": "8.2",
    "origine": "generee",
    "titre": "Le pointeur mal initialisé",
-   "enonce": "Ce programme doit afficher la valeur de `x` en passant par un pointeur. Il ne compile pas : le pointeur reçoit une valeur au lieu d'une adresse.",
+   "enonce": "Ce programme doit afficher la valeur de `x` ([[X]]) en passant par un pointeur. Il ne compile pas : le pointeur reçoit une **valeur** au lieu d'une **adresse**.\n```c\n#include <stdio.h>\n\nint main(void) {\n    int x = [[X]];\n    int *p = x;\n    printf(\"%d\\n\", *p);\n    return 0;\n}\n```",
    "guidage": "**Diagnostic** : 1. que doit contenir un pointeur ? → 2. quel opérateur donne l'adresse d'une variable ? → 3. corriger l'initialisation.",
    "duree": 2,
    "etapes": [
     {
-     "consigne": "Que doit contenir une variable de type `int *` ? (réponse courte)",
+     "consigne": "Une variable de type `int *` ne contient pas un nombre ordinaire. Que doit-elle contenir ? (réponse courte)",
      "question": "Contenu d'un pointeur ?",
      "verif": {
       "mode": "regex",
@@ -774,7 +1244,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Quel opérateur donne l'adresse de la variable `x` ?",
+     "consigne": "Tu l'utilises déjà dans `scanf` : quel opérateur, placé devant `x`, donne l'adresse de `x` ?",
      "question": "Opérateur d'adresse ?",
      "verif": {
       "mode": "exact",
@@ -791,18 +1261,18 @@
      "guideSeul": true
     },
     {
-     "consigne": "Corrige l'initialisation de `p` pour que le programme compile et affiche `7`.",
+     "consigne": "Corrige l'initialisation de `p` pour qu'il reçoive l'adresse de `x` : le programme doit compiler et afficher `[[X]]`.",
      "question": "Corrige le programme.",
      "verif": {
       "mode": "c",
       "tests": [
        {
         "entree": "",
-        "sortie": "7"
+        "sortie": "[[X]]"
        }
       ],
-      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int x = 7;\n    int *p = &x;\n    printf(\"%d\\n\", *p);\n    return 0;\n}",
       "nombres": true,
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int x = [[X]];\n    int *p = &x;\n    printf(\"%d\\n\", *p);\n    return 0;\n}",
       "exige": [
        {
         "motif": "int\\s*\\*\\s*p\\s*=\\s*&\\s*x",
@@ -810,13 +1280,42 @@
        }
       ]
      },
-     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int x = 7;\n    int *p = &x;\n    printf(\"%d\\n\", *p);\n    return 0;\n}\n```",
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int x = [[X]];\n    int *p = &x;\n    printf(\"%d\\n\", *p);\n    return 0;\n}\n```",
      "indices": [
       "`p` doit recevoir l'adresse de `x`, pas sa valeur.",
       "`int *p = &x;`"
      ],
      "duree": 1.2,
-     "depart": "#include <stdio.h>\n\nint main(void) {\n    int x = 7;\n    int *p = x;\n    printf(\"%d\\n\", *p);\n    return 0;\n}"
+     "depart": "#include <stdio.h>\n\nint main(void) {\n    int x = [[X]];\n    int *p = x;\n    printf(\"%d\\n\", *p);\n    return 0;\n}"
+    }
+   ],
+   "vals": {
+    "X": "72"
+   },
+   "variantes": [
+    {
+     "X": "72"
+    },
+    {
+     "X": "59"
+    },
+    {
+     "X": "76"
+    },
+    {
+     "X": "71"
+    },
+    {
+     "X": "40"
+    },
+    {
+     "X": "22"
+    },
+    {
+     "X": "30"
+    },
+    {
+     "X": "78"
     }
    ]
   },
@@ -826,12 +1325,12 @@
    "notion": "8.3",
    "origine": "generee",
    "titre": "Chercher et renvoyer un pointeur",
-   "enonce": "Écris `int *chercher(int t[], int n, int v)` qui renvoie l'**adresse** de la première case qui vaut `v`, ou `NULL` si `v` est absente. `main` lit `N`, `N` entiers, puis `v` : si le résultat n'est pas `NULL`, il **met la case trouvée à 0 en passant par le pointeur** et affiche le tableau ; sinon il affiche `absent`.",
-   "guidage": "**Plan** : 1. la fonction parcourt le tableau → 2. à la première case égale à `v`, `return &t[i];` (l'**adresse** de la case) → 3. sinon `return NULL;` → 4. `main` teste `r != NULL` avant d'écrire `*r = 0`.\n\n**Piège** : écrire à travers un pointeur `NULL` plante le programme.",
+   "enonce": "Écris `int *chercher(int t[], int n, int v)` qui renvoie l'**adresse** de la première case qui vaut `v`, ou `NULL` si `v` est absente.\n\n`main` lit `N`, puis `N` entiers, puis `v`. Si le résultat n'est pas `NULL`, il **met la case trouvée à 0 en passant par le pointeur**, puis affiche le tableau ; sinon il affiche `absent`.\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S4_0]]\n```",
+   "guidage": "**Plan** : 1. la fonction parcourt le tableau → 2. à la première case égale à `v`, elle renvoie son **adresse** (`&t[i]`) → 3. sinon `NULL` → 4. `main` teste le résultat avant d'écrire dedans.\n\n**Piège** : écrire à travers un pointeur `NULL` fait planter le programme.",
    "duree": 7,
    "etapes": [
     {
-     "consigne": "Que doit renvoyer la fonction quand `v` est absente ? (un mot)",
+     "consigne": "La fonction renvoie une adresse. Si la valeur n'est nulle part, il faut renvoyer une adresse spéciale qui veut dire « nulle part ». Comment s'appelle-t-elle ? (un mot)",
      "question": "Valeur renvoyée si absente ?",
      "verif": {
       "mode": "exact",
@@ -848,7 +1347,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Écris l'instruction (dans le `if`) qui renvoie l'**adresse** de la case `t[i]`.",
+     "consigne": "Quand `t[i] == v`, on ne veut pas renvoyer la valeur `t[i]` (on la connaît déjà, c'est `v`), mais **l'endroit** où elle se trouve. Écris l'instruction qui renvoie l'adresse de la case `t[i]`.",
      "question": "Renvoyer l'adresse de `t[i]` ?",
      "verif": {
       "mode": "regex",
@@ -864,7 +1363,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Dans `main`, `r` reçoit le résultat. Écris la condition (sans `if`) qui vérifie que la valeur a été trouvée.",
+     "consigne": "Dans `main`, le pointeur `r` reçoit le résultat. Avant d'écrire `*r = 0`, il faut s'assurer que la valeur a été trouvée. Écris cette condition (sans le `if`).",
      "question": "Condition « trouvé » ?",
      "verif": {
       "mode": "regex",
@@ -880,18 +1379,18 @@
      "guideSeul": true
     },
     {
-     "consigne": "Sans fonction : lis `N`, `N` entiers puis `v`. Dans `main`, cherche `v` avec un pointeur `r` (`NULL` au départ, `&t[i]` à la première occurrence) ; si `r` n'est pas `NULL`, mets la case à 0 par `*r = 0` et affiche le tableau, sinon affiche `absent`.",
+     "consigne": "Premier jalon, sans fonction : lis `N`, les `N` entiers puis `v`. Avec un pointeur `r` qui vaut `NULL` au départ, cherche `v` : à la première occurrence, `r = &t[i];` puis `break`. Ensuite, si `r` n'est pas `NULL`, mets la case à 0 par `*r = 0` et affiche le tableau ; sinon affiche `absent`.",
      "question": "Recherche avec pointeur dans `main`.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "4\n5 7 9 7\n7",
-        "sortie": "5 0 9 7"
+        "entree": "[[E0]]",
+        "sortie": "[[S3_0]]"
        },
        {
-        "entree": "3\n1 2 3\n8",
-        "sortie": "absent"
+        "entree": "[[E1]]",
+        "sortie": "[[S3_1]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[100], n, v;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    scanf(\"%d\", &v);\n    int *r = NULL;\n    for (int i = 0; i < n; i++) {\n        if (t[i] == v) {\n            r = &t[i];\n            break;\n        }\n    }\n    if (r != NULL) {\n        *r = 0;\n        for (int i = 0; i < n; i++) printf(\"%d \", t[i]);\n        printf(\"\\n\");\n    } else {\n        printf(\"absent\\n\");\n    }\n    return 0;\n}"
@@ -905,18 +1404,22 @@
      "guideSeul": true
     },
     {
-     "consigne": "Sors la recherche dans `int *chercher(int t[], int n, int v)` : elle renvoie `&t[i]` ou `NULL`. `main` appelle `int *r = chercher(t, n, v);` puis teste `r != NULL`.",
+     "consigne": "Déplace la recherche dans la fonction `int *chercher(int t[], int n, int v)` : elle renvoie `&t[i]` dès qu'elle trouve, et `NULL` après la boucle. `main` écrit simplement `int *r = chercher(t, n, v);` puis garde son test `r != NULL`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "4\n5 7 9 7\n7",
-        "sortie": "5 0 9 7"
+        "entree": "[[E0]]",
+        "sortie": "[[S4_0]]"
        },
        {
-        "entree": "3\n1 2 3\n8",
-        "sortie": "absent"
+        "entree": "[[E1]]",
+        "sortie": "[[S4_1]]"
+       },
+       {
+        "entree": "[[E2]]",
+        "sortie": "[[S4_2]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint *chercher(int t[], int n, int v) {\n    for (int i = 0; i < n; i++) {\n        if (t[i] == v) return &t[i];\n    }\n    return NULL;\n}\n\nint main(void) {\n    int t[100], n, v;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    scanf(\"%d\", &v);\n    int *r = chercher(t, n, v);\n    if (r != NULL) {\n        *r = 0;\n        for (int i = 0; i < n; i++) printf(\"%d \", t[i]);\n        printf(\"\\n\");\n    } else {\n        printf(\"absent\\n\");\n    }\n    return 0;\n}",
@@ -939,6 +1442,98 @@
      "duree": 3.49,
      "depart": "#include <stdio.h>\n\nint main(void) {\n    int t[100], n, v;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    scanf(\"%d\", &v);\n    int *r = NULL;\n    for (int i = 0; i < n; i++) {\n        if (t[i] == v) {\n            r = &t[i];\n            break;\n        }\n    }\n    if (r != NULL) {\n        *r = 0;\n        for (int i = 0; i < n; i++) printf(\"%d \", t[i]);\n        printf(\"\\n\");\n    } else {\n        printf(\"absent\\n\");\n    }\n    return 0;\n}"
     }
+   ],
+   "vals": {
+    "E0": "4\n9 7 9 7\n7",
+    "E1": "4\n16 13 12 4\n2",
+    "E2": "3\n9 7 3\n9",
+    "S3_0": "9 0 9 7 ",
+    "S3_1": "absent",
+    "S4_0": "9 0 9 7 ",
+    "S4_1": "absent",
+    "S4_2": "0 7 3 "
+   },
+   "variantes": [
+    {
+     "E0": "4\n9 7 9 7\n7",
+     "E1": "4\n16 13 12 4\n2",
+     "E2": "3\n9 7 3\n9",
+     "S3_0": "9 0 9 7 ",
+     "S3_1": "absent",
+     "S4_0": "9 0 9 7 ",
+     "S4_1": "absent",
+     "S4_2": "0 7 3 "
+    },
+    {
+     "E0": "4\n8 1 9 1\n1",
+     "E1": "3\n14 6 16\n19",
+     "E2": "3\n3 7 1\n3",
+     "S3_0": "8 0 9 1 ",
+     "S3_1": "absent",
+     "S4_0": "8 0 9 1 ",
+     "S4_1": "absent",
+     "S4_2": "0 7 1 "
+    },
+    {
+     "E0": "5\n3 7 7 2 7\n7",
+     "E1": "5\n20 11 18 12 3\n13",
+     "E2": "3\n8 4 5\n8",
+     "S3_0": "3 0 7 2 7 ",
+     "S3_1": "absent",
+     "S4_0": "3 0 7 2 7 ",
+     "S4_1": "absent",
+     "S4_2": "0 4 5 "
+    },
+    {
+     "E0": "4\n2 5 9 9\n9",
+     "E1": "3\n18 9 15\n16",
+     "E2": "3\n4 3 1\n4",
+     "S3_0": "2 5 0 9 ",
+     "S3_1": "absent",
+     "S4_0": "2 5 0 9 ",
+     "S4_1": "absent",
+     "S4_2": "0 3 1 "
+    },
+    {
+     "E0": "6\n3 3 9 2 1 2\n2",
+     "E1": "4\n14 9 13 4\n2",
+     "E2": "3\n2 5 3\n2",
+     "S3_0": "3 3 9 0 1 2 ",
+     "S3_1": "absent",
+     "S4_0": "3 3 9 0 1 2 ",
+     "S4_1": "absent",
+     "S4_2": "0 5 3 "
+    },
+    {
+     "E0": "6\n2 2 7 3 5 2\n2",
+     "E1": "3\n12 11 18\n4",
+     "E2": "3\n7 6 4\n7",
+     "S3_0": "0 2 7 3 5 2 ",
+     "S3_1": "absent",
+     "S4_0": "0 2 7 3 5 2 ",
+     "S4_1": "absent",
+     "S4_2": "0 6 4 "
+    },
+    {
+     "E0": "5\n6 5 7 8 8\n8",
+     "E1": "4\n12 4 15 3\n14",
+     "E2": "3\n9 3 7\n9",
+     "S3_0": "6 5 7 0 8 ",
+     "S3_1": "absent",
+     "S4_0": "6 5 7 0 8 ",
+     "S4_1": "absent",
+     "S4_2": "0 3 7 "
+    },
+    {
+     "E0": "6\n7 9 7 7 1 7\n7",
+     "E1": "5\n19 5 1 12 7\n20",
+     "E2": "3\n3 4 5\n3",
+     "S3_0": "0 9 7 7 1 7 ",
+     "S3_1": "absent",
+     "S4_0": "0 9 7 7 1 7 ",
+     "S4_1": "absent",
+     "S4_2": "0 4 5 "
+    }
    ]
   },
   {
@@ -947,12 +1542,12 @@
    "notion": "8.4",
    "origine": "generee",
    "titre": "Parcourir avec p++",
-   "enonce": "Écris un programme qui lit `N` puis `N` entiers dans un tableau, puis affiche les éléments **en parcourant le tableau avec un pointeur** qui avance avec `p++` (utilise un compteur pour t'arrêter, sans comparer de pointeurs).",
-   "guidage": "**Plan** : 1. `int *p = t;` (le nom du tableau est l'adresse de sa 1re case) → 2. `n` fois : afficher `*p` puis `p++` (le pointeur avance d'un **élément**).",
+   "enonce": "Écris un programme qui lit `N` puis `N` entiers dans un tableau, puis les affiche **en parcourant le tableau avec un pointeur** qui avance avec `p++`. Utilise un compteur pour savoir quand t'arrêter (sans comparer de pointeurs).\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S3_0]]\n```",
+   "guidage": "**Plan** : 1. `int *p = t;` (le nom du tableau est l'adresse de sa première case) → 2. `n` fois : afficher `*p`, puis `p++` (le pointeur avance d'un **élément**).",
    "duree": 4,
    "etapes": [
     {
-     "consigne": "Écris la déclaration d'un pointeur `p` qui pointe sur la **première case** du tableau `t`.",
+     "consigne": "Le nom d'un tableau, utilisé seul, vaut l'adresse de sa première case. Écris la déclaration d'un pointeur `p` qui pointe sur le début du tableau `t`.",
      "question": "`p` sur le début de `t` ?",
      "verif": {
       "mode": "regex",
@@ -968,7 +1563,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Si `p` pointe sur `t[0]`, vers quelle case (indice) pointe-t-il après un `p++` ?",
+     "consigne": "`p` pointe sur `t[0]`. On fait `p++`. Sur quelle case (donne son indice) pointe-t-il maintenant ? Attention : un pointeur avance d'un **élément** entier, pas d'un octet.",
      "question": "Case pointée après `p++` ?",
      "verif": {
       "mode": "numerique",
@@ -983,18 +1578,18 @@
      "guideSeul": true
     },
     {
-     "consigne": "Lis `N` puis `N` entiers dans un tableau, et affiche-les (séparés par une espace) avec une boucle à indice `i` et `t[i]`.",
+     "consigne": "Premier jalon, sans pointeur : lis `N` puis les `N` entiers, et affiche-les séparés par une espace avec une boucle classique (`t[i]`).",
      "question": "Affiche avec `t[i]`.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "4\n3 1 4 1",
-        "sortie": "3 1 4 1"
+        "entree": "[[E0]]",
+        "sortie": "[[S2_0]]"
        },
        {
-        "entree": "1\n9",
-        "sortie": "9"
+        "entree": "[[E1]]",
+        "sortie": "[[S2_1]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    for (int i = 0; i < n; i++) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    return 0;\n}"
@@ -1008,18 +1603,18 @@
      "guideSeul": true
     },
     {
-     "consigne": "Réécris l'affichage avec un pointeur : `int *p = t;`, puis `n` fois affiche `*p` et fais avancer `p` avec `p++` (garde un compteur pour t'arrêter).",
+     "consigne": "Remplace la boucle d'affichage : déclare `int *p = t;`, puis répète `n` fois « affiche `*p`, puis `p++` ». Le compteur de la boucle sert juste à compter les tours ; c'est `p` qui se déplace dans le tableau.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "4\n3 1 4 1",
-        "sortie": "3 1 4 1"
+        "entree": "[[E0]]",
+        "sortie": "[[S3_0]]"
        },
        {
-        "entree": "1\n9",
-        "sortie": "9"
+        "entree": "[[E1]]",
+        "sortie": "[[S3_1]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    int *p = t;\n    for (int k = 0; k < n; k++) {\n        printf(\"%d \", *p);\n        p++;\n    }\n    printf(\"\\n\");\n    return 0;\n}",
@@ -1043,6 +1638,80 @@
      "duree": 2,
      "depart": "#include <stdio.h>\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    for (int i = 0; i < n; i++) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    return 0;\n}"
     }
+   ],
+   "vals": {
+    "E0": "4\n24 27 39 18",
+    "E1": "1\n16",
+    "S2_0": "24 27 39 18 ",
+    "S2_1": "16 ",
+    "S3_0": "24 27 39 18 ",
+    "S3_1": "16 "
+   },
+   "variantes": [
+    {
+     "E0": "4\n24 27 39 18",
+     "E1": "1\n16",
+     "S2_0": "24 27 39 18 ",
+     "S2_1": "16 ",
+     "S3_0": "24 27 39 18 ",
+     "S3_1": "16 "
+    },
+    {
+     "E0": "6\n15 6 -4 50 48 7",
+     "E1": "1\n73",
+     "S2_0": "15 6 -4 50 48 7 ",
+     "S2_1": "73 ",
+     "S3_0": "15 6 -4 50 48 7 ",
+     "S3_1": "73 "
+    },
+    {
+     "E0": "4\n27 38 42 0",
+     "E1": "1\n72",
+     "S2_0": "27 38 42 0 ",
+     "S2_1": "72 ",
+     "S3_0": "27 38 42 0 ",
+     "S3_1": "72 "
+    },
+    {
+     "E0": "4\n45 50 0 15",
+     "E1": "1\n23",
+     "S2_0": "45 50 0 15 ",
+     "S2_1": "23 ",
+     "S3_0": "45 50 0 15 ",
+     "S3_1": "23 "
+    },
+    {
+     "E0": "5\n45 48 -2 24 32",
+     "E1": "1\n60",
+     "S2_0": "45 48 -2 24 32 ",
+     "S2_1": "60 ",
+     "S3_0": "45 48 -2 24 32 ",
+     "S3_1": "60 "
+    },
+    {
+     "E0": "7\n5 24 0 41 -5 47 16",
+     "E1": "1\n66",
+     "S2_0": "5 24 0 41 -5 47 16 ",
+     "S2_1": "66 ",
+     "S3_0": "5 24 0 41 -5 47 16 ",
+     "S3_1": "66 "
+    },
+    {
+     "E0": "6\n-4 7 7 12 26 32",
+     "E1": "1\n48",
+     "S2_0": "-4 7 7 12 26 32 ",
+     "S2_1": "48 ",
+     "S3_0": "-4 7 7 12 26 32 ",
+     "S3_1": "48 "
+    },
+    {
+     "E0": "4\n16 35 45 5",
+     "E1": "1\n7",
+     "S2_0": "16 35 45 5 ",
+     "S2_1": "7 ",
+     "S3_0": "16 35 45 5 ",
+     "S3_1": "7 "
+    }
    ]
   },
   {
@@ -1051,12 +1720,12 @@
    "notion": "8.5",
    "origine": "generee",
    "titre": "Somme en notation pointeur",
-   "enonce": "Écris `int somme(int *t, int n)` qui calcule la somme **en notation pointeur** (`*(t + i)`, sans crochets). `main` lit `N` puis `N` entiers et affiche la somme.",
-   "guidage": "**Plan** : 1. `somme` reçoit un pointeur `int *t` → 2. `t[i]` s'écrit aussi `*(t + i)` → 3. cumuler dans `s`.\n\n**À retenir** : `t + i` est l'adresse de la case `i` ; `*` lit ce qu'il y a dedans.",
+   "enonce": "Écris `int somme(int *t, int n)` qui calcule la somme des `n` cases **en notation pointeur** (`*(t + i)`, sans crochets). `main` lit `N` puis `N` entiers et affiche la somme.\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S3_0]]\n```",
+   "guidage": "**Plan** : 1. `somme` reçoit un pointeur `int *t` → 2. `t[i]` s'écrit aussi `*(t + i)` → 3. on cumule dans `s`.\n\n**À retenir** : `t + i` est l'adresse de la case `i` ; l'étoile lit ce qu'il y a dedans.",
    "duree": 5,
    "etapes": [
     {
-     "consigne": "Écris l'expression, en notation pointeur (sans crochets), équivalente à `t[i]`.",
+     "consigne": "`t + i` est l'adresse de la case `i` (on avance de `i` éléments à partir du début). Comment lire la **valeur** rangée à cette adresse ? Écris l'expression équivalente à `t[i]`, sans crochets.",
      "question": "`t[i]` en notation pointeur ?",
      "verif": {
       "mode": "regex",
@@ -1072,33 +1741,33 @@
      "guideSeul": true
     },
     {
-     "consigne": "Si `t` pointe sur `{1, 2, 3, 4}`, que vaut `*(t + 2)` ?",
-     "question": "Valeur de `*(t + 2)` ?",
+     "consigne": "Si `t` pointe sur `[[TAB]]`, que vaut `*(t + [[K]])` ?",
+     "question": "Valeur de `*(t + [[K]])` ?",
      "verif": {
       "mode": "numerique",
-      "attendu": 3
+      "attendu": "[[R]]"
      },
-     "corrige": "`t + 2` est l'adresse de `t[2]`, qui vaut 3.",
+     "corrige": "`t + [[K]]` est l'adresse de `t[[[K]]]`, qui vaut **[[R]]**.",
      "indices": [
-      "`*(t + 2)` est la même chose que `t[2]`.",
-      "3"
+      "`*(t + [[K]])` est la même chose que `t[[[K]]]`.",
+      "Compte à partir de 0."
      ],
      "duree": 0.33,
      "guideSeul": true
     },
     {
-     "consigne": "Écris `int somme(int t[], int n)` (notation à crochets) qui renvoie la somme ; `main` lit `N` puis `N` entiers et affiche `somme(t, n)`.",
+     "consigne": "Premier jalon, avec les crochets : écris `int somme(int t[], int n)` qui renvoie la somme, et un `main` qui lit `N` puis les `N` entiers et affiche `somme(t, n)`.",
      "question": "Somme avec des crochets.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "4\n1 2 3 4",
-        "sortie": "10"
+        "entree": "[[E0]]",
+        "sortie": "[[S2_0]]"
        },
        {
-        "entree": "2\n-5 5",
-        "sortie": "0"
+        "entree": "[[E1]]",
+        "sortie": "[[S2_1]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint somme(int t[], int n) {\n    int s = 0;\n    for (int i = 0; i < n; i++) {\n        s += t[i];\n    }\n    return s;\n}\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    printf(\"%d\\n\", somme(t, n));\n    return 0;\n}"
@@ -1112,18 +1781,18 @@
      "guideSeul": true
     },
     {
-     "consigne": "Réécris `somme` avec un paramètre `int *t` et la **notation pointeur** : remplace `t[i]` par `*(t + i)`.",
+     "consigne": "Réécris `somme` avec un paramètre `int *t` et la **notation pointeur** : chaque `t[i]` devient `*(t + i)`. `main` ne change pas.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "4\n1 2 3 4",
-        "sortie": "10"
+        "entree": "[[E0]]",
+        "sortie": "[[S3_0]]"
        },
        {
-        "entree": "2\n-5 5",
-        "sortie": "0"
+        "entree": "[[E1]]",
+        "sortie": "[[S3_1]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint somme(int *t, int n) {\n    int s = 0;\n    for (int i = 0; i < n; i++) {\n        s += *(t + i);\n    }\n    return s;\n}\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    printf(\"%d\\n\", somme(t, n));\n    return 0;\n}",
@@ -1143,6 +1812,107 @@
      "duree": 2.5,
      "depart": "#include <stdio.h>\n\nint somme(int t[], int n) {\n    int s = 0;\n    for (int i = 0; i < n; i++) {\n        s += t[i];\n    }\n    return s;\n}\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    printf(\"%d\\n\", somme(t, n));\n    return 0;\n}"
     }
+   ],
+   "vals": {
+    "TAB": "{8, 6, 7, 2}",
+    "K": "3",
+    "E0": "5\n2 36 9 38 1",
+    "E1": "2\n-16 20",
+    "R": "2",
+    "S2_0": "86",
+    "S2_1": "4",
+    "S3_0": "86",
+    "S3_1": "4"
+   },
+   "variantes": [
+    {
+     "TAB": "{8, 6, 7, 2}",
+     "K": "3",
+     "E0": "5\n2 36 9 38 1",
+     "E1": "2\n-16 20",
+     "R": "2",
+     "S2_0": "86",
+     "S2_1": "4",
+     "S3_0": "86",
+     "S3_1": "4"
+    },
+    {
+     "TAB": "{6, 1, 5, 9}",
+     "K": "3",
+     "E0": "6\n40 15 35 18 28 38",
+     "E1": "2\n-18 2",
+     "R": "9",
+     "S2_0": "174",
+     "S2_1": "-16",
+     "S3_0": "174",
+     "S3_1": "-16"
+    },
+    {
+     "TAB": "{5, 6, 4, 8}",
+     "K": "2",
+     "E0": "7\n30 1 14 25 2 36 16",
+     "E1": "2\n-6 18",
+     "R": "4",
+     "S2_0": "124",
+     "S2_1": "12",
+     "S3_0": "124",
+     "S3_1": "12"
+    },
+    {
+     "TAB": "{6, 7, 8, 9}",
+     "K": "2",
+     "E0": "5\n17 17 22 11 28",
+     "E1": "2\n-12 16",
+     "R": "8",
+     "S2_0": "95",
+     "S2_1": "4",
+     "S3_0": "95",
+     "S3_1": "4"
+    },
+    {
+     "TAB": "{7, 1, 2, 4}",
+     "K": "1",
+     "E0": "3\n5 19 20",
+     "E1": "2\n-5 19",
+     "R": "1",
+     "S2_0": "44",
+     "S2_1": "14",
+     "S3_0": "44",
+     "S3_1": "14"
+    },
+    {
+     "TAB": "{6, 4, 9, 2}",
+     "K": "1",
+     "E0": "3\n23 13 26",
+     "E1": "2\n-17 7",
+     "R": "4",
+     "S2_0": "62",
+     "S2_1": "-10",
+     "S3_0": "62",
+     "S3_1": "-10"
+    },
+    {
+     "TAB": "{1, 4, 5, 3}",
+     "K": "2",
+     "E0": "7\n3 39 8 16 18 8 35",
+     "E1": "2\n-17 6",
+     "R": "5",
+     "S2_0": "127",
+     "S2_1": "-11",
+     "S3_0": "127",
+     "S3_1": "-11"
+    },
+    {
+     "TAB": "{7, 3, 4, 2}",
+     "K": "3",
+     "E0": "3\n33 16 31",
+     "E1": "2\n-15 5",
+     "R": "2",
+     "S2_0": "80",
+     "S2_1": "-10",
+     "S3_0": "80",
+     "S3_1": "-10"
+    }
    ]
   },
   {
@@ -1151,12 +1921,12 @@
    "notion": "8.5",
    "origine": "generee",
    "titre": "Doubler chaque élément",
-   "enonce": "Écris `void modifier(int *tab, int taille)` (exemple du cours) qui **double** chaque élément du tableau. `main` lit `N` puis `N` entiers, appelle `modifier`, puis affiche le tableau.",
-   "guidage": "**Plan** : `modifier` reçoit l'adresse du tableau (`int *tab`) et sa taille ; elle double chaque case ; comme elle travaille sur l'original, `main` affiche ensuite le tableau modifié.",
+   "enonce": "Écris `void modifier(int *tab, int taille)` (exemple du cours) qui **double** chaque élément du tableau. `main` lit `N` puis `N` entiers, appelle `modifier`, puis affiche le tableau.\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S3_0]]\n```",
+   "guidage": "**Plan** : `modifier` reçoit l'adresse du tableau et sa taille. Elle travaille directement sur le tableau d'origine (pas sur une copie) : après l'appel, `main` voit les valeurs doublées.",
    "duree": 4,
    "etapes": [
     {
-     "consigne": "Écris l'en-tête de `modifier` : un pointeur `int *tab`, une taille `taille`, aucune valeur renvoyée.",
+     "consigne": "Écris l'en-tête de `modifier` : elle reçoit un pointeur sur entier `tab` et un entier `taille`, et ne renvoie rien.",
      "question": "En-tête de `modifier` ?",
      "verif": {
       "mode": "regex",
@@ -1172,7 +1942,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Écris l'instruction (dans la boucle d'indice `i`) qui double la case `i` de `tab`.",
+     "consigne": "Dans la boucle (indice `i`), écris l'instruction qui double la case `i` de `tab`.",
      "question": "Doubler la case `i` ?",
      "verif": {
       "mode": "regex",
@@ -1188,18 +1958,18 @@
      "guideSeul": true
     },
     {
-     "consigne": "Écris `void modifier(int tab[], int taille)` (crochets) qui double chaque case ; `main` lit `N` entiers, appelle `modifier` et affiche le tableau.",
+     "consigne": "Premier jalon : écris `void modifier(int tab[], int taille)` (avec des crochets) qui double chaque case. `main` lit les `N` entiers, appelle `modifier(t, n)`, puis affiche le tableau.",
      "question": "Doubler avec des crochets.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "5\n10 20 30 40 50",
-        "sortie": "20 40 60 80 100"
+        "entree": "[[E0]]",
+        "sortie": "[[S2_0]]"
        },
        {
-        "entree": "2\n-1 0",
-        "sortie": "-2 0"
+        "entree": "[[E1]]",
+        "sortie": "[[S2_1]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nvoid modifier(int tab[], int taille) {\n    for (int i = 0; i < taille; i++) {\n        tab[i] *= 2;\n    }\n}\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    modifier(t, n);\n    for (int i = 0; i < n; i++) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    return 0;\n}"
@@ -1213,18 +1983,18 @@
      "guideSeul": true
     },
     {
-     "consigne": "Remplace le paramètre `int tab[]` par un **pointeur** `int *tab` (le reste du corps ne change pas : `tab[i]` fonctionne aussi avec un pointeur).",
+     "consigne": "Remplace le paramètre `int tab[]` par un **pointeur** `int *tab`. Le corps ne change pas : `tab[i]` marche aussi avec un pointeur.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "5\n10 20 30 40 50",
-        "sortie": "20 40 60 80 100"
+        "entree": "[[E0]]",
+        "sortie": "[[S3_0]]"
        },
        {
-        "entree": "2\n-1 0",
-        "sortie": "-2 0"
+        "entree": "[[E1]]",
+        "sortie": "[[S3_1]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nvoid modifier(int *tab, int taille) {\n    for (int i = 0; i < taille; i++) {\n        tab[i] *= 2;\n    }\n}\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    modifier(t, n);\n    for (int i = 0; i < n; i++) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    return 0;\n}",
@@ -1244,6 +2014,80 @@
      "duree": 2.01,
      "depart": "#include <stdio.h>\n\nvoid modifier(int tab[], int taille) {\n    for (int i = 0; i < taille; i++) {\n        tab[i] *= 2;\n    }\n}\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    modifier(t, n);\n    for (int i = 0; i < n; i++) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    return 0;\n}"
     }
+   ],
+   "vals": {
+    "E0": "4\n28 25 8 36",
+    "E1": "2\n-1 0",
+    "S2_0": "56 50 16 72 ",
+    "S2_1": "-2 0 ",
+    "S3_0": "56 50 16 72 ",
+    "S3_1": "-2 0 "
+   },
+   "variantes": [
+    {
+     "E0": "4\n28 25 8 36",
+     "E1": "2\n-1 0",
+     "S2_0": "56 50 16 72 ",
+     "S2_1": "-2 0 ",
+     "S3_0": "56 50 16 72 ",
+     "S3_1": "-2 0 "
+    },
+    {
+     "E0": "3\n26 27 46",
+     "E1": "2\n-3 0",
+     "S2_0": "52 54 92 ",
+     "S2_1": "-6 0 ",
+     "S3_0": "52 54 92 ",
+     "S3_1": "-6 0 "
+    },
+    {
+     "E0": "3\n13 32 44",
+     "E1": "2\n-4 0",
+     "S2_0": "26 64 88 ",
+     "S2_1": "-8 0 ",
+     "S3_0": "26 64 88 ",
+     "S3_1": "-8 0 "
+    },
+    {
+     "E0": "4\n32 15 21 30",
+     "E1": "2\n-4 0",
+     "S2_0": "64 30 42 60 ",
+     "S2_1": "-8 0 ",
+     "S3_0": "64 30 42 60 ",
+     "S3_1": "-8 0 "
+    },
+    {
+     "E0": "4\n24 14 20 42",
+     "E1": "2\n-5 0",
+     "S2_0": "48 28 40 84 ",
+     "S2_1": "-10 0 ",
+     "S3_0": "48 28 40 84 ",
+     "S3_1": "-10 0 "
+    },
+    {
+     "E0": "4\n49 20 2 6",
+     "E1": "2\n-8 0",
+     "S2_0": "98 40 4 12 ",
+     "S2_1": "-16 0 ",
+     "S3_0": "98 40 4 12 ",
+     "S3_1": "-16 0 "
+    },
+    {
+     "E0": "6\n39 28 20 41 19 37",
+     "E1": "2\n-7 0",
+     "S2_0": "78 56 40 82 38 74 ",
+     "S2_1": "-14 0 ",
+     "S3_0": "78 56 40 82 38 74 ",
+     "S3_1": "-14 0 "
+    },
+    {
+     "E0": "3\n35 17 17",
+     "E1": "2\n-1 0",
+     "S2_0": "70 34 34 ",
+     "S2_1": "-2 0 ",
+     "S3_0": "70 34 34 ",
+     "S3_1": "-2 0 "
+    }
    ]
   },
   {
@@ -1252,12 +2096,12 @@
    "notion": "8.5",
    "origine": "generee",
    "titre": "Minimum et maximum par pointeurs",
-   "enonce": "Écris `void min_max(int *t, int n, int *min, int *max)` qui range le minimum et le maximum du tableau dans les variables pointées par `min` et `max`. `main` lit `N` puis `N` entiers et affiche le minimum puis le maximum.",
-   "guidage": "**Plan** : `min_max` produit **deux** résultats : deux paramètres pointeurs `min` et `max`. On les initialise avec `t[0]` puis on les met à jour en parcourant le reste du tableau.",
+   "enonce": "Écris `void min_max(int *t, int n, int *min, int *max)` qui range le minimum et le maximum du tableau dans les variables pointées par `min` et `max`. `main` lit `N` puis `N` entiers et affiche le minimum puis le maximum.\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S4_0]]\n```",
+   "guidage": "**Plan** : une fonction ne renvoie qu'une valeur avec `return`. Pour en produire **deux**, on lui donne les adresses de deux variables de `main`, et elle écrit dedans à travers `*min` et `*max`.",
    "duree": 6,
    "etapes": [
     {
-     "consigne": "Écris l'instruction qui initialise le minimum (variable pointée par `min`) avec la première case du tableau.",
+     "consigne": "Dans la fonction, `min` est l'adresse d'une variable de `main`. Écris l'instruction qui range la première case du tableau **dans cette variable** (à travers le pointeur).",
      "question": "Initialiser `*min` ?",
      "verif": {
       "mode": "regex",
@@ -1273,7 +2117,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Écris la ligne (dans la boucle d'indice `i`) qui met à jour le minimum quand `t[i]` est plus petit.",
+     "consigne": "Dans la boucle (indice `i`), écris la ligne qui remplace le minimum par `t[i]` quand `t[i]` est plus petit. Compare bien avec la **valeur** pointée, pas avec l'adresse.",
      "question": "Mise à jour du minimum ?",
      "verif": {
       "mode": "regex",
@@ -1289,7 +2133,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Dans `main`, les résultats iront dans `mi` et `ma`. Écris l'appel de `min_max` (tableau `t`, taille `n`).",
+     "consigne": "Dans `main`, les résultats doivent arriver dans les variables `mi` et `ma`. Écris l'appel de `min_max` (tableau `t`, taille `n`) en lui donnant ce qu'il faut pour qu'elle puisse écrire dans `mi` et `ma`.",
      "question": "Appel de `min_max` ?",
      "verif": {
       "mode": "regex",
@@ -1305,18 +2149,18 @@
      "guideSeul": true
     },
     {
-     "consigne": "Sans fonction : lis `N` puis `N` entiers et affiche le minimum puis le maximum (variables `mi` et `ma`).",
+     "consigne": "Premier jalon, sans fonction : lis `N` et les `N` entiers, puis calcule `mi` et `ma` dans `main` (les deux partent de `t[0]`) et affiche `mi ma`.",
      "question": "Min et max dans `main`.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "5\n4 -2 9 0 3",
-        "sortie": "-2 9"
+        "entree": "[[E0]]",
+        "sortie": "[[S3_0]]"
        },
        {
-        "entree": "1\n7",
-        "sortie": "7 7"
+        "entree": "[[E1]]",
+        "sortie": "[[S3_1]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    int mi = t[0], ma = t[0];\n    for (int i = 1; i < n; i++) {\n        if (t[i] < mi) mi = t[i];\n        if (t[i] > ma) ma = t[i];\n    }\n    printf(\"%d %d\\n\", mi, ma);\n    return 0;\n}"
@@ -1330,18 +2174,22 @@
      "guideSeul": true
     },
     {
-     "consigne": "Sors le calcul dans `void min_max(int *t, int n, int *min, int *max)` : les résultats sortent par les pointeurs `min` et `max` ; `main` affiche `mi` puis `ma`.",
+     "consigne": "Déplace le calcul dans `void min_max(int *t, int n, int *min, int *max)` : dans la fonction, `mi` devient `*min` et `ma` devient `*max`. `main` appelle `min_max(t, n, &mi, &ma);` puis affiche `mi` et `ma`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "5\n4 -2 9 0 3",
-        "sortie": "-2 9"
+        "entree": "[[E0]]",
+        "sortie": "[[S4_0]]"
        },
        {
-        "entree": "1\n7",
-        "sortie": "7 7"
+        "entree": "[[E1]]",
+        "sortie": "[[S4_1]]"
+       },
+       {
+        "entree": "[[E2]]",
+        "sortie": "[[S4_2]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nvoid min_max(int *t, int n, int *min, int *max) {\n    *min = t[0];\n    *max = t[0];\n    for (int i = 1; i < n; i++) {\n        if (t[i] < *min) *min = t[i];\n        if (t[i] > *max) *max = t[i];\n    }\n}\n\nint main(void) {\n    int t[100], n, mi, ma;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    min_max(t, n, &mi, &ma);\n    printf(\"%d %d\\n\", mi, ma);\n    return 0;\n}",
@@ -1365,6 +2213,98 @@
      "duree": 3,
      "depart": "#include <stdio.h>\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    int mi = t[0], ma = t[0];\n    for (int i = 1; i < n; i++) {\n        if (t[i] < mi) mi = t[i];\n        if (t[i] > ma) ma = t[i];\n    }\n    printf(\"%d %d\\n\", mi, ma);\n    return 0;\n}"
     }
+   ],
+   "vals": {
+    "E0": "7\n-2 -9 31 9 22 5 36",
+    "E1": "1\n56",
+    "E2": "3\n18 75 18",
+    "S3_0": "-9 36",
+    "S3_1": "56 56",
+    "S4_0": "-9 36",
+    "S4_1": "56 56",
+    "S4_2": "18 75"
+   },
+   "variantes": [
+    {
+     "E0": "7\n-2 -9 31 9 22 5 36",
+     "E1": "1\n56",
+     "E2": "3\n18 75 18",
+     "S3_0": "-9 36",
+     "S3_1": "56 56",
+     "S4_0": "-9 36",
+     "S4_1": "56 56",
+     "S4_2": "18 75"
+    },
+    {
+     "E0": "4\n23 3 -7 28",
+     "E1": "1\n60",
+     "E2": "4\n11 17 57 36",
+     "S3_0": "-7 28",
+     "S3_1": "60 60",
+     "S4_0": "-7 28",
+     "S4_1": "60 60",
+     "S4_2": "11 57"
+    },
+    {
+     "E0": "7\n18 49 -20 42 -10 40 44",
+     "E1": "1\n66",
+     "E2": "3\n14 90 26",
+     "S3_0": "-20 49",
+     "S3_1": "66 66",
+     "S4_0": "-20 49",
+     "S4_1": "66 66",
+     "S4_2": "14 90"
+    },
+    {
+     "E0": "6\n29 -15 -18 28 39 -3",
+     "E1": "1\n92",
+     "E2": "5\n50 88 82 37 44",
+     "S3_0": "-18 39",
+     "S3_1": "92 92",
+     "S4_0": "-18 39",
+     "S4_1": "92 92",
+     "S4_2": "37 88"
+    },
+    {
+     "E0": "5\n44 26 32 -19 21",
+     "E1": "1\n13",
+     "E2": "5\n82 48 52 25 26",
+     "S3_0": "-19 44",
+     "S3_1": "13 13",
+     "S4_0": "-19 44",
+     "S4_1": "13 13",
+     "S4_2": "25 82"
+    },
+    {
+     "E0": "5\n1 9 7 6 22",
+     "E1": "1\n20",
+     "E2": "3\n23 69 46",
+     "S3_0": "1 22",
+     "S3_1": "20 20",
+     "S4_0": "1 22",
+     "S4_1": "20 20",
+     "S4_2": "23 69"
+    },
+    {
+     "E0": "5\n-4 6 31 -3 36",
+     "E1": "1\n99",
+     "E2": "3\n50 75 82",
+     "S3_0": "-4 36",
+     "S3_1": "99 99",
+     "S4_0": "-4 36",
+     "S4_1": "99 99",
+     "S4_2": "50 82"
+    },
+    {
+     "E0": "6\n48 28 5 13 41 29",
+     "E1": "1\n8",
+     "E2": "4\n13 48 70 67",
+     "S3_0": "5 48",
+     "S3_1": "8 8",
+     "S4_0": "5 48",
+     "S4_1": "8 8",
+     "S4_2": "13 70"
+    }
    ]
   },
   {
@@ -1373,12 +2313,12 @@
    "notion": "8.5",
    "origine": "generee",
    "titre": "Longueur d'une chaîne avec un pointeur",
-   "enonce": "Écris `int longueur(char *s)` qui compte les caractères **en faisant avancer le pointeur** `s` jusqu'au `'\\0'`. `main` lit un mot et affiche sa longueur.",
-   "guidage": "**Plan** : `longueur(char *s)` fait **avancer le pointeur** `s` jusqu'au `'\\0'` en comptant les pas : `while (*s != '\\0') { n++; s++; }`.",
+   "enonce": "Écris `int longueur(char *s)` qui compte les caractères d'une chaîne **en faisant avancer le pointeur** `s` jusqu'au `'\\0'`. `main` lit un mot et affiche sa longueur.\n\n**Exemple**\n```text\nEntrée :\n[[W0]]\nSortie :\n[[N0]]\n```",
+   "guidage": "**Plan** : `*s` est le caractère sur lequel `s` pointe. Tant que ce n'est pas le `'\\0'`, on compte un caractère et on fait avancer `s` d'une case.",
    "duree": 4,
    "etapes": [
     {
-     "consigne": "Écris la condition du `while` (sans `while`) qui continue tant que le caractère **pointé** par `s` n'est pas le `'\\0'`.",
+     "consigne": "Écris la condition du `while` (sans le mot `while`) qui continue tant que le caractère **pointé** par `s` n'est pas la fin de chaîne `'\\0'`.",
      "question": "Condition du `while` ?",
      "verif": {
       "mode": "regex",
@@ -1394,7 +2334,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Écris l'instruction qui fait avancer le pointeur `s` d'un caractère.",
+     "consigne": "Écris l'instruction qui fait avancer le pointeur `s` d'un caractère (pour qu'il pointe sur le suivant).",
      "question": "Avancer le pointeur ?",
      "verif": {
       "mode": "regex",
@@ -1410,18 +2350,22 @@
      "guideSeul": true
     },
     {
-     "consigne": "Écris `int longueur(char s[])` avec un indice `n` : `while (s[n] != '\\0') n++;`. `main` lit un mot (`%99s`) et affiche `longueur(mot)`.",
+     "consigne": "Premier jalon, avec un indice : écris `int longueur(char s[])` qui avance un indice `n` tant que `s[n] != '\\0'` et renvoie `n`. `main` lit un mot (`%99s`) et affiche `longueur(mot)`.",
      "question": "Longueur avec un indice.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "Bonjour",
-        "sortie": "7"
+        "entree": "[[W0]]",
+        "sortie": "[[S2_0]]"
+       },
+       {
+        "entree": "[[W1]]",
+        "sortie": "[[S2_1]]"
        },
        {
         "entree": "C",
-        "sortie": "1"
+        "sortie": "[[S2_2]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint longueur(char s[]) {\n    int n = 0;\n    while (s[n] != '\\0') {\n        n++;\n    }\n    return n;\n}\n\nint main(void) {\n    char mot[100];\n    scanf(\"%99s\", mot);\n    printf(\"%d\\n\", longueur(mot));\n    return 0;\n}",
@@ -1441,18 +2385,22 @@
      "guideSeul": true
     },
     {
-     "consigne": "Réécris `longueur(char *s)` en faisant **avancer le pointeur** `s` lui-même (`s++`) au lieu d'utiliser un indice ; garde un compteur `n`.",
+     "consigne": "Réécris `longueur(char *s)` sans indice : c'est le pointeur `s` lui-même qui avance (`s++`), et un compteur `n` compte les pas.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "Bonjour",
-        "sortie": "7"
+        "entree": "[[W0]]",
+        "sortie": "[[S3_0]]"
+       },
+       {
+        "entree": "[[W1]]",
+        "sortie": "[[S3_1]]"
        },
        {
         "entree": "C",
-        "sortie": "1"
+        "sortie": "[[S3_2]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint longueur(char *s) {\n    int n = 0;\n    while (*s != '\\0') {\n        n++;\n        s++;\n    }\n    return n;\n}\n\nint main(void) {\n    char mot[100];\n    scanf(\"%99s\", mot);\n    printf(\"%d\\n\", longueur(mot));\n    return 0;\n}",
@@ -1478,6 +2426,107 @@
      "duree": 2,
      "depart": "#include <stdio.h>\n\nint longueur(char s[]) {\n    int n = 0;\n    while (s[n] != '\\0') {\n        n++;\n    }\n    return n;\n}\n\nint main(void) {\n    char mot[100];\n    scanf(\"%99s\", mot);\n    printf(\"%d\\n\", longueur(mot));\n    return 0;\n}"
     }
+   ],
+   "vals": {
+    "W0": "clavier",
+    "W1": "tableau",
+    "N0": "7",
+    "S2_0": "7",
+    "S2_1": "7",
+    "S2_2": "1",
+    "S3_0": "7",
+    "S3_1": "7",
+    "S3_2": "1"
+   },
+   "variantes": [
+    {
+     "W0": "clavier",
+     "W1": "tableau",
+     "N0": "7",
+     "S2_0": "7",
+     "S2_1": "7",
+     "S2_2": "1",
+     "S3_0": "7",
+     "S3_1": "7",
+     "S3_2": "1"
+    },
+    {
+     "W0": "clavier",
+     "W1": "memoire",
+     "N0": "7",
+     "S2_0": "7",
+     "S2_1": "7",
+     "S2_2": "1",
+     "S3_0": "7",
+     "S3_1": "7",
+     "S3_2": "1"
+    },
+    {
+     "W0": "adresse",
+     "W1": "tableau",
+     "N0": "7",
+     "S2_0": "7",
+     "S2_1": "7",
+     "S2_2": "1",
+     "S3_0": "7",
+     "S3_1": "7",
+     "S3_2": "1"
+    },
+    {
+     "W0": "octet",
+     "W1": "boucle",
+     "N0": "5",
+     "S2_0": "5",
+     "S2_1": "6",
+     "S2_2": "1",
+     "S3_0": "5",
+     "S3_1": "6",
+     "S3_2": "1"
+    },
+    {
+     "W0": "esilv",
+     "W1": "memoire",
+     "N0": "5",
+     "S2_0": "5",
+     "S2_1": "7",
+     "S2_2": "1",
+     "S3_0": "5",
+     "S3_1": "7",
+     "S3_2": "1"
+    },
+    {
+     "W0": "octet",
+     "W1": "tableau",
+     "N0": "5",
+     "S2_0": "5",
+     "S2_1": "7",
+     "S2_2": "1",
+     "S3_0": "5",
+     "S3_1": "7",
+     "S3_2": "1"
+    },
+    {
+     "W0": "memoire",
+     "W1": "adresse",
+     "N0": "7",
+     "S2_0": "7",
+     "S2_1": "7",
+     "S2_2": "1",
+     "S3_0": "7",
+     "S3_1": "7",
+     "S3_2": "1"
+    },
+    {
+     "W0": "memoire",
+     "W1": "pointeur",
+     "N0": "7",
+     "S2_0": "7",
+     "S2_1": "8",
+     "S2_2": "1",
+     "S3_0": "7",
+     "S3_1": "8",
+     "S3_2": "1"
+    }
    ]
   },
   {
@@ -1486,12 +2535,12 @@
    "notion": "8.6",
    "origine": "generee",
    "titre": "Moyenne en lecture seule",
-   "enonce": "Écris `double moyenne(const int *t, int n)` : le paramètre est déclaré `const`, car la fonction ne fait que **lire** le tableau. `main` lit `N` puis `N` entiers et affiche la moyenne avec 2 décimales.",
-   "guidage": "**Plan** : 1. `const int *t` : promesse de ne pas modifier le tableau → 2. cumuler la somme → 3. diviser en **réel**.",
+   "enonce": "Écris `double moyenne(const int *t, int n)` : le paramètre est déclaré `const`, car la fonction ne fait que **lire** le tableau. `main` lit `N` puis `N` entiers et affiche la moyenne avec 2 décimales.\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S3_0]]\n```",
+   "guidage": "**Plan** : 1. `const int *t` : promesse de ne jamais modifier le tableau → 2. cumuler la somme → 3. diviser en **réel**.",
    "duree": 4,
    "etapes": [
     {
-     "consigne": "Écris l'en-tête de `moyenne` avec le paramètre `t` déclaré `const` (lecture seule) et la taille `n`.",
+     "consigne": "Écris l'en-tête de `moyenne`, avec le paramètre `t` en **lecture seule** : le mot `const` se place devant le type des cases (`int`).",
      "question": "En-tête avec `const` ?",
      "verif": {
       "mode": "regex",
@@ -1507,7 +2556,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Si la fonction essaie d'écrire `t[0] = 0;` alors que `t` est `const int *`, que se passe-t-il ? (un mot)",
+     "consigne": "Si la fonction essaie quand même d'écrire `t[0] = 0;` alors que `t` est un `const int *`, que se passe-t-il ? (réponse courte)",
      "question": "Écrire dans un `const` ?",
      "verif": {
       "mode": "regex",
@@ -1523,18 +2572,18 @@
      "guideSeul": true
     },
     {
-     "consigne": "Écris `double moyenne(int *t, int n)` (sans `const` pour l'instant) qui renvoie la moyenne réelle ; `main` lit `N` entiers et affiche la moyenne avec 2 décimales.",
+     "consigne": "Premier jalon, sans `const` : écris `double moyenne(int *t, int n)` qui renvoie la moyenne **réelle** (attention à la division entière), et un `main` qui lit les `N` entiers et l'affiche avec 2 décimales.",
      "question": "Moyenne sans `const`.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "3\n10 11 12",
-        "sortie": "11.00"
+        "entree": "[[E0]]",
+        "sortie": "[[S2_0]]"
        },
        {
-        "entree": "4\n1 2 2 2",
-        "sortie": "1.75"
+        "entree": "[[E1]]",
+        "sortie": "[[S2_1]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\ndouble moyenne(int *t, int n) {\n    int s = 0;\n    for (int i = 0; i < n; i++) s += t[i];\n    return (double)s / n;\n}\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    printf(\"%.2f\\n\", moyenne(t, n));\n    return 0;\n}"
@@ -1548,18 +2597,18 @@
      "guideSeul": true
     },
     {
-     "consigne": "Ajoute la promesse de lecture seule : déclare le paramètre `const int *t`.",
+     "consigne": "Ajoute la promesse de lecture seule : le paramètre devient `const int *t`. Rien d'autre ne change.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "3\n10 11 12",
-        "sortie": "11.00"
+        "entree": "[[E0]]",
+        "sortie": "[[S3_0]]"
        },
        {
-        "entree": "4\n1 2 2 2",
-        "sortie": "1.75"
+        "entree": "[[E1]]",
+        "sortie": "[[S3_1]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\ndouble moyenne(const int *t, int n) {\n    int s = 0;\n    for (int i = 0; i < n; i++) s += t[i];\n    return (double)s / n;\n}\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    printf(\"%.2f\\n\", moyenne(t, n));\n    return 0;\n}",
@@ -1580,6 +2629,80 @@
      "duree": 2,
      "depart": "#include <stdio.h>\n\ndouble moyenne(int *t, int n) {\n    int s = 0;\n    for (int i = 0; i < n; i++) s += t[i];\n    return (double)s / n;\n}\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    printf(\"%.2f\\n\", moyenne(t, n));\n    return 0;\n}"
     }
+   ],
+   "vals": {
+    "E0": "4\n11 15 2 15",
+    "E1": "4\n5 3 2 8",
+    "S2_0": "10.75",
+    "S2_1": "4.50",
+    "S3_0": "10.75",
+    "S3_1": "4.50"
+   },
+   "variantes": [
+    {
+     "E0": "4\n11 15 2 15",
+     "E1": "4\n5 3 2 8",
+     "S2_0": "10.75",
+     "S2_1": "4.50",
+     "S3_0": "10.75",
+     "S3_1": "4.50"
+    },
+    {
+     "E0": "6\n3 7 8 5 18 8",
+     "E1": "4\n9 6 9 9",
+     "S2_0": "8.17",
+     "S2_1": "8.25",
+     "S3_0": "8.17",
+     "S3_1": "8.25"
+    },
+    {
+     "E0": "5\n3 15 4 9 8",
+     "E1": "4\n2 2 8 5",
+     "S2_0": "7.80",
+     "S2_1": "4.25",
+     "S3_0": "7.80",
+     "S3_1": "4.25"
+    },
+    {
+     "E0": "5\n9 19 13 7 5",
+     "E1": "4\n7 3 1 3",
+     "S2_0": "10.60",
+     "S2_1": "3.50",
+     "S3_0": "10.60",
+     "S3_1": "3.50"
+    },
+    {
+     "E0": "4\n19 18 2 7",
+     "E1": "4\n9 5 8 7",
+     "S2_0": "11.50",
+     "S2_1": "7.25",
+     "S3_0": "11.50",
+     "S3_1": "7.25"
+    },
+    {
+     "E0": "6\n20 19 8 2 5 3",
+     "E1": "4\n4 7 1 1",
+     "S2_0": "9.50",
+     "S2_1": "3.25",
+     "S3_0": "9.50",
+     "S3_1": "3.25"
+    },
+    {
+     "E0": "5\n8 3 4 19 3",
+     "E1": "4\n4 4 6 3",
+     "S2_0": "7.40",
+     "S2_1": "4.25",
+     "S3_0": "7.40",
+     "S3_1": "4.25"
+    },
+    {
+     "E0": "4\n4 3 11 3",
+     "E1": "4\n3 1 4 3",
+     "S2_0": "5.25",
+     "S2_1": "2.75",
+     "S3_0": "5.25",
+     "S3_1": "2.75"
+    }
    ]
   },
   {
@@ -1588,42 +2711,42 @@
    "notion": "8.3",
    "origine": "generee",
    "titre": "Deux pointeurs, une variable",
-   "enonce": "Écris un programme qui lit un entier `x`, déclare **deux** pointeurs `p` et `q` vers `x`, ajoute 1 à `x` par `p`, multiplie `x` par 3 par `q`, puis affiche `x`, puis `1` si `p == q` (ils contiennent la même adresse), `0` sinon.",
-   "guidage": "**Plan** : 1. deux pointeurs `p` et `q` qui reçoivent la **même** adresse `&x` → 2. `*p` et `*q` désignent la même case → 3. comparer `p == q` (adresses).",
+   "enonce": "Écris un programme qui lit un entier `x` et déclare **deux** pointeurs `p` et `q` vers `x`. Il ajoute 1 à `x` à travers `p`, multiplie `x` par 3 à travers `q`, puis affiche `x`, une espace, et `1` si `p == q` (même adresse), `0` sinon.\n\n**Exemple**\n```text\nEntrée :\n[[X]]\nSortie :\n[[R]] 1\n```",
+   "guidage": "**Plan** : 1. `p` et `q` reçoivent la **même** adresse `&x` → 2. `*p` et `*q` désignent la même case : chaque modification se voit par l'autre → 3. `p == q` compare les adresses.",
    "duree": 4,
    "etapes": [
     {
-     "consigne": "Avec `x = 4`, on exécute `*p = *p + 1;`. Que vaut `x` ensuite ?",
+     "consigne": "Avec `x = [[X]]` et `p` qui pointe sur `x`, on exécute `*p = *p + 1;`. Que vaut `x` ensuite ?",
      "question": "Valeur de `x` ?",
      "verif": {
       "mode": "numerique",
-      "attendu": 5
+      "attendu": "[[X1]]"
      },
-     "corrige": "`*p` est `x` : 4 + 1 = 5.",
+     "corrige": "`*p` est `x` : [[X]] + 1 = **[[X1]]**.",
      "indices": [
       "`*p` et `x` désignent la même case.",
-      "5"
+      "[[X1]]"
      ],
      "duree": 0.35,
      "guideSeul": true
     },
     {
-     "consigne": "Puis, avec `x = 5`, on exécute `*q = *q * 3;` (`q` pointe aussi sur `x`). Que vaut `x` ?",
+     "consigne": "Puis on exécute `*q = *q * 3;`, avec `q` qui pointe **aussi** sur `x` (qui vaut maintenant [[X1]]). Que vaut `x` ?",
      "question": "Valeur de `x` ?",
      "verif": {
       "mode": "numerique",
-      "attendu": 15
+      "attendu": "[[R]]"
      },
-     "corrige": "`*q` est aussi `x` : 5 × 3 = 15.",
+     "corrige": "`*q` est aussi `x` : [[X1]] × 3 = **[[R]]**.",
      "indices": [
       "Même case, autre pointeur.",
-      "15"
+      "[[R]]"
      ],
      "duree": 0.35,
      "guideSeul": true
     },
     {
-     "consigne": "Écris la déclaration du second pointeur `q`, qui pointe aussi sur `x`.",
+     "consigne": "Écris la déclaration du second pointeur `q`, qui pointe lui aussi sur `x`.",
      "question": "Déclarer `q` ?",
      "verif": {
       "mode": "regex",
@@ -1639,18 +2762,18 @@
      "guideSeul": true
     },
     {
-     "consigne": "Lis `x`, déclare `p` sur `x`, ajoute 1 à `x` à travers `p`, puis affiche `x`.",
+     "consigne": "Premier jalon : lis `x`, déclare `p` sur `x`, ajoute 1 à `x` **à travers `p`**, puis affiche `x`.",
      "question": "Ajouter 1 par `p`.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "4",
-        "sortie": "5"
+        "entree": "[[X]]",
+        "sortie": "[[S3_0]]"
        },
        {
         "entree": "0",
-        "sortie": "1"
+        "sortie": "[[S3_1]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint main(void) {\n    int x;\n    scanf(\"%d\", &x);\n    int *p = &x;\n    *p = *p + 1;\n    printf(\"%d\\n\", x);\n    return 0;\n}"
@@ -1664,18 +2787,22 @@
      "guideSeul": true
     },
     {
-     "consigne": "Ajoute le second pointeur `q` (aussi sur `x`) : multiplie `x` par 3 **à travers `q`**, puis affiche `x`, une espace, et `1` si `p == q` (`0` sinon).",
+     "consigne": "Ajoute `q` (aussi sur `x`) : multiplie `x` par 3 **à travers `q`**. Affiche ensuite `x`, une espace, et le résultat de `p == q` (une comparaison vaut 1 ou 0).",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "4",
-        "sortie": "15 1"
+        "entree": "[[X]]",
+        "sortie": "[[S4_0]]"
        },
        {
         "entree": "0",
-        "sortie": "3 1"
+        "sortie": "[[S4_1]]"
+       },
+       {
+        "entree": "[[Y]]",
+        "sortie": "[[S4_2]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint main(void) {\n    int x;\n    scanf(\"%d\", &x);\n    int *p = &x;\n    int *q = &x;\n    *p = *p + 1;\n    *q = *q * 3;\n    printf(\"%d %d\\n\", x, p == q);\n    return 0;\n}",
@@ -1695,6 +2822,107 @@
      "duree": 2,
      "depart": "#include <stdio.h>\n\nint main(void) {\n    int x;\n    scanf(\"%d\", &x);\n    int *p = &x;\n    *p = *p + 1;\n    printf(\"%d\\n\", x);\n    return 0;\n}"
     }
+   ],
+   "vals": {
+    "X": "13",
+    "Y": "-4",
+    "X1": "14",
+    "R": "42",
+    "S3_0": "14",
+    "S3_1": "1",
+    "S4_0": "42 1",
+    "S4_1": "3 1",
+    "S4_2": "-9 1"
+   },
+   "variantes": [
+    {
+     "X": "13",
+     "Y": "-4",
+     "X1": "14",
+     "R": "42",
+     "S3_0": "14",
+     "S3_1": "1",
+     "S4_0": "42 1",
+     "S4_1": "3 1",
+     "S4_2": "-9 1"
+    },
+    {
+     "X": "9",
+     "Y": "-5",
+     "X1": "10",
+     "R": "30",
+     "S3_0": "10",
+     "S3_1": "1",
+     "S4_0": "30 1",
+     "S4_1": "3 1",
+     "S4_2": "-12 1"
+    },
+    {
+     "X": "8",
+     "Y": "-1",
+     "X1": "9",
+     "R": "27",
+     "S3_0": "9",
+     "S3_1": "1",
+     "S4_0": "27 1",
+     "S4_1": "3 1",
+     "S4_2": "0 1"
+    },
+    {
+     "X": "8",
+     "Y": "-7",
+     "X1": "9",
+     "R": "27",
+     "S3_0": "9",
+     "S3_1": "1",
+     "S4_0": "27 1",
+     "S4_1": "3 1",
+     "S4_2": "-18 1"
+    },
+    {
+     "X": "14",
+     "Y": "-2",
+     "X1": "15",
+     "R": "45",
+     "S3_0": "15",
+     "S3_1": "1",
+     "S4_0": "45 1",
+     "S4_1": "3 1",
+     "S4_2": "-3 1"
+    },
+    {
+     "X": "19",
+     "Y": "-1",
+     "X1": "20",
+     "R": "60",
+     "S3_0": "20",
+     "S3_1": "1",
+     "S4_0": "60 1",
+     "S4_1": "3 1",
+     "S4_2": "0 1"
+    },
+    {
+     "X": "8",
+     "Y": "-2",
+     "X1": "9",
+     "R": "27",
+     "S3_0": "9",
+     "S3_1": "1",
+     "S4_0": "27 1",
+     "S4_1": "3 1",
+     "S4_2": "-3 1"
+    },
+    {
+     "X": "12",
+     "Y": "-7",
+     "X1": "13",
+     "R": "39",
+     "S3_0": "13",
+     "S3_1": "1",
+     "S4_0": "39 1",
+     "S4_1": "3 1",
+     "S4_2": "-18 1"
+    }
    ]
   },
   {
@@ -1703,12 +2931,12 @@
    "notion": "8.4",
    "origine": "generee",
    "titre": "Parcours sans compteur",
-   "enonce": "Écris un programme qui lit un entier `n` (au plus 10), puis `n` entiers rangés dans un tableau `t`, et affiche leur somme. **Sans indice `i`** : parcours le tableau avec un pointeur `p`, de `t` jusqu'à `t + n` exclu.",
-   "guidage": "**Plan** : une boucle `for (int *p = t; p < t + n; p++)` : `p` parcourt les adresses des cases, de `t` jusqu'à `t + n` **exclu**. Dans la saisie, `scanf(\"%d\", p)` : `p` est déjà une adresse.",
+   "enonce": "Écris un programme qui lit un entier `n` (au plus 10), puis `n` entiers rangés dans un tableau `t`, et affiche leur somme. **Sans indice `i`** : on parcourt le tableau avec un pointeur `p`, de `t` jusqu'à `t + n` exclu.\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S3_0]]\n```",
+   "guidage": "**Plan** : une boucle `for (int *p = t; p < t + n; p++)`. `p` prend successivement les adresses des cases, de `t` (la première) jusqu'à `t + n` (juste **après** la dernière, donc exclue). Pour la saisie, `scanf(\"%d\", p)` : `p` est déjà une adresse.",
    "duree": 5,
    "etapes": [
     {
-     "consigne": "Écris l'en-tête du `for` qui fait parcourir le tableau `t` (de `n` cases) par un pointeur `p`, de `t` jusqu'à `t + n` exclu.",
+     "consigne": "Écris l'en-tête complet du `for` dans lequel un pointeur `p` part du début du tableau `t`, continue tant qu'il n'a pas atteint `t + n`, et avance d'une case à chaque tour.",
      "question": "En-tête avec pointeur ?",
      "verif": {
       "mode": "regex",
@@ -1724,7 +2952,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Écris l'instruction qui lit un entier directement dans la case pointée par `p` (`p` est déjà une adresse).",
+     "consigne": "`scanf` a besoin de l'adresse où ranger la valeur. Or `p` **est** déjà une adresse (celle de la case courante). Écris l'instruction qui lit un entier directement dans la case pointée par `p`.",
      "question": "Lire dans la case pointée ?",
      "verif": {
       "mode": "regex",
@@ -1740,22 +2968,22 @@
      "guideSeul": true
     },
     {
-     "consigne": "Même programme avec un **indice** : lis `n` (≤ 10) puis `n` entiers, et affiche leur somme (boucles `for (int i = 0; …)`).",
+     "consigne": "Premier jalon, avec un indice : lis `n` (≤ 10) puis `n` entiers, et affiche leur somme, avec des boucles `for (int i = 0; …)` habituelles.",
      "question": "Somme avec indices.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "4\n1 2 3 4",
-        "sortie": "10"
+        "entree": "[[E0]]",
+        "sortie": "[[S2_0]]"
        },
        {
-        "entree": "1\n-7",
-        "sortie": "-7"
+        "entree": "[[E1]]",
+        "sortie": "[[S2_1]]"
        },
        {
         "entree": "0",
-        "sortie": "0"
+        "sortie": "[[S2_2]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[10], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        scanf(\"%d\", &t[i]);\n    }\n    int somme = 0;\n    for (int i = 0; i < n; i++) {\n        somme += t[i];\n    }\n    printf(\"%d\\n\", somme);\n    return 0;\n}"
@@ -1769,22 +2997,22 @@
      "guideSeul": true
     },
     {
-     "consigne": "Supprime l'indice `i` : parcours le tableau avec un pointeur `p` (de `t` à `t + n` exclu) pour la saisie **et** pour la somme.",
+     "consigne": "Supprime l'indice `i` : les deux boucles (saisie **et** somme) parcourent maintenant le tableau avec un pointeur `p`, de `t` à `t + n` exclu. Dans la somme, la valeur de la case courante est `*p`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "4\n1 2 3 4",
-        "sortie": "10"
+        "entree": "[[E0]]",
+        "sortie": "[[S3_0]]"
        },
        {
-        "entree": "1\n-7",
-        "sortie": "-7"
+        "entree": "[[E1]]",
+        "sortie": "[[S3_1]]"
        },
        {
         "entree": "0",
-        "sortie": "0"
+        "sortie": "[[S3_2]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[10];\n    int n;\n    scanf(\"%d\", &n);\n    for (int *p = t; p < t + n; p++) {\n        scanf(\"%d\", p);\n    }\n    int somme = 0;\n    for (int *p = t; p < t + n; p++) {\n        somme += *p;\n    }\n    printf(\"%d\\n\", somme);\n    return 0;\n}",
@@ -1808,6 +3036,98 @@
      "duree": 2.5,
      "depart": "#include <stdio.h>\n\nint main(void) {\n    int t[10], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        scanf(\"%d\", &t[i]);\n    }\n    int somme = 0;\n    for (int i = 0; i < n; i++) {\n        somme += t[i];\n    }\n    printf(\"%d\\n\", somme);\n    return 0;\n}"
     }
+   ],
+   "vals": {
+    "E0": "3\n16 15 -5",
+    "E1": "1\n-9",
+    "S2_0": "26",
+    "S2_1": "-9",
+    "S2_2": "0",
+    "S3_0": "26",
+    "S3_1": "-9",
+    "S3_2": "0"
+   },
+   "variantes": [
+    {
+     "E0": "3\n16 15 -5",
+     "E1": "1\n-9",
+     "S2_0": "26",
+     "S2_1": "-9",
+     "S2_2": "0",
+     "S3_0": "26",
+     "S3_1": "-9",
+     "S3_2": "0"
+    },
+    {
+     "E0": "4\n17 -10 -6 10",
+     "E1": "1\n-20",
+     "S2_0": "11",
+     "S2_1": "-20",
+     "S2_2": "0",
+     "S3_0": "11",
+     "S3_1": "-20",
+     "S3_2": "0"
+    },
+    {
+     "E0": "5\n19 12 -3 14 20",
+     "E1": "1\n-33",
+     "S2_0": "62",
+     "S2_1": "-33",
+     "S2_2": "0",
+     "S3_0": "62",
+     "S3_1": "-33",
+     "S3_2": "0"
+    },
+    {
+     "E0": "8\n14 6 13 8 33 8 34 12",
+     "E1": "1\n-4",
+     "S2_0": "128",
+     "S2_1": "-4",
+     "S2_2": "0",
+     "S3_0": "128",
+     "S3_1": "-4",
+     "S3_2": "0"
+    },
+    {
+     "E0": "3\n39 25 9",
+     "E1": "1\n-15",
+     "S2_0": "73",
+     "S2_1": "-15",
+     "S2_2": "0",
+     "S3_0": "73",
+     "S3_1": "-15",
+     "S3_2": "0"
+    },
+    {
+     "E0": "3\n19 17 16",
+     "E1": "1\n-43",
+     "S2_0": "52",
+     "S2_1": "-43",
+     "S2_2": "0",
+     "S3_0": "52",
+     "S3_1": "-43",
+     "S3_2": "0"
+    },
+    {
+     "E0": "6\n31 14 2 39 14 27",
+     "E1": "1\n-8",
+     "S2_0": "127",
+     "S2_1": "-8",
+     "S2_2": "0",
+     "S3_0": "127",
+     "S3_1": "-8",
+     "S3_2": "0"
+    },
+    {
+     "E0": "7\n26 2 37 23 2 37 -1",
+     "E1": "1\n-13",
+     "S2_0": "126",
+     "S2_1": "-13",
+     "S2_2": "0",
+     "S3_0": "126",
+     "S3_1": "-13",
+     "S3_2": "0"
+    }
    ]
   },
   {
@@ -1816,27 +3136,27 @@
    "notion": "8.4",
    "origine": "generee",
    "titre": "Longueur par soustraction",
-   "enonce": "Écris une fonction `int longueur(char *s)` qui renvoie la longueur d'une chaîne **sans compteur** : avance un pointeur `q` jusqu'au `'\\0'`, puis renvoie `q - s`. Dans `main`, lis un mot et affiche sa longueur.",
-   "guidage": "**Plan** : 1. un pointeur `q` part de `s` → 2. il avance jusqu'au `'\\0'` → 3. `q - s` donne le **nombre d'éléments** entre les deux adresses = la longueur.",
+   "enonce": "Écris une fonction `int longueur(char *s)` qui renvoie la longueur d'une chaîne **sans compteur** : un pointeur `q` avance jusqu'au `'\\0'`, puis on renvoie `q - s`. Dans `main`, lis un mot et affiche sa longueur.\n\n**Exemple**\n```text\nEntrée :\n[[W0]]\nSortie :\n[[N0]]\n```",
+   "guidage": "**Plan** : 1. un pointeur `q` part de `s` (le début du mot) → 2. il avance jusqu'au `'\\0'` → 3. `q - s` donne le **nombre d'éléments** entre les deux adresses, c'est-à-dire la longueur.",
    "duree": 5,
    "etapes": [
     {
-     "consigne": "Pour `s = \"pointeur\"` (8 lettres), `q` s'arrête sur le `'\\0'`. Que vaut `q - s` ?",
+     "consigne": "Pour `s = \"[[W0]]\"` ([[N0]] lettres), `q` part de `s` et s'arrête sur le `'\\0'`. La différence de deux pointeurs compte les **éléments** qui les séparent. Que vaut `q - s` ?",
      "question": "Valeur de `q - s` ?",
      "verif": {
       "mode": "numerique",
-      "attendu": 8
+      "attendu": "[[N0]]"
      },
-     "corrige": "La différence de deux pointeurs est un nombre d'**éléments** : 8 caractères séparent le début du `'\\0'`.",
+     "corrige": "[[N0]] caractères séparent le début du mot du `'\\0'` : `q - s` vaut **[[N0]]**.",
      "indices": [
       "Combien de lettres avant le `'\\0'` ?",
-      "8"
+      "[[N0]]"
      ],
      "duree": 0.4,
      "guideSeul": true
     },
     {
-     "consigne": "Écris l'instruction de retour qui renvoie la longueur grâce à la différence des deux pointeurs.",
+     "consigne": "Écris l'instruction qui renvoie la longueur grâce à la différence des deux pointeurs (point d'arrivée moins point de départ).",
      "question": "Instruction de retour ?",
      "verif": {
       "mode": "regex",
@@ -1852,22 +3172,22 @@
      "guideSeul": true
     },
     {
-     "consigne": "Écris `int longueur(char *s)` : un pointeur `q` part de `s`, avance jusqu'au `'\\0'`, et un **compteur** `n` compte les pas ; la fonction renvoie `n`. `main` lit un mot et affiche sa longueur.",
+     "consigne": "Premier jalon : `char *q = s;`, puis `q` avance jusqu'au `'\\0'` pendant qu'un **compteur** `n` compte les pas ; la fonction renvoie `n`. `main` lit un mot et affiche sa longueur.",
      "question": "Longueur avec `q` et un compteur.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "pointeur",
-        "sortie": "8"
+        "entree": "[[W0]]",
+        "sortie": "[[S2_0]]"
+       },
+       {
+        "entree": "[[W1]]",
+        "sortie": "[[S2_1]]"
        },
        {
         "entree": "C",
-        "sortie": "1"
-       },
-       {
-        "entree": "esilv",
-        "sortie": "5"
+        "sortie": "[[S2_2]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint longueur(char *s) {\n    char *q = s;\n    int n = 0;\n    while (*q != '\\0') {\n        q++;\n        n++;\n    }\n    return n;\n}\n\nint main(void) {\n    char mot[50];\n    scanf(\"%49s\", mot);\n    printf(\"%d\\n\", longueur(mot));\n    return 0;\n}"
@@ -1881,22 +3201,22 @@
      "guideSeul": true
     },
     {
-     "consigne": "Supprime le compteur `n` : renvoie directement **la différence des deux pointeurs** `q - s`.",
+     "consigne": "Supprime le compteur `n` : la boucle ne fait plus qu'avancer `q`, et la fonction renvoie directement `q - s`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "pointeur",
-        "sortie": "8"
+        "entree": "[[W0]]",
+        "sortie": "[[S3_0]]"
+       },
+       {
+        "entree": "[[W1]]",
+        "sortie": "[[S3_1]]"
        },
        {
         "entree": "C",
-        "sortie": "1"
-       },
-       {
-        "entree": "esilv",
-        "sortie": "5"
+        "sortie": "[[S3_2]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint longueur(char *s) {\n    char *q = s;\n    while (*q != '\\0') {\n        q++;\n    }\n    return q - s;\n}\n\nint main(void) {\n    char mot[50];\n    scanf(\"%s\", mot);\n    printf(\"%d\\n\", longueur(mot));\n    return 0;\n}",
@@ -1915,6 +3235,107 @@
      ],
      "duree": 2.6,
      "depart": "#include <stdio.h>\n\nint longueur(char *s) {\n    char *q = s;\n    int n = 0;\n    while (*q != '\\0') {\n        q++;\n        n++;\n    }\n    return n;\n}\n\nint main(void) {\n    char mot[50];\n    scanf(\"%49s\", mot);\n    printf(\"%d\\n\", longueur(mot));\n    return 0;\n}"
+    }
+   ],
+   "vals": {
+    "W0": "esilv",
+    "W1": "pointeur",
+    "N0": "5",
+    "S2_0": "5",
+    "S2_1": "8",
+    "S2_2": "1",
+    "S3_0": "5",
+    "S3_1": "8",
+    "S3_2": "1"
+   },
+   "variantes": [
+    {
+     "W0": "esilv",
+     "W1": "pointeur",
+     "N0": "5",
+     "S2_0": "5",
+     "S2_1": "8",
+     "S2_2": "1",
+     "S3_0": "5",
+     "S3_1": "8",
+     "S3_2": "1"
+    },
+    {
+     "W0": "tableau",
+     "W1": "boucle",
+     "N0": "7",
+     "S2_0": "7",
+     "S2_1": "6",
+     "S2_2": "1",
+     "S3_0": "7",
+     "S3_1": "6",
+     "S3_2": "1"
+    },
+    {
+     "W0": "boucle",
+     "W1": "octet",
+     "N0": "6",
+     "S2_0": "6",
+     "S2_1": "5",
+     "S2_2": "1",
+     "S3_0": "6",
+     "S3_1": "5",
+     "S3_2": "1"
+    },
+    {
+     "W0": "fonction",
+     "W1": "tableau",
+     "N0": "8",
+     "S2_0": "8",
+     "S2_1": "7",
+     "S2_2": "1",
+     "S3_0": "8",
+     "S3_1": "7",
+     "S3_2": "1"
+    },
+    {
+     "W0": "pointeur",
+     "W1": "tableau",
+     "N0": "8",
+     "S2_0": "8",
+     "S2_1": "7",
+     "S2_2": "1",
+     "S3_0": "8",
+     "S3_1": "7",
+     "S3_2": "1"
+    },
+    {
+     "W0": "fonction",
+     "W1": "adresse",
+     "N0": "8",
+     "S2_0": "8",
+     "S2_1": "7",
+     "S2_2": "1",
+     "S3_0": "8",
+     "S3_1": "7",
+     "S3_2": "1"
+    },
+    {
+     "W0": "memoire",
+     "W1": "tableau",
+     "N0": "7",
+     "S2_0": "7",
+     "S2_1": "7",
+     "S2_2": "1",
+     "S3_0": "7",
+     "S3_1": "7",
+     "S3_2": "1"
+    },
+    {
+     "W0": "esilv",
+     "W1": "boucle",
+     "N0": "5",
+     "S2_0": "5",
+     "S2_1": "6",
+     "S2_2": "1",
+     "S3_0": "5",
+     "S3_1": "6",
+     "S3_2": "1"
     }
    ]
   },

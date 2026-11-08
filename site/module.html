@@ -396,8 +396,10 @@ async function verifier(v, rep, ctx, champ){
     }
     case "regex": {
       const r = String(rep ?? "").trim().replace(/\s+/g," ");
+      /* point-virgule final oublié (ou en trop) : on accepte les deux formes */
+      const sans = r.replace(/\s*;+$/, ""), formes = [r, sans, sans + ";"];
       const motifs = [].concat(v.motif ?? v.attendu ?? []);
-      return {ok: motifs.some(m => { try{ return new RegExp("^(?:" + m + ")$", v.flags ?? "i").test(r); }catch(e){ return false; } })};
+      return {ok: motifs.some(m => { try{ const re = new RegExp("^(?:" + m + ")$", v.flags ?? "i"); return formes.some(f => re.test(f)); }catch(e){ return false; } })};
     }
     case "sql": return verifSQL(v, rep, ctx);
     case "dom": return verifDOM(v, rep, champ);

@@ -366,13 +366,69 @@
    "type": "saisie",
    "notion": "9.2",
    "origine": "cours",
-   "enonce": "Combien d'octets réserve `malloc(6 * sizeof(double))` ? (un double = 8 octets)",
+   "enonce": "Combien d'octets réserve `malloc([[N]] * sizeof([[TY]]))` ? (un `[[TY]]` = [[O]] octets)",
    "verif": {
     "mode": "numerique",
-    "attendu": 48
+    "attendu": "[[R]]"
    },
    "duree": 0.67,
-   "explication": "6 × 8 = 48 octets."
+   "explication": "`malloc` compte en octets : [[N]] éléments × [[O]] octets = **[[R]]** octets.",
+   "vals": {
+    "TY": "int",
+    "O": "4",
+    "N": "10",
+    "R": "40"
+   },
+   "variantes": [
+    {
+     "TY": "int",
+     "O": "4",
+     "N": "10",
+     "R": "40"
+    },
+    {
+     "TY": "double",
+     "O": "8",
+     "N": "22",
+     "R": "176"
+    },
+    {
+     "TY": "int",
+     "O": "4",
+     "N": "15",
+     "R": "60"
+    },
+    {
+     "TY": "char",
+     "O": "1",
+     "N": "7",
+     "R": "7"
+    },
+    {
+     "TY": "double",
+     "O": "8",
+     "N": "15",
+     "R": "120"
+    },
+    {
+     "TY": "char",
+     "O": "1",
+     "N": "18",
+     "R": "18"
+    },
+    {
+     "TY": "double",
+     "O": "8",
+     "N": "13",
+     "R": "104"
+    },
+    {
+     "TY": "double",
+     "O": "8",
+     "N": "14",
+     "R": "112"
+    }
+   ]
   },
   {
    "id": "c9-007",
@@ -508,29 +564,113 @@
    "type": "saisie",
    "notion": "9.4",
    "origine": "cours",
-   "enonce": "Combien d'appels à `free` faut-il pour ce code ? (un nombre)\n```c\nint *a = malloc(10 * sizeof(int));\nint *b = calloc(5, sizeof(int));\nchar *c = malloc(20);\n```",
+   "enonce": "Combien d'appels à `free` faut-il pour ce code ? (un nombre)\n```c\n[[CODE]]\n```",
    "verif": {
     "mode": "exact",
     "attendu": [
-     "3",
-     "trois"
+     "[[R]]"
     ]
    },
    "duree": 0.67,
-   "explication": "Un free par bloc alloué."
+   "explication": "Il faut un `free` par bloc obtenu avec `malloc` ou `calloc` (un tableau déclaré normalement, lui, se libère tout seul) : **[[R]]**.",
+   "vals": {
+    "CODE": "int *a = malloc(10 * sizeof(int));\nint t[50];\ndouble *d = calloc(8, sizeof(double));\nchar *c = malloc(20);",
+    "R": "3"
+   },
+   "variantes": [
+    {
+     "CODE": "int *a = malloc(10 * sizeof(int));\nint t[50];\ndouble *d = calloc(8, sizeof(double));\nchar *c = malloc(20);",
+     "R": "3"
+    },
+    {
+     "CODE": "char nom[30];\nint *a = malloc(10 * sizeof(int));\ndouble *d = calloc(8, sizeof(double));",
+     "R": "2"
+    },
+    {
+     "CODE": "char *c = malloc(20);\nint t[50];\nint *b = calloc(5, sizeof(int));\nint *a = malloc(10 * sizeof(int));",
+     "R": "3"
+    },
+    {
+     "CODE": "int *b = calloc(5, sizeof(int));\nchar *c = malloc(20);\ndouble *d = calloc(8, sizeof(double));\nchar nom[30];",
+     "R": "3"
+    },
+    {
+     "CODE": "double *d = calloc(8, sizeof(double));\nchar nom[30];\nint *a = malloc(10 * sizeof(int));",
+     "R": "2"
+    },
+    {
+     "CODE": "double *d = calloc(8, sizeof(double));\nint *a = malloc(10 * sizeof(int));\nint t[50];",
+     "R": "2"
+    },
+    {
+     "CODE": "int *b = calloc(5, sizeof(int));\nint *a = malloc(10 * sizeof(int));\nchar *c = malloc(20);",
+     "R": "3"
+    },
+    {
+     "CODE": "int *a = malloc(10 * sizeof(int));\nchar *c = malloc(20);\nchar nom[30];\ndouble *d = calloc(8, sizeof(double));",
+     "R": "3"
+    }
+   ]
   },
   {
    "id": "c9-014",
    "type": "saisie",
    "notion": "9.5",
    "origine": "cours",
-   "enonce": "Pour copier le mot `\"ESILV\"` dans un bloc dynamique, combien d'octets faut-il réserver ?",
+   "enonce": "Pour copier le mot `\"[[W]]\"` dans un bloc dynamique, combien d'octets faut-il réserver ?",
    "verif": {
     "mode": "numerique",
-    "attendu": 6
+    "attendu": "[[R]]"
    },
    "duree": 0.67,
-   "explication": "strlen vaut 5, plus 1 pour le '\\0'."
+   "explication": "`strlen` vaut [[N]], plus 1 pour le `'\\0'` final : **[[R]]** octets.",
+   "vals": {
+    "W": "dynamique",
+    "N": "9",
+    "R": "10"
+   },
+   "variantes": [
+    {
+     "W": "dynamique",
+     "N": "9",
+     "R": "10"
+    },
+    {
+     "W": "pointeur",
+     "N": "8",
+     "R": "9"
+    },
+    {
+     "W": "malloc",
+     "N": "6",
+     "R": "7"
+    },
+    {
+     "W": "allocation",
+     "N": "10",
+     "R": "11"
+    },
+    {
+     "W": "octet",
+     "N": "5",
+     "R": "6"
+    },
+    {
+     "W": "memoire",
+     "N": "7",
+     "R": "8"
+    },
+    {
+     "W": "tableau",
+     "N": "7",
+     "R": "8"
+    },
+    {
+     "W": "programme",
+     "N": "9",
+     "R": "10"
+    }
+   ]
   },
   {
    "id": "c9-015",
@@ -559,12 +699,12 @@
    "notion": "9.5",
    "origine": "generee",
    "titre": "Tableau dynamique à l'envers",
-   "enonce": "Écris un programme qui lit `N`, **alloue dynamiquement** un tableau de `N` entiers, le remplit avec les `N` valeurs saisies, l'affiche **à l'envers**, puis libère la mémoire.",
-   "guidage": "**Plan** : 1. lire `n` → 2. `int *t = malloc(n * sizeof(int));` → 3. tester `t == NULL` → 4. remplir puis afficher à l'envers → 5. `free(t);`.",
+   "enonce": "Écris un programme qui lit `N`, **alloue dynamiquement** un tableau de `N` entiers, le remplit avec les `N` valeurs tapées ensuite, l'affiche **à l'envers**, puis libère la mémoire.\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S4_0]]\n```",
+   "guidage": "**Plan** : 1. lire `n` → 2. demander la place de `n` entiers avec `malloc` → 3. vérifier que `malloc` n'a pas échoué → 4. remplir, puis afficher à l'envers → 5. rendre la mémoire avec `free`.",
    "duree": 6,
    "etapes": [
     {
-     "consigne": "Écris l'allocation de `n` entiers dans `int *t`.",
+     "consigne": "`malloc` attend une taille en **octets** : pour `n` entiers, c'est `n` fois la taille d'un `int`. Écris la ligne qui déclare `int *t` et lui donne un bloc de `n` entiers.",
      "question": "Allocation de `n` entiers ?",
      "verif": {
       "mode": "regex",
@@ -580,7 +720,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Écris la condition (sans `if`) qui détecte un échec d'allocation.",
+     "consigne": "Si la mémoire manque, `malloc` renvoie une adresse spéciale qui veut dire « échec ». Écris la condition (sans `if`) qui détecte cet échec.",
      "question": "Condition d'échec ?",
      "verif": {
       "mode": "regex",
@@ -596,7 +736,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Écris l'instruction qui libère la mémoire.",
+     "consigne": "Tout bloc obtenu avec `malloc` doit être rendu à la fin. Écris l'instruction qui libère `t`.",
      "question": "Libérer le bloc ?",
      "verif": {
       "mode": "regex",
@@ -612,18 +752,18 @@
      "guideSeul": true
     },
     {
-     "consigne": "Sans mémoire dynamique : lis `n` (≤ 20) puis `n` entiers dans un tableau **statique** `int t[20]` et affiche-les à l'envers.",
+     "consigne": "Premier jalon, sans mémoire dynamique : lis `n` (au plus 20) puis les `n` entiers dans un tableau **ordinaire** `int t[20]`, et affiche-les à l'envers (de la case `n - 1` à la case 0).",
      "question": "Version statique.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "4\n1 2 3 4",
-        "sortie": "4 3 2 1"
+        "entree": "[[E0]]",
+        "sortie": "[[S3_0]]"
        },
        {
-        "entree": "1\n9",
-        "sortie": "9"
+        "entree": "[[E1]]",
+        "sortie": "[[S3_1]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[20], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    for (int i = n - 1; i >= 0; i--) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    return 0;\n}"
@@ -637,22 +777,22 @@
      "guideSeul": true
     },
     {
-     "consigne": "Remplace le tableau statique par un tableau **alloué** de `n` entiers (`malloc`, test `NULL`), puis libère-le (`free`) à la fin.",
+     "consigne": "Remplace le tableau `int t[20]` par un bloc de **exactement** `n` entiers obtenu avec `malloc` (après avoir lu `n`), vérifie qu'il n'est pas `NULL`, et libère-le avec `free` juste avant `return 0;`. Le reste ne change pas : `t[i]` marche pareil.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "4\n1 2 3 4",
-        "sortie": "4 3 2 1"
+        "entree": "[[E0]]",
+        "sortie": "[[S4_0]]"
        },
        {
-        "entree": "1\n9",
-        "sortie": "9"
+        "entree": "[[E1]]",
+        "sortie": "[[S4_1]]"
        },
        {
-        "entree": "6\n5 0 -1 7 3 2",
-        "sortie": "2 3 7 -1 0 5"
+        "entree": "[[E2]]",
+        "sortie": "[[S4_2]]"
        }
       ],
       "exemple": "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    int *t = malloc(n * sizeof(int));\n    if (t == NULL) return 1;\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    for (int i = n - 1; i >= 0; i--) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    free(t);\n    t = NULL;\n    return 0;\n}",
@@ -680,6 +820,98 @@
      "duree": 3,
      "depart": "#include <stdio.h>\n\nint main(void) {\n    int t[20], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    for (int i = n - 1; i >= 0; i--) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    return 0;\n}"
     }
+   ],
+   "vals": {
+    "E0": "4\n32 3 47 8",
+    "E1": "1\n11",
+    "E2": "8\n9 4 8 -3 -7 -7 1 2",
+    "S3_0": "8 47 3 32 ",
+    "S3_1": "11 ",
+    "S4_0": "8 47 3 32 ",
+    "S4_1": "11 ",
+    "S4_2": "2 1 -7 -7 -3 8 4 9 "
+   },
+   "variantes": [
+    {
+     "E0": "4\n32 3 47 8",
+     "E1": "1\n11",
+     "E2": "8\n9 4 8 -3 -7 -7 1 2",
+     "S3_0": "8 47 3 32 ",
+     "S3_1": "11 ",
+     "S4_0": "8 47 3 32 ",
+     "S4_1": "11 ",
+     "S4_2": "2 1 -7 -7 -3 8 4 9 "
+    },
+    {
+     "E0": "3\n26 7 21",
+     "E1": "1\n32",
+     "E2": "8\n-8 -4 -5 8 2 -1 1 6",
+     "S3_0": "21 7 26 ",
+     "S3_1": "32 ",
+     "S4_0": "21 7 26 ",
+     "S4_1": "32 ",
+     "S4_2": "6 1 -1 2 8 -5 -4 -8 "
+    },
+    {
+     "E0": "6\n20 49 6 35 24 35",
+     "E1": "1\n84",
+     "E2": "5\n4 -9 -9 -8 6",
+     "S3_0": "35 24 35 6 49 20 ",
+     "S3_1": "84 ",
+     "S4_0": "35 24 35 6 49 20 ",
+     "S4_1": "84 ",
+     "S4_2": "6 -8 -9 -9 4 "
+    },
+    {
+     "E0": "7\n31 43 4 26 6 25 31",
+     "E1": "1\n8",
+     "E2": "5\n-1 -2 -3 6 0",
+     "S3_0": "31 25 6 26 4 43 31 ",
+     "S3_1": "8 ",
+     "S4_0": "31 25 6 26 4 43 31 ",
+     "S4_1": "8 ",
+     "S4_2": "0 6 -3 -2 -1 "
+    },
+    {
+     "E0": "4\n27 30 36 10",
+     "E1": "1\n84",
+     "E2": "8\n6 3 9 8 2 4 2 3",
+     "S3_0": "10 36 30 27 ",
+     "S3_1": "84 ",
+     "S4_0": "10 36 30 27 ",
+     "S4_1": "84 ",
+     "S4_2": "3 2 4 2 8 9 3 6 "
+    },
+    {
+     "E0": "7\n1 28 12 27 16 35 24",
+     "E1": "1\n29",
+     "E2": "7\n-1 1 6 8 1 -8 6",
+     "S3_0": "24 35 16 27 12 28 1 ",
+     "S3_1": "29 ",
+     "S4_0": "24 35 16 27 12 28 1 ",
+     "S4_1": "29 ",
+     "S4_2": "6 -8 1 8 6 1 -1 "
+    },
+    {
+     "E0": "3\n39 19 44",
+     "E1": "1\n94",
+     "E2": "7\n5 -7 5 6 7 -8 5",
+     "S3_0": "44 19 39 ",
+     "S3_1": "94 ",
+     "S4_0": "44 19 39 ",
+     "S4_1": "94 ",
+     "S4_2": "5 -8 7 6 5 -7 5 "
+    },
+    {
+     "E0": "5\n17 31 33 24 39",
+     "E1": "1\n17",
+     "E2": "9\n-9 -4 3 4 -9 -1 1 5 -9",
+     "S3_0": "39 24 33 31 17 ",
+     "S3_1": "17 ",
+     "S4_0": "39 24 33 31 17 ",
+     "S4_1": "17 ",
+     "S4_2": "-9 5 1 -1 -9 4 3 -4 -9 "
+    }
    ]
   },
   {
@@ -688,12 +920,12 @@
    "notion": "9.4",
    "origine": "generee",
    "titre": "Carrés avec calloc",
-   "enonce": "Écris un programme qui lit `N`, alloue avec **`calloc`** un tableau de `N` entiers (tous à 0), affiche le tableau, puis range `i * i` dans chaque case et l'affiche de nouveau. Libère la mémoire à la fin.",
-   "guidage": "**Plan** : 1. `calloc(n, sizeof(int))` : `n` cases **déjà à 0** → 2. afficher (que des 0) → 3. remplir avec `i * i` → 4. afficher → 5. `free`.",
+   "enonce": "Écris un programme qui lit `N`, alloue avec **`calloc`** un tableau de `N` entiers (tous à 0), l'affiche, puis range `i * i` dans chaque case `i` et l'affiche de nouveau. Libère la mémoire à la fin.\n\n**Exemple**\n```text\nEntrée :\n[[N]]\nSortie :\n[[S3_0]]\n```",
+   "guidage": "**Plan** : 1. `calloc` donne `n` cases **déjà mises à 0** → 2. afficher (que des 0) → 3. remplir avec `i * i` → 4. afficher → 5. `free`.",
    "duree": 5,
    "etapes": [
     {
-     "consigne": "Écris l'allocation avec `calloc` de `n` entiers dans `int *t`.",
+     "consigne": "`calloc` prend **deux** arguments : le nombre d'éléments, puis la taille d'un élément. Écris la ligne qui déclare `int *t` et lui donne un bloc de `n` entiers avec `calloc`.",
      "question": "Allocation avec `calloc` ?",
      "verif": {
       "mode": "regex",
@@ -709,7 +941,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Que contient `t[0]` juste après `calloc` ? (un nombre)",
+     "consigne": "Que contient `t[0]` juste après `calloc` ? C'est justement ce qui distingue `calloc` de `malloc`. (un nombre)",
      "question": "Contenu juste après `calloc` ?",
      "verif": {
       "mode": "numerique",
@@ -724,18 +956,18 @@
      "guideSeul": true
     },
     {
-     "consigne": "Version statique : lis `n` (≤ 20), affiche `n` zéros séparés par des espaces (tableau `int t[20] = {0}`), puis mets `i * i` dans chaque case et affiche-les (deux lignes).",
+     "consigne": "Premier jalon, sans mémoire dynamique : lis `n` (au plus 20), déclare `int t[20] = {0};`, affiche les `n` premières cases (des 0), puis range `i * i` dans chaque case et affiche-les sur une deuxième ligne.",
      "question": "Version statique.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "4",
-        "sortie": "0 0 0 0\n0 1 4 9"
+        "entree": "[[N]]",
+        "sortie": "[[S2_0]]"
        },
        {
         "entree": "1",
-        "sortie": "0\n0"
+        "sortie": "[[S2_1]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[20] = {0}, n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    for (int i = 0; i < n; i++) {\n        t[i] = i * i;\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    return 0;\n}"
@@ -749,18 +981,22 @@
      "guideSeul": true
     },
     {
-     "consigne": "Remplace le tableau statique par `calloc(n, sizeof(int))` (test `NULL`, puis `free` à la fin).",
+     "consigne": "Remplace `int t[20] = {0}` par un bloc de `n` entiers obtenu avec `calloc` (plus besoin de mettre à 0 : `calloc` le fait). Vérifie `NULL`, et libère le bloc à la fin.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "4",
-        "sortie": "0 0 0 0\n0 1 4 9"
+        "entree": "[[N]]",
+        "sortie": "[[S3_0]]"
        },
        {
         "entree": "1",
-        "sortie": "0\n0"
+        "sortie": "[[S3_1]]"
+       },
+       {
+        "entree": "[[N2]]",
+        "sortie": "[[S3_2]]"
        }
       ],
       "exemple": "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    int *t = calloc(n, sizeof(int));\n    if (t == NULL) return 1;\n    for (int i = 0; i < n; i++) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    for (int i = 0; i < n; i++) {\n        t[i] = i * i;\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    free(t);\n    return 0;\n}",
@@ -784,6 +1020,89 @@
      "duree": 2.5,
      "depart": "#include <stdio.h>\n\nint main(void) {\n    int t[20] = {0}, n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    for (int i = 0; i < n; i++) {\n        t[i] = i * i;\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    return 0;\n}"
     }
+   ],
+   "vals": {
+    "N": "4",
+    "N2": "11",
+    "S2_0": "0 0 0 0 \n0 1 4 9 ",
+    "S2_1": "0 \n0 ",
+    "S3_0": "0 0 0 0 \n0 1 4 9 ",
+    "S3_1": "0 \n0 ",
+    "S3_2": "0 0 0 0 0 0 0 0 0 0 0 \n0 1 4 9 16 25 36 49 64 81 100 "
+   },
+   "variantes": [
+    {
+     "N": "4",
+     "N2": "11",
+     "S2_0": "0 0 0 0 \n0 1 4 9 ",
+     "S2_1": "0 \n0 ",
+     "S3_0": "0 0 0 0 \n0 1 4 9 ",
+     "S3_1": "0 \n0 ",
+     "S3_2": "0 0 0 0 0 0 0 0 0 0 0 \n0 1 4 9 16 25 36 49 64 81 100 "
+    },
+    {
+     "N": "3",
+     "N2": "10",
+     "S2_0": "0 0 0 \n0 1 4 ",
+     "S2_1": "0 \n0 ",
+     "S3_0": "0 0 0 \n0 1 4 ",
+     "S3_1": "0 \n0 ",
+     "S3_2": "0 0 0 0 0 0 0 0 0 0 \n0 1 4 9 16 25 36 49 64 81 "
+    },
+    {
+     "N": "6",
+     "N2": "12",
+     "S2_0": "0 0 0 0 0 0 \n0 1 4 9 16 25 ",
+     "S2_1": "0 \n0 ",
+     "S3_0": "0 0 0 0 0 0 \n0 1 4 9 16 25 ",
+     "S3_1": "0 \n0 ",
+     "S3_2": "0 0 0 0 0 0 0 0 0 0 0 0 \n0 1 4 9 16 25 36 49 64 81 100 121 "
+    },
+    {
+     "N": "4",
+     "N2": "9",
+     "S2_0": "0 0 0 0 \n0 1 4 9 ",
+     "S2_1": "0 \n0 ",
+     "S3_0": "0 0 0 0 \n0 1 4 9 ",
+     "S3_1": "0 \n0 ",
+     "S3_2": "0 0 0 0 0 0 0 0 0 \n0 1 4 9 16 25 36 49 64 "
+    },
+    {
+     "N": "4",
+     "N2": "12",
+     "S2_0": "0 0 0 0 \n0 1 4 9 ",
+     "S2_1": "0 \n0 ",
+     "S3_0": "0 0 0 0 \n0 1 4 9 ",
+     "S3_1": "0 \n0 ",
+     "S3_2": "0 0 0 0 0 0 0 0 0 0 0 0 \n0 1 4 9 16 25 36 49 64 81 100 121 "
+    },
+    {
+     "N": "8",
+     "N2": "10",
+     "S2_0": "0 0 0 0 0 0 0 0 \n0 1 4 9 16 25 36 49 ",
+     "S2_1": "0 \n0 ",
+     "S3_0": "0 0 0 0 0 0 0 0 \n0 1 4 9 16 25 36 49 ",
+     "S3_1": "0 \n0 ",
+     "S3_2": "0 0 0 0 0 0 0 0 0 0 \n0 1 4 9 16 25 36 49 64 81 "
+    },
+    {
+     "N": "8",
+     "N2": "9",
+     "S2_0": "0 0 0 0 0 0 0 0 \n0 1 4 9 16 25 36 49 ",
+     "S2_1": "0 \n0 ",
+     "S3_0": "0 0 0 0 0 0 0 0 \n0 1 4 9 16 25 36 49 ",
+     "S3_1": "0 \n0 ",
+     "S3_2": "0 0 0 0 0 0 0 0 0 \n0 1 4 9 16 25 36 49 64 "
+    },
+    {
+     "N": "7",
+     "N2": "10",
+     "S2_0": "0 0 0 0 0 0 0 \n0 1 4 9 16 25 36 ",
+     "S2_1": "0 \n0 ",
+     "S3_0": "0 0 0 0 0 0 0 \n0 1 4 9 16 25 36 ",
+     "S3_1": "0 \n0 ",
+     "S3_2": "0 0 0 0 0 0 0 0 0 0 \n0 1 4 9 16 25 36 49 64 81 "
+    }
    ]
   },
   {
@@ -792,12 +1111,12 @@
    "notion": "9.4",
    "origine": "generee",
    "titre": "Agrandir avec realloc",
-   "enonce": "Écris un programme qui lit `N` puis `N` entiers dans un bloc alloué avec `malloc`, puis lit `M` et `M` entiers supplémentaires : il **agrandit le bloc avec `realloc`** (via un pointeur temporaire) pour y ranger les `N + M` valeurs, affiche la somme de toutes les valeurs, puis libère.",
-   "guidage": "**Plan** : 1. `malloc` de `n` entiers, saisie → 2. lire `m` → 3. `int *tmp = realloc(t, (n + m) * sizeof(int));` → 4. si `tmp == NULL` : `free(t)` et quitter, sinon `t = tmp;` → 5. lire les `m` nouvelles valeurs aux indices `n` à `n + m - 1` → 6. somme, `free`.",
+   "enonce": "Écris un programme qui lit `N` puis `N` entiers dans un bloc alloué avec `malloc`, puis lit `M` et `M` entiers supplémentaires. Pour les ranger aussi, il **agrandit le bloc avec `realloc`** (via un pointeur temporaire). Il affiche ensuite la somme des `N + M` valeurs, puis libère la mémoire.\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S4_0]]\n```",
+   "guidage": "**Plan** : 1. `malloc` de `n` entiers, saisie → 2. lire `m` → 3. agrandir le bloc à `n + m` entiers avec `realloc`, en passant par `tmp` → 4. si `tmp == NULL` : `free(t)` et quitter ; sinon `t = tmp;` → 5. lire les `m` nouvelles valeurs **à partir de la case `n`** → 6. somme, `free`.",
    "duree": 7,
    "etapes": [
     {
-     "consigne": "Écris l'agrandissement du bloc `t` pour `n + m` entiers, avec un pointeur temporaire `tmp`.",
+     "consigne": "`realloc(ancien_bloc, nouvelle_taille_en_octets)` renvoie l'adresse du bloc agrandi. Écris la ligne qui déclare `int *tmp` et lui donne le bloc `t` agrandi à `n + m` entiers.",
      "question": "Agrandir avec `realloc` ?",
      "verif": {
       "mode": "regex",
@@ -813,7 +1132,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Pourquoi passer par `tmp` plutôt que `t = realloc(t, …)` ? (idée en quelques mots)",
+     "consigne": "Pourquoi ranger le résultat dans `tmp` plutôt que d'écrire directement `t = realloc(t, …)` ? Pense à ce qui arrive si `realloc` échoue et renvoie `NULL`. (quelques mots)",
      "question": "Pourquoi `tmp` ?",
      "verif": {
       "mode": "regex",
@@ -829,7 +1148,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Écris la boucle (en-tête du `for`) qui lit les `m` **nouvelles** valeurs dans les cases `n` à `n + m - 1`.",
+     "consigne": "Les `n` premières cases sont déjà remplies. Écris l'en-tête du `for` (variable `i`) qui lit les `m` **nouvelles** valeurs, dans les cases qui suivent : de `n` jusqu'à `n + m - 1`.",
      "question": "Boucle des nouvelles valeurs ?",
      "verif": {
       "mode": "regex",
@@ -845,18 +1164,18 @@
      "guideSeul": true
     },
     {
-     "consigne": "Sans `realloc` : lis `n`, `n` entiers, `m`, `m` entiers dans un tableau statique `int t[100]` et affiche la somme des `n + m` valeurs.",
+     "consigne": "Premier jalon, sans mémoire dynamique : avec un tableau ordinaire `int t[100]`, lis `n`, les `n` entiers, `m`, les `m` entiers (à partir de la case `n`), puis affiche la somme des `n + m` valeurs.",
      "question": "Somme sans `realloc`.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "3\n1 2 3\n2\n4 5",
-        "sortie": "15"
+        "entree": "[[E0]]",
+        "sortie": "[[S3_0]]"
        },
        {
-        "entree": "1\n10\n1\n-10",
-        "sortie": "0"
+        "entree": "[[E1]]",
+        "sortie": "[[S3_1]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[100], n, m;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    scanf(\"%d\", &m);\n    for (int i = n; i < n + m; i++) scanf(\"%d\", &t[i]);\n    int s = 0;\n    for (int i = 0; i < n + m; i++) s += t[i];\n    printf(\"%d\\n\", s);\n    return 0;\n}"
@@ -870,18 +1189,22 @@
      "guideSeul": true
     },
     {
-     "consigne": "Passe en mémoire dynamique : `malloc` de `n` entiers, puis `realloc` (via `tmp`, avec test `NULL`) pour passer à `n + m`, et `free` à la fin.",
+     "consigne": "Passe en mémoire dynamique : `malloc` de `n` entiers au début ; après avoir lu `m`, `realloc` vers `tmp` pour passer à `n + m` entiers (avec le test `NULL`), puis `t = tmp;`. N'oublie pas `free(t)` à la fin.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "3\n1 2 3\n2\n4 5",
-        "sortie": "15"
+        "entree": "[[E0]]",
+        "sortie": "[[S4_0]]"
        },
        {
-        "entree": "1\n10\n1\n-10",
-        "sortie": "0"
+        "entree": "[[E1]]",
+        "sortie": "[[S4_1]]"
+       },
+       {
+        "entree": "[[E2]]",
+        "sortie": "[[S4_2]]"
        }
       ],
       "exemple": "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int n, m;\n    scanf(\"%d\", &n);\n    int *t = malloc(n * sizeof(int));\n    if (t == NULL) return 1;\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    scanf(\"%d\", &m);\n    int *tmp = realloc(t, (n + m) * sizeof(int));\n    if (tmp == NULL) {\n        free(t);\n        return 1;\n    }\n    t = tmp;\n    for (int i = n; i < n + m; i++) scanf(\"%d\", &t[i]);\n    int s = 0;\n    for (int i = 0; i < n + m; i++) s += t[i];\n    printf(\"%d\\n\", s);\n    free(t);\n    return 0;\n}",
@@ -905,6 +1228,98 @@
      "duree": 3.5,
      "depart": "#include <stdio.h>\n\nint main(void) {\n    int t[100], n, m;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    scanf(\"%d\", &m);\n    for (int i = n; i < n + m; i++) scanf(\"%d\", &t[i]);\n    int s = 0;\n    for (int i = 0; i < n + m; i++) s += t[i];\n    printf(\"%d\\n\", s);\n    return 0;\n}"
     }
+   ],
+   "vals": {
+    "E0": "2\n0 17\n1\n17",
+    "E1": "3\n-2 -2 27\n3\n-6 4 -4",
+    "E2": "3\n27 3 22\n4\n1 9 12 -7",
+    "S3_0": "34",
+    "S3_1": "17",
+    "S4_0": "34",
+    "S4_1": "17",
+    "S4_2": "67"
+   },
+   "variantes": [
+    {
+     "E0": "2\n0 17\n1\n17",
+     "E1": "3\n-2 -2 27\n3\n-6 4 -4",
+     "E2": "3\n27 3 22\n4\n1 9 12 -7",
+     "S3_0": "34",
+     "S3_1": "17",
+     "S4_0": "34",
+     "S4_1": "17",
+     "S4_2": "67"
+    },
+    {
+     "E0": "1\n26\n3\n19 -9 -2",
+     "E1": "3\n17 24 0\n3\n12 5 7",
+     "E2": "4\n-7 24 24 24\n2\n24 3",
+     "S3_0": "34",
+     "S3_1": "65",
+     "S4_0": "34",
+     "S4_1": "65",
+     "S4_2": "92"
+    },
+    {
+     "E0": "3\n27 25 27\n2\n-10 -9",
+     "E1": "1\n4\n1\n29",
+     "E2": "1\n18\n1\n11",
+     "S3_0": "60",
+     "S3_1": "33",
+     "S4_0": "60",
+     "S4_1": "33",
+     "S4_2": "29"
+    },
+    {
+     "E0": "4\n16 14 14 -10\n3\n2 16 20",
+     "E1": "1\n-7\n2\n9 -10",
+     "E2": "2\n11 18\n2\n-5 26",
+     "S3_0": "72",
+     "S3_1": "-8",
+     "S4_0": "72",
+     "S4_1": "-8",
+     "S4_2": "50"
+    },
+    {
+     "E0": "2\n7 26\n1\n28",
+     "E1": "4\n-2 -3 4 -6\n2\n2 29",
+     "E2": "3\n1 10 14\n2\n9 20",
+     "S3_0": "61",
+     "S3_1": "24",
+     "S4_0": "61",
+     "S4_1": "24",
+     "S4_2": "54"
+    },
+    {
+     "E0": "4\n-8 21 9 1\n2\n22 6",
+     "E1": "4\n21 -5 17 27\n4\n-8 29 13 21",
+     "E2": "1\n28\n1\n27",
+     "S3_0": "51",
+     "S3_1": "115",
+     "S4_0": "51",
+     "S4_1": "115",
+     "S4_2": "55"
+    },
+    {
+     "E0": "2\n6 5\n3\n-6 24 5",
+     "E1": "4\n15 20 -8 18\n3\n2 2 4",
+     "E2": "2\n19 10\n4\n19 20 11 3",
+     "S3_0": "34",
+     "S3_1": "53",
+     "S4_0": "34",
+     "S4_1": "53",
+     "S4_2": "82"
+    },
+    {
+     "E0": "2\n29 14\n4\n29 7 19 17",
+     "E1": "2\n10 29\n4\n10 5 30 3",
+     "E2": "1\n23\n1\n24",
+     "S3_0": "115",
+     "S3_1": "87",
+     "S4_0": "115",
+     "S4_1": "87",
+     "S4_2": "47"
+    }
    ]
   },
   {
@@ -913,12 +1328,12 @@
    "notion": "9.4",
    "origine": "generee",
    "titre": "La fuite",
-   "enonce": "Ce programme fonctionne… mais il a une **fuite de mémoire** : un bloc est alloué et jamais rendu. Corrige-le (et remets le pointeur à `NULL` après la libération).",
+   "enonce": "Ce programme fonctionne… mais il a une **fuite de mémoire** : un bloc est alloué et jamais rendu. Corrige-le, et remets le pointeur à `NULL` après la libération.\n```c\n#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    int *t = malloc(n * sizeof(int));\n    if (t == NULL) return 1;\n    for (int i = 0; i < n; i++) t[i] = 2 * i;\n    printf(\"%d\\n\", t[n - 1]);\n    return 0;\n}\n```\n**Exemple**\n```text\nEntrée :\n[[N]]\nSortie :\n[[S2_0]]\n```",
    "guidage": "**Diagnostic** : 1. repère le `malloc` → 2. cherche le `free` correspondant (il n'y en a pas) → 3. ajoute `free(t);` puis `t = NULL;` avant `return 0;`.",
    "duree": 3,
    "etapes": [
     {
-     "consigne": "Combien de `free` faut-il pour un `malloc` ? (un nombre)",
+     "consigne": "Chaque bloc obtenu avec `malloc` doit être rendu exactement une fois. Combien d'appels à `free` faut-il pour un `malloc` ?",
      "question": "Combien de `free` ?",
      "verif": {
       "mode": "numerique",
@@ -933,7 +1348,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Écris l'instruction qui évite un pointeur « fou » après la libération (`t` ne doit plus désigner le bloc rendu).",
+     "consigne": "Après `free(t)`, `t` contient toujours l'adresse du bloc rendu : s'en servir par erreur serait dangereux. Écris l'instruction qui lui donne une valeur sûre, facile à tester.",
      "question": "Après `free(t)` ?",
      "verif": {
       "mode": "regex",
@@ -949,18 +1364,22 @@
      "guideSeul": true
     },
     {
-     "consigne": "Corrige la fuite : libère `t` avant la fin puis remets-le à `NULL`.",
+     "consigne": "Corrige la fuite : juste avant `return 0;`, libère `t`, puis remets-le à `NULL`. L'affichage ne change pas.",
      "question": "Corrige le programme.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "5",
-        "sortie": "8"
+        "entree": "[[N]]",
+        "sortie": "[[S2_0]]"
        },
        {
         "entree": "1",
-        "sortie": "0"
+        "sortie": "[[S2_1]]"
+       },
+       {
+        "entree": "[[N2]]",
+        "sortie": "[[S2_2]]"
        }
       ],
       "exemple": "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    int *t = malloc(n * sizeof(int));\n    if (t == NULL) return 1;\n    for (int i = 0; i < n; i++) t[i] = 2 * i;\n    printf(\"%d\\n\", t[n - 1]);\n    free(t);\n    t = NULL;\n    return 0;\n}",
@@ -984,6 +1403,71 @@
      "duree": 2.3,
      "depart": "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    int *t = malloc(n * sizeof(int));\n    if (t == NULL) return 1;\n    for (int i = 0; i < n; i++) t[i] = 2 * i;\n    printf(\"%d\\n\", t[n - 1]);\n    return 0;\n}"
     }
+   ],
+   "vals": {
+    "N": "7",
+    "N2": "17",
+    "S2_0": "12",
+    "S2_1": "0",
+    "S2_2": "32"
+   },
+   "variantes": [
+    {
+     "N": "7",
+     "N2": "17",
+     "S2_0": "12",
+     "S2_1": "0",
+     "S2_2": "32"
+    },
+    {
+     "N": "2",
+     "N2": "27",
+     "S2_0": "2",
+     "S2_1": "0",
+     "S2_2": "52"
+    },
+    {
+     "N": "10",
+     "N2": "32",
+     "S2_0": "18",
+     "S2_1": "0",
+     "S2_2": "62"
+    },
+    {
+     "N": "6",
+     "N2": "34",
+     "S2_0": "10",
+     "S2_1": "0",
+     "S2_2": "66"
+    },
+    {
+     "N": "2",
+     "N2": "26",
+     "S2_0": "2",
+     "S2_1": "0",
+     "S2_2": "50"
+    },
+    {
+     "N": "8",
+     "N2": "37",
+     "S2_0": "14",
+     "S2_1": "0",
+     "S2_2": "72"
+    },
+    {
+     "N": "9",
+     "N2": "18",
+     "S2_0": "16",
+     "S2_1": "0",
+     "S2_2": "34"
+    },
+    {
+     "N": "11",
+     "N2": "22",
+     "S2_0": "20",
+     "S2_1": "0",
+     "S2_2": "42"
+    }
    ]
   },
   {
@@ -992,12 +1476,12 @@
    "notion": "9.4",
    "origine": "generee",
    "titre": "Pas assez de place",
-   "enonce": "Ce programme alloue un tableau de `n` entiers… mais réserve `n` **octets** au lieu de `n` entiers. Corrige l'allocation.",
+   "enonce": "Ce programme alloue un tableau de `n` entiers… mais réserve `n` **octets** au lieu de la place de `n` entiers. Corrige l'allocation.\n```c\n#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    int *t = malloc(n);\n    if (t == NULL) return 1;\n    for (int i = 0; i < n; i++) t[i] = i + 1;\n    int s = 0;\n    for (int i = 0; i < n; i++) s += t[i];\n    printf(\"%d\\n\", s);\n    free(t);\n    return 0;\n}\n```\n**Exemple**\n```text\nEntrée :\n[[N]]\nSortie :\n[[S2_0]]\n```",
    "guidage": "**Diagnostic** : 1. `malloc` compte en **octets** → 2. un `int` en occupe `sizeof(int)` (4) → 3. il faut `n * sizeof(int)` octets.",
    "duree": 3,
    "etapes": [
     {
-     "consigne": "En quelle unité `malloc` attend-il sa taille ? (un mot)",
+     "consigne": "`malloc(n)` réserve `n`… quoi ? En quelle unité `malloc` compte-t-il la taille demandée ? (un mot)",
      "question": "Unité de `malloc` ?",
      "verif": {
       "mode": "regex",
@@ -1013,33 +1497,33 @@
      "guideSeul": true
     },
     {
-     "consigne": "Combien d'octets faut-il pour 10 `int` si `sizeof(int)` vaut 4 ? (un nombre)",
-     "question": "Octets pour 10 `int` ?",
+     "consigne": "Combien d'octets faut-il pour ranger [[K]] `int`, si un `int` occupe 4 octets ?",
+     "question": "Octets pour [[K]] `int` ?",
      "verif": {
       "mode": "numerique",
-      "attendu": 40
+      "attendu": "[[K4]]"
      },
-     "corrige": "10 × 4 = 40 octets.",
+     "corrige": "[[K]] × 4 = **[[K4]]** octets. `malloc([[K]])` n'en réserverait que [[K]] : de quoi ranger à peine [[KQ]] entier(s).",
      "indices": [
       "Nombre d'éléments × taille d'un élément.",
-      "40"
+      "[[K4]]"
      ],
      "duree": 0.3,
      "guideSeul": true
     },
     {
-     "consigne": "Corrige l'allocation pour qu'elle réserve la place de `n` **entiers** (pas `n` octets).",
+     "consigne": "Corrige l'allocation pour qu'elle réserve la place de `n` **entiers** : la taille à donner à `malloc` est le nombre d'éléments multiplié par `sizeof(int)`.",
      "question": "Corrige le programme.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "4",
-        "sortie": "10"
+        "entree": "[[N]]",
+        "sortie": "[[S2_0]]"
        },
        {
-        "entree": "10",
-        "sortie": "55"
+        "entree": "[[N2]]",
+        "sortie": "[[S2_1]]"
        }
       ],
       "exemple": "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    int *t = malloc(n * sizeof(int));\n    if (t == NULL) return 1;\n    for (int i = 0; i < n; i++) t[i] = i + 1;\n    int s = 0;\n    for (int i = 0; i < n; i++) s += t[i];\n    printf(\"%d\\n\", s);\n    free(t);\n    return 0;\n}",
@@ -1059,6 +1543,89 @@
      "duree": 2.4,
      "depart": "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    int *t = malloc(n);\n    if (t == NULL) return 1;\n    for (int i = 0; i < n; i++) t[i] = i + 1;\n    int s = 0;\n    for (int i = 0; i < n; i++) s += t[i];\n    printf(\"%d\\n\", s);\n    free(t);\n    return 0;\n}"
     }
+   ],
+   "vals": {
+    "N": "11",
+    "N2": "24",
+    "K": "22",
+    "K4": "88",
+    "KQ": "5",
+    "S2_0": "66",
+    "S2_1": "300"
+   },
+   "variantes": [
+    {
+     "N": "11",
+     "N2": "24",
+     "K": "22",
+     "K4": "88",
+     "KQ": "5",
+     "S2_0": "66",
+     "S2_1": "300"
+    },
+    {
+     "N": "8",
+     "N2": "25",
+     "K": "14",
+     "K4": "56",
+     "KQ": "3",
+     "S2_0": "36",
+     "S2_1": "325"
+    },
+    {
+     "N": "9",
+     "N2": "16",
+     "K": "23",
+     "K4": "92",
+     "KQ": "5",
+     "S2_0": "45",
+     "S2_1": "136"
+    },
+    {
+     "N": "3",
+     "N2": "15",
+     "K": "20",
+     "K4": "80",
+     "KQ": "5",
+     "S2_0": "6",
+     "S2_1": "120"
+    },
+    {
+     "N": "8",
+     "N2": "21",
+     "K": "15",
+     "K4": "60",
+     "KQ": "3",
+     "S2_0": "36",
+     "S2_1": "231"
+    },
+    {
+     "N": "3",
+     "N2": "14",
+     "K": "5",
+     "K4": "20",
+     "KQ": "1",
+     "S2_0": "6",
+     "S2_1": "105"
+    },
+    {
+     "N": "5",
+     "N2": "15",
+     "K": "11",
+     "K4": "44",
+     "KQ": "2",
+     "S2_0": "15",
+     "S2_1": "120"
+    },
+    {
+     "N": "12",
+     "N2": "29",
+     "K": "22",
+     "K4": "88",
+     "KQ": "5",
+     "S2_0": "78",
+     "S2_1": "435"
+    }
    ]
   },
   {
@@ -1067,12 +1634,12 @@
    "notion": "9.5",
    "origine": "generee",
    "titre": "Copie d'un mot à la bonne taille",
-   "enonce": "Écris un programme qui lit un mot dans un tampon de 100 caractères, alloue **exactement** la place nécessaire pour le copier (`strlen + 1`), le copie avec `strcpy`, affiche la copie et sa longueur, puis libère la mémoire.",
-   "guidage": "**Plan** : 1. lire dans `tampon[100]` → 2. `malloc(strlen(tampon) + 1)` (le `+ 1` est pour le `'\\0'`) → 3. `strcpy(copie, tampon)` → 4. afficher copie et longueur → 5. `free`.",
+   "enonce": "Écris un programme qui lit un mot dans un tampon de 100 caractères, alloue **exactement** la place nécessaire pour le copier (sa longueur + 1), le copie avec `strcpy`, affiche la copie et sa longueur, puis libère la mémoire.\n\n**Exemple**\n```text\nEntrée :\n[[W0]]\nSortie :\n[[W0]] [[N0]]\n```",
+   "guidage": "**Plan** : 1. lire dans `tampon[100]` → 2. `malloc(strlen(tampon) + 1)` (le `+ 1` est pour le `'\\0'`) → 3. `strcpy(copie, tampon)` → 4. afficher la copie et sa longueur → 5. `free`.",
    "duree": 5,
    "etapes": [
     {
-     "consigne": "Écris l'allocation de `copie` pour contenir exactement le mot de `tampon`, `'\\0'` compris.",
+     "consigne": "`strlen` donne le nombre de lettres, **sans** compter le `'\\0'` final, qui a pourtant besoin d'une case. Écris la ligne qui déclare `char *copie` et lui donne un bloc juste assez grand pour le mot de `tampon`.",
      "question": "Allocation de la copie ?",
      "verif": {
       "mode": "regex",
@@ -1088,7 +1655,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Écris la copie de `tampon` dans `copie` avec `strcpy`.",
+     "consigne": "`strcpy` copie une chaîne dans une autre. Attention à l'ordre : la **destination** d'abord, la source ensuite. Écris la copie de `tampon` dans `copie`.",
      "question": "Copier avec `strcpy` ?",
      "verif": {
       "mode": "regex",
@@ -1104,18 +1671,22 @@
      "guideSeul": true
     },
     {
-     "consigne": "Sans copie : lis un mot (`%99s`) et affiche-le suivi de sa longueur (`strlen`, converti en `int`).",
+     "consigne": "Premier jalon, sans copie : lis un mot (`%99s`) dans `tampon` et affiche-le suivi de sa longueur (`(int)strlen(tampon)`).",
      "question": "Mot et longueur.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "Bonjour",
-        "sortie": "Bonjour 7"
+        "entree": "[[W0]]",
+        "sortie": "[[S2_0]]"
+       },
+       {
+        "entree": "[[W1]]",
+        "sortie": "[[S2_1]]"
        },
        {
         "entree": "C",
-        "sortie": "C 1"
+        "sortie": "[[S2_2]]"
        }
       ],
       "exemple": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char tampon[100];\n    scanf(\"%99s\", tampon);\n    printf(\"%s %d\\n\", tampon, (int)strlen(tampon));\n    return 0;\n}\n"
@@ -1129,18 +1700,22 @@
      "guideSeul": true
     },
     {
-     "consigne": "Alloue `copie` à la taille exacte, copie le mot avec `strcpy`, affiche la **copie** et sa longueur, puis libère (`free`).",
+     "consigne": "Ajoute la copie : alloue `copie` à la taille exacte, vérifie `NULL`, copie le mot avec `strcpy`, puis affiche la **copie** et sa longueur. Libère `copie` à la fin.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "Bonjour",
-        "sortie": "Bonjour 7"
+        "entree": "[[W0]]",
+        "sortie": "[[S3_0]]"
+       },
+       {
+        "entree": "[[W1]]",
+        "sortie": "[[S3_1]]"
        },
        {
         "entree": "C",
-        "sortie": "C 1"
+        "sortie": "[[S3_2]]"
        }
       ],
       "exemple": "#include <stdio.h>\n#include <stdlib.h>\n\n#include <string.h>\n\nint main(void) {\n    char tampon[100];\n    scanf(\"%99s\", tampon);\n    char *copie = malloc(strlen(tampon) + 1);\n    if (copie == NULL) return 1;\n    strcpy(copie, tampon);\n    printf(\"%s %d\\n\", copie, (int)strlen(copie));\n    free(copie);\n    copie = NULL;\n    return 0;\n}",
@@ -1163,6 +1738,107 @@
      "duree": 2.9,
      "depart": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char tampon[100];\n    scanf(\"%99s\", tampon);\n    printf(\"%s %d\\n\", tampon, (int)strlen(tampon));\n    return 0;\n}\n"
     }
+   ],
+   "vals": {
+    "W0": "ESILV",
+    "W1": "tableau",
+    "N0": "5",
+    "S2_0": "ESILV 5",
+    "S2_1": "tableau 7",
+    "S2_2": "C 1",
+    "S3_0": "ESILV 5",
+    "S3_1": "tableau 7",
+    "S3_2": "C 1"
+   },
+   "variantes": [
+    {
+     "W0": "ESILV",
+     "W1": "tableau",
+     "N0": "5",
+     "S2_0": "ESILV 5",
+     "S2_1": "tableau 7",
+     "S2_2": "C 1",
+     "S3_0": "ESILV 5",
+     "S3_1": "tableau 7",
+     "S3_2": "C 1"
+    },
+    {
+     "W0": "programme",
+     "W1": "octet",
+     "N0": "9",
+     "S2_0": "programme 9",
+     "S2_1": "octet 5",
+     "S2_2": "C 1",
+     "S3_0": "programme 9",
+     "S3_1": "octet 5",
+     "S3_2": "C 1"
+    },
+    {
+     "W0": "ESILV",
+     "W1": "programme",
+     "N0": "5",
+     "S2_0": "ESILV 5",
+     "S2_1": "programme 9",
+     "S2_2": "C 1",
+     "S3_0": "ESILV 5",
+     "S3_1": "programme 9",
+     "S3_2": "C 1"
+    },
+    {
+     "W0": "Bonjour",
+     "W1": "memoire",
+     "N0": "7",
+     "S2_0": "Bonjour 7",
+     "S2_1": "memoire 7",
+     "S2_2": "C 1",
+     "S3_0": "Bonjour 7",
+     "S3_1": "memoire 7",
+     "S3_2": "C 1"
+    },
+    {
+     "W0": "octet",
+     "W1": "dynamique",
+     "N0": "5",
+     "S2_0": "octet 5",
+     "S2_1": "dynamique 9",
+     "S2_2": "C 1",
+     "S3_0": "octet 5",
+     "S3_1": "dynamique 9",
+     "S3_2": "C 1"
+    },
+    {
+     "W0": "Bonjour",
+     "W1": "pointeur",
+     "N0": "7",
+     "S2_0": "Bonjour 7",
+     "S2_1": "pointeur 8",
+     "S2_2": "C 1",
+     "S3_0": "Bonjour 7",
+     "S3_1": "pointeur 8",
+     "S3_2": "C 1"
+    },
+    {
+     "W0": "allocation",
+     "W1": "memoire",
+     "N0": "10",
+     "S2_0": "allocation 10",
+     "S2_1": "memoire 7",
+     "S2_2": "C 1",
+     "S3_0": "allocation 10",
+     "S3_1": "memoire 7",
+     "S3_2": "C 1"
+    },
+    {
+     "W0": "allocation",
+     "W1": "programme",
+     "N0": "10",
+     "S2_0": "allocation 10",
+     "S2_1": "programme 9",
+     "S2_2": "C 1",
+     "S3_0": "allocation 10",
+     "S3_1": "programme 9",
+     "S3_2": "C 1"
+    }
    ]
   },
   {
@@ -1171,12 +1847,12 @@
    "notion": "9.5",
    "origine": "generee",
    "titre": "Une fonction qui crée un tableau",
-   "enonce": "Écris `int *creer_tableau(int n)` qui alloue avec `calloc` un tableau de `n` entiers et le renvoie (ou `NULL` en cas d'échec). `main` lit `n`, appelle `creer_tableau`, remplit chaque case avec `10 * (i + 1)`, affiche le tableau, puis **libère** le bloc.",
-   "guidage": "**Plan** : 1. `int *creer_tableau(int n)` : `return calloc(n, sizeof(int));` → 2. `main` : `t = creer_tableau(n)`, test `NULL` → 3. remplir (`10 * (i + 1)`) et afficher → 4. `free(t)` dans `main` (celui qui reçoit le bloc le libère).",
+   "enonce": "Écris `int *creer_tableau(int n)` qui alloue avec `calloc` un tableau de `n` entiers et le renvoie (ou `NULL` en cas d'échec). `main` lit `n`, appelle `creer_tableau`, range `[[K]] * (i + 1)` dans chaque case `i`, affiche le tableau, puis **libère** le bloc.\n\n**Exemple**\n```text\nEntrée :\n[[N]]\nSortie :\n[[S3_0]]\n```",
+   "guidage": "**Plan** : 1. `creer_tableau` renvoie directement ce que donne `calloc` → 2. `main` récupère le bloc et teste `NULL` → 3. remplir et afficher → 4. `free(t)` dans `main` : c'est celui qui reçoit le bloc qui le libère.",
    "duree": 5,
    "etapes": [
     {
-     "consigne": "Écris la ligne qui fait renvoyer à `creer_tableau` un bloc de `n` entiers initialisés à 0.",
+     "consigne": "La fonction peut tenir en une ligne : elle renvoie directement le bloc de `n` entiers à 0 que fournit `calloc`. Écris cette ligne.",
      "question": "Corps de `creer_tableau` ?",
      "verif": {
       "mode": "regex",
@@ -1192,7 +1868,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Qui doit appeler `free` : `creer_tableau` ou `main` ? (un mot)",
+     "consigne": "Le bloc doit rester valable après la fin de `creer_tableau`, puisque `main` s'en sert. Qui doit donc appeler `free` : `creer_tableau` ou `main` ? (un mot)",
      "question": "Qui libère ?",
      "verif": {
       "mode": "exact",
@@ -1209,47 +1885,51 @@
      "guideSeul": true
     },
     {
-     "consigne": "Sans fonction : lis `n` (≤ 20), mets `10 * (i + 1)` dans un tableau statique et affiche-le.",
+     "consigne": "Premier jalon, sans fonction ni mémoire dynamique : lis `n` (au plus 20), range `[[K]] * (i + 1)` dans chaque case d'un tableau `int t[20]` et affiche-le.",
      "question": "Remplissage sans fonction.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "3",
-        "sortie": "10 20 30"
+        "entree": "[[N]]",
+        "sortie": "[[S2_0]]"
        },
        {
         "entree": "1",
-        "sortie": "10"
+        "sortie": "[[S2_1]]"
        }
       ],
-      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[20], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        t[i] = 10 * (i + 1);\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    return 0;\n}"
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[20], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        t[i] = [[K]] * (i + 1);\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    return 0;\n}"
      },
-     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[20], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        t[i] = 10 * (i + 1);\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    return 0;\n}\n```",
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[20], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        t[i] = [[K]] * (i + 1);\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    return 0;\n}\n```",
      "indices": [
       "Une seule boucle suffit : remplir et afficher.",
-      "`t[i] = 10 * (i + 1);`"
+      "`t[i] = [[K]] * (i + 1);`"
      ],
      "duree": 1.2,
      "guideSeul": true
     },
     {
-     "consigne": "Écris `int *creer_tableau(int n)` (avec `calloc`) ; `main` l'appelle, teste `NULL`, remplit, affiche, puis fait le `free`.",
+     "consigne": "Écris `int *creer_tableau(int n)` (avec `calloc`). Dans `main`, remplace le tableau par `int *t = creer_tableau(n);`, teste `NULL`, remplis, affiche, puis fais le `free`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "3",
-        "sortie": "10 20 30"
+        "entree": "[[N]]",
+        "sortie": "[[S3_0]]"
        },
        {
         "entree": "1",
-        "sortie": "10"
+        "sortie": "[[S3_1]]"
+       },
+       {
+        "entree": "[[N2]]",
+        "sortie": "[[S3_2]]"
        }
       ],
-      "exemple": "#include <stdio.h>\n#include <stdlib.h>\n\nint *creer_tableau(int n) {\n    return calloc(n, sizeof(int));\n}\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    int *t = creer_tableau(n);\n    if (t == NULL) return 1;\n    for (int i = 0; i < n; i++) {\n        t[i] = 10 * (i + 1);\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    free(t);\n    return 0;\n}",
       "nombres": true,
+      "exemple": "#include <stdio.h>\n#include <stdlib.h>\n\nint *creer_tableau(int n) {\n    return calloc(n, sizeof(int));\n}\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    int *t = creer_tableau(n);\n    if (t == NULL) return 1;\n    for (int i = 0; i < n; i++) {\n        t[i] = [[K]] * (i + 1);\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    free(t);\n    return 0;\n}",
       "exige": [
        {
         "motif": "int\\s*\\*\\s*creer_tableau\\s*\\(",
@@ -1261,13 +1941,105 @@
        }
       ]
      },
-     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n#include <stdlib.h>\n\nint *creer_tableau(int n) {\n    return calloc(n, sizeof(int));\n}\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    int *t = creer_tableau(n);\n    if (t == NULL) return 1;\n    for (int i = 0; i < n; i++) {\n        t[i] = 10 * (i + 1);\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    free(t);\n    return 0;\n}\n```",
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n#include <stdlib.h>\n\nint *creer_tableau(int n) {\n    return calloc(n, sizeof(int));\n}\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    int *t = creer_tableau(n);\n    if (t == NULL) return 1;\n    for (int i = 0; i < n; i++) {\n        t[i] = [[K]] * (i + 1);\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    free(t);\n    return 0;\n}\n```",
      "indices": [
       "La fonction tient en une ligne : `return calloc(n, sizeof(int));`.",
-      "`int *t = creer_tableau(n); if (t == NULL) return 1;` puis `free(t);` en fin de `main`."
+      "`int *t = creer_tableau(n); if (t == NULL) return 1;` puis `free(t);` à la fin de `main`."
      ],
      "duree": 2.8,
-     "depart": "#include <stdio.h>\n\nint main(void) {\n    int t[20], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        t[i] = 10 * (i + 1);\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    return 0;\n}"
+     "depart": "#include <stdio.h>\n\nint main(void) {\n    int t[20], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        t[i] = [[K]] * (i + 1);\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    return 0;\n}"
+    }
+   ],
+   "vals": {
+    "K": "10",
+    "N": "6",
+    "N2": "11",
+    "S2_0": "10 20 30 40 50 60 ",
+    "S2_1": "10 ",
+    "S3_0": "10 20 30 40 50 60 ",
+    "S3_1": "10 ",
+    "S3_2": "10 20 30 40 50 60 70 80 90 100 110 "
+   },
+   "variantes": [
+    {
+     "K": "10",
+     "N": "6",
+     "N2": "11",
+     "S2_0": "10 20 30 40 50 60 ",
+     "S2_1": "10 ",
+     "S3_0": "10 20 30 40 50 60 ",
+     "S3_1": "10 ",
+     "S3_2": "10 20 30 40 50 60 70 80 90 100 110 "
+    },
+    {
+     "K": "25",
+     "N": "4",
+     "N2": "8",
+     "S2_0": "25 50 75 100 ",
+     "S2_1": "25 ",
+     "S3_0": "25 50 75 100 ",
+     "S3_1": "25 ",
+     "S3_2": "25 50 75 100 125 150 175 200 "
+    },
+    {
+     "K": "3",
+     "N": "3",
+     "N2": "8",
+     "S2_0": "3 6 9 ",
+     "S2_1": "3 ",
+     "S3_0": "3 6 9 ",
+     "S3_1": "3 ",
+     "S3_2": "3 6 9 12 15 18 21 24 "
+    },
+    {
+     "K": "25",
+     "N": "7",
+     "N2": "11",
+     "S2_0": "25 50 75 100 125 150 175 ",
+     "S2_1": "25 ",
+     "S3_0": "25 50 75 100 125 150 175 ",
+     "S3_1": "25 ",
+     "S3_2": "25 50 75 100 125 150 175 200 225 250 275 "
+    },
+    {
+     "K": "2",
+     "N": "6",
+     "N2": "11",
+     "S2_0": "2 4 6 8 10 12 ",
+     "S2_1": "2 ",
+     "S3_0": "2 4 6 8 10 12 ",
+     "S3_1": "2 ",
+     "S3_2": "2 4 6 8 10 12 14 16 18 20 22 "
+    },
+    {
+     "K": "25",
+     "N": "6",
+     "N2": "12",
+     "S2_0": "25 50 75 100 125 150 ",
+     "S2_1": "25 ",
+     "S3_0": "25 50 75 100 125 150 ",
+     "S3_1": "25 ",
+     "S3_2": "25 50 75 100 125 150 175 200 225 250 275 300 "
+    },
+    {
+     "K": "2",
+     "N": "6",
+     "N2": "12",
+     "S2_0": "2 4 6 8 10 12 ",
+     "S2_1": "2 ",
+     "S3_0": "2 4 6 8 10 12 ",
+     "S3_1": "2 ",
+     "S3_2": "2 4 6 8 10 12 14 16 18 20 22 24 "
+    },
+    {
+     "K": "10",
+     "N": "5",
+     "N2": "10",
+     "S2_0": "10 20 30 40 50 ",
+     "S2_1": "10 ",
+     "S3_0": "10 20 30 40 50 ",
+     "S3_1": "10 ",
+     "S3_2": "10 20 30 40 50 60 70 80 90 100 "
     }
    ]
   },
@@ -1277,12 +2049,12 @@
    "notion": "9.5",
    "origine": "generee",
    "titre": "Notes d'une classe de taille variable",
-   "enonce": "Écris un programme qui lit le nombre d'élèves `n`, puis leurs `n` notes (entiers), et affiche la moyenne (2 décimales) puis le nombre de notes au-dessus de la moyenne. Le tableau de notes est alloué **dynamiquement** (on ne connaît pas `n` à l'avance).",
-   "guidage": "**Plan** : 1. lire `n`, `malloc` du tableau de notes → 2. lire les notes en cumulant la somme → 3. moyenne `(double)s / n` → 4. **reparcourir** le tableau pour compter `notes[i] > moy` → 5. afficher, `free`.\n\n**Pourquoi un tableau ?** La moyenne n'est connue qu'à la fin de la saisie : il faut garder les notes pour les recomparer.",
+   "enonce": "Écris un programme qui lit le nombre d'élèves `n`, puis leurs `n` notes (entiers), et affiche la moyenne (2 décimales) puis le **nombre de notes au-dessus de la moyenne**. Le tableau de notes est alloué **dynamiquement**, puisqu'on ne connaît pas `n` à l'avance.\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S3_0]]\n```",
+   "guidage": "**Plan** : 1. lire `n`, allouer le tableau → 2. lire les notes en cumulant la somme → 3. moyenne réelle → 4. **reparcourir** le tableau pour compter les notes `> moy` → 5. afficher, `free`.\n\n**Pourquoi un tableau ?** La moyenne n'est connue qu'à la fin de la saisie : il faut garder les notes pour les comparer ensuite.",
    "duree": 6,
    "etapes": [
     {
-     "consigne": "Pourquoi faut-il **conserver** les notes au lieu de seulement cumuler la somme ? (idée en quelques mots)",
+     "consigne": "On pourrait se contenter de cumuler la somme au fil de la saisie… Pourquoi faut-il quand même **garder** toutes les notes dans un tableau ? (quelques mots)",
      "question": "Pourquoi garder les notes ?",
      "verif": {
       "mode": "regex",
@@ -1298,7 +2070,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Écris le calcul de la moyenne `moy` (réelle) à partir de la somme entière `s` et de `n`.",
+     "consigne": "La somme `s` et `n` sont des `int`. Écris la déclaration de `double moy` qui calcule la moyenne **avec ses décimales** (pense à la division entière).",
      "question": "Calcul de `moy` ?",
      "verif": {
       "mode": "regex",
@@ -1314,18 +2086,18 @@
      "guideSeul": true
     },
     {
-     "consigne": "Avec un tableau **statique** `int notes[100]` : lis `n` puis `n` notes, affiche la moyenne (2 décimales) puis le nombre de notes strictement supérieures à la moyenne.",
+     "consigne": "Premier jalon, avec un tableau ordinaire `int notes[100]` : lis `n` puis les `n` notes (en cumulant la somme), affiche la moyenne (2 décimales) puis le nombre de notes **strictement** supérieures à la moyenne.",
      "question": "Version statique.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "4\n10 12 14 16",
-        "sortie": "13.00 2"
+        "entree": "[[E0]]",
+        "sortie": "[[S2_0]]"
        },
        {
-        "entree": "3\n5 5 20",
-        "sortie": "10.00 1"
+        "entree": "[[E1]]",
+        "sortie": "[[S2_1]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint main(void) {\n    int notes[100], n, s = 0, nb = 0;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        scanf(\"%d\", &notes[i]);\n        s += notes[i];\n    }\n    double moy = (double)s / n;\n    for (int i = 0; i < n; i++) {\n        if (notes[i] > moy) nb++;\n    }\n    printf(\"%.2f %d\\n\", moy, nb);\n    return 0;\n}"
@@ -1339,18 +2111,22 @@
      "guideSeul": true
     },
     {
-     "consigne": "La classe n'a plus de taille maximale : alloue `notes` dynamiquement (`n` entiers, test `NULL`) et libère-le à la fin.",
+     "consigne": "La classe n'a plus de taille maximale : remplace `int notes[100]` par un bloc de `n` entiers obtenu avec `malloc` (après la lecture de `n`, avec le test `NULL`), et libère-le à la fin.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "4\n10 12 14 16",
-        "sortie": "13.00 2"
+        "entree": "[[E0]]",
+        "sortie": "[[S3_0]]"
        },
        {
-        "entree": "3\n5 5 20",
-        "sortie": "10.00 1"
+        "entree": "[[E1]]",
+        "sortie": "[[S3_1]]"
+       },
+       {
+        "entree": "[[E2]]",
+        "sortie": "[[S3_2]]"
        }
       ],
       "exemple": "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int n, s = 0, nb = 0;\n    scanf(\"%d\", &n);\n    int *notes = malloc(n * sizeof(int));\n    if (notes == NULL) return 1;\n    for (int i = 0; i < n; i++) {\n        scanf(\"%d\", &notes[i]);\n        s += notes[i];\n    }\n    double moy = (double)s / n;\n    for (int i = 0; i < n; i++) {\n        if (notes[i] > moy) nb++;\n    }\n    printf(\"%.2f %d\\n\", moy, nb);\n    free(notes);\n    return 0;\n}",
@@ -1373,6 +2149,98 @@
      ],
      "duree": 2.99,
      "depart": "#include <stdio.h>\n\nint main(void) {\n    int notes[100], n, s = 0, nb = 0;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        scanf(\"%d\", &notes[i]);\n        s += notes[i];\n    }\n    double moy = (double)s / n;\n    for (int i = 0; i < n; i++) {\n        if (notes[i] > moy) nb++;\n    }\n    printf(\"%.2f %d\\n\", moy, nb);\n    return 0;\n}"
+    }
+   ],
+   "vals": {
+    "E0": "8\n15 7 4 9 17 13 11 19",
+    "E1": "3\n5 5 20",
+    "E2": "3\n15 7 16",
+    "S2_0": "11.88 4",
+    "S2_1": "10.00 1",
+    "S3_0": "11.88 4",
+    "S3_1": "10.00 1",
+    "S3_2": "12.67 2"
+   },
+   "variantes": [
+    {
+     "E0": "8\n15 7 4 9 17 13 11 19",
+     "E1": "3\n5 5 20",
+     "E2": "3\n15 7 16",
+     "S2_0": "11.88 4",
+     "S2_1": "10.00 1",
+     "S3_0": "11.88 4",
+     "S3_1": "10.00 1",
+     "S3_2": "12.67 2"
+    },
+    {
+     "E0": "8\n19 6 9 15 12 11 10 7",
+     "E1": "3\n5 5 18",
+     "E2": "6\n4 7 10 18 17 11",
+     "S2_0": "11.12 3",
+     "S2_1": "9.33 1",
+     "S3_0": "11.12 3",
+     "S3_1": "9.33 1",
+     "S3_2": "11.17 2"
+    },
+    {
+     "E0": "8\n12 11 14 8 11 17 17 19",
+     "E1": "3\n5 5 18",
+     "E2": "3\n8 9 20",
+     "S2_0": "13.62 4",
+     "S2_1": "9.33 1",
+     "S3_0": "13.62 4",
+     "S3_1": "9.33 1",
+     "S3_2": "12.33 1"
+    },
+    {
+     "E0": "8\n9 16 8 4 14 12 20 7",
+     "E1": "3\n5 5 20",
+     "E2": "5\n1 7 1 18 8",
+     "S2_0": "11.25 4",
+     "S2_1": "10.00 1",
+     "S3_0": "11.25 4",
+     "S3_1": "10.00 1",
+     "S3_2": "7.00 2"
+    },
+    {
+     "E0": "6\n12 8 4 13 16 11",
+     "E1": "3\n5 5 17",
+     "E2": "6\n8 17 16 6 0 16",
+     "S2_0": "10.67 4",
+     "S2_1": "9.00 1",
+     "S3_0": "10.67 4",
+     "S3_1": "9.00 1",
+     "S3_2": "10.50 3"
+    },
+    {
+     "E0": "5\n17 7 20 13 17",
+     "E1": "3\n5 5 19",
+     "E2": "5\n2 10 2 17 8",
+     "S2_0": "14.80 3",
+     "S2_1": "9.67 1",
+     "S3_0": "14.80 3",
+     "S3_1": "9.67 1",
+     "S3_2": "7.80 3"
+    },
+    {
+     "E0": "4\n9 17 18 13",
+     "E1": "3\n5 5 15",
+     "E2": "5\n10 18 13 20 11",
+     "S2_0": "14.25 2",
+     "S2_1": "8.33 1",
+     "S3_0": "14.25 2",
+     "S3_1": "8.33 1",
+     "S3_2": "14.40 2"
+    },
+    {
+     "E0": "6\n12 6 8 5 16 9",
+     "E1": "3\n5 5 16",
+     "E2": "6\n13 9 3 5 14 19",
+     "S2_0": "9.33 2",
+     "S2_1": "8.67 1",
+     "S3_0": "9.33 2",
+     "S3_1": "8.67 1",
+     "S3_2": "10.50 3"
     }
    ]
   },
