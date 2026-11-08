@@ -1648,7 +1648,11 @@ function jouerMock(it, zone, opts = {}){
     S.nettoyer = () => M.finExo(it.id);
     const toutes = (it.etapes && it.etapes.length) ? it.etapes : [{question:"Réponse", verif:it.verif, corrige:it.corrige}];
     /* Classique / Mock : les étapes guideSeul (accompagnement) sont masquées ; idx = indice d'origine (le journal y fait référence) */
-    const idx = toutes.map((e, k) => k).filter(k => !toutes[k].guideSeul), etapes = idx.map(k => toutes[k]);
+    const idx = toutes.map((e, k) => k).filter(k => !toutes[k].guideSeul);
+    /* un `depart` repris d'un jalon guideSeul (son depart ou sa solution) donnerait la réponse : on repart du squelette.
+       Un depart propre à l'étape (exo « trouve le bug ») est conservé. */
+    const jalons = new Set(toutes.filter(e => e.guideSeul).flatMap(e => [e.depart, e.verif && e.verif.exemple]).filter(Boolean).map(s => String(s).trim()));
+    const etapes = idx.map(k => toutes[k]).map(e => e.depart && jalons.has(String(e.depart).trim()) ? Object.assign({}, e, {depart:undefined}) : e);
     const n = etapes.length, ctx = {module:S.mod.id, chapitre:S.chapDe[it.id]}, dTot = dureeExo(it), t0 = Date.now();
     const mode = opts.mode || "mock", avecChrono = opts.chrono !== false && !opts.examen;
     zone.innerHTML = `<article class="q exo mock">
