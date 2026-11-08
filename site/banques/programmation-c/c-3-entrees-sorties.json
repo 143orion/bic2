@@ -228,11 +228,11 @@
    "type": "qcm",
    "notion": "3.1",
    "origine": "cours",
-   "enonce": "Combien de valeurs `printf(\"%d et %d\", a, b)` consomme-t-elle ?",
+   "enonce": "Combien de valeurs `printf(\"[[FMT]]\", [[ARGS]])` attend-elle après le texte ?",
    "choix": [
-    "2",
+    "[[K]]",
     "1",
-    "3",
+    "[[K1]]",
     "0"
    ],
    "verif": {
@@ -242,7 +242,63 @@
     ]
    },
    "duree": 0.33,
-   "explication": "Deux `%d` = deux valeurs : `a` et `b`."
+   "explication": "Chaque format (`%d`, `%c`…) est remplacé par une valeur, dans l'ordre : [[K]] formats, donc **[[K]]** valeurs.",
+   "vals": {
+    "K": "2",
+    "K1": "3",
+    "FMT": "%d - %d",
+    "ARGS": "a, b"
+   },
+   "variantes": [
+    {
+     "K": "2",
+     "K1": "3",
+     "FMT": "%d - %d",
+     "ARGS": "a, b"
+    },
+    {
+     "K": "2",
+     "K1": "3",
+     "FMT": "%d et %d",
+     "ARGS": "a, b"
+    },
+    {
+     "K": "3",
+     "K1": "4",
+     "FMT": "%d, %d, %d",
+     "ARGS": "a, b, c"
+    },
+    {
+     "K": "4",
+     "K1": "5",
+     "FMT": "%d - %d - %d - %d",
+     "ARGS": "a, b, c, d"
+    },
+    {
+     "K": "2",
+     "K1": "3",
+     "FMT": "%d, %d",
+     "ARGS": "a, b"
+    },
+    {
+     "K": "3",
+     "K1": "4",
+     "FMT": "%d et %d et %d",
+     "ARGS": "a, b, c"
+    },
+    {
+     "K": "4",
+     "K1": "5",
+     "FMT": "%d et %d et %d et %d",
+     "ARGS": "a, b, c, d"
+    },
+    {
+     "K": "4",
+     "K1": "5",
+     "FMT": "%d, %d, %d, %d",
+     "ARGS": "a, b, c, d"
+    }
+   ]
   },
   {
    "id": "c3-005",
@@ -279,28 +335,122 @@
    "type": "saisie",
    "notion": "3.2",
    "origine": "cours",
-   "enonce": "Que vaut `printf(\"%.2f\", 3.14159)` ? (nombre affiché)",
+   "enonce": "Quel nombre affiche `printf(\"%.2f\", [[X]])` ?",
    "verif": {
     "mode": "numerique",
-    "attendu": 3.14
+    "attendu": "[[R]]"
    },
    "duree": 0.67,
-   "explication": "Deux décimales : 3.14."
+   "explication": "`%.2f` garde 2 chiffres après la virgule (en arrondissant) : **[[R]]**.",
+   "vals": {
+    "X": "12.2304",
+    "R": "12.23"
+   },
+   "variantes": [
+    {
+     "X": "12.2304",
+     "R": "12.23"
+    },
+    {
+     "X": "35.3928",
+     "R": "35.39"
+    },
+    {
+     "X": "37.6125",
+     "R": "37.61"
+    },
+    {
+     "X": "27.6483",
+     "R": "27.65"
+    },
+    {
+     "X": "23.3113",
+     "R": "23.31"
+    },
+    {
+     "X": "0.1482",
+     "R": "0.15"
+    },
+    {
+     "X": "36.5779",
+     "R": "36.58"
+    },
+    {
+     "X": "37.1093",
+     "R": "37.11"
+    }
+   ]
   },
   {
    "id": "c3-008",
    "type": "saisie",
    "notion": "3.2",
    "origine": "cours",
-   "enonce": "Que s'affiche avec `printf(\"%x\", 42)` ? (en minuscules)",
+   "enonce": "Que s'affiche avec `printf(\"%x\", [[N]])` ? (en minuscules)",
    "verif": {
     "mode": "exact",
     "attendu": [
-     "2a"
+     "[[R]]"
     ]
    },
    "duree": 0.67,
-   "explication": "42 en hexadécimal vaut 2a."
+   "explication": "`%x` affiche en hexadécimal : [[N]] = [[H]] × 16 + [[L]], soit **[[R]]**.",
+   "vals": {
+    "N": "188",
+    "H": "11",
+    "L": "12",
+    "R": "bc"
+   },
+   "variantes": [
+    {
+     "N": "188",
+     "H": "11",
+     "L": "12",
+     "R": "bc"
+    },
+    {
+     "N": "53",
+     "H": "3",
+     "L": "5",
+     "R": "35"
+    },
+    {
+     "N": "177",
+     "H": "11",
+     "L": "1",
+     "R": "b1"
+    },
+    {
+     "N": "244",
+     "H": "15",
+     "L": "4",
+     "R": "f4"
+    },
+    {
+     "N": "92",
+     "H": "5",
+     "L": "12",
+     "R": "5c"
+    },
+    {
+     "N": "234",
+     "H": "14",
+     "L": "10",
+     "R": "ea"
+    },
+    {
+     "N": "128",
+     "H": "8",
+     "L": "0",
+     "R": "80"
+    },
+    {
+     "N": "46",
+     "H": "2",
+     "L": "14",
+     "R": "2e"
+    }
+   ]
   },
   {
    "id": "c3-009",
@@ -451,12 +601,12 @@
    "notion": "3.3",
    "origine": "td",
    "titre": "Bonjour X",
-   "enonce": "Lire un prénom et afficher « Bonjour X » (TD Premiers pas, exercice 2).",
-   "guidage": "**Plan** : un tableau de `char` pour ranger le prénom → `scanf` → `printf` avec `%s`.\n\n**Piège** : pas de `&` devant un tableau, et on limite la taille lue.",
+   "enonce": "Écris un programme qui lit un prénom (un seul mot) et affiche `Bonjour` suivi de ce prénom. (TD Premiers pas, exercice 2)\n\n**Exemple**\n```text\nEntrée :\n[[P0]]\nSortie :\nBonjour [[P0]]\n```",
+   "guidage": "**Plan** : 1. un tableau de `char` pour ranger le prénom → 2. le lire avec `scanf` → 3. l'afficher avec `%s`.\n\n**Piège** : pas de `&` devant un tableau, et on limite le nombre de caractères lus.",
    "duree": 6.9,
    "etapes": [
     {
-     "consigne": "Déclare un tableau de 20 caractères nommé `prenom`.",
+     "consigne": "Un prénom est une suite de caractères : on le range dans un **tableau** de `char`. Déclare un tableau `prenom` de 20 caractères.",
      "question": "Écris la déclaration.",
      "verif": {
       "mode": "regex",
@@ -472,7 +622,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Lis le prénom en limitant à 19 caractères.",
+     "consigne": "Lis le prénom avec `scanf`. Deux détails : le format d'un mot est `%s`, avec un nombre devant pour ne jamais lire plus de 19 caractères (la 20e case est réservée à la fin de chaîne) ; et **pas de `&`** devant un tableau.",
      "question": "Écris l'instruction de lecture.",
      "verif": {
       "mode": "regex",
@@ -488,7 +638,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Affiche « Bonjour » suivi du prénom et d'un retour à la ligne.",
+     "consigne": "Affiche `Bonjour`, une espace, le prénom (format `%s`), puis un retour à la ligne.",
      "question": "Écris l'instruction d'affichage.",
      "verif": {
       "mode": "regex",
@@ -504,28 +654,84 @@
      "guideSeul": true
     },
     {
-     "consigne": "Écris le programme complet : il lit un prénom (un seul mot) et affiche « Bonjour » suivi du prénom.",
+     "consigne": "Assemble le tout : déclaration, lecture, affichage, dans `main`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "Lea",
-        "sortie": "Bonjour Lea"
+        "entree": "[[P0]]",
+        "sortie": "[[S3_0]]"
        },
        {
-        "entree": "Adam",
-        "sortie": "Bonjour Adam"
+        "entree": "[[P1]]",
+        "sortie": "[[S3_1]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint main(void) {\n    char prenom[20];\n    scanf(\"%19s\", prenom);\n    printf(\"Bonjour %s\\n\", prenom);\n    return 0;\n}"
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    char prenom[20];\n    scanf(\"%19s\", prenom);\n    printf(\"Bonjour %s\\n\", prenom);\n    return 0;\n}\n```",
      "indices": [
-      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
-      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+      "Trois lignes dans `main` : `char prenom[20];`, `scanf(\"%19s\", prenom);`, puis le `printf`.",
+      "`printf(\"Bonjour %s\\n\", prenom);`"
      ],
      "duree": 5
+    }
+   ],
+   "vals": {
+    "P0": "Adam",
+    "P1": "Lina",
+    "S3_0": "Bonjour Adam",
+    "S3_1": "Bonjour Lina"
+   },
+   "variantes": [
+    {
+     "P0": "Adam",
+     "P1": "Lina",
+     "S3_0": "Bonjour Adam",
+     "S3_1": "Bonjour Lina"
+    },
+    {
+     "P0": "Hugo",
+     "P1": "Yanis",
+     "S3_0": "Bonjour Hugo",
+     "S3_1": "Bonjour Yanis"
+    },
+    {
+     "P0": "Sami",
+     "P1": "Jade",
+     "S3_0": "Bonjour Sami",
+     "S3_1": "Bonjour Jade"
+    },
+    {
+     "P0": "Lea",
+     "P1": "Jade",
+     "S3_0": "Bonjour Lea",
+     "S3_1": "Bonjour Jade"
+    },
+    {
+     "P0": "Jade",
+     "P1": "Lina",
+     "S3_0": "Bonjour Jade",
+     "S3_1": "Bonjour Lina"
+    },
+    {
+     "P0": "Hugo",
+     "P1": "Jade",
+     "S3_0": "Bonjour Hugo",
+     "S3_1": "Bonjour Jade"
+    },
+    {
+     "P0": "Adam",
+     "P1": "Noah",
+     "S3_0": "Bonjour Adam",
+     "S3_1": "Bonjour Noah"
+    },
+    {
+     "P0": "Yanis",
+     "P1": "Lina",
+     "S3_0": "Bonjour Yanis",
+     "S3_1": "Bonjour Lina"
     }
    ]
   },
@@ -535,12 +741,12 @@
    "notion": "3.2",
    "origine": "td",
    "titre": "Quatre opérations sur deux entiers",
-   "enonce": "Lire deux entiers puis afficher somme, différence, produit et quotient (TD Premiers pas, exercice 3). On saisit a = 17 et b = 5.",
-   "guidage": "**Plan** : une lecture avec deux `%d`, puis un affichage par opération.\n\n**Piège** : `a / b` avec des `int` est entier ; pour afficher 3,40 il faut convertir un opérande.",
+   "enonce": "Écris un programme qui lit deux entiers `a` et `b`, puis affiche sur une ligne : leur somme, leur différence, leur produit, puis leur **quotient réel** avec 2 décimales. (TD Premiers pas, exercice 3)\n\n**Exemple**\n```text\nEntrée :\n[[A]] [[B]]\nSortie :\n[[S3_0]]\n```",
+   "guidage": "**Plan** : une lecture avec deux `%d`, puis un seul `printf` pour les quatre résultats.\n\n**Piège** : `a / b` entre deux `int` est une division entière ; pour obtenir [[QR]], il faut convertir un opérande en réel.",
    "duree": 8,
    "etapes": [
     {
-     "consigne": "Lis les deux entiers en une seule instruction.",
+     "consigne": "Lis les deux entiers `a` et `b` avec **un seul** `scanf` : un `%d` par variable, et un `&` devant chaque nom de variable.",
      "question": "Écris le `scanf` (variables `a` et `b`).",
      "verif": {
       "mode": "regex",
@@ -556,51 +762,51 @@
      "guideSeul": true
     },
     {
-     "consigne": "`printf(\"%d\", a / b)` avec a = 17 et b = 5.",
+     "consigne": "Avec `a = [[A]]` et `b = [[B]]`, quel nombre affiche `printf(\"%d\", a / b)` ? Rappel : deux `int` donnent une division entière.",
      "question": "Quel nombre s'affiche ?",
      "verif": {
       "mode": "numerique",
-      "attendu": 3
+      "attendu": "[[Q]]"
      },
-     "corrige": "Division entière : 3.",
+     "corrige": "Division entière : [[A]] / [[B]] = **[[Q]]** (le reste [[RE]] est perdu).",
      "indices": [
-      "Deux `int` donnent une division entière."
+      "Combien de fois [[B]] rentre-t-il dans [[A]] ?"
      ],
      "duree": 0.5,
      "guideSeul": true
     },
     {
-     "consigne": "`printf(\"%.2f\", (double)a / b)`.",
+     "consigne": "Et `printf(\"%.2f\", (double)a / b)` ? Le `(double)` convertit `a` **avant** la division, qui devient réelle.",
      "question": "Quel nombre s'affiche ?",
      "verif": {
       "mode": "numerique",
-      "attendu": 3.4
+      "attendu": "[[QR]]"
      },
-     "corrige": "(double)17 / 5 = 3,4 → affiché 3.40.",
+     "corrige": "(double)[[A]] / [[B]] = [[QR]].",
      "indices": [
       "Le cast agit sur `a` avant la division.",
-      "17 / 5 = 3,4."
+      "[[A]] / [[B]] ≈ [[QR]]."
      ],
      "duree": 0.7,
      "guideSeul": true
     },
     {
-     "consigne": "Écris le programme qui lit a et b puis affiche sur une ligne : somme, différence, produit, puis le quotient réel avec 2 décimales.",
+     "consigne": "Écris le programme : lis `a` et `b`, puis affiche sur une ligne `somme différence produit quotient`, le quotient réel avec 2 décimales.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "17 5",
-        "sortie": "22 12 85 3.40"
+        "entree": "[[A]] [[B]]",
+        "sortie": "[[S3_0]]"
        },
        {
-        "entree": "9 4",
-        "sortie": "13 5 36 2.25"
+        "entree": "[[E1]]",
+        "sortie": "[[S3_1]]"
        },
        {
         "entree": "7 2",
-        "sortie": "9 5 14 3.50"
+        "sortie": "[[S3_2]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint main(void) {\n    int a, b;\n    scanf(\"%d %d\", &a, &b);\n    printf(\"%d %d %d %.2f\\n\", a + b, a - b, a * b, (double)a / b);\n    return 0;\n}",
@@ -608,10 +814,111 @@
      },
      "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int a, b;\n    scanf(\"%d %d\", &a, &b);\n    printf(\"%d %d %d %.2f\\n\", a + b, a - b, a * b, (double)a / b);\n    return 0;\n}\n```",
      "indices": [
-      "Reprends les étapes précédentes : chaque instruction que tu as trouvée est une ligne du programme.",
-      "N'oublie ni `#include <stdio.h>`, ni `return 0;`."
+      "Format : `\"%d %d %d %.2f\\n\"`.",
+      "Le quatrième argument est `(double)a / b`."
      ],
      "duree": 6
+    }
+   ],
+   "vals": {
+    "A": "13",
+    "B": "2",
+    "E1": "97 6",
+    "Q": "6",
+    "RE": "1",
+    "QR": "6.50",
+    "S3_0": "15 11 26 6.50",
+    "S3_1": "103 91 582 16.17",
+    "S3_2": "9 5 14 3.50"
+   },
+   "variantes": [
+    {
+     "A": "13",
+     "B": "2",
+     "E1": "97 6",
+     "Q": "6",
+     "RE": "1",
+     "QR": "6.50",
+     "S3_0": "15 11 26 6.50",
+     "S3_1": "103 91 582 16.17",
+     "S3_2": "9 5 14 3.50"
+    },
+    {
+     "A": "28",
+     "B": "5",
+     "E1": "49 6",
+     "Q": "5",
+     "RE": "3",
+     "QR": "5.60",
+     "S3_0": "33 23 140 5.60",
+     "S3_1": "55 43 294 8.17",
+     "S3_2": "9 5 14 3.50"
+    },
+    {
+     "A": "20",
+     "B": "8",
+     "E1": "41 4",
+     "Q": "2",
+     "RE": "4",
+     "QR": "2.50",
+     "S3_0": "28 12 160 2.50",
+     "S3_1": "45 37 164 10.25",
+     "S3_2": "9 5 14 3.50"
+    },
+    {
+     "A": "44",
+     "B": "8",
+     "E1": "86 4",
+     "Q": "5",
+     "RE": "4",
+     "QR": "5.50",
+     "S3_0": "52 36 352 5.50",
+     "S3_1": "90 82 344 21.50",
+     "S3_2": "9 5 14 3.50"
+    },
+    {
+     "A": "8",
+     "B": "5",
+     "E1": "23 7",
+     "Q": "1",
+     "RE": "3",
+     "QR": "1.60",
+     "S3_0": "13 3 40 1.60",
+     "S3_1": "30 16 161 3.29",
+     "S3_2": "9 5 14 3.50"
+    },
+    {
+     "A": "43",
+     "B": "2",
+     "E1": "58 4",
+     "Q": "21",
+     "RE": "1",
+     "QR": "21.50",
+     "S3_0": "45 41 86 21.50",
+     "S3_1": "62 54 232 14.50",
+     "S3_2": "9 5 14 3.50"
+    },
+    {
+     "A": "28",
+     "B": "5",
+     "E1": "78 7",
+     "Q": "5",
+     "RE": "3",
+     "QR": "5.60",
+     "S3_0": "33 23 140 5.60",
+     "S3_1": "85 71 546 11.14",
+     "S3_2": "9 5 14 3.50"
+    },
+    {
+     "A": "35",
+     "B": "8",
+     "E1": "15 7",
+     "Q": "4",
+     "RE": "3",
+     "QR": "4.38",
+     "S3_0": "43 27 280 4.38",
+     "S3_1": "22 8 105 2.14",
+     "S3_2": "9 5 14 3.50"
     }
    ]
   },
@@ -620,43 +927,175 @@
    "type": "saisie",
    "notion": "3.2",
    "origine": "cours",
-   "enonce": "Qu'affiche ce code ?\n```c\nprintf(\"%d %d\\n\", 5 / 2, 5 % 2);\n```",
+   "enonce": "Qu'affiche ce code ?\n```c\nprintf(\"%d %d\\n\", [[A]] / [[B]], [[A]] % [[B]]);\n```",
    "verif": {
     "mode": "exact",
     "attendu": [
-     "2 1"
+     "[[Q]] [[R]]"
     ]
    },
    "duree": 0.67,
-   "explication": "5 / 2 = 2 (division entière) et 5 % 2 = 1."
+   "explication": "[[A]] = [[Q]] × [[B]] + [[R]] : la division entière donne [[Q]] et le reste vaut [[R]].",
+   "vals": {
+    "A": "12",
+    "B": "6",
+    "Q": "2",
+    "R": "0"
+   },
+   "variantes": [
+    {
+     "A": "12",
+     "B": "6",
+     "Q": "2",
+     "R": "0"
+    },
+    {
+     "A": "37",
+     "B": "3",
+     "Q": "12",
+     "R": "1"
+    },
+    {
+     "A": "35",
+     "B": "2",
+     "Q": "17",
+     "R": "1"
+    },
+    {
+     "A": "36",
+     "B": "6",
+     "Q": "6",
+     "R": "0"
+    },
+    {
+     "A": "18",
+     "B": "5",
+     "Q": "3",
+     "R": "3"
+    },
+    {
+     "A": "17",
+     "B": "3",
+     "Q": "5",
+     "R": "2"
+    },
+    {
+     "A": "24",
+     "B": "7",
+     "Q": "3",
+     "R": "3"
+    },
+    {
+     "A": "28",
+     "B": "6",
+     "Q": "4",
+     "R": "4"
+    }
+   ]
   },
   {
    "id": "c3-017",
    "type": "saisie",
    "notion": "3.1",
    "origine": "cours",
-   "enonce": "Qu'affiche `printf(\"[%c%c]\", 'O', 'K');` ?",
+   "enonce": "Qu'affiche `printf(\"[%c%c]\", '[[X]]', '[[Y]]');` ?",
    "verif": {
     "mode": "exact",
     "attendu": [
-     "[OK]"
+     "[[[X]][[Y]]]"
     ]
    },
    "duree": 0.67,
-   "explication": "Les deux `%c` sont remplacés par O puis K."
+   "explication": "Les deux `%c` sont remplacés, dans l'ordre, par `[[X]]` puis `[[Y]]` ; les crochets sont du texte ordinaire.",
+   "vals": {
+    "X": "A",
+    "Y": "G"
+   },
+   "variantes": [
+    {
+     "X": "A",
+     "Y": "G"
+    },
+    {
+     "X": "I",
+     "Y": "F"
+    },
+    {
+     "X": "U",
+     "Y": "J"
+    },
+    {
+     "X": "Y",
+     "Y": "R"
+    },
+    {
+     "X": "V",
+     "Y": "O"
+    },
+    {
+     "X": "W",
+     "Y": "P"
+    },
+    {
+     "X": "L",
+     "Y": "Y"
+    },
+    {
+     "X": "L",
+     "Y": "G"
+    }
+   ]
   },
   {
    "id": "c3-018",
    "type": "saisie",
    "notion": "3.2",
    "origine": "cours",
-   "enonce": "Quel nombre affiche `printf(\"%d\", 'B');` ? (code ASCII)",
+   "enonce": "Quel nombre affiche `printf(\"%d\", '[[C]]');` ? (code ASCII)",
    "verif": {
     "mode": "numerique",
-    "attendu": 66
+    "attendu": "[[R]]"
    },
    "duree": 0.67,
-   "explication": "Un `char` est un petit entier : 'A' vaut 65, donc 'B' vaut 66."
+   "explication": "Un `char` est un petit entier : 'A' vaut 65, 'a' vaut 97, et les lettres se suivent. '[[C]]' vaut donc **[[R]]**.",
+   "vals": {
+    "C": "z",
+    "R": "122"
+   },
+   "variantes": [
+    {
+     "C": "z",
+     "R": "122"
+    },
+    {
+     "C": "r",
+     "R": "114"
+    },
+    {
+     "C": "X",
+     "R": "88"
+    },
+    {
+     "C": "k",
+     "R": "107"
+    },
+    {
+     "C": "F",
+     "R": "70"
+    },
+    {
+     "C": "P",
+     "R": "80"
+    },
+    {
+     "C": "R",
+     "R": "82"
+    },
+    {
+     "C": "S",
+     "R": "83"
+    }
+   ]
   },
   {
    "id": "c3-019",
@@ -685,57 +1124,57 @@
    "notion": "3.2",
    "origine": "generee",
    "titre": "Ticket de caisse",
-   "enonce": "Écris un programme qui lit un prix unitaire (réel) puis une quantité (entier), et affiche sur une ligne : le total HT, la TVA à 20 %, puis le total TTC, chacun avec 2 décimales.\n\nExemple : `2.5 4` → `10.00 2.00 12.00`.",
+   "enonce": "Écris un programme qui lit un prix unitaire (réel) puis une quantité (entier), et affiche sur une ligne le **total HT**, la **TVA à 20 %** et le **total TTC**, chacun avec 2 décimales.\n\n**Exemple**\n```text\nEntrée :\n[[P]] [[Q]]\nSortie :\n[[S3_0]]\n```",
    "guidage": "**Plan** : 1. lire le prix (`%lf`) et la quantité (`%d`) → 2. HT = prix × quantité → 3. TVA = HT × 0,2 → 4. TTC = HT + TVA → 5. afficher avec `%.2f`.",
    "duree": 5,
    "etapes": [
     {
-     "consigne": "Pour un prix de 2.5 et une quantité de 4, quel est le total HT ?",
+     "consigne": "Pour un prix de [[P]] € et une quantité de [[Q]], quel est le total HT (prix × quantité) ?",
      "question": "Total HT ?",
      "verif": {
       "mode": "numerique",
-      "attendu": 10
+      "attendu": "[[HT]]"
      },
-     "corrige": "2,5 × 4 = 10.",
+     "corrige": "[[P]] × [[Q]] = [[HT]].",
      "indices": [
       "Prix × quantité.",
-      "10"
+      "[[HT]]"
      ],
      "duree": 0.4,
      "guideSeul": true
     },
     {
-     "consigne": "Pour un total HT de 10, quel est le montant de la TVA à 20 % ?",
+     "consigne": "La TVA à 20 % représente 20 % du HT, soit HT × 0,2. Pour un total HT de [[HT]], combien vaut la TVA ?",
      "question": "Montant de la TVA ?",
      "verif": {
       "mode": "numerique",
-      "attendu": 2
+      "attendu": "[[TVA]]"
      },
-     "corrige": "10 × 0,2 = 2.",
+     "corrige": "[[HT]] × 0,2 = [[TVA]].",
      "indices": [
       "20 % = 0,2.",
-      "2"
+      "[[TVA]]"
      ],
      "duree": 0.4,
      "guideSeul": true
     },
     {
-     "consigne": "Lis le prix (réel) et la quantité (entier), et affiche **seulement le total HT** avec 2 décimales.",
+     "consigne": "Premier jalon : lis le prix (réel) et la quantité (entier) avec un seul `scanf`, et affiche **seulement le total HT**, avec 2 décimales.",
      "question": "Affiche le total HT.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "2.5 4",
-        "sortie": "10.00"
+        "entree": "[[P]] [[Q]]",
+        "sortie": "[[S2_0]]"
        },
        {
-        "entree": "19.99 3",
-        "sortie": "59.97"
+        "entree": "[[E1]]",
+        "sortie": "[[S2_1]]"
        },
        {
         "entree": "100 1",
-        "sortie": "100.00"
+        "sortie": "[[S2_2]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint main(void) {\n    double prix;\n    int qte;\n    scanf(\"%lf %d\", &prix, &qte);\n    double ht = prix * qte;\n    printf(\"%.2f\\n\", ht);\n    return 0;\n}"
@@ -755,16 +1194,16 @@
       "mode": "c",
       "tests": [
        {
-        "entree": "2.5 4",
-        "sortie": "10.00 2.00 12.00"
+        "entree": "[[P]] [[Q]]",
+        "sortie": "[[S3_0]]"
        },
        {
-        "entree": "19.99 3",
-        "sortie": "59.97 11.99 71.96"
+        "entree": "[[E1]]",
+        "sortie": "[[S3_1]]"
        },
        {
         "entree": "100 1",
-        "sortie": "100.00 20.00 120.00"
+        "sortie": "[[S3_2]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint main(void) {\n    double prix;\n    int qte;\n    scanf(\"%lf %d\", &prix, &qte);\n    double ht = prix * qte;\n    double tva = ht * 0.2;\n    printf(\"%.2f %.2f %.2f\\n\", ht, tva, ht + tva);\n    return 0;\n}",
@@ -778,6 +1217,125 @@
      "duree": 2.7,
      "depart": "#include <stdio.h>\n\nint main(void) {\n    double prix;\n    int qte;\n    scanf(\"%lf %d\", &prix, &qte);\n    double ht = prix * qte;\n    printf(\"%.2f\\n\", ht);\n    return 0;\n}"
     }
+   ],
+   "vals": {
+    "P": "3.5",
+    "Q": "8",
+    "E1": "20.21 6",
+    "HT": "28.00",
+    "TVA": "5.60",
+    "S2_0": "28.00",
+    "S2_1": "121.26",
+    "S2_2": "100.00",
+    "S3_0": "28.00 5.60 33.60",
+    "S3_1": "121.26 24.25 145.51",
+    "S3_2": "100.00 20.00 120.00"
+   },
+   "variantes": [
+    {
+     "P": "3.5",
+     "Q": "8",
+     "E1": "20.21 6",
+     "HT": "28.00",
+     "TVA": "5.60",
+     "S2_0": "28.00",
+     "S2_1": "121.26",
+     "S2_2": "100.00",
+     "S3_0": "28.00 5.60 33.60",
+     "S3_1": "121.26 24.25 145.51",
+     "S3_2": "100.00 20.00 120.00"
+    },
+    {
+     "P": "15",
+     "Q": "8",
+     "E1": "7.93 6",
+     "HT": "120.00",
+     "TVA": "24.00",
+     "S2_0": "120.00",
+     "S2_1": "47.58",
+     "S2_2": "100.00",
+     "S3_0": "120.00 24.00 144.00",
+     "S3_1": "47.58 9.52 57.10",
+     "S3_2": "100.00 20.00 120.00"
+    },
+    {
+     "P": "3.5",
+     "Q": "6",
+     "E1": "19.68 5",
+     "HT": "21.00",
+     "TVA": "4.20",
+     "S2_0": "21.00",
+     "S2_1": "98.40",
+     "S2_2": "100.00",
+     "S3_0": "21.00 4.20 25.20",
+     "S3_1": "98.40 19.68 118.08",
+     "S3_2": "100.00 20.00 120.00"
+    },
+    {
+     "P": "15",
+     "Q": "8",
+     "E1": "24.90 2",
+     "HT": "120.00",
+     "TVA": "24.00",
+     "S2_0": "120.00",
+     "S2_1": "49.80",
+     "S2_2": "100.00",
+     "S3_0": "120.00 24.00 144.00",
+     "S3_1": "49.80 9.96 59.76",
+     "S3_2": "100.00 20.00 120.00"
+    },
+    {
+     "P": "15",
+     "Q": "6",
+     "E1": "32.12 6",
+     "HT": "90.00",
+     "TVA": "18.00",
+     "S2_0": "90.00",
+     "S2_1": "192.72",
+     "S2_2": "100.00",
+     "S3_0": "90.00 18.00 108.00",
+     "S3_1": "192.72 38.54 231.26",
+     "S3_2": "100.00 20.00 120.00"
+    },
+    {
+     "P": "3.5",
+     "Q": "6",
+     "E1": "48.64 6",
+     "HT": "21.00",
+     "TVA": "4.20",
+     "S2_0": "21.00",
+     "S2_1": "291.84",
+     "S2_2": "100.00",
+     "S3_0": "21.00 4.20 25.20",
+     "S3_1": "291.84 58.37 350.21",
+     "S3_2": "100.00 20.00 120.00"
+    },
+    {
+     "P": "3.5",
+     "Q": "4",
+     "E1": "26.64 2",
+     "HT": "14.00",
+     "TVA": "2.80",
+     "S2_0": "14.00",
+     "S2_1": "53.28",
+     "S2_2": "100.00",
+     "S3_0": "14.00 2.80 16.80",
+     "S3_1": "53.28 10.66 63.94",
+     "S3_2": "100.00 20.00 120.00"
+    },
+    {
+     "P": "1.25",
+     "Q": "4",
+     "E1": "40.37 3",
+     "HT": "5.00",
+     "TVA": "1.00",
+     "S2_0": "5.00",
+     "S2_1": "121.11",
+     "S2_2": "100.00",
+     "S3_0": "5.00 1.00 6.00",
+     "S3_1": "121.11 24.22 145.33",
+     "S3_2": "100.00 20.00 120.00"
+    }
    ]
   },
   {
@@ -786,12 +1344,12 @@
    "notion": "3.3",
    "origine": "generee",
    "titre": "Le scanf qui ne lit rien",
-   "enonce": "Ce programme doit lire un âge (entier) et une taille (réel), puis les afficher. Il contient **deux** erreurs dans les `scanf`.\n\nExemple : `20 1.75` → `20 1.75`.",
+   "enonce": "Ce programme doit lire un âge (entier) et une taille en mètres (réel), puis les afficher. Il contient **deux** erreurs dans les `scanf`.\n```c\n#include <stdio.h>\n\nint main(void) {\n    int age;\n    double taille;\n    scanf(\"%d\", age);\n    scanf(\"%f\", &taille);\n    printf(\"%d %.2f\\n\", age, taille);\n    return 0;\n}\n```\n**Exemple**\n```text\nEntrée :\n[[A]] [[T]]\nSortie :\n[[S2_0]]\n```",
    "guidage": "**Diagnostic** : 1. que reçoit `scanf` pour une variable ? → 2. quel format pour un `double` ? → 3. corriger les deux lignes.\n\n**À retenir** : `scanf` écrit dans la variable, il lui faut donc son **adresse** (`&`).",
    "duree": 3,
    "etapes": [
     {
-     "consigne": "Dans `scanf(\"%d\", age);`, que manque-t-il devant `age` ?",
+     "consigne": "`scanf` doit **écrire** dans la variable : on ne lui donne donc pas sa valeur, mais l'endroit où elle se trouve. Dans `scanf(\"%d\", age);`, que manque-t-il devant `age` ?",
      "question": "Que manque-t-il devant `age` ?",
      "verif": {
       "mode": "regex",
@@ -807,7 +1365,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Quel format `scanf` faut-il pour lire un `double` ?",
+     "consigne": "Dans `scanf`, `%f` lit un `float`. Quel format faut-il pour lire un `double` ?",
      "question": "Format `scanf` d'un `double` ?",
      "verif": {
       "mode": "exact",
@@ -824,18 +1382,18 @@
      "guideSeul": true
     },
     {
-     "consigne": "Corrige les **deux** `scanf` pour que le programme lise bien l'âge et la taille.",
+     "consigne": "Corrige les **deux** `scanf` : le programme doit afficher l'âge puis la taille avec 2 décimales.",
      "question": "Corrige le programme.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "20 1.75",
-        "sortie": "20 1.75"
+        "entree": "[[A]] [[T]]",
+        "sortie": "[[S2_0]]"
        },
        {
-        "entree": "35 1.8",
-        "sortie": "35 1.80"
+        "entree": "[[E1]]",
+        "sortie": "[[S2_1]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint main(void) {\n    int age;\n    double taille;\n    scanf(\"%d\", &age);\n    scanf(\"%lf\", &taille);\n    printf(\"%d %.2f\\n\", age, taille);\n    return 0;\n}",
@@ -856,6 +1414,71 @@
      "duree": 2.1,
      "depart": "#include <stdio.h>\n\nint main(void) {\n    int age;\n    double taille;\n    scanf(\"%d\", age);\n    scanf(\"%f\", &taille);\n    printf(\"%d %.2f\\n\", age, taille);\n    return 0;\n}"
     }
+   ],
+   "vals": {
+    "A": "23",
+    "T": "1.79",
+    "E1": "40 1.95",
+    "S2_0": "23 1.79",
+    "S2_1": "40 1.95"
+   },
+   "variantes": [
+    {
+     "A": "23",
+     "T": "1.79",
+     "E1": "40 1.95",
+     "S2_0": "23 1.79",
+     "S2_1": "40 1.95"
+    },
+    {
+     "A": "17",
+     "T": "1.77",
+     "E1": "38 1.73",
+     "S2_0": "17 1.77",
+     "S2_1": "38 1.73"
+    },
+    {
+     "A": "23",
+     "T": "1.64",
+     "E1": "59 1.71",
+     "S2_0": "23 1.64",
+     "S2_1": "59 1.71"
+    },
+    {
+     "A": "21",
+     "T": "1.89",
+     "E1": "56 1.61",
+     "S2_0": "21 1.89",
+     "S2_1": "56 1.61"
+    },
+    {
+     "A": "17",
+     "T": "1.92",
+     "E1": "55 1.57",
+     "S2_0": "17 1.92",
+     "S2_1": "55 1.57"
+    },
+    {
+     "A": "29",
+     "T": "1.93",
+     "E1": "80 1.88",
+     "S2_0": "29 1.93",
+     "S2_1": "80 1.88"
+    },
+    {
+     "A": "21",
+     "T": "1.76",
+     "E1": "47 1.83",
+     "S2_0": "21 1.76",
+     "S2_1": "47 1.83"
+    },
+    {
+     "A": "30",
+     "T": "1.78",
+     "E1": "61 1.73",
+     "S2_0": "30 1.78",
+     "S2_1": "61 1.73"
+    }
    ]
   },
   {
@@ -864,27 +1487,27 @@
    "notion": "3.2",
    "origine": "generee",
    "titre": "Caractère et code ASCII",
-   "enonce": "Écris un programme qui lit **un caractère** et affiche ce caractère, une espace, puis son code ASCII.\n\nExemple : `A` → `A 65`.",
+   "enonce": "Écris un programme qui lit **un caractère** et affiche ce caractère, une espace, puis son code ASCII.\n\n**Exemple**\n```text\nEntrée :\n[[C]]\nSortie :\n[[C]] [[CODE]]\n```",
    "guidage": "**Plan** : 1. lire un `char` avec `%c` → 2. l'afficher deux fois : en caractère (`%c`) puis en nombre (`%d`).\n\n**À retenir** : un `char` est un petit entier, son code ASCII.",
    "duree": 3,
    "etapes": [
     {
-     "consigne": "Quel est le code ASCII du caractère `A` ?",
-     "question": "Code ASCII de `A` ?",
+     "consigne": "Les codes ASCII des lettres se suivent : `'A'` vaut 65, `'B'` vaut 66… et `'a'` vaut 97. Quel est le code de `[[C]]` ?",
+     "question": "Code ASCII de `[[C]]` ?",
      "verif": {
       "mode": "numerique",
-      "attendu": 65
+      "attendu": "[[CODE]]"
      },
-     "corrige": "`'A'` vaut 65 (`'a'` vaut 97).",
+     "corrige": "`'[[C]]'` vaut **[[CODE]]**.",
      "indices": [
-      "Les majuscules commencent à 65.",
-      "65"
+      "[[BASE]], puis compte les lettres.",
+      "[[CODE]]"
      ],
      "duree": 0.33,
      "guideSeul": true
     },
     {
-     "consigne": "Quel format `printf` affiche le **code** (le nombre) d'une variable `char` ?",
+     "consigne": "Un `char` est en fait un petit entier. Quel format `printf` l'affiche sous forme de **nombre** (son code) plutôt que de lettre ?",
      "question": "Format du code ASCII ?",
      "verif": {
       "mode": "exact",
@@ -901,22 +1524,22 @@
      "guideSeul": true
     },
     {
-     "consigne": "Lis **un caractère** et affiche-le seul.",
+     "consigne": "Premier jalon : lis **un caractère** (`scanf(\" %c\", &c);`, l'espace avant `%c` ignore les blancs) et affiche-le seul.",
      "question": "Lis et affiche le caractère.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "A",
-        "sortie": "A"
+        "entree": "[[C]]",
+        "sortie": "[[S2_0]]"
        },
        {
-        "entree": "z",
-        "sortie": "z"
+        "entree": "[[D]]",
+        "sortie": "[[S2_1]]"
        },
        {
         "entree": "0",
-        "sortie": "0"
+        "sortie": "[[S2_2]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint main(void) {\n    char c;\n    scanf(\" %c\", &c);\n    printf(\"%c\\n\", c);\n    return 0;\n}"
@@ -930,22 +1553,22 @@
      "guideSeul": true
     },
     {
-     "consigne": "Affiche le caractère **puis son code ASCII**, séparés par une espace (`A 65`).",
+     "consigne": "Affiche le caractère **puis son code**, séparés par une espace : la même variable, une fois avec `%c`, une fois avec `%d`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "A",
-        "sortie": "A 65"
+        "entree": "[[C]]",
+        "sortie": "[[S3_0]]"
        },
        {
-        "entree": "z",
-        "sortie": "z 122"
+        "entree": "[[D]]",
+        "sortie": "[[S3_1]]"
        },
        {
         "entree": "0",
-        "sortie": "0 48"
+        "sortie": "[[S3_2]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint main(void) {\n    char c;\n    scanf(\" %c\", &c);\n    printf(\"%c %d\\n\", c, c);\n    return 0;\n}"
@@ -958,6 +1581,116 @@
      "duree": 1.51,
      "depart": "#include <stdio.h>\n\nint main(void) {\n    char c;\n    scanf(\" %c\", &c);\n    printf(\"%c\\n\", c);\n    return 0;\n}"
     }
+   ],
+   "vals": {
+    "C": "m",
+    "D": "n",
+    "CODE": "109",
+    "BASE": "`'a'` = 97",
+    "S2_0": "m",
+    "S2_1": "n",
+    "S2_2": "0",
+    "S3_0": "m 109",
+    "S3_1": "n 110",
+    "S3_2": "0 48"
+   },
+   "variantes": [
+    {
+     "C": "m",
+     "D": "n",
+     "CODE": "109",
+     "BASE": "`'a'` = 97",
+     "S2_0": "m",
+     "S2_1": "n",
+     "S2_2": "0",
+     "S3_0": "m 109",
+     "S3_1": "n 110",
+     "S3_2": "0 48"
+    },
+    {
+     "C": "d",
+     "D": "E",
+     "CODE": "100",
+     "BASE": "`'a'` = 97",
+     "S2_0": "d",
+     "S2_1": "E",
+     "S2_2": "0",
+     "S3_0": "d 100",
+     "S3_1": "E 69",
+     "S3_2": "0 48"
+    },
+    {
+     "C": "D",
+     "D": "N",
+     "CODE": "68",
+     "BASE": "`'A'` = 65",
+     "S2_0": "D",
+     "S2_1": "N",
+     "S2_2": "0",
+     "S3_0": "D 68",
+     "S3_1": "N 78",
+     "S3_2": "0 48"
+    },
+    {
+     "C": "Q",
+     "D": "A",
+     "CODE": "81",
+     "BASE": "`'A'` = 65",
+     "S2_0": "Q",
+     "S2_1": "A",
+     "S2_2": "0",
+     "S3_0": "Q 81",
+     "S3_1": "A 65",
+     "S3_2": "0 48"
+    },
+    {
+     "C": "q",
+     "D": "N",
+     "CODE": "113",
+     "BASE": "`'a'` = 97",
+     "S2_0": "q",
+     "S2_1": "N",
+     "S2_2": "0",
+     "S3_0": "q 113",
+     "S3_1": "N 78",
+     "S3_2": "0 48"
+    },
+    {
+     "C": "G",
+     "D": "h",
+     "CODE": "71",
+     "BASE": "`'A'` = 65",
+     "S2_0": "G",
+     "S2_1": "h",
+     "S2_2": "0",
+     "S3_0": "G 71",
+     "S3_1": "h 104",
+     "S3_2": "0 48"
+    },
+    {
+     "C": "T",
+     "D": "h",
+     "CODE": "84",
+     "BASE": "`'A'` = 65",
+     "S2_0": "T",
+     "S2_1": "h",
+     "S2_2": "0",
+     "S3_0": "T 84",
+     "S3_1": "h 104",
+     "S3_2": "0 48"
+    },
+    {
+     "C": "Q",
+     "D": "H",
+     "CODE": "81",
+     "BASE": "`'A'` = 65",
+     "S2_0": "Q",
+     "S2_1": "H",
+     "S2_2": "0",
+     "S3_0": "Q 81",
+     "S3_1": "H 72",
+     "S3_2": "0 48"
+    }
    ]
   },
   {
@@ -966,12 +1699,12 @@
    "notion": "3.3",
    "origine": "generee",
    "titre": "Fiche d'identité",
-   "enonce": "Écris un programme qui lit un prénom (un mot) puis un âge, et affiche exactement :\n```text\nPrenom : <prénom>\nAge : <âge> ans\n```\nExemple : `Lea 19` → `Prenom : Lea` puis `Age : 19 ans`.",
+   "enonce": "Écris un programme qui lit un prénom (un mot) puis un âge, et affiche exactement :\n```text\nPrenom : <prénom>\nAge : <âge> ans\n```\n**Exemple**\n```text\nEntrée :\n[[P0]] [[A0]]\nSortie :\nPrenom : [[P0]]\nAge : [[A0]] ans\n```",
    "guidage": "**Plan** : 1. un tableau `char prenom[20]` et un `int age` → 2. un seul `scanf` (`%19s %d`) → 3. deux `printf`.\n\n**À retenir** : pas de `&` devant `prenom` ; `%19s` limite la saisie à 19 caractères.",
    "duree": 4,
    "etapes": [
     {
-     "consigne": "Quel format `scanf` lit un mot dans un tableau `char prenom[20]` sans jamais dépasser sa taille ?",
+     "consigne": "Pour lire un mot dans `char prenom[20]` sans risquer de déborder, on indique dans le format le nombre maximum de caractères (une case est réservée à la fin de chaîne). Quel format ?",
      "question": "Format de lecture d'un mot ?",
      "verif": {
       "mode": "exact",
@@ -988,18 +1721,18 @@
      "guideSeul": true
     },
     {
-     "consigne": "Lis un prénom (un mot) puis un âge, et affiche **seulement** `Prenom : <prénom>`.",
+     "consigne": "Premier jalon : lis le prénom puis l'âge avec un seul `scanf` (`prenom` sans `&`, `age` avec), et affiche **seulement** la ligne `Prenom : <prénom>`.",
      "question": "Affiche la ligne du prénom.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "Lea 19",
-        "sortie": "Prenom : Lea"
+        "entree": "[[P0]] [[A0]]",
+        "sortie": "[[S1_0]]"
        },
        {
-        "entree": "Adam 20",
-        "sortie": "Prenom : Adam"
+        "entree": "[[P1]] [[A1]]",
+        "sortie": "[[S1_1]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint main(void) {\n    char prenom[20];\n    int age;\n    scanf(\"%19s %d\", prenom, &age);\n    printf(\"Prenom : %s\\n\", prenom);\n    return 0;\n}"
@@ -1019,12 +1752,12 @@
       "mode": "c",
       "tests": [
        {
-        "entree": "Lea 19",
-        "sortie": "Prenom : Lea\nAge : 19 ans"
+        "entree": "[[P0]] [[A0]]",
+        "sortie": "[[S2_0]]"
        },
        {
-        "entree": "Adam 20",
-        "sortie": "Prenom : Adam\nAge : 20 ans"
+        "entree": "[[P1]] [[A1]]",
+        "sortie": "[[S2_1]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint main(void) {\n    char prenom[20];\n    int age;\n    scanf(\"%19s %d\", prenom, &age);\n    printf(\"Prenom : %s\\n\", prenom);\n    printf(\"Age : %d ans\\n\", age);\n    return 0;\n}"
@@ -1037,6 +1770,98 @@
      "duree": 2,
      "depart": "#include <stdio.h>\n\nint main(void) {\n    char prenom[20];\n    int age;\n    scanf(\"%19s %d\", prenom, &age);\n    printf(\"Prenom : %s\\n\", prenom);\n    return 0;\n}"
     }
+   ],
+   "vals": {
+    "P0": "Sami",
+    "P1": "Noah",
+    "A0": "25",
+    "A1": "36",
+    "S1_0": "Prenom : Sami",
+    "S1_1": "Prenom : Noah",
+    "S2_0": "Prenom : Sami\nAge : 25 ans",
+    "S2_1": "Prenom : Noah\nAge : 36 ans"
+   },
+   "variantes": [
+    {
+     "P0": "Sami",
+     "P1": "Noah",
+     "A0": "25",
+     "A1": "36",
+     "S1_0": "Prenom : Sami",
+     "S1_1": "Prenom : Noah",
+     "S2_0": "Prenom : Sami\nAge : 25 ans",
+     "S2_1": "Prenom : Noah\nAge : 36 ans"
+    },
+    {
+     "P0": "Jade",
+     "P1": "Lea",
+     "A0": "25",
+     "A1": "29",
+     "S1_0": "Prenom : Jade",
+     "S1_1": "Prenom : Lea",
+     "S2_0": "Prenom : Jade\nAge : 25 ans",
+     "S2_1": "Prenom : Lea\nAge : 29 ans"
+    },
+    {
+     "P0": "Maya",
+     "P1": "Lea",
+     "A0": "21",
+     "A1": "36",
+     "S1_0": "Prenom : Maya",
+     "S1_1": "Prenom : Lea",
+     "S2_0": "Prenom : Maya\nAge : 21 ans",
+     "S2_1": "Prenom : Lea\nAge : 36 ans"
+    },
+    {
+     "P0": "Lea",
+     "P1": "Maya",
+     "A0": "21",
+     "A1": "30",
+     "S1_0": "Prenom : Lea",
+     "S1_1": "Prenom : Maya",
+     "S2_0": "Prenom : Lea\nAge : 21 ans",
+     "S2_1": "Prenom : Maya\nAge : 30 ans"
+    },
+    {
+     "P0": "Maya",
+     "P1": "Jade",
+     "A0": "20",
+     "A1": "38",
+     "S1_0": "Prenom : Maya",
+     "S1_1": "Prenom : Jade",
+     "S2_0": "Prenom : Maya\nAge : 20 ans",
+     "S2_1": "Prenom : Jade\nAge : 38 ans"
+    },
+    {
+     "P0": "Lea",
+     "P1": "Noah",
+     "A0": "21",
+     "A1": "38",
+     "S1_0": "Prenom : Lea",
+     "S1_1": "Prenom : Noah",
+     "S2_0": "Prenom : Lea\nAge : 21 ans",
+     "S2_1": "Prenom : Noah\nAge : 38 ans"
+    },
+    {
+     "P0": "Ines",
+     "P1": "Maya",
+     "A0": "19",
+     "A1": "50",
+     "S1_0": "Prenom : Ines",
+     "S1_1": "Prenom : Maya",
+     "S2_0": "Prenom : Ines\nAge : 19 ans",
+     "S2_1": "Prenom : Maya\nAge : 50 ans"
+    },
+    {
+     "P0": "Lina",
+     "P1": "Chloe",
+     "A0": "25",
+     "A1": "26",
+     "S1_0": "Prenom : Lina",
+     "S1_1": "Prenom : Chloe",
+     "S2_0": "Prenom : Lina\nAge : 25 ans",
+     "S2_1": "Prenom : Chloe\nAge : 26 ans"
+    }
    ]
   },
   {
@@ -1045,12 +1870,12 @@
    "notion": "3.3",
    "origine": "generee",
    "titre": "Somme de trois réels",
-   "enonce": "Écris un programme qui lit trois nombres réels et affiche leur somme avec **une** décimale.\n\nExemple : `1.5 2.2 3` → `6.7`.",
+   "enonce": "Écris un programme qui lit trois nombres réels et affiche leur somme avec **une** décimale.\n\n**Exemple**\n```text\nEntrée :\n[[X]] [[Y]] [[Z]]\nSortie :\n[[SOM]]\n```",
    "guidage": "**Plan** : 1. trois `double` → 2. un seul `scanf` avec trois `%lf` → 3. additionner → 4. afficher avec `%.1f`.",
    "duree": 3,
    "etapes": [
     {
-     "consigne": "Écris le **format** (entre guillemets) d'un `scanf` qui lit trois `double` séparés par des espaces.",
+     "consigne": "Écris le **format** (avec ses guillemets) d'un `scanf` qui lit trois `double` séparés par des espaces.",
      "question": "Format de lecture ?",
      "verif": {
       "mode": "regex",
@@ -1083,22 +1908,22 @@
      "guideSeul": true
     },
     {
-     "consigne": "Lis trois réels et affiche leur somme avec le format **par défaut** `%f` (6 décimales).",
+     "consigne": "Premier jalon : lis les trois réels et affiche leur somme avec le format par défaut `%f` (qui donne 6 décimales).",
      "question": "Somme avec `%f`.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "1.5 2.2 3",
-        "sortie": "6.700000"
+        "entree": "[[X]] [[Y]] [[Z]]",
+        "sortie": "[[S2_0]]"
        },
        {
         "entree": "0.1 0.2 0.3",
-        "sortie": "0.600000"
+        "sortie": "[[S2_1]]"
        },
        {
-        "entree": "-1 -2.5 10",
-        "sortie": "6.500000"
+        "entree": "[[E1]]",
+        "sortie": "[[S2_2]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint main(void) {\n    double a, b, c;\n    scanf(\"%lf %lf %lf\", &a, &b, &c);\n    printf(\"%f\\n\", a + b + c);\n    return 0;\n}",
@@ -1119,22 +1944,22 @@
      "guideSeul": true
     },
     {
-     "consigne": "Il suffit d'afficher la somme avec **une** décimale (`1.5 2.2 3` → `6.7`).",
+     "consigne": "Il ne reste qu'à changer le format : affiche la somme avec **une** décimale.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "1.5 2.2 3",
-        "sortie": "6.7"
+        "entree": "[[X]] [[Y]] [[Z]]",
+        "sortie": "[[S3_0]]"
        },
        {
         "entree": "0.1 0.2 0.3",
-        "sortie": "0.6"
+        "sortie": "[[S3_1]]"
        },
        {
-        "entree": "-1 -2.5 10",
-        "sortie": "6.5"
+        "entree": "[[E1]]",
+        "sortie": "[[S3_2]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint main(void) {\n    double a, b, c;\n    scanf(\"%lf %lf %lf\", &a, &b, &c);\n    printf(\"%.1f\\n\", a + b + c);\n    return 0;\n}",
@@ -1160,6 +1985,125 @@
      ],
      "duree": 1.5,
      "depart": "#include <stdio.h>\n\nint main(void) {\n    double a, b, c;\n    scanf(\"%lf %lf %lf\", &a, &b, &c);\n    printf(\"%f\\n\", a + b + c);\n    return 0;\n}"
+    }
+   ],
+   "vals": {
+    "X": "4.4",
+    "Y": "4.9",
+    "Z": "7",
+    "E1": "-3 -1.5 17",
+    "SOM": "16.3",
+    "S2_0": "16.300000",
+    "S2_1": "0.600000",
+    "S2_2": "12.500000",
+    "S3_0": "16.3",
+    "S3_1": "0.6",
+    "S3_2": "12.5"
+   },
+   "variantes": [
+    {
+     "X": "4.4",
+     "Y": "4.9",
+     "Z": "7",
+     "E1": "-3 -1.5 17",
+     "SOM": "16.3",
+     "S2_0": "16.300000",
+     "S2_1": "0.600000",
+     "S2_2": "12.500000",
+     "S3_0": "16.3",
+     "S3_1": "0.6",
+     "S3_2": "12.5"
+    },
+    {
+     "X": "6.1",
+     "Y": "8.9",
+     "Z": "5",
+     "E1": "-2 -3.5 19",
+     "SOM": "20.0",
+     "S2_0": "20.000000",
+     "S2_1": "0.600000",
+     "S2_2": "13.500000",
+     "S3_0": "20.0",
+     "S3_1": "0.6",
+     "S3_2": "13.5"
+    },
+    {
+     "X": "7.1",
+     "Y": "8.8",
+     "Z": "6",
+     "E1": "-5 -1.5 10",
+     "SOM": "21.9",
+     "S2_0": "21.900000",
+     "S2_1": "0.600000",
+     "S2_2": "3.500000",
+     "S3_0": "21.9",
+     "S3_1": "0.6",
+     "S3_2": "3.5"
+    },
+    {
+     "X": "8.8",
+     "Y": "7.9",
+     "Z": "4",
+     "E1": "-2 -2.5 13",
+     "SOM": "20.7",
+     "S2_0": "20.700000",
+     "S2_1": "0.600000",
+     "S2_2": "8.500000",
+     "S3_0": "20.7",
+     "S3_1": "0.6",
+     "S3_2": "8.5"
+    },
+    {
+     "X": "1.9",
+     "Y": "2.5",
+     "Z": "2",
+     "E1": "-3 -5.5 15",
+     "SOM": "6.4",
+     "S2_0": "6.400000",
+     "S2_1": "0.600000",
+     "S2_2": "6.500000",
+     "S3_0": "6.4",
+     "S3_1": "0.6",
+     "S3_2": "6.5"
+    },
+    {
+     "X": "9.2",
+     "Y": "8.3",
+     "Z": "6",
+     "E1": "-1 -4.5 16",
+     "SOM": "23.5",
+     "S2_0": "23.500000",
+     "S2_1": "0.600000",
+     "S2_2": "10.500000",
+     "S3_0": "23.5",
+     "S3_1": "0.6",
+     "S3_2": "10.5"
+    },
+    {
+     "X": "7.2",
+     "Y": "0.4",
+     "Z": "4",
+     "E1": "-1 -5.5 10",
+     "SOM": "11.6",
+     "S2_0": "11.600000",
+     "S2_1": "0.600000",
+     "S2_2": "3.500000",
+     "S3_0": "11.6",
+     "S3_1": "0.6",
+     "S3_2": "3.5"
+    },
+    {
+     "X": "0.4",
+     "Y": "1.8",
+     "Z": "9",
+     "E1": "-5 -2.5 14",
+     "SOM": "11.2",
+     "S2_0": "11.200000",
+     "S2_1": "0.600000",
+     "S2_2": "6.500000",
+     "S3_0": "11.2",
+     "S3_1": "0.6",
+     "S3_2": "6.5"
     }
    ]
   },

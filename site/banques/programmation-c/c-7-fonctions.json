@@ -435,13 +435,78 @@
    "type": "saisie",
    "notion": "7.1",
    "origine": "cours",
-   "enonce": "Qu'affiche `printf(\"%d\", multiplier(4, multiplier(2, 3)));` avec `multiplier(x, y)` qui renvoie `x * y` ?",
+   "enonce": "Qu'affiche `printf(\"%d\", multiplier([[A]], multiplier([[B]], [[C]])));` avec `multiplier(x, y)` qui renvoie `x * y` ?",
    "verif": {
     "mode": "numerique",
-    "attendu": 24
+    "attendu": "[[R]]"
    },
    "duree": 0.67,
-   "explication": "multiplier(2, 3) = 6, puis multiplier(4, 6) = 24."
+   "explication": "On évalue d'abord l'appel intérieur : `multiplier([[B]], [[C]])` vaut [[BC]]. Puis `multiplier([[A]], [[BC]])` vaut **[[R]]**.",
+   "vals": {
+    "A": "6",
+    "B": "2",
+    "C": "2",
+    "BC": "4",
+    "R": "24"
+   },
+   "variantes": [
+    {
+     "A": "6",
+     "B": "2",
+     "C": "2",
+     "BC": "4",
+     "R": "24"
+    },
+    {
+     "A": "2",
+     "B": "2",
+     "C": "3",
+     "BC": "6",
+     "R": "12"
+    },
+    {
+     "A": "6",
+     "B": "5",
+     "C": "2",
+     "BC": "10",
+     "R": "60"
+    },
+    {
+     "A": "3",
+     "B": "4",
+     "C": "5",
+     "BC": "20",
+     "R": "60"
+    },
+    {
+     "A": "3",
+     "B": "2",
+     "C": "2",
+     "BC": "4",
+     "R": "12"
+    },
+    {
+     "A": "4",
+     "B": "5",
+     "C": "2",
+     "BC": "10",
+     "R": "40"
+    },
+    {
+     "A": "5",
+     "B": "5",
+     "C": "3",
+     "BC": "15",
+     "R": "75"
+    },
+    {
+     "A": "2",
+     "B": "3",
+     "C": "3",
+     "BC": "9",
+     "R": "18"
+    }
+   ]
   },
   {
    "id": "c7-003",
@@ -494,13 +559,69 @@
    "type": "saisie",
    "notion": "7.2",
    "origine": "cours",
-   "enonce": "Que renvoie `f(7)` ?\n```c\nint f(int n) {\n    if (n > 5) return 1;\n    return 2;\n    return 3;\n}\n```",
+   "enonce": "Que renvoie `f([[N]])` ?\n```c\nint f(int n) {\n    if (n > [[S]]) return 1;\n    return 2;\n    return 3;\n}\n```",
    "verif": {
     "mode": "numerique",
-    "attendu": 1
+    "attendu": "[[R]]"
    },
    "duree": 0.67,
-   "explication": "7 > 5 : `return 1;` termine immédiatement la fonction."
+   "explication": "[[EXP]] Le `return 3;` n'est jamais atteint : un `return` quitte la fonction immédiatement.",
+   "vals": {
+    "N": "8",
+    "S": "8",
+    "R": "2",
+    "EXP": "8 > 8 est faux : on passe au `return 2;`, qui renvoie **2**."
+   },
+   "variantes": [
+    {
+     "N": "8",
+     "S": "8",
+     "R": "2",
+     "EXP": "8 > 8 est faux : on passe au `return 2;`, qui renvoie **2**."
+    },
+    {
+     "N": "11",
+     "S": "5",
+     "R": "1",
+     "EXP": "11 > 5 : le premier `return` renvoie **1**."
+    },
+    {
+     "N": "10",
+     "S": "3",
+     "R": "1",
+     "EXP": "10 > 3 : le premier `return` renvoie **1**."
+    },
+    {
+     "N": "3",
+     "S": "3",
+     "R": "2",
+     "EXP": "3 > 3 est faux : on passe au `return 2;`, qui renvoie **2**."
+    },
+    {
+     "N": "5",
+     "S": "8",
+     "R": "2",
+     "EXP": "5 > 8 est faux : on passe au `return 2;`, qui renvoie **2**."
+    },
+    {
+     "N": "11",
+     "S": "7",
+     "R": "1",
+     "EXP": "11 > 7 : le premier `return` renvoie **1**."
+    },
+    {
+     "N": "1",
+     "S": "8",
+     "R": "2",
+     "EXP": "1 > 8 est faux : on passe au `return 2;`, qui renvoie **2**."
+    },
+    {
+     "N": "3",
+     "S": "8",
+     "R": "2",
+     "EXP": "3 > 8 est faux : on passe au `return 2;`, qui renvoie **2**."
+    }
+   ]
   },
   {
    "id": "c7-006",
@@ -528,13 +649,69 @@
    "type": "saisie",
    "notion": "7.3",
    "origine": "cours",
-   "enonce": "Qu'affiche ce programme ?\n```c\nint total = 0;\nvoid ajouter(int x) { total += x; }\nint main(void) {\n    ajouter(3); ajouter(4);\n    printf(\"%d\", total);\n    return 0;\n}\n```",
+   "enonce": "Qu'affiche ce programme ?\n```c\nint total = [[T0]];\nvoid ajouter(int x) { total += x; }\nint main(void) {\n    ajouter([[A]]); ajouter([[B]]);\n    printf(\"%d\", total);\n    return 0;\n}\n```",
    "verif": {
     "mode": "numerique",
-    "attendu": 7
+    "attendu": "[[R]]"
    },
    "duree": 0.67,
-   "explication": "`total` est globale : les deux appels la modifient : 0 + 3 + 4."
+   "explication": "`total` est **globale** : les deux appels modifient la même variable. [[T0]] + [[A]] + [[B]] = **[[R]]**.",
+   "vals": {
+    "T0": "0",
+    "A": "3",
+    "B": "7",
+    "R": "10"
+   },
+   "variantes": [
+    {
+     "T0": "0",
+     "A": "3",
+     "B": "7",
+     "R": "10"
+    },
+    {
+     "T0": "0",
+     "A": "9",
+     "B": "2",
+     "R": "11"
+    },
+    {
+     "T0": "0",
+     "A": "8",
+     "B": "4",
+     "R": "12"
+    },
+    {
+     "T0": "10",
+     "A": "5",
+     "B": "6",
+     "R": "21"
+    },
+    {
+     "T0": "10",
+     "A": "9",
+     "B": "9",
+     "R": "28"
+    },
+    {
+     "T0": "10",
+     "A": "6",
+     "B": "1",
+     "R": "17"
+    },
+    {
+     "T0": "0",
+     "A": "9",
+     "B": "9",
+     "R": "18"
+    },
+    {
+     "T0": "0",
+     "A": "7",
+     "B": "7",
+     "R": "14"
+    }
+   ]
   },
   {
    "id": "c7-008",
@@ -562,26 +739,102 @@
    "type": "saisie",
    "notion": "7.4",
    "origine": "cours",
-   "enonce": "Qu'affiche ce code ?\n```c\nvoid f(int x) { x = 100; }\nint main(void) {\n    int a = 1;\n    f(a);\n    printf(\"%d\", a);\n    return 0;\n}\n```",
+   "enonce": "Qu'affiche ce code ?\n```c\nvoid f(int x) { x = [[Z]]; }\nint main(void) {\n    int a = [[A]];\n    f(a);\n    printf(\"%d\", a);\n    return 0;\n}\n```",
    "verif": {
     "mode": "numerique",
-    "attendu": 1
+    "attendu": "[[A]]"
    },
    "duree": 0.67,
-   "explication": "f a modifié une copie : `a` vaut toujours 1."
+   "explication": "`f` reçoit une **copie** de `a` : elle met sa copie à [[Z]], mais `a` garde **[[A]]**.",
+   "vals": {
+    "A": "17",
+    "Z": "99"
+   },
+   "variantes": [
+    {
+     "A": "17",
+     "Z": "99"
+    },
+    {
+     "A": "19",
+     "Z": "99"
+    },
+    {
+     "A": "18",
+     "Z": "50"
+    },
+    {
+     "A": "19",
+     "Z": "50"
+    },
+    {
+     "A": "20",
+     "Z": "99"
+    },
+    {
+     "A": "4",
+     "Z": "0"
+    },
+    {
+     "A": "17",
+     "Z": "-1"
+    },
+    {
+     "A": "17",
+     "Z": "50"
+    }
+   ]
   },
   {
    "id": "c7-010",
    "type": "saisie",
    "notion": "7.5",
    "origine": "cours",
-   "enonce": "Qu'affiche ce code ?\n```c\nvoid f(int *x) { *x = 100; }\nint main(void) {\n    int a = 1;\n    f(&a);\n    printf(\"%d\", a);\n    return 0;\n}\n```",
+   "enonce": "Qu'affiche ce code ?\n```c\nvoid f(int *x) { *x = [[Z]]; }\nint main(void) {\n    int a = [[A]];\n    f(&a);\n    printf(\"%d\", a);\n    return 0;\n}\n```",
    "verif": {
     "mode": "numerique",
-    "attendu": 100
+    "attendu": "[[Z]]"
    },
    "duree": 0.67,
-   "explication": "f reçoit l'adresse de `a` et écrit 100 dans la variable d'origine."
+   "explication": "`f` reçoit l'**adresse** de `a` : `*x` désigne `a` lui-même, qui passe à **[[Z]]**.",
+   "vals": {
+    "A": "18",
+    "Z": "0"
+   },
+   "variantes": [
+    {
+     "A": "18",
+     "Z": "0"
+    },
+    {
+     "A": "6",
+     "Z": "0"
+    },
+    {
+     "A": "11",
+     "Z": "0"
+    },
+    {
+     "A": "11",
+     "Z": "50"
+    },
+    {
+     "A": "16",
+     "Z": "99"
+    },
+    {
+     "A": "12",
+     "Z": "-1"
+    },
+    {
+     "A": "2",
+     "Z": "0"
+    },
+    {
+     "A": "19",
+     "Z": "100"
+    }
+   ]
   },
   {
    "id": "c7-011",
@@ -760,12 +1013,12 @@
    "notion": "7.1",
    "origine": "generee",
    "titre": "Fonction carré",
-   "enonce": "Écris une fonction `int carre(int x)` qui renvoie le carré de `x`, avec son **prototype avant `main`** et sa **définition après**. Dans `main`, lis `n` et affiche `carre(n)`.",
-   "guidage": "**Plan** : 1. prototype `int carre(int x);` avant `main` → 2. `main` appelle `carre(n)` → 3. définition (même en-tête, sans `;`) après `main`, avec `return x * x;`.",
+   "enonce": "Écris une fonction `int carre(int x)` qui renvoie le carré de `x`. Son **prototype** (sa déclaration, terminée par `;`) se place avant `main`, sa **définition** (avec le corps) après. Dans `main`, lis `n` et affiche `carre(n)`.\n\n**Exemple**\n```text\nEntrée :\n[[N]]\nSortie :\n[[R]]\n```",
+   "guidage": "**Pourquoi un prototype ?** Le compilateur lit le fichier de haut en bas : quand il rencontre `carre(n)` dans `main`, il doit déjà savoir que `carre` existe et ce qu'elle prend et renvoie. Le prototype le lui annonce ; la définition peut venir plus bas.",
    "duree": 4,
    "etapes": [
     {
-     "consigne": "Écris le **prototype** d'une fonction `carre` qui reçoit un `int` et renvoie un `int` (avec le `;`).",
+     "consigne": "Le prototype, c'est la première ligne de la fonction (type renvoyé, nom, paramètres), suivie d'un `;` au lieu du corps. Écris celui de `carre`, qui reçoit un `int` et renvoie un `int`.",
      "question": "Prototype de `carre` ?",
      "verif": {
       "mode": "regex",
@@ -781,7 +1034,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Écris l'instruction de la définition qui **renvoie** le carré de `x`.",
+     "consigne": "Dans la définition, une seule instruction suffit : celle qui **renvoie** le carré de `x`. Écris-la.",
      "question": "Instruction de retour ?",
      "verif": {
       "mode": "regex",
@@ -797,22 +1050,22 @@
      "guideSeul": true
     },
     {
-     "consigne": "Sans fonction pour l'instant : lis `n` dans `main` et affiche directement son carré.",
+     "consigne": "Premier jalon, sans fonction : lis `n` dans `main` et affiche directement son carré.",
      "question": "Carré dans `main`.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "4",
-        "sortie": "16"
+        "entree": "[[N]]",
+        "sortie": "[[S2_0]]"
        },
        {
-        "entree": "-3",
-        "sortie": "9"
+        "entree": "[[M]]",
+        "sortie": "[[S2_1]]"
        },
        {
         "entree": "0",
-        "sortie": "0"
+        "sortie": "[[S2_2]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    printf(\"%d\\n\", n * n);\n    return 0;\n}"
@@ -825,22 +1078,22 @@
      "guideSeul": true
     },
     {
-     "consigne": "Transforme en **fonction** : écris le prototype `int carre(int x);` avant `main`, appelle `carre(n)` dans `main`, et place la définition après `main`.",
+     "consigne": "Transforme en fonction : prototype `int carre(int x);` avant `main`, appel `carre(n)` dans le `printf`, et définition complète après `main`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "4",
-        "sortie": "16"
+        "entree": "[[N]]",
+        "sortie": "[[S3_0]]"
        },
        {
-        "entree": "-3",
-        "sortie": "9"
+        "entree": "[[M]]",
+        "sortie": "[[S3_1]]"
        },
        {
         "entree": "0",
-        "sortie": "0"
+        "sortie": "[[S3_2]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint carre(int x);\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    printf(\"%d\\n\", carre(n));\n    return 0;\n}\n\nint carre(int x) {\n    return x * x;\n}",
@@ -864,6 +1117,107 @@
      "duree": 2.1,
      "depart": "#include <stdio.h>\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    printf(\"%d\\n\", n * n);\n    return 0;\n}"
     }
+   ],
+   "vals": {
+    "N": "30",
+    "M": "-10",
+    "R": "900",
+    "S2_0": "900",
+    "S2_1": "100",
+    "S2_2": "0",
+    "S3_0": "900",
+    "S3_1": "100",
+    "S3_2": "0"
+   },
+   "variantes": [
+    {
+     "N": "30",
+     "M": "-10",
+     "R": "900",
+     "S2_0": "900",
+     "S2_1": "100",
+     "S2_2": "0",
+     "S3_0": "900",
+     "S3_1": "100",
+     "S3_2": "0"
+    },
+    {
+     "N": "30",
+     "M": "-14",
+     "R": "900",
+     "S2_0": "900",
+     "S2_1": "196",
+     "S2_2": "0",
+     "S3_0": "900",
+     "S3_1": "196",
+     "S3_2": "0"
+    },
+    {
+     "N": "20",
+     "M": "-1",
+     "R": "400",
+     "S2_0": "400",
+     "S2_1": "1",
+     "S2_2": "0",
+     "S3_0": "400",
+     "S3_1": "1",
+     "S3_2": "0"
+    },
+    {
+     "N": "20",
+     "M": "-3",
+     "R": "400",
+     "S2_0": "400",
+     "S2_1": "9",
+     "S2_2": "0",
+     "S3_0": "400",
+     "S3_1": "9",
+     "S3_2": "0"
+    },
+    {
+     "N": "17",
+     "M": "-14",
+     "R": "289",
+     "S2_0": "289",
+     "S2_1": "196",
+     "S2_2": "0",
+     "S3_0": "289",
+     "S3_1": "196",
+     "S3_2": "0"
+    },
+    {
+     "N": "28",
+     "M": "-10",
+     "R": "784",
+     "S2_0": "784",
+     "S2_1": "100",
+     "S2_2": "0",
+     "S3_0": "784",
+     "S3_1": "100",
+     "S3_2": "0"
+    },
+    {
+     "N": "22",
+     "M": "-17",
+     "R": "484",
+     "S2_0": "484",
+     "S2_1": "289",
+     "S2_2": "0",
+     "S3_0": "484",
+     "S3_1": "289",
+     "S3_2": "0"
+    },
+    {
+     "N": "3",
+     "M": "-6",
+     "R": "9",
+     "S2_0": "9",
+     "S2_1": "36",
+     "S2_2": "0",
+     "S3_0": "9",
+     "S3_1": "36",
+     "S3_2": "0"
+    }
    ]
   },
   {
@@ -872,12 +1226,12 @@
    "notion": "7.2",
    "origine": "generee",
    "titre": "Maximum et ligne de tirets",
-   "enonce": "Écris :\n- une fonction `int maximum(int a, int b)` qui renvoie le plus grand des deux ;\n- une fonction `void afficher_ligne(int n)` qui affiche `n` tirets puis un retour à la ligne.\n\n`main` lit deux entiers, affiche une ligne de tirets de la longueur du maximum, puis le maximum.\n\nExemple : `3 5` → `-----` puis `5`.",
+   "enonce": "Écris :\n- une fonction `int maximum(int a, int b)` qui renvoie le plus grand des deux ;\n- une fonction `void afficher_ligne(int n)` qui affiche `n` tirets puis un retour à la ligne.\n\n`main` lit deux entiers, affiche une ligne de tirets de la longueur du maximum, puis le maximum.\n\n**Exemple**\n```text\nEntrée :\n[[A]] [[B]]\nSortie :\n[[S3_0]]\n```",
    "guidage": "**Plan** : 1. `maximum(a, b)` renvoie une valeur (`int`) → 2. `afficher_ligne(n)` n'en renvoie aucune (`void`) → 3. `main` calcule le maximum **une fois** et l'utilise deux fois.",
    "duree": 6,
    "etapes": [
     {
-     "consigne": "Écris l'en-tête (sans le corps) de la fonction `maximum` qui reçoit deux `int` `a` et `b` et renvoie un `int`.",
+     "consigne": "Écris l'en-tête (sans le corps) de `maximum` : elle reçoit deux `int` nommés `a` et `b`, et renvoie un `int`.",
      "question": "En-tête de `maximum` ?",
      "verif": {
       "mode": "regex",
@@ -893,7 +1247,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "`afficher_ligne` affiche des tirets mais ne renvoie aucune valeur. Quel est son type de retour ?",
+     "consigne": "`afficher_ligne` affiche des tirets mais ne **renvoie** aucune valeur. Quel mot met-on à la place du type de retour ?",
      "question": "Type de retour de `afficher_ligne` ?",
      "verif": {
       "mode": "exact",
@@ -910,22 +1264,22 @@
      "guideSeul": true
     },
     {
-     "consigne": "Sans fonctions : lis `a` et `b`, calcule le maximum `m`, affiche une ligne de `m` tirets (boucle `for`) puis `m`.",
+     "consigne": "Premier jalon, sans fonctions : lis `a` et `b`, calcule le maximum `m`, affiche une ligne de `m` tirets (avec une boucle `for`), puis `m`.",
      "question": "Tout dans `main`.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "3 5",
-        "sortie": "-----\n5"
+        "entree": "[[A]] [[B]]",
+        "sortie": "[[S2_0]]"
        },
        {
-        "entree": "4 2",
-        "sortie": "----\n4"
+        "entree": "[[C]] [[D]]",
+        "sortie": "[[S2_1]]"
        },
        {
         "entree": "1 1",
-        "sortie": "-\n1"
+        "sortie": "[[S2_2]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint main(void) {\n    int a, b;\n    scanf(\"%d %d\", &a, &b);\n    int m = a;\n    if (b > m) m = b;\n    for (int i = 0; i < m; i++) printf(\"-\");\n    printf(\"\\n\");\n    printf(\"%d\\n\", m);\n    return 0;\n}"
@@ -939,22 +1293,22 @@
      "guideSeul": true
     },
     {
-     "consigne": "Extrais deux fonctions : `int maximum(int a, int b)` et `void afficher_ligne(int n)` (placées avant `main`). `main` ne fait plus que les appeler.",
+     "consigne": "Extrais les deux fonctions (placées avant `main`) : `maximum` renvoie le plus grand, `afficher_ligne` contient la boucle des tirets. `main` ne fait plus que lire, appeler les fonctions et afficher.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "3 5",
-        "sortie": "-----\n5"
+        "entree": "[[A]] [[B]]",
+        "sortie": "[[S3_0]]"
        },
        {
-        "entree": "4 2",
-        "sortie": "----\n4"
+        "entree": "[[C]] [[D]]",
+        "sortie": "[[S3_1]]"
        },
        {
         "entree": "1 1",
-        "sortie": "-\n1"
+        "sortie": "[[S3_2]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint maximum(int a, int b) {\n    if (a > b) return a;\n    return b;\n}\n\nvoid afficher_ligne(int n) {\n    for (int i = 0; i < n; i++) printf(\"-\");\n    printf(\"\\n\");\n}\n\nint main(void) {\n    int a, b;\n    scanf(\"%d %d\", &a, &b);\n    int m = maximum(a, b);\n    afficher_ligne(m);\n    printf(\"%d\\n\", m);\n    return 0;\n}",
@@ -977,6 +1331,116 @@
      "duree": 2.99,
      "depart": "#include <stdio.h>\n\nint main(void) {\n    int a, b;\n    scanf(\"%d %d\", &a, &b);\n    int m = a;\n    if (b > m) m = b;\n    for (int i = 0; i < m; i++) printf(\"-\");\n    printf(\"\\n\");\n    printf(\"%d\\n\", m);\n    return 0;\n}"
     }
+   ],
+   "vals": {
+    "A": "9",
+    "B": "3",
+    "C": "7",
+    "D": "11",
+    "S2_0": "---------\n9",
+    "S2_1": "-----------\n11",
+    "S2_2": "-\n1",
+    "S3_0": "---------\n9",
+    "S3_1": "-----------\n11",
+    "S3_2": "-\n1"
+   },
+   "variantes": [
+    {
+     "A": "9",
+     "B": "3",
+     "C": "7",
+     "D": "11",
+     "S2_0": "---------\n9",
+     "S2_1": "-----------\n11",
+     "S2_2": "-\n1",
+     "S3_0": "---------\n9",
+     "S3_1": "-----------\n11",
+     "S3_2": "-\n1"
+    },
+    {
+     "A": "9",
+     "B": "2",
+     "C": "5",
+     "D": "8",
+     "S2_0": "---------\n9",
+     "S2_1": "--------\n8",
+     "S2_2": "-\n1",
+     "S3_0": "---------\n9",
+     "S3_1": "--------\n8",
+     "S3_2": "-\n1"
+    },
+    {
+     "A": "2",
+     "B": "3",
+     "C": "4",
+     "D": "4",
+     "S2_0": "---\n3",
+     "S2_1": "----\n4",
+     "S2_2": "-\n1",
+     "S3_0": "---\n3",
+     "S3_1": "----\n4",
+     "S3_2": "-\n1"
+    },
+    {
+     "A": "9",
+     "B": "9",
+     "C": "2",
+     "D": "3",
+     "S2_0": "---------\n9",
+     "S2_1": "---\n3",
+     "S2_2": "-\n1",
+     "S3_0": "---------\n9",
+     "S3_1": "---\n3",
+     "S3_2": "-\n1"
+    },
+    {
+     "A": "6",
+     "B": "1",
+     "C": "4",
+     "D": "1",
+     "S2_0": "------\n6",
+     "S2_1": "----\n4",
+     "S2_2": "-\n1",
+     "S3_0": "------\n6",
+     "S3_1": "----\n4",
+     "S3_2": "-\n1"
+    },
+    {
+     "A": "1",
+     "B": "7",
+     "C": "5",
+     "D": "12",
+     "S2_0": "-------\n7",
+     "S2_1": "------------\n12",
+     "S2_2": "-\n1",
+     "S3_0": "-------\n7",
+     "S3_1": "------------\n12",
+     "S3_2": "-\n1"
+    },
+    {
+     "A": "8",
+     "B": "1",
+     "C": "4",
+     "D": "12",
+     "S2_0": "--------\n8",
+     "S2_1": "------------\n12",
+     "S2_2": "-\n1",
+     "S3_0": "--------\n8",
+     "S3_1": "------------\n12",
+     "S3_2": "-\n1"
+    },
+    {
+     "A": "1",
+     "B": "1",
+     "C": "4",
+     "D": "11",
+     "S2_0": "-\n1",
+     "S2_1": "-----------\n11",
+     "S2_2": "-\n1",
+     "S3_0": "-\n1",
+     "S3_1": "-----------\n11",
+     "S3_2": "-\n1"
+    }
    ]
   },
   {
@@ -985,12 +1449,12 @@
    "notion": "7.2",
    "origine": "generee",
    "titre": "est_pair",
-   "enonce": "Écris une fonction `int est_pair(int n)` qui renvoie 1 si `n` est pair, 0 sinon. `main` lit `N` puis `N` entiers et affiche **combien sont pairs**, en appelant `est_pair`.",
+   "enonce": "Écris une fonction `int est_pair(int n)` qui renvoie 1 si `n` est pair, 0 sinon. `main` lit `N` puis `N` entiers et affiche **combien sont pairs**, en appelant `est_pair`.\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S3_0]]\n```",
    "guidage": "**Plan** : 1. `est_pair(n)` renvoie 1 ou 0 → 2. `main` lit `N` valeurs, et compte celles pour lesquelles `est_pair(x)` est vrai.",
    "duree": 5,
    "etapes": [
     {
-     "consigne": "Écris l'en-tête de la fonction `est_pair` (un `int` en paramètre `n`, un `int` renvoyé).",
+     "consigne": "Écris l'en-tête de `est_pair` : un paramètre `int n`, un `int` renvoyé.",
      "question": "En-tête de `est_pair` ?",
      "verif": {
       "mode": "regex",
@@ -1006,7 +1470,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Écris l'instruction qui renvoie 1 si `n` est pair et 0 sinon, en une seule ligne.",
+     "consigne": "Une comparaison vaut déjà 1 (vrai) ou 0 (faux) : on peut la renvoyer directement, sans `if`. Écris l'instruction qui renvoie 1 si `n` est pair, 0 sinon, en une ligne.",
      "question": "Instruction de retour ?",
      "verif": {
       "mode": "regex",
@@ -1022,22 +1486,18 @@
      "guideSeul": true
     },
     {
-     "consigne": "Sans fonction : lis `N` puis `N` entiers et affiche le nombre de pairs (test `x % 2 == 0` dans `main`).",
+     "consigne": "Premier jalon, sans fonction : lis `N` puis les `N` entiers, et compte les pairs avec un test `x % 2 == 0` directement dans `main`.",
      "question": "Compte les pairs dans `main`.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "5\n1 2 3 4 6",
-        "sortie": "3"
+        "entree": "[[E0]]",
+        "sortie": "[[S2_0]]"
        },
        {
-        "entree": "2\n7 9",
-        "sortie": "0"
-       },
-       {
-        "entree": "3\n0 -2 8",
-        "sortie": "3"
+        "entree": "[[E1]]",
+        "sortie": "[[S2_1]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint main(void) {\n    int n, x, nb = 0;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        scanf(\"%d\", &x);\n        if (x % 2 == 0) nb++;\n    }\n    printf(\"%d\\n\", nb);\n    return 0;\n}"
@@ -1051,22 +1511,22 @@
      "guideSeul": true
     },
     {
-     "consigne": "Sors le test dans une fonction `int est_pair(int n)` (avant `main`) et appelle-la : `if (est_pair(x)) nb++;`.",
+     "consigne": "Sors le test dans la fonction `est_pair` (placée avant `main`), et dans la boucle de `main` écris `if (est_pair(x)) nb++;`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "5\n1 2 3 4 6",
-        "sortie": "3"
+        "entree": "[[E0]]",
+        "sortie": "[[S3_0]]"
        },
        {
-        "entree": "2\n7 9",
-        "sortie": "0"
+        "entree": "[[E1]]",
+        "sortie": "[[S3_1]]"
        },
        {
         "entree": "3\n0 -2 8",
-        "sortie": "3"
+        "sortie": "[[S3_2]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint est_pair(int n) {\n    return n % 2 == 0;\n}\n\nint main(void) {\n    int n, x, nb = 0;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        scanf(\"%d\", &x);\n        if (est_pair(x)) nb++;\n    }\n    printf(\"%d\\n\", nb);\n    return 0;\n}",
@@ -1090,6 +1550,89 @@
      "duree": 2.5,
      "depart": "#include <stdio.h>\n\nint main(void) {\n    int n, x, nb = 0;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        scanf(\"%d\", &x);\n        if (x % 2 == 0) nb++;\n    }\n    printf(\"%d\\n\", nb);\n    return 0;\n}"
     }
+   ],
+   "vals": {
+    "E0": "5\n4 -2 46 -10 -14",
+    "E1": "3\n18 45 58",
+    "S2_0": "5",
+    "S2_1": "2",
+    "S3_0": "5",
+    "S3_1": "2",
+    "S3_2": "3"
+   },
+   "variantes": [
+    {
+     "E0": "5\n4 -2 46 -10 -14",
+     "E1": "3\n18 45 58",
+     "S2_0": "5",
+     "S2_1": "2",
+     "S3_0": "5",
+     "S3_1": "2",
+     "S3_2": "3"
+    },
+    {
+     "E0": "4\n-4 -16 31 25",
+     "E1": "3\n32 10 7",
+     "S2_0": "2",
+     "S2_1": "2",
+     "S3_0": "2",
+     "S3_1": "2",
+     "S3_2": "3"
+    },
+    {
+     "E0": "6\n23 -12 -12 1 24 8",
+     "E1": "5\n59 88 66 33 2",
+     "S2_0": "4",
+     "S2_1": "3",
+     "S3_0": "4",
+     "S3_1": "3",
+     "S3_2": "3"
+    },
+    {
+     "E0": "6\n37 8 -7 -16 -3 3",
+     "E1": "5\n21 69 26 23 27",
+     "S2_0": "2",
+     "S2_1": "1",
+     "S3_0": "2",
+     "S3_1": "1",
+     "S3_2": "3"
+    },
+    {
+     "E0": "7\n42 32 49 -17 42 42 -11",
+     "E1": "2\n92 50",
+     "S2_0": "4",
+     "S2_1": "2",
+     "S3_0": "4",
+     "S3_1": "2",
+     "S3_2": "3"
+    },
+    {
+     "E0": "4\n-1 48 10 15",
+     "E1": "5\n43 40 95 67 38",
+     "S2_0": "2",
+     "S2_1": "2",
+     "S3_0": "2",
+     "S3_1": "2",
+     "S3_2": "3"
+    },
+    {
+     "E0": "4\n44 37 17 37",
+     "E1": "5\n40 96 35 74 82",
+     "S2_0": "1",
+     "S2_1": "4",
+     "S3_0": "1",
+     "S3_1": "4",
+     "S3_2": "3"
+    },
+    {
+     "E0": "5\n0 45 -10 17 -8",
+     "E1": "4\n22 44 29 31",
+     "S2_0": "3",
+     "S2_1": "2",
+     "S3_0": "3",
+     "S3_1": "2",
+     "S3_2": "3"
+    }
    ]
   },
   {
@@ -1098,12 +1641,12 @@
    "notion": "7.3",
    "origine": "generee",
    "titre": "Compteur d'appels",
-   "enonce": "Écris une variable **globale** `appels` (initialisée à 0) et une fonction `void saluer(void)` qui affiche `Bonjour` et augmente `appels`. `main` lit `n`, appelle `saluer` `n` fois, puis affiche `appels`.",
-   "guidage": "**Plan** : 1. une variable **globale** `appels` (hors de toute fonction, en haut) → 2. `saluer` affiche et fait `appels++` → 3. `main` appelle `saluer` `n` fois puis affiche `appels`.",
+   "enonce": "Écris une variable **globale** `appels` (initialisée à 0) et une fonction `void saluer(void)` qui affiche `Bonjour` et augmente `appels`. `main` lit `n`, appelle `saluer` `n` fois, puis affiche `appels`.\n\n**Exemple**\n```text\nEntrée :\n[[N]]\nSortie :\n[[S3_0]]\n```",
+   "guidage": "**À retenir** : une variable **globale** est déclarée en dehors de toute fonction ; toutes les fonctions du fichier la voient et la modifient. Une variable locale, elle, n'existe que dans sa fonction.",
    "duree": 4,
    "etapes": [
     {
-     "consigne": "Où déclare-t-on une variable **globale** ? (réponse courte)",
+     "consigne": "Pour que `saluer` et `main` voient toutes les deux la même variable `appels`, où faut-il la déclarer ? (réponse courte)",
      "question": "Où déclarer une globale ?",
      "verif": {
       "mode": "regex",
@@ -1119,37 +1662,37 @@
      "guideSeul": true
     },
     {
-     "consigne": "Si `main` appelle `saluer` 3 fois, que vaut la globale `appels` à la fin ?",
+     "consigne": "Si `main` appelle `saluer` [[K]] fois, que vaut la globale `appels` à la fin ?",
      "question": "Valeur finale de `appels` ?",
      "verif": {
       "mode": "numerique",
-      "attendu": 3
+      "attendu": "[[K]]"
      },
-     "corrige": "Chaque appel fait `appels++` : 3 appels, valeur 3.",
+     "corrige": "Chaque appel fait `appels++` sur la même variable : **[[K]]**.",
      "indices": [
-      "Un appel = une incrémentation.",
-      "3"
+      "Un appel = +1.",
+      "[[K]]"
      ],
      "duree": 0.33,
      "guideSeul": true
     },
     {
-     "consigne": "Sans fonction ni globale : lis `n`, affiche `Bonjour` `n` fois (une par ligne), puis le nombre de fois dans une variable locale `compteur`.",
+     "consigne": "Premier jalon, sans fonction ni globale : lis `n`, affiche `Bonjour` `n` fois (une par ligne) en comptant dans une variable locale `compteur`, puis affiche `compteur`.",
      "question": "Boucle et compteur local.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "3",
-        "sortie": "Bonjour\nBonjour\nBonjour\n3"
+        "entree": "[[N]]",
+        "sortie": "[[S2_0]]"
        },
        {
         "entree": "1",
-        "sortie": "Bonjour\n1"
+        "sortie": "[[S2_1]]"
        },
        {
         "entree": "0",
-        "sortie": "0"
+        "sortie": "[[S2_2]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint main(void) {\n    int n, compteur = 0;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        printf(\"Bonjour\\n\");\n        compteur++;\n    }\n    printf(\"%d\\n\", compteur);\n    return 0;\n}"
@@ -1163,22 +1706,22 @@
      "guideSeul": true
     },
     {
-     "consigne": "Remplace le compteur local par une **globale** `int appels = 0;` (en haut du fichier) et mets l'affichage de `Bonjour` + `appels++` dans une fonction `void saluer(void)`.",
+     "consigne": "Remplace le compteur local par une globale `int appels = 0;` en haut du fichier, et mets l'affichage de `Bonjour` et le `appels++` dans `void saluer(void)`. `main` appelle `saluer` dans sa boucle, puis affiche `appels`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "3",
-        "sortie": "Bonjour\nBonjour\nBonjour\n3"
+        "entree": "[[N]]",
+        "sortie": "[[S3_0]]"
        },
        {
         "entree": "1",
-        "sortie": "Bonjour\n1"
+        "sortie": "[[S3_1]]"
        },
        {
         "entree": "0",
-        "sortie": "0"
+        "sortie": "[[S3_2]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint appels = 0;\n\nvoid saluer(void) {\n    printf(\"Bonjour\\n\");\n    appels++;\n}\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        saluer();\n    }\n    printf(\"%d\\n\", appels);\n    return 0;\n}",
@@ -1197,6 +1740,98 @@
      "duree": 2,
      "depart": "#include <stdio.h>\n\nint main(void) {\n    int n, compteur = 0;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        printf(\"Bonjour\\n\");\n        compteur++;\n    }\n    printf(\"%d\\n\", compteur);\n    return 0;\n}"
     }
+   ],
+   "vals": {
+    "N": "4",
+    "K": "6",
+    "S2_0": "Bonjour\nBonjour\nBonjour\nBonjour\n4",
+    "S2_1": "Bonjour\n1",
+    "S2_2": "0",
+    "S3_0": "Bonjour\nBonjour\nBonjour\nBonjour\n4",
+    "S3_1": "Bonjour\n1",
+    "S3_2": "0"
+   },
+   "variantes": [
+    {
+     "N": "4",
+     "K": "6",
+     "S2_0": "Bonjour\nBonjour\nBonjour\nBonjour\n4",
+     "S2_1": "Bonjour\n1",
+     "S2_2": "0",
+     "S3_0": "Bonjour\nBonjour\nBonjour\nBonjour\n4",
+     "S3_1": "Bonjour\n1",
+     "S3_2": "0"
+    },
+    {
+     "N": "2",
+     "K": "12",
+     "S2_0": "Bonjour\nBonjour\n2",
+     "S2_1": "Bonjour\n1",
+     "S2_2": "0",
+     "S3_0": "Bonjour\nBonjour\n2",
+     "S3_1": "Bonjour\n1",
+     "S3_2": "0"
+    },
+    {
+     "N": "5",
+     "K": "11",
+     "S2_0": "Bonjour\nBonjour\nBonjour\nBonjour\nBonjour\n5",
+     "S2_1": "Bonjour\n1",
+     "S2_2": "0",
+     "S3_0": "Bonjour\nBonjour\nBonjour\nBonjour\nBonjour\n5",
+     "S3_1": "Bonjour\n1",
+     "S3_2": "0"
+    },
+    {
+     "N": "3",
+     "K": "3",
+     "S2_0": "Bonjour\nBonjour\nBonjour\n3",
+     "S2_1": "Bonjour\n1",
+     "S2_2": "0",
+     "S3_0": "Bonjour\nBonjour\nBonjour\n3",
+     "S3_1": "Bonjour\n1",
+     "S3_2": "0"
+    },
+    {
+     "N": "4",
+     "K": "3",
+     "S2_0": "Bonjour\nBonjour\nBonjour\nBonjour\n4",
+     "S2_1": "Bonjour\n1",
+     "S2_2": "0",
+     "S3_0": "Bonjour\nBonjour\nBonjour\nBonjour\n4",
+     "S3_1": "Bonjour\n1",
+     "S3_2": "0"
+    },
+    {
+     "N": "3",
+     "K": "6",
+     "S2_0": "Bonjour\nBonjour\nBonjour\n3",
+     "S2_1": "Bonjour\n1",
+     "S2_2": "0",
+     "S3_0": "Bonjour\nBonjour\nBonjour\n3",
+     "S3_1": "Bonjour\n1",
+     "S3_2": "0"
+    },
+    {
+     "N": "3",
+     "K": "5",
+     "S2_0": "Bonjour\nBonjour\nBonjour\n3",
+     "S2_1": "Bonjour\n1",
+     "S2_2": "0",
+     "S3_0": "Bonjour\nBonjour\nBonjour\n3",
+     "S3_1": "Bonjour\n1",
+     "S3_2": "0"
+    },
+    {
+     "N": "2",
+     "K": "7",
+     "S2_0": "Bonjour\nBonjour\n2",
+     "S2_1": "Bonjour\n1",
+     "S2_2": "0",
+     "S3_0": "Bonjour\nBonjour\n2",
+     "S3_1": "Bonjour\n1",
+     "S3_2": "0"
+    }
    ]
   },
   {
@@ -1205,12 +1840,12 @@
    "notion": "7.5",
    "origine": "generee",
    "titre": "La fonction qui ne double rien",
-   "enonce": "Ce programme doit doubler `n` grâce à la fonction `doubler`, puis l'afficher : avec `5`, il doit afficher `10`. Il affiche `5`. Corrige `doubler` (et son appel) en passant **par adresse**.",
+   "enonce": "Ce programme doit doubler `n` grâce à la fonction `doubler`, puis l'afficher : avec `[[N]]`, il devrait afficher `[[R]]`. Il affiche `[[N]]`. Corrige `doubler` (et son appel) en passant `n` **par adresse**.\n```c\n#include <stdio.h>\n\nvoid doubler(int x) {\n    x = x * 2;\n}\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    doubler(n);\n    printf(\"%d\\n\", n);\n    return 0;\n}\n```",
    "guidage": "**Diagnostic** : 1. la fonction reçoit-elle l'original ou une copie ? → 2. comment lui donner l'adresse de `n` ? → 3. comment modifier la valeur à cette adresse ?\n\n**À retenir** : par adresse = on passe `&n`, la fonction reçoit un `int *` et écrit avec `*x`.",
    "duree": 4,
    "etapes": [
     {
-     "consigne": "Dans `void doubler(int x)`, la fonction travaille sur l'original de `n` ou sur une **copie** ? (un mot)",
+     "consigne": "Dans `void doubler(int x)`, `x` reçoit la valeur de `n` au moment de l'appel. La fonction travaille-t-elle sur l'original de `n`, ou sur une **copie** ? (un mot)",
      "question": "Original ou copie ?",
      "verif": {
       "mode": "exact",
@@ -1227,7 +1862,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Écris l'en-tête de `doubler` pour qu'elle reçoive l'**adresse** d'un entier `x`.",
+     "consigne": "Pour modifier l'original, la fonction doit recevoir son **adresse** : le paramètre devient un pointeur sur `int`. Écris le nouvel en-tête de `doubler` (paramètre `x`).",
      "question": "En-tête par adresse ?",
      "verif": {
       "mode": "regex",
@@ -1243,7 +1878,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Écris l'appel de `doubler` dans `main` qui transmet l'adresse de `n`.",
+     "consigne": "Dans `main`, l'appel doit maintenant transmettre l'adresse de `n`. Écris cet appel.",
      "question": "Appel par adresse ?",
      "verif": {
       "mode": "regex",
@@ -1259,18 +1894,18 @@
      "guideSeul": true
     },
     {
-     "consigne": "Corrige `doubler` et son appel : passe `n` **par adresse**, et modifie la valeur pointée.",
+     "consigne": "Corrige le programme : paramètre `int *x`, et dans la fonction on modifie la valeur pointée (`*x = *x * 2;`) ; l'appel devient `doubler(&n);`.",
      "question": "Corrige le programme.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "5",
-        "sortie": "10"
+        "entree": "[[N]]",
+        "sortie": "[[S3_0]]"
        },
        {
-        "entree": "-4",
-        "sortie": "-8"
+        "entree": "[[M]]",
+        "sortie": "[[S3_1]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nvoid doubler(int *x) {\n    *x = *x * 2;\n}\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    doubler(&n);\n    printf(\"%d\\n\", n);\n    return 0;\n}",
@@ -1289,6 +1924,71 @@
      "duree": 2.5,
      "depart": "#include <stdio.h>\n\nvoid doubler(int x) {\n    x = x * 2;\n}\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    doubler(n);\n    printf(\"%d\\n\", n);\n    return 0;\n}"
     }
+   ],
+   "vals": {
+    "N": "27",
+    "M": "-4",
+    "R": "54",
+    "S3_0": "54",
+    "S3_1": "-8"
+   },
+   "variantes": [
+    {
+     "N": "27",
+     "M": "-4",
+     "R": "54",
+     "S3_0": "54",
+     "S3_1": "-8"
+    },
+    {
+     "N": "15",
+     "M": "-19",
+     "R": "30",
+     "S3_0": "30",
+     "S3_1": "-38"
+    },
+    {
+     "N": "50",
+     "M": "-20",
+     "R": "100",
+     "S3_0": "100",
+     "S3_1": "-40"
+    },
+    {
+     "N": "27",
+     "M": "-1",
+     "R": "54",
+     "S3_0": "54",
+     "S3_1": "-2"
+    },
+    {
+     "N": "10",
+     "M": "-14",
+     "R": "20",
+     "S3_0": "20",
+     "S3_1": "-28"
+    },
+    {
+     "N": "2",
+     "M": "-2",
+     "R": "4",
+     "S3_0": "4",
+     "S3_1": "-4"
+    },
+    {
+     "N": "32",
+     "M": "-2",
+     "R": "64",
+     "S3_0": "64",
+     "S3_1": "-4"
+    },
+    {
+     "N": "49",
+     "M": "-9",
+     "R": "98",
+     "S3_0": "98",
+     "S3_1": "-18"
+    }
    ]
   },
   {
@@ -1297,12 +1997,12 @@
    "notion": "7.5",
    "origine": "generee",
    "titre": "Échanger avec une fonction",
-   "enonce": "Écris `void echanger(int *a, int *b)` qui échange les valeurs pointées. `main` lit deux entiers, appelle `echanger`, puis les affiche.\n\nExemple : `10 20` → `20 10`.",
-   "guidage": "**Plan** : 1. `temp` met `*a` de côté → 2. `*a = *b;` → 3. `*b = temp;` → 4. l'appel passe les adresses `&x`, `&y`.",
+   "enonce": "Écris `void echanger(int *a, int *b)` qui échange les deux valeurs pointées. `main` lit deux entiers, appelle `echanger`, puis les affiche.\n\n**Exemple**\n```text\nEntrée :\n[[A]] [[B]]\nSortie :\n[[B]] [[A]]\n```",
+   "guidage": "**Pourquoi des pointeurs ?** Une fonction ne reçoit que des copies de ses arguments. Pour qu'elle modifie les variables de `main`, on lui donne leurs **adresses**, et elle écrit à travers `*a` et `*b`.",
    "duree": 5,
    "etapes": [
     {
-     "consigne": "Écris l'en-tête de `echanger` : deux paramètres, **pointeurs** vers des `int`, nommés `a` et `b`.",
+     "consigne": "Écris l'en-tête de `echanger` : deux paramètres `a` et `b`, qui sont des **pointeurs** vers des `int`, et aucune valeur renvoyée.",
      "question": "En-tête de `echanger` ?",
      "verif": {
       "mode": "regex",
@@ -1318,7 +2018,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Écris l'instruction qui met la valeur pointée par `a` de côté dans `temp` (déclarée au même moment).",
+     "consigne": "Comme pour un échange classique, on met d'abord une valeur de côté. Écris l'instruction qui déclare `temp` et y range la valeur **pointée** par `a`.",
      "question": "Mettre `*a` de côté ?",
      "verif": {
       "mode": "regex",
@@ -1334,7 +2034,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Écris l'appel de `echanger` dans `main` pour échanger les variables `x` et `y`.",
+     "consigne": "Dans `main`, on veut échanger `x` et `y`. Écris l'appel de `echanger` en lui donnant leurs adresses.",
      "question": "Appel de `echanger` ?",
      "verif": {
       "mode": "regex",
@@ -1350,18 +2050,18 @@
      "guideSeul": true
     },
     {
-     "consigne": "Sans fonction : lis `x` et `y`, échange-les avec une variable `temp` dans `main`, et affiche-les.",
+     "consigne": "Premier jalon, sans fonction : lis `x` et `y`, échange-les dans `main` avec une variable `temp`, et affiche-les.",
      "question": "Échange dans `main`.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "10 20",
-        "sortie": "20 10"
+        "entree": "[[A]] [[B]]",
+        "sortie": "[[S3_0]]"
        },
        {
-        "entree": "-1 3",
-        "sortie": "3 -1"
+        "entree": "[[E1]]",
+        "sortie": "[[S3_1]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint main(void) {\n    int x, y;\n    scanf(\"%d %d\", &x, &y);\n    int temp = x;\n    x = y;\n    y = temp;\n    printf(\"%d %d\\n\", x, y);\n    return 0;\n}"
@@ -1375,18 +2075,18 @@
      "guideSeul": true
     },
     {
-     "consigne": "Sors l'échange dans `void echanger(int *a, int *b)` et appelle-la avec les adresses : `echanger(&x, &y);`.",
+     "consigne": "Sors l'échange dans `void echanger(int *a, int *b)` (avec `*a`, `*b` et `temp`), et appelle-la avec `echanger(&x, &y);`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "10 20",
-        "sortie": "20 10"
+        "entree": "[[A]] [[B]]",
+        "sortie": "[[S4_0]]"
        },
        {
-        "entree": "-1 3",
-        "sortie": "3 -1"
+        "entree": "[[E1]]",
+        "sortie": "[[S4_1]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nvoid echanger(int *a, int *b) {\n    int temp = *a;\n    *a = *b;\n    *b = temp;\n}\n\nint main(void) {\n    int x, y;\n    scanf(\"%d %d\", &x, &y);\n    echanger(&x, &y);\n    printf(\"%d %d\\n\", x, y);\n    return 0;\n}",
@@ -1410,6 +2110,89 @@
      "duree": 2.5,
      "depart": "#include <stdio.h>\n\nint main(void) {\n    int x, y;\n    scanf(\"%d %d\", &x, &y);\n    int temp = x;\n    x = y;\n    y = temp;\n    printf(\"%d %d\\n\", x, y);\n    return 0;\n}"
     }
+   ],
+   "vals": {
+    "A": "6",
+    "B": "29",
+    "E1": "-6 3",
+    "S3_0": "29 6",
+    "S3_1": "3 -6",
+    "S4_0": "29 6",
+    "S4_1": "3 -6"
+   },
+   "variantes": [
+    {
+     "A": "6",
+     "B": "29",
+     "E1": "-6 3",
+     "S3_0": "29 6",
+     "S3_1": "3 -6",
+     "S4_0": "29 6",
+     "S4_1": "3 -6"
+    },
+    {
+     "A": "22",
+     "B": "42",
+     "E1": "-8 5",
+     "S3_0": "42 22",
+     "S3_1": "5 -8",
+     "S4_0": "42 22",
+     "S4_1": "5 -8"
+    },
+    {
+     "A": "43",
+     "B": "10",
+     "E1": "-8 4",
+     "S3_0": "10 43",
+     "S3_1": "4 -8",
+     "S4_0": "10 43",
+     "S4_1": "4 -8"
+    },
+    {
+     "A": "45",
+     "B": "21",
+     "E1": "-7 2",
+     "S3_0": "21 45",
+     "S3_1": "2 -7",
+     "S4_0": "21 45",
+     "S4_1": "2 -7"
+    },
+    {
+     "A": "4",
+     "B": "29",
+     "E1": "-9 5",
+     "S3_0": "29 4",
+     "S3_1": "5 -9",
+     "S4_0": "29 4",
+     "S4_1": "5 -9"
+    },
+    {
+     "A": "2",
+     "B": "12",
+     "E1": "-3 7",
+     "S3_0": "12 2",
+     "S3_1": "7 -3",
+     "S4_0": "12 2",
+     "S4_1": "7 -3"
+    },
+    {
+     "A": "35",
+     "B": "2",
+     "E1": "-3 9",
+     "S3_0": "2 35",
+     "S3_1": "9 -3",
+     "S4_0": "2 35",
+     "S4_1": "9 -3"
+    },
+    {
+     "A": "12",
+     "B": "6",
+     "E1": "-5 5",
+     "S3_0": "6 12",
+     "S3_1": "5 -5",
+     "S4_0": "6 12",
+     "S4_1": "5 -5"
+    }
    ]
   },
   {
@@ -1418,12 +2201,12 @@
    "notion": "7.5",
    "origine": "generee",
    "titre": "Quotient et reste",
-   "enonce": "Écris `void diviser(int dividende, int diviseur, int *quotient, int *reste)` (exemple du cours). `main` lit deux entiers et affiche le quotient puis le reste, calculés par `diviser`.",
-   "guidage": "**Plan** : une fonction qui produit **deux** résultats → deux paramètres pointeurs `quotient` et `reste`, remplis avec `*quotient = …` et `*reste = …`.",
+   "enonce": "Écris `void diviser(int dividende, int diviseur, int *quotient, int *reste)` (exemple du cours). `main` lit deux entiers et affiche le quotient puis le reste, calculés par `diviser`.\n\n**Exemple**\n```text\nEntrée :\n[[A]] [[B]]\nSortie :\n[[Q]] [[R]]\n```",
+   "guidage": "**Idée** : une fonction ne renvoie qu'une valeur avec `return`. Pour en produire deux, elle reçoit les **adresses** de deux variables de `main` et écrit dedans.",
    "duree": 5,
    "etapes": [
     {
-     "consigne": "Écris l'instruction qui range le quotient de `dividende` par `diviseur` dans la variable pointée par `quotient`.",
+     "consigne": "Dans `diviser`, `quotient` est l'adresse d'une variable de `main`. Écris l'instruction qui range, **dans cette variable**, le quotient de `dividende` par `diviseur`.",
      "question": "Remplir `*quotient` ?",
      "verif": {
       "mode": "regex",
@@ -1439,7 +2222,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Écris l'instruction qui range le **reste** dans la variable pointée par `reste`.",
+     "consigne": "Même chose pour le **reste** de la division, dans la variable pointée par `reste`.",
      "question": "Remplir `*reste` ?",
      "verif": {
       "mode": "regex",
@@ -1455,7 +2238,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Dans `main`, `a` et `b` sont les entrées, `q` et `r` recevront les résultats. Écris l'appel de `diviser`.",
+     "consigne": "Dans `main`, `a` et `b` sont les entrées, et `q` et `r` doivent recevoir les résultats. Écris l'appel de `diviser`.",
      "question": "Appel de `diviser` ?",
      "verif": {
       "mode": "regex",
@@ -1471,22 +2254,22 @@
      "guideSeul": true
     },
     {
-     "consigne": "Sans fonction : lis `a` et `b`, calcule `q = a / b` et `r = a % b` dans `main`, et affiche `q r`.",
+     "consigne": "Premier jalon, sans fonction : lis `a` et `b`, calcule `q = a / b` et `r = a % b` dans `main`, et affiche `q r`.",
      "question": "Quotient et reste dans `main`.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "17 5",
-        "sortie": "3 2"
+        "entree": "[[A]] [[B]]",
+        "sortie": "[[S3_0]]"
        },
        {
         "entree": "20 4",
-        "sortie": "5 0"
+        "sortie": "[[S3_1]]"
        },
        {
         "entree": "3 7",
-        "sortie": "0 3"
+        "sortie": "[[S3_2]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint main(void) {\n    int a, b, q, r;\n    scanf(\"%d %d\", &a, &b);\n    q = a / b;\n    r = a % b;\n    printf(\"%d %d\\n\", q, r);\n    return 0;\n}"
@@ -1500,22 +2283,22 @@
      "guideSeul": true
     },
     {
-     "consigne": "Place les deux calculs dans `void diviser(int dividende, int diviseur, int *quotient, int *reste)` et appelle-la depuis `main`.",
+     "consigne": "Déplace les deux calculs dans `diviser` (qui écrit dans `*quotient` et `*reste`), et appelle-la depuis `main` avec `&q` et `&r`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "17 5",
-        "sortie": "3 2"
+        "entree": "[[A]] [[B]]",
+        "sortie": "[[S4_0]]"
        },
        {
         "entree": "20 4",
-        "sortie": "5 0"
+        "sortie": "[[S4_1]]"
        },
        {
         "entree": "3 7",
-        "sortie": "0 3"
+        "sortie": "[[S4_2]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nvoid diviser(int dividende, int diviseur, int *quotient, int *reste) {\n    *quotient = dividende / diviseur;\n    *reste = dividende % diviseur;\n}\n\nint main(void) {\n    int a, b, q, r;\n    scanf(\"%d %d\", &a, &b);\n    diviser(a, b, &q, &r);\n    printf(\"%d %d\\n\", q, r);\n    return 0;\n}",
@@ -1539,6 +2322,116 @@
      "duree": 2.5,
      "depart": "#include <stdio.h>\n\nint main(void) {\n    int a, b, q, r;\n    scanf(\"%d %d\", &a, &b);\n    q = a / b;\n    r = a % b;\n    printf(\"%d %d\\n\", q, r);\n    return 0;\n}"
     }
+   ],
+   "vals": {
+    "A": "40",
+    "B": "4",
+    "Q": "10",
+    "R": "0",
+    "S3_0": "10 0",
+    "S3_1": "5 0",
+    "S3_2": "0 3",
+    "S4_0": "10 0",
+    "S4_1": "5 0",
+    "S4_2": "0 3"
+   },
+   "variantes": [
+    {
+     "A": "40",
+     "B": "4",
+     "Q": "10",
+     "R": "0",
+     "S3_0": "10 0",
+     "S3_1": "5 0",
+     "S3_2": "0 3",
+     "S4_0": "10 0",
+     "S4_1": "5 0",
+     "S4_2": "0 3"
+    },
+    {
+     "A": "91",
+     "B": "8",
+     "Q": "11",
+     "R": "3",
+     "S3_0": "11 3",
+     "S3_1": "5 0",
+     "S3_2": "0 3",
+     "S4_0": "11 3",
+     "S4_1": "5 0",
+     "S4_2": "0 3"
+    },
+    {
+     "A": "43",
+     "B": "6",
+     "Q": "7",
+     "R": "1",
+     "S3_0": "7 1",
+     "S3_1": "5 0",
+     "S3_2": "0 3",
+     "S4_0": "7 1",
+     "S4_1": "5 0",
+     "S4_2": "0 3"
+    },
+    {
+     "A": "21",
+     "B": "4",
+     "Q": "5",
+     "R": "1",
+     "S3_0": "5 1",
+     "S3_1": "5 0",
+     "S3_2": "0 3",
+     "S4_0": "5 1",
+     "S4_1": "5 0",
+     "S4_2": "0 3"
+    },
+    {
+     "A": "11",
+     "B": "7",
+     "Q": "1",
+     "R": "4",
+     "S3_0": "1 4",
+     "S3_1": "5 0",
+     "S3_2": "0 3",
+     "S4_0": "1 4",
+     "S4_1": "5 0",
+     "S4_2": "0 3"
+    },
+    {
+     "A": "15",
+     "B": "3",
+     "Q": "5",
+     "R": "0",
+     "S3_0": "5 0",
+     "S3_1": "5 0",
+     "S3_2": "0 3",
+     "S4_0": "5 0",
+     "S4_1": "5 0",
+     "S4_2": "0 3"
+    },
+    {
+     "A": "21",
+     "B": "7",
+     "Q": "3",
+     "R": "0",
+     "S3_0": "3 0",
+     "S3_1": "5 0",
+     "S3_2": "0 3",
+     "S4_0": "3 0",
+     "S4_1": "5 0",
+     "S4_2": "0 3"
+    },
+    {
+     "A": "97",
+     "B": "7",
+     "Q": "13",
+     "R": "6",
+     "S3_0": "13 6",
+     "S3_1": "5 0",
+     "S3_2": "0 3",
+     "S4_0": "13 6",
+     "S4_1": "5 0",
+     "S4_2": "0 3"
+    }
    ]
   },
   {
@@ -1547,8 +2440,8 @@
    "notion": "7.6",
    "origine": "td",
    "titre": "Remplir, afficher, sommer",
-   "enonce": "Reprends l'exercice du cours : écris `void remplir_tableau(int arr[], int taille)`, `void afficher_tableau(int arr[], int taille)` (format `[10, 20, 30]`) et `int somme_tableau(int arr[], int taille)`. `main` lit `N` (≤ 100), remplit, affiche, puis affiche la somme.",
-   "guidage": "**Plan** : trois fonctions qui reçoivent le tableau **et** sa taille : `remplir_tableau`, `afficher_tableau`, `somme_tableau`. `main` les enchaîne.\n\n**À retenir** : un tableau passé en paramètre n'est pas copié ; la fonction travaille sur l'original.",
+   "enonce": "Reprends l'exercice du cours : écris `void remplir_tableau(int arr[], int taille)`, `void afficher_tableau(int arr[], int taille)` (format `[10, 20, 30]`) et `int somme_tableau(int arr[], int taille)`. `main` lit `N` (au plus 100), remplit le tableau, l'affiche, puis affiche la somme.\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S4_0]]\n```",
+   "guidage": "**Plan** : chaque fonction reçoit le tableau **et** sa taille (une fonction ne peut pas deviner combien de cases elle a reçues). `remplir` lit, `afficher` écrit au format `[a, b, c]`, `somme` renvoie un `int`.",
    "duree": 8,
    "etapes": [
     {
@@ -1568,7 +2461,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Dans `main`, le tableau est `t` et sa taille `n`. Écris l'appel de `remplir_tableau`.",
+     "consigne": "Dans `main`, le tableau s'appelle `t` et sa taille `n`. Écris l'appel de `remplir_tableau` (le tableau se passe par son nom, sans crochets).",
      "question": "Appel de `remplir_tableau` ?",
      "verif": {
       "mode": "regex",
@@ -1584,7 +2477,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Pour afficher `[10, 20, 30]` sans virgule après le dernier élément, quelle condition (indice `i`, `taille`) autorise l'affichage de la virgule ?",
+     "consigne": "Pour afficher `[10, 20, 30]`, chaque valeur est suivie d'une virgule… sauf la **dernière**. Écris la condition (indice `i`, `taille`) qui autorise l'affichage de la virgule.",
      "question": "Condition de la virgule ?",
      "verif": {
       "mode": "regex",
@@ -1600,18 +2493,18 @@
      "guideSeul": true
     },
     {
-     "consigne": "Sans fonctions : lis `N` (≤ 100) puis `N` entiers, affiche le tableau au format `[10, 20, 30]`, puis la somme sur la ligne suivante.",
+     "consigne": "Premier jalon, sans fonctions : lis `N` puis les `N` entiers, affiche le tableau au format `[10, 20, 30]`, puis la somme sur la ligne suivante.",
      "question": "Tout dans `main`.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "3\n10 20 30",
-        "sortie": "[10, 20, 30]\n60"
+        "entree": "[[E0]]",
+        "sortie": "[[S3_0]]"
        },
        {
-        "entree": "1\n7",
-        "sortie": "[7]\n7"
+        "entree": "1\n[[UN]]",
+        "sortie": "[[S3_1]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[100], n, s = 0;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        scanf(\"%d\", &t[i]);\n        s += t[i];\n    }\n    printf(\"[\");\n    for (int i = 0; i < n; i++) {\n        printf(\"%d\", t[i]);\n        if (i < n - 1) printf(\", \");\n    }\n    printf(\"]\\n\");\n    printf(\"%d\\n\", s);\n    return 0;\n}"
@@ -1625,18 +2518,22 @@
      "guideSeul": true
     },
     {
-     "consigne": "Découpe en trois fonctions `remplir_tableau`, `afficher_tableau` et `somme_tableau` (chacune reçoit `arr` et `taille`), puis appelle-les dans `main`.",
+     "consigne": "Découpe en trois fonctions `remplir_tableau`, `afficher_tableau` et `somme_tableau` (chacune reçoit `arr` et `taille`), et appelle-les dans `main`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "3\n10 20 30",
-        "sortie": "[10, 20, 30]\n60"
+        "entree": "[[E0]]",
+        "sortie": "[[S4_0]]"
        },
        {
-        "entree": "1\n7",
-        "sortie": "[7]\n7"
+        "entree": "1\n[[UN]]",
+        "sortie": "[[S4_1]]"
+       },
+       {
+        "entree": "[[E1]]",
+        "sortie": "[[S4_2]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nvoid remplir_tableau(int arr[], int taille) {\n    for (int i = 0; i < taille; i++) scanf(\"%d\", &arr[i]);\n}\n\nvoid afficher_tableau(int arr[], int taille) {\n    printf(\"[\");\n    for (int i = 0; i < taille; i++) {\n        printf(\"%d\", arr[i]);\n        if (i < taille - 1) printf(\", \");\n    }\n    printf(\"]\\n\");\n}\n\nint somme_tableau(int arr[], int taille) {\n    int s = 0;\n    for (int i = 0; i < taille; i++) s += arr[i];\n    return s;\n}\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    remplir_tableau(t, n);\n    afficher_tableau(t, n);\n    printf(\"%d\\n\", somme_tableau(t, n));\n    return 0;\n}",
@@ -1663,6 +2560,98 @@
      "duree": 4,
      "depart": "#include <stdio.h>\n\nint main(void) {\n    int t[100], n, s = 0;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        scanf(\"%d\", &t[i]);\n        s += t[i];\n    }\n    printf(\"[\");\n    for (int i = 0; i < n; i++) {\n        printf(\"%d\", t[i]);\n        if (i < n - 1) printf(\", \");\n    }\n    printf(\"]\\n\");\n    printf(\"%d\\n\", s);\n    return 0;\n}"
     }
+   ],
+   "vals": {
+    "E0": "5\n20 20 90 80 50",
+    "E1": "3\n9 -6 22",
+    "UN": "75",
+    "S3_0": "[20, 20, 90, 80, 50]\n260",
+    "S3_1": "[75]\n75",
+    "S4_0": "[20, 20, 90, 80, 50]\n260",
+    "S4_1": "[75]\n75",
+    "S4_2": "[9, -6, 22]\n25"
+   },
+   "variantes": [
+    {
+     "E0": "5\n20 20 90 80 50",
+     "E1": "3\n9 -6 22",
+     "UN": "75",
+     "S3_0": "[20, 20, 90, 80, 50]\n260",
+     "S3_1": "[75]\n75",
+     "S4_0": "[20, 20, 90, 80, 50]\n260",
+     "S4_1": "[75]\n75",
+     "S4_2": "[9, -6, 22]\n25"
+    },
+    {
+     "E0": "6\n70 60 50 80 80 10",
+     "E1": "2\n12 4",
+     "UN": "85",
+     "S3_0": "[70, 60, 50, 80, 80, 10]\n350",
+     "S3_1": "[85]\n85",
+     "S4_0": "[70, 60, 50, 80, 80, 10]\n350",
+     "S4_1": "[85]\n85",
+     "S4_2": "[12, 4]\n16"
+    },
+    {
+     "E0": "3\n20 70 60",
+     "E1": "3\n-9 1 14",
+     "UN": "18",
+     "S3_0": "[20, 70, 60]\n150",
+     "S3_1": "[18]\n18",
+     "S4_0": "[20, 70, 60]\n150",
+     "S4_1": "[18]\n18",
+     "S4_2": "[-9, 1, 14]\n6"
+    },
+    {
+     "E0": "4\n80 60 40 30",
+     "E1": "5\n23 -7 12 22 3",
+     "UN": "50",
+     "S3_0": "[80, 60, 40, 30]\n210",
+     "S3_1": "[50]\n50",
+     "S4_0": "[80, 60, 40, 30]\n210",
+     "S4_1": "[50]\n50",
+     "S4_2": "[23, -7, 12, 22, 3]\n53"
+    },
+    {
+     "E0": "4\n50 90 90 20",
+     "E1": "3\n27 26 13",
+     "UN": "9",
+     "S3_0": "[50, 90, 90, 20]\n250",
+     "S3_1": "[9]\n9",
+     "S4_0": "[50, 90, 90, 20]\n250",
+     "S4_1": "[9]\n9",
+     "S4_2": "[27, 26, 13]\n66"
+    },
+    {
+     "E0": "4\n50 20 50 90",
+     "E1": "5\n20 19 -1 17 10",
+     "UN": "65",
+     "S3_0": "[50, 20, 50, 90]\n210",
+     "S3_1": "[65]\n65",
+     "S4_0": "[50, 20, 50, 90]\n210",
+     "S4_1": "[65]\n65",
+     "S4_2": "[20, 19, -1, 17, 10]\n65"
+    },
+    {
+     "E0": "6\n50 10 90 40 10 90",
+     "E1": "2\n8 -7",
+     "UN": "50",
+     "S3_0": "[50, 10, 90, 40, 10, 90]\n290",
+     "S3_1": "[50]\n50",
+     "S4_0": "[50, 10, 90, 40, 10, 90]\n290",
+     "S4_1": "[50]\n50",
+     "S4_2": "[8, -7]\n1"
+    },
+    {
+     "E0": "3\n30 60 80",
+     "E1": "2\n-9 -1",
+     "UN": "37",
+     "S3_0": "[30, 60, 80]\n170",
+     "S3_1": "[37]\n37",
+     "S4_0": "[30, 60, 80]\n170",
+     "S4_1": "[37]\n37",
+     "S4_2": "[-9, -1]\n-10"
+    }
    ]
   },
   {
@@ -1671,27 +2660,27 @@
    "notion": "7.6",
    "origine": "td",
    "titre": "Tableau trié ?",
-   "enonce": "Écris `int est_trie(int t[], int n)` qui renvoie 1 si le tableau est trié par ordre croissant (au sens large), 0 sinon (le cours propose `is_sorted`). `main` lit `N` puis `N` entiers et affiche le résultat.",
+   "enonce": "Écris `int est_trie(int t[], int n)` qui renvoie 1 si le tableau est trié par ordre croissant (deux valeurs égales côte à côte sont acceptées), 0 sinon. `main` lit `N` puis `N` entiers et affiche le résultat.\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S4_0]]\n```",
    "guidage": "**Plan** : parcourir les paires voisines `t[i]`, `t[i + 1]` ; dès qu'une paire est dans le mauvais ordre → `return 0` ; si la boucle se termine → `return 1`.",
    "duree": 5,
    "etapes": [
     {
-     "consigne": "Le tableau `{1, 2, 2, 5}` est-il trié par ordre croissant (au sens large) ? (1 oui, 0 non)",
+     "consigne": "Le tableau `[[TAB]]` est-il trié par ordre croissant (deux valeurs égales côte à côte sont acceptées) ? (1 oui, 0 non)",
      "question": "`{1, 2, 2, 5}` trié ?",
      "verif": {
       "mode": "numerique",
-      "attendu": 1
+      "attendu": "[[RT]]"
      },
-     "corrige": "Chaque valeur est ≤ à la suivante : oui (les égalités sont permises).",
+     "corrige": "[[EXP]]",
      "indices": [
       "Compare chaque valeur à sa voisine de droite.",
-      "1"
+      "[[RT]]"
      ],
      "duree": 0.28,
      "guideSeul": true
     },
     {
-     "consigne": "Écris la condition (sans `if`) qui détecte un **désordre** entre `t[i]` et sa voisine de droite.",
+     "consigne": "Un tableau n'est pas trié dès qu'une valeur est **plus grande** que sa voisine de droite. Écris cette condition de désordre, pour `t[i]`.",
      "question": "Condition de désordre ?",
      "verif": {
       "mode": "regex",
@@ -1707,7 +2696,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "`t[i + 1]` doit rester dans le tableau de `n` cases : écris la condition de la boucle (indice `i`).",
+     "consigne": "On lit `t[i + 1]` : il faut donc que `i + 1` reste un indice valide (au plus `n - 1`). Écris la condition de la boucle sur `i`.",
      "question": "Condition de la boucle ?",
      "verif": {
       "mode": "regex",
@@ -1723,22 +2712,22 @@
      "guideSeul": true
     },
     {
-     "consigne": "Sans fonction : lis `N` puis `N` entiers et affiche `1` si le tableau est trié, `0` sinon (indicateur `trie`).",
+     "consigne": "Premier jalon, sans fonction : lis `N` puis les `N` entiers, et affiche `1` si le tableau est trié, `0` sinon (un indicateur `trie` qui passe à 0 au premier désordre).",
      "question": "Trié ? dans `main`.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "4\n1 2 2 5",
-        "sortie": "1"
+        "entree": "[[E0]]",
+        "sortie": "[[S3_0]]"
        },
        {
-        "entree": "3\n3 1 2",
-        "sortie": "0"
+        "entree": "[[E1]]",
+        "sortie": "[[S3_1]]"
        },
        {
         "entree": "1\n9",
-        "sortie": "1"
+        "sortie": "[[S3_2]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[100], n, trie = 1;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    for (int i = 0; i < n - 1; i++) {\n        if (t[i] > t[i + 1]) trie = 0;\n    }\n    printf(\"%d\\n\", trie);\n    return 0;\n}"
@@ -1758,16 +2747,16 @@
       "mode": "c",
       "tests": [
        {
-        "entree": "4\n1 2 2 5",
-        "sortie": "1"
+        "entree": "[[E0]]",
+        "sortie": "[[S4_0]]"
        },
        {
-        "entree": "3\n3 1 2",
-        "sortie": "0"
+        "entree": "[[E1]]",
+        "sortie": "[[S4_1]]"
        },
        {
         "entree": "1\n9",
-        "sortie": "1"
+        "sortie": "[[S4_2]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint est_trie(int t[], int n) {\n    for (int i = 0; i < n - 1; i++) {\n        if (t[i] > t[i + 1]) return 0;\n    }\n    return 1;\n}\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    printf(\"%d\\n\", est_trie(t, n));\n    return 0;\n}",
@@ -1787,6 +2776,125 @@
      "duree": 2.49,
      "depart": "#include <stdio.h>\n\nint main(void) {\n    int t[100], n, trie = 1;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    for (int i = 0; i < n - 1; i++) {\n        if (t[i] > t[i + 1]) trie = 0;\n    }\n    printf(\"%d\\n\", trie);\n    return 0;\n}"
     }
+   ],
+   "vals": {
+    "TAB": "{4, 15, 13, 16}",
+    "E0": "5\n3 9 9 11 12",
+    "E1": "4\n6 8 10 10",
+    "RT": "0",
+    "EXP": "15 est plus grand que 13, juste après lui : **0**.",
+    "S3_0": "1",
+    "S3_1": "1",
+    "S3_2": "1",
+    "S4_0": "1",
+    "S4_1": "1",
+    "S4_2": "1"
+   },
+   "variantes": [
+    {
+     "TAB": "{4, 15, 13, 16}",
+     "E0": "5\n3 9 9 11 12",
+     "E1": "4\n6 8 10 10",
+     "RT": "0",
+     "EXP": "15 est plus grand que 13, juste après lui : **0**.",
+     "S3_0": "1",
+     "S3_1": "1",
+     "S3_2": "1",
+     "S4_0": "1",
+     "S4_1": "1",
+     "S4_2": "1"
+    },
+    {
+     "TAB": "{4, 13, 15, 15}",
+     "E0": "4\n18 19 13 17",
+     "E1": "5\n7 7 10 18 19",
+     "RT": "1",
+     "EXP": "Chaque valeur est inférieure ou égale à la suivante : **1**.",
+     "S3_0": "0",
+     "S3_1": "1",
+     "S3_2": "1",
+     "S4_0": "0",
+     "S4_1": "1",
+     "S4_2": "1"
+    },
+    {
+     "TAB": "{19, 18, 10, 9}",
+     "E0": "4\n10 16 20 13",
+     "E1": "4\n3 13 13 18",
+     "RT": "0",
+     "EXP": "19 est plus grand que 18, juste après lui : **0**.",
+     "S3_0": "0",
+     "S3_1": "1",
+     "S3_2": "1",
+     "S4_0": "0",
+     "S4_1": "1",
+     "S4_2": "1"
+    },
+    {
+     "TAB": "{9, 19, 14, 16}",
+     "E0": "4\n18 15 9 1",
+     "E1": "3\n10 16 19",
+     "RT": "0",
+     "EXP": "19 est plus grand que 14, juste après lui : **0**.",
+     "S3_0": "0",
+     "S3_1": "1",
+     "S3_2": "1",
+     "S4_0": "0",
+     "S4_1": "1",
+     "S4_2": "1"
+    },
+    {
+     "TAB": "{10, 4, 1, 10}",
+     "E0": "4\n8 1 11 2",
+     "E1": "5\n3 10 16 8 9",
+     "RT": "0",
+     "EXP": "10 est plus grand que 4, juste après lui : **0**.",
+     "S3_0": "0",
+     "S3_1": "0",
+     "S3_2": "1",
+     "S4_0": "0",
+     "S4_1": "0",
+     "S4_2": "1"
+    },
+    {
+     "TAB": "{7, 12, 14, 20}",
+     "E0": "5\n1 8 11 17 18",
+     "E1": "3\n15 9 10",
+     "RT": "1",
+     "EXP": "Chaque valeur est inférieure ou égale à la suivante : **1**.",
+     "S3_0": "1",
+     "S3_1": "0",
+     "S3_2": "1",
+     "S4_0": "1",
+     "S4_1": "0",
+     "S4_2": "1"
+    },
+    {
+     "TAB": "{2, 12, 15, 20}",
+     "E0": "4\n18 8 15 13",
+     "E1": "3\n14 6 3",
+     "RT": "1",
+     "EXP": "Chaque valeur est inférieure ou égale à la suivante : **1**.",
+     "S3_0": "0",
+     "S3_1": "0",
+     "S3_2": "1",
+     "S4_0": "0",
+     "S4_1": "0",
+     "S4_2": "1"
+    },
+    {
+     "TAB": "{1, 5, 10, 18}",
+     "E0": "5\n6 6 6 14 18",
+     "E1": "5\n3 4 11 3 14",
+     "RT": "1",
+     "EXP": "Chaque valeur est inférieure ou égale à la suivante : **1**.",
+     "S3_0": "1",
+     "S3_1": "0",
+     "S3_2": "1",
+     "S4_0": "1",
+     "S4_1": "0",
+     "S4_2": "1"
+    }
    ]
   },
   {
@@ -1795,27 +2903,27 @@
    "notion": "7.6",
    "origine": "td",
    "titre": "Position d'une valeur",
-   "enonce": "Écris `int recherche_position(int t[], int n, int val)` qui renvoie l'indice de la première occurrence de `val`, ou -1. `main` lit `N`, `N` entiers, puis `val`, et affiche le résultat.",
+   "enonce": "Écris `int recherche_position(int t[], int n, int val)` qui renvoie l'indice de la première case qui vaut `val`, ou `-1` si `val` est absente. `main` lit `N`, les `N` entiers, puis `val`, et affiche le résultat.\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S4_0]]\n```",
    "guidage": "**Plan** : parcourir le tableau ; à la première case égale à `val`, `return i;` ; si la boucle finit sans succès, `return -1;`.",
    "duree": 5,
    "etapes": [
     {
-     "consigne": "Dans `{4, 9, 1, 9, 3}`, quel indice la fonction doit-elle renvoyer pour `val = 9` ?",
+     "consigne": "Dans `[[TAB]]`, quel indice la fonction doit-elle renvoyer pour `val = [[X]]` ? (la **première** occurrence, en comptant à partir de 0)",
      "question": "Indice de la 1re occurrence ?",
      "verif": {
       "mode": "numerique",
-      "attendu": 1
+      "attendu": "[[IX]]"
      },
-     "corrige": "La première occurrence de 9 est à l'indice 1.",
+     "corrige": "La première case qui vaut [[X]] est à l'indice **[[IX]]**.",
      "indices": [
-      "Compte à partir de 0.",
-      "1"
+      "Compte à partir de 0 et arrête-toi à la première.",
+      "[[IX]]"
      ],
      "duree": 0.31,
      "guideSeul": true
     },
     {
-     "consigne": "Écris l'instruction (dans le `if`) qui renvoie immédiatement la position courante `i`.",
+     "consigne": "Dans la boucle, dès que `t[i] == val`, on connaît la réponse : on peut quitter la fonction tout de suite en renvoyant `i`. Écris cette instruction.",
      "question": "Renvoyer la position ?",
      "verif": {
       "mode": "regex",
@@ -1831,7 +2939,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Écris l'instruction, **après** la boucle, qui signale que la valeur est absente.",
+     "consigne": "Si la boucle va jusqu'au bout sans rien trouver, la valeur est absente. Écris l'instruction, placée **après** la boucle, qui le signale.",
      "question": "Valeur absente ?",
      "verif": {
       "mode": "regex",
@@ -1847,18 +2955,18 @@
      "guideSeul": true
     },
     {
-     "consigne": "Sans fonction : lis `N`, `N` entiers puis `val`, et affiche l'indice de la première occurrence de `val` (ou `-1`).",
+     "consigne": "Premier jalon, sans fonction : lis `N`, les `N` entiers, puis `val`, et affiche l'indice de la première occurrence de `val` (ou `-1`).",
      "question": "Recherche dans `main`.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "5\n4 9 1 9 3\n9",
-        "sortie": "1"
+        "entree": "[[E0]]",
+        "sortie": "[[S3_0]]"
        },
        {
-        "entree": "3\n1 2 3\n7",
-        "sortie": "-1"
+        "entree": "[[E1]]",
+        "sortie": "[[S3_1]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[100], n, val, pos = -1;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    scanf(\"%d\", &val);\n    for (int i = 0; i < n; i++) {\n        if (t[i] == val) {\n            pos = i;\n            break;\n        }\n    }\n    printf(\"%d\\n\", pos);\n    return 0;\n}"
@@ -1872,18 +2980,18 @@
      "guideSeul": true
     },
     {
-     "consigne": "Place la recherche dans `int recherche_position(int t[], int n, int val)` : `return i;` dès la première occurrence, `return -1;` après la boucle.",
+     "consigne": "Place la recherche dans `int recherche_position(int t[], int n, int val)` : `return i;` dès la première occurrence, `return -1;` après la boucle. `main` affiche le résultat.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "5\n4 9 1 9 3\n9",
-        "sortie": "1"
+        "entree": "[[E0]]",
+        "sortie": "[[S4_0]]"
        },
        {
-        "entree": "3\n1 2 3\n7",
-        "sortie": "-1"
+        "entree": "[[E1]]",
+        "sortie": "[[S4_1]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint recherche_position(int t[], int n, int val) {\n    for (int i = 0; i < n; i++) {\n        if (t[i] == val) return i;\n    }\n    return -1;\n}\n\nint main(void) {\n    int t[100], n, val;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    scanf(\"%d\", &val);\n    printf(\"%d\\n\", recherche_position(t, n, val));\n    return 0;\n}",
@@ -1903,6 +3011,107 @@
      "duree": 2.51,
      "depart": "#include <stdio.h>\n\nint main(void) {\n    int t[100], n, val, pos = -1;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    scanf(\"%d\", &val);\n    for (int i = 0; i < n; i++) {\n        if (t[i] == val) {\n            pos = i;\n            break;\n        }\n    }\n    printf(\"%d\\n\", pos);\n    return 0;\n}"
     }
+   ],
+   "vals": {
+    "TAB": "{8, 4, 9, 3, 3}",
+    "X": "3",
+    "IX": "3",
+    "E0": "7\n24 22 5 8 11 7 15\n11",
+    "E1": "5\n7 18 2 10 23\n6",
+    "S3_0": "4",
+    "S3_1": "-1",
+    "S4_0": "4",
+    "S4_1": "-1"
+   },
+   "variantes": [
+    {
+     "TAB": "{8, 4, 9, 3, 3}",
+     "X": "3",
+     "IX": "3",
+     "E0": "7\n24 22 5 8 11 7 15\n11",
+     "E1": "5\n7 18 2 10 23\n6",
+     "S3_0": "4",
+     "S3_1": "-1",
+     "S4_0": "4",
+     "S4_1": "-1"
+    },
+    {
+     "TAB": "{2, 5, 7, 1, 5}",
+     "X": "5",
+     "IX": "1",
+     "E0": "6\n20 11 6 8 1 17\n20",
+     "E1": "3\n6 7 12\n27",
+     "S3_0": "0",
+     "S3_1": "-1",
+     "S4_0": "0",
+     "S4_1": "-1"
+    },
+    {
+     "TAB": "{7, 6, 4, 9, 6}",
+     "X": "6",
+     "IX": "1",
+     "E0": "7\n24 18 4 30 29 14 5\n18",
+     "E1": "4\n2 25 5 26\n28",
+     "S3_0": "1",
+     "S3_1": "-1",
+     "S4_0": "1",
+     "S4_1": "-1"
+    },
+    {
+     "TAB": "{6, 2, 5, 4, 5}",
+     "X": "5",
+     "IX": "2",
+     "E0": "7\n19 3 21 28 26 7 1\n3",
+     "E1": "3\n24 15 6\n30",
+     "S3_0": "1",
+     "S3_1": "-1",
+     "S4_0": "1",
+     "S4_1": "-1"
+    },
+    {
+     "TAB": "{6, 2, 9, 8, 9}",
+     "X": "9",
+     "IX": "2",
+     "E0": "7\n27 18 19 30 22 6 7\n7",
+     "E1": "3\n22 24 5\n19",
+     "S3_0": "6",
+     "S3_1": "-1",
+     "S4_0": "6",
+     "S4_1": "-1"
+    },
+    {
+     "TAB": "{2, 6, 8, 7, 7}",
+     "X": "7",
+     "IX": "3",
+     "E0": "7\n5 20 27 2 26 1 15\n26",
+     "E1": "3\n7 28 21\n23",
+     "S3_0": "4",
+     "S3_1": "-1",
+     "S4_0": "4",
+     "S4_1": "-1"
+    },
+    {
+     "TAB": "{1, 6, 8, 4, 8}",
+     "X": "8",
+     "IX": "2",
+     "E0": "5\n1 27 10 21 17\n17",
+     "E1": "3\n21 23 17\n20",
+     "S3_0": "4",
+     "S3_1": "-1",
+     "S4_0": "4",
+     "S4_1": "-1"
+    },
+    {
+     "TAB": "{4, 3, 6, 2, 2}",
+     "X": "2",
+     "IX": "3",
+     "E0": "6\n29 23 7 26 9 5\n5",
+     "E1": "4\n29 5 23 7\n22",
+     "S3_0": "5",
+     "S3_1": "-1",
+     "S4_0": "5",
+     "S4_1": "-1"
+    }
    ]
   },
   {
@@ -1911,12 +3120,12 @@
    "notion": "7.6",
    "origine": "generee",
    "titre": "Mettre à zéro les négatifs",
-   "enonce": "Écris `void sans_negatifs(int t[], int n)` qui remplace chaque valeur négative par 0 **dans le tableau d'origine**. `main` lit `N` puis `N` entiers, appelle la fonction, puis affiche le tableau.",
+   "enonce": "Écris `void sans_negatifs(int t[], int n)` qui remplace chaque valeur négative par 0, **dans le tableau d'origine**. `main` lit `N` puis `N` entiers, appelle la fonction, puis affiche le tableau.\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S3_0]]\n```",
    "guidage": "**Plan** : parcourir le tableau reçu et remplacer chaque négatif par 0 ; pas de `return`, car la fonction travaille sur le **tableau d'origine**.",
    "duree": 5,
    "etapes": [
     {
-     "consigne": "Un tableau passé en paramètre à une fonction : la fonction en reçoit une copie ou travaille sur l'original ? (réponse courte)",
+     "consigne": "Quand on passe un tableau à une fonction, elle reçoit en fait l'adresse de sa première case. Travaille-t-elle sur une **copie** ou sur l'**original** ? (réponse courte)",
      "question": "Copie ou original ?",
      "verif": {
       "mode": "regex",
@@ -1948,18 +3157,18 @@
      "guideSeul": true
     },
     {
-     "consigne": "Sans fonction : lis `N` entiers, remplace chaque négatif par 0 dans `main`, et affiche le tableau (valeurs séparées par une espace).",
+     "consigne": "Premier jalon, sans fonction : lis `N` puis les `N` entiers, remplace chaque négatif par 0 directement dans `main`, et affiche le tableau.",
      "question": "Remplace dans `main`.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "5\n3 -1 4 -5 0",
-        "sortie": "3 0 4 0 0"
+        "entree": "[[E0]]",
+        "sortie": "[[S2_0]]"
        },
        {
-        "entree": "2\n-7 -8",
-        "sortie": "0 0"
+        "entree": "[[E1]]",
+        "sortie": "[[S2_1]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    for (int i = 0; i < n; i++) {\n        if (t[i] < 0) t[i] = 0;\n    }\n    for (int i = 0; i < n; i++) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    return 0;\n}"
@@ -1973,18 +3182,18 @@
      "guideSeul": true
     },
     {
-     "consigne": "Sors le remplacement dans `void sans_negatifs(int t[], int n)` et appelle-la depuis `main` avant l'affichage.",
+     "consigne": "Sors le remplacement dans `void sans_negatifs(int t[], int n)`, et appelle-la depuis `main` avant l'affichage. Comme elle travaille sur l'original, `main` voit le tableau modifié.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "5\n3 -1 4 -5 0",
-        "sortie": "3 0 4 0 0"
+        "entree": "[[E0]]",
+        "sortie": "[[S3_0]]"
        },
        {
-        "entree": "2\n-7 -8",
-        "sortie": "0 0"
+        "entree": "[[E1]]",
+        "sortie": "[[S3_1]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nvoid sans_negatifs(int t[], int n) {\n    for (int i = 0; i < n; i++) {\n        if (t[i] < 0) t[i] = 0;\n    }\n}\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    sans_negatifs(t, n);\n    for (int i = 0; i < n; i++) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    return 0;\n}",
@@ -2004,6 +3213,80 @@
      "duree": 2.51,
      "depart": "#include <stdio.h>\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    for (int i = 0; i < n; i++) {\n        if (t[i] < 0) t[i] = 0;\n    }\n    for (int i = 0; i < n; i++) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    return 0;\n}"
     }
+   ],
+   "vals": {
+    "E0": "4\n8 2 -9 1",
+    "E1": "2\n-15 -19",
+    "S2_0": "8 2 0 1 ",
+    "S2_1": "0 0 ",
+    "S3_0": "8 2 0 1 ",
+    "S3_1": "0 0 "
+   },
+   "variantes": [
+    {
+     "E0": "4\n8 2 -9 1",
+     "E1": "2\n-15 -19",
+     "S2_0": "8 2 0 1 ",
+     "S2_1": "0 0 ",
+     "S3_0": "8 2 0 1 ",
+     "S3_1": "0 0 "
+    },
+    {
+     "E0": "7\n-9 2 -7 7 -7 -1 -2",
+     "E1": "3\n-13 -3 -9",
+     "S2_0": "0 2 0 7 0 0 0 ",
+     "S2_1": "0 0 0 ",
+     "S3_0": "0 2 0 7 0 0 0 ",
+     "S3_1": "0 0 0 "
+    },
+    {
+     "E0": "5\n-6 6 -2 2 -8",
+     "E1": "4\n-4 -1 -5 -3",
+     "S2_0": "0 6 0 2 0 ",
+     "S2_1": "0 0 0 0 ",
+     "S3_0": "0 6 0 2 0 ",
+     "S3_1": "0 0 0 0 "
+    },
+    {
+     "E0": "5\n1 6 -4 7 2",
+     "E1": "4\n-4 -18 -17 -20",
+     "S2_0": "1 6 0 7 2 ",
+     "S2_1": "0 0 0 0 ",
+     "S3_0": "1 6 0 7 2 ",
+     "S3_1": "0 0 0 0 "
+    },
+    {
+     "E0": "6\n0 -4 6 -4 -9 8",
+     "E1": "2\n-11 -2",
+     "S2_0": "0 0 6 0 0 8 ",
+     "S2_1": "0 0 ",
+     "S3_0": "0 0 6 0 0 8 ",
+     "S3_1": "0 0 "
+    },
+    {
+     "E0": "4\n2 1 7 9",
+     "E1": "2\n-15 -7",
+     "S2_0": "2 1 7 9 ",
+     "S2_1": "0 0 ",
+     "S3_0": "2 1 7 9 ",
+     "S3_1": "0 0 "
+    },
+    {
+     "E0": "7\n3 -7 8 -3 -5 3 6",
+     "E1": "3\n-9 -8 -7",
+     "S2_0": "3 0 8 0 0 3 6 ",
+     "S2_1": "0 0 0 ",
+     "S3_0": "3 0 8 0 0 3 6 ",
+     "S3_1": "0 0 0 "
+    },
+    {
+     "E0": "5\n-6 7 2 -9 -1",
+     "E1": "2\n-8 -7",
+     "S2_0": "0 7 2 0 0 ",
+     "S2_1": "0 0 ",
+     "S3_0": "0 7 2 0 0 ",
+     "S3_1": "0 0 "
+    }
    ]
   },
   {
@@ -2012,27 +3295,27 @@
    "notion": "7.7",
    "origine": "generee",
    "titre": "Hypoténuse",
-   "enonce": "Écris une fonction `double hypotenuse(double a, double b)` qui renvoie $\\sqrt{a^2 + b^2}$ en utilisant `sqrt` et `pow` de `math.h`. `main` lit deux réels et affiche le résultat avec 2 décimales.",
+   "enonce": "Écris une fonction `double hypotenuse(double a, double b)` qui renvoie $\\sqrt{a^2 + b^2}$ en utilisant `sqrt` et `pow` de `math.h`. `main` lit deux réels et affiche le résultat avec 2 décimales.\n\n**Exemple**\n```text\nEntrée :\n[[A]] [[B]]\nSortie :\n[[R]]\n```",
    "guidage": "**Plan** : 1. `#include <math.h>` → 2. $\\sqrt{a^2+b^2}$ avec `sqrt` et `pow(a, 2)` → 3. renvoyer le résultat (`double`) → 4. afficher avec `%.2f`.",
    "duree": 4,
    "etapes": [
     {
-     "consigne": "Quelle est l'hypoténuse d'un triangle rectangle de côtés 3 et 4 ?",
+     "consigne": "Quelle est l'hypoténuse d'un triangle rectangle de côtés [[A]] et [[B]] ? ($\\sqrt{[[A]]^2 + [[B]]^2}$)",
      "question": "Hypoténuse de 3 et 4 ?",
      "verif": {
       "mode": "numerique",
-      "attendu": 5
+      "attendu": "[[R]]"
      },
-     "corrige": "$\\sqrt{9 + 16} = 5$.",
+     "corrige": "$\\sqrt{[[A2]] + [[B2]]} = \\sqrt{[[S]]}$ = **[[R]]**.",
      "indices": [
-      "Théorème de Pythagore.",
-      "5"
+      "Calcule [[A]]² + [[B]]², puis prends la racine.",
+      "[[R]]"
      ],
      "duree": 0.31,
      "guideSeul": true
     },
     {
-     "consigne": "Écris la ligne qui inclut la bibliothèque mathématique.",
+     "consigne": "`sqrt` et `pow` ne sont pas disponibles sans la bonne bibliothèque. Écris la ligne qui inclut la bibliothèque mathématique.",
      "question": "Bibliothèque mathématique ?",
      "verif": {
       "mode": "regex",
@@ -2048,7 +3331,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Écris l'expression qui calcule $\\sqrt{a^2 + b^2}$ avec `sqrt` et `pow`.",
+     "consigne": "`pow(a, 2)` calcule $a^2$ et `sqrt(…)` la racine carrée. Écris l'expression complète de $\\sqrt{a^2 + b^2}$.",
      "question": "Expression de l'hypoténuse ?",
      "verif": {
       "mode": "regex",
@@ -2064,22 +3347,22 @@
      "guideSeul": true
     },
     {
-     "consigne": "Sans fonction ni racine : lis `a` et `b` (réels) et affiche $a^2 + b^2$ avec 2 décimales.",
+     "consigne": "Premier jalon, sans fonction ni racine : lis `a` et `b` (réels, avec `%lf`) et affiche $a^2 + b^2$ avec 2 décimales.",
      "question": "Somme des carrés.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "3 4",
-        "sortie": "25.00"
+        "entree": "[[A]] [[B]]",
+        "sortie": "[[S3_0]]"
        },
        {
         "entree": "1 1",
-        "sortie": "2.00"
+        "sortie": "[[S3_1]]"
        },
        {
-        "entree": "5 12",
-        "sortie": "169.00"
+        "entree": "[[E1]]",
+        "sortie": "[[S3_2]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint main(void) {\n    double a, b;\n    scanf(\"%lf %lf\", &a, &b);\n    printf(\"%.2f\\n\", a * a + b * b);\n    return 0;\n}"
@@ -2099,16 +3382,16 @@
       "mode": "c",
       "tests": [
        {
-        "entree": "3 4",
-        "sortie": "5.00"
+        "entree": "[[A]] [[B]]",
+        "sortie": "[[S4_0]]"
        },
        {
         "entree": "1 1",
-        "sortie": "1.41"
+        "sortie": "[[S4_1]]"
        },
        {
-        "entree": "5 12",
-        "sortie": "13.00"
+        "entree": "[[E1]]",
+        "sortie": "[[S4_2]]"
        }
       ],
       "exemple": "#include <stdio.h>\n#include <math.h>\n\ndouble hypotenuse(double a, double b) {\n    return sqrt(pow(a, 2) + pow(b, 2));\n}\n\nint main(void) {\n    double a, b;\n    scanf(\"%lf %lf\", &a, &b);\n    printf(\"%.2f\\n\", hypotenuse(a, b));\n    return 0;\n}",
@@ -2133,6 +3416,143 @@
      "duree": 1.99,
      "depart": "#include <stdio.h>\n\nint main(void) {\n    double a, b;\n    scanf(\"%lf %lf\", &a, &b);\n    printf(\"%.2f\\n\", a * a + b * b);\n    return 0;\n}"
     }
+   ],
+   "vals": {
+    "A": "8",
+    "B": "15",
+    "E1": "5.5 5",
+    "A2": "64",
+    "B2": "225",
+    "S": "289",
+    "R": "17.00",
+    "S3_0": "289.00",
+    "S3_1": "2.00",
+    "S3_2": "55.25",
+    "S4_0": "17.00",
+    "S4_1": "1.41",
+    "S4_2": "7.43"
+   },
+   "variantes": [
+    {
+     "A": "8",
+     "B": "15",
+     "E1": "5.5 5",
+     "A2": "64",
+     "B2": "225",
+     "S": "289",
+     "R": "17.00",
+     "S3_0": "289.00",
+     "S3_1": "2.00",
+     "S3_2": "55.25",
+     "S4_0": "17.00",
+     "S4_1": "1.41",
+     "S4_2": "7.43"
+    },
+    {
+     "A": "7",
+     "B": "24",
+     "E1": "9.5 9",
+     "A2": "49",
+     "B2": "576",
+     "S": "625",
+     "R": "25.00",
+     "S3_0": "625.00",
+     "S3_1": "2.00",
+     "S3_2": "171.25",
+     "S4_0": "25.00",
+     "S4_1": "1.41",
+     "S4_2": "13.09"
+    },
+    {
+     "A": "2",
+     "B": "3",
+     "E1": "1.5 1",
+     "A2": "4",
+     "B2": "9",
+     "S": "13",
+     "R": "3.61",
+     "S3_0": "13.00",
+     "S3_1": "2.00",
+     "S3_2": "3.25",
+     "S4_0": "3.61",
+     "S4_1": "1.41",
+     "S4_2": "1.80"
+    },
+    {
+     "A": "1",
+     "B": "2",
+     "E1": "9.5 6",
+     "A2": "1",
+     "B2": "4",
+     "S": "5",
+     "R": "2.24",
+     "S3_0": "5.00",
+     "S3_1": "2.00",
+     "S3_2": "126.25",
+     "S4_0": "2.24",
+     "S4_1": "1.41",
+     "S4_2": "11.24"
+    },
+    {
+     "A": "3",
+     "B": "4",
+     "E1": "8.5 5",
+     "A2": "9",
+     "B2": "16",
+     "S": "25",
+     "R": "5.00",
+     "S3_0": "25.00",
+     "S3_1": "2.00",
+     "S3_2": "97.25",
+     "S4_0": "5.00",
+     "S4_1": "1.41",
+     "S4_2": "9.86"
+    },
+    {
+     "A": "7",
+     "B": "24",
+     "E1": "5.5 5",
+     "A2": "49",
+     "B2": "576",
+     "S": "625",
+     "R": "25.00",
+     "S3_0": "625.00",
+     "S3_1": "2.00",
+     "S3_2": "55.25",
+     "S4_0": "25.00",
+     "S4_1": "1.41",
+     "S4_2": "7.43"
+    },
+    {
+     "A": "1",
+     "B": "2",
+     "E1": "4.5 6",
+     "A2": "1",
+     "B2": "4",
+     "S": "5",
+     "R": "2.24",
+     "S3_0": "5.00",
+     "S3_1": "2.00",
+     "S3_2": "56.25",
+     "S4_0": "2.24",
+     "S4_1": "1.41",
+     "S4_2": "7.50"
+    },
+    {
+     "A": "1",
+     "B": "2",
+     "E1": "9.5 1",
+     "A2": "1",
+     "B2": "4",
+     "S": "5",
+     "R": "2.24",
+     "S3_0": "5.00",
+     "S3_1": "2.00",
+     "S3_2": "91.25",
+     "S4_0": "2.24",
+     "S4_1": "1.41",
+     "S4_2": "9.55"
+    }
    ]
   },
   {
@@ -2141,12 +3561,12 @@
    "notion": "7.8",
    "origine": "generee",
    "titre": "Le module calculatrice, en un seul fichier",
-   "enonce": "Dans l'éditeur, un seul fichier : reproduis l'organisation du module calculatrice. En haut, les **prototypes** de `addition` et `soustraction` (ce qui irait dans `calculatrice.h`) ; puis `main`, qui lit deux entiers et affiche leur somme puis leur différence ; puis les **définitions** (ce qui irait dans `calculatrice.c`).",
+   "enonce": "Dans l'éditeur, il n'y a qu'un seul fichier : reproduis l'organisation d'un module `calculatrice`. En haut, les **prototypes** de `addition` et `soustraction` (ce qui irait dans `calculatrice.h`) ; puis `main`, qui lit deux entiers et affiche leur somme puis leur différence ; puis les **définitions** des deux fonctions (ce qui irait dans `calculatrice.c`).\n\n**Exemple**\n```text\nEntrée :\n[[A]] [[B]]\nSortie :\n[[S3_0]]\n```",
    "guidage": "**Plan** (organisation d'un module dans un seul fichier) : 1. prototypes en haut (le « .h ») → 2. `main` → 3. définitions en bas (le « .c »).",
    "duree": 5,
    "etapes": [
     {
-     "consigne": "Écris le prototype de `addition` (deux `int`, un `int` renvoyé), avec le `;`.",
+     "consigne": "Écris le prototype de `addition` : deux `int` en paramètres, un `int` renvoyé, et le `;` final qui en fait une simple déclaration.",
      "question": "Prototype de `addition` ?",
      "verif": {
       "mode": "regex",
@@ -2162,7 +3582,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Dans un vrai projet, dans quel type de fichier mettrait-on ces prototypes ? (donne l'extension, par exemple `.c`)",
+     "consigne": "Dans un vrai projet, les prototypes d'un module sont regroupés dans un fichier d'en-tête, inclus par ceux qui utilisent le module. Quelle est l'extension de ce fichier ? (par exemple `.c`)",
      "question": "Extension du fichier des prototypes ?",
      "verif": {
       "mode": "regex",
@@ -2178,18 +3598,18 @@
      "guideSeul": true
     },
     {
-     "consigne": "Sans fonctions : lis deux entiers et affiche leur somme puis leur différence, sur une ligne.",
+     "consigne": "Premier jalon, sans fonctions : lis deux entiers et affiche leur somme puis leur différence, sur une ligne.",
      "question": "Somme et différence.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "10 5",
-        "sortie": "15 5"
+        "entree": "[[A]] [[B]]",
+        "sortie": "[[S2_0]]"
        },
        {
-        "entree": "-2 8",
-        "sortie": "6 -10"
+        "entree": "[[E1]]",
+        "sortie": "[[S2_1]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint main(void) {\n    int a, b;\n    scanf(\"%d %d\", &a, &b);\n    printf(\"%d %d\\n\", a + b, a - b);\n    return 0;\n}"
@@ -2203,18 +3623,18 @@
      "guideSeul": true
     },
     {
-     "consigne": "Organise comme le module calculatrice : prototypes de `addition` et `soustraction` **avant** `main`, appels dans `main`, définitions **après** `main`.",
+     "consigne": "Organise comme un module : les deux prototypes **avant** `main`, les appels `addition(a, b)` et `soustraction(a, b)` dans `main`, et les deux définitions **après** `main`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "10 5",
-        "sortie": "15 5"
+        "entree": "[[A]] [[B]]",
+        "sortie": "[[S3_0]]"
        },
        {
-        "entree": "-2 8",
-        "sortie": "6 -10"
+        "entree": "[[E1]]",
+        "sortie": "[[S3_1]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\n/* --- ce qui irait dans calculatrice.h --- */\nint addition(int a, int b);\nint soustraction(int a, int b);\n\nint main(void) {\n    int a, b;\n    scanf(\"%d %d\", &a, &b);\n    printf(\"%d %d\\n\", addition(a, b), soustraction(a, b));\n    return 0;\n}\n\n/* --- ce qui irait dans calculatrice.c --- */\nint addition(int a, int b) {\n    return a + b;\n}\n\nint soustraction(int a, int b) {\n    return a - b;\n}",
@@ -2237,6 +3657,89 @@
      ],
      "duree": 3.2,
      "depart": "#include <stdio.h>\n\nint main(void) {\n    int a, b;\n    scanf(\"%d %d\", &a, &b);\n    printf(\"%d %d\\n\", a + b, a - b);\n    return 0;\n}"
+    }
+   ],
+   "vals": {
+    "A": "36",
+    "B": "34",
+    "E1": "-13 1",
+    "S2_0": "70 2",
+    "S2_1": "-12 -14",
+    "S3_0": "70 2",
+    "S3_1": "-12 -14"
+   },
+   "variantes": [
+    {
+     "A": "36",
+     "B": "34",
+     "E1": "-13 1",
+     "S2_0": "70 2",
+     "S2_1": "-12 -14",
+     "S3_0": "70 2",
+     "S3_1": "-12 -14"
+    },
+    {
+     "A": "14",
+     "B": "44",
+     "E1": "-16 17",
+     "S2_0": "58 -30",
+     "S2_1": "1 -33",
+     "S3_0": "58 -30",
+     "S3_1": "1 -33"
+    },
+    {
+     "A": "22",
+     "B": "45",
+     "E1": "-19 20",
+     "S2_0": "67 -23",
+     "S2_1": "1 -39",
+     "S3_0": "67 -23",
+     "S3_1": "1 -39"
+    },
+    {
+     "A": "2",
+     "B": "7",
+     "E1": "-19 3",
+     "S2_0": "9 -5",
+     "S2_1": "-16 -22",
+     "S3_0": "9 -5",
+     "S3_1": "-16 -22"
+    },
+    {
+     "A": "10",
+     "B": "36",
+     "E1": "-9 15",
+     "S2_0": "46 -26",
+     "S2_1": "6 -24",
+     "S3_0": "46 -26",
+     "S3_1": "6 -24"
+    },
+    {
+     "A": "5",
+     "B": "6",
+     "E1": "-8 10",
+     "S2_0": "11 -1",
+     "S2_1": "2 -18",
+     "S3_0": "11 -1",
+     "S3_1": "2 -18"
+    },
+    {
+     "A": "20",
+     "B": "25",
+     "E1": "-20 16",
+     "S2_0": "45 -5",
+     "S2_1": "-4 -36",
+     "S3_0": "45 -5",
+     "S3_1": "-4 -36"
+    },
+    {
+     "A": "41",
+     "B": "46",
+     "E1": "-14 18",
+     "S2_0": "87 -5",
+     "S2_1": "4 -32",
+     "S3_0": "87 -5",
+     "S3_1": "4 -32"
     }
    ]
   },
