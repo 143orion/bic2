@@ -702,7 +702,7 @@
       "Un `printf` par ligne, chacun terminé par `\\n`.",
       "`printf(\"BIC2.exe\\n\");` puis `printf(\"Programmation C\\n\");`"
      ],
-     "duree": 1.0,
+     "duree": 1,
      "guideSeul": true
     },
     {
@@ -831,6 +831,140 @@
      ],
      "duree": 1.5,
      "depart": "#include <stdio.h>\n\nint main(void) {\n    printf(\"42\\n\"); // la réponse\n    return 0;\n}"
+    }
+   ]
+  },
+  {
+   "id": "c1-105",
+   "type": "exo",
+   "notion": "1.1",
+   "origine": "cours",
+   "titre": "Ça ne compile pas !",
+   "enonce": "Tu as tapé ce programme dans le fichier `[[F]].c`. Il doit afficher `[[MSG]]`, mais la **compilation** échoue à cause d'une faute de frappe.\n```c\n[[BUG]]\n```",
+   "guidage": "**Plan** : 1. retrouver ce que produit la commande de compilation → 2. comprendre à quel moment une faute de frappe est repérée → 3. corriger la faute et lancer le programme.\n\n**À retenir** : tant que le code ne compile pas, il n'y a pas d'exécutable, donc rien ne s'exécute.",
+   "duree": 3,
+   "etapes": [
+    {
+     "guideSeul": true,
+     "consigne": "Pour compiler, on tape `gcc [[F]].c -o [[X]]`. L'option `-o` donne le nom du fichier produit. Comment s'appelle le programme exécutable obtenu ?",
+     "question": "Nom de l'exécutable ?",
+     "verif": {
+      "mode": "exact",
+      "attendu": [
+       "[[X]]",
+       "./[[X]]"
+      ]
+     },
+     "duree": 0.5,
+     "corrige": "`-o [[X]]` : l'exécutable s'appelle **[[X]]**, et on le lance avec `./[[X]]`.",
+     "indices": [
+      "Regarde ce qui suit `-o`."
+     ]
+    },
+    {
+     "guideSeul": true,
+     "consigne": "La faute de frappe dans ce programme sera-t-elle signalée **à la compilation** ou **à l'exécution** ? (réponds « compilation » ou « exécution »)",
+     "question": "Quand la faute est-elle repérée ?",
+     "verif": {
+      "mode": "exact",
+      "attendu": [
+       "compilation",
+       "a la compilation",
+       "à la compilation"
+      ]
+     },
+     "duree": 0.5,
+     "corrige": "Une faute de syntaxe est repérée **à la compilation** : le compilateur refuse de produire l'exécutable, donc le programme ne démarre même pas.",
+     "indices": [
+      "Le compilateur lit tout le code avant de produire quoi que ce soit.",
+      "Compilation."
+     ]
+    },
+    {
+     "consigne": "Corrige la faute pour que le programme compile, puis exécute-le : il doit afficher `[[MSG]]`.\n\nLe bouton **Exécuter** fait les deux étapes pour toi (compiler, puis lancer). S'il y a une erreur, lis bien le message : il donne le numéro de la ligne.",
+     "question": "Corrige le programme.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "",
+        "sortie": "[[S2_0]]"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    printf(\"[[MSG]]\\n\");\n    return 0;\n}"
+     },
+     "depart": "[[BUG]]",
+     "duree": 2,
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    printf(\"[[MSG]]\\n\");\n    return 0;\n}\n```\n\nLa faute : [[QUOI]].",
+     "indices": [
+      "Lance-le une première fois pour lire le message d'erreur : il indique la ligne fautive.",
+      "[[QUOI_MAJ]]"
+     ]
+    }
+   ],
+   "vals": {
+    "MSG": "C'est parti !",
+    "F": "hello",
+    "X": "hello",
+    "BUG": "#include <stdio.h>\n\nint main(void) {\n    printf(\"C'est parti !\\n\";\n    return 0;\n}",
+    "QUOI": "il manquait la parenthèse `)` qui ferme le `printf`",
+    "QUOI_MAJ": "Compte les parenthèses de la ligne du `printf`.",
+    "S2_0": "C'est parti !"
+   },
+   "variantes": [
+    {
+     "MSG": "C'est parti !",
+     "F": "hello",
+     "X": "hello",
+     "BUG": "#include <stdio.h>\n\nint main(void) {\n    printf(\"C'est parti !\\n\";\n    return 0;\n}",
+     "QUOI": "il manquait la parenthèse `)` qui ferme le `printf`",
+     "QUOI_MAJ": "Compte les parenthèses de la ligne du `printf`.",
+     "S2_0": "C'est parti !"
+    },
+    {
+     "MSG": "Bonjour ESILV !",
+     "F": "main",
+     "X": "prog",
+     "BUG": "#include <stdio.h>\n\nint main(void) {\n    printf(\"Bonjour ESILV !\\n\");\n    return 0;\n",
+     "QUOI": "il manquait l'accolade `}` qui ferme `main`",
+     "QUOI_MAJ": "Compte les accolades : chaque `{` a besoin de son `}`.",
+     "S2_0": "Bonjour ESILV !"
+    },
+    {
+     "MSG": "Hello, world!",
+     "F": "premier",
+     "X": "premier",
+     "BUG": "#include <stdio.h>\n\nint main(void) {\n    printf(\"Hello, world!\\n\");\n    return 0;\n",
+     "QUOI": "il manquait l'accolade `}` qui ferme `main`",
+     "QUOI_MAJ": "Compte les accolades : chaque `{` a besoin de son `}`.",
+     "S2_0": "Hello, world!"
+    },
+    {
+     "MSG": "C'est parti !",
+     "F": "premier",
+     "X": "premier",
+     "BUG": "#include <stdio.h>\n\nint main(void) {\n    printf(\"C'est parti !\\n\");\n    return 0\n}",
+     "QUOI": "il manquait le `;` après `return 0`",
+     "QUOI_MAJ": "Il manque un caractère à la fin de la ligne du `return`.",
+     "S2_0": "C'est parti !"
+    },
+    {
+     "MSG": "C'est parti !",
+     "F": "main",
+     "X": "prog",
+     "BUG": "#include <stdio.h>\n\nint main(void) {\n    printf(\"C'est parti !\\n\";\n    return 0;\n}",
+     "QUOI": "il manquait la parenthèse `)` qui ferme le `printf`",
+     "QUOI_MAJ": "Compte les parenthèses de la ligne du `printf`.",
+     "S2_0": "C'est parti !"
+    },
+    {
+     "MSG": "Hello, world!",
+     "F": "main",
+     "X": "prog",
+     "BUG": "#include <stdio.h>\n\nint main(void) {\n    printf(\"Hello, world!\\n\";\n    return 0;\n}",
+     "QUOI": "il manquait la parenthèse `)` qui ferme le `printf`",
+     "QUOI_MAJ": "Compte les parenthèses de la ligne du `printf`.",
+     "S2_0": "Hello, world!"
     }
    ]
   }

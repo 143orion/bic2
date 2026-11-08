@@ -1194,7 +1194,7 @@
       "`int appels = 0;` avant toutes les fonctions ; `saluer` affiche puis fait `appels++;`.",
       "`main` appelle `saluer();` dans la boucle puis affiche `appels`."
      ],
-     "duree": 2.0,
+     "duree": 2,
      "depart": "#include <stdio.h>\n\nint main(void) {\n    int n, compteur = 0;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        printf(\"Bonjour\\n\");\n        compteur++;\n    }\n    printf(\"%d\\n\", compteur);\n    return 0;\n}"
     }
    ]
@@ -1660,7 +1660,7 @@
       "`remplir_tableau` : la boucle de saisie ; `afficher_tableau` : le format `[…]` ; `somme_tableau` : renvoie `s`.",
       "`remplir_tableau(t, n); afficher_tableau(t, n); printf(\"%d\\n\", somme_tableau(t, n));`"
      ],
-     "duree": 4.0,
+     "duree": 4,
      "depart": "#include <stdio.h>\n\nint main(void) {\n    int t[100], n, s = 0;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        scanf(\"%d\", &t[i]);\n        s += t[i];\n    }\n    printf(\"[\");\n    for (int i = 0; i < n; i++) {\n        printf(\"%d\", t[i]);\n        if (i < n - 1) printf(\", \");\n    }\n    printf(\"]\\n\");\n    printf(\"%d\\n\", s);\n    return 0;\n}"
     }
    ]
@@ -2237,6 +2237,181 @@
      ],
      "duree": 3.2,
      "depart": "#include <stdio.h>\n\nint main(void) {\n    int a, b;\n    scanf(\"%d %d\", &a, &b);\n    printf(\"%d %d\\n\", a + b, a - b);\n    return 0;\n}"
+    }
+   ]
+  },
+  {
+   "id": "c7-114",
+   "type": "exo",
+   "notion": "7.4",
+   "origine": "cours",
+   "titre": "La fonction qui ne change rien",
+   "enonce": "Ce programme lit `[[V]]` puis appelle `[[F]]` pour lui ajouter [[K]] [[UNITE]]. Il devrait afficher la nouvelle valeur, mais il réaffiche toujours celle de départ.\n```c\n#include <stdio.h>\n\nvoid [[F]](int x) {\n    x = x + [[K]];\n}\n\nint main(void) {\n    int [[V]];\n    scanf(\"%d\", &[[V]]);\n    [[F]]([[V]]);\n    printf(\"%d\\n\", [[V]]);\n    return 0;\n}\n```\n**Exemple**\n```text\nEntrée :\n[[A]]\nSortie :\n[[R]]\n```",
+   "guidage": "**Diagnostic** : 1. ce que reçoit vraiment `x` → 2. ce que le programme affiche → 3. corriger en faisant **renvoyer** le résultat par la fonction.\n\n**À retenir** : une fonction travaille sur une **copie** de ses arguments.",
+   "duree": 4,
+   "etapes": [
+    {
+     "guideSeul": true,
+     "consigne": "Si on tape `[[A]]`, qu'affiche ce programme ? Rappelle-toi : `x` est une **copie** de `[[V]]`, et changer la copie ne touche pas l'original.",
+     "question": "Que s'affiche-t-il pour `[[A]]` ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": "[[A]]"
+     },
+     "duree": 0.6,
+     "corrige": "La fonction modifie sa copie `x`, puis la copie disparaît à la fin de la fonction. `[[V]]` vaut toujours **[[A]]**.",
+     "indices": [
+      "`[[F]]` ne renvoie rien (`void`).",
+      "La valeur n'a pas bougé : [[A]]."
+     ]
+    },
+    {
+     "guideSeul": true,
+     "consigne": "Pour récupérer le résultat, la fonction doit le **renvoyer**. Réécris sa première ligne (son en-tête) pour qu'elle renvoie un `int`, sans changer son nom ni son paramètre.",
+     "question": "Nouvel en-tête de `[[F]]` ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "int\\s+[[F]]\\s*\\(\\s*int\\s+x\\s*\\)\\s*\\{?",
+      "exemple": "int [[F]](int x)",
+      "flags": ""
+     },
+     "duree": 0.6,
+     "corrige": "`int [[F]](int x)` : `void` devient `int`, le type de la valeur renvoyée.",
+     "indices": [
+      "Le mot avant le nom de la fonction, c'est le type renvoyé.",
+      "`int [[F]](int x)`"
+     ]
+    },
+    {
+     "consigne": "Corrige le programme : la fonction **renvoie** `x + [[K]]` avec `return`, et dans `main` on range ce résultat dans `[[V]]` (`[[V]] = [[F]]([[V]]);`).\n\nPas de pointeur ici : on utilise seulement `return`.",
+     "question": "Corrige le programme.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "[[A]]",
+        "sortie": "[[S2_0]]"
+       },
+       {
+        "entree": "[[B]]",
+        "sortie": "[[S2_1]]"
+       },
+       {
+        "entree": "0",
+        "sortie": "[[S2_2]]"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint [[F]](int x) {\n    return x + [[K]];\n}\n\nint main(void) {\n    int [[V]];\n    scanf(\"%d\", &[[V]]);\n    [[V]] = [[F]]([[V]]);\n    printf(\"%d\\n\", [[V]]);\n    return 0;\n}",
+      "exige": [
+       {
+        "motif": "return",
+        "msg": "La fonction doit renvoyer le résultat avec return."
+       },
+       {
+        "motif": "[[V]]\\s*=\\s*[[F]]\\s*\\(",
+        "msg": "Range le résultat : [[V]] = [[F]]([[V]]);"
+       }
+      ],
+      "interdit": [
+       {
+        "motif": "\\*\\s*\\w+\\s*[=+]|int\\s*\\*",
+        "msg": "Pas de pointeur ici : utilise return."
+       }
+      ]
+     },
+     "duree": 2.8,
+     "depart": "#include <stdio.h>\n\nvoid [[F]](int x) {\n    x = x + [[K]];\n}\n\nint main(void) {\n    int [[V]];\n    scanf(\"%d\", &[[V]]);\n    [[F]]([[V]]);\n    printf(\"%d\\n\", [[V]]);\n    return 0;\n}",
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint [[F]](int x) {\n    return x + [[K]];\n}\n\nint main(void) {\n    int [[V]];\n    scanf(\"%d\", &[[V]]);\n    [[V]] = [[F]]([[V]]);\n    printf(\"%d\\n\", [[V]]);\n    return 0;\n}\n```",
+     "indices": [
+      "Deux changements : `return x + [[K]];` dans la fonction, et `[[V]] = [[F]]([[V]]);` dans `main`.",
+      "N'oublie pas de remplacer `void` par `int` dans l'en-tête."
+     ]
+    }
+   ],
+   "vals": {
+    "F": "vieillir",
+    "V": "age",
+    "UNITE": "ans",
+    "K": "8",
+    "A": "41",
+    "B": "50",
+    "R": "49",
+    "S2_0": "49",
+    "S2_1": "58",
+    "S2_2": "8"
+   },
+   "variantes": [
+    {
+     "F": "vieillir",
+     "V": "age",
+     "UNITE": "ans",
+     "K": "8",
+     "A": "41",
+     "B": "50",
+     "R": "49",
+     "S2_0": "49",
+     "S2_1": "58",
+     "S2_2": "8"
+    },
+    {
+     "F": "gagner",
+     "V": "pieces",
+     "UNITE": "pièces",
+     "K": "8",
+     "A": "43",
+     "B": "79",
+     "R": "51",
+     "S2_0": "51",
+     "S2_1": "87",
+     "S2_2": "8"
+    },
+    {
+     "F": "augmenter",
+     "V": "score",
+     "UNITE": "points",
+     "K": "4",
+     "A": "35",
+     "B": "28",
+     "R": "39",
+     "S2_0": "39",
+     "S2_1": "32",
+     "S2_2": "4"
+    },
+    {
+     "F": "bonus",
+     "V": "note",
+     "UNITE": "points",
+     "K": "8",
+     "A": "51",
+     "B": "-19",
+     "R": "59",
+     "S2_0": "59",
+     "S2_1": "-11",
+     "S2_2": "8"
+    },
+    {
+     "F": "vieillir",
+     "V": "age",
+     "UNITE": "ans",
+     "K": "4",
+     "A": "15",
+     "B": "21",
+     "R": "19",
+     "S2_0": "19",
+     "S2_1": "25",
+     "S2_2": "4"
+    },
+    {
+     "F": "augmenter",
+     "V": "score",
+     "UNITE": "points",
+     "K": "10",
+     "A": "44",
+     "B": "44",
+     "R": "54",
+     "S2_0": "54",
+     "S2_1": "54",
+     "S2_2": "10"
     }
    ]
   }

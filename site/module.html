@@ -289,7 +289,7 @@ function maths(){
 }
 new MutationObserver(ms => { if(ms.every(m => m.target.closest && m.target.closest(".code-hl, .c-zone"))) return; clearTimeout(tMaths); tMaths = setTimeout(maths, 30); }).observe(L, {childList:true, subtree:true});
 
-/* ---------- variantes (générateurs) : [[CLE]] remplacé par la valeur ; réponses/corrigés remplacés par étape ---------- */
+/* ---------- variantes (générateurs ou « variantes » de la banque) : [[CLE]] remplacé par la valeur ; réponses/corrigés remplacés par étape ---------- */
 function variante(it, g){
   const x = JSON.parse(JSON.stringify(it));
   const vals = Object.assign({}, it.vals || {}, (g && g.vals) || {});
@@ -300,10 +300,18 @@ function variante(it, g){
     if(g.rep && g.rep[k] != null && e.verif) e.verif = Object.assign({}, e.verif, {attendu:g.rep[k]});
     if(g.corr && g.corr[k] != null) e.corrige = g.corr[k];
   });
+  /* « [[N]] » dans une réponse chiffrée : la valeur tirée est un texte, on la repasse en nombre */
+  const num = v => { if(v && v.mode === "numerique" && typeof v.attendu === "string" && v.attendu.trim() !== "" && !isNaN(+v.attendu)) v.attendu = +v.attendu; };
+  num(y.verif); (y.etapes || []).forEach(e => num(e.verif));
   y._variante = !!g;
   return y;
 }
-const tirage = it => it.generateur && EXT.generateurs[it.generateur] ? EXT.generateurs[it.generateur]() : null;
+/* tirage d'une variante : générateur JS de l'extension, sinon un jeu de valeurs pris au hasard dans « variantes » de la banque
+   (même id, mêmes règles d'XP ; tiré à chaque ouverture, dans tous les modes) */
+const aVariantes = it => !!(it && ((it.generateur && EXT.generateurs[it.generateur]) || (Array.isArray(it.variantes) && it.variantes.length > 1)));
+const tirage = it => it.generateur && EXT.generateurs[it.generateur] ? EXT.generateurs[it.generateur]()
+  : Array.isArray(it.variantes) && it.variantes.length ? {vals:it.variantes[Math.floor(Math.random()*it.variantes.length)]} : null;
+const instance = it => it.generateur || it.variantes ? variante(it, tirage(it)) : it;
 
 /* =====================================================================
    ÉTAT DES ITEMS (affichage seulement : l'XP reste calculée par xp.js)
@@ -1487,7 +1495,7 @@ async function sessionExpress(){
     const barre = document.createElement("div"); barre.className = "progression"; barre.innerHTML = `<i></i><span></span>`; zone.before(barre);
     for(let k = 0; k < serie.length; k++){
       barre.querySelector("i").style.width = (k/serie.length*100) + "%"; barre.querySelector("span").textContent = `${k+1}/${serie.length}`;
-      const r = await jouerQuestion(serie[k], zone, {pos:`${k+1}/${serie.length}`, dernier:k === serie.length-1, log:sess.log});
+      const r = await jouerQuestion(instance(serie[k]), zone, {pos:`${k+1}/${serie.length}`, dernier:k === serie.length-1, log:sess.log});
       if(S.vue !== moi || !zone.isConnected) return;
       if(r.d && r.d.ok) sess.xp += r.d.xp + r.d.bonus; majXpSess();
     }
@@ -1501,10 +1509,10 @@ async function sessionClassique(offset = 0){
   if(!exos.length) return vueModule();
   const it0 = exos[offset % exos.length];
   ouvrirSession(`Classique${guide ? " · guidé" : ""} · ${esc(libSel())}`, async zone => {
-    const moi = S.vue; let g = guide ? tirage(it0) : null, r;
+    const moi = S.vue; let g = tirage(it0), r;
     for(;;){
       const mark = sess.log.length, inst = variante(it0, g);
-      const relancer = it0.generateur && EXT.generateurs[it0.generateur] ? () => {} : null;
+      const relancer = aVariantes(it0) ? () => {} : null;
       r = await (guide ? jouerExo(inst, zone, {mode:"guide", relancer, log:sess.log, aRattraper:s.ee[it0.id]}) : jouerMock(inst, zone, {mode:"classique", chrono:false, relancer, log:sess.log, aRattraper:s.ee[it0.id]}));
       if(S.vue !== moi || !zone.isConnected) return;
       if(r && r.relance){ sess.log.length = mark; g = tirage(it0); continue; }
@@ -1534,7 +1542,7 @@ async function sessionMock(){
     tic(); S.chrono = setInterval(tic, 1000);
     for(let k = 0; k < liste.length; k++){
       const it = liste[k], av = s.ee[it.id];
-      const r = it.type === "exo" ? await jouerMock(it, zone, {mode:"mock", examen:true, log:sess.log, aRattraper:av}) : await jouerQuestion(it, zone, {examen:true, pos:`${k+1}/${liste.length}`, dernier:k === liste.length-1, log:sess.log});
+      const r = it.type === "exo" ? await jouerMock(instance(it), zone, {mode:"mock", examen:true, log:sess.log, aRattraper:av}) : await jouerQuestion(instance(it), zone, {examen:true, pos:`${k+1}/${liste.length}`, dernier:k === liste.length-1, log:sess.log});
       if(fini || S.vue !== moi) return;
       sess.xp += r.xp != null ? r.xp : (r.d && r.d.ok ? r.d.xp + r.d.bonus : 0); majXpSess();
     }

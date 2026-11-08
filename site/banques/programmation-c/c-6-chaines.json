@@ -849,7 +849,7 @@
       "Ajoute une seconde condition à la boucle, reliée par `&&`.",
       "`while (s[n] != '\\0' && s[n] != '\\n')`"
      ],
-     "duree": 2.0,
+     "duree": 2,
      "depart": "#include <stdio.h>\n\nint main(void) {\n    char s[100];\n    fgets(s, sizeof(s), stdin);\n    int n = 0;\n    while (s[n] != '\\0') {\n        n++;\n    }\n    printf(\"%d\\n\", n);\n    return 0;\n}"
     }
    ]
@@ -954,7 +954,7 @@
       "Une ligne à insérer entre `fgets` et `printf`.",
       "`s[strcspn(s, \"\\n\")] = '\\0';`"
      ],
-     "duree": 2.0,
+     "duree": 2,
      "depart": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char s[100];\n    fgets(s, sizeof(s), stdin);\n    printf(\"[%s]\\n\", s);\n    return 0;\n}"
     }
    ]
@@ -1185,7 +1185,7 @@
       "Stocke le résultat : `int r = strcmp(a, b);` puis un `if (r < 0) … else if (r > 0) … else …`.",
       "`avant` si `r < 0`, `apres` si `r > 0`, `egal` sinon."
      ],
-     "duree": 2.0,
+     "duree": 2,
      "depart": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char a[50], b[50];\n    scanf(\"%49s %49s\", a, b);\n    if (strcmp(a, b) == 0) {\n        printf(\"egal\\n\");\n    } else {\n        printf(\"different\\n\");\n    }\n    return 0;\n}"
     }
    ]
@@ -1286,7 +1286,7 @@
       "`for (int i = n - 1; i >= 0; i--) { printf(\"%c\", s[i]); }`",
       "Termine par `printf(\"\\n\");`."
      ],
-     "duree": 2.0,
+     "duree": 2,
      "depart": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char s[100];\n    scanf(\"%99s\", s);\n    int n = strlen(s);\n    printf(\"%d\\n\", n);\n    return 0;\n}"
     }
    ]
@@ -1358,7 +1358,7 @@
       "`n = strlen(s)` ; la dernière lettre est `s[n - 1]`.",
       "`printf(\"%c %c\\n\", s[0], s[n - 1]);`"
      ],
-     "duree": 1.0,
+     "duree": 1,
      "guideSeul": true
     },
     {
@@ -1489,7 +1489,7 @@
       "Range le caractère courant dans `char c = s[i];` puis combine six égalités avec `||`.",
       "`if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u' || c == 'y') nb++;`"
      ],
-     "duree": 2.0,
+     "duree": 2,
      "depart": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char s[100];\n    fgets(s, sizeof(s), stdin);\n    int nb = 0;\n    for (int i = 0; s[i] != '\\0'; i++) {\n        if (s[i] == 'e') nb++;\n    }\n    printf(\"%d\\n\", nb);\n    return 0;\n}"
     }
    ]
@@ -1558,7 +1558,7 @@
       "`fgets` puis `s[strcspn(s, \"\\n\")] = '\\0';`",
       "`printf(\"%s\\n\", s);`"
      ],
-     "duree": 1.0,
+     "duree": 1,
      "guideSeul": true
     },
     {
@@ -1781,6 +1781,322 @@
      ],
      "duree": 2.8,
      "depart": "#include <stdio.h>\n\nint main(void) {\n    char c, s[200];\n    scanf(\" %c\", &c);\n    getchar();\n    fgets(s, sizeof(s), stdin);\n    printf(\"%c\\n\", s[0]);\n    return 0;\n}"
+    }
+   ]
+  },
+  {
+   "id": "c6-112",
+   "type": "exo",
+   "notion": "6.1",
+   "origine": "cours",
+   "titre": "Où s'arrête la chaîne ?",
+   "enonce": "Écris un programme qui part de `char mot[] = \"[[MOT]]\";` et compte **lui-même** ses caractères, en avançant case par case jusqu'au `'\\0'` (sans `strlen`). Il affiche ensuite le nombre de caractères visibles et le nombre de cases occupées :\n```text\n[[SORTIE]]\n```",
+   "guidage": "**Plan** : 1. combien de cases pour ce mot ? → 2. quelle condition arrête le parcours ? → 3. compter, puis afficher les deux nombres.\n\n**À retenir** : le `'\\0'` est la seule façon de savoir où finit le texte.",
+   "duree": 4,
+   "etapes": [
+    {
+     "guideSeul": true,
+     "consigne": "Le mot `\"[[MOT]]\"` a [[N]] lettres. Combien de **cases** occupe-t-il dans le tableau `mot` ?",
+     "question": "Nombre de cases occupées ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": "[[N1]]"
+     },
+     "duree": 0.4,
+     "corrige": "[[N]] lettres + le `'\\0'` final = **[[N1]]** cases.",
+     "indices": [
+      "N'oublie pas le caractère invisible de la fin.",
+      "[[N]] + 1."
+     ]
+    },
+    {
+     "guideSeul": true,
+     "consigne": "On avance avec un indice `n` tant qu'on n'a pas atteint la fin du texte. Écris seulement la **condition** du `while` qui continue tant que la case `mot[n]` n'est pas le caractère de fin.",
+     "question": "Condition du `while` ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "\\(?\\s*mot\\s*\\[\\s*n\\s*\\]\\s*!=\\s*('\\\\0'|0)\\s*\\)?|\\(?\\s*mot\\s*\\[\\s*n\\s*\\]\\s*\\)?",
+      "exemple": "mot[n] != '\\0'"
+     },
+     "duree": 0.5,
+     "corrige": "`mot[n] != '\\0'` : on continue tant qu'on n'est pas sur le marqueur de fin.",
+     "indices": [
+      "Le caractère de fin s'écrit `'\\0'`.",
+      "`mot[n] != '\\0'`"
+     ]
+    },
+    {
+     "guideSeul": true,
+     "consigne": "Compte les caractères : `n` part de 0 et augmente tant que `mot[n]` n'est pas `'\\0'`. Affiche seulement `n`.",
+     "question": "Compte les caractères.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "",
+        "sortie": "[[S2_0]]"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    char mot[] = \"[[MOT]]\";\n    int n = 0;\n    while (mot[n] != '\\0') {\n        n++;\n    }\n    printf(\"%d\\n\", n);\n    return 0;\n}",
+      "interdit": [
+       {
+        "motif": "strlen",
+        "msg": "Sans strlen : avance case par case jusqu'au '\\0'."
+       }
+      ]
+     },
+     "duree": 1.3,
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    char mot[] = \"[[MOT]]\";\n    int n = 0;\n    while (mot[n] != '\\0') {\n        n++;\n    }\n    printf(\"%d\\n\", n);\n    return 0;\n}\n```",
+     "indices": [
+      "`int n = 0;` puis `while (…) { n++; }`.",
+      "`while (mot[n] != '\\0') { n++; }` puis `printf(\"%d\\n\", n);`"
+     ]
+    },
+    {
+     "consigne": "Termine : affiche sur une ligne `[[SORTIE]]`, c'est-à-dire le nombre de caractères puis le nombre de cases (une de plus, pour le `'\\0'`).",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "",
+        "sortie": "[[S3_0]]"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    char mot[] = \"[[MOT]]\";\n    int n = 0;\n    while (mot[n] != '\\0') {\n        n++;\n    }\n    printf(\"%d caracteres, %d cases\\n\", n, n + 1);\n    return 0;\n}",
+      "interdit": [
+       {
+        "motif": "strlen",
+        "msg": "Sans strlen : avance case par case jusqu'au '\\0'."
+       }
+      ]
+     },
+     "duree": 1.8,
+     "depart": "#include <stdio.h>\n\nint main(void) {\n    char mot[] = \"[[MOT]]\";\n    int n = 0;\n    while (mot[n] != '\\0') {\n        n++;\n    }\n    printf(\"%d\\n\", n);\n    return 0;\n}",
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    char mot[] = \"[[MOT]]\";\n    int n = 0;\n    while (mot[n] != '\\0') {\n        n++;\n    }\n    printf(\"%d caracteres, %d cases\\n\", n, n + 1);\n    return 0;\n}\n```",
+     "indices": [
+      "Le nombre de cases, c'est `n + 1`.",
+      "`printf(\"%d caracteres, %d cases\\n\", n, n + 1);`"
+     ]
+    }
+   ],
+   "vals": {
+    "MOT": "binaire",
+    "N": "7",
+    "N1": "8",
+    "SORTIE": "7 caracteres, 8 cases",
+    "S2_0": "7",
+    "S3_0": "7 caracteres, 8 cases"
+   },
+   "variantes": [
+    {
+     "MOT": "binaire",
+     "N": "7",
+     "N1": "8",
+     "SORTIE": "7 caracteres, 8 cases",
+     "S2_0": "7",
+     "S3_0": "7 caracteres, 8 cases"
+    },
+    {
+     "MOT": "souris",
+     "N": "6",
+     "N1": "7",
+     "SORTIE": "6 caracteres, 7 cases",
+     "S2_0": "6",
+     "S3_0": "6 caracteres, 7 cases"
+    },
+    {
+     "MOT": "variable",
+     "N": "8",
+     "N1": "9",
+     "SORTIE": "8 caracteres, 9 cases",
+     "S2_0": "8",
+     "S3_0": "8 caracteres, 9 cases"
+    },
+    {
+     "MOT": "reseau",
+     "N": "6",
+     "N1": "7",
+     "SORTIE": "6 caracteres, 7 cases",
+     "S2_0": "6",
+     "S3_0": "6 caracteres, 7 cases"
+    },
+    {
+     "MOT": "compilateur",
+     "N": "11",
+     "N1": "12",
+     "SORTIE": "11 caracteres, 12 cases",
+     "S2_0": "11",
+     "S3_0": "11 caracteres, 12 cases"
+    },
+    {
+     "MOT": "programme",
+     "N": "9",
+     "N1": "10",
+     "SORTIE": "9 caracteres, 10 cases",
+     "S2_0": "9",
+     "S3_0": "9 caracteres, 10 cases"
+    }
+   ]
+  },
+  {
+   "id": "c6-113",
+   "type": "exo",
+   "notion": "6.2",
+   "origine": "cours",
+   "titre": "Un sigle lettre par lettre",
+   "enonce": "Écris un programme qui déclare `char sigle[4];`, le remplit **case par case** pour qu'il contienne la chaîne `\"[[S]]\"`, puis l'affiche avec `printf(\"%s\\n\", sigle);`.\n\nInterdit d'écrire `sigle = \"[[S]]\"` : on construit la chaîne à la main.",
+   "guidage": "**Plan** : 1. combien de cases faut-il ? → 2. que mettre dans la dernière ? → 3. remplir les cases une par une, puis afficher.\n\n**Piège** : sans le `'\\0'` final, `printf` ne sait pas où s'arrêter.",
+   "duree": 4,
+   "etapes": [
+    {
+     "guideSeul": true,
+     "consigne": "La chaîne `\"[[S]]\"` a 3 lettres. Combien de cases faut-il **au minimum** pour la ranger dans un tableau de `char` ?",
+     "question": "Nombre minimum de cases ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 4
+     },
+     "duree": 0.4,
+     "corrige": "3 lettres + le `'\\0'` = **4** cases.",
+     "indices": [
+      "Une chaîne se termine toujours par un caractère invisible.",
+      "3 + 1."
+     ]
+    },
+    {
+     "guideSeul": true,
+     "consigne": "Après avoir rangé les 3 lettres dans `sigle[0]`, `sigle[1]` et `sigle[2]`, il faut marquer la fin de la chaîne dans la dernière case. Écris cette instruction.",
+     "question": "Instruction qui termine la chaîne ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "sigle\\s*\\[\\s*3\\s*\\]\\s*=\\s*('\\\\0'|0)\\s*;",
+      "exemple": "sigle[3] = '\\0';"
+     },
+     "duree": 0.5,
+     "corrige": "`sigle[3] = '\\0';` : la case d'indice 3 reçoit le caractère nul.",
+     "indices": [
+      "La dernière case a l'indice 3.",
+      "`sigle[3] = '\\0';`"
+     ]
+    },
+    {
+     "guideSeul": true,
+     "consigne": "Pour voir le résultat attendu, commence par la forme la plus simple : déclare `char sigle[] = \"[[S]]\";` (le compilateur ajoute le `'\\0'` tout seul) et affiche-la avec `%s`.",
+     "question": "Déclare et affiche le sigle.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "",
+        "sortie": "[[S2_0]]"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    char sigle[] = \"[[S]]\";\n    printf(\"%s\\n\", sigle);\n    return 0;\n}"
+     },
+     "duree": 1,
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    char sigle[] = \"[[S]]\";\n    printf(\"%s\\n\", sigle);\n    return 0;\n}\n```",
+     "indices": [
+      "`%s` affiche une chaîne.",
+      "`printf(\"%s\\n\", sigle);`"
+     ]
+    },
+    {
+     "consigne": "Maintenant, à la main : déclare `char sigle[4];`, range chaque lettre dans sa case (`sigle[0] = '[[C0]]';`…), mets le `'\\0'` dans la dernière, puis affiche.\n\nUn caractère seul s'écrit entre **apostrophes** : `'[[C0]]'`, pas `\"[[C0]]\"`.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "",
+        "sortie": "[[S3_0]]"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    char sigle[4];\n    sigle[0] = '[[C0]]';\n    sigle[1] = '[[C1]]';\n    sigle[2] = '[[C2]]';\n    sigle[3] = '\\0';\n    printf(\"%s\\n\", sigle);\n    return 0;\n}",
+      "exige": [
+       {
+        "motif": "\\[\\s*3\\s*\\]\\s*=\\s*('\\\\0'|0)\\s*;",
+        "brut": true,
+        "msg": "N'oublie pas de terminer la chaîne : sigle[3] = '\\0';"
+       }
+      ],
+      "interdit": [
+       {
+        "motif": "sigle\\s*\\[\\s*\\d*\\s*\\]\\s*=\\s*\"",
+        "brut": true,
+        "msg": "Remplis le tableau case par case, sans = \"…\"."
+       },
+       {
+        "motif": "strcpy",
+        "msg": "Remplis le tableau case par case, sans strcpy."
+       }
+      ]
+     },
+     "duree": 2.1,
+     "depart": "#include <stdio.h>\n\nint main(void) {\n    char sigle[] = \"[[S]]\";\n    printf(\"%s\\n\", sigle);\n    return 0;\n}",
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    char sigle[4];\n    sigle[0] = '[[C0]]';\n    sigle[1] = '[[C1]]';\n    sigle[2] = '[[C2]]';\n    sigle[3] = '\\0';\n    printf(\"%s\\n\", sigle);\n    return 0;\n}\n```",
+     "indices": [
+      "Quatre affectations : trois lettres, puis `sigle[3] = '\\0';`.",
+      "`sigle[0] = '[[C0]]'; sigle[1] = '[[C1]]'; sigle[2] = '[[C2]]'; sigle[3] = '\\0';`"
+     ]
+    }
+   ],
+   "vals": {
+    "S": "PDF",
+    "C0": "P",
+    "C1": "D",
+    "C2": "F",
+    "S2_0": "PDF",
+    "S3_0": "PDF"
+   },
+   "variantes": [
+    {
+     "S": "PDF",
+     "C0": "P",
+     "C1": "D",
+     "C2": "F",
+     "S2_0": "PDF",
+     "S3_0": "PDF"
+    },
+    {
+     "S": "BIC",
+     "C0": "B",
+     "C1": "I",
+     "C2": "C",
+     "S2_0": "BIC",
+     "S3_0": "BIC"
+    },
+    {
+     "S": "CPU",
+     "C0": "C",
+     "C1": "P",
+     "C2": "U",
+     "S2_0": "CPU",
+     "S3_0": "CPU"
+    },
+    {
+     "S": "URL",
+     "C0": "U",
+     "C1": "R",
+     "C2": "L",
+     "S2_0": "URL",
+     "S3_0": "URL"
+    },
+    {
+     "S": "DNS",
+     "C0": "D",
+     "C1": "N",
+     "C2": "S",
+     "S2_0": "DNS",
+     "S3_0": "DNS"
+    },
+    {
+     "S": "TCP",
+     "C0": "T",
+     "C1": "C",
+     "C2": "P",
+     "S2_0": "TCP",
+     "S3_0": "TCP"
     }
    ]
   }

@@ -271,6 +271,42 @@ const SCENARIOS = {
     return pg;
   },
   /* panneau du Cours : fiche qui suit la lecture, « Essayer » → bac à sable C ; ordi = grand écran (colonne), tel = tiroir */
+  /* variantes de la banque : valeurs tirées à l'ouverture (jamais de [[CLE]] visible), réponse chiffrée corrigée sur la valeur tirée, 🎲 qui retire */
+  async variantes(app){
+    const pg = await page(app); await pg.goto(URL0 + "module.html?mock=mia&reset#programmation-c");
+    await pg.waitForFunction(() => window.moteur && window.moteur.etat()); await attendre(800);
+    const crochets = async quoi => { if(/\[\[\w+\]\]/.test(await pg.evaluate(() => document.body.innerText))) erreurs.push(`[${app}] variantes : [[CLE]] visible (${quoi})`); };
+    await pg.click('[data-m="tab"][data-v="exos"]'); await attendre(200);
+    await pg.click('[data-m="pk"][data-id="5.2"]'); await pg.click('[data-m="exsuiv"]');   /* 5.2 : 2 QCM + c5-009 (saisie à variantes) */
+    await pg.click('[data-m="mode"][data-v="express"]'); await pg.click('[data-m="go"]'); await attendre(500);
+    let vu = false;
+    for(let q = 0; q < 6 && !(await pg.$(".fin")); q++){
+      for(let t = 0; t < 30; t++){
+        if(await pg.$(".choix button")){ await pg.click(".choix button >> nth=0"); const mv = await pg.$("[data-a=valider]"); if(mv) await mv.click(); break; }
+        if(await pg.$(".entree")){
+          await crochets("express");
+          const txt = await pg.evaluate(() => document.querySelector(".q-enonce").innerText);
+          const m = txt.match(/tl = (\d+)[\s\S]*?ajoute (\d+)[\s\S]*?supprime (?:(\d+) fois|une fois)/);
+          if(!m){ erreurs.push(`[${app}] variantes : énoncé de c5-009 inattendu (${txt.slice(0, 80)})`); break; }
+          await pg.fill(".entree", String(+m[1] + +m[2] - (m[3] ? +m[3] : 1))); await pg.click("[data-a=valider]"); await attendre(300);
+          if(!(await pg.$(".q-retour.ok"))) erreurs.push(`[${app}] variantes : la bonne réponse à la valeur tirée est refusée`);
+          vu = true; break;
+        }
+        await attendre(250);
+      }
+      await attendre(300); const sv = await pg.$("[data-a=suivant]"); if(sv){ await sv.click(); await attendre(300); }
+    }
+    if(!vu) erreurs.push(`[${app}] variantes : la saisie c5-009 n'est pas apparue en Express`);
+    await pg.click('[data-m="quit"]'); await attendre(300);
+    await pg.click('[data-m="mode"][data-v="classique"]'); await pg.click('[data-m="go"]'); await attendre(600);   /* Classique non guidé : c5-106 */
+    await crochets("classique");
+    const avant = await pg.evaluate(() => document.querySelector(".mock-qs, .q-corps, main").innerText);
+    let change = false;
+    for(let k = 0; k < 6 && !change; k++){ await pg.click('[data-a="de"]'); await attendre(400); change = (await pg.evaluate(() => document.querySelector(".mock-qs, .q-corps, main").innerText)) !== avant; }
+    if(!change) erreurs.push(`[${app}] variantes : « Autres valeurs » ne change pas l'énoncé`);
+    await crochets("après 🎲"); await capture(pg, `variantes-classique-${app}`);
+    return pg;
+  },
   async panneau(app){
     const pg = await page(app);
     if(app === "ordi") await pg.setViewportSize({width:1600, height:900});

@@ -738,7 +738,7 @@
       "`%lf` pour lire un `double`, `%.2f` pour l'afficher.",
       "`printf(\"%.2f\\n\", x * x + y * y);`"
      ],
-     "duree": 1.0,
+     "duree": 1,
      "guideSeul": true
     },
     {
@@ -850,7 +850,7 @@
       "Un test sur 5 et 6.",
       "`if (n == 5 || n == 6)`"
      ],
-     "duree": 1.0,
+     "duree": 1,
      "guideSeul": true
     },
     {
@@ -1063,7 +1063,7 @@
       "`emp.salaire` se modifie comme une variable ordinaire.",
       "`emp.salaire += emp.salaire * (pct / 100.0);`"
      ],
-     "duree": 2.0,
+     "duree": 2,
      "guideSeul": true
     },
     {
@@ -1168,7 +1168,7 @@
       "`best` est un indice : il part de 0.",
       "`if (notes[i] > notes[best]) best = i;`"
      ],
-     "duree": 2.0,
+     "duree": 2,
      "guideSeul": true
     },
     {
@@ -1307,7 +1307,7 @@
       "Remplace `Contact annuaire[50];` par un pointeur ; il faut `<stdlib.h>`.",
       "`Contact *annuaire = calloc(n, sizeof(Contact));` après la lecture de `n`, `free(annuaire);` avant `return 0;`."
      ],
-     "duree": 4.0,
+     "duree": 4,
      "depart": "#include <stdio.h>\n#include <string.h>\n\ntypedef struct {\n    char nom[30];\n    char tel[15];\n} Contact;\n\nint main(void) {\n    Contact annuaire[50];\n    int n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        scanf(\"%29s %14s\", annuaire[i].nom, annuaire[i].tel);\n    }\n    char cherche[30];\n    scanf(\"%29s\", cherche);\n    int trouve = 0;\n    for (int i = 0; i < n; i++) {\n        if (strcmp(annuaire[i].nom, cherche) == 0) {\n            printf(\"%s\\n\", annuaire[i].tel);\n            trouve = 1;\n            break;\n        }\n    }\n    if (!trouve) printf(\"inconnu\\n\");\n    return 0;\n}\n"
     }
    ]
@@ -1578,8 +1578,183 @@
       "La boucle d'affichage passe dans la fonction, `classe[i]` devient `etudiants[i]`.",
       "Moyenne : `s / 3.0` avec `s` cumulé sur les notes."
      ],
-     "duree": 3.0,
+     "duree": 3,
      "depart": "#include <stdio.h>\n\ntypedef struct {\n    char nom[30];\n    int note;\n} Etudiant;\n\nint main(void) {\n    Etudiant classe[3] = {\n        {\"Alice\", 18},\n        {\"Bob\", 15},\n        {\"Charlie\", 17}\n    };\n    for (int i = 0; i < 3; i++) {\n        printf(\"%d. %s - Note : %d/20\\n\", i + 1, classe[i].nom, classe[i].note);\n    }\n    return 0;\n}\n"
+    }
+   ]
+  },
+  {
+   "id": "c10-110",
+   "type": "exo",
+   "notion": "10.1",
+   "origine": "cours",
+   "titre": "Des types qui parlent",
+   "enonce": "[[CONTEXTE]] Écris un programme qui crée deux alias avec `typedef` : `[[TA]]` pour `double` et `[[TB]]` pour `int`. Il lit [[QUOI_A]] (de type `[[TA]]`) puis [[QUOI_B]] (de type `[[TB]]`), et affiche le total avec 2 décimales.\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S2_0]]\n```",
+   "guidage": "**Plan** : 1. écrire les deux `typedef` (en haut du fichier, avant `main`) → 2. déclarer les variables avec ces nouveaux noms → 3. lire, multiplier, afficher.\n\n**À retenir** : `[[TA]]` reste un `double` : on le lit avec `%lf` et on l'affiche avec `%.2f`.",
+   "duree": 4,
+   "etapes": [
+    {
+     "guideSeul": true,
+     "consigne": "Écris la ligne qui fait de `[[TA]]` un autre nom pour `double`.",
+     "question": "Alias `[[TA]]` ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "typedef\\s+double\\s+[[TA]]\\s*;",
+      "exemple": "typedef double [[TA]];",
+      "flags": ""
+     },
+     "duree": 0.5,
+     "corrige": "`typedef double [[TA]];` : le type existant d'abord, le nouveau nom ensuite.",
+     "indices": [
+      "`typedef type_existant nouveau_nom;`",
+      "`typedef double [[TA]];`"
+     ]
+    },
+    {
+     "guideSeul": true,
+     "consigne": "Après `typedef double [[TA]];`, `[[TA]]` est-il un **nouveau type**, différent de `double` ? (oui / non)",
+     "question": "Nouveau type ?",
+     "verif": {
+      "mode": "exact",
+      "attendu": [
+       "non"
+      ]
+     },
+     "duree": 0.4,
+     "corrige": "**Non** : c'est exactement `double`, sous un autre nom. Il se lit avec `%lf` et s'affiche avec `%f`.",
+     "indices": [
+      "On parle d'un *alias*.",
+      "Non."
+     ]
+    },
+    {
+     "consigne": "Écris le programme complet : les deux `typedef` avant `main`, une variable `prix` de type `[[TA]]` et une variable `[[VB]]` de type `[[TB]]`. Lis-les avec `scanf(\"%lf %d\", …)`, puis affiche `Total : …` avec 2 décimales.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "[[E0]]",
+        "sortie": "[[S2_0]]"
+       },
+       {
+        "entree": "[[E1]]",
+        "sortie": "[[S2_1]]"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\ntypedef double [[TA]];\ntypedef int [[TB]];\n\nint main(void) {\n    [[TA]] prix;\n    [[TB]] [[VB]];\n    scanf(\"%lf %d\", &prix, &[[VB]]);\n    [[TA]] total = prix * [[VB]];\n    printf(\"Total : %.2f\\n\", total);\n    return 0;\n}",
+      "nombres": true,
+      "exige": [
+       {
+        "motif": "typedef\\s+double\\s+[[TA]]",
+        "msg": "Crée l'alias : typedef double [[TA]];"
+       },
+       {
+        "motif": "typedef\\s+int\\s+[[TB]]",
+        "msg": "Crée l'alias : typedef int [[TB]];"
+       },
+       {
+        "motif": "\\b[[TA]]\\s+\\w+",
+        "msg": "Déclare au moins une variable avec le type [[TA]]."
+       },
+       {
+        "motif": "\\b[[TB]]\\s+\\w+\\s*[;,=]",
+        "msg": "Déclare au moins une variable avec le type [[TB]]."
+       }
+      ]
+     },
+     "duree": 3.1,
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\ntypedef double [[TA]];\ntypedef int [[TB]];\n\nint main(void) {\n    [[TA]] prix;\n    [[TB]] [[VB]];\n    scanf(\"%lf %d\", &prix, &[[VB]]);\n    [[TA]] total = prix * [[VB]];\n    printf(\"Total : %.2f\\n\", total);\n    return 0;\n}\n```",
+     "indices": [
+      "En haut : `typedef double [[TA]];` et `typedef int [[TB]];`. Dans `main` : `[[TA]] prix; [[TB]] [[VB]];`.",
+      "`scanf(\"%lf %d\", &prix, &[[VB]]);` puis `printf(\"Total : %.2f\\n\", prix * [[VB]]);`"
+     ]
+    }
+   ],
+   "vals": {
+    "CONTEXTE": "Pour un abonnement, on calcule ce qu'on paie sur plusieurs mois.",
+    "TA": "montant",
+    "TB": "mois",
+    "VB": "nb_mois",
+    "QUOI_A": "le prix mensuel",
+    "QUOI_B": "le nombre de mois",
+    "E0": "24.36 7",
+    "E1": "16.22 1",
+    "S2_0": "Total : 170.52",
+    "S2_1": "Total : 16.22"
+   },
+   "variantes": [
+    {
+     "CONTEXTE": "Pour un abonnement, on calcule ce qu'on paie sur plusieurs mois.",
+     "TA": "montant",
+     "TB": "mois",
+     "VB": "nb_mois",
+     "QUOI_A": "le prix mensuel",
+     "QUOI_B": "le nombre de mois",
+     "E0": "24.36 7",
+     "E1": "16.22 1",
+     "S2_0": "Total : 170.52",
+     "S2_1": "Total : 16.22"
+    },
+    {
+     "CONTEXTE": "Pour une location de voiture, on calcule le coût total.",
+     "TA": "tarif",
+     "TB": "jours",
+     "VB": "duree",
+     "QUOI_A": "le tarif journalier",
+     "QUOI_B": "le nombre de jours",
+     "E0": "44.40 3",
+     "E1": "41.19 3",
+     "S2_0": "Total : 133.20",
+     "S2_1": "Total : 123.57"
+    },
+    {
+     "CONTEXTE": "Au supermarché, on calcule le prix de plusieurs articles identiques.",
+     "TA": "euros",
+     "TB": "quantite",
+     "VB": "nb",
+     "QUOI_A": "le prix d'un article",
+     "QUOI_B": "le nombre d'articles",
+     "E0": "9.66 3",
+     "E1": "4.23 3",
+     "S2_0": "Total : 28.98",
+     "S2_1": "Total : 12.69"
+    },
+    {
+     "CONTEXTE": "Pour une location de voiture, on calcule le coût total.",
+     "TA": "tarif",
+     "TB": "jours",
+     "VB": "duree",
+     "QUOI_A": "le tarif journalier",
+     "QUOI_B": "le nombre de jours",
+     "E0": "79.72 1",
+     "E1": "87.13 3",
+     "S2_0": "Total : 79.72",
+     "S2_1": "Total : 261.39"
+    },
+    {
+     "CONTEXTE": "Au supermarché, on calcule le prix de plusieurs articles identiques.",
+     "TA": "euros",
+     "TB": "quantite",
+     "VB": "nb",
+     "QUOI_A": "le prix d'un article",
+     "QUOI_B": "le nombre d'articles",
+     "E0": "6.28 8",
+     "E1": "0.76 5",
+     "S2_0": "Total : 50.24",
+     "S2_1": "Total : 3.80"
+    },
+    {
+     "CONTEXTE": "Au cinéma, on calcule le prix d'un groupe.",
+     "TA": "euros",
+     "TB": "nb_places",
+     "VB": "places",
+     "QUOI_A": "le prix d'une place",
+     "QUOI_B": "le nombre de places",
+     "E0": "10.03 6",
+     "E1": "7.46 2",
+     "S2_0": "Total : 60.18",
+     "S2_1": "Total : 14.92"
     }
    ]
   }

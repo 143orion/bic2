@@ -224,52 +224,276 @@
    "type": "saisie",
    "notion": "5.1",
    "origine": "cours",
-   "enonce": "Combien d'éléments contient `int t[8];` ?",
+   "enonce": "Combien de cases contient le tableau déclaré par `[[TYPE]] [[NOM]][[[N]]];` ?",
    "verif": {
     "mode": "numerique",
-    "attendu": 8
+    "attendu": "[[N]]"
    },
    "duree": 0.67,
-   "explication": "La taille entre crochets est le nombre d'éléments."
+   "explication": "Le nombre entre crochets, c'est le nombre de cases : ici **[[N]]**. Le type (`[[TYPE]]`) dit seulement ce que contient chaque case.",
+   "vals": {
+    "TYPE": "int",
+    "NOM": "notes",
+    "N": "8"
+   },
+   "variantes": [
+    {
+     "TYPE": "int",
+     "NOM": "notes",
+     "N": "8"
+    },
+    {
+     "TYPE": "int",
+     "NOM": "notes",
+     "N": "4"
+    },
+    {
+     "TYPE": "int",
+     "NOM": "notes",
+     "N": "16"
+    },
+    {
+     "TYPE": "char",
+     "NOM": "lettres",
+     "N": "15"
+    },
+    {
+     "TYPE": "int",
+     "NOM": "t",
+     "N": "12"
+    },
+    {
+     "TYPE": "int",
+     "NOM": "notes",
+     "N": "7"
+    },
+    {
+     "TYPE": "int",
+     "NOM": "notes",
+     "N": "9"
+    },
+    {
+     "TYPE": "double",
+     "NOM": "temperatures",
+     "N": "4"
+    }
+   ]
   },
   {
    "id": "c5-002",
    "type": "saisie",
    "notion": "5.1",
    "origine": "cours",
-   "enonce": "Quel est l'indice du dernier élément de `int t[8];` ?",
+   "enonce": "Quel est l'indice de la **dernière** case de `[[TYPE]] [[NOM]][[[N]]];` ?",
    "verif": {
     "mode": "numerique",
-    "attendu": 7
+    "attendu": "[[M]]"
    },
    "duree": 0.67,
-   "explication": "Les indices vont de 0 à N − 1 = 7."
+   "explication": "Les cases sont numérotées à partir de 0 : de `[[NOM]][0]` à `[[NOM]][[[M]]]`. Le dernier indice vaut donc [[N]] − 1 = **[[M]]**.",
+   "vals": {
+    "TYPE": "int",
+    "NOM": "scores",
+    "N": "12",
+    "M": "11"
+   },
+   "variantes": [
+    {
+     "TYPE": "int",
+     "NOM": "scores",
+     "N": "12",
+     "M": "11"
+    },
+    {
+     "TYPE": "double",
+     "NOM": "prix",
+     "N": "12",
+     "M": "11"
+    },
+    {
+     "TYPE": "char",
+     "NOM": "lettres",
+     "N": "10",
+     "M": "9"
+    },
+    {
+     "TYPE": "int",
+     "NOM": "scores",
+     "N": "13",
+     "M": "12"
+    },
+    {
+     "TYPE": "int",
+     "NOM": "scores",
+     "N": "7",
+     "M": "6"
+    },
+    {
+     "TYPE": "double",
+     "NOM": "temperatures",
+     "N": "14",
+     "M": "13"
+    },
+    {
+     "TYPE": "int",
+     "NOM": "t",
+     "N": "5",
+     "M": "4"
+    },
+    {
+     "TYPE": "int",
+     "NOM": "notes",
+     "N": "7",
+     "M": "6"
+    }
+   ]
   },
   {
    "id": "c5-003",
    "type": "saisie",
    "notion": "5.1",
    "origine": "cours",
-   "enonce": "Que vaut `t[3]` après `int t[5] = {9, 4};` ?",
+   "enonce": "Que vaut `t[[[K]]]` après `int t[[[N]]] = {[[A]], [[B]]};` ?",
    "verif": {
     "mode": "numerique",
     "attendu": 0
    },
    "duree": 0.67,
-   "explication": "Les éléments non initialisés explicitement valent 0."
+   "explication": "On n'a donné que 2 valeurs : elles remplissent `t[0]` et `t[1]`. Toutes les autres cases, dont `t[[[K]]]`, sont mises à **0**.",
+   "vals": {
+    "N": "5",
+    "A": "14",
+    "B": "20",
+    "K": "4"
+   },
+   "variantes": [
+    {
+     "N": "5",
+     "A": "14",
+     "B": "20",
+     "K": "4"
+    },
+    {
+     "N": "9",
+     "A": "4",
+     "B": "13",
+     "K": "2"
+    },
+    {
+     "N": "9",
+     "A": "18",
+     "B": "7",
+     "K": "7"
+    },
+    {
+     "N": "6",
+     "A": "7",
+     "B": "10",
+     "K": "3"
+    },
+    {
+     "N": "5",
+     "A": "17",
+     "B": "15",
+     "K": "3"
+    },
+    {
+     "N": "4",
+     "A": "19",
+     "B": "1",
+     "K": "3"
+    },
+    {
+     "N": "9",
+     "A": "18",
+     "B": "3",
+     "K": "5"
+    },
+    {
+     "N": "4",
+     "A": "1",
+     "B": "4",
+     "K": "3"
+    }
+   ]
   },
   {
    "id": "c5-004",
    "type": "saisie",
    "notion": "5.1",
    "origine": "cours",
-   "enonce": "Qu'affiche ce code ?\n```c\nint t[4] = {3, 1, 4, 1};\nint s = 0;\nfor (int i = 0; i < 4; i++) s += t[i];\nprintf(\"%d\", s);\n```",
+   "enonce": "Qu'affiche ce code ?\n```c\nint t[4] = {[[A]], [[B]], [[C]], [[D]]};\nint s = 0;\nfor (int i = 0; i < 4; i++) s += t[i];\nprintf(\"%d\", s);\n```",
    "verif": {
     "mode": "numerique",
-    "attendu": 9
+    "attendu": "[[S]]"
    },
    "duree": 0.67,
-   "explication": "3 + 1 + 4 + 1 = 9."
+   "explication": "La boucle additionne les 4 cases une par une : [[A]] + [[B]] + [[C]] + [[D]] = **[[S]]**.",
+   "vals": {
+    "A": "7",
+    "B": "5",
+    "C": "4",
+    "D": "8",
+    "S": "24"
+   },
+   "variantes": [
+    {
+     "A": "7",
+     "B": "5",
+     "C": "4",
+     "D": "8",
+     "S": "24"
+    },
+    {
+     "A": "5",
+     "B": "9",
+     "C": "3",
+     "D": "0",
+     "S": "17"
+    },
+    {
+     "A": "7",
+     "B": "8",
+     "C": "7",
+     "D": "2",
+     "S": "24"
+    },
+    {
+     "A": "8",
+     "B": "3",
+     "C": "3",
+     "D": "8",
+     "S": "22"
+    },
+    {
+     "A": "7",
+     "B": "4",
+     "C": "0",
+     "D": "7",
+     "S": "18"
+    },
+    {
+     "A": "9",
+     "B": "4",
+     "C": "3",
+     "D": "1",
+     "S": "17"
+    },
+    {
+     "A": "5",
+     "B": "2",
+     "C": "6",
+     "D": "1",
+     "S": "14"
+    },
+    {
+     "A": "1",
+     "B": "6",
+     "C": "9",
+     "D": "8",
+     "S": "24"
+    }
+   ]
   },
   {
    "id": "c5-005",
@@ -301,15 +525,80 @@
    "type": "saisie",
    "notion": "5.1",
    "origine": "cours",
-   "enonce": "Qu'affiche ce code ? (nombres séparés par des espaces)\n```c\nint t[5] = {10, 20, 30, 40, 50};\nfor (int i = 4; i >= 0; i -= 2) printf(\"%d \", t[i]);\n```",
+   "enonce": "Qu'affiche ce code ? (nombres séparés par des espaces)\n```c\nint t[5] = [[TAB]];\nfor (int i = [[DEB]]; i >= 0; i -= [[PAS]]) printf(\"%d \", t[i]);\n```",
    "verif": {
     "mode": "exact",
     "attendu": [
-     "50 30 10"
+     "[[R]]"
     ]
    },
    "duree": 0.67,
-   "explication": "i vaut 4, 2 puis 0."
+   "explication": "`i` vaut successivement [[IDX]], puis devient négatif et la boucle s'arrête. On affiche donc les cases correspondantes : **[[R]]**.",
+   "vals": {
+    "TAB": "{10, 30, 50, 70, 40}",
+    "DEB": "3",
+    "PAS": "1",
+    "IDX": "3, 2, 1, 0",
+    "R": "70 50 30 10"
+   },
+   "variantes": [
+    {
+     "TAB": "{10, 30, 50, 70, 40}",
+     "DEB": "3",
+     "PAS": "1",
+     "IDX": "3, 2, 1, 0",
+     "R": "70 50 30 10"
+    },
+    {
+     "TAB": "{40, 10, 80, 60, 90}",
+     "DEB": "3",
+     "PAS": "1",
+     "IDX": "3, 2, 1, 0",
+     "R": "60 80 10 40"
+    },
+    {
+     "TAB": "{50, 10, 70, 40, 20}",
+     "DEB": "3",
+     "PAS": "3",
+     "IDX": "3, 0",
+     "R": "40 50"
+    },
+    {
+     "TAB": "{70, 80, 40, 20, 60}",
+     "DEB": "3",
+     "PAS": "2",
+     "IDX": "3, 1",
+     "R": "20 80"
+    },
+    {
+     "TAB": "{10, 70, 90, 80, 50}",
+     "DEB": "4",
+     "PAS": "2",
+     "IDX": "4, 2, 0",
+     "R": "50 90 10"
+    },
+    {
+     "TAB": "{10, 30, 40, 50, 80}",
+     "DEB": "4",
+     "PAS": "3",
+     "IDX": "4, 1",
+     "R": "80 30"
+    },
+    {
+     "TAB": "{60, 90, 20, 30, 70}",
+     "DEB": "3",
+     "PAS": "1",
+     "IDX": "3, 2, 1, 0",
+     "R": "30 20 90 60"
+    },
+    {
+     "TAB": "{20, 60, 90, 80, 30}",
+     "DEB": "4",
+     "PAS": "3",
+     "IDX": "4, 1",
+     "R": "30 60"
+    }
+   ]
   },
   {
    "id": "c5-007",
@@ -358,13 +647,96 @@
    "type": "saisie",
    "notion": "5.2",
    "origine": "cours",
-   "enonce": "Tableau de taille physique 10 avec `tl = 4`. Après deux ajouts puis une suppression du dernier, que vaut `tl` ?",
+   "enonce": "Un tableau a une taille physique de [[TP]] et une taille logique `tl = [[A]]`. On ajoute [[XA]] à la fin, puis on supprime [[YS]] le dernier élément. Que vaut `tl` maintenant ?",
    "verif": {
     "mode": "numerique",
-    "attendu": 5
+    "attendu": "[[R]]"
    },
    "duree": 0.67,
-   "explication": "4 + 2 − 1 = 5."
+   "explication": "Chaque ajout fait `tl++`, chaque suppression `tl--` : [[A]] + [[X]] − [[Y]] = **[[R]]**. La taille physique, elle, ne bouge jamais.",
+   "vals": {
+    "TP": "10",
+    "A": "4",
+    "X": "1",
+    "Y": "2",
+    "XA": "1 élément",
+    "YS": "2 fois",
+    "R": "3"
+   },
+   "variantes": [
+    {
+     "TP": "10",
+     "A": "4",
+     "X": "1",
+     "Y": "2",
+     "XA": "1 élément",
+     "YS": "2 fois",
+     "R": "3"
+    },
+    {
+     "TP": "10",
+     "A": "6",
+     "X": "1",
+     "Y": "1",
+     "XA": "1 élément",
+     "YS": "une fois",
+     "R": "6"
+    },
+    {
+     "TP": "10",
+     "A": "5",
+     "X": "1",
+     "Y": "1",
+     "XA": "1 élément",
+     "YS": "une fois",
+     "R": "5"
+    },
+    {
+     "TP": "15",
+     "A": "4",
+     "X": "3",
+     "Y": "1",
+     "XA": "3 éléments",
+     "YS": "une fois",
+     "R": "6"
+    },
+    {
+     "TP": "20",
+     "A": "2",
+     "X": "2",
+     "Y": "1",
+     "XA": "2 éléments",
+     "YS": "une fois",
+     "R": "3"
+    },
+    {
+     "TP": "15",
+     "A": "4",
+     "X": "2",
+     "Y": "1",
+     "XA": "2 éléments",
+     "YS": "une fois",
+     "R": "5"
+    },
+    {
+     "TP": "15",
+     "A": "5",
+     "X": "3",
+     "Y": "1",
+     "XA": "3 éléments",
+     "YS": "une fois",
+     "R": "7"
+    },
+    {
+     "TP": "15",
+     "A": "6",
+     "X": "3",
+     "Y": "1",
+     "XA": "3 éléments",
+     "YS": "une fois",
+     "R": "8"
+    }
+   ]
   },
   {
    "id": "c5-010",
@@ -415,12 +787,12 @@
    "type": "qcm",
    "notion": "5.3",
    "origine": "cours",
-   "enonce": "Quelle boucle sort du tableau `int t[5];` ?",
+   "enonce": "Quelle boucle **sort** du tableau `int t[[[N]]];` (elle lit une case qui n'existe pas) ?",
    "choix": [
-    "for (int i = 0; i <= 5; i++)",
-    "for (int i = 0; i < 5; i++)",
-    "for (int i = 4; i >= 0; i--)",
-    "for (int i = 1; i < 5; i++)"
+    "for (int i = 0; i <= [[N]]; i++)",
+    "for (int i = 0; i < [[N]]; i++)",
+    "for (int i = [[M]]; i >= 0; i--)",
+    "for (int i = 1; i < [[N]]; i++)"
    ],
    "verif": {
     "mode": "exact",
@@ -429,48 +801,236 @@
     ]
    },
    "duree": 0.33,
-   "explication": "Avec `i <= 5`, la dernière itération accède à `t[5]`, qui n'existe pas."
+   "explication": "Avec `i <= [[N]]`, le dernier tour lit `t[[[N]]]`, qui n'existe pas : le dernier indice est [[M]]. Les autres boucles restent entre 0 et [[M]] (celle qui part de 1 saute juste la première case).",
+   "vals": {
+    "N": "10",
+    "M": "9"
+   },
+   "variantes": [
+    {
+     "N": "10",
+     "M": "9"
+    },
+    {
+     "N": "12",
+     "M": "11"
+    },
+    {
+     "N": "5",
+     "M": "4"
+    },
+    {
+     "N": "4",
+     "M": "3"
+    },
+    {
+     "N": "7",
+     "M": "6"
+    },
+    {
+     "N": "8",
+     "M": "7"
+    },
+    {
+     "N": "11",
+     "M": "10"
+    },
+    {
+     "N": "9",
+     "M": "8"
+    }
+   ]
   },
   {
    "id": "c5-013",
    "type": "saisie",
    "notion": "5.4",
    "origine": "cours",
-   "enonce": "Combien vaut `nb` ?\n```c\nint t[6] = {2, 7, 2, 2, 9, 7};\nint nb = 0;\nfor (int i = 0; i < 6; i++) if (t[i] == 2) nb++;\n```",
+   "enonce": "Combien vaut `nb` à la fin ?\n```c\nint t[6] = [[TAB]];\nint nb = 0;\nfor (int i = 0; i < 6; i++) if (t[i] == [[X]]) nb++;\n```",
    "verif": {
     "mode": "numerique",
-    "attendu": 3
+    "attendu": "[[R]]"
    },
    "duree": 0.67,
-   "explication": "2 apparaît aux indices 0, 2 et 3."
+   "explication": "`nb` augmente de 1 à chaque case égale à [[X]] : [[X]] apparaît aux indices [[POS]], donc **[[R]]** fois.",
+   "vals": {
+    "TAB": "{5, 8, 8, 2, 5, 8}",
+    "X": "5",
+    "POS": "0, 4",
+    "R": "2"
+   },
+   "variantes": [
+    {
+     "TAB": "{5, 8, 8, 2, 5, 8}",
+     "X": "5",
+     "POS": "0, 4",
+     "R": "2"
+    },
+    {
+     "TAB": "{4, 4, 5, 5, 5, 9}",
+     "X": "4",
+     "POS": "0, 1",
+     "R": "2"
+    },
+    {
+     "TAB": "{7, 5, 7, 5, 9, 5}",
+     "X": "5",
+     "POS": "1, 3, 5",
+     "R": "3"
+    },
+    {
+     "TAB": "{2, 5, 5, 4, 2, 5}",
+     "X": "5",
+     "POS": "1, 2, 5",
+     "R": "3"
+    },
+    {
+     "TAB": "{2, 7, 8, 2, 2, 8}",
+     "X": "8",
+     "POS": "2, 5",
+     "R": "2"
+    },
+    {
+     "TAB": "{8, 3, 9, 3, 9, 9}",
+     "X": "9",
+     "POS": "2, 4, 5",
+     "R": "3"
+    },
+    {
+     "TAB": "{7, 5, 7, 7, 3, 3}",
+     "X": "3",
+     "POS": "4, 5",
+     "R": "2"
+    },
+    {
+     "TAB": "{8, 8, 8, 7, 7, 8}",
+     "X": "8",
+     "POS": "0, 1, 2, 5",
+     "R": "4"
+    }
+   ]
   },
   {
    "id": "c5-014",
    "type": "saisie",
    "notion": "5.4",
    "origine": "cours",
-   "enonce": "Que vaut `pos` ?\n```c\nint t[5] = {4, 9, 1, 9, 3};\nint pos = -1;\nfor (int i = 0; i < 5; i++) {\n    if (t[i] == 9) { pos = i; break; }\n}\n```",
+   "enonce": "Que vaut `pos` à la fin ?\n```c\nint t[5] = [[TAB]];\nint pos = -1;\nfor (int i = 0; i < 5; i++) {\n    if (t[i] == [[X]]) { pos = i; break; }\n}\n```",
    "verif": {
     "mode": "numerique",
-    "attendu": 1
+    "attendu": "[[R]]"
    },
    "duree": 0.67,
-   "explication": "La première occurrence de 9 est à l'indice 1 ; `break` arrête la recherche."
+   "explication": "La première case qui vaut [[X]] est à l'indice **[[R]]** ; le `break` arrête la boucle tout de suite, donc une éventuelle deuxième occurrence n'est jamais vue.",
+   "vals": {
+    "TAB": "{3, 6, 5, 4, 1}",
+    "X": "6",
+    "R": "1"
+   },
+   "variantes": [
+    {
+     "TAB": "{3, 6, 5, 4, 1}",
+     "X": "6",
+     "R": "1"
+    },
+    {
+     "TAB": "{9, 4, 7, 3, 2}",
+     "X": "2",
+     "R": "4"
+    },
+    {
+     "TAB": "{1, 2, 8, 3, 5}",
+     "X": "3",
+     "R": "3"
+    },
+    {
+     "TAB": "{4, 2, 9, 6, 2}",
+     "X": "2",
+     "R": "1"
+    },
+    {
+     "TAB": "{6, 9, 5, 1, 6}",
+     "X": "6",
+     "R": "0"
+    },
+    {
+     "TAB": "{6, 2, 6, 3, 7}",
+     "X": "6",
+     "R": "0"
+    },
+    {
+     "TAB": "{4, 1, 5, 7, 6}",
+     "X": "4",
+     "R": "0"
+    },
+    {
+     "TAB": "{9, 1, 5, 8, 7}",
+     "X": "1",
+     "R": "1"
+    }
+   ]
   },
   {
    "id": "c5-015",
    "type": "saisie",
    "notion": "5.4",
    "origine": "cours",
-   "enonce": "Après un décalage circulaire à gauche de `{1, 2, 3, 4}`, que contient le tableau ? (nombres séparés par des espaces)",
+   "enonce": "Après un décalage circulaire **à gauche** de `[[TAB]]`, que contient le tableau ? (nombres séparés par des espaces)",
    "verif": {
     "mode": "exact",
     "attendu": [
-     "2 3 4 1"
+     "[[R]]"
     ]
    },
    "duree": 0.67,
-   "explication": "Chacun prend la place de son voisin de gauche, le premier passe à la fin."
+   "explication": "Chaque valeur recule d'une case, et la première ([[P]]) fait le tour pour se placer à la fin : **[[R]]**.",
+   "vals": {
+    "TAB": "{4, 8, 3, 6}",
+    "P": "4",
+    "R": "8 3 6 4"
+   },
+   "variantes": [
+    {
+     "TAB": "{4, 8, 3, 6}",
+     "P": "4",
+     "R": "8 3 6 4"
+    },
+    {
+     "TAB": "{2, 4, 3, 6}",
+     "P": "2",
+     "R": "4 3 6 2"
+    },
+    {
+     "TAB": "{6, 3, 4, 7}",
+     "P": "6",
+     "R": "3 4 7 6"
+    },
+    {
+     "TAB": "{8, 6, 3, 2}",
+     "P": "8",
+     "R": "6 3 2 8"
+    },
+    {
+     "TAB": "{7, 9, 2, 1}",
+     "P": "7",
+     "R": "9 2 1 7"
+    },
+    {
+     "TAB": "{4, 6, 9, 1}",
+     "P": "4",
+     "R": "6 9 1 4"
+    },
+    {
+     "TAB": "{1, 5, 6, 2}",
+     "P": "1",
+     "R": "5 6 2 1"
+    },
+    {
+     "TAB": "{3, 5, 8, 6}",
+     "P": "3",
+     "R": "5 8 6 3"
+    }
+   ]
   },
   {
    "id": "c5-016",
@@ -503,66 +1063,158 @@
    "notion": "5.1",
    "origine": "td",
    "titre": "Indices pairs entre accolades",
-   "enonce": "On a le tableau `{12, -1, 34, 91, 23, 55, -13, 11, 67, 70, -32, 17, 29, 20}`.\n\nÉcris un programme qui affiche, sur une ligne, les valeurs d'**indice pair** entre accolades, séparées par des espaces : `{ 12 34 23 -13 67 -32 29 }` (Tableaux_chainex, intermédiaire ex. 1).",
-   "guidage": "**Plan** : 1. repérer les indices pairs → 2. les parcourir avec un pas de 2 → 3. entourer l'affichage d'accolades.\n\n**Piège** : on parle d'**indice** pair, pas de valeur paire.",
+   "enonce": "On a le tableau de [[N]] entiers `[[TAB]]`.\n\nÉcris un programme qui affiche, sur une seule ligne, les valeurs rangées dans les cases d'**indice pair** (cases 0, 2, 4…), entre accolades et séparées par des espaces.\n\n**Sortie attendue**\n```text\n[[RES]]\n```\n\n(Tableaux_chainex, intermédiaire ex. 1)",
+   "guidage": "**Plan** : 1. repérer quelles cases ont un indice pair → 2. les parcourir en sautant une case sur deux → 3. ajouter les accolades autour.\n\n**Piège** : on parle de la **position** paire (l'indice), pas de la valeur paire.",
    "duree": 4,
    "etapes": [
     {
-     "consigne": "Les 14 cases sont numérotées de 0 à 13. Combien de cases ont un **indice pair** (0, 2, 4…) ?",
-     "question": "Combien de valeurs va-t-on afficher ?",
+     "consigne": "Les [[N]] cases sont numérotées de 0 à [[M]]. Compte celles dont le numéro est pair (0, 2, 4…) : c'est le nombre de valeurs que ton programme devra afficher.",
+     "question": "Combien de cases ont un indice pair ?",
      "verif": {
       "mode": "numerique",
-      "attendu": 7
+      "attendu": "[[NP]]"
      },
-     "corrige": "Indices pairs : 0, 2, 4, 6, 8, 10, 12, donc 7 valeurs.",
+     "corrige": "Les indices pairs vont de 0 à [[MP]] de 2 en 2 : cela fait **[[NP]]** cases.",
      "indices": [
-      "Écris les indices de 0 à 13 et barre les impairs.",
-      "0, 2, 4, 6, 8, 10, 12 : compte-les."
+      "Écris les numéros de 0 à [[M]] et barre les impairs.",
+      "0, 2, 4… jusqu'à [[MP]] : compte-les."
      ],
      "duree": 0.5,
      "guideSeul": true
     },
     {
-     "consigne": "Écris un programme qui affiche les valeurs d'**indice pair** du tableau, séparées par un espace, sans accolades pour l'instant. Pour sauter une case sur deux, change le **pas** de la boucle.",
-     "question": "Affiche les valeurs d'indice pair.",
+     "consigne": "Première version, sans les accolades : affiche les valeurs des cases d'indice pair, séparées par un espace.\n\nD'habitude, une boucle `for` avance d'une case à la fois avec `i++`. Ici tu veux sauter une case sur deux : fais avancer `i` de **2** à chaque tour.",
+     "question": "Affiche les valeurs des cases d'indice pair.",
      "verif": {
       "mode": "c",
       "tests": [
        {
         "entree": "",
-        "sortie": "12 34 23 -13 67 -32 29"
+        "sortie": "[[S1_0]]"
        }
       ],
-      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[14] = {12, -1, 34, 91, 23, 55, -13, 11, 67, 70, -32, 17, 29, 20};\n    for (int i = 0; i < 14; i += 2) {\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    return 0;\n}"
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[[[N]]] = [[TAB]];\n    for (int i = 0; i < [[N]]; i += 2) {\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    return 0;\n}"
      },
-     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[14] = {12, -1, 34, 91, 23, 55, -13, 11, 67, 70, -32, 17, 29, 20};\n    for (int i = 0; i < 14; i += 2) {\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    return 0;\n}\n```",
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[[[N]]] = [[TAB]];\n    for (int i = 0; i < [[N]]; i += 2) {\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    return 0;\n}\n```",
      "indices": [
-      "Une boucle `for` classique avance de 1 : `i++`. Ici, `i` doit avancer de 2.",
-      "`for (int i = 0; i < 14; i += 2)` puis `printf(\"%d \", t[i]);`."
+      "Remplace `i++` par une instruction qui ajoute 2 à `i`.",
+      "`for (int i = 0; i < [[N]]; i += 2)`, et dans la boucle `printf(\"%d \", t[i]);`."
      ],
      "duree": 1.2,
      "guideSeul": true
     },
     {
-     "consigne": "Il ne reste qu'à entourer l'affichage : écris `{ ` avant la boucle et `}` après, le tout sur **une seule ligne** (`{ 12 34 23 -13 67 -32 29 }`).",
+     "consigne": "Il ne reste qu'à habiller l'affichage : écris `{ ` avant la boucle et `}` après, le tout sur **une seule ligne** :\n```text\n[[RES]]\n```",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
       "tests": [
        {
         "entree": "",
-        "sortie": "{ 12 34 23 -13 67 -32 29 }"
+        "sortie": "[[S2_0]]"
        }
       ],
-      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[14] = {12, -1, 34, 91, 23, 55, -13, 11, 67, 70, -32, 17, 29, 20};\n    printf(\"{ \");\n    for (int i = 0; i < 14; i += 2) {\n        printf(\"%d \", t[i]);\n    }\n    printf(\"}\\n\");\n    return 0;\n}"
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[[[N]]] = [[TAB]];\n    printf(\"{ \");\n    for (int i = 0; i < [[N]]; i += 2) {\n        printf(\"%d \", t[i]);\n    }\n    printf(\"}\\n\");\n    return 0;\n}"
      },
-     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[14] = {12, -1, 34, 91, 23, 55, -13, 11, 67, 70, -32, 17, 29, 20};\n    printf(\"{ \");\n    for (int i = 0; i < 14; i += 2) {\n        printf(\"%d \", t[i]);\n    }\n    printf(\"}\\n\");\n    return 0;\n}\n```",
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[[[N]]] = [[TAB]];\n    printf(\"{ \");\n    for (int i = 0; i < [[N]]; i += 2) {\n        printf(\"%d \", t[i]);\n    }\n    printf(\"}\\n\");\n    return 0;\n}\n```",
      "indices": [
       "Un `printf(\"{ \");` avant la boucle, un `printf(\"}\\n\");` après.",
       "Chaque valeur est déjà suivie d'une espace : le `}` final tombe donc au bon endroit."
      ],
      "duree": 2.3,
-     "depart": "#include <stdio.h>\n\nint main(void) {\n    int t[14] = {12, -1, 34, 91, 23, 55, -13, 11, 67, 70, -32, 17, 29, 20};\n    for (int i = 0; i < 14; i += 2) {\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    return 0;\n}"
+     "depart": "#include <stdio.h>\n\nint main(void) {\n    int t[[[N]]] = [[TAB]];\n    for (int i = 0; i < [[N]]; i += 2) {\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    return 0;\n}"
+    }
+   ],
+   "vals": {
+    "N": "11",
+    "TAB": "{13, 18, 11, 76, 5, 17, -25, -14, 28, -15, 86}",
+    "RES": "{ 13 11 5 -25 28 86 }",
+    "M": "10",
+    "NP": "6",
+    "MP": "10",
+    "S1_0": "13 11 5 -25 28 86 ",
+    "S2_0": "{ 13 11 5 -25 28 86 }"
+   },
+   "variantes": [
+    {
+     "N": "11",
+     "TAB": "{13, 18, 11, 76, 5, 17, -25, -14, 28, -15, 86}",
+     "RES": "{ 13 11 5 -25 28 86 }",
+     "M": "10",
+     "NP": "6",
+     "MP": "10",
+     "S1_0": "13 11 5 -25 28 86 ",
+     "S2_0": "{ 13 11 5 -25 28 86 }"
+    },
+    {
+     "N": "11",
+     "TAB": "{19, -24, 68, 11, -1, 40, 30, -40, 94, 27, 78}",
+     "RES": "{ 19 68 -1 30 94 78 }",
+     "M": "10",
+     "NP": "6",
+     "MP": "10",
+     "S1_0": "19 68 -1 30 94 78 ",
+     "S2_0": "{ 19 68 -1 30 94 78 }"
+    },
+    {
+     "N": "13",
+     "TAB": "{-3, 64, 53, 61, 15, 54, 25, 3, 58, 19, 93, 81, 74}",
+     "RES": "{ -3 53 15 25 58 93 74 }",
+     "M": "12",
+     "NP": "7",
+     "MP": "12",
+     "S1_0": "-3 53 15 25 58 93 74 ",
+     "S2_0": "{ -3 53 15 25 58 93 74 }"
+    },
+    {
+     "N": "12",
+     "TAB": "{-3, 37, -35, 96, 80, 77, 87, 65, 68, 25, 32, -24}",
+     "RES": "{ -3 -35 80 87 68 32 }",
+     "M": "11",
+     "NP": "6",
+     "MP": "10",
+     "S1_0": "-3 -35 80 87 68 32 ",
+     "S2_0": "{ -3 -35 80 87 68 32 }"
+    },
+    {
+     "N": "10",
+     "TAB": "{30, 1, 11, 50, 91, -4, -34, 94, 74, -1}",
+     "RES": "{ 30 11 91 -34 74 }",
+     "M": "9",
+     "NP": "5",
+     "MP": "8",
+     "S1_0": "30 11 91 -34 74 ",
+     "S2_0": "{ 30 11 91 -34 74 }"
+    },
+    {
+     "N": "13",
+     "TAB": "{30, 22, 5, -18, -4, -28, 23, 42, -16, -32, -30, 13, -31}",
+     "RES": "{ 30 5 -4 23 -16 -30 -31 }",
+     "M": "12",
+     "NP": "7",
+     "MP": "12",
+     "S1_0": "30 5 -4 23 -16 -30 -31 ",
+     "S2_0": "{ 30 5 -4 23 -16 -30 -31 }"
+    },
+    {
+     "N": "15",
+     "TAB": "{25, -4, 60, 89, -33, -34, 61, 97, 93, 66, 12, -37, 68, 3, 0}",
+     "RES": "{ 25 60 -33 61 93 12 68 0 }",
+     "M": "14",
+     "NP": "8",
+     "MP": "14",
+     "S1_0": "25 60 -33 61 93 12 68 0 ",
+     "S2_0": "{ 25 60 -33 61 93 12 68 0 }"
+    },
+    {
+     "N": "10",
+     "TAB": "{-28, 97, 49, 42, 51, -17, -10, 19, 92, -38}",
+     "RES": "{ -28 49 51 -10 92 }",
+     "M": "9",
+     "NP": "5",
+     "MP": "8",
+     "S1_0": "-28 49 51 -10 92 ",
+     "S2_0": "{ -28 49 51 -10 92 }"
     }
    ]
   },
@@ -572,28 +1224,28 @@
    "notion": "5.1",
    "origine": "td",
    "titre": "Produit des valeurs impaires",
-   "enonce": "On a le tableau `{12, -1, 3, 9, 2, 15, -3, 11, 10, 7, -32, 17, 19, 20}`.\n\nÉcris un programme qui calcule et affiche le **produit des valeurs impaires** (Tableaux_chainex, intermédiaire ex. 2).",
-   "guidage": "**Plan** : 1. savoir reconnaître un entier impair, y compris négatif → 2. ne retenir que ces valeurs → 3. les multiplier dans un produit qui part de 1.\n\n**Piège** : `-3 % 2` vaut `-1` en C, pas `1`.",
+   "enonce": "On a le tableau de 14 entiers `[[TAB]]`.\n\nÉcris un programme qui **multiplie entre elles** toutes les valeurs **impaires** du tableau (négatives comprises) et affiche le produit obtenu.\n\n**Sortie attendue**\n```text\n[[P]]\n```\n\n(Tableaux_chainex, intermédiaire ex. 2)",
+   "guidage": "**Plan** : 1. savoir reconnaître un entier impair, même négatif → 2. ne garder que ces valeurs → 3. les multiplier dans une variable qui part de **1**.\n\n**Piège** : en C, `-3 % 2` vaut `-1`, pas `1`.",
    "duree": 5,
    "etapes": [
     {
-     "consigne": "En C, le reste de la division entière garde le **signe** du dividende. Que vaut `-3 % 2` ?",
-     "question": "Que vaut `-3 % 2` ?",
+     "consigne": "Pour savoir si un nombre est impair, on regarde le reste de sa division par 2 avec `%`. Attention : en C, ce reste garde le **signe** du nombre de départ. Que vaut `-[[A]] % 2` ?",
+     "question": "Que vaut `-[[A]] % 2` ?",
      "verif": {
       "mode": "numerique",
       "attendu": -1
      },
-     "corrige": "Le reste a le signe de -3 : `-3 % 2` vaut `-1`. Tester `% 2 == 1` raterait donc les impairs négatifs.",
+     "corrige": "-[[A]] = 2 × ([[Q]]) + (-1) : le reste vaut **-1**. Un test `t[i] % 2 == 1` raterait donc les impairs négatifs.",
      "indices": [
-      "-3 = 2 × (-1) + (-1) : le reste est négatif.",
+      "Le reste a le même signe que -[[A]].",
       "Le reste vaut -1."
      ],
      "duree": 0.5,
      "guideSeul": true
     },
     {
-     "consigne": "Écris la condition (sans `if`) qui est vraie pour **toutes** les valeurs impaires de `t[i]`, négatives comprises.",
-     "question": "Condition « t[i] est impair » ?",
+     "consigne": "Écris seulement la **condition** (ce qu'on mettrait entre les parenthèses d'un `if`) qui est vraie quand `t[i]` est impair, **y compris** s'il est négatif.",
+     "question": "Condition « `t[i]` est impair » ?",
      "verif": {
       "mode": "regex",
       "motif": "\\(?\\s*t\\[i\\]\\s*%\\s*2\\s*(!=\\s*0)?\\s*\\)?|\\(?\\s*t\\[i\\]\\s*%\\s*2\\s*==\\s*1\\s*\\|\\|\\s*t\\[i\\]\\s*%\\s*2\\s*==\\s*-\\s*1\\s*\\)?",
@@ -601,54 +1253,128 @@
      },
      "corrige": "`t[i] % 2 != 0` : le reste est 1 ou -1, donc différent de 0.",
      "indices": [
-      "Un nombre pair a un reste nul.",
-      "Impair = reste **différent de 0**."
+      "Un nombre pair a un reste nul. Un impair a un reste… pas nul.",
+      "Teste si le reste est **différent de 0** : `!=`."
      ],
      "duree": 0.6,
      "guideSeul": true
     },
     {
-     "consigne": "Écris un programme qui affiche, séparées par un espace, les valeurs **impaires** de `{12, -1, 3, 9, 2, 15, -3, 11, 10, 7, -32, 17, 19, 20}`.",
+     "consigne": "Avant de multiplier, vérifie que tu repères bien les bonnes valeurs : affiche les valeurs **impaires** du tableau, séparées par un espace.",
      "question": "Affiche les valeurs impaires.",
      "verif": {
       "mode": "c",
       "tests": [
        {
         "entree": "",
-        "sortie": "-1 3 9 15 -3 11 7 17 19"
+        "sortie": "[[S2_0]]"
        }
       ],
-      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[14] = {12, -1, 3, 9, 2, 15, -3, 11, 10, 7, -32, 17, 19, 20};\n    for (int i = 0; i < 14; i++) {\n        if (t[i] % 2 != 0) {\n            printf(\"%d \", t[i]);\n        }\n    }\n    printf(\"\\n\");\n    return 0;\n}"
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[14] = [[TAB]];\n    for (int i = 0; i < 14; i++) {\n        if (t[i] % 2 != 0) {\n            printf(\"%d \", t[i]);\n        }\n    }\n    printf(\"\\n\");\n    return 0;\n}"
      },
-     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[14] = {12, -1, 3, 9, 2, 15, -3, 11, 10, 7, -32, 17, 19, 20};\n    for (int i = 0; i < 14; i++) {\n        if (t[i] % 2 != 0) {\n            printf(\"%d \", t[i]);\n        }\n    }\n    printf(\"\\n\");\n    return 0;\n}\n```",
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[14] = [[TAB]];\n    for (int i = 0; i < 14; i++) {\n        if (t[i] % 2 != 0) {\n            printf(\"%d \", t[i]);\n        }\n    }\n    printf(\"\\n\");\n    return 0;\n}\n```",
      "indices": [
-      "Une boucle sur tout le tableau, avec un `if` dedans.",
-      "`for (int i = 0; i < 14; i++) { if (t[i] % 2 != 0) { printf(\"%d \", t[i]); } }`"
+      "Une boucle sur les 14 cases, avec un `if` dedans.",
+      "`if (t[i] % 2 != 0) { printf(\"%d \", t[i]); }`"
      ],
      "duree": 1.2,
      "guideSeul": true
     },
     {
-     "consigne": "Au lieu d'afficher chaque valeur impaire, **multiplie-les** dans une variable `p` et affiche seulement `p` à la fin. Attention à sa valeur de départ : un produit qui démarre à 0 reste 0.",
+     "consigne": "Maintenant, au lieu d'afficher chaque valeur impaire, **multiplie-la** dans une variable `p`, et affiche seulement `p` à la fin.\n\nAttention à la valeur de départ de `p` : un produit qui commence à 0 reste toujours 0.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
       "tests": [
        {
         "entree": "",
-        "sortie": "30218265"
+        "sortie": "[[S3_0]]"
        }
       ],
-      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[14] = {12, -1, 3, 9, 2, 15, -3, 11, 10, 7, -32, 17, 19, 20};\n    int p = 1;\n    for (int i = 0; i < 14; i++) {\n        if (t[i] % 2 != 0) {\n            p *= t[i];\n        }\n    }\n    printf(\"%d\\n\", p);\n    return 0;\n}",
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[14] = [[TAB]];\n    int p = 1;\n    for (int i = 0; i < 14; i++) {\n        if (t[i] % 2 != 0) {\n            p *= t[i];\n        }\n    }\n    printf(\"%d\\n\", p);\n    return 0;\n}",
       "nombres": true
      },
-     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[14] = {12, -1, 3, 9, 2, 15, -3, 11, 10, 7, -32, 17, 19, 20};\n    int p = 1;\n    for (int i = 0; i < 14; i++) {\n        if (t[i] % 2 != 0) {\n            p *= t[i];\n        }\n    }\n    printf(\"%d\\n\", p);\n    return 0;\n}\n```",
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[14] = [[TAB]];\n    int p = 1;\n    for (int i = 0; i < 14; i++) {\n        if (t[i] % 2 != 0) {\n            p *= t[i];\n        }\n    }\n    printf(\"%d\\n\", p);\n    return 0;\n}\n```",
      "indices": [
       "Déclare `int p = 1;` avant la boucle, puis `p *= t[i];` à la place du `printf`.",
       "Le `printf(\"%d\\n\", p);` se place **après** la boucle."
      ],
      "duree": 2.7,
-     "depart": "#include <stdio.h>\n\nint main(void) {\n    int t[14] = {12, -1, 3, 9, 2, 15, -3, 11, 10, 7, -32, 17, 19, 20};\n    for (int i = 0; i < 14; i++) {\n        if (t[i] % 2 != 0) {\n            printf(\"%d \", t[i]);\n        }\n    }\n    printf(\"\\n\");\n    return 0;\n}"
+     "depart": "#include <stdio.h>\n\nint main(void) {\n    int t[14] = [[TAB]];\n    for (int i = 0; i < 14; i++) {\n        if (t[i] % 2 != 0) {\n            printf(\"%d \", t[i]);\n        }\n    }\n    printf(\"\\n\");\n    return 0;\n}"
+    }
+   ],
+   "vals": {
+    "TAB": "{-6, 15, 15, 2, 17, 20, -2, 2, -3, 3, 20, -32, 16, -2}",
+    "P": "-34425",
+    "A": "5",
+    "Q": "-2",
+    "S2_0": "15 15 17 -3 3 ",
+    "S3_0": "-34425"
+   },
+   "variantes": [
+    {
+     "TAB": "{-6, 15, 15, 2, 17, 20, -2, 2, -3, 3, 20, -32, 16, -2}",
+     "P": "-34425",
+     "A": "5",
+     "Q": "-2",
+     "S2_0": "15 15 17 -3 3 ",
+     "S3_0": "-34425"
+    },
+    {
+     "TAB": "{24, 22, 15, 10, 11, 15, -5, -6, 8, -7, -22, 0, 13, 28}",
+     "P": "1126125",
+     "A": "9",
+     "Q": "-4",
+     "S2_0": "15 11 15 -5 -7 13 ",
+     "S3_0": "1126125"
+    },
+    {
+     "TAB": "{0, 5, 3, 13, 5, 13, 28, -8, 4, -7, 6, -24, 16, 11}",
+     "P": "-975975",
+     "A": "3",
+     "Q": "-1",
+     "S2_0": "5 3 13 5 13 -7 11 ",
+     "S3_0": "-975975"
+    },
+    {
+     "TAB": "{-3, -32, -30, -2, -2, 7, 22, -26, -26, -6, 9, 15, 11, -12}",
+     "P": "-31185",
+     "A": "7",
+     "Q": "-3",
+     "S2_0": "-3 7 9 15 11 ",
+     "S3_0": "-31185"
+    },
+    {
+     "TAB": "{-8, 11, 11, -12, -3, 10, -6, -30, 13, -24, 0, 18, -20, 9}",
+     "P": "-42471",
+     "A": "7",
+     "Q": "-3",
+     "S2_0": "11 11 -3 13 9 ",
+     "S3_0": "-42471"
+    },
+    {
+     "TAB": "{-7, 18, -24, 5, 19, 9, 18, 15, -8, -16, -3, 10, -8, 13}",
+     "P": "3501225",
+     "A": "9",
+     "Q": "-4",
+     "S2_0": "-7 5 19 9 15 -3 13 ",
+     "S3_0": "3501225"
+    },
+    {
+     "TAB": "{4, -16, 4, -5, 19, -18, 12, 22, -30, 4, 18, -28, 9, 7}",
+     "P": "-5985",
+     "A": "9",
+     "Q": "-4",
+     "S2_0": "-5 19 9 7 ",
+     "S3_0": "-5985"
+    },
+    {
+     "TAB": "{-7, -4, -12, 8, 10, 13, 12, -20, 16, 11, 26, 6, 11, -28}",
+     "P": "-11011",
+     "A": "3",
+     "Q": "-1",
+     "S2_0": "-7 13 11 11 ",
+     "S3_0": "-11011"
     }
    ]
   },
@@ -658,82 +1384,183 @@
    "notion": "5.1",
    "origine": "td",
    "titre": "Tableau de 25 cases",
-   "enonce": "Écris un programme qui initialise un tableau de 25 éléments à 1, multiplie chaque valeur par **le double de l'indice de sa case**, puis affiche le tableau sur une ligne (Tableaux_chainex, intermédiaire ex. 3).",
-   "guidage": "**Plan** : 1. déclarer 25 cases → 2. les mettre toutes à 1 → 3. multiplier chacune par `2 * i` → 4. afficher.\n\n**Piège** : les indices vont de 0 à **24**.",
+   "enonce": "Écris un programme qui crée un tableau de [[N]] entiers, met **toutes** les cases à 1, puis multiplie chaque case par **[[K]] fois son indice** (la case `i` devient `1 × [[K]] × i`). Affiche ensuite le tableau sur une ligne, valeurs séparées par un espace.\n\nL'affichage commence par `0 [[K]] [[K2]] [[K3]] …` (Tableaux_chainex, intermédiaire ex. 3, adapté).",
+   "guidage": "**Plan** : 1. déclarer [[N]] cases → 2. les mettre toutes à 1 → 3. multiplier chacune par `[[K]] * i` → 4. afficher.\n\n**Piège** : les indices vont de 0 à **[[M]]**, pas jusqu'à [[N]].",
    "duree": 4,
    "etapes": [
     {
-     "consigne": "Dans la case d'indice `i`, on multiplie 1 par `2 * i`. Que contient la case d'indice 7 à la fin ?",
-     "question": "Valeur de `t[7]` ?",
+     "consigne": "La case d'indice `i` vaut 1 au départ, puis on la multiplie par `[[K]] * i`. Que contient la case d'indice [[J]] à la fin ?",
+     "question": "Valeur de `t[[[J]]]` ?",
      "verif": {
       "mode": "numerique",
-      "attendu": 14
+      "attendu": "[[KJ]]"
      },
-     "corrige": "1 × (2 × 7) = 14.",
+     "corrige": "1 × ([[K]] × [[J]]) = **[[KJ]]**.",
      "indices": [
-      "Remplace `i` par 7 dans `2 * i`."
+      "Remplace `i` par [[J]] dans `[[K]] * i`."
      ],
      "duree": 0.38,
      "guideSeul": true
     },
     {
-     "consigne": "Le tableau a 25 cases. Écris la condition d'arrêt de la boucle (sans `for`) qui parcourt **toutes** les cases avec `i`, sans en sortir.",
-     "question": "Condition d'arrêt ?",
+     "consigne": "Ta boucle doit passer par toutes les cases, de 0 à [[M]], sans jamais aller jusqu'à [[N]]. Écris seulement la **condition** qu'on met au milieu du `for` (entre les deux `;`), avec la variable `i`.",
+     "question": "Condition de la boucle ?",
      "verif": {
       "mode": "regex",
-      "motif": "\\(?\\s*i\\s*<\\s*25\\s*\\)?|\\(?\\s*i\\s*<=\\s*24\\s*\\)?",
-      "exemple": "i < 25"
+      "motif": "\\(?\\s*i\\s*<\\s*[[N]]\\s*\\)?|\\(?\\s*i\\s*<=\\s*[[M]]\\s*\\)?",
+      "exemple": "i < [[N]]"
      },
-     "corrige": "Les indices valides sont 0 à 24 : `i < 25` (ou `i <= 24`).",
+     "corrige": "Les indices valides vont de 0 à [[M]] : `i < [[N]]` (ou `i <= [[M]]`).",
      "indices": [
-      "Le dernier indice est 24, pas 25.",
-      "`i < 25`."
+      "Le dernier indice est [[M]], pas [[N]].",
+      "`i < [[N]]`."
      ],
      "duree": 0.48,
      "guideSeul": true
     },
     {
-     "consigne": "Déclare un tableau `t` de 25 entiers, mets **toutes les cases à 1** avec une boucle, puis affiche le tableau sur une ligne, valeurs séparées par un espace.",
-     "question": "Initialise à 1 et affiche.",
+     "consigne": "Commence sans la multiplication : déclare un tableau `t` de [[N]] entiers, mets **toutes les cases à 1** avec une boucle, puis affiche le tableau sur une ligne (valeurs séparées par un espace). Tu dois voir [[N]] fois `1`.",
+     "question": "Remplis de 1 et affiche.",
      "verif": {
       "mode": "c",
       "tests": [
        {
         "entree": "",
-        "sortie": "1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1"
+        "sortie": "[[S2_0]]"
        }
       ],
-      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[25];\n    for (int i = 0; i < 25; i++) {\n        t[i] = 1;\n    }\n    for (int i = 0; i < 25; i++) {\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    return 0;\n}"
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[[[N]]];\n    for (int i = 0; i < [[N]]; i++) {\n        t[i] = 1;\n    }\n    for (int i = 0; i < [[N]]; i++) {\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    return 0;\n}"
      },
-     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[25];\n    for (int i = 0; i < 25; i++) {\n        t[i] = 1;\n    }\n    for (int i = 0; i < 25; i++) {\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    return 0;\n}\n```",
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[[[N]]];\n    for (int i = 0; i < [[N]]; i++) {\n        t[i] = 1;\n    }\n    for (int i = 0; i < [[N]]; i++) {\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    return 0;\n}\n```",
      "indices": [
-      "Une boucle pour remplir (`t[i] = 1;`), une boucle pour afficher.",
-      "Deux `for (int i = 0; i < 25; i++)` à la suite."
+      "Une boucle pour remplir (`t[i] = 1;`), une autre pour afficher.",
+      "Deux `for (int i = 0; i < [[N]]; i++)` à la suite."
      ],
      "duree": 1.14,
      "guideSeul": true
     },
     {
-     "consigne": "Ajoute l'étape qui **multiplie** chaque case par le double de son indice : `t[i] = t[i] * (2 * i);`. Tu peux le faire dans la boucle de remplissage ou dans celle d'affichage.",
+     "consigne": "Ajoute la multiplication : chaque case doit être multipliée par `[[K]] * i`, soit `t[i] = t[i] * ([[K]] * i);`. Tu peux la mettre dans la boucle de remplissage ou juste avant le `printf` de la boucle d'affichage.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
       "tests": [
        {
         "entree": "",
-        "sortie": "0 2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 40 42 44 46 48"
+        "sortie": "[[S3_0]]"
        }
       ],
-      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[25];\n    for (int i = 0; i < 25; i++) {\n        t[i] = 1;\n    }\n    for (int i = 0; i < 25; i++) {\n        t[i] = t[i] * (2 * i);\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    return 0;\n}",
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[[[N]]];\n    for (int i = 0; i < [[N]]; i++) {\n        t[i] = 1;\n    }\n    for (int i = 0; i < [[N]]; i++) {\n        t[i] = t[i] * ([[K]] * i);\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    return 0;\n}",
       "nombres": true
      },
-     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[25];\n    for (int i = 0; i < 25; i++) {\n        t[i] = 1;\n    }\n    for (int i = 0; i < 25; i++) {\n        t[i] = t[i] * (2 * i);\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    return 0;\n}\n```",
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[[[N]]];\n    for (int i = 0; i < [[N]]; i++) {\n        t[i] = 1;\n    }\n    for (int i = 0; i < [[N]]; i++) {\n        t[i] = t[i] * ([[K]] * i);\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    return 0;\n}\n```",
      "indices": [
-      "Une ligne à ajouter : `t[i] = t[i] * (2 * i);`, placée avant le `printf` de cette case.",
-      "La case 0 vaut 1 × 0 = 0 : l'affichage doit commencer par `0 2 4 6 …`."
+      "Une seule ligne à ajouter : `t[i] = t[i] * ([[K]] * i);`, avant le `printf` de cette case.",
+      "La case 0 vaut 1 × 0 = 0 : l'affichage doit commencer par `0 [[K]] [[K2]] …`."
      ],
-     "duree": 2.0,
-     "depart": "#include <stdio.h>\n\nint main(void) {\n    int t[25];\n    for (int i = 0; i < 25; i++) {\n        t[i] = 1;\n    }\n    for (int i = 0; i < 25; i++) {\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    return 0;\n}"
+     "duree": 2,
+     "depart": "#include <stdio.h>\n\nint main(void) {\n    int t[[[N]]];\n    for (int i = 0; i < [[N]]; i++) {\n        t[i] = 1;\n    }\n    for (int i = 0; i < [[N]]; i++) {\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    return 0;\n}"
+    }
+   ],
+   "vals": {
+    "N": "24",
+    "K": "3",
+    "J": "4",
+    "M": "23",
+    "K2": "6",
+    "K3": "9",
+    "KJ": "12",
+    "S2_0": "1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 ",
+    "S3_0": "0 3 6 9 12 15 18 21 24 27 30 33 36 39 42 45 48 51 54 57 60 63 66 69 "
+   },
+   "variantes": [
+    {
+     "N": "24",
+     "K": "3",
+     "J": "4",
+     "M": "23",
+     "K2": "6",
+     "K3": "9",
+     "KJ": "12",
+     "S2_0": "1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 ",
+     "S3_0": "0 3 6 9 12 15 18 21 24 27 30 33 36 39 42 45 48 51 54 57 60 63 66 69 "
+    },
+    {
+     "N": "20",
+     "K": "2",
+     "J": "11",
+     "M": "19",
+     "K2": "4",
+     "K3": "6",
+     "KJ": "22",
+     "S2_0": "1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 ",
+     "S3_0": "0 2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 "
+    },
+    {
+     "N": "18",
+     "K": "2",
+     "J": "15",
+     "M": "17",
+     "K2": "4",
+     "K3": "6",
+     "KJ": "30",
+     "S2_0": "1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 ",
+     "S3_0": "0 2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32 34 "
+    },
+    {
+     "N": "27",
+     "K": "10",
+     "J": "25",
+     "M": "26",
+     "K2": "20",
+     "K3": "30",
+     "KJ": "250",
+     "S2_0": "1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 ",
+     "S3_0": "0 10 20 30 40 50 60 70 80 90 100 110 120 130 140 150 160 170 180 190 200 210 220 230 240 250 260 "
+    },
+    {
+     "N": "17",
+     "K": "10",
+     "J": "14",
+     "M": "16",
+     "K2": "20",
+     "K3": "30",
+     "KJ": "140",
+     "S2_0": "1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 ",
+     "S3_0": "0 10 20 30 40 50 60 70 80 90 100 110 120 130 140 150 160 "
+    },
+    {
+     "N": "24",
+     "K": "5",
+     "J": "11",
+     "M": "23",
+     "K2": "10",
+     "K3": "15",
+     "KJ": "55",
+     "S2_0": "1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 ",
+     "S3_0": "0 5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95 100 105 110 115 "
+    },
+    {
+     "N": "22",
+     "K": "3",
+     "J": "13",
+     "M": "21",
+     "K2": "6",
+     "K3": "9",
+     "KJ": "39",
+     "S2_0": "1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 ",
+     "S3_0": "0 3 6 9 12 15 18 21 24 27 30 33 36 39 42 45 48 51 54 57 60 63 "
+    },
+    {
+     "N": "22",
+     "K": "10",
+     "J": "16",
+     "M": "21",
+     "K2": "20",
+     "K3": "30",
+     "KJ": "160",
+     "S2_0": "1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 ",
+     "S3_0": "0 10 20 30 40 50 60 70 80 90 100 110 120 130 140 150 160 170 180 190 200 210 "
     }
    ]
   },
@@ -743,28 +1570,28 @@
    "notion": "5.1",
    "origine": "td",
    "titre": "Les jours de chaque mois",
-   "enonce": "Écris un programme qui définit un tableau `jours` contenant le nombre de jours de chacun des 12 mois d'une année non bissextile (`31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31`) et affiche :\n```text\nMois 1 : 31 jours\nMois 2 : 28 jours\n…\nMois 12 : 31 jours\n```\n(Tableaux_chainex, intermédiaire ex. 4, adapté)",
-   "guidage": "**Plan** : 1. un tableau de 12 entiers → 2. une boucle sur les 12 cases → 3. afficher `i + 1` (le numéro du mois) et `jours[i]` (sa durée).\n\n**Piège** : janvier est à l'indice 0, mais s'affiche « Mois 1 ».",
+   "enonce": "Écris un programme qui range dans un tableau `jours` le nombre de jours de chacun des 12 mois d'une année **[[ANNEE]]** (`31, [[FEV]], 31, 30, 31, 30, 31, 31, 30, 31, 30, 31`), puis affiche une ligne par mois :\n```text\nMois 1 : 31 jours\nMois 2 : [[FEV]] jours\n…\nMois 12 : 31 jours\n```\n(Tableaux_chainex, intermédiaire ex. 4, adapté)",
+   "guidage": "**Plan** : 1. un tableau de 12 entiers → 2. une boucle sur les 12 cases → 3. pour la case `i`, afficher `i + 1` (le numéro du mois) et `jours[i]` (son nombre de jours).\n\n**Piège** : janvier est rangé à l'indice 0, mais on l'affiche « Mois 1 ».",
    "duree": 4,
    "etapes": [
     {
-     "consigne": "Le tableau `jours` commence par `31` (janvier), `28` (février), `31` (mars)… Quel est l'indice de la case de **mars** ?",
-     "question": "Indice de mars ?",
+     "consigne": "Le tableau commence par janvier, puis février, mars… Comme les indices démarrent à 0, à quel **indice** se trouve [[MOIS]] ?",
+     "question": "Indice de [[MOIS]] ?",
      "verif": {
       "mode": "numerique",
-      "attendu": 2
+      "attendu": "[[IM]]"
      },
-     "corrige": "Les indices commencent à 0 : janvier 0, février 1, mars 2.",
+     "corrige": "[[MOIS]] est le mois n° [[NM]] ; on enlève 1 parce qu'on compte à partir de 0 : indice **[[IM]]**.",
      "indices": [
-      "Compte à partir de 0 : janvier, février, mars.",
-      "2"
+      "Janvier → 0, février → 1, mars → 2…",
+      "Numéro du mois moins 1."
      ],
      "duree": 0.38,
      "guideSeul": true
     },
     {
-     "consigne": "Dans « Mois 3 : 31 jours », quelle expression (avec `i`) donne le numéro à afficher pour la case d'indice `i` ?",
-     "question": "Numéro affiché ?",
+     "consigne": "Pour la case d'indice `i`, quel numéro de mois faut-il afficher ? Écris l'expression avec `i` (par exemple, la case 2 doit afficher « Mois 3 »).",
+     "question": "Numéro de mois affiché pour la case `i` ?",
      "verif": {
       "mode": "regex",
       "motif": "i\\s*\\+\\s*1|1\\s*\\+\\s*i",
@@ -779,46 +1606,129 @@
      "guideSeul": true
     },
     {
-     "consigne": "Déclare le tableau `jours` (12 entiers) et affiche les valeurs, **une par ligne**, sans texte pour l'instant.",
+     "consigne": "Première version : déclare le tableau `jours` (12 entiers) et affiche les 12 valeurs, **une par ligne**, sans texte autour pour l'instant.",
      "question": "Affiche les 12 durées.",
      "verif": {
       "mode": "c",
       "tests": [
        {
         "entree": "",
-        "sortie": "31\n28\n31\n30\n31\n30\n31\n31\n30\n31\n30\n31"
+        "sortie": "[[S2_0]]"
        }
       ],
-      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int jours[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};\n    for (int i = 0; i < 12; i++) {\n        printf(\"%d\\n\", jours[i]);\n    }\n    return 0;\n}"
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int jours[12] = {31, [[FEV]], 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};\n    for (int i = 0; i < 12; i++) {\n        printf(\"%d\\n\", jours[i]);\n    }\n    return 0;\n}"
      },
-     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int jours[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};\n    for (int i = 0; i < 12; i++) {\n        printf(\"%d\\n\", jours[i]);\n    }\n    return 0;\n}\n```",
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int jours[12] = {31, [[FEV]], 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};\n    for (int i = 0; i < 12; i++) {\n        printf(\"%d\\n\", jours[i]);\n    }\n    return 0;\n}\n```",
      "indices": [
-      "`int jours[12] = {31, 28, …};` puis une boucle de 0 à 11.",
+      "`int jours[12] = {31, [[FEV]], …};` puis une boucle de 0 à 11.",
       "`for (int i = 0; i < 12; i++) printf(\"%d\\n\", jours[i]);`"
      ],
      "duree": 1.14,
      "guideSeul": true
     },
     {
-     "consigne": "Ajoute le texte autour : chaque ligne doit être `Mois 1 : 31 jours`, `Mois 2 : 28 jours`… Il te faut maintenant **deux** valeurs dans le `printf`.",
+     "consigne": "Ajoute le texte autour : chaque ligne doit devenir `Mois 1 : 31 jours`, `Mois 2 : [[FEV]] jours`… Ton `printf` affiche maintenant **deux** nombres : le numéro du mois, puis son nombre de jours.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
       "tests": [
        {
         "entree": "",
-        "sortie": "Mois 1 : 31 jours\nMois 2 : 28 jours\nMois 3 : 31 jours\nMois 4 : 30 jours\nMois 5 : 31 jours\nMois 6 : 30 jours\nMois 7 : 31 jours\nMois 8 : 31 jours\nMois 9 : 30 jours\nMois 10 : 31 jours\nMois 11 : 30 jours\nMois 12 : 31 jours"
+        "sortie": "[[S3_0]]"
        }
       ],
-      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int jours[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};\n    for (int i = 0; i < 12; i++) {\n        printf(\"Mois %d : %d jours\\n\", i + 1, jours[i]);\n    }\n    return 0;\n}"
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int jours[12] = {31, [[FEV]], 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};\n    for (int i = 0; i < 12; i++) {\n        printf(\"Mois %d : %d jours\\n\", i + 1, jours[i]);\n    }\n    return 0;\n}"
      },
-     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int jours[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};\n    for (int i = 0; i < 12; i++) {\n        printf(\"Mois %d : %d jours\\n\", i + 1, jours[i]);\n    }\n    return 0;\n}\n```",
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int jours[12] = {31, [[FEV]], 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};\n    for (int i = 0; i < 12; i++) {\n        printf(\"Mois %d : %d jours\\n\", i + 1, jours[i]);\n    }\n    return 0;\n}\n```",
      "indices": [
       "Le format devient `\"Mois %d : %d jours\\n\"`, avec `i + 1` puis `jours[i]`.",
       "`printf(\"Mois %d : %d jours\\n\", i + 1, jours[i]);`"
      ],
-     "duree": 2.0,
-     "depart": "#include <stdio.h>\n\nint main(void) {\n    int jours[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};\n    for (int i = 0; i < 12; i++) {\n        printf(\"%d\\n\", jours[i]);\n    }\n    return 0;\n}"
+     "duree": 2,
+     "depart": "#include <stdio.h>\n\nint main(void) {\n    int jours[12] = {31, [[FEV]], 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};\n    for (int i = 0; i < 12; i++) {\n        printf(\"%d\\n\", jours[i]);\n    }\n    return 0;\n}"
+    }
+   ],
+   "vals": {
+    "ANNEE": "non bissextile",
+    "FEV": "28",
+    "MOIS": "mars",
+    "NM": "3",
+    "IM": "2",
+    "S2_0": "31\n28\n31\n30\n31\n30\n31\n31\n30\n31\n30\n31",
+    "S3_0": "Mois 1 : 31 jours\nMois 2 : 28 jours\nMois 3 : 31 jours\nMois 4 : 30 jours\nMois 5 : 31 jours\nMois 6 : 30 jours\nMois 7 : 31 jours\nMois 8 : 31 jours\nMois 9 : 30 jours\nMois 10 : 31 jours\nMois 11 : 30 jours\nMois 12 : 31 jours"
+   },
+   "variantes": [
+    {
+     "ANNEE": "non bissextile",
+     "FEV": "28",
+     "MOIS": "mars",
+     "NM": "3",
+     "IM": "2",
+     "S2_0": "31\n28\n31\n30\n31\n30\n31\n31\n30\n31\n30\n31",
+     "S3_0": "Mois 1 : 31 jours\nMois 2 : 28 jours\nMois 3 : 31 jours\nMois 4 : 30 jours\nMois 5 : 31 jours\nMois 6 : 30 jours\nMois 7 : 31 jours\nMois 8 : 31 jours\nMois 9 : 30 jours\nMois 10 : 31 jours\nMois 11 : 30 jours\nMois 12 : 31 jours"
+    },
+    {
+     "ANNEE": "non bissextile",
+     "FEV": "28",
+     "MOIS": "mai",
+     "NM": "5",
+     "IM": "4",
+     "S2_0": "31\n28\n31\n30\n31\n30\n31\n31\n30\n31\n30\n31",
+     "S3_0": "Mois 1 : 31 jours\nMois 2 : 28 jours\nMois 3 : 31 jours\nMois 4 : 30 jours\nMois 5 : 31 jours\nMois 6 : 30 jours\nMois 7 : 31 jours\nMois 8 : 31 jours\nMois 9 : 30 jours\nMois 10 : 31 jours\nMois 11 : 30 jours\nMois 12 : 31 jours"
+    },
+    {
+     "ANNEE": "non bissextile",
+     "FEV": "28",
+     "MOIS": "juin",
+     "NM": "6",
+     "IM": "5",
+     "S2_0": "31\n28\n31\n30\n31\n30\n31\n31\n30\n31\n30\n31",
+     "S3_0": "Mois 1 : 31 jours\nMois 2 : 28 jours\nMois 3 : 31 jours\nMois 4 : 30 jours\nMois 5 : 31 jours\nMois 6 : 30 jours\nMois 7 : 31 jours\nMois 8 : 31 jours\nMois 9 : 30 jours\nMois 10 : 31 jours\nMois 11 : 30 jours\nMois 12 : 31 jours"
+    },
+    {
+     "ANNEE": "bissextile",
+     "FEV": "29",
+     "MOIS": "octobre",
+     "NM": "10",
+     "IM": "9",
+     "S2_0": "31\n29\n31\n30\n31\n30\n31\n31\n30\n31\n30\n31",
+     "S3_0": "Mois 1 : 31 jours\nMois 2 : 29 jours\nMois 3 : 31 jours\nMois 4 : 30 jours\nMois 5 : 31 jours\nMois 6 : 30 jours\nMois 7 : 31 jours\nMois 8 : 31 jours\nMois 9 : 30 jours\nMois 10 : 31 jours\nMois 11 : 30 jours\nMois 12 : 31 jours"
+    },
+    {
+     "ANNEE": "bissextile",
+     "FEV": "29",
+     "MOIS": "juillet",
+     "NM": "7",
+     "IM": "6",
+     "S2_0": "31\n29\n31\n30\n31\n30\n31\n31\n30\n31\n30\n31",
+     "S3_0": "Mois 1 : 31 jours\nMois 2 : 29 jours\nMois 3 : 31 jours\nMois 4 : 30 jours\nMois 5 : 31 jours\nMois 6 : 30 jours\nMois 7 : 31 jours\nMois 8 : 31 jours\nMois 9 : 30 jours\nMois 10 : 31 jours\nMois 11 : 30 jours\nMois 12 : 31 jours"
+    },
+    {
+     "ANNEE": "bissextile",
+     "FEV": "29",
+     "MOIS": "avril",
+     "NM": "4",
+     "IM": "3",
+     "S2_0": "31\n29\n31\n30\n31\n30\n31\n31\n30\n31\n30\n31",
+     "S3_0": "Mois 1 : 31 jours\nMois 2 : 29 jours\nMois 3 : 31 jours\nMois 4 : 30 jours\nMois 5 : 31 jours\nMois 6 : 30 jours\nMois 7 : 31 jours\nMois 8 : 31 jours\nMois 9 : 30 jours\nMois 10 : 31 jours\nMois 11 : 30 jours\nMois 12 : 31 jours"
+    },
+    {
+     "ANNEE": "bissextile",
+     "FEV": "29",
+     "MOIS": "décembre",
+     "NM": "12",
+     "IM": "11",
+     "S2_0": "31\n29\n31\n30\n31\n30\n31\n31\n30\n31\n30\n31",
+     "S3_0": "Mois 1 : 31 jours\nMois 2 : 29 jours\nMois 3 : 31 jours\nMois 4 : 30 jours\nMois 5 : 31 jours\nMois 6 : 30 jours\nMois 7 : 31 jours\nMois 8 : 31 jours\nMois 9 : 30 jours\nMois 10 : 31 jours\nMois 11 : 30 jours\nMois 12 : 31 jours"
+    },
+    {
+     "ANNEE": "bissextile",
+     "FEV": "29",
+     "MOIS": "mai",
+     "NM": "5",
+     "IM": "4",
+     "S2_0": "31\n29\n31\n30\n31\n30\n31\n31\n30\n31\n30\n31",
+     "S3_0": "Mois 1 : 31 jours\nMois 2 : 29 jours\nMois 3 : 31 jours\nMois 4 : 30 jours\nMois 5 : 31 jours\nMois 6 : 30 jours\nMois 7 : 31 jours\nMois 8 : 31 jours\nMois 9 : 30 jours\nMois 10 : 31 jours\nMois 11 : 30 jours\nMois 12 : 31 jours"
     }
    ]
   },
@@ -828,12 +1738,12 @@
    "notion": "5.1",
    "origine": "td",
    "titre": "Saisie, somme et moyenne",
-   "enonce": "Écris un programme qui déclare un tableau de 5 entiers, les fait saisir, affiche le tableau sur une ligne, puis sur la ligne suivante la somme et la moyenne (2 décimales) (exercice du cours Tableaux).",
-   "guidage": "**Plan** : 1. remplir le tableau avec `scanf` dans une boucle → 2. l'afficher (en cumulant la somme au passage) → 3. calculer la moyenne **réelle**.\n\n**Piège** : `s / 5` est une division entière.",
+   "enonce": "Écris un programme qui déclare un tableau de [[N]] entiers et les fait saisir au clavier. Il affiche ensuite le tableau sur une ligne, puis, sur la ligne suivante, la **somme** et la **moyenne** (avec 2 décimales).\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S3_0]]\n```\n\n(exercice du cours Tableaux)",
+   "guidage": "**Plan** : 1. remplir le tableau avec `scanf` dans une boucle → 2. l'afficher, en ajoutant chaque valeur à la somme au passage → 3. calculer une moyenne **réelle**.\n\n**Piège** : `s / [[N]]` avec deux `int` est une division entière : la partie décimale est perdue.",
    "duree": 5,
    "etapes": [
     {
-     "consigne": "Écris l'instruction qui lit un entier dans la case d'indice `i` du tableau `t`.",
+     "consigne": "Dans la boucle de saisie, `scanf` doit ranger l'entier tapé dans la case d'indice `i` du tableau `t`. Écris cette instruction (n'oublie pas que `scanf` veut l'**adresse** de la case).",
      "question": "Lecture de `t[i]` ?",
      "verif": {
       "mode": "regex",
@@ -849,38 +1759,38 @@
      "guideSeul": true
     },
     {
-     "consigne": "Si la somme `s` (un `int`) vaut 17, que vaut `s / 5` en C ?",
-     "question": "Valeur de `s / 5` ?",
+     "consigne": "La somme `s` est un `int` qui vaut [[SS]]. Que vaut `s / [[N]]` en C, où les deux opérandes sont des entiers ?",
+     "question": "Valeur de `s / [[N]]` ?",
      "verif": {
       "mode": "numerique",
-      "attendu": 3
+      "attendu": "[[SD]]"
      },
-     "corrige": "Deux entiers : la division est **entière**, le résultat est 3 (pas 3,4). Pour garder les décimales : `s / 5.0`.",
+     "corrige": "[[SS]] = [[N]] × [[SD]] + [[SR]] : la division entière garde **[[SD]]** et jette le reste. Pour une moyenne exacte, il faut un réel : `s / [[N]].0`.",
      "indices": [
-      "17 = 5 × 3 + 2.",
-      "La partie décimale est perdue : 3."
+      "Combien de fois [[N]] rentre-t-il dans [[SS]] ?",
+      "La partie décimale est perdue : [[SD]]."
      ],
      "duree": 0.5,
      "guideSeul": true
     },
     {
-     "consigne": "Déclare un tableau de 5 entiers, lis-les au clavier avec une boucle, puis affiche-les sur une ligne, séparés par un espace.",
-     "question": "Saisis et affiche le tableau.",
+     "consigne": "Déclare un tableau de [[N]] entiers, remplis-le au clavier avec une boucle, puis affiche-le sur une ligne (valeurs séparées par un espace).",
+     "question": "Saisis puis affiche le tableau.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "1 2 3 4 5",
-        "sortie": "1 2 3 4 5"
+        "entree": "[[E0]]",
+        "sortie": "[[S2_0]]"
        },
        {
-        "entree": "10 0 -4 7 8",
-        "sortie": "10 0 -4 7 8"
+        "entree": "[[E1]]",
+        "sortie": "[[S2_1]]"
        }
       ],
-      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[5];\n    for (int i = 0; i < 5; i++) {\n        scanf(\"%d\", &t[i]);\n    }\n    for (int i = 0; i < 5; i++) {\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    return 0;\n}"
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[[[N]]];\n    for (int i = 0; i < [[N]]; i++) {\n        scanf(\"%d\", &t[i]);\n    }\n    for (int i = 0; i < [[N]]; i++) {\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    return 0;\n}"
      },
-     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[5];\n    for (int i = 0; i < 5; i++) {\n        scanf(\"%d\", &t[i]);\n    }\n    for (int i = 0; i < 5; i++) {\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    return 0;\n}\n```",
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[[[N]]];\n    for (int i = 0; i < [[N]]; i++) {\n        scanf(\"%d\", &t[i]);\n    }\n    for (int i = 0; i < [[N]]; i++) {\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    return 0;\n}\n```",
      "indices": [
       "Une boucle de saisie, puis une boucle d'affichage.",
       "`scanf(\"%d\", &t[i]);` dans la première, `printf(\"%d \", t[i]);` dans la seconde."
@@ -889,30 +1799,140 @@
      "guideSeul": true
     },
     {
-     "consigne": "Ajoute la **somme** (cumulée pendant l'affichage) et la **moyenne** à 2 décimales, sur la ligne suivante : `somme moyenne`.",
+     "consigne": "Ajoute la somme et la moyenne sur une **deuxième ligne** : `somme moyenne`, la moyenne avec 2 décimales. Tu peux cumuler la somme pendant la boucle d'affichage.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "1 2 3 4 5",
-        "sortie": "1 2 3 4 5\n15 3.00"
+        "entree": "[[E0]]",
+        "sortie": "[[S3_0]]"
        },
        {
-        "entree": "10 0 -4 7 8",
-        "sortie": "10 0 -4 7 8\n21 4.20"
+        "entree": "[[E1]]",
+        "sortie": "[[S3_1]]"
        }
       ],
-      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[5], s = 0;\n    for (int i = 0; i < 5; i++) {\n        scanf(\"%d\", &t[i]);\n    }\n    for (int i = 0; i < 5; i++) {\n        printf(\"%d \", t[i]);\n        s += t[i];\n    }\n    printf(\"\\n%d %.2f\\n\", s, s / 5.0);\n    return 0;\n}",
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[[[N]]], s = 0;\n    for (int i = 0; i < [[N]]; i++) {\n        scanf(\"%d\", &t[i]);\n    }\n    for (int i = 0; i < [[N]]; i++) {\n        printf(\"%d \", t[i]);\n        s += t[i];\n    }\n    printf(\"\\n%d %.2f\\n\", s, s / [[N]].0);\n    return 0;\n}",
       "nombres": true
      },
-     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[5], s = 0;\n    for (int i = 0; i < 5; i++) {\n        scanf(\"%d\", &t[i]);\n    }\n    for (int i = 0; i < 5; i++) {\n        printf(\"%d \", t[i]);\n        s += t[i];\n    }\n    printf(\"\\n%d %.2f\\n\", s, s / 5.0);\n    return 0;\n}\n```",
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[[[N]]], s = 0;\n    for (int i = 0; i < [[N]]; i++) {\n        scanf(\"%d\", &t[i]);\n    }\n    for (int i = 0; i < [[N]]; i++) {\n        printf(\"%d \", t[i]);\n        s += t[i];\n    }\n    printf(\"\\n%d %.2f\\n\", s, s / [[N]].0);\n    return 0;\n}\n```",
      "indices": [
-      "`int s = 0;` avant la boucle, `s += t[i];` dedans. Après : `printf(\"\\n%d %.2f\\n\", s, s / 5.0);`",
-      "`%.2f` affiche 2 décimales ; `5.0` (réel) évite la division entière."
+      "`int s = 0;` avant la boucle, `s += t[i];` dedans. Après : `printf(\"\\n%d %.2f\\n\", s, s / [[N]].0);`",
+      "`%.2f` affiche 2 décimales ; `[[N]].0` (un réel) évite la division entière."
      ],
      "duree": 2.6,
-     "depart": "#include <stdio.h>\n\nint main(void) {\n    int t[5];\n    for (int i = 0; i < 5; i++) {\n        scanf(\"%d\", &t[i]);\n    }\n    for (int i = 0; i < 5; i++) {\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    return 0;\n}"
+     "depart": "#include <stdio.h>\n\nint main(void) {\n    int t[[[N]]];\n    for (int i = 0; i < [[N]]; i++) {\n        scanf(\"%d\", &t[i]);\n    }\n    for (int i = 0; i < [[N]]; i++) {\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    return 0;\n}"
+    }
+   ],
+   "vals": {
+    "N": "5",
+    "SS": "17",
+    "E0": "19 4 8 16 11",
+    "E1": "83 1 10 42 17",
+    "SD": "3",
+    "SR": "2",
+    "S2_0": "19 4 8 16 11 ",
+    "S2_1": "83 1 10 42 17 ",
+    "S3_0": "19 4 8 16 11 \n58 11.60",
+    "S3_1": "83 1 10 42 17 \n153 30.60"
+   },
+   "variantes": [
+    {
+     "N": "5",
+     "SS": "17",
+     "E0": "19 4 8 16 11",
+     "E1": "83 1 10 42 17",
+     "SD": "3",
+     "SR": "2",
+     "S2_0": "19 4 8 16 11 ",
+     "S2_1": "83 1 10 42 17 ",
+     "S3_0": "19 4 8 16 11 \n58 11.60",
+     "S3_1": "83 1 10 42 17 \n153 30.60"
+    },
+    {
+     "N": "5",
+     "SS": "31",
+     "E0": "12 5 -5 -5 14",
+     "E1": "28 74 94 57 19",
+     "SD": "6",
+     "SR": "1",
+     "S2_0": "12 5 -5 -5 14 ",
+     "S2_1": "28 74 94 57 19 ",
+     "S3_0": "12 5 -5 -5 14 \n21 4.20",
+     "S3_1": "28 74 94 57 19 \n272 54.40"
+    },
+    {
+     "N": "6",
+     "SS": "11",
+     "E0": "18 8 7 20 9 14",
+     "E1": "25 52 38 81 9 21",
+     "SD": "1",
+     "SR": "5",
+     "S2_0": "18 8 7 20 9 14 ",
+     "S2_1": "25 52 38 81 9 21 ",
+     "S3_0": "18 8 7 20 9 14 \n76 12.67",
+     "S3_1": "25 52 38 81 9 21 \n226 37.67"
+    },
+    {
+     "N": "5",
+     "SS": "21",
+     "E0": "4 20 3 1 19",
+     "E1": "68 36 72 25 93",
+     "SD": "4",
+     "SR": "1",
+     "S2_0": "4 20 3 1 19 ",
+     "S2_1": "68 36 72 25 93 ",
+     "S3_0": "4 20 3 1 19 \n47 9.40",
+     "S3_1": "68 36 72 25 93 \n294 58.80"
+    },
+    {
+     "N": "4",
+     "SS": "41",
+     "E0": "6 5 12 -4",
+     "E1": "90 86 74 50",
+     "SD": "10",
+     "SR": "1",
+     "S2_0": "6 5 12 -4 ",
+     "S2_1": "90 86 74 50 ",
+     "S3_0": "6 5 12 -4 \n19 4.75",
+     "S3_1": "90 86 74 50 \n300 75.00"
+    },
+    {
+     "N": "5",
+     "SS": "27",
+     "E0": "20 19 -5 10 20",
+     "E1": "64 22 62 39 93",
+     "SD": "5",
+     "SR": "2",
+     "S2_0": "20 19 -5 10 20 ",
+     "S2_1": "64 22 62 39 93 ",
+     "S3_0": "20 19 -5 10 20 \n64 12.80",
+     "S3_1": "64 22 62 39 93 \n280 56.00"
+    },
+    {
+     "N": "5",
+     "SS": "44",
+     "E0": "3 15 10 -1 5",
+     "E1": "86 84 6 89 14",
+     "SD": "8",
+     "SR": "4",
+     "S2_0": "3 15 10 -1 5 ",
+     "S2_1": "86 84 6 89 14 ",
+     "S3_0": "3 15 10 -1 5 \n32 6.40",
+     "S3_1": "86 84 6 89 14 \n279 55.80"
+    },
+    {
+     "N": "5",
+     "SS": "29",
+     "E0": "19 10 -3 4 -1",
+     "E1": "86 53 67 43 9",
+     "SD": "5",
+     "SR": "4",
+     "S2_0": "19 10 -3 4 -1 ",
+     "S2_1": "86 53 67 43 9 ",
+     "S3_0": "19 10 -3 4 -1 \n29 5.80",
+     "S3_1": "86 53 67 43 9 \n258 51.60"
     }
    ]
   },
@@ -922,12 +1942,12 @@
    "notion": "5.2",
    "origine": "td",
    "titre": "Ajouter puis supprimer",
-   "enonce": "Taille physique `TP = 20`. Le programme lit la taille logique `TL` (≤ TP), puis `TL` entiers, puis un entier `x`.\n\nIl ajoute `x` à la fin (si `TL < TP`) et affiche le tableau, puis supprime le dernier élément (si `TL > 0`) et affiche de nouveau le tableau. Un affichage par ligne (exercice du cours Tableaux).",
-   "guidage": "**Plan** : 1. lire `tl`, les `tl` valeurs, puis `x` → 2. ajouter : écrire `x` dans `t[tl]` puis `tl++` (seulement si `tl < TP`) → 3. afficher → 4. supprimer : un simple `tl--` (si `tl > 0`) → 5. afficher.\n\n**À retenir** : on ne touche jamais à la taille physique ; seule la taille **logique** change.",
+   "enonce": "Le tableau a une taille physique `TP = [[TP]]` (avec `#define`). Le programme lit d'abord la taille logique `tl` (au plus `TP`), puis les `tl` entiers du tableau, puis un entier `x`.\n\nIl **ajoute** `x` à la fin (seulement s'il reste de la place) et affiche le tableau ; puis il **supprime** le dernier élément (s'il y en a un) et affiche de nouveau le tableau. Un affichage par ligne.\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S4_0]]\n```\n\n(exercice du cours Tableaux)",
+   "guidage": "**Plan** : 1. lire `tl`, les `tl` valeurs, puis `x` → 2. ajouter : ranger `x` dans `t[tl]` puis `tl++` (seulement si `tl < TP`) → 3. afficher → 4. supprimer : un simple `tl--` (si `tl > 0`) → 5. afficher.\n\n**À retenir** : on ne touche jamais à la taille physique ; seule la taille **logique** change.",
    "duree": 7,
    "etapes": [
     {
-     "consigne": "Le tableau contient `tl` valeurs, dans les cases 0 à `tl - 1`. Écris l'instruction qui place `x` dans la **première case libre**.",
+     "consigne": "Le tableau contient `tl` valeurs, rangées dans les cases 0 à `tl - 1`. La première case libre est donc juste après. Écris l'instruction qui range `x` dans cette case.",
      "question": "Où écrire `x` ?",
      "verif": {
       "mode": "regex",
@@ -943,7 +1963,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Après avoir ajouté `x`, le tableau contient une valeur de plus. Écris l'instruction qui met à jour la taille logique.",
+     "consigne": "Après l'ajout, le tableau contient une valeur de plus. Écris l'instruction qui met à jour la taille logique `tl`.",
      "question": "Mise à jour de `tl` ?",
      "verif": {
       "mode": "regex",
@@ -959,32 +1979,36 @@
      "guideSeul": true
     },
     {
-     "consigne": "Écris le début du programme : avec `#define TP 20`, lis `tl`, les `tl` entiers puis `x`, ajoute `x` à la fin **si `tl < TP`**, et affiche le tableau sur une ligne.",
+     "consigne": "Écris le début du programme : `#define TP [[TP]]`, lis `tl`, les `tl` entiers, puis `x`. Ajoute `x` à la fin **seulement si `tl < TP`** (sinon le tableau est plein), et affiche le tableau sur une ligne.",
      "question": "Lis, ajoute et affiche.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "3\n1 2 3\n9",
-        "sortie": "1 2 3 9"
+        "entree": "[[E0]]",
+        "sortie": "[[S2_0]]"
        },
        {
-        "entree": "1\n5\n6",
-        "sortie": "5 6"
+        "entree": "[[E1]]",
+        "sortie": "[[S2_1]]"
+       },
+       {
+        "entree": "[[E2]]",
+        "sortie": "[[S2_2]]"
        }
       ],
-      "exemple": "#include <stdio.h>\n\n#define TP 20\n\nint main(void) {\n    int t[TP], tl, x;\n    scanf(\"%d\", &tl);\n    for (int i = 0; i < tl; i++) {\n        scanf(\"%d\", &t[i]);\n    }\n    scanf(\"%d\", &x);\n    if (tl < TP) {\n        t[tl] = x;\n        tl++;\n    }\n    for (int i = 0; i < tl; i++) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    return 0;\n}"
+      "exemple": "#include <stdio.h>\n\n#define TP [[TP]]\n\nint main(void) {\n    int t[TP], tl, x;\n    scanf(\"%d\", &tl);\n    for (int i = 0; i < tl; i++) {\n        scanf(\"%d\", &t[i]);\n    }\n    scanf(\"%d\", &x);\n    if (tl < TP) {\n        t[tl] = x;\n        tl++;\n    }\n    for (int i = 0; i < tl; i++) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    return 0;\n}"
      },
-     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\n#define TP 20\n\nint main(void) {\n    int t[TP], tl, x;\n    scanf(\"%d\", &tl);\n    for (int i = 0; i < tl; i++) {\n        scanf(\"%d\", &t[i]);\n    }\n    scanf(\"%d\", &x);\n    if (tl < TP) {\n        t[tl] = x;\n        tl++;\n    }\n    for (int i = 0; i < tl; i++) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    return 0;\n}\n```",
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\n#define TP [[TP]]\n\nint main(void) {\n    int t[TP], tl, x;\n    scanf(\"%d\", &tl);\n    for (int i = 0; i < tl; i++) {\n        scanf(\"%d\", &t[i]);\n    }\n    scanf(\"%d\", &x);\n    if (tl < TP) {\n        t[tl] = x;\n        tl++;\n    }\n    for (int i = 0; i < tl; i++) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    return 0;\n}\n```",
      "indices": [
       "Dans l'ordre : `scanf` de `tl`, boucle de saisie, `scanf` de `x`, ajout, affichage.",
-      "L'ajout est protégé par `if (tl < TP)`."
+      "L'ajout est protégé par `if (tl < TP) { t[tl] = x; tl++; }`."
      ],
      "duree": 1.94,
      "guideSeul": true
     },
     {
-     "consigne": "Pour **supprimer le dernier élément**, faut-il effacer la case ? Écris l'unique instruction qui suffit.",
+     "consigne": "Pour **supprimer le dernier élément**, faut-il vraiment effacer sa case ? Non : il suffit que le programme ne la compte plus. Écris l'unique instruction qui fait ça.",
      "question": "Suppression du dernier ?",
      "verif": {
       "mode": "regex",
@@ -1000,37 +2024,151 @@
      "guideSeul": true
     },
     {
-     "consigne": "Termine : si `tl > 0`, supprime le dernier élément, puis affiche de nouveau le tableau sur une **deuxième ligne**.",
+     "consigne": "Termine : si `tl > 0`, supprime le dernier élément, puis affiche de nouveau le tableau sur une **deuxième ligne**.\n\nPense au cas où le tableau était déjà plein : `x` n'a pas pu être ajouté, et c'est alors une valeur d'origine qui disparaît.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "3\n1 2 3\n9",
-        "sortie": "1 2 3 9\n1 2 3"
+        "entree": "[[E0]]",
+        "sortie": "[[S4_0]]"
        },
        {
-        "entree": "1\n5\n6",
-        "sortie": "5 6\n5"
+        "entree": "[[E1]]",
+        "sortie": "[[S4_1]]"
+       },
+       {
+        "entree": "[[E2]]",
+        "sortie": "[[S4_2]]"
        }
       ],
-      "exemple": "#include <stdio.h>\n\n#define TP 20\n\nint main(void) {\n    int t[TP], tl, x;\n    scanf(\"%d\", &tl);\n    for (int i = 0; i < tl; i++) {\n        scanf(\"%d\", &t[i]);\n    }\n    scanf(\"%d\", &x);\n    if (tl < TP) {\n        t[tl] = x;\n        tl++;\n    }\n    for (int i = 0; i < tl; i++) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    if (tl > 0) {\n        tl--;\n    }\n    for (int i = 0; i < tl; i++) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    return 0;\n}",
+      "exemple": "#include <stdio.h>\n\n#define TP [[TP]]\n\nint main(void) {\n    int t[TP], tl, x;\n    scanf(\"%d\", &tl);\n    for (int i = 0; i < tl; i++) {\n        scanf(\"%d\", &t[i]);\n    }\n    scanf(\"%d\", &x);\n    if (tl < TP) {\n        t[tl] = x;\n        tl++;\n    }\n    for (int i = 0; i < tl; i++) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    if (tl > 0) {\n        tl--;\n    }\n    for (int i = 0; i < tl; i++) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    return 0;\n}",
       "nombres": true,
       "exige": [
        {
         "motif": "#\\s*define\\s+TP\\b",
         "brut": true,
-        "msg": "Définis la taille physique avec #define TP 20."
+        "msg": "Définis la taille physique avec #define TP [[TP]]."
        }
       ]
      },
-     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\n#define TP 20\n\nint main(void) {\n    int t[TP], tl, x;\n    scanf(\"%d\", &tl);\n    for (int i = 0; i < tl; i++) {\n        scanf(\"%d\", &t[i]);\n    }\n    scanf(\"%d\", &x);\n    if (tl < TP) {\n        t[tl] = x;\n        tl++;\n    }\n    for (int i = 0; i < tl; i++) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    if (tl > 0) {\n        tl--;\n    }\n    for (int i = 0; i < tl; i++) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    return 0;\n}\n```",
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\n#define TP [[TP]]\n\nint main(void) {\n    int t[TP], tl, x;\n    scanf(\"%d\", &tl);\n    for (int i = 0; i < tl; i++) {\n        scanf(\"%d\", &t[i]);\n    }\n    scanf(\"%d\", &x);\n    if (tl < TP) {\n        t[tl] = x;\n        tl++;\n    }\n    for (int i = 0; i < tl; i++) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    if (tl > 0) {\n        tl--;\n    }\n    for (int i = 0; i < tl; i++) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    return 0;\n}\n```",
      "indices": [
       "Après le premier affichage : `if (tl > 0) { tl--; }` puis la même boucle d'affichage.",
-      "Deux lignes en sortie : `1 2 3 9` puis `1 2 3`."
+      "Deux lignes en sortie, la seconde a une valeur de moins que la première."
      ],
      "duree": 3.5,
-     "depart": "#include <stdio.h>\n\n#define TP 20\n\nint main(void) {\n    int t[TP], tl, x;\n    scanf(\"%d\", &tl);\n    for (int i = 0; i < tl; i++) {\n        scanf(\"%d\", &t[i]);\n    }\n    scanf(\"%d\", &x);\n    if (tl < TP) {\n        t[tl] = x;\n        tl++;\n    }\n    for (int i = 0; i < tl; i++) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    return 0;\n}"
+     "depart": "#include <stdio.h>\n\n#define TP [[TP]]\n\nint main(void) {\n    int t[TP], tl, x;\n    scanf(\"%d\", &tl);\n    for (int i = 0; i < tl; i++) {\n        scanf(\"%d\", &t[i]);\n    }\n    scanf(\"%d\", &x);\n    if (tl < TP) {\n        t[tl] = x;\n        tl++;\n    }\n    for (int i = 0; i < tl; i++) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    return 0;\n}"
+    }
+   ],
+   "vals": {
+    "TP": "10",
+    "E0": "3\n18 45 30\n59",
+    "E1": "1\n4\n18",
+    "E2": "10\n8 6 4 8 8 6 7 9 1 2\n52",
+    "S2_0": "18 45 30 59 ",
+    "S2_1": "4 18 ",
+    "S2_2": "8 6 4 8 8 6 7 9 1 2 ",
+    "S4_0": "18 45 30 59 \n18 45 30 ",
+    "S4_1": "4 18 \n4 ",
+    "S4_2": "8 6 4 8 8 6 7 9 1 2 \n8 6 4 8 8 6 7 9 1 "
+   },
+   "variantes": [
+    {
+     "TP": "10",
+     "E0": "3\n18 45 30\n59",
+     "E1": "1\n4\n18",
+     "E2": "10\n8 6 4 8 8 6 7 9 1 2\n52",
+     "S2_0": "18 45 30 59 ",
+     "S2_1": "4 18 ",
+     "S2_2": "8 6 4 8 8 6 7 9 1 2 ",
+     "S4_0": "18 45 30 59 \n18 45 30 ",
+     "S4_1": "4 18 \n4 ",
+     "S4_2": "8 6 4 8 8 6 7 9 1 2 \n8 6 4 8 8 6 7 9 1 "
+    },
+    {
+     "TP": "12",
+     "E0": "5\n32 17 44 37 16\n76",
+     "E1": "1\n3\n14",
+     "E2": "12\n6 4 4 4 2 1 7 9 6 3 1 3\n24",
+     "S2_0": "32 17 44 37 16 76 ",
+     "S2_1": "3 14 ",
+     "S2_2": "6 4 4 4 2 1 7 9 6 3 1 3 ",
+     "S4_0": "32 17 44 37 16 76 \n32 17 44 37 16 ",
+     "S4_1": "3 14 \n3 ",
+     "S4_2": "6 4 4 4 2 1 7 9 6 3 1 3 \n6 4 4 4 2 1 7 9 6 3 1 "
+    },
+    {
+     "TP": "20",
+     "E0": "2\n2 45\n82",
+     "E1": "1\n7\n10",
+     "E2": "20\n8 6 4 9 1 8 1 3 7 7 2 5 7 4 3 5 8 8 5 5\n46",
+     "S2_0": "2 45 82 ",
+     "S2_1": "7 10 ",
+     "S2_2": "8 6 4 9 1 8 1 3 7 7 2 5 7 4 3 5 8 8 5 5 ",
+     "S4_0": "2 45 82 \n2 45 ",
+     "S4_1": "7 10 \n7 ",
+     "S4_2": "8 6 4 9 1 8 1 3 7 7 2 5 7 4 3 5 8 8 5 5 \n8 6 4 9 1 8 1 3 7 7 2 5 7 4 3 5 8 8 5 "
+    },
+    {
+     "TP": "15",
+     "E0": "3\n6 47 41\n89",
+     "E1": "1\n5\n15",
+     "E2": "15\n9 7 3 9 2 3 1 6 2 5 5 7 1 5 3\n47",
+     "S2_0": "6 47 41 89 ",
+     "S2_1": "5 15 ",
+     "S2_2": "9 7 3 9 2 3 1 6 2 5 5 7 1 5 3 ",
+     "S4_0": "6 47 41 89 \n6 47 41 ",
+     "S4_1": "5 15 \n5 ",
+     "S4_2": "9 7 3 9 2 3 1 6 2 5 5 7 1 5 3 \n9 7 3 9 2 3 1 6 2 5 5 7 1 5 "
+    },
+    {
+     "TP": "12",
+     "E0": "5\n50 27 13 36 28\n98",
+     "E1": "1\n8\n11",
+     "E2": "12\n6 3 4 2 5 9 7 3 6 5 2 8\n92",
+     "S2_0": "50 27 13 36 28 98 ",
+     "S2_1": "8 11 ",
+     "S2_2": "6 3 4 2 5 9 7 3 6 5 2 8 ",
+     "S4_0": "50 27 13 36 28 98 \n50 27 13 36 28 ",
+     "S4_1": "8 11 \n8 ",
+     "S4_2": "6 3 4 2 5 9 7 3 6 5 2 8 \n6 3 4 2 5 9 7 3 6 5 2 "
+    },
+    {
+     "TP": "15",
+     "E0": "2\n10 48\n57",
+     "E1": "1\n9\n16",
+     "E2": "15\n2 6 3 1 7 7 4 3 6 9 8 6 6 6 6\n90",
+     "S2_0": "10 48 57 ",
+     "S2_1": "9 16 ",
+     "S2_2": "2 6 3 1 7 7 4 3 6 9 8 6 6 6 6 ",
+     "S4_0": "10 48 57 \n10 48 ",
+     "S4_1": "9 16 \n9 ",
+     "S4_2": "2 6 3 1 7 7 4 3 6 9 8 6 6 6 6 \n2 6 3 1 7 7 4 3 6 9 8 6 6 6 "
+    },
+    {
+     "TP": "20",
+     "E0": "2\n22 43\n80",
+     "E1": "1\n8\n12",
+     "E2": "20\n2 5 7 1 4 9 5 2 2 2 9 9 3 4 2 8 3 9 9 9\n95",
+     "S2_0": "22 43 80 ",
+     "S2_1": "8 12 ",
+     "S2_2": "2 5 7 1 4 9 5 2 2 2 9 9 3 4 2 8 3 9 9 9 ",
+     "S4_0": "22 43 80 \n22 43 ",
+     "S4_1": "8 12 \n8 ",
+     "S4_2": "2 5 7 1 4 9 5 2 2 2 9 9 3 4 2 8 3 9 9 9 \n2 5 7 1 4 9 5 2 2 2 9 9 3 4 2 8 3 9 9 "
+    },
+    {
+     "TP": "15",
+     "E0": "5\n38 5 44 34 48\n66",
+     "E1": "1\n1\n10",
+     "E2": "15\n7 5 9 7 2 8 7 7 4 1 8 5 4 3 1\n49",
+     "S2_0": "38 5 44 34 48 66 ",
+     "S2_1": "1 10 ",
+     "S2_2": "7 5 9 7 2 8 7 7 4 1 8 5 4 3 1 ",
+     "S4_0": "38 5 44 34 48 66 \n38 5 44 34 48 ",
+     "S4_1": "1 10 \n1 ",
+     "S4_2": "7 5 9 7 2 8 7 7 4 1 8 5 4 3 1 \n7 5 9 7 2 8 7 7 4 1 8 5 4 3 "
     }
    ]
   },
@@ -1040,12 +2178,12 @@
    "notion": "5.3",
    "origine": "generee",
    "titre": "Afficher un tableau",
-   "enonce": "Ce programme doit afficher les trois valeurs du tableau, séparées par des espaces : `4 8 15`. Il affiche autre chose.",
-   "guidage": "**Diagnostic** : 1. que fait vraiment `printf(\"%d\\n\", t)` ? → 2. quel mécanisme affiche chaque case ? → 3. corriger.\n\n**À retenir** : en C, on n'affiche jamais un tableau d'un coup, case par case.",
+   "enonce": "Ce programme doit afficher les [[N]] valeurs du tableau, séparées par des espaces : `[[RES]]`. Il affiche pourtant tout autre chose.\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[[[N]]] = [[TAB]];\n    printf(\"%d\\n\", t);\n    return 0;\n}\n```",
+   "guidage": "**Diagnostic** : 1. que désigne vraiment `t` tout seul dans `printf(\"%d\\n\", t)` ? → 2. comment afficher chaque case ? → 3. corriger.\n\n**À retenir** : en C, un tableau ne s'affiche jamais d'un coup, mais case par case.",
    "duree": 3,
    "etapes": [
     {
-     "consigne": "Dans `printf(\"%d\\n\", t);`, le nom `t` seul désigne… quoi ? (réponds en une expression courte)",
+     "consigne": "Dans `printf(\"%d\\n\", t);`, on donne à `printf` le nom du tableau, sans crochets. Que désigne `t` tout seul ? (réponds en quelques mots)",
      "question": "Que désigne `t` seul ?",
      "verif": {
       "mode": "regex",
@@ -1061,42 +2199,107 @@
      "guideSeul": true
     },
     {
-     "consigne": "Écris l'en-tête de la boucle `for` (variable `i`) qui parcourt les 3 cases du tableau.",
+     "consigne": "Pour afficher les cases une par une, il faut une boucle. Écris l'en-tête complet du `for` (variable `i`) qui passe par les [[N]] cases du tableau.",
      "question": "En-tête de la boucle ?",
      "verif": {
       "mode": "regex",
-      "motif": "for\\s*\\(\\s*(int\\s+)?i\\s*=\\s*0\\s*;\\s*i\\s*(<\\s*3|<=\\s*2)\\s*;\\s*(i\\+\\+|\\+\\+i|i\\s*\\+=\\s*1|i\\s*=\\s*i\\s*\\+\\s*1)\\s*\\)\\s*\\{?",
-      "exemple": "for (int i = 0; i < 3; i++)"
+      "motif": "for\\s*\\(\\s*(int\\s+)?i\\s*=\\s*0\\s*;\\s*i\\s*(<\\s*[[N]]|<=\\s*[[M]])\\s*;\\s*(i\\+\\+|\\+\\+i|i\\s*\\+=\\s*1|i\\s*=\\s*i\\s*\\+\\s*1)\\s*\\)\\s*\\{?",
+      "exemple": "for (int i = 0; i < [[N]]; i++)"
      },
-     "corrige": "`for (int i = 0; i < 3; i++)` : indices 0, 1, 2.",
+     "corrige": "[[N]] cases, indices de 0 à [[M]] : `for (int i = 0; i < [[N]]; i++)`.",
      "indices": [
-      "3 cases : indices de 0 à 2.",
-      "`for (int i = 0; i < 3; i++)`"
+      "[[N]] cases : indices de 0 à [[M]].",
+      "`for (int i = 0; i < [[N]]; i++)`"
      ],
      "duree": 0.6,
      "guideSeul": true
     },
     {
-     "consigne": "Corrige le programme : affiche chaque case dans une boucle, avec une espace après chaque valeur, pour obtenir `4 8 15`.",
+     "consigne": "Corrige le programme : remplace le `printf` fautif par une boucle qui affiche chaque case suivie d'une espace, pour obtenir `[[RES]]`.",
      "question": "Corrige le programme.",
      "verif": {
       "mode": "c",
       "tests": [
        {
         "entree": "",
-        "sortie": "4 8 15"
+        "sortie": "[[S2_0]]"
        }
       ],
-      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[3] = {4, 8, 15};\n    for (int i = 0; i < 3; i++) {\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    return 0;\n}",
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[[[N]]] = [[TAB]];\n    for (int i = 0; i < [[N]]; i++) {\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    return 0;\n}",
       "nombres": true
      },
-     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[3] = {4, 8, 15};\n    for (int i = 0; i < 3; i++) {\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    return 0;\n}\n```",
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[[[N]]] = [[TAB]];\n    for (int i = 0; i < [[N]]; i++) {\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    return 0;\n}\n```",
      "indices": [
       "Remplace le `printf` actuel par une boucle qui affiche `t[i]`.",
-      "`for (int i = 0; i < 3; i++) { printf(\"%d \", t[i]); }` puis `printf(\"\\n\");`"
+      "`for (int i = 0; i < [[N]]; i++) { printf(\"%d \", t[i]); }` puis `printf(\"\\n\");`"
      ],
      "duree": 1.9,
-     "depart": "#include <stdio.h>\n\nint main(void) {\n    int t[3] = {4, 8, 15};\n    printf(\"%d\\n\", t);\n    return 0;\n}"
+     "depart": "#include <stdio.h>\n\nint main(void) {\n    int t[[[N]]] = [[TAB]];\n    printf(\"%d\\n\", t);\n    return 0;\n}"
+    }
+   ],
+   "vals": {
+    "N": "5",
+    "M": "4",
+    "TAB": "{13, 14, 27, 38, 46}",
+    "RES": "13 14 27 38 46",
+    "S2_0": "13 14 27 38 46 "
+   },
+   "variantes": [
+    {
+     "N": "5",
+     "M": "4",
+     "TAB": "{13, 14, 27, 38, 46}",
+     "RES": "13 14 27 38 46",
+     "S2_0": "13 14 27 38 46 "
+    },
+    {
+     "N": "4",
+     "M": "3",
+     "TAB": "{4, 19, 44, 47}",
+     "RES": "4 19 44 47",
+     "S2_0": "4 19 44 47 "
+    },
+    {
+     "N": "3",
+     "M": "2",
+     "TAB": "{10, 25, 48}",
+     "RES": "10 25 48",
+     "S2_0": "10 25 48 "
+    },
+    {
+     "N": "3",
+     "M": "2",
+     "TAB": "{6, 14, 20}",
+     "RES": "6 14 20",
+     "S2_0": "6 14 20 "
+    },
+    {
+     "N": "4",
+     "M": "3",
+     "TAB": "{3, 30, 31, 32}",
+     "RES": "3 30 31 32",
+     "S2_0": "3 30 31 32 "
+    },
+    {
+     "N": "5",
+     "M": "4",
+     "TAB": "{9, 21, 23, 26, 43}",
+     "RES": "9 21 23 26 43",
+     "S2_0": "9 21 23 26 43 "
+    },
+    {
+     "N": "5",
+     "M": "4",
+     "TAB": "{24, 40, 41, 51, 60}",
+     "RES": "24 40 41 51 60",
+     "S2_0": "24 40 41 51 60 "
+    },
+    {
+     "N": "5",
+     "M": "4",
+     "TAB": "{9, 14, 16, 41, 42}",
+     "RES": "9 14 16 41 42",
+     "S2_0": "9 14 16 41 42 "
     }
    ]
   },
@@ -1106,12 +2309,12 @@
    "notion": "5.3",
    "origine": "generee",
    "titre": "Deux tableaux égaux ?",
-   "enonce": "Ce programme lit deux tableaux de 3 entiers et doit afficher `egaux` s'ils contiennent les mêmes valeurs dans le même ordre, `differents` sinon. Il répond toujours `differents`.",
-   "guidage": "**Diagnostic** : 1. que compare `t1 == t2` ? → 2. quelle stratégie pour comparer des valeurs ? → 3. corriger.\n\n**Astuce** : part du principe « égaux », et change d'avis dès qu'une case diffère.",
+   "enonce": "Ce programme lit deux tableaux de [[N]] entiers et doit afficher `egaux` s'ils contiennent les mêmes valeurs dans le même ordre, `differents` sinon. Problème : il répond **toujours** `differents`.\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t1[[[N]]], t2[[[N]]];\n    for (int i = 0; i < [[N]]; i++) scanf(\"%d\", &t1[i]);\n    for (int i = 0; i < [[N]]; i++) scanf(\"%d\", &t2[i]);\n    if (t1 == t2) {\n        printf(\"egaux\\n\");\n    } else {\n        printf(\"differents\\n\");\n    }\n    return 0;\n}\n```",
+   "guidage": "**Diagnostic** : 1. que compare vraiment `t1 == t2` ? → 2. comment comparer les valeurs ? → 3. corriger.\n\n**Astuce** : pars du principe que les tableaux sont égaux, et change d'avis dès qu'une case diffère.",
    "duree": 5,
    "etapes": [
     {
-     "consigne": "Que compare l'expression `t1 == t2` quand `t1` et `t2` sont des tableaux ? (réponse courte)",
+     "consigne": "Rappel : un nom de tableau seul (sans crochets) ne donne pas son contenu. Alors, que compare `t1 == t2` ? (réponse courte)",
      "question": "Que compare `t1 == t2` ?",
      "verif": {
       "mode": "regex",
@@ -1127,7 +2330,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "On suppose les tableaux égaux avec `egaux = 1`. Dans la boucle, quand `t1[i] != t2[i]`, quelle instruction faut-il exécuter ?",
+     "consigne": "On utilise un indicateur : `egaux = 1` au départ (« jusqu'ici, tout est pareil »). Dans la boucle, si `t1[i] != t2[i]`, quelle instruction faut-il exécuter ?",
      "question": "Que faire quand une case diffère ?",
      "verif": {
       "mode": "regex",
@@ -1143,25 +2346,29 @@
      "guideSeul": true
     },
     {
-     "consigne": "Corrige le programme : compare les tableaux **case par case** avec un indicateur `egaux`, puis affiche `egaux` ou `differents`.",
+     "consigne": "Corrige le programme : compare les deux tableaux **case par case** avec l'indicateur `egaux`, puis affiche `egaux` ou `differents` selon sa valeur.",
      "question": "Corrige le programme.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "1 2 3 1 2 3",
-        "sortie": "egaux"
+        "entree": "[[E0]]",
+        "sortie": "[[S2_0]]"
        },
        {
-        "entree": "1 2 3 1 2 4",
-        "sortie": "differents"
+        "entree": "[[E1]]",
+        "sortie": "[[S2_1]]"
        },
        {
-        "entree": "5 5 5 5 5 5",
-        "sortie": "egaux"
+        "entree": "[[E2]]",
+        "sortie": "[[S2_2]]"
+       },
+       {
+        "entree": "[[E3]]",
+        "sortie": "[[S2_3]]"
        }
       ],
-      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t1[3], t2[3], egaux = 1;\n    for (int i = 0; i < 3; i++) scanf(\"%d\", &t1[i]);\n    for (int i = 0; i < 3; i++) scanf(\"%d\", &t2[i]);\n    for (int i = 0; i < 3; i++) {\n        if (t1[i] != t2[i]) {\n            egaux = 0;\n        }\n    }\n    if (egaux) {\n        printf(\"egaux\\n\");\n    } else {\n        printf(\"differents\\n\");\n    }\n    return 0;\n}",
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t1[[[N]]], t2[[[N]]], egaux = 1;\n    for (int i = 0; i < [[N]]; i++) scanf(\"%d\", &t1[i]);\n    for (int i = 0; i < [[N]]; i++) scanf(\"%d\", &t2[i]);\n    for (int i = 0; i < [[N]]; i++) {\n        if (t1[i] != t2[i]) {\n            egaux = 0;\n        }\n    }\n    if (egaux) {\n        printf(\"egaux\\n\");\n    } else {\n        printf(\"differents\\n\");\n    }\n    return 0;\n}",
       "interdit": [
        {
         "motif": "t1\\s*==\\s*t2|t2\\s*==\\s*t1",
@@ -1169,13 +2376,114 @@
        }
       ]
      },
-     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t1[3], t2[3], egaux = 1;\n    for (int i = 0; i < 3; i++) scanf(\"%d\", &t1[i]);\n    for (int i = 0; i < 3; i++) scanf(\"%d\", &t2[i]);\n    for (int i = 0; i < 3; i++) {\n        if (t1[i] != t2[i]) {\n            egaux = 0;\n        }\n    }\n    if (egaux) {\n        printf(\"egaux\\n\");\n    } else {\n        printf(\"differents\\n\");\n    }\n    return 0;\n}\n```",
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t1[[[N]]], t2[[[N]]], egaux = 1;\n    for (int i = 0; i < [[N]]; i++) scanf(\"%d\", &t1[i]);\n    for (int i = 0; i < [[N]]; i++) scanf(\"%d\", &t2[i]);\n    for (int i = 0; i < [[N]]; i++) {\n        if (t1[i] != t2[i]) {\n            egaux = 0;\n        }\n    }\n    if (egaux) {\n        printf(\"egaux\\n\");\n    } else {\n        printf(\"differents\\n\");\n    }\n    return 0;\n}\n```",
      "indices": [
-      "`int egaux = 1;`, une boucle sur les 3 cases, et `if (t1[i] != t2[i]) egaux = 0;`.",
+      "`int egaux = 1;`, une boucle sur les [[N]] cases, et `if (t1[i] != t2[i]) egaux = 0;`.",
       "Après la boucle : `if (egaux) printf(\"egaux\\n\"); else printf(\"differents\\n\");`"
      ],
-     "duree": 4.0,
-     "depart": "#include <stdio.h>\n\nint main(void) {\n    int t1[3], t2[3];\n    for (int i = 0; i < 3; i++) scanf(\"%d\", &t1[i]);\n    for (int i = 0; i < 3; i++) scanf(\"%d\", &t2[i]);\n    if (t1 == t2) {\n        printf(\"egaux\\n\");\n    } else {\n        printf(\"differents\\n\");\n    }\n    return 0;\n}"
+     "duree": 4,
+     "depart": "#include <stdio.h>\n\nint main(void) {\n    int t1[[[N]]], t2[[[N]]];\n    for (int i = 0; i < [[N]]; i++) scanf(\"%d\", &t1[i]);\n    for (int i = 0; i < [[N]]; i++) scanf(\"%d\", &t2[i]);\n    if (t1 == t2) {\n        printf(\"egaux\\n\");\n    } else {\n        printf(\"differents\\n\");\n    }\n    return 0;\n}"
+    }
+   ],
+   "vals": {
+    "N": "5",
+    "E0": "1 2 0 6 5\n1 2 0 6 5",
+    "E1": "1 2 0 6 5\n1 2 0 6 0",
+    "E2": "7 5 5 0 1\n0 5 5 0 1",
+    "E3": "2 8 8 2 8\n2 8 8 2 8",
+    "S2_0": "egaux",
+    "S2_1": "differents",
+    "S2_2": "differents",
+    "S2_3": "egaux"
+   },
+   "variantes": [
+    {
+     "N": "5",
+     "E0": "1 2 0 6 5\n1 2 0 6 5",
+     "E1": "1 2 0 6 5\n1 2 0 6 0",
+     "E2": "7 5 5 0 1\n0 5 5 0 1",
+     "E3": "2 8 8 2 8\n2 8 8 2 8",
+     "S2_0": "egaux",
+     "S2_1": "differents",
+     "S2_2": "differents",
+     "S2_3": "egaux"
+    },
+    {
+     "N": "5",
+     "E0": "8 3 4 4 3\n8 3 4 4 3",
+     "E1": "8 3 4 4 3\n8 3 4 4 6",
+     "E2": "6 2 6 4 7\n0 2 6 4 7",
+     "E3": "1 6 6 6 4\n1 6 6 6 4",
+     "S2_0": "egaux",
+     "S2_1": "differents",
+     "S2_2": "differents",
+     "S2_3": "egaux"
+    },
+    {
+     "N": "3",
+     "E0": "5 3 2\n5 3 2",
+     "E1": "5 3 2\n5 3 9",
+     "E2": "3 8 1\n1 8 1",
+     "E3": "1 9 5\n1 9 5",
+     "S2_0": "egaux",
+     "S2_1": "differents",
+     "S2_2": "differents",
+     "S2_3": "egaux"
+    },
+    {
+     "N": "3",
+     "E0": "8 9 1\n8 9 1",
+     "E1": "8 9 1\n8 9 6",
+     "E2": "3 1 2\n6 1 2",
+     "E3": "2 5 3\n2 5 3",
+     "S2_0": "egaux",
+     "S2_1": "differents",
+     "S2_2": "differents",
+     "S2_3": "egaux"
+    },
+    {
+     "N": "3",
+     "E0": "0 6 9\n0 6 9",
+     "E1": "0 6 9\n0 6 1",
+     "E2": "3 6 8\n1 6 8",
+     "E3": "2 8 3\n2 8 3",
+     "S2_0": "egaux",
+     "S2_1": "differents",
+     "S2_2": "differents",
+     "S2_3": "egaux"
+    },
+    {
+     "N": "4",
+     "E0": "9 6 5 7\n9 6 5 7",
+     "E1": "9 6 5 7\n9 6 5 3",
+     "E2": "1 7 6 2\n7 7 6 2",
+     "E3": "6 7 5 8\n6 7 5 8",
+     "S2_0": "egaux",
+     "S2_1": "differents",
+     "S2_2": "differents",
+     "S2_3": "egaux"
+    },
+    {
+     "N": "4",
+     "E0": "7 6 4 0\n7 6 4 0",
+     "E1": "7 6 4 0\n7 6 4 6",
+     "E2": "1 0 2 6\n6 0 2 6",
+     "E3": "7 2 9 1\n7 2 9 1",
+     "S2_0": "egaux",
+     "S2_1": "differents",
+     "S2_2": "differents",
+     "S2_3": "egaux"
+    },
+    {
+     "N": "3",
+     "E0": "0 7 6\n0 7 6",
+     "E1": "0 7 6\n0 7 8",
+     "E2": "6 6 5\n7 6 5",
+     "E3": "4 7 4\n4 7 4",
+     "S2_0": "egaux",
+     "S2_1": "differents",
+     "S2_2": "differents",
+     "S2_3": "egaux"
     }
    ]
   },
@@ -1185,12 +2493,12 @@
    "notion": "5.4",
    "origine": "td",
    "titre": "Recherche dans un tableau non trié",
-   "enonce": "Le tableau est `{12, 45, -16, 5, 98, 122, 33, 9, -23, 65, 11, 66, 54, 52, 92, 71, 100, 21, 40}`. Écris un programme qui lit `val` et affiche `trouve` si `val` est dans le tableau, `absent` sinon (Tableaux_chainex, intermédiaire ex. 5).",
-   "guidage": "**Plan** : 1. un indicateur `trouve = 0` → 2. parcourir **tout** le tableau, `trouve = 1` si `t[i] == val` → 3. afficher selon l'indicateur.\n\n**Piège** : on ne peut dire « absent » qu'après avoir regardé **toutes** les cases.",
+   "enonce": "Le tableau `[[TAB]]` contient 19 entiers, dans le désordre.\n\nÉcris un programme qui lit un entier `val` et affiche `trouve` si `val` est dans le tableau, `absent` sinon.\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S3_0]]\n```\n\n(Tableaux_chainex, intermédiaire ex. 5)",
+   "guidage": "**Plan** : 1. un indicateur `trouve = 0` → 2. parcourir le tableau, et mettre `trouve = 1` si une case vaut `val` → 3. afficher selon l'indicateur.\n\n**Piège** : on ne peut dire « absent » qu'après avoir regardé **toutes** les cases.",
    "duree": 5,
    "etapes": [
     {
-     "consigne": "Le tableau n'est pas trié. Après avoir comparé `val` à la première case seulement, sans succès, peut-on conclure « absent » ? (oui / non)",
+     "consigne": "Le tableau n'est pas trié. Tu compares `val` à la première case : ce n'est pas elle. Peux-tu déjà conclure que `val` est absent ? (oui / non)",
      "question": "Peut-on conclure ?",
      "verif": {
       "mode": "exact",
@@ -1206,7 +2514,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Écris la condition (sans `if`) qui teste si la case d'indice `i` contient la valeur cherchée `val`.",
+     "consigne": "Écris seulement la **condition** (ce qu'on mettrait dans un `if`) qui est vraie quand la case d'indice `i` contient la valeur cherchée `val`.",
      "question": "Test de la case `i` ?",
      "verif": {
       "mode": "regex",
@@ -1222,27 +2530,27 @@
      "guideSeul": true
     },
     {
-     "consigne": "Lis `val`, parcours le tableau `{12, 45, -16, 5, 98, 122, 33, 9, -23, 65, 11, 66, 54, 52, 92, 71, 100, 21, 40}` avec un indicateur `trouve` (0 au départ, 1 si une case égale `val`, avec `break`), puis affiche **1 ou 0** seulement.",
-     "question": "Indicateur 1 / 0.",
+     "consigne": "Lis `val`, puis parcours le tableau avec un indicateur `trouve` : 0 au départ, 1 dès qu'une case vaut `val` (et `break` pour arrêter de chercher). Pour l'instant, affiche juste la valeur de l'indicateur : **1 ou 0**.",
+     "question": "Affiche l'indicateur (1 ou 0).",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "98",
-        "sortie": "1"
+        "entree": "[[E0]]",
+        "sortie": "[[S2_0]]"
        },
        {
-        "entree": "7",
-        "sortie": "0"
+        "entree": "[[E1]]",
+        "sortie": "[[S2_1]]"
        },
        {
-        "entree": "40",
-        "sortie": "1"
+        "entree": "[[E2]]",
+        "sortie": "[[S2_2]]"
        }
       ],
-      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[19] = {12, 45, -16, 5, 98, 122, 33, 9, -23, 65, 11, 66, 54, 52, 92, 71, 100, 21, 40};\n    int val, trouve = 0;\n    scanf(\"%d\", &val);\n    for (int i = 0; i < 19; i++) {\n        if (t[i] == val) {\n            trouve = 1;\n            break;\n        }\n    }\n    printf(\"%d\\n\", trouve);\n    return 0;\n}"
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[19] = [[TAB]];\n    int val, trouve = 0;\n    scanf(\"%d\", &val);\n    for (int i = 0; i < 19; i++) {\n        if (t[i] == val) {\n            trouve = 1;\n            break;\n        }\n    }\n    printf(\"%d\\n\", trouve);\n    return 0;\n}"
      },
-     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[19] = {12, 45, -16, 5, 98, 122, 33, 9, -23, 65, 11, 66, 54, 52, 92, 71, 100, 21, 40};\n    int val, trouve = 0;\n    scanf(\"%d\", &val);\n    for (int i = 0; i < 19; i++) {\n        if (t[i] == val) {\n            trouve = 1;\n            break;\n        }\n    }\n    printf(\"%d\\n\", trouve);\n    return 0;\n}\n```",
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[19] = [[TAB]];\n    int val, trouve = 0;\n    scanf(\"%d\", &val);\n    for (int i = 0; i < 19; i++) {\n        if (t[i] == val) {\n            trouve = 1;\n            break;\n        }\n    }\n    printf(\"%d\\n\", trouve);\n    return 0;\n}\n```",
      "indices": [
       "Déclare `int val, trouve = 0;`, lis `val`, puis une boucle avec un `if`.",
       "Dans le `if` : `trouve = 1; break;`. Affiche `trouve` après la boucle."
@@ -1251,37 +2559,165 @@
      "guideSeul": true
     },
     {
-     "consigne": "Au lieu d'afficher 1 ou 0, affiche le **mot** `trouve` ou `absent` selon l'indicateur.",
+     "consigne": "Dernière touche : au lieu d'afficher 1 ou 0, affiche le **mot** `trouve` ou `absent` selon l'indicateur.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "98",
-        "sortie": "trouve"
+        "entree": "[[E0]]",
+        "sortie": "[[S3_0]]"
        },
        {
-        "entree": "7",
-        "sortie": "absent"
+        "entree": "[[E1]]",
+        "sortie": "[[S3_1]]"
        },
        {
-        "entree": "40",
-        "sortie": "trouve"
+        "entree": "[[E2]]",
+        "sortie": "[[S3_2]]"
        },
        {
-        "entree": "-23",
-        "sortie": "trouve"
+        "entree": "[[E3]]",
+        "sortie": "[[S3_3]]"
        }
       ],
-      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[19] = {12, 45, -16, 5, 98, 122, 33, 9, -23, 65, 11, 66, 54, 52, 92, 71, 100, 21, 40};\n    int val, trouve = 0;\n    scanf(\"%d\", &val);\n    for (int i = 0; i < 19; i++) {\n        if (t[i] == val) {\n            trouve = 1;\n            break;\n        }\n    }\n    if (trouve) printf(\"trouve\\n\");\n    else printf(\"absent\\n\");\n    return 0;\n}"
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[19] = [[TAB]];\n    int val, trouve = 0;\n    scanf(\"%d\", &val);\n    for (int i = 0; i < 19; i++) {\n        if (t[i] == val) {\n            trouve = 1;\n            break;\n        }\n    }\n    if (trouve) printf(\"trouve\\n\");\n    else printf(\"absent\\n\");\n    return 0;\n}"
      },
-     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[19] = {12, 45, -16, 5, 98, 122, 33, 9, -23, 65, 11, 66, 54, 52, 92, 71, 100, 21, 40};\n    int val, trouve = 0;\n    scanf(\"%d\", &val);\n    for (int i = 0; i < 19; i++) {\n        if (t[i] == val) {\n            trouve = 1;\n            break;\n        }\n    }\n    if (trouve) printf(\"trouve\\n\");\n    else printf(\"absent\\n\");\n    return 0;\n}\n```",
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[19] = [[TAB]];\n    int val, trouve = 0;\n    scanf(\"%d\", &val);\n    for (int i = 0; i < 19; i++) {\n        if (t[i] == val) {\n            trouve = 1;\n            break;\n        }\n    }\n    if (trouve) printf(\"trouve\\n\");\n    else printf(\"absent\\n\");\n    return 0;\n}\n```",
      "indices": [
       "Remplace le dernier `printf` par un `if (trouve) … else …`.",
       "`if (trouve) printf(\"trouve\\n\"); else printf(\"absent\\n\");`"
      ],
      "duree": 2.51,
-     "depart": "#include <stdio.h>\n\nint main(void) {\n    int t[19] = {12, 45, -16, 5, 98, 122, 33, 9, -23, 65, 11, 66, 54, 52, 92, 71, 100, 21, 40};\n    int val, trouve = 0;\n    scanf(\"%d\", &val);\n    for (int i = 0; i < 19; i++) {\n        if (t[i] == val) {\n            trouve = 1;\n            break;\n        }\n    }\n    printf(\"%d\\n\", trouve);\n    return 0;\n}"
+     "depart": "#include <stdio.h>\n\nint main(void) {\n    int t[19] = [[TAB]];\n    int val, trouve = 0;\n    scanf(\"%d\", &val);\n    for (int i = 0; i < 19; i++) {\n        if (t[i] == val) {\n            trouve = 1;\n            break;\n        }\n    }\n    printf(\"%d\\n\", trouve);\n    return 0;\n}"
+    }
+   ],
+   "vals": {
+    "TAB": "{-23, 125, -24, 82, 10, 18, 20, 115, 106, 43, 86, 117, 41, 97, 127, 116, -30, 111, -20}",
+    "E0": "117",
+    "E1": "66",
+    "E2": "-20",
+    "E3": "-23",
+    "S2_0": "1",
+    "S2_1": "0",
+    "S2_2": "1",
+    "S3_0": "trouve",
+    "S3_1": "absent",
+    "S3_2": "trouve",
+    "S3_3": "trouve"
+   },
+   "variantes": [
+    {
+     "TAB": "{-23, 125, -24, 82, 10, 18, 20, 115, 106, 43, 86, 117, 41, 97, 127, 116, -30, 111, -20}",
+     "E0": "117",
+     "E1": "66",
+     "E2": "-20",
+     "E3": "-23",
+     "S2_0": "1",
+     "S2_1": "0",
+     "S2_2": "1",
+     "S3_0": "trouve",
+     "S3_1": "absent",
+     "S3_2": "trouve",
+     "S3_3": "trouve"
+    },
+    {
+     "TAB": "{70, 104, 69, 47, -27, 31, 63, 33, 43, -24, 41, 71, 98, 9, 19, 59, 6, 122, 50}",
+     "E0": "69",
+     "E1": "18",
+     "E2": "50",
+     "E3": "70",
+     "S2_0": "1",
+     "S2_1": "0",
+     "S2_2": "1",
+     "S3_0": "trouve",
+     "S3_1": "absent",
+     "S3_2": "trouve",
+     "S3_3": "trouve"
+    },
+    {
+     "TAB": "{95, -13, 105, 27, 12, 34, 101, 22, -5, 122, 109, 36, 65, 28, 125, -25, 91, 113, 97}",
+     "E0": "-25",
+     "E1": "-26",
+     "E2": "97",
+     "E3": "95",
+     "S2_0": "1",
+     "S2_1": "0",
+     "S2_2": "1",
+     "S3_0": "trouve",
+     "S3_1": "absent",
+     "S3_2": "trouve",
+     "S3_3": "trouve"
+    },
+    {
+     "TAB": "{2, 75, 95, 91, 38, 7, -7, 19, 129, 77, 80, -1, 47, -29, 87, 128, 68, 116, 117}",
+     "E0": "87",
+     "E1": "-28",
+     "E2": "117",
+     "E3": "2",
+     "S2_0": "1",
+     "S2_1": "0",
+     "S2_2": "1",
+     "S3_0": "trouve",
+     "S3_1": "absent",
+     "S3_2": "trouve",
+     "S3_3": "trouve"
+    },
+    {
+     "TAB": "{42, 65, 83, 66, 108, 126, 58, 59, 113, 7, 52, -14, 107, 98, 71, 18, 112, -26, 93}",
+     "E0": "83",
+     "E1": "-19",
+     "E2": "93",
+     "E3": "42",
+     "S2_0": "1",
+     "S2_1": "0",
+     "S2_2": "1",
+     "S3_0": "trouve",
+     "S3_1": "absent",
+     "S3_2": "trouve",
+     "S3_3": "trouve"
+    },
+    {
+     "TAB": "{123, 111, 72, 41, 60, 122, 28, 23, 126, -20, 17, 101, -17, 130, 104, -2, 40, 74, 31}",
+     "E0": "74",
+     "E1": "7",
+     "E2": "31",
+     "E3": "123",
+     "S2_0": "1",
+     "S2_1": "0",
+     "S2_2": "1",
+     "S3_0": "trouve",
+     "S3_1": "absent",
+     "S3_2": "trouve",
+     "S3_3": "trouve"
+    },
+    {
+     "TAB": "{87, -17, 31, 35, -25, -21, 12, 114, 115, 76, 6, -7, 23, 24, 39, 14, 57, 118, 33}",
+     "E0": "14",
+     "E1": "4",
+     "E2": "33",
+     "E3": "87",
+     "S2_0": "1",
+     "S2_1": "0",
+     "S2_2": "1",
+     "S3_0": "trouve",
+     "S3_1": "absent",
+     "S3_2": "trouve",
+     "S3_3": "trouve"
+    },
+    {
+     "TAB": "{7, 4, 99, 97, 108, 11, 103, 78, -27, -16, 107, 88, -28, 61, -7, 84, 115, 49, 53}",
+     "E0": "107",
+     "E1": "105",
+     "E2": "53",
+     "E3": "7",
+     "S2_0": "1",
+     "S2_1": "0",
+     "S2_2": "1",
+     "S3_0": "trouve",
+     "S3_1": "absent",
+     "S3_2": "trouve",
+     "S3_3": "trouve"
     }
    ]
   },
@@ -1291,12 +2727,12 @@
    "notion": "5.4",
    "origine": "td",
    "titre": "Minimum et moyenne de N valeurs",
-   "enonce": "Écris un programme qui lit `N` (au plus 100), remplit un tableau de `N` entiers saisis, puis affiche le **minimum** et la **moyenne** (2 décimales) (Tableaux_chainex, intermédiaire ex. 6 et 7).",
-   "guidage": "**Plan** : 1. lire `n` puis `n` valeurs (taille physique 100) → 2. cumuler la somme pendant la saisie → 3. minimum : partir de `t[0]` puis comparer avec les autres cases → 4. moyenne **réelle**.\n\n**Pièges** : initialiser `min` à 0 fausse le résultat s'il n'y a que des valeurs positives ; `s / n` est une division entière.",
+   "enonce": "Écris un programme qui lit un entier `n` (au plus 100), puis `n` entiers qu'il range dans un tableau. Il affiche ensuite le **minimum** du tableau et la **moyenne** (2 décimales), sur une ligne.\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S3_0]]\n```\n\n(Tableaux_chainex, intermédiaire ex. 6 et 7)",
+   "guidage": "**Plan** : 1. lire `n` puis les `n` valeurs (tableau de taille physique 100) → 2. cumuler la somme pendant la saisie → 3. minimum : partir de `t[0]` puis comparer aux autres cases → 4. moyenne **réelle**.\n\n**Pièges** : démarrer `min` à 0 donne un faux résultat si toutes les valeurs sont positives ; `s / n` avec deux `int` est une division entière.",
    "duree": 6,
    "etapes": [
     {
-     "consigne": "Pourquoi ne pas initialiser `min` à 0 ? Avec quelle valeur du tableau l'initialise-t-on le plus sûrement ? (écris l'expression)",
+     "consigne": "Pour chercher le minimum, on part d'une valeur puis on la remplace dès qu'on trouve plus petit. Démarrer à 0 est un piège : avec `{5, 8, 12}`, on trouverait 0, qui n'est même pas dans le tableau ! Quelle valeur du tableau prendre comme point de départ ? (écris l'expression)",
      "question": "Valeur de départ du minimum ?",
      "verif": {
       "mode": "regex",
@@ -1312,22 +2748,22 @@
      "guideSeul": true
     },
     {
-     "consigne": "Lis `n` (au plus 100) puis les `n` entiers dans un tableau de taille physique 100, et affiche le **minimum** (rien d'autre).",
-     "question": "Lis et cherche le minimum.",
+     "consigne": "Lis `n` puis les `n` entiers dans un tableau de taille physique 100, et affiche seulement le **minimum**.",
+     "question": "Lis les valeurs et affiche le minimum.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "5\n4 -2 9 0 3",
-        "sortie": "-2"
+        "entree": "[[E0]]",
+        "sortie": "[[S1_0]]"
        },
        {
-        "entree": "1\n7",
-        "sortie": "7"
+        "entree": "[[E1]]",
+        "sortie": "[[S1_1]]"
        },
        {
-        "entree": "4\n10 20 30 40",
-        "sortie": "10"
+        "entree": "[[E2]]",
+        "sortie": "[[S1_2]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        scanf(\"%d\", &t[i]);\n    }\n    int min = t[0];\n    for (int i = 1; i < n; i++) {\n        if (t[i] < min) min = t[i];\n    }\n    printf(\"%d\\n\", min);\n    return 0;\n}"
@@ -1341,7 +2777,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Pour calculer la moyenne **réelle** de la somme `s` sur `n` valeurs (deux `int`), écris l'expression qui évite la division entière.",
+     "consigne": "La somme `s` et le nombre de valeurs `n` sont deux `int`. Écris l'expression qui calcule la moyenne **avec ses décimales** (sans division entière).",
      "question": "Expression de la moyenne ?",
      "verif": {
       "mode": "regex",
@@ -1357,22 +2793,22 @@
      "guideSeul": true
     },
     {
-     "consigne": "Complète le programme : cumule aussi la somme `s` (dans la boucle de saisie) et affiche sur une ligne `minimum moyenne`, la moyenne avec 2 décimales.",
+     "consigne": "Complète le programme : cumule aussi la somme `s` (dans la boucle de saisie, juste après chaque `scanf`), puis affiche sur une ligne `minimum moyenne`, la moyenne avec 2 décimales.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "5\n4 -2 9 0 3",
-        "sortie": "-2 2.80"
+        "entree": "[[E0]]",
+        "sortie": "[[S3_0]]"
        },
        {
-        "entree": "1\n7",
-        "sortie": "7 7.00"
+        "entree": "[[E1]]",
+        "sortie": "[[S3_1]]"
        },
        {
-        "entree": "4\n10 20 30 40",
-        "sortie": "10 25.00"
+        "entree": "[[E2]]",
+        "sortie": "[[S3_2]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[100], n, s = 0;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        scanf(\"%d\", &t[i]);\n        s += t[i];\n    }\n    int min = t[0];\n    for (int i = 1; i < n; i++) {\n        if (t[i] < min) min = t[i];\n    }\n    printf(\"%d %.2f\\n\", min, (double)s / n);\n    return 0;\n}",
@@ -1383,8 +2819,109 @@
       "`int s = 0;`, puis `s += t[i];` juste après chaque `scanf`.",
       "`printf(\"%d %.2f\\n\", min, (double)s / n);`"
      ],
-     "duree": 3.0,
+     "duree": 3,
      "depart": "#include <stdio.h>\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        scanf(\"%d\", &t[i]);\n    }\n    int min = t[0];\n    for (int i = 1; i < n; i++) {\n        if (t[i] < min) min = t[i];\n    }\n    printf(\"%d\\n\", min);\n    return 0;\n}"
+    }
+   ],
+   "vals": {
+    "E0": "5\n23 35 34 20 -1",
+    "E1": "1\n1",
+    "E2": "4\n33 47 39 16",
+    "S1_0": "-1",
+    "S1_1": "1",
+    "S1_2": "16",
+    "S3_0": "-1 22.20",
+    "S3_1": "1 1.00",
+    "S3_2": "16 33.75"
+   },
+   "variantes": [
+    {
+     "E0": "5\n23 35 34 20 -1",
+     "E1": "1\n1",
+     "E2": "4\n33 47 39 16",
+     "S1_0": "-1",
+     "S1_1": "1",
+     "S1_2": "16",
+     "S3_0": "-1 22.20",
+     "S3_1": "1 1.00",
+     "S3_2": "16 33.75"
+    },
+    {
+     "E0": "5\n20 21 0 36 17",
+     "E1": "1\n33",
+     "E2": "4\n19 55 81 78",
+     "S1_0": "0",
+     "S1_1": "33",
+     "S1_2": "19",
+     "S3_0": "0 18.80",
+     "S3_1": "33 33.00",
+     "S3_2": "19 58.25"
+    },
+    {
+     "E0": "5\n39 32 25 -5 0",
+     "E1": "1\n19",
+     "E2": "4\n44 38 34 27",
+     "S1_0": "-5",
+     "S1_1": "19",
+     "S1_2": "27",
+     "S3_0": "-5 18.20",
+     "S3_1": "19 19.00",
+     "S3_2": "27 35.75"
+    },
+    {
+     "E0": "6\n-9 15 -4 -10 15 14",
+     "E1": "1\n20",
+     "E2": "4\n20 40 26 56",
+     "S1_0": "-10",
+     "S1_1": "20",
+     "S1_2": "20",
+     "S3_0": "-10 3.50",
+     "S3_1": "20 20.00",
+     "S3_2": "20 35.50"
+    },
+    {
+     "E0": "7\n-7 4 -2 39 33 -2 32",
+     "E1": "1\n47",
+     "E2": "4\n53 7 77 48",
+     "S1_0": "-7",
+     "S1_1": "47",
+     "S1_2": "7",
+     "S3_0": "-7 13.86",
+     "S3_1": "47 47.00",
+     "S3_2": "7 46.25"
+    },
+    {
+     "E0": "7\n14 33 3 25 -1 18 28",
+     "E1": "1\n34",
+     "E2": "4\n75 9 48 67",
+     "S1_0": "-1",
+     "S1_1": "34",
+     "S1_2": "9",
+     "S3_0": "-1 17.14",
+     "S3_1": "34 34.00",
+     "S3_2": "9 49.75"
+    },
+    {
+     "E0": "5\n29 -14 19 -6 24",
+     "E1": "1\n33",
+     "E2": "4\n43 67 31 55",
+     "S1_0": "-14",
+     "S1_1": "33",
+     "S1_2": "31",
+     "S3_0": "-14 10.40",
+     "S3_1": "33 33.00",
+     "S3_2": "31 49.00"
+    },
+    {
+     "E0": "4\n27 28 -9 -5",
+     "E1": "1\n38",
+     "E2": "4\n7 5 12 44",
+     "S1_0": "-9",
+     "S1_1": "38",
+     "S1_2": "5",
+     "S3_0": "-9 10.25",
+     "S3_1": "38 38.00",
+     "S3_2": "5 17.00"
     }
    ]
   },
@@ -1394,12 +2931,12 @@
    "notion": "5.4",
    "origine": "td",
    "titre": "Nombre d'occurrences",
-   "enonce": "Écris un programme qui lit `N`, puis `N` entiers, puis une valeur `val`, et affiche le **nombre d'occurrences** de `val` dans le tableau (Tableaux_chainex, intermédiaire ex. 8).",
+   "enonce": "Écris un programme qui lit `n`, puis `n` entiers, puis une valeur `val`, et affiche le **nombre de fois** où `val` apparaît dans le tableau.\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S3_0]]\n```\n\n(Tableaux_chainex, intermédiaire ex. 8)",
    "guidage": "**Plan** : 1. un compteur `nb` à 0 → 2. parcourir **toutes** les cases → 3. `nb++` à chaque case égale à `val` → 4. afficher `nb`.\n\n**Différence avec la recherche** : ici on ne s'arrête jamais avant la fin.",
    "duree": 5,
    "etapes": [
     {
-     "consigne": "Si `val` n'apparaît **jamais** dans le tableau, que doit afficher le programme ?",
+     "consigne": "Imagine que `val` n'apparaît **nulle part** dans le tableau. Quel nombre le programme doit-il afficher ? (C'est aussi la valeur de départ du compteur.)",
      "question": "Résultat si `val` est absente ?",
      "verif": {
       "mode": "numerique",
@@ -1414,18 +2951,18 @@
      "guideSeul": true
     },
     {
-     "consigne": "Lis `N`, les `N` entiers puis `val`, et affiche les **indices** des cases égales à `val`, séparés par un espace.",
-     "question": "Affiche les positions de `val`.",
+     "consigne": "Pour vérifier que tu repères les bonnes cases : lis `n`, les `n` entiers puis `val`, et affiche les **indices** des cases égales à `val`, séparés par un espace.",
+     "question": "Affiche les indices où se trouve `val`.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "6\n2 7 2 2 9 7\n2",
-        "sortie": "0 2 3"
+        "entree": "[[E0]]",
+        "sortie": "[[S1_0]]"
        },
        {
-        "entree": "4\n5 6 5 6\n6",
-        "sortie": "1 3"
+        "entree": "[[E1]]",
+        "sortie": "[[S1_1]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[100], n, val;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    scanf(\"%d\", &val);\n    for (int i = 0; i < n; i++) {\n        if (t[i] == val) printf(\"%d \", i);\n    }\n    printf(\"\\n\");\n    return 0;\n}"
@@ -1439,7 +2976,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "À chaque case égale à `val`, quelle instruction augmente le compteur `nb` de 1 ?",
+     "consigne": "Chaque fois qu'une case vaut `val`, le compteur `nb` doit augmenter de 1. Écris cette instruction.",
      "question": "Incrément du compteur ?",
      "verif": {
       "mode": "regex",
@@ -1455,22 +2992,22 @@
      "guideSeul": true
     },
     {
-     "consigne": "Au lieu d'afficher les positions, **compte** les occurrences dans `nb` et affiche seulement ce nombre à la fin.",
+     "consigne": "Au lieu d'afficher les indices, **compte** les cases égales à `val` dans `nb`, et affiche seulement ce nombre à la fin.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "6\n2 7 2 2 9 7\n2",
-        "sortie": "3"
+        "entree": "[[E0]]",
+        "sortie": "[[S3_0]]"
        },
        {
-        "entree": "3\n1 1 1\n5",
-        "sortie": "0"
+        "entree": "[[E2]]",
+        "sortie": "[[S3_1]]"
        },
        {
-        "entree": "4\n5 6 5 6\n6",
-        "sortie": "2"
+        "entree": "[[E1]]",
+        "sortie": "[[S3_2]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[100], n, val, nb = 0;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    scanf(\"%d\", &val);\n    for (int i = 0; i < n; i++) {\n        if (t[i] == val) nb++;\n    }\n    printf(\"%d\\n\", nb);\n    return 0;\n}",
@@ -1484,6 +3021,98 @@
      "duree": 2.49,
      "depart": "#include <stdio.h>\n\nint main(void) {\n    int t[100], n, val;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    scanf(\"%d\", &val);\n    for (int i = 0; i < n; i++) {\n        if (t[i] == val) printf(\"%d \", i);\n    }\n    printf(\"\\n\");\n    return 0;\n}"
     }
+   ],
+   "vals": {
+    "E0": "6\n8 8 9 2 8 5\n8",
+    "E1": "6\n3 4 7 7 1 1\n7",
+    "E2": "3\n1 6 8\n3",
+    "S1_0": "0 1 4 ",
+    "S1_1": "2 3 ",
+    "S3_0": "3",
+    "S3_1": "0",
+    "S3_2": "2"
+   },
+   "variantes": [
+    {
+     "E0": "6\n8 8 9 2 8 5\n8",
+     "E1": "6\n3 4 7 7 1 1\n7",
+     "E2": "3\n1 6 8\n3",
+     "S1_0": "0 1 4 ",
+     "S1_1": "2 3 ",
+     "S3_0": "3",
+     "S3_1": "0",
+     "S3_2": "2"
+    },
+    {
+     "E0": "5\n7 8 5 2 7\n7",
+     "E1": "4\n8 5 5 1\n5",
+     "E2": "5\n4 9 3 4 5\n6",
+     "S1_0": "0 4 ",
+     "S1_1": "1 2 ",
+     "S3_0": "2",
+     "S3_1": "0",
+     "S3_2": "2"
+    },
+    {
+     "E0": "6\n2 7 8 9 8 9\n8",
+     "E1": "5\n8 3 8 5 1\n8",
+     "E2": "3\n7 1 7\n4",
+     "S1_0": "2 4 ",
+     "S1_1": "0 2 ",
+     "S3_0": "2",
+     "S3_1": "0",
+     "S3_2": "2"
+    },
+    {
+     "E0": "8\n6 1 3 8 1 2 1 7\n1",
+     "E1": "4\n5 6 4 5\n5",
+     "E2": "3\n2 4 2\n1",
+     "S1_0": "1 4 6 ",
+     "S1_1": "0 3 ",
+     "S3_0": "3",
+     "S3_1": "0",
+     "S3_2": "2"
+    },
+    {
+     "E0": "5\n7 4 4 4 7\n4",
+     "E1": "5\n3 7 6 2 7\n6",
+     "E2": "3\n3 1 5\n6",
+     "S1_0": "1 2 3 ",
+     "S1_1": "2 ",
+     "S3_0": "3",
+     "S3_1": "0",
+     "S3_2": "1"
+    },
+    {
+     "E0": "8\n8 8 2 4 1 1 3 8\n1",
+     "E1": "4\n7 2 2 7\n2",
+     "E2": "4\n6 9 9 1\n3",
+     "S1_0": "4 5 ",
+     "S1_1": "1 2 ",
+     "S3_0": "2",
+     "S3_1": "0",
+     "S3_2": "2"
+    },
+    {
+     "E0": "6\n7 6 3 1 3 3\n3",
+     "E1": "6\n8 1 7 8 7 5\n5",
+     "E2": "4\n3 8 1 6\n5",
+     "S1_0": "2 4 5 ",
+     "S1_1": "5 ",
+     "S3_0": "3",
+     "S3_1": "0",
+     "S3_2": "1"
+    },
+    {
+     "E0": "5\n8 9 5 5 6\n5",
+     "E1": "5\n4 7 4 3 7\n4",
+     "E2": "3\n3 2 8\n6",
+     "S1_0": "2 3 ",
+     "S1_1": "0 2 ",
+     "S3_0": "2",
+     "S3_1": "0",
+     "S3_2": "2"
+    }
    ]
   },
   {
@@ -1492,27 +3121,27 @@
    "notion": "5.4",
    "origine": "td",
    "titre": "Décalage circulaire à gauche",
-   "enonce": "Écris un programme qui lit `N`, puis `N` entiers, décale les éléments **vers la gauche de façon circulaire** (le premier passe à la fin), puis affiche le tableau (Tableaux_chainex, intermédiaire ex. 9).",
-   "guidage": "**Plan** : 1. mettre `t[0]` de côté → 2. décaler chaque case vers la gauche (`t[i] = t[i + 1]`, de 0 à n-2) → 3. replacer l'ancien premier en dernière case → 4. afficher.\n\n**Piège** : sans la sauvegarde, la première valeur est écrasée et perdue.",
+   "enonce": "Écris un programme qui lit `n`, puis `n` entiers, décale toutes les valeurs d'une case **vers la gauche de façon circulaire** (la première passe à la fin), puis affiche le tableau.\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S4_0]]\n```\n\n(Tableaux_chainex, intermédiaire ex. 9)",
+   "guidage": "**Plan** : 1. mettre `t[0]` de côté → 2. faire reculer chaque case d'un cran (`t[i] = t[i + 1]`, pour `i` de 0 à `n - 2`) → 3. replacer l'ancien premier dans la dernière case → 4. afficher.\n\n**Piège** : sans la sauvegarde, la première valeur est écrasée et perdue.",
    "duree": 6,
    "etapes": [
     {
-     "consigne": "Un décalage circulaire à gauche de `{1, 2, 3, 4}` donne `{2, 3, 4, 1}`. Que vaut la **dernière** case du résultat ?",
+     "consigne": "Un décalage circulaire à gauche de `[[TAB]]` donne `[[RES]]`. Que vaut la **dernière** case du résultat ?",
      "question": "Dernière valeur du résultat ?",
      "verif": {
       "mode": "numerique",
-      "attendu": 1
+      "attendu": "[[P]]"
      },
-     "corrige": "C'est l'ancien premier élément, passé à la fin : 1.",
+     "corrige": "Le premier élément ([[P]]) fait le tour et se retrouve à la fin : **[[P]]**.",
      "indices": [
       "Le premier élément « boucle » vers la fin.",
-      "1"
+      "[[P]]"
      ],
      "duree": 0.33,
      "guideSeul": true
     },
     {
-     "consigne": "Avant de décaler, on sauvegarde la première valeur dans une variable `premier`. Écris la déclaration complète.",
+     "consigne": "Avant de décaler, on met la première valeur à l'abri dans une variable `premier` (sinon elle sera écrasée). Écris sa déclaration, avec son initialisation.",
      "question": "Sauvegarde du premier ?",
      "verif": {
       "mode": "regex",
@@ -1528,7 +3157,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Écris l'instruction (dans la boucle, indice `i`) qui recopie la case suivante dans la case courante.",
+     "consigne": "Dans la boucle de décalage (indice `i`), chaque case prend la valeur de sa voisine de **droite**. Écris cette instruction.",
      "question": "Une étape du décalage ?",
      "verif": {
       "mode": "regex",
@@ -1544,18 +3173,18 @@
      "guideSeul": true
     },
     {
-     "consigne": "Lis `n` et les `n` entiers. Décale les valeurs vers la gauche (le premier est perdu, **sans** le remettre à la fin) et affiche les `n - 1` premières cases. Pour `4 / 1 2 3 4` : `2 3 4`.",
-     "question": "Décale sans circularité.",
+     "consigne": "Version sans circularité : lis `n` et les `n` entiers, fais reculer les valeurs d'une case (la première est perdue, on ne la remet **pas** à la fin), puis affiche les `n - 1` premières cases.",
+     "question": "Décale sans remettre le premier.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "4\n1 2 3 4",
-        "sortie": "2 3 4"
+        "entree": "[[E0]]",
+        "sortie": "[[S3_0]]"
        },
        {
-        "entree": "5\n5 4 3 2 1",
-        "sortie": "4 3 2 1"
+        "entree": "[[E1]]",
+        "sortie": "[[S3_1]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    for (int i = 0; i < n - 1; i++) {\n        t[i] = t[i + 1];\n    }\n    for (int i = 0; i < n - 1; i++) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    return 0;\n}"
@@ -1569,22 +3198,22 @@
      "guideSeul": true
     },
     {
-     "consigne": "Rends le décalage **circulaire** : sauvegarde `premier` avant le décalage, remets-le en dernière case (`t[n - 1]`), puis affiche les **`n`** cases.",
+     "consigne": "Rends le décalage **circulaire** : sauvegarde `premier` avant la boucle de décalage, range-le dans la dernière case (`t[n - 1]`) juste après, puis affiche les **`n`** cases.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "4\n1 2 3 4",
-        "sortie": "2 3 4 1"
+        "entree": "[[E0]]",
+        "sortie": "[[S4_0]]"
        },
        {
-        "entree": "1\n9",
-        "sortie": "9"
+        "entree": "1\n[[UN]]",
+        "sortie": "[[S4_1]]"
        },
        {
-        "entree": "5\n5 4 3 2 1",
-        "sortie": "4 3 2 1 5"
+        "entree": "[[E1]]",
+        "sortie": "[[S4_2]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    int premier = t[0];\n    for (int i = 0; i < n - 1; i++) {\n        t[i] = t[i + 1];\n    }\n    t[n - 1] = premier;\n    for (int i = 0; i < n; i++) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    return 0;\n}",
@@ -1595,8 +3224,127 @@
       "`int premier = t[0];` avant la boucle de décalage, `t[n - 1] = premier;` juste après.",
       "La boucle d'affichage va maintenant jusqu'à `n` (exclu)."
      ],
-     "duree": 3.0,
+     "duree": 3,
      "depart": "#include <stdio.h>\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    for (int i = 0; i < n - 1; i++) {\n        t[i] = t[i + 1];\n    }\n    for (int i = 0; i < n - 1; i++) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    return 0;\n}"
+    }
+   ],
+   "vals": {
+    "TAB": "{3, 9, 2, 4}",
+    "RES": "{9, 2, 4, 3}",
+    "P": "3",
+    "UN": "5",
+    "E0": "6\n34 32 40 49 30 37",
+    "E1": "3\n13 7 -14",
+    "S3_0": "32 40 49 30 37 ",
+    "S3_1": "7 -14 ",
+    "S4_0": "32 40 49 30 37 34 ",
+    "S4_1": "5 ",
+    "S4_2": "7 -14 13 "
+   },
+   "variantes": [
+    {
+     "TAB": "{3, 9, 2, 4}",
+     "RES": "{9, 2, 4, 3}",
+     "P": "3",
+     "UN": "5",
+     "E0": "6\n34 32 40 49 30 37",
+     "E1": "3\n13 7 -14",
+     "S3_0": "32 40 49 30 37 ",
+     "S3_1": "7 -14 ",
+     "S4_0": "32 40 49 30 37 34 ",
+     "S4_1": "5 ",
+     "S4_2": "7 -14 13 "
+    },
+    {
+     "TAB": "{8, 7, 4, 9}",
+     "RES": "{7, 4, 9, 8}",
+     "P": "8",
+     "UN": "45",
+     "E0": "5\n34 28 41 18 37",
+     "E1": "6\n14 -5 5 9 -19 -11",
+     "S3_0": "28 41 18 37 ",
+     "S3_1": "-5 5 9 -19 -11 ",
+     "S4_0": "28 41 18 37 34 ",
+     "S4_1": "45 ",
+     "S4_2": "-5 5 9 -19 -11 14 "
+    },
+    {
+     "TAB": "{8, 1, 6, 9}",
+     "RES": "{1, 6, 9, 8}",
+     "P": "8",
+     "UN": "3",
+     "E0": "7\n37 38 24 35 16 34 47",
+     "E1": "5\n-3 -9 -2 4 -12",
+     "S3_0": "38 24 35 16 34 47 ",
+     "S3_1": "-9 -2 4 -12 ",
+     "S4_0": "38 24 35 16 34 47 37 ",
+     "S4_1": "3 ",
+     "S4_2": "-9 -2 4 -12 -3 "
+    },
+    {
+     "TAB": "{8, 3, 1, 5}",
+     "RES": "{3, 1, 5, 8}",
+     "P": "8",
+     "UN": "23",
+     "E0": "5\n18 31 24 7 28",
+     "E1": "6\n3 20 1 -4 -10 9",
+     "S3_0": "31 24 7 28 ",
+     "S3_1": "20 1 -4 -10 9 ",
+     "S4_0": "31 24 7 28 18 ",
+     "S4_1": "23 ",
+     "S4_2": "20 1 -4 -10 9 3 "
+    },
+    {
+     "TAB": "{5, 1, 9, 2}",
+     "RES": "{1, 9, 2, 5}",
+     "P": "5",
+     "UN": "46",
+     "E0": "7\n17 39 35 26 23 40 27",
+     "E1": "5\n-2 8 -14 10 -8",
+     "S3_0": "39 35 26 23 40 27 ",
+     "S3_1": "8 -14 10 -8 ",
+     "S4_0": "39 35 26 23 40 27 17 ",
+     "S4_1": "46 ",
+     "S4_2": "8 -14 10 -8 -2 "
+    },
+    {
+     "TAB": "{5, 2, 3, 8}",
+     "RES": "{2, 3, 8, 5}",
+     "P": "5",
+     "UN": "96",
+     "E0": "6\n22 31 10 36 12 15",
+     "E1": "5\n16 3 15 10 -3",
+     "S3_0": "31 10 36 12 15 ",
+     "S3_1": "3 15 10 -3 ",
+     "S4_0": "31 10 36 12 15 22 ",
+     "S4_1": "96 ",
+     "S4_2": "3 15 10 -3 16 "
+    },
+    {
+     "TAB": "{2, 6, 9, 4}",
+     "RES": "{6, 9, 4, 2}",
+     "P": "2",
+     "UN": "78",
+     "E0": "4\n37 32 47 33",
+     "E1": "4\n-13 -15 -12 -9",
+     "S3_0": "32 47 33 ",
+     "S3_1": "-15 -12 -9 ",
+     "S4_0": "32 47 33 37 ",
+     "S4_1": "78 ",
+     "S4_2": "-15 -12 -9 -13 "
+    },
+    {
+     "TAB": "{9, 2, 4, 3}",
+     "RES": "{2, 4, 3, 9}",
+     "P": "9",
+     "UN": "59",
+     "E0": "6\n38 25 46 45 19 16",
+     "E1": "4\n7 -4 5 -20",
+     "S3_0": "25 46 45 19 16 ",
+     "S3_1": "-4 5 -20 ",
+     "S4_0": "25 46 45 19 16 38 ",
+     "S4_1": "59 ",
+     "S4_2": "-4 5 -20 7 "
     }
    ]
   },
@@ -1606,27 +3354,27 @@
    "notion": "5.4",
    "origine": "td",
    "titre": "Position de la première occurrence",
-   "enonce": "Écris un programme qui lit `N`, puis `N` entiers, puis `val`, et affiche l'**indice de la première occurrence** de `val`, ou `-1` si elle est absente (Tableaux_chainex, intermédiaire ex. 10).",
-   "guidage": "**Plan** : 1. `pos = -1` (valeur « absent ») → 2. parcourir, et à la première case égale à `val`, `pos = i` puis `break` → 3. afficher `pos`.\n\n**Piège** : l'indice 0 est valide, donc 0 ne peut pas signifier « absent ».",
+   "enonce": "Écris un programme qui lit `n`, puis `n` entiers, puis `val`, et affiche l'**indice de la première case** qui contient `val`, ou `-1` si `val` n'est pas dans le tableau.\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S3_0]]\n```\n\n(Tableaux_chainex, intermédiaire ex. 10)",
+   "guidage": "**Plan** : 1. `pos = -1` (la valeur « pas trouvé ») → 2. parcourir, et à la première case égale à `val` : `pos = i` puis `break` → 3. afficher `pos`.\n\n**Piège** : l'indice 0 est un vrai indice, donc 0 ne peut pas vouloir dire « absent ».",
    "duree": 5,
    "etapes": [
     {
-     "consigne": "Dans `{4, 9, 1, 9, 3}`, quel est l'**indice** de la première occurrence de 9 ?",
-     "question": "Indice de la 1re occurrence ?",
+     "consigne": "Dans `[[TAB]]`, à quel **indice** se trouve la première case qui vaut [[X]] ?",
+     "question": "Indice de la 1re occurrence de [[X]] ?",
      "verif": {
       "mode": "numerique",
-      "attendu": 1
+      "attendu": "[[IX]]"
      },
-     "corrige": "Les indices commencent à 0 : 4 est en 0, 9 en 1.",
+     "corrige": "En comptant à partir de 0, la première case qui vaut [[X]] est à l'indice **[[IX]]**.",
      "indices": [
       "Compte à partir de 0.",
-      "1"
+      "[[IX]]"
      ],
      "duree": 0.36,
      "guideSeul": true
     },
     {
-     "consigne": "L'indice 0 est valide. Quelle valeur de `pos` peut signifier « absent » sans jamais être un indice ?",
+     "consigne": "Il faut une valeur de `pos` qui veut dire « pas trouvé ». Elle ne doit jamais pouvoir être confondue avec un vrai indice (et 0 en est un). Laquelle ?",
      "question": "Valeur « absent » ?",
      "verif": {
       "mode": "numerique",
@@ -1641,18 +3389,18 @@
      "guideSeul": true
     },
     {
-     "consigne": "Lis `N`, les `N` entiers, puis `val`. Affiche l'indice de la **première** case égale à `val` (avec `break`) ; si elle est absente, le programme n'affiche rien pour l'instant.",
-     "question": "Indice de la première occurrence.",
+     "consigne": "Lis `n`, les `n` entiers, puis `val`. Affiche l'indice de la **première** case égale à `val` (un `break` évite d'afficher les suivantes). Si `val` est absente, ton programme n'affiche rien pour l'instant.",
+     "question": "Affiche l'indice de la 1re occurrence.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "5\n4 9 1 9 3\n9",
-        "sortie": "1"
+        "entree": "[[E0]]",
+        "sortie": "[[S2_0]]"
        },
        {
-        "entree": "2\n6 6\n6",
-        "sortie": "0"
+        "entree": "[[E2]]",
+        "sortie": "[[S2_1]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[100], n, val;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    scanf(\"%d\", &val);\n    for (int i = 0; i < n; i++) {\n        if (t[i] == val) {\n            printf(\"%d\\n\", i);\n            break;\n        }\n    }\n    return 0;\n}"
@@ -1666,22 +3414,22 @@
      "guideSeul": true
     },
     {
-     "consigne": "Il faut aussi gérer l'absence : utilise une variable `pos` (départ : -1), qui mémorise l'indice trouvé, et affiche **toujours** `pos` à la fin.",
+     "consigne": "Gère maintenant l'absence : une variable `pos` démarre à -1, retient l'indice trouvé, et tu l'affiches **toujours** à la fin (une seule fois, après la boucle).",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "5\n4 9 1 9 3\n9",
-        "sortie": "1"
+        "entree": "[[E0]]",
+        "sortie": "[[S3_0]]"
        },
        {
-        "entree": "3\n1 2 3\n7",
-        "sortie": "-1"
+        "entree": "[[E1]]",
+        "sortie": "[[S3_1]]"
        },
        {
-        "entree": "2\n6 6\n6",
-        "sortie": "0"
+        "entree": "[[E2]]",
+        "sortie": "[[S3_2]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[100], n, val, pos = -1;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    scanf(\"%d\", &val);\n    for (int i = 0; i < n; i++) {\n        if (t[i] == val) {\n            pos = i;\n            break;\n        }\n    }\n    printf(\"%d\\n\", pos);\n    return 0;\n}",
@@ -1695,6 +3443,125 @@
      "duree": 2.49,
      "depart": "#include <stdio.h>\n\nint main(void) {\n    int t[100], n, val;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    scanf(\"%d\", &val);\n    for (int i = 0; i < n; i++) {\n        if (t[i] == val) {\n            printf(\"%d\\n\", i);\n            break;\n        }\n    }\n    return 0;\n}"
     }
+   ],
+   "vals": {
+    "TAB": "{4, 5, 2, 9, 2}",
+    "X": "2",
+    "IX": "2",
+    "E0": "8\n1 11 26 14 29 22 15 14\n14",
+    "E1": "4\n9 10 11 20\n22",
+    "E2": "2\n3 3\n3",
+    "S2_0": "3",
+    "S2_1": "0",
+    "S3_0": "3",
+    "S3_1": "-1",
+    "S3_2": "0"
+   },
+   "variantes": [
+    {
+     "TAB": "{4, 5, 2, 9, 2}",
+     "X": "2",
+     "IX": "2",
+     "E0": "8\n1 11 26 14 29 22 15 14\n14",
+     "E1": "4\n9 10 11 20\n22",
+     "E2": "2\n3 3\n3",
+     "S2_0": "3",
+     "S2_1": "0",
+     "S3_0": "3",
+     "S3_1": "-1",
+     "S3_2": "0"
+    },
+    {
+     "TAB": "{4, 5, 2, 1, 2}",
+     "X": "2",
+     "IX": "2",
+     "E0": "7\n12 9 14 17 7 24 24\n24",
+     "E1": "3\n1 11 27\n15",
+     "E2": "2\n4 4\n4",
+     "S2_0": "5",
+     "S2_1": "0",
+     "S3_0": "5",
+     "S3_1": "-1",
+     "S3_2": "0"
+    },
+    {
+     "TAB": "{5, 4, 3, 8, 3}",
+     "X": "3",
+     "IX": "2",
+     "E0": "5\n20 8 9 13 13\n13",
+     "E1": "3\n2 4 26\n17",
+     "E2": "2\n1 1\n1",
+     "S2_0": "3",
+     "S2_1": "0",
+     "S3_0": "3",
+     "S3_1": "-1",
+     "S3_2": "0"
+    },
+    {
+     "TAB": "{9, 5, 6, 8, 6}",
+     "X": "6",
+     "IX": "2",
+     "E0": "6\n18 30 3 29 25 29\n29",
+     "E1": "4\n5 18 19 23\n17",
+     "E2": "2\n4 4\n4",
+     "S2_0": "3",
+     "S2_1": "0",
+     "S3_0": "3",
+     "S3_1": "-1",
+     "S3_2": "0"
+    },
+    {
+     "TAB": "{3, 7, 6, 9, 9}",
+     "X": "9",
+     "IX": "3",
+     "E0": "6\n5 22 13 24 25 13\n13",
+     "E1": "3\n11 23 18\n3",
+     "E2": "2\n7 7\n7",
+     "S2_0": "2",
+     "S2_1": "0",
+     "S3_0": "2",
+     "S3_1": "-1",
+     "S3_2": "0"
+    },
+    {
+     "TAB": "{2, 7, 1, 5, 7}",
+     "X": "7",
+     "IX": "1",
+     "E0": "5\n2 9 1 19 19\n19",
+     "E1": "4\n24 13 11 1\n22",
+     "E2": "2\n4 4\n4",
+     "S2_0": "3",
+     "S2_1": "0",
+     "S3_0": "3",
+     "S3_1": "-1",
+     "S3_2": "0"
+    },
+    {
+     "TAB": "{6, 5, 9, 3, 3}",
+     "X": "3",
+     "IX": "3",
+     "E0": "6\n13 5 27 26 28 28\n28",
+     "E1": "5\n22 29 18 11 1\n17",
+     "E2": "2\n3 3\n3",
+     "S2_0": "4",
+     "S2_1": "0",
+     "S3_0": "4",
+     "S3_1": "-1",
+     "S3_2": "0"
+    },
+    {
+     "TAB": "{3, 1, 8, 2, 1}",
+     "X": "1",
+     "IX": "1",
+     "E0": "6\n23 5 14 2 19 19\n19",
+     "E1": "5\n5 10 26 8 17\n28",
+     "E2": "2\n4 4\n4",
+     "S2_0": "4",
+     "S2_1": "0",
+     "S3_0": "4",
+     "S3_1": "-1",
+     "S3_2": "0"
+    }
    ]
   },
   {
@@ -1703,42 +3570,42 @@
    "notion": "5.4",
    "origine": "td",
    "titre": "Supprimer la première occurrence",
-   "enonce": "Sans fonction prédéfinie : le programme lit `N`, `N` entiers, puis `val`. Il **supprime la première occurrence** de `val` (en décalant les éléments suivants) et affiche le tableau restant. Si `val` est absente, le tableau est affiché tel quel (Tableaux_chainex, intermédiaire ex. 11).",
-   "guidage": "**Plan** : 1. trouver `pos` (comme à l'exo précédent) → 2. si `pos != -1`, refermer le trou : `t[i] = t[i + 1]` de `pos` à `n - 2` → 3. `n--` → 4. afficher les `n` cases restantes.\n\n**Piège** : ne décale que si la valeur a été trouvée.",
+   "enonce": "Sans utiliser de fonction toute prête : le programme lit `n`, puis `n` entiers, puis `val`. Il **supprime la première case** qui contient `val` (les cases suivantes reculent d'un cran pour boucher le trou) et affiche le tableau restant. Si `val` est absente, le tableau est affiché tel quel.\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S4_0]]\n```\n\n(Tableaux_chainex, intermédiaire ex. 11)",
+   "guidage": "**Plan** : 1. trouver `pos`, l'indice de la 1re occurrence (comme à l'exo précédent) → 2. si `pos != -1`, boucher le trou : `t[i] = t[i + 1]` pour `i` de `pos` à `n - 2` → 3. `n--` → 4. afficher les `n` cases restantes.\n\n**Piège** : ne décale que si la valeur a été trouvée.",
    "duree": 7,
    "etapes": [
     {
-     "consigne": "On supprime la première occurrence de 9 dans `{4, 9, 1, 9, 3}` (indice 1) : on obtient `{4, 1, 9, 3}`. Que contient alors la case d'indice 1 ?",
-     "question": "Contenu de la case 1 après suppression ?",
+     "consigne": "On supprime la première occurrence de [[X]] dans `[[TAB]]` : on obtient `[[RES]]`. Que contient alors la case d'indice [[IX]] (celle où était [[X]]) ?",
+     "question": "Contenu de la case [[IX]] après suppression ?",
      "verif": {
       "mode": "numerique",
-      "attendu": 1
+      "attendu": "[[V]]"
      },
-     "corrige": "Les cases à droite de la suppression glissent d'un cran vers la gauche : `t[1]` reprend la valeur de `t[2]`, soit 1.",
+     "corrige": "La case suivante a reculé d'un cran pour boucher le trou : `t[[[IX]]]` vaut maintenant **[[V]]**.",
      "indices": [
       "Chaque case à droite recule d'une place.",
-      "1"
+      "[[V]]"
      ],
      "duree": 0.4,
      "guideSeul": true
     },
     {
-     "consigne": "Lis `N`, les `N` entiers, puis `val`. Affiche la position `pos` de la première occurrence de `val`, ou `-1` si elle est absente.",
+     "consigne": "Première étape, déjà vue à l'exo précédent : lis `n`, les `n` entiers puis `val`, et affiche `pos`, l'indice de la première occurrence de `val` (ou `-1` si elle est absente).",
      "question": "Trouve `pos`.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "5\n4 9 1 9 3\n9",
-        "sortie": "1"
+        "entree": "[[E0]]",
+        "sortie": "[[S1_0]]"
        },
        {
-        "entree": "3\n1 2 3\n7",
-        "sortie": "-1"
+        "entree": "[[E1]]",
+        "sortie": "[[S1_1]]"
        },
        {
-        "entree": "3\n8 1 2\n8",
-        "sortie": "0"
+        "entree": "[[E2]]",
+        "sortie": "[[S1_2]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[100], n, val, pos = -1;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    scanf(\"%d\", &val);\n    for (int i = 0; i < n; i++) {\n        if (t[i] == val) { pos = i; break; }\n    }\n    printf(\"%d\\n\", pos);\n    return 0;\n}"
@@ -1752,7 +3619,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Écris l'en-tête de la boucle qui referme le trou : elle part de `pos` et s'arrête quand `i + 1` atteindrait `n` (pour ne pas lire hors du tableau). Variable `i`.",
+     "consigne": "Pour boucher le trou, une boucle part de `pos` et recopie à chaque tour `t[i + 1]` dans `t[i]`. Elle doit s'arrêter avant que `i + 1` atteigne `n` (sinon on lirait en dehors du tableau). Écris l'en-tête complet de ce `for` (variable `i`).",
      "question": "En-tête de la boucle de décalage ?",
      "verif": {
       "mode": "regex",
@@ -1768,7 +3635,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Une fois le trou refermé, le tableau contient une valeur de moins. Écris l'instruction qui l'enregistre.",
+     "consigne": "Une fois le trou bouché, le tableau contient une valeur de moins. Écris l'instruction qui le prend en compte.",
      "question": "Mise à jour de `n` ?",
      "verif": {
       "mode": "regex",
@@ -1784,22 +3651,22 @@
      "guideSeul": true
     },
     {
-     "consigne": "Assemble le tout : **si** `pos != -1`, referme le trou avec la boucle puis fais `n--` ; ensuite affiche les `n` cases restantes sur une ligne (si `val` est absente, le tableau reste intact).",
+     "consigne": "Assemble le tout : **si** `pos != -1`, bouche le trou avec la boucle puis fais `n--` ; ensuite affiche les `n` cases sur une ligne. Si `val` est absente, rien ne change et le tableau s'affiche en entier.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
       "tests": [
        {
-        "entree": "5\n4 9 1 9 3\n9",
-        "sortie": "4 1 9 3"
+        "entree": "[[E0]]",
+        "sortie": "[[S4_0]]"
        },
        {
-        "entree": "3\n1 2 3\n7",
-        "sortie": "1 2 3"
+        "entree": "[[E1]]",
+        "sortie": "[[S4_1]]"
        },
        {
-        "entree": "3\n8 1 2\n8",
-        "sortie": "1 2"
+        "entree": "[[E2]]",
+        "sortie": "[[S4_2]]"
        }
       ],
       "exemple": "#include <stdio.h>\n\nint main(void) {\n    int t[100], n, val, pos = -1;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    scanf(\"%d\", &val);\n    for (int i = 0; i < n; i++) {\n        if (t[i] == val) { pos = i; break; }\n    }\n    if (pos != -1) {\n        for (int i = pos; i < n - 1; i++) {\n            t[i] = t[i + 1];\n        }\n        n--;\n    }\n    for (int i = 0; i < n; i++) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    return 0;\n}",
@@ -1810,8 +3677,154 @@
       "`if (pos != -1) { for (…) t[i] = t[i + 1]; n--; }`",
       "Termine par la boucle d'affichage jusqu'à `n` : `for (int i = 0; i < n; i++) printf(\"%d \", t[i]);`"
      ],
-     "duree": 4.0,
+     "duree": 4,
      "depart": "#include <stdio.h>\n\nint main(void) {\n    int t[100], n, val, pos = -1;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    scanf(\"%d\", &val);\n    for (int i = 0; i < n; i++) {\n        if (t[i] == val) { pos = i; break; }\n    }\n    printf(\"%d\\n\", pos);\n    return 0;\n}"
+    }
+   ],
+   "vals": {
+    "TAB": "{7, 5, 9, 8, 8}",
+    "X": "8",
+    "IX": "3",
+    "V": "8",
+    "RES": "{7, 5, 9, 8}",
+    "E0": "5\n24 25 15 13 25\n25",
+    "E1": "5\n22 18 16 14 11\n27",
+    "E2": "4\n5 13 6 28\n5",
+    "S1_0": "1",
+    "S1_1": "-1",
+    "S1_2": "0",
+    "S4_0": "24 15 13 25 ",
+    "S4_1": "22 18 16 14 11 ",
+    "S4_2": "13 6 28 "
+   },
+   "variantes": [
+    {
+     "TAB": "{7, 5, 9, 8, 8}",
+     "X": "8",
+     "IX": "3",
+     "V": "8",
+     "RES": "{7, 5, 9, 8}",
+     "E0": "5\n24 25 15 13 25\n25",
+     "E1": "5\n22 18 16 14 11\n27",
+     "E2": "4\n5 13 6 28\n5",
+     "S1_0": "1",
+     "S1_1": "-1",
+     "S1_2": "0",
+     "S4_0": "24 15 13 25 ",
+     "S4_1": "22 18 16 14 11 ",
+     "S4_2": "13 6 28 "
+    },
+    {
+     "TAB": "{3, 5, 2, 7, 2}",
+     "X": "2",
+     "IX": "2",
+     "V": "7",
+     "RES": "{3, 5, 7, 2}",
+     "E0": "5\n18 22 8 14 22\n22",
+     "E1": "3\n26 19 2\n29",
+     "E2": "5\n22 18 28 24 1\n22",
+     "S1_0": "1",
+     "S1_1": "-1",
+     "S1_2": "0",
+     "S4_0": "18 8 14 22 ",
+     "S4_1": "26 19 2 ",
+     "S4_2": "18 28 24 1 "
+    },
+    {
+     "TAB": "{2, 5, 6, 9, 9}",
+     "X": "9",
+     "IX": "3",
+     "V": "9",
+     "RES": "{2, 5, 6, 9}",
+     "E0": "7\n30 20 29 7 26 1 7\n7",
+     "E1": "4\n14 3 24 1\n18",
+     "E2": "4\n3 19 11 16\n3",
+     "S1_0": "3",
+     "S1_1": "-1",
+     "S1_2": "0",
+     "S4_0": "30 20 29 26 1 7 ",
+     "S4_1": "14 3 24 1 ",
+     "S4_2": "19 11 16 "
+    },
+    {
+     "TAB": "{5, 7, 2, 8, 8}",
+     "X": "8",
+     "IX": "3",
+     "V": "8",
+     "RES": "{5, 7, 2, 8}",
+     "E0": "5\n25 15 6 29 29\n29",
+     "E1": "4\n11 28 22 8\n14",
+     "E2": "5\n9 14 20 2 18\n9",
+     "S1_0": "3",
+     "S1_1": "-1",
+     "S1_2": "0",
+     "S4_0": "25 15 6 29 ",
+     "S4_1": "11 28 22 8 ",
+     "S4_2": "14 20 2 18 "
+    },
+    {
+     "TAB": "{2, 1, 7, 5, 2}",
+     "X": "2",
+     "IX": "0",
+     "V": "1",
+     "RES": "{1, 7, 5, 2}",
+     "E0": "7\n30 2 3 28 23 11 23\n23",
+     "E1": "5\n7 1 19 23 12\n15",
+     "E2": "4\n9 29 14 12\n9",
+     "S1_0": "4",
+     "S1_1": "-1",
+     "S1_2": "0",
+     "S4_0": "30 2 3 28 11 23 ",
+     "S4_1": "7 1 19 23 12 ",
+     "S4_2": "29 14 12 "
+    },
+    {
+     "TAB": "{8, 1, 7, 2, 7}",
+     "X": "7",
+     "IX": "2",
+     "V": "2",
+     "RES": "{8, 1, 2, 7}",
+     "E0": "5\n17 3 8 19 3\n3",
+     "E1": "5\n15 18 29 24 1\n14",
+     "E2": "4\n7 21 10 18\n7",
+     "S1_0": "1",
+     "S1_1": "-1",
+     "S1_2": "0",
+     "S4_0": "17 8 19 3 ",
+     "S4_1": "15 18 29 24 1 ",
+     "S4_2": "21 10 18 "
+    },
+    {
+     "TAB": "{7, 9, 5, 3, 7}",
+     "X": "7",
+     "IX": "0",
+     "V": "9",
+     "RES": "{9, 5, 3, 7}",
+     "E0": "5\n14 5 7 18 5\n5",
+     "E1": "5\n17 2 7 26 18\n22",
+     "E2": "4\n7 23 1 19\n7",
+     "S1_0": "1",
+     "S1_1": "-1",
+     "S1_2": "0",
+     "S4_0": "14 7 18 5 ",
+     "S4_1": "17 2 7 26 18 ",
+     "S4_2": "23 1 19 "
+    },
+    {
+     "TAB": "{4, 8, 9, 2, 9}",
+     "X": "9",
+     "IX": "2",
+     "V": "2",
+     "RES": "{4, 8, 2, 9}",
+     "E0": "7\n2 8 23 4 27 3 27\n27",
+     "E1": "4\n23 25 24 7\n5",
+     "E2": "4\n24 1 25 27\n24",
+     "S1_0": "4",
+     "S1_1": "-1",
+     "S1_2": "0",
+     "S4_0": "2 8 23 4 3 27 ",
+     "S4_1": "23 25 24 7 ",
+     "S4_2": "1 25 27 "
     }
    ]
   }

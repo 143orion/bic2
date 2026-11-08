@@ -537,7 +537,7 @@
    "titre": "Quatre opérations sur deux entiers",
    "enonce": "Lire deux entiers puis afficher somme, différence, produit et quotient (TD Premiers pas, exercice 3). On saisit a = 17 et b = 5.",
    "guidage": "**Plan** : une lecture avec deux `%d`, puis un affichage par opération.\n\n**Piège** : `a / b` avec des `int` est entier ; pour afficher 3,40 il faut convertir un opérande.",
-   "duree": 8.0,
+   "duree": 8,
    "etapes": [
     {
      "consigne": "Lis les deux entiers en une seule instruction.",
@@ -1034,7 +1034,7 @@
       "Un second `printf` avec `%d`.",
       "`printf(\"Age : %d ans\\n\", age);`"
      ],
-     "duree": 2.0,
+     "duree": 2,
      "depart": "#include <stdio.h>\n\nint main(void) {\n    char prenom[20];\n    int age;\n    scanf(\"%19s %d\", prenom, &age);\n    printf(\"Prenom : %s\\n\", prenom);\n    return 0;\n}"
     }
    ]
@@ -1145,6 +1145,11 @@
         "motif": "%lf",
         "brut": true,
         "msg": "Lis des double avec %lf."
+       },
+       {
+        "motif": "%\\.1l?f",
+        "brut": true,
+        "msg": "Affiche la somme avec une seule décimale : %.1f."
        }
       ]
      },
@@ -1155,6 +1160,162 @@
      ],
      "duree": 1.5,
      "depart": "#include <stdio.h>\n\nint main(void) {\n    double a, b, c;\n    scanf(\"%lf %lf %lf\", &a, &b, &c);\n    printf(\"%f\\n\", a + b + c);\n    return 0;\n}"
+    }
+   ]
+  },
+  {
+   "id": "c3-108",
+   "type": "exo",
+   "notion": "3.1",
+   "origine": "cours",
+   "titre": "Fiche d'identité",
+   "enonce": "Écris un programme qui déclare `int age = [[AGE]];` et `int progression = [[P]];`, puis affiche exactement ces trois lignes, en utilisant les variables pour les nombres :\n```text\n[[SORTIE]]\n```",
+   "guidage": "**Plan** : 1. savoir écrire un guillemet dans un texte → 2. savoir écrire le signe `%` → 3. un `printf` par ligne, avec `%d` pour chaque variable.\n\n**Piège** : le retour à la ligne n'est jamais automatique, chaque ligne finit par `\\n`.",
+   "duree": 4,
+   "etapes": [
+    {
+     "guideSeul": true,
+     "consigne": "Dans `printf(\"…\")`, le texte est entouré de guillemets. Pour **afficher** un guillemet sans fermer le texte, on le précède d'un caractère spécial. Écris cette séquence (deux caractères).",
+     "question": "Séquence pour afficher un guillemet ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "\\\\\"",
+      "exemple": "\\\""
+     },
+     "duree": 0.4,
+     "corrige": "`\\\"` : la barre oblique inversée annonce un caractère spécial, ici le guillemet.",
+     "indices": [
+      "C'est la même barre que dans `\\n`.",
+      "`\\\"`"
+     ]
+    },
+    {
+     "guideSeul": true,
+     "consigne": "Dans un `printf`, `%` annonce un emplacement pour une valeur (`%d`…). Comment écrire un vrai signe `%` dans le texte affiché ?",
+     "question": "Comment afficher `%` ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "%%",
+      "exemple": "%%"
+     },
+     "duree": 0.4,
+     "corrige": "`%%` affiche un seul `%`.",
+     "indices": [
+      "On double le caractère.",
+      "`%%`"
+     ]
+    },
+    {
+     "guideSeul": true,
+     "consigne": "Commence par la première ligne seulement : `Fiche \"[[NOM]]\"`, guillemets compris.",
+     "question": "Affiche la première ligne.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "",
+        "sortie": "[[S2_0]]"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    printf(\"Fiche \\\"[[NOM]]\\\"\\n\");\n    return 0;\n}"
+     },
+     "duree": 1.2,
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    printf(\"Fiche \\\"[[NOM]]\\\"\\n\");\n    return 0;\n}\n```",
+     "indices": [
+      "Les guillemets à afficher s'écrivent `\\\"` dans le texte.",
+      "`printf(\"Fiche \\\"[[NOM]]\\\"\\n\");`"
+     ]
+    },
+    {
+     "consigne": "Ajoute les deux variables et les deux lignes suivantes :\n```text\nAge : [[AGE]] ans\nProgression : [[P]]%\n```\nLes nombres doivent venir des variables (`%d`), pas être écrits en dur dans le texte.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "",
+        "sortie": "[[S3_0]]"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    int age = [[AGE]];\n    int progression = [[P]];\n    printf(\"Fiche \\\"[[NOM]]\\\"\\n\");\n    printf(\"Age : %d ans\\n\", age);\n    printf(\"Progression : %d%%\\n\", progression);\n    return 0;\n}",
+      "exige": [
+       {
+        "motif": "%d[^\"]*\"\\s*,\\s*age",
+        "brut": true,
+        "msg": "Affiche l'âge avec %d et la variable age."
+       },
+       {
+        "motif": "%%",
+        "brut": true,
+        "msg": "Pour afficher le signe %, écris %% dans le texte."
+       }
+      ]
+     },
+     "duree": 2,
+     "depart": "#include <stdio.h>\n\nint main(void) {\n    printf(\"Fiche \\\"[[NOM]]\\\"\\n\");\n    return 0;\n}",
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    int age = [[AGE]];\n    int progression = [[P]];\n    printf(\"Fiche \\\"[[NOM]]\\\"\\n\");\n    printf(\"Age : %d ans\\n\", age);\n    printf(\"Progression : %d%%\\n\", progression);\n    return 0;\n}\n```",
+     "indices": [
+      "Un `printf` par ligne : `printf(\"Age : %d ans\\n\", age);`.",
+      "Pour la dernière ligne : `printf(\"Progression : %d%%\\n\", progression);`"
+     ]
+    }
+   ],
+   "vals": {
+    "NOM": "Hugo",
+    "AGE": "25",
+    "P": "26",
+    "SORTIE": "Fiche \"Hugo\"\nAge : 25 ans\nProgression : 26%",
+    "S2_0": "Fiche \"Hugo\"",
+    "S3_0": "Fiche \"Hugo\"\nAge : 25 ans\nProgression : 26%"
+   },
+   "variantes": [
+    {
+     "NOM": "Hugo",
+     "AGE": "25",
+     "P": "26",
+     "SORTIE": "Fiche \"Hugo\"\nAge : 25 ans\nProgression : 26%",
+     "S2_0": "Fiche \"Hugo\"",
+     "S3_0": "Fiche \"Hugo\"\nAge : 25 ans\nProgression : 26%"
+    },
+    {
+     "NOM": "Yanis",
+     "AGE": "17",
+     "P": "79",
+     "SORTIE": "Fiche \"Yanis\"\nAge : 17 ans\nProgression : 79%",
+     "S2_0": "Fiche \"Yanis\"",
+     "S3_0": "Fiche \"Yanis\"\nAge : 17 ans\nProgression : 79%"
+    },
+    {
+     "NOM": "Hugo",
+     "AGE": "22",
+     "P": "55",
+     "SORTIE": "Fiche \"Hugo\"\nAge : 22 ans\nProgression : 55%",
+     "S2_0": "Fiche \"Hugo\"",
+     "S3_0": "Fiche \"Hugo\"\nAge : 22 ans\nProgression : 55%"
+    },
+    {
+     "NOM": "Noah",
+     "AGE": "18",
+     "P": "69",
+     "SORTIE": "Fiche \"Noah\"\nAge : 18 ans\nProgression : 69%",
+     "S2_0": "Fiche \"Noah\"",
+     "S3_0": "Fiche \"Noah\"\nAge : 18 ans\nProgression : 69%"
+    },
+    {
+     "NOM": "Hugo",
+     "AGE": "21",
+     "P": "79",
+     "SORTIE": "Fiche \"Hugo\"\nAge : 21 ans\nProgression : 79%",
+     "S2_0": "Fiche \"Hugo\"",
+     "S3_0": "Fiche \"Hugo\"\nAge : 21 ans\nProgression : 79%"
+    },
+    {
+     "NOM": "Jade",
+     "AGE": "25",
+     "P": "79",
+     "SORTIE": "Fiche \"Jade\"\nAge : 25 ans\nProgression : 79%",
+     "S2_0": "Fiche \"Jade\"",
+     "S3_0": "Fiche \"Jade\"\nAge : 25 ans\nProgression : 79%"
     }
    ]
   }

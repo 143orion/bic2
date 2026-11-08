@@ -1040,7 +1040,7 @@
       "Plus de `t[i]` dans l'affichage : `*p` à la place.",
       "`for (int k = 0; k < n; k++) { printf(\"%d \", *p); p++; }`"
      ],
-     "duree": 2.0,
+     "duree": 2,
      "depart": "#include <stdio.h>\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    for (int i = 0; i < n; i++) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    return 0;\n}"
     }
    ]
@@ -1362,7 +1362,7 @@
       "Dans la fonction, `mi` devient `*min` et `ma` devient `*max`.",
       "`min_max(t, n, &mi, &ma);` puis `printf(\"%d %d\\n\", mi, ma);`"
      ],
-     "duree": 3.0,
+     "duree": 3,
      "depart": "#include <stdio.h>\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    int mi = t[0], ma = t[0];\n    for (int i = 1; i < n; i++) {\n        if (t[i] < mi) mi = t[i];\n        if (t[i] > ma) ma = t[i];\n    }\n    printf(\"%d %d\\n\", mi, ma);\n    return 0;\n}"
     }
    ]
@@ -1475,7 +1475,7 @@
       "`while (*s != '\\0') { n++; s++; }`",
       "L'en-tête devient `int longueur(char *s)`."
      ],
-     "duree": 2.0,
+     "duree": 2,
      "depart": "#include <stdio.h>\n\nint longueur(char s[]) {\n    int n = 0;\n    while (s[n] != '\\0') {\n        n++;\n    }\n    return n;\n}\n\nint main(void) {\n    char mot[100];\n    scanf(\"%99s\", mot);\n    printf(\"%d\\n\", longueur(mot));\n    return 0;\n}"
     }
    ]
@@ -1577,7 +1577,7 @@
       "Un seul mot à ajouter dans l'en-tête de la fonction.",
       "`double moyenne(const int *t, int n)`"
      ],
-     "duree": 2.0,
+     "duree": 2,
      "depart": "#include <stdio.h>\n\ndouble moyenne(int *t, int n) {\n    int s = 0;\n    for (int i = 0; i < n; i++) s += t[i];\n    return (double)s / n;\n}\n\nint main(void) {\n    int t[100], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    printf(\"%.2f\\n\", moyenne(t, n));\n    return 0;\n}"
     }
    ]
@@ -1692,7 +1692,7 @@
       "`int *q = &x;` puis `*q = *q * 3;`",
       "`printf(\"%d %d\\n\", x, p == q);` : la comparaison vaut 1 ou 0."
      ],
-     "duree": 2.0,
+     "duree": 2,
      "depart": "#include <stdio.h>\n\nint main(void) {\n    int x;\n    scanf(\"%d\", &x);\n    int *p = &x;\n    *p = *p + 1;\n    printf(\"%d\\n\", x);\n    return 0;\n}"
     }
    ]
@@ -1915,6 +1915,171 @@
      ],
      "duree": 2.6,
      "depart": "#include <stdio.h>\n\nint longueur(char *s) {\n    char *q = s;\n    int n = 0;\n    while (*q != '\\0') {\n        q++;\n        n++;\n    }\n    return n;\n}\n\nint main(void) {\n    char mot[50];\n    scanf(\"%49s\", mot);\n    printf(\"%d\\n\", longueur(mot));\n    return 0;\n}"
+    }
+   ]
+  },
+  {
+   "id": "c8-113",
+   "type": "exo",
+   "notion": "8.1",
+   "origine": "cours",
+   "titre": "Combien de place en mémoire ?",
+   "enonce": "Écris un programme qui déclare un `char`, un `int`, un `double` et un tableau `int t[[[N]]];`, puis affiche sur une ligne la taille de chacun **en octets**, dans cet ordre, avec `sizeof` :\n```text\n[[SORTIE]]\n```",
+   "guidage": "**Plan** : 1. une variable occupe plusieurs octets à la suite → 2. un tableau occupe la place de toutes ses cases → 3. `sizeof` donne ces tailles.\n\n**À retenir** : `sizeof` renvoie un nombre d'octets ; on le convertit en `int` pour l'afficher avec `%d`.",
+   "duree": 4,
+   "etapes": [
+    {
+     "guideSeul": true,
+     "consigne": "Un `int` de 4 octets commence à l'adresse `[[AD]]` : il occupe cet octet et les 3 suivants, à la suite. Quelle est l'adresse de son **dernier** octet ? (écris-la en hexadécimal, comme `0x…`)",
+     "question": "Adresse du dernier octet ?",
+     "verif": {
+      "mode": "exact",
+      "attendu": [
+       "[[AF]]"
+      ]
+     },
+     "duree": 0.6,
+     "corrige": "Les 4 octets sont `[[AD]]`, puis +1, +2, +3 : le dernier est à **`[[AF]]`**.",
+     "indices": [
+      "Ajoute 3 (pas 4) : le premier octet compte déjà.",
+      "[[AD]] + 3 = [[AF]]."
+     ]
+    },
+    {
+     "guideSeul": true,
+     "consigne": "Un `int` occupe 4 octets. Combien d'octets occupe le tableau `int t[[[N]]];` en tout ?",
+     "question": "Taille de `t` en octets ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": "[[TT]]"
+     },
+     "duree": 0.5,
+     "corrige": "[[N]] cases × 4 octets = **[[TT]]** octets.",
+     "indices": [
+      "Toutes les cases sont rangées à la suite.",
+      "[[N]] × 4."
+     ]
+    },
+    {
+     "guideSeul": true,
+     "consigne": "Déclare un `char c`, un `int n` et un `double d`, et affiche leurs tailles sur une ligne, séparées par un espace. Écris `(int)sizeof(c)` pour pouvoir l'afficher avec `%d`.",
+     "question": "Affiche les trois tailles.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "",
+        "sortie": "[[S2_0]]"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    char c;\n    int n;\n    double d;\n    printf(\"%d %d %d\\n\", (int)sizeof(c), (int)sizeof(n), (int)sizeof(d));\n    return 0;\n}",
+      "nombres": true,
+      "exige": [
+       {
+        "motif": "sizeof",
+        "msg": "Utilise sizeof pour obtenir les tailles."
+       }
+      ]
+     },
+     "duree": 1.2,
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    char c;\n    int n;\n    double d;\n    printf(\"%d %d %d\\n\", (int)sizeof(c), (int)sizeof(n), (int)sizeof(d));\n    return 0;\n}\n```",
+     "indices": [
+      "Trois `(int)sizeof(…)` dans un seul `printf`.",
+      "`printf(\"%d %d %d\\n\", (int)sizeof(c), (int)sizeof(n), (int)sizeof(d));`"
+     ]
+    },
+    {
+     "consigne": "Ajoute le tableau `int t[[[N]]];` et affiche aussi sa taille en dernier. Laisse `sizeof` faire le calcul : n'écris pas [[TT]] en dur.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "",
+        "sortie": "[[S3_0]]"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\nint main(void) {\n    char c;\n    int n;\n    double d;\n    int t[[[N]]];\n    printf(\"%d %d %d %d\\n\", (int)sizeof(c), (int)sizeof(n), (int)sizeof(d), (int)sizeof(t));\n    return 0;\n}",
+      "nombres": true,
+      "exige": [
+       {
+        "motif": "sizeof\\s*\\(\\s*t\\s*\\)",
+        "msg": "Affiche la taille du tableau avec sizeof(t)."
+       }
+      ]
+     },
+     "duree": 1.7,
+     "depart": "#include <stdio.h>\n\nint main(void) {\n    char c;\n    int n;\n    double d;\n    printf(\"%d %d %d\\n\", (int)sizeof(c), (int)sizeof(n), (int)sizeof(d));\n    return 0;\n}",
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\nint main(void) {\n    char c;\n    int n;\n    double d;\n    int t[[[N]]];\n    printf(\"%d %d %d %d\\n\", (int)sizeof(c), (int)sizeof(n), (int)sizeof(d), (int)sizeof(t));\n    return 0;\n}\n```",
+     "indices": [
+      "`sizeof(t)` donne la taille du tableau entier.",
+      "Ajoute `, (int)sizeof(t)` et un 4e `%d`."
+     ]
+    }
+   ],
+   "vals": {
+    "N": "5",
+    "TT": "20",
+    "AD": "0x3B10",
+    "AF": "0x3B13",
+    "SORTIE": "1 4 8 20",
+    "S2_0": "1 4 8",
+    "S3_0": "1 4 8 20"
+   },
+   "variantes": [
+    {
+     "N": "5",
+     "TT": "20",
+     "AD": "0x3B10",
+     "AF": "0x3B13",
+     "SORTIE": "1 4 8 20",
+     "S2_0": "1 4 8",
+     "S3_0": "1 4 8 20"
+    },
+    {
+     "N": "8",
+     "TT": "32",
+     "AD": "0x3B14",
+     "AF": "0x3B17",
+     "SORTIE": "1 4 8 32",
+     "S2_0": "1 4 8",
+     "S3_0": "1 4 8 32"
+    },
+    {
+     "N": "9",
+     "TT": "36",
+     "AD": "0x4C30",
+     "AF": "0x4C33",
+     "SORTIE": "1 4 8 36",
+     "S2_0": "1 4 8",
+     "S3_0": "1 4 8 36"
+    },
+    {
+     "N": "20",
+     "TT": "80",
+     "AD": "0x2A0C",
+     "AF": "0x2A0F",
+     "SORTIE": "1 4 8 80",
+     "S2_0": "1 4 8",
+     "S3_0": "1 4 8 80"
+    },
+    {
+     "N": "21",
+     "TT": "84",
+     "AD": "0x1FF4",
+     "AF": "0x1FF7",
+     "SORTIE": "1 4 8 84",
+     "S2_0": "1 4 8",
+     "S3_0": "1 4 8 84"
+    },
+    {
+     "N": "3",
+     "TT": "12",
+     "AD": "0x1004",
+     "AF": "0x1007",
+     "SORTIE": "1 4 8 12",
+     "S2_0": "1 4 8",
+     "S3_0": "1 4 8 12"
     }
    ]
   }

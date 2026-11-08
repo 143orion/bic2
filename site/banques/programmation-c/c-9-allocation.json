@@ -677,7 +677,7 @@
       "`int *t = malloc(n * sizeof(int));` suivi de `if (t == NULL) return 1;`.",
       "`free(t);` juste avant `return 0;`."
      ],
-     "duree": 3.0,
+     "duree": 3,
      "depart": "#include <stdio.h>\n\nint main(void) {\n    int t[20], n;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &t[i]);\n    for (int i = n - 1; i >= 0; i--) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    return 0;\n}"
     }
    ]
@@ -1125,7 +1125,7 @@
       "`strlen` est dans `<string.h>`.",
       "`printf(\"%s %d\\n\", tampon, (int)strlen(tampon));`"
      ],
-     "duree": 1.0,
+     "duree": 1,
      "guideSeul": true
     },
     {
@@ -1373,6 +1373,533 @@
      ],
      "duree": 2.99,
      "depart": "#include <stdio.h>\n\nint main(void) {\n    int notes[100], n, s = 0, nb = 0;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        scanf(\"%d\", &notes[i]);\n        s += notes[i];\n    }\n    double moy = (double)s / n;\n    for (int i = 0; i < n; i++) {\n        if (notes[i] > moy) nb++;\n    }\n    printf(\"%.2f %d\\n\", moy, nb);\n    return 0;\n}"
+    }
+   ]
+  },
+  {
+   "id": "c9-109",
+   "type": "exo",
+   "notion": "9.1",
+   "origine": "cours",
+   "titre": "Le tableau qui ne peut pas grandir",
+   "enonce": "Avec un tableau **statique** `int t[TP];` (`#define TP [[TP]]`), la taille est fixée une fois pour toutes. Écris un programme qui lit `n` : si `n` dépasse `TP`, il affiche `trop grand` et s'arrête ; sinon il lit les `n` entiers dans `t` et affiche leur somme.\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S2_0]]\n```\n\n**Exemple**\n```text\nEntrée :\n[[E1]]\nSortie :\n[[S2_1]]\n```",
+   "guidage": "**Plan** : 1. quand la taille d'un tableau statique est-elle fixée ? → 2. qui libère sa mémoire ? → 3. protéger le tableau avant de le remplir.\n\n**À retenir** : c'est cette limite que l'allocation dynamique (`malloc`, notion suivante) fait sauter.",
+   "duree": 4,
+   "etapes": [
+    {
+     "guideSeul": true,
+     "consigne": "Pour `int t[TP];`, la taille est-elle décidée **à la compilation** (avant de lancer le programme) ou **à l'exécution** (selon ce que tape l'utilisateur) ? Réponds « compilation » ou « exécution ».",
+     "question": "Taille fixée quand ?",
+     "verif": {
+      "mode": "exact",
+      "attendu": [
+       "compilation",
+       "a la compilation",
+       "à la compilation"
+      ]
+     },
+     "duree": 0.5,
+     "corrige": "**À la compilation** : `TP` est une constante, la taille est connue avant même de lancer le programme. Elle ne peut plus changer ensuite.",
+     "indices": [
+      "`TP` est remplacé par [[TP]] avant la compilation.",
+      "Compilation."
+     ]
+    },
+    {
+     "guideSeul": true,
+     "consigne": "À la fin du bloc où `t` est déclaré, que devient sa mémoire : est-elle libérée **automatiquement**, ou faut-il appeler **free** ? (réponds « automatiquement » ou « free »)",
+     "question": "Libération de `t` ?",
+     "verif": {
+      "mode": "exact",
+      "attendu": [
+       "automatiquement",
+       "automatique"
+      ]
+     },
+     "duree": 0.5,
+     "corrige": "La mémoire statique est libérée **automatiquement** à la fin du bloc. `free` sert seulement pour la mémoire qu'on a demandée soi-même.",
+     "indices": [
+      "On n'a rien demandé à `malloc`.",
+      "Automatiquement."
+     ]
+    },
+    {
+     "consigne": "Écris le programme : `#define TP [[TP]]`, un tableau `int t[TP];`, lis `n`. **Avant** de remplir le tableau, si `n > TP`, affiche `trop grand` et arrête-toi (`return 0;`). Sinon, lis les `n` entiers et affiche leur somme.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "[[E0]]",
+        "sortie": "[[S2_0]]"
+       },
+       {
+        "entree": "[[E1]]",
+        "sortie": "[[S2_1]]"
+       },
+       {
+        "entree": "[[E2]]",
+        "sortie": "[[S2_2]]"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n\n#define TP [[TP]]\n\nint main(void) {\n    int t[TP], n, s = 0;\n    scanf(\"%d\", &n);\n    if (n > TP) {\n        printf(\"trop grand\\n\");\n        return 0;\n    }\n    for (int i = 0; i < n; i++) {\n        scanf(\"%d\", &t[i]);\n        s += t[i];\n    }\n    printf(\"%d\\n\", s);\n    return 0;\n}",
+      "exige": [
+       {
+        "motif": "#\\s*define\\s+TP\\b",
+        "brut": true,
+        "msg": "Définis la taille avec #define TP [[TP]]."
+       }
+      ],
+      "interdit": [
+       {
+        "motif": "malloc|calloc",
+        "msg": "Ici, on reste avec un tableau statique (pas de malloc)."
+       }
+      ]
+     },
+     "duree": 3,
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n\n#define TP [[TP]]\n\nint main(void) {\n    int t[TP], n, s = 0;\n    scanf(\"%d\", &n);\n    if (n > TP) {\n        printf(\"trop grand\\n\");\n        return 0;\n    }\n    for (int i = 0; i < n; i++) {\n        scanf(\"%d\", &t[i]);\n        s += t[i];\n    }\n    printf(\"%d\\n\", s);\n    return 0;\n}\n```",
+     "indices": [
+      "Juste après le `scanf` de `n` : `if (n > TP) { printf(\"trop grand\\n\"); return 0; }`.",
+      "Ensuite une boucle qui lit `t[i]` et ajoute chaque valeur à `s` (qui part de 0)."
+     ]
+    }
+   ],
+   "vals": {
+    "TP": "10",
+    "E0": "4\n1 23 12 7",
+    "E1": "22",
+    "E2": "10\n5 5 1 8 6 3 1 5 1 0",
+    "S2_0": "43",
+    "S2_1": "trop grand",
+    "S2_2": "35"
+   },
+   "variantes": [
+    {
+     "TP": "10",
+     "E0": "4\n1 23 12 7",
+     "E1": "22",
+     "E2": "10\n5 5 1 8 6 3 1 5 1 0",
+     "S2_0": "43",
+     "S2_1": "trop grand",
+     "S2_2": "35"
+    },
+    {
+     "TP": "20",
+     "E0": "3\n28 21 19",
+     "E1": "30",
+     "E2": "20\n8 3 6 2 7 4 8 4 6 8 8 8 9 7 3 6 9 8 1 1",
+     "S2_0": "68",
+     "S2_1": "trop grand",
+     "S2_2": "116"
+    },
+    {
+     "TP": "20",
+     "E0": "4\n7 28 15 19",
+     "E1": "26",
+     "E2": "20\n9 4 6 1 3 2 6 5 7 4 8 9 7 7 8 3 2 5 5 3",
+     "S2_0": "69",
+     "S2_1": "trop grand",
+     "S2_2": "104"
+    },
+    {
+     "TP": "8",
+     "E0": "4\n28 7 4 6",
+     "E1": "9",
+     "E2": "8\n9 3 8 6 8 3 7 2",
+     "S2_0": "45",
+     "S2_1": "trop grand",
+     "S2_2": "46"
+    },
+    {
+     "TP": "10",
+     "E0": "6\n17 25 11 12 10 22",
+     "E1": "16",
+     "E2": "10\n9 8 8 2 1 3 7 9 9 8",
+     "S2_0": "97",
+     "S2_1": "trop grand",
+     "S2_2": "64"
+    },
+    {
+     "TP": "5",
+     "E0": "5\n19 26 17 10 5",
+     "E1": "24",
+     "E2": "5\n4 1 8 1 1",
+     "S2_0": "77",
+     "S2_1": "trop grand",
+     "S2_2": "15"
+    }
+   ]
+  },
+  {
+   "id": "c9-110",
+   "type": "exo",
+   "notion": "9.2",
+   "origine": "cours",
+   "titre": "Un tableau à la bonne taille",
+   "enonce": "Écris un programme qui lit `n`, réserve avec `malloc` un tableau d'exactement `n` entiers, y range les `n` entiers tapés ensuite, puis les affiche **à l'envers** (du dernier au premier), avant de libérer la mémoire.\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S3_0]]\n```",
+   "guidage": "**Plan** : 1. calculer la taille à demander, en octets → 2. vérifier que `malloc` n'a pas renvoyé `NULL` → 3. utiliser `t` comme un tableau → 4. `free(t)` à la fin.\n\n**Piège** : `malloc(n)` réserve `n` **octets**, pas `n` entiers.",
+   "duree": 5,
+   "etapes": [
+    {
+     "guideSeul": true,
+     "consigne": "Un `int` fait 4 octets. Combien d'octets réserve `malloc([[N]] * sizeof(int))` ?",
+     "question": "Nombre d'octets réservés ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": "[[NO]]"
+     },
+     "duree": 0.5,
+     "corrige": "[[N]] × 4 = **[[NO]]** octets, de quoi ranger [[N]] entiers.",
+     "indices": [
+      "`sizeof(int)` vaut 4.",
+      "[[N]] × 4."
+     ]
+    },
+    {
+     "guideSeul": true,
+     "consigne": "Écris l'appel à `malloc` qui réserve la place pour `n` entiers (juste l'expression, sans le `int *t =` devant).",
+     "question": "Appel à `malloc` pour `n` entiers ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "(\\(\\s*int\\s*\\*\\s*\\)\\s*)?malloc\\s*\\(\\s*(n\\s*\\*\\s*sizeof\\s*\\(\\s*int\\s*\\)|sizeof\\s*\\(\\s*int\\s*\\)\\s*\\*\\s*n)\\s*\\)\\s*;?",
+      "exemple": "malloc(n * sizeof(int))"
+     },
+     "duree": 0.6,
+     "corrige": "`malloc(n * sizeof(int))` : le nombre d'éléments multiplié par la taille d'un élément.",
+     "indices": [
+      "La taille se donne en octets : nombre d'éléments × taille d'un élément.",
+      "`malloc(n * sizeof(int))`"
+     ]
+    },
+    {
+     "guideSeul": true,
+     "consigne": "Premier jalon : lis `n`, réserve `n` entiers avec `malloc` (vérifie que le pointeur n'est pas `NULL`), remplis la case `i` avec `i * [[K]]`, affiche le tableau sur une ligne, puis libère-le avec `free`.",
+     "question": "Réserve, remplis et affiche.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "[[N]]",
+        "sortie": "[[S2_0]]"
+       },
+       {
+        "entree": "3",
+        "sortie": "[[S2_1]]"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    int *t = malloc(n * sizeof(int));\n    if (t == NULL) {\n        printf(\"Erreur d'allocation\\n\");\n        return 1;\n    }\n    for (int i = 0; i < n; i++) {\n        t[i] = i * [[K]];\n    }\n    for (int i = 0; i < n; i++) {\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    free(t);\n    return 0;\n}",
+      "exige": [
+       {
+        "motif": "malloc|calloc",
+        "msg": "Réserve le tableau avec malloc."
+       },
+       {
+        "motif": "free\\s*\\(",
+        "msg": "Libère la mémoire avec free."
+       }
+      ]
+     },
+     "duree": 1.6,
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    int *t = malloc(n * sizeof(int));\n    if (t == NULL) {\n        printf(\"Erreur d'allocation\\n\");\n        return 1;\n    }\n    for (int i = 0; i < n; i++) {\n        t[i] = i * [[K]];\n    }\n    for (int i = 0; i < n; i++) {\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    free(t);\n    return 0;\n}\n```",
+     "indices": [
+      "`int *t = malloc(n * sizeof(int));` puis `if (t == NULL) { … return 1; }`.",
+      "Ensuite `t[i] = i * [[K]];` dans une boucle, comme avec un tableau ordinaire."
+     ]
+    },
+    {
+     "consigne": "Version finale : au lieu de calculer les valeurs, **lis-les** au clavier dans `t`, puis affiche-les en partant de la dernière case (`n - 1`) jusqu'à la première (0). N'oublie pas `free(t)` à la fin.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "[[E0]]",
+        "sortie": "[[S3_0]]"
+       },
+       {
+        "entree": "[[E1]]",
+        "sortie": "[[S3_1]]"
+       },
+       {
+        "entree": "1\n[[UN]]",
+        "sortie": "[[S3_2]]"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    int *t = malloc(n * sizeof(int));\n    if (t == NULL) {\n        printf(\"Erreur d'allocation\\n\");\n        return 1;\n    }\n    for (int i = 0; i < n; i++) {\n        scanf(\"%d\", &t[i]);\n    }\n    for (int i = n - 1; i >= 0; i--) {\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    free(t);\n    return 0;\n}",
+      "nombres": true,
+      "exige": [
+       {
+        "motif": "malloc|calloc",
+        "msg": "Réserve le tableau avec malloc."
+       },
+       {
+        "motif": "free\\s*\\(",
+        "msg": "Libère la mémoire avec free."
+       }
+      ]
+     },
+     "duree": 2.3,
+     "depart": "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    int *t = malloc(n * sizeof(int));\n    if (t == NULL) {\n        printf(\"Erreur d'allocation\\n\");\n        return 1;\n    }\n    for (int i = 0; i < n; i++) {\n        t[i] = i * [[K]];\n    }\n    for (int i = 0; i < n; i++) {\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    free(t);\n    return 0;\n}",
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    int *t = malloc(n * sizeof(int));\n    if (t == NULL) {\n        printf(\"Erreur d'allocation\\n\");\n        return 1;\n    }\n    for (int i = 0; i < n; i++) {\n        scanf(\"%d\", &t[i]);\n    }\n    for (int i = n - 1; i >= 0; i--) {\n        printf(\"%d \", t[i]);\n    }\n    printf(\"\\n\");\n    free(t);\n    return 0;\n}\n```",
+     "indices": [
+      "Remplace le remplissage par `scanf(\"%d\", &t[i]);`.",
+      "Boucle d'affichage à l'envers : `for (int i = n - 1; i >= 0; i--)`."
+     ]
+    }
+   ],
+   "vals": {
+    "N": "10",
+    "NO": "40",
+    "K": "5",
+    "UN": "87",
+    "E0": "7\n49 8 41 12 42 27 19",
+    "E1": "5\n6 7 1 4 3",
+    "S2_0": "0 5 10 15 20 25 30 35 40 45 ",
+    "S2_1": "0 5 10 ",
+    "S3_0": "19 27 42 12 41 8 49 ",
+    "S3_1": "3 4 1 7 6 ",
+    "S3_2": "87 "
+   },
+   "variantes": [
+    {
+     "N": "10",
+     "NO": "40",
+     "K": "5",
+     "UN": "87",
+     "E0": "7\n49 8 41 12 42 27 19",
+     "E1": "5\n6 7 1 4 3",
+     "S2_0": "0 5 10 15 20 25 30 35 40 45 ",
+     "S2_1": "0 5 10 ",
+     "S3_0": "19 27 42 12 41 8 49 ",
+     "S3_1": "3 4 1 7 6 ",
+     "S3_2": "87 "
+    },
+    {
+     "N": "5",
+     "NO": "20",
+     "K": "10",
+     "UN": "29",
+     "E0": "6\n31 3 5 34 34 14",
+     "E1": "4\n-1 9 -7 -2",
+     "S2_0": "0 10 20 30 40 ",
+     "S2_1": "0 10 20 ",
+     "S3_0": "14 34 34 5 3 31 ",
+     "S3_1": "-2 -7 9 -1 ",
+     "S3_2": "29 "
+    },
+    {
+     "N": "4",
+     "NO": "16",
+     "K": "5",
+     "UN": "71",
+     "E0": "6\n39 25 10 46 16 14",
+     "E1": "3\n7 -5 -6",
+     "S2_0": "0 5 10 15 ",
+     "S2_1": "0 5 10 ",
+     "S3_0": "14 16 46 10 25 39 ",
+     "S3_1": "-6 -5 7 ",
+     "S3_2": "71 "
+    },
+    {
+     "N": "6",
+     "NO": "24",
+     "K": "10",
+     "UN": "65",
+     "E0": "4\n36 40 41 49",
+     "E1": "3\n1 6 -2",
+     "S2_0": "0 10 20 30 40 50 ",
+     "S2_1": "0 10 20 ",
+     "S3_0": "49 41 40 36 ",
+     "S3_1": "-2 6 1 ",
+     "S3_2": "65 "
+    },
+    {
+     "N": "10",
+     "NO": "40",
+     "K": "3",
+     "UN": "62",
+     "E0": "6\n3 43 18 46 48 8",
+     "E1": "4\n-8 -5 -9 -3",
+     "S2_0": "0 3 6 9 12 15 18 21 24 27 ",
+     "S2_1": "0 3 6 ",
+     "S3_0": "8 48 46 18 43 3 ",
+     "S3_1": "-3 -9 -5 -8 ",
+     "S3_2": "62 "
+    },
+    {
+     "N": "6",
+     "NO": "24",
+     "K": "3",
+     "UN": "71",
+     "E0": "6\n39 15 37 35 32 6",
+     "E1": "5\n-6 -6 -5 4 3",
+     "S2_0": "0 3 6 9 12 15 ",
+     "S2_1": "0 3 6 ",
+     "S3_0": "6 32 35 37 15 39 ",
+     "S3_1": "3 4 -5 -6 -6 ",
+     "S3_2": "71 "
+    }
+   ]
+  },
+  {
+   "id": "c9-111",
+   "type": "exo",
+   "notion": "9.3",
+   "origine": "cours",
+   "titre": "La liste qui grandit",
+   "enonce": "Écris un programme qui lit des entiers jusqu'à ce qu'on tape `0`, et les range dans un tableau dynamique. Au départ, le tableau a une capacité de **[[C]]** entiers ; chaque fois qu'il est plein, sa capacité **double** grâce à `realloc`. À la fin, le programme affiche le nombre de valeurs et la capacité finale, puis les valeurs.\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S2_0]]\n```",
+   "guidage": "**Plan** : 1. `malloc` de [[C]] entiers, `n = 0` → 2. pour chaque valeur lue (tant qu'elle n'est pas 0) : si `n == cap`, doubler avec `realloc` → 3. ranger la valeur → 4. afficher, puis `free`.\n\n**Piège** : `t = realloc(t, …)` perd l'ancien bloc si `realloc` échoue ; passe par un pointeur temporaire.",
+   "duree": 6,
+   "etapes": [
+    {
+     "guideSeul": true,
+     "consigne": "Capacité de départ : [[C]]. On range [[V]] valeurs, et on double la capacité chaque fois que le tableau est plein au moment d'en ajouter une. Quelle est la capacité à la fin ?",
+     "question": "Capacité finale ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": "[[CF]]"
+     },
+     "duree": 0.7,
+     "corrige": "La capacité passe par [[SUITE]] : la première qui suffit pour [[V]] valeurs est **[[CF]]**.",
+     "indices": [
+      "Double [[C]] jusqu'à dépasser ou atteindre [[V]].",
+      "[[SUITE]]."
+     ]
+    },
+    {
+     "guideSeul": true,
+     "consigne": "Quand le tableau est plein, on demande un bloc deux fois plus grand **sans écraser `t` tout de suite**. Écris la ligne qui déclare `int *tmp` et lui donne le résultat de `realloc` pour une capacité de `2 * cap` entiers.",
+     "question": "Ligne avec `realloc` ?",
+     "verif": {
+      "mode": "regex",
+      "motif": "int\\s*\\*\\s*tmp\\s*=\\s*(\\(\\s*int\\s*\\*\\s*\\)\\s*)?realloc\\s*\\(\\s*t\\s*,\\s*(2\\s*\\*\\s*cap\\s*\\*\\s*sizeof\\s*\\(\\s*int\\s*\\)|cap\\s*\\*\\s*2\\s*\\*\\s*sizeof\\s*\\(\\s*int\\s*\\)|2\\s*\\*\\s*sizeof\\s*\\(\\s*int\\s*\\)\\s*\\*\\s*cap|sizeof\\s*\\(\\s*int\\s*\\)\\s*\\*\\s*2\\s*\\*\\s*cap)\\s*\\)\\s*;",
+      "exemple": "int *tmp = realloc(t, 2 * cap * sizeof(int));"
+     },
+     "duree": 0.8,
+     "corrige": "`int *tmp = realloc(t, 2 * cap * sizeof(int));` : si ça échoue, `tmp` vaut `NULL` mais `t` pointe toujours vers les données.",
+     "indices": [
+      "`realloc(ancien_pointeur, nouvelle_taille_en_octets)`.",
+      "`int *tmp = realloc(t, 2 * cap * sizeof(int));`"
+     ]
+    },
+    {
+     "consigne": "Écris le programme : `cap = [[C]]`, `n = 0`, un `malloc` de `cap` entiers. Lis les valeurs jusqu'au `0`. Avant de ranger une valeur, si `n == cap` : `realloc` vers `tmp`, vérifie `tmp != NULL`, puis `t = tmp;` et `cap = 2 * cap;`. À la fin, affiche `n valeurs, capacite cap` puis les valeurs sur une ligne, et libère `t`.",
+     "question": "Écris le programme complet.",
+     "verif": {
+      "mode": "c",
+      "tests": [
+       {
+        "entree": "[[E0]]",
+        "sortie": "[[S2_0]]"
+       },
+       {
+        "entree": "[[E1]]",
+        "sortie": "[[S2_1]]"
+       },
+       {
+        "entree": "0",
+        "sortie": "[[S2_2]]"
+       }
+      ],
+      "exemple": "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int cap = [[C]], n = 0, x;\n    int *t = malloc(cap * sizeof(int));\n    if (t == NULL) return 1;\n    scanf(\"%d\", &x);\n    while (x != 0) {\n        if (n == cap) {\n            int *tmp = realloc(t, 2 * cap * sizeof(int));\n            if (tmp == NULL) {\n                free(t);\n                return 1;\n            }\n            t = tmp;\n            cap = 2 * cap;\n        }\n        t[n] = x;\n        n++;\n        scanf(\"%d\", &x);\n    }\n    printf(\"%d valeurs, capacite %d\\n\", n, cap);\n    for (int i = 0; i < n; i++) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    free(t);\n    return 0;\n}",
+      "nombres": true,
+      "exige": [
+       {
+        "motif": "realloc",
+        "msg": "Agrandis le tableau avec realloc."
+       },
+       {
+        "motif": "free\\s*\\(",
+        "msg": "Libère la mémoire avec free."
+       }
+      ]
+     },
+     "duree": 4.5,
+     "corrige": "Une solution possible :\n```c\n#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int cap = [[C]], n = 0, x;\n    int *t = malloc(cap * sizeof(int));\n    if (t == NULL) return 1;\n    scanf(\"%d\", &x);\n    while (x != 0) {\n        if (n == cap) {\n            int *tmp = realloc(t, 2 * cap * sizeof(int));\n            if (tmp == NULL) {\n                free(t);\n                return 1;\n            }\n            t = tmp;\n            cap = 2 * cap;\n        }\n        t[n] = x;\n        n++;\n        scanf(\"%d\", &x);\n    }\n    printf(\"%d valeurs, capacite %d\\n\", n, cap);\n    for (int i = 0; i < n; i++) printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    free(t);\n    return 0;\n}\n```",
+     "indices": [
+      "Structure : `scanf` d'une valeur, puis `while (x != 0) { … scanf(\"%d\", &x); }`. Dans la boucle, d'abord le test `if (n == cap)`, puis `t[n] = x; n++;`.",
+      "Dans le `if` : `int *tmp = realloc(t, 2 * cap * sizeof(int)); if (tmp == NULL) { free(t); return 1; } t = tmp; cap = 2 * cap;`"
+     ]
+    }
+   ],
+   "vals": {
+    "C": "3",
+    "V": "14",
+    "CF": "24",
+    "SUITE": "3 → 6 → 12 → 24",
+    "E0": "96 40 84 63 8 32 50 0",
+    "E1": "82 45 78 0",
+    "S2_0": "7 valeurs, capacite 12\n96 40 84 63 8 32 50 ",
+    "S2_1": "3 valeurs, capacite 3\n82 45 78 ",
+    "S2_2": "0 valeurs, capacite 3"
+   },
+   "variantes": [
+    {
+     "C": "3",
+     "V": "14",
+     "CF": "24",
+     "SUITE": "3 → 6 → 12 → 24",
+     "E0": "96 40 84 63 8 32 50 0",
+     "E1": "82 45 78 0",
+     "S2_0": "7 valeurs, capacite 12\n96 40 84 63 8 32 50 ",
+     "S2_1": "3 valeurs, capacite 3\n82 45 78 ",
+     "S2_2": "0 valeurs, capacite 3"
+    },
+    {
+     "C": "2",
+     "V": "4",
+     "CF": "4",
+     "SUITE": "2 → 4",
+     "E0": "11 4 68 31 26 91 54 7 0",
+     "E1": "34 27 0",
+     "S2_0": "8 valeurs, capacite 8\n11 4 68 31 26 91 54 7 ",
+     "S2_1": "2 valeurs, capacite 2\n34 27 ",
+     "S2_2": "0 valeurs, capacite 2"
+    },
+    {
+     "C": "2",
+     "V": "3",
+     "CF": "4",
+     "SUITE": "2 → 4",
+     "E0": "63 20 4 80 56 0",
+     "E1": "64 0",
+     "S2_0": "5 valeurs, capacite 8\n63 20 4 80 56 ",
+     "S2_1": "1 valeurs, capacite 2\n64 ",
+     "S2_2": "0 valeurs, capacite 2"
+    },
+    {
+     "C": "2",
+     "V": "9",
+     "CF": "16",
+     "SUITE": "2 → 4 → 8 → 16",
+     "E0": "78 6 21 47 74 18 57 58 0",
+     "E1": "64 26 0",
+     "S2_0": "8 valeurs, capacite 8\n78 6 21 47 74 18 57 58 ",
+     "S2_1": "2 valeurs, capacite 2\n64 26 ",
+     "S2_2": "0 valeurs, capacite 2"
+    },
+    {
+     "C": "2",
+     "V": "4",
+     "CF": "4",
+     "SUITE": "2 → 4",
+     "E0": "45 7 40 78 27 1 12 58 0",
+     "E1": "54 0",
+     "S2_0": "8 valeurs, capacite 8\n45 7 40 78 27 1 12 58 ",
+     "S2_1": "1 valeurs, capacite 2\n54 ",
+     "S2_2": "0 valeurs, capacite 2"
+    },
+    {
+     "C": "3",
+     "V": "10",
+     "CF": "12",
+     "SUITE": "3 → 6 → 12",
+     "E0": "86 61 73 75 62 93 6 21 92 0",
+     "E1": "82 70 28 0",
+     "S2_0": "9 valeurs, capacite 12\n86 61 73 75 62 93 6 21 92 ",
+     "S2_1": "3 valeurs, capacite 3\n82 70 28 ",
+     "S2_2": "0 valeurs, capacite 3"
     }
    ]
   }
