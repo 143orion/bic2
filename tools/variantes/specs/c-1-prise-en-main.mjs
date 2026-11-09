@@ -1,4 +1,5 @@
 /* Chapitre 1 : consignes réécrites + variantes (08/11/2026). */
+import {BLOC, but, rien, lit, fait, affiche, afaire, jalon, ex, sortie, corriger} from "../redaction.mjs";
 const sol = c => "Une solution possible :\n```c\n" + c + "\n```";
 const E = (k, o) => Object.fromEntries(Object.entries(o).map(([a, b]) => [`etapes.${k}.${a}`, b]));
 const prog = (...lignes) => "#include <stdio.h>\n\n" + lignes.join("\n");
@@ -10,7 +11,7 @@ const c103 = prog("int main(void) {", '    printf("[[L1]]\\n");', '    printf("[
 const c104a = prog("int main(void) {", '    printf("[[N]]\\n"); // affiche [[N]]', "    return 0;", "}");
 const c104 = prog("/* Programme qui affiche [[N]] */", "int main(void) {", '    printf("[[N]]\\n"); // affiche [[N]]', "    return 0;", "}");
 
-export default {
+const base = {
   banque: "programmation-c/c-1-prise-en-main.json",
   n: 6,
   items: {
@@ -80,3 +81,35 @@ export default {
     },
   },
 };
+
+/* ---------- format « Au clavier / Ce qu'il fait / Ce qu'il affiche » (09/11/2026), appliqué après la base ---------- */
+const format = {
+  banque: "programmation-c/c-1-prise-en-main.json",
+  items: {
+    "c1-101": {set: {
+      enonce: BLOC(but("écrire ton tout premier programme C. (TD Premiers pas, exercice 1)"), rien, affiche("`Hello World`, puis un retour à la ligne."), sortie("Hello World")),
+      ...E(3, {consigne: jalon("Assemble tes trois réponses :", "première ligne : l'inclusion de la bibliothèque ;", "puis `int main(void) {` ;", "dedans : l'instruction d'affichage, puis l'instruction de retour ;", "ferme `main` avec `}`.")}),
+    }},
+    "c1-102": {set: {
+      enonce: BLOC("Ce programme devrait afficher `[[MSG]]`, mais il ne compile pas : il contient **deux** erreurs de débutant.\n```c\n" + c102d + "\n```", corriger("les deux erreurs, sans rien changer d'autre."), sortie("[[MSG]]")),
+      ...E(2, {consigne: jalon("**À faire** :", "renomme la fonction `Main` en `main` (tout en minuscules) ;", "ajoute le `;` qui manque à la fin de la ligne du `printf` ;", "exécute : le programme doit afficher `[[MSG]]`.")}),
+    }},
+    "c1-103": {set: {
+      enonce: BLOC(but("afficher plusieurs lignes, chacune à sa place."), rien, affiche("exactement ces trois lignes, recopiées à l'identique (majuscules, espaces, ponctuation) :"), sortie("[[L1]]\n[[L2]]\n[[L3]]")),
+      ...E(1, {consigne: jalon("Premier jalon, les **deux premières** lignes :", "dans `main`, écris `printf(\"[[L1]]\\n\");` ;", "en dessous, `printf(\"[[L2]]\\n\");` ;", "termine par `return 0;`.")}),
+      ...E(2, {consigne: jalon("Ajoute la dernière ligne :", "sous les deux `printf`, ajoute celui de `[[L3]]`, avec son `\\n` ;", "ne change rien d'autre.")}),
+    }},
+    "c1-104": {set: {
+      enonce: BLOC(but("commenter son code. Les commentaires ne changent rien à ce que fait le programme : ils servent à l'expliquer."), rien,
+        fait("contient au moins un commentaire sur une ligne (`// …`) ;", "et au moins un commentaire de bloc (`/* … */`)."), affiche("`[[N]]`."), sortie("[[N]]")),
+      ...E(2, {consigne: jalon("Premier jalon :", "écris un programme qui affiche `[[N]]` (un `printf` dans `main`) ;", "à la fin de la ligne du `printf`, ajoute un commentaire `// …`.")}),
+      ...E(3, {consigne: jalon("Ajoute le commentaire de bloc :", "juste au-dessus de `int main(void)`, écris `/* … */` avec, à l'intérieur, une phrase qui dit ce que fait le programme ;", "garde le `//` et le `printf`.")}),
+    }},
+    "c1-105": {set: {
+      enonce: BLOC("Tu as tapé ce programme dans le fichier `[[F]].c`. Il doit afficher `[[MSG]]`, mais la **compilation** échoue à cause d'une faute de frappe.\n```c\n[[BUG]]\n```", corriger("la faute de frappe."), sortie("[[MSG]]")),
+      ...E(2, {consigne: jalon("**À faire** :", "clique sur **Exécuter** une première fois et lis le message d'erreur : il donne le numéro de la ligne fautive ;", "corrige la faute sur cette ligne (ou juste avant) ;", "exécute de nouveau : le programme doit afficher `[[MSG]]`.")}),
+    }},
+  },
+};
+
+export default [base, format];

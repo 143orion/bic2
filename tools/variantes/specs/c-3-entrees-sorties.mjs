@@ -1,4 +1,5 @@
 /* Chapitre 3 : consignes réécrites + variantes (08/11/2026). */
+import {BLOC, but, rien, lit, fait, affiche, afaire, jalon, sortie, corriger} from "../redaction.mjs";
 const E = (k, o) => Object.fromEntries(Object.entries(o).map(([a, b]) => [`etapes.${k}.${a}`, b]));
 const ex = (e, s) => "**Exemple**\n```text\nEntrée :\n" + e + "\nSortie :\n" + s + "\n```";
 const tests = (...es) => es.map(e => ({entree: e, sortie: "@auto"}));
@@ -6,7 +7,7 @@ const dec = (x, n = 2) => (Math.round(x * 10**n) / 10**n).toFixed(n);
 const PRENOMS = ["Lea", "Adam", "Ines", "Hugo", "Sami", "Jade", "Noah", "Lina", "Yanis", "Chloe", "Rayan", "Maya"];
 const LETTRES = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-export default {
+const base = {
   banque: "programmation-c/c-3-entrees-sorties.json",
   n: 8,
   items: {
@@ -108,3 +109,53 @@ export default {
     },
   },
 };
+
+/* ---------- format « Au clavier / Ce qu'il fait / Ce qu'il affiche » (09/11/2026), appliqué après la base ---------- */
+const format = {
+  banque: "programmation-c/c-3-entrees-sorties.json",
+  items: {
+    "c3-101": {set: {
+      enonce: BLOC(but("lire un mot au clavier et le réutiliser dans l'affichage. (TD Premiers pas, exercice 2)"), lit("un prénom (un seul mot)."), affiche("`Bonjour`, une espace, puis le prénom."), ex("[[P0]]", "Bonjour [[P0]]")),
+      ...E(3, {consigne: jalon("Assemble le tout dans `main` :", "déclare `char prenom[20];` ;", "lis-le avec `scanf(\"%19s\", prenom);` (pas de `&` devant un tableau) ;", "affiche `printf(\"Bonjour %s\\n\", prenom);`.")}),
+    }},
+    "c3-102": {set: {
+      enonce: BLOC(but("afficher plusieurs résultats avec un seul `printf`, dont un quotient **réel**. (TD Premiers pas, exercice 3)"), lit("un entier `a` ;", "un entier `b`."),
+        affiche("sur une ligne : la somme, la différence, le produit, puis le quotient réel de `a` par `b` avec 2 décimales."), ex("[[A]] [[B]]", "[[S3_0]]")),
+      ...E(3, {consigne: jalon("Écris le programme :", "déclare `int a, b;` et lis-les avec un seul `scanf` ;", "affiche avec le format `\"%d %d %d %.2f\\n\"` ;", "les quatre valeurs : `a + b`, `a - b`, `a * b`, `(double)a / b`.")}),
+    }},
+    "c3-103": {set: {
+      enonce: BLOC(but("lire un réel et un entier, et afficher des montants avec 2 décimales."), lit("le prix unitaire d'un article (un réel) ;", "la quantité achetée (un entier)."),
+        affiche("sur une ligne, séparés par des espaces : le **total HT** (prix × quantité), la **TVA à 20 %** (HT × 0,2) et le **total TTC** (HT + TVA), chacun avec 2 décimales."), ex("[[P]] [[Q]]", "[[S3_0]]")),
+      ...E(2, {consigne: jalon("Premier jalon, le HT seul :", "déclare `double prix;` et `int q;` ;", "lis-les avec `scanf(\"%lf %d\", &prix, &q);` ;", "affiche `prix * q` avec `%.2f`.")}),
+      ...E(3, {consigne: jalon("Complète :", "calcule `double ht = prix * q;`, `double tva = ht * 0.2;` et `double ttc = ht + tva;` ;", "affiche les trois sur une ligne, chacun avec `%.2f`, séparés par une espace.")}),
+    }},
+    "c3-104": {set: {
+      enonce: BLOC("Ce programme doit lire un âge (entier) et une taille en mètres (réel), puis les afficher. Les deux `scanf` contiennent chacun une erreur.\n```c\n#include <stdio.h>\n\nint main(void) {\n    int age;\n    double taille;\n    scanf(\"%d\", age);\n    scanf(\"%f\", &taille);\n    printf(\"%d %.2f\\n\", age, taille);\n    return 0;\n}\n```",
+        corriger("les deux lignes `scanf`, sans toucher au reste."), ex("[[A]] [[T]]", "[[S2_0]]")),
+      ...E(2, {consigne: jalon("**À faire** :", "premier `scanf` : ajoute le `&` qui manque devant `age` ;", "second `scanf` : remplace `%f` par `%lf` (le format d'un `double`) ;", "ne change rien d'autre.")}),
+    }},
+    "c3-105": {set: {
+      enonce: BLOC(but("voir qu'un caractère est aussi un nombre (son code ASCII)."), lit("un caractère."), affiche("ce caractère, une espace, puis son code ASCII."), ex("[[C]]", "[[C]] [[CODE]]")),
+      ...E(2, {consigne: jalon("Premier jalon :", "déclare `char c;` ;", "lis-le avec `scanf(\" %c\", &c);` (l'espace avant `%c` saute les blancs) ;", "affiche-le avec `%c`.")}),
+      ...E(3, {consigne: jalon("Complète l'affichage :", "affiche la même variable deux fois dans un seul `printf` : une fois avec `%c`, une fois avec `%d` ;", "sépare-les par une espace : `printf(\"%c %d\\n\", c, c);`.")}),
+    }},
+    "c3-106": {set: {
+      enonce: BLOC(but("lire un mot et un nombre, puis les afficher dans un texte mis en forme."), lit("un prénom (un mot) ;", "un âge (un entier)."), affiche("exactement deux lignes : `Prenom : <prénom>` puis `Age : <âge> ans`."), ex("[[P0]] [[A0]]", "Prenom : [[P0]]\nAge : [[A0]] ans")),
+      ...E(1, {consigne: jalon("Premier jalon, la première ligne :", "déclare `char prenom[20];` et `int age;` ;", "lis-les avec un seul `scanf(\"%19s %d\", prenom, &age);` (`prenom` sans `&`, `age` avec) ;", "affiche `Prenom : ` suivi du prénom.")}),
+      ...E(2, {consigne: jalon("Ajoute la deuxième ligne :", "un second `printf` affiche `Age : `, l'âge, puis ` ans` ;", "n'oublie pas le `\\n` à la fin de chaque ligne.")}),
+    }},
+    "c3-107": {set: {
+      enonce: BLOC(but("lire des réels et choisir le nombre de décimales affichées."), lit("trois nombres réels."), affiche("leur somme, avec **une** décimale."), ex("[[X]] [[Y]] [[Z]]", "[[SOM]]")),
+      ...E(2, {consigne: jalon("Premier jalon :", "déclare trois `double` et lis-les avec un seul `scanf(\"%lf %lf %lf\", …);` ;", "affiche leur somme avec `%f` (6 décimales par défaut).")}),
+      ...E(3, {consigne: jalon("Change seulement le format d'affichage :", "remplace `%f` par `%.1f` pour n'afficher qu'**une** décimale.")}),
+    }},
+    "c3-108": {set: {
+      enonce: BLOC(but("afficher des guillemets et le signe `%` dans un `printf`, et des valeurs prises dans des variables."), rien,
+        fait("déclare `int age = [[AGE]];` et `int progression = [[P]];` ;", "affiche les trois lignes ci-dessous, en prenant les nombres **dans les variables** (avec `%d`), pas en les écrivant en dur."), sortie("[[SORTIE]]")),
+      ...E(2, {consigne: jalon("Premier jalon, la première ligne seulement :", "écris `printf(\"Fiche \\\"[[NOM]]\\\"\\n\");` : chaque guillemet à afficher s'écrit `\\\"`.")}),
+      ...E(3, {consigne: jalon("Ajoute le reste :", "déclare `int age = [[AGE]];` et `int progression = [[P]];` ;", "deuxième ligne : `printf(\"Age : %d ans\\n\", age);` ;", "troisième ligne : `Progression : ` puis la variable, puis le signe `%`, qui s'écrit `%%` dans le texte.")}),
+    }},
+  },
+};
+
+export default [base, format];

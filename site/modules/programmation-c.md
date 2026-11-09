@@ -5,16 +5,16 @@ Cours ESILV Programmation C (BIC) : langage C de base jusqu'aux structures et à
 ## Chapitres (`banques/programmation-c/`)
 | ordre | id | titre | statut | sources |
 |---|---|---|---|---|
-| 1 | `c-1-prise-en-main` | Prise en main (21 items) | ✅ en ligne | CM1 · TD ex. 1 |
+| 1 | `c-1-prise-en-main` | Prise en main (22 items) | ✅ en ligne | CM1 · TD ex. 1 |
 | 2 | `c-2-variables-types` | Variables, types et opérateurs (41 items) | ✅ en ligne | CM1 · Types · TD ex. 3, 5, 6 |
-| 3 | `c-3-entrees-sorties` | Entrées / sorties (26 items) | ✅ en ligne | CM1 · TD ex. 2, 3 |
+| 3 | `c-3-entrees-sorties` | Entrées / sorties (27 items) | ✅ en ligne | CM1 · TD ex. 2, 3 |
 | 4 | `c-4-controle` | Structures de contrôle (67 items) | ✅ en ligne | CM1 · TD Premiers pas · TD Boucles (débutant) |
 | 5 | `c-5-tableaux` | Tableaux (30 items) | ✅ en ligne | Tableaux1D · TD Boucles (intermédiaire ex. 1-11) |
-| 6 | `c-6-chaines` | Chaînes de caractères (31 items) | ✅ en ligne | Chaînes · Fonctions (`string.h`) · TD ex. 12 |
-| 7 | `c-7-fonctions` | Fonctions (31 items) | ✅ en ligne | Fonctions (exercice tableaux, module calculatrice) |
-| 8 | `c-8-pointeurs` | Pointeurs (28 items) | ✅ en ligne | Pointeurs |
-| 9 | `c-9-allocation` | Allocation dynamique (23 items) | ✅ en ligne | Pointeurs · Types |
-| 10 | `c-10-structures` | Types et structures (26 items) | ✅ en ligne | Types et Structures (annuaire, employé, classe) |
+| 6 | `c-6-chaines` | Chaînes de caractères (33 items) | ✅ en ligne | Chaînes · Fonctions (`string.h`) · TD ex. 12 |
+| 7 | `c-7-fonctions` | Fonctions (32 items) | ✅ en ligne | Fonctions (exercice tableaux, module calculatrice) |
+| 8 | `c-8-pointeurs` | Pointeurs (31 items) | ✅ en ligne | Pointeurs |
+| 9 | `c-9-allocation` | Allocation dynamique (26 items) | ✅ en ligne | Pointeurs · Types |
+| 10 | `c-10-structures` | Types et structures (27 items) | ✅ en ligne | Types et Structures (annuaire, employé, classe) |
 
 Ids des items : `c<chapitre>-0xx` (questions courtes), `c<chapitre>-1xx` (exos). Ne jamais réutiliser un id. Ids des checks : `<chapitre>-ctl-<n°>`.
 
@@ -45,7 +45,12 @@ Ids des items : `c<chapitre>-0xx` (questions courtes), `c<chapitre>-1xx` (exos).
 - Express : questions « qu'affiche ce code ? » avec le code dans l'énoncé.
 - **Mode guidé (refonte du 07/11/2026)** : les exos `c*-1xx` sont découpés en questions courtes (`regex`/`exact`/`numerique`) puis jalons exécutables chaînés par `depart`, étape finale partant du dernier jalon avec 2 indices progressifs, `guidage` = plan numéroté. Chapitre 7 : jalon « tout dans `main` », puis étape finale « sors-le dans une fonction » (l'`exige` fait échouer la version inline). Toutes les étapes sauf la finale portent `guideSeul: true` : Classique et Mock n'affichent que l'énoncé et l'étape finale (qui vaut alors la durée de l'exo entier).
 - **Ordre des notions** : un exo de notion *N* n'utilise que des notions ≤ *N* (audité le 07/11 ; notions réaffectées : c3-106, c6-006, c7-105, c8-110, c9-102/103/105/108). Exceptions assumées : `scanf` dès le ch. 1-2 (utilisé avant sa notion 3.3, indispensable pour lire une entrée), `break` dans un `switch` (4.2), `*` des paramètres par adresse en 7.5.
-- Compte au 03/11 : **10 chapitres, 53 notions, 326 items, 123 exos**, chacun avec une étape de code exécutée (toutes les solutions passent leurs tests ; les codes de départ des exos « corrige » échouent).
+- Compte au 09/11 : **10 chapitres, 53 notions, 336 items, 133 exos** (chaque notion a au moins un exo), chacun avec une étape de code exécutée (toutes les solutions passent leurs tests ; les codes de départ des exos « corrige » échouent).
+- **Consignes (09/11, règle commune à tous les modules de prog, voir QUESTIONS.md « Rédaction des exos guidés »)** : énoncé = « Le but : » + **Au clavier** (entrées dans l'ordre, ou « rien ») + **Ce qu'il fait** + **Ce qu'il affiche** + Exemple / Sortie attendue (+ **À corriger** pour un bug). Jalons et étapes de code = liste numérotée de modifications précises. Aides : `tools/variantes/redaction.mjs`.
+
+## Variantes (09/11/2026)
+- 201 items sur 336 ont un champ `variantes` (valeurs `[[CLE]]` tirées à chaque ouverture, dans tous les modes, bouton 🎲). Specs par chapitre dans `tools/variantes/specs/c-*.mjs` (+ `c-nouveaux-exos.mjs`), générées avec `node tools/variantes/generer.mjs <spec>` : les sorties `@auto` sont calculées en exécutant la solution.
+- Vérification : `node tools/variantes/verifier.mjs programmation-c` doit finir à 0 erreur (chaque variante : solution qui passe ses tests, départ qui échoue, QCM et regex cohérents). Au 09/11 : 1 568 variantes, 4 855 exécutions, 0 différence avec gcc.
 
 ## Règles de correction propres au module
 - Réponses de code en `regex` (toute la réponse, insensible à la casse, espaces libres via `\s*`) ; l'`exemple` affiché en correction est la forme canonique.

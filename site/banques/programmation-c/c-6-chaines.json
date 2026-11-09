@@ -282,11 +282,36 @@
    "duree": 0.67,
    "explication": "[[N]] lettres, plus le `'\\0'` qui marque la fin : **[[R]]** cases.",
    "vals": {
-    "W": "souris",
-    "N": "6",
-    "R": "7"
+    "W": "clavier",
+    "N": "7",
+    "R": "8"
    },
    "variantes": [
+    {
+     "W": "clavier",
+     "N": "7",
+     "R": "8"
+    },
+    {
+     "W": "ESILV",
+     "N": "5",
+     "R": "6"
+    },
+    {
+     "W": "octet",
+     "N": "5",
+     "R": "6"
+    },
+    {
+     "W": "radar",
+     "N": "5",
+     "R": "6"
+    },
+    {
+     "W": "Paris",
+     "N": "5",
+     "R": "6"
+    },
     {
      "W": "souris",
      "N": "6",
@@ -298,34 +323,9 @@
      "R": "7"
     },
     {
-     "W": "octet",
+     "W": "ecran",
      "N": "5",
      "R": "6"
-    },
-    {
-     "W": "Paris",
-     "N": "5",
-     "R": "6"
-    },
-    {
-     "W": "kayak",
-     "N": "5",
-     "R": "6"
-    },
-    {
-     "W": "tableau",
-     "N": "7",
-     "R": "8"
-    },
-    {
-     "W": "radar",
-     "N": "5",
-     "R": "6"
-    },
-    {
-     "W": "Bonjour",
-     "N": "7",
-     "R": "8"
     }
    ]
   },
@@ -384,50 +384,50 @@
    "duree": 0.67,
    "explication": "Il faut garder une case pour le `'\\0'` final : [[N]] − 1 = **[[R]]** lettres.",
    "vals": {
-    "NOM": "nom",
-    "N": "50",
-    "R": "49"
+    "NOM": "prenom",
+    "N": "10",
+    "R": "9"
    },
    "variantes": [
     {
-     "NOM": "nom",
-     "N": "50",
-     "R": "49"
-    },
-    {
-     "NOM": "pseudo",
-     "N": "20",
-     "R": "19"
-    },
-    {
-     "NOM": "mot",
+     "NOM": "prenom",
      "N": "10",
      "R": "9"
     },
     {
-     "NOM": "mot",
+     "NOM": "prenom",
      "N": "20",
      "R": "19"
+    },
+    {
+     "NOM": "pseudo",
+     "N": "100",
+     "R": "99"
     },
     {
      "NOM": "ville",
-     "N": "10",
-     "R": "9"
+     "N": "100",
+     "R": "99"
     },
     {
-     "NOM": "pseudo",
-     "N": "50",
-     "R": "49"
+     "NOM": "ville",
+     "N": "15",
+     "R": "14"
     },
     {
-     "NOM": "nom",
+     "NOM": "mot",
+     "N": "15",
+     "R": "14"
+    },
+    {
+     "NOM": "mot",
      "N": "30",
      "R": "29"
     },
     {
-     "NOM": "pseudo",
-     "N": "15",
-     "R": "14"
+     "NOM": "prenom",
+     "N": "100",
+     "R": "99"
     }
    ]
   },
@@ -596,41 +596,41 @@
    "duree": 0.67,
    "explication": "Les codes des lettres se suivent : `'[[C]]'` est [[R]] lettres après `'A'`, donc **[[R]]**.",
    "vals": {
-    "C": "R",
-    "R": "17"
+    "C": "F",
+    "R": "5"
    },
    "variantes": [
-    {
-     "C": "R",
-     "R": "17"
-    },
     {
      "C": "F",
      "R": "5"
     },
     {
-     "C": "Z",
-     "R": "25"
+     "C": "M",
+     "R": "12"
     },
     {
-     "C": "K",
-     "R": "10"
+     "C": "R",
+     "R": "17"
     },
     {
-     "C": "B",
-     "R": "1"
-    },
-    {
-     "C": "T",
-     "R": "19"
+     "C": "J",
+     "R": "9"
     },
     {
      "C": "G",
      "R": "6"
     },
     {
-     "C": "J",
-     "R": "9"
+     "C": "Z",
+     "R": "25"
+    },
+    {
+     "C": "H",
+     "R": "7"
+    },
+    {
+     "C": "X",
+     "R": "23"
     }
    ]
   },
@@ -647,32 +647,32 @@
    "duree": 0.67,
    "explication": "Les codes des chiffres se suivent : `'[[D]]' - '0'` donne la **valeur** du chiffre, **[[D]]**. C'est l'astuce pour convertir un caractère chiffre en nombre.",
    "vals": {
-    "D": "1"
+    "D": "8"
    },
    "variantes": [
     {
-     "D": "1"
-    },
-    {
-     "D": "9"
+     "D": "8"
     },
     {
      "D": "2"
     },
     {
-     "D": "8"
-    },
-    {
-     "D": "4"
+     "D": "5"
     },
     {
      "D": "3"
     },
     {
+     "D": "9"
+    },
+    {
      "D": "7"
     },
     {
-     "D": "5"
+     "D": "1"
+    },
+    {
+     "D": "6"
     }
    ]
   },
@@ -691,30 +691,20 @@
    "duree": 0.67,
    "explication": "`'[[C]]' - 'a'` donne la position de la lettre dans l'alphabet ([[P]]) ; en l'ajoutant à `'A'`, on obtient la **majuscule** correspondante : **[[M]]**.",
    "vals": {
-    "C": "z",
-    "P": "25",
-    "M": "Z"
+    "C": "b",
+    "P": "1",
+    "M": "B"
    },
    "variantes": [
     {
-     "C": "z",
-     "P": "25",
-     "M": "Z"
+     "C": "b",
+     "P": "1",
+     "M": "B"
     },
     {
-     "C": "c",
-     "P": "2",
-     "M": "C"
-    },
-    {
-     "C": "m",
-     "P": "12",
-     "M": "M"
-    },
-    {
-     "C": "k",
-     "P": "10",
-     "M": "K"
+     "C": "g",
+     "P": "6",
+     "M": "G"
     },
     {
      "C": "e",
@@ -722,9 +712,14 @@
      "M": "E"
     },
     {
-     "C": "w",
-     "P": "22",
-     "M": "W"
+     "C": "h",
+     "P": "7",
+     "M": "H"
+    },
+    {
+     "C": "r",
+     "P": "17",
+     "M": "R"
     },
     {
      "C": "t",
@@ -732,9 +727,14 @@
      "M": "T"
     },
     {
-     "C": "d",
-     "P": "3",
-     "M": "D"
+     "C": "k",
+     "P": "10",
+     "M": "K"
+    },
+    {
+     "C": "z",
+     "P": "25",
+     "M": "Z"
     }
    ]
   },
@@ -751,41 +751,41 @@
    "duree": 0.67,
    "explication": "`n` avance tant qu'on n'est pas sur le `'\\0'` : il s'arrête sur la case qui suit la dernière lettre, et vaut la longueur, **[[R]]**.",
    "vals": {
-    "W": "langage",
-    "R": "7"
+    "W": "radar",
+    "R": "5"
    },
    "variantes": [
     {
-     "W": "langage",
-     "R": "7"
-    },
-    {
-     "W": "octet",
+     "W": "radar",
      "R": "5"
-    },
-    {
-     "W": "Paris",
-     "R": "5"
-    },
-    {
-     "W": "tableau",
-     "R": "7"
-    },
-    {
-     "W": "kayak",
-     "R": "5"
-    },
-    {
-     "W": "souris",
-     "R": "6"
     },
     {
      "W": "chaine",
      "R": "6"
     },
     {
-     "W": "clavier",
+     "W": "tableau",
      "R": "7"
+    },
+    {
+     "W": "souris",
+     "R": "6"
+    },
+    {
+     "W": "kayak",
+     "R": "5"
+    },
+    {
+     "W": "langage",
+     "R": "7"
+    },
+    {
+     "W": "Bonjour",
+     "R": "7"
+    },
+    {
+     "W": "octet",
+     "R": "5"
     }
    ]
   },
@@ -802,41 +802,41 @@
    "duree": 0.67,
    "explication": "`strlen` compte **tous** les caractères avant le `'\\0'`, espaces et ponctuation compris : **[[R]]**.",
    "vals": {
-    "P": "Bonjour ESILV",
-    "R": "13"
+    "P": "Salut le monde",
+    "R": "14"
    },
    "variantes": [
     {
-     "P": "Bonjour ESILV",
-     "R": "13"
-    },
-    {
-     "P": "Hello World",
-     "R": "11"
-    },
-    {
-     "P": "Une ligne de texte",
-     "R": "18"
-    },
-    {
-     "P": "Le C, C'EST BIEN !",
-     "R": "18"
-    },
-    {
-     "P": "Vive les TD",
-     "R": "11"
-    },
-    {
-     "P": "Partiel de C demain",
-     "R": "19"
+     "P": "Salut le monde",
+     "R": "14"
     },
     {
      "P": "Je code en C",
      "R": "12"
     },
     {
-     "P": "bonjour tout le monde",
-     "R": "21"
+     "P": "Partiel de C demain",
+     "R": "19"
+    },
+    {
+     "P": "Une ligne de texte",
+     "R": "18"
+    },
+    {
+     "P": "Le langage C",
+     "R": "12"
+    },
+    {
+     "P": "Vive les TD",
+     "R": "11"
+    },
+    {
+     "P": "Hello World",
+     "R": "11"
+    },
+    {
+     "P": "Bonjour ESILV",
+     "R": "13"
     }
    ]
   },
@@ -882,35 +882,17 @@
    "duree": 0.33,
    "explication": "`strcmp` compare lettre par lettre ; à la première différence, [[EXP]] Le résultat est donc **[[R]]**.",
    "vals": {
-    "A": "lune",
-    "B": "lapin",
-    "R": "positif",
-    "EXP": "`'u'` est après `'a'` dans l'alphabet."
+    "A": "zebre",
+    "B": "zero",
+    "R": "négatif",
+    "EXP": "`'b'` est avant `'r'` dans l'alphabet."
    },
    "variantes": [
-    {
-     "A": "lune",
-     "B": "lapin",
-     "R": "positif",
-     "EXP": "`'u'` est après `'a'` dans l'alphabet."
-    },
     {
      "A": "zebre",
      "B": "zero",
      "R": "négatif",
      "EXP": "`'b'` est avant `'r'` dans l'alphabet."
-    },
-    {
-     "A": "porte",
-     "B": "pomme",
-     "R": "positif",
-     "EXP": "`'r'` est après `'m'` dans l'alphabet."
-    },
-    {
-     "A": "chat",
-     "B": "chien",
-     "R": "négatif",
-     "EXP": "`'a'` est avant `'i'` dans l'alphabet."
     },
     {
      "A": "table",
@@ -925,16 +907,34 @@
      "EXP": "`'i'` est avant `'r'` dans l'alphabet."
     },
     {
-     "A": "soleil",
-     "B": "sol",
+     "A": "lune",
+     "B": "lapin",
      "R": "positif",
-     "EXP": "« sol » s'arrête avant « soleil » (le plus court est le plus petit)."
+     "EXP": "`'u'` est après `'a'` dans l'alphabet."
+    },
+    {
+     "A": "chat",
+     "B": "chien",
+     "R": "négatif",
+     "EXP": "`'a'` est avant `'i'` dans l'alphabet."
+    },
+    {
+     "A": "porte",
+     "B": "pomme",
+     "R": "positif",
+     "EXP": "`'r'` est après `'m'` dans l'alphabet."
     },
     {
      "A": "arbre",
      "B": "avion",
      "R": "négatif",
      "EXP": "`'r'` est avant `'v'` dans l'alphabet."
+    },
+    {
+     "A": "soleil",
+     "B": "sol",
+     "R": "positif",
+     "EXP": "« sol » s'arrête avant « soleil » (le plus court est le plus petit)."
     }
    ]
   },
@@ -953,18 +953,10 @@
    "duree": 0.67,
    "explication": "`strcpy` met « [[A]] » dans `d` (en écrasant tout), puis `strcat` **ajoute** « [[B]] » à la fin : **[[A]][[B]]**.",
    "vals": {
-    "A": "Programm",
-    "B": "ation"
+    "A": "arc-en",
+    "B": "-ciel"
    },
    "variantes": [
-    {
-     "A": "Programm",
-     "B": "ation"
-    },
-    {
-     "A": "super",
-     "B": "marche"
-    },
     {
      "A": "arc-en",
      "B": "-ciel"
@@ -980,6 +972,14 @@
     {
      "A": "Bon",
      "B": "jour"
+    },
+    {
+     "A": "super",
+     "B": "marche"
+    },
+    {
+     "A": "Programm",
+     "B": "ation"
     },
     {
      "A": "BIC",
@@ -1015,7 +1015,7 @@
    "notion": "6.4",
    "origine": "td",
    "titre": "Minuscules et majuscules",
-   "enonce": "**Sans fonction prédéfinie** (`islower`, `isupper`, `ctype.h`… interdits) : écris un programme qui lit une ligne de texte et affiche le nombre de **lettres minuscules**, puis le nombre de **lettres majuscules**. (Tableaux_chainex, intermédiaire ex. 12)\n\n**Exemple**\n```text\nEntrée :\n[[P]]\nSortie :\n[[S3_0]]\n```",
+   "enonce": "Le but : reconnaître minuscules et majuscules grâce à leurs codes, **sans fonction prédéfinie** (`islower`, `isupper`, `ctype.h`… interdits). (Tableaux_chainex, intermédiaire ex. 12)\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. une ligne de texte (espaces compris).\n\n**Ce qu'il affiche** : le nombre de lettres **minuscules**, une espace, puis le nombre de lettres **majuscules**.\n\n**Exemple**\n```text\nEntrée :\n[[P]]\nSortie :\n[[S3_0]]\n```",
    "guidage": "**Idée** : les codes des lettres se suivent. Un caractère `c` est une minuscule s'il est entre `'a'` et `'z'`, une majuscule s'il est entre `'A'` et `'Z'`. On parcourt la ligne jusqu'au `'\\0'`.",
    "duree": 6,
    "etapes": [
@@ -1052,7 +1052,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Premier jalon : lis la ligne avec `fgets`, parcours-la jusqu'au `'\\0'`, et affiche seulement le nombre de minuscules.",
+     "consigne": "Premier jalon, les minuscules :\n1. lis la ligne : `char s[100];` puis `fgets(s, sizeof(s), stdin);` ;\n2. `for (int i = 0; s[i] != '\\0'; i++)` : si `s[i] >= 'a' && s[i] <= 'z'`, ajoute 1 à `min` ;\n3. affiche `min`.",
      "question": "Compte les minuscules.",
      "verif": {
       "mode": "c",
@@ -1077,7 +1077,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Compte aussi les **majuscules** (entre `'A'` et `'Z'`) et affiche les deux nombres : `minuscules majuscules`.",
+     "consigne": "Ajoute les majuscules :\n1. dans la même boucle, si `s[i] >= 'A' && s[i] <= 'Z'`, ajoute 1 à `maj` ;\n2. affiche `min` puis `maj`, séparés par une espace.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -1115,43 +1115,23 @@
    ],
    "vals": {
     "P": "Le C, C'EST BIEN !",
-    "Q": "Une ligne de texte",
+    "Q": "bonjour tout le monde",
     "MIN": "1",
     "S2_0": "1",
-    "S2_1": "14",
+    "S2_1": "18",
     "S3_0": "1 10",
-    "S3_1": "14 1",
+    "S3_1": "18 0",
     "S3_2": "3 0"
    },
    "variantes": [
     {
      "P": "Le C, C'EST BIEN !",
-     "Q": "Une ligne de texte",
+     "Q": "bonjour tout le monde",
      "MIN": "1",
      "S2_0": "1",
-     "S2_1": "14",
+     "S2_1": "18",
      "S3_0": "1 10",
-     "S3_1": "14 1",
-     "S3_2": "3 0"
-    },
-    {
-     "P": "Le langage C",
-     "Q": "Le C, C'EST BIEN !",
-     "MIN": "8",
-     "S2_0": "8",
-     "S2_1": "1",
-     "S3_0": "8 2",
-     "S3_1": "1 10",
-     "S3_2": "3 0"
-    },
-    {
-     "P": "Partiel de C demain",
-     "Q": "Une ligne de texte",
-     "MIN": "14",
-     "S2_0": "14",
-     "S2_1": "14",
-     "S3_0": "14 2",
-     "S3_1": "14 1",
+     "S3_1": "18 0",
      "S3_2": "3 0"
     },
     {
@@ -1165,6 +1145,16 @@
      "S3_2": "3 0"
     },
     {
+     "P": "Partiel de C demain",
+     "Q": "Vive les TD",
+     "MIN": "14",
+     "S2_0": "14",
+     "S2_1": "6",
+     "S3_0": "14 2",
+     "S3_1": "6 3",
+     "S3_2": "3 0"
+    },
+    {
      "P": "Salut le monde",
      "Q": "Vive les TD",
      "MIN": "11",
@@ -1175,33 +1165,43 @@
      "S3_2": "3 0"
     },
     {
+     "P": "Une ligne de texte",
+     "Q": "Le langage C",
+     "MIN": "14",
+     "S2_0": "14",
+     "S2_1": "8",
+     "S3_0": "14 1",
+     "S3_1": "8 2",
+     "S3_2": "3 0"
+    },
+    {
      "P": "Hello World",
-     "Q": "Le C, C'EST BIEN !",
+     "Q": "Partiel de C demain",
      "MIN": "8",
      "S2_0": "8",
-     "S2_1": "1",
+     "S2_1": "14",
      "S3_0": "8 2",
-     "S3_1": "1 10",
+     "S3_1": "14 2",
      "S3_2": "3 0"
     },
     {
-     "P": "Je code en C",
-     "Q": "Vive les TD",
-     "MIN": "7",
-     "S2_0": "7",
-     "S2_1": "6",
-     "S3_0": "7 2",
-     "S3_1": "6 3",
+     "P": "Le langage C",
+     "Q": "bonjour tout le monde",
+     "MIN": "8",
+     "S2_0": "8",
+     "S2_1": "18",
+     "S3_0": "8 2",
+     "S3_1": "18 0",
      "S3_2": "3 0"
     },
     {
-     "P": "Le C, C'EST BIEN !",
-     "Q": "Bonjour ESILV",
-     "MIN": "1",
-     "S2_0": "1",
-     "S2_1": "6",
-     "S3_0": "1 10",
-     "S3_1": "6 6",
+     "P": "Bonjour ESILV",
+     "Q": "Salut le monde",
+     "MIN": "6",
+     "S2_0": "6",
+     "S2_1": "11",
+     "S3_0": "6 6",
+     "S3_1": "11 1",
      "S3_2": "3 0"
     }
    ]
@@ -1212,7 +1212,7 @@
    "notion": "6.4",
    "origine": "generee",
    "titre": "Longueur sans strlen",
-   "enonce": "Écris un programme qui lit une ligne (avec `fgets`) et affiche sa longueur, **sans utiliser `strlen`**. Le `'\\n'` que `fgets` garde à la fin ne compte pas.\n\n**Exemple**\n```text\nEntrée :\n[[P]]\nSortie :\n[[N]]\n```",
+   "enonce": "Le but : parcourir une chaîne jusqu'à sa fin, sans `strlen`.\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. une ligne de texte.\n\n**Ce qu'il affiche** : sa longueur, **sans compter** le `'\\n'` que `fgets` garde à la fin.\n\n**Exemple**\n```text\nEntrée :\n[[P]]\nSortie :\n[[N]]\n```",
    "guidage": "**Plan** : parcourir la chaîne en comptant, jusqu'au `'\\0'` **ou** au `'\\n'`.\n\n**Piège** : `fgets` range aussi le `'\\n'` dans la chaîne ; il ne doit pas être compté.",
    "duree": 4,
    "etapes": [
@@ -1248,7 +1248,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Premier jalon : lis une ligne avec `fgets` et compte les caractères jusqu'au `'\\0'` (le `'\\n'` est encore compté à ce stade, c'est normal).",
+     "consigne": "Premier jalon :\n1. lis la ligne : `char s[100];` puis `fgets(s, sizeof(s), stdin);` ;\n2. `int n = 0;` puis `while (s[n] != '\\0') n++;` ;\n3. affiche `n` (le `'\\n'` est encore compté à ce stade).",
      "question": "Compte jusqu'au `'\\0'`.",
      "verif": {
       "mode": "c",
@@ -1283,7 +1283,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Arrête aussi la boucle sur le `'\\n'`, pour qu'il ne soit plus compté.",
+     "consigne": "Ne compte plus le `'\\n'` :\n1. change la condition du `while` en `s[n] != '\\0' && s[n] != '\\n'` ;\n2. le reste ne change pas.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -1320,74 +1320,22 @@
     }
    ],
    "vals": {
-    "P": "Salut le monde",
-    "W": "chaine",
-    "N": "14",
-    "NW": "6",
-    "NW1": "5",
-    "S2_0": "15",
-    "S2_1": "7",
+    "P": "Vive les TD",
+    "W": "Paris",
+    "N": "11",
+    "NW": "5",
+    "NW1": "4",
+    "S2_0": "12",
+    "S2_1": "6",
     "S2_2": "1",
-    "S3_0": "14",
-    "S3_1": "6",
+    "S3_0": "11",
+    "S3_1": "5",
     "S3_2": "0"
    },
    "variantes": [
     {
-     "P": "Salut le monde",
-     "W": "chaine",
-     "N": "14",
-     "NW": "6",
-     "NW1": "5",
-     "S2_0": "15",
-     "S2_1": "7",
-     "S2_2": "1",
-     "S3_0": "14",
-     "S3_1": "6",
-     "S3_2": "0"
-    },
-    {
-     "P": "Salut le monde",
-     "W": "Bonjour",
-     "N": "14",
-     "NW": "7",
-     "NW1": "6",
-     "S2_0": "15",
-     "S2_1": "8",
-     "S2_2": "1",
-     "S3_0": "14",
-     "S3_1": "7",
-     "S3_2": "0"
-    },
-    {
-     "P": "Bonjour ESILV",
-     "W": "ecran",
-     "N": "13",
-     "NW": "5",
-     "NW1": "4",
-     "S2_0": "14",
-     "S2_1": "6",
-     "S2_2": "1",
-     "S3_0": "13",
-     "S3_1": "5",
-     "S3_2": "0"
-    },
-    {
-     "P": "bonjour tout le monde",
-     "W": "Bonjour",
-     "N": "21",
-     "NW": "7",
-     "NW1": "6",
-     "S2_0": "22",
-     "S2_1": "8",
-     "S2_2": "1",
-     "S3_0": "21",
-     "S3_1": "7",
-     "S3_2": "0"
-    },
-    {
      "P": "Vive les TD",
-     "W": "kayak",
+     "W": "Paris",
      "N": "11",
      "NW": "5",
      "NW1": "4",
@@ -1399,34 +1347,86 @@
      "S3_2": "0"
     },
     {
-     "P": "Une ligne de texte",
-     "W": "Paris",
+     "P": "Le C, C'EST BIEN !",
+     "W": "Bonjour",
      "N": "18",
-     "NW": "5",
-     "NW1": "4",
+     "NW": "7",
+     "NW1": "6",
      "S2_0": "19",
-     "S2_1": "6",
+     "S2_1": "8",
      "S2_2": "1",
      "S3_0": "18",
-     "S3_1": "5",
+     "S3_1": "7",
      "S3_2": "0"
     },
     {
-     "P": "bonjour tout le monde",
-     "W": "ecran",
-     "N": "21",
+     "P": "Partiel de C demain",
+     "W": "Paris",
+     "N": "19",
      "NW": "5",
      "NW1": "4",
-     "S2_0": "22",
+     "S2_0": "20",
      "S2_1": "6",
      "S2_2": "1",
-     "S3_0": "21",
+     "S3_0": "19",
      "S3_1": "5",
      "S3_2": "0"
     },
     {
+     "P": "Vive les TD",
+     "W": "tableau",
+     "N": "11",
+     "NW": "7",
+     "NW1": "6",
+     "S2_0": "12",
+     "S2_1": "8",
+     "S2_2": "1",
+     "S3_0": "11",
+     "S3_1": "7",
+     "S3_2": "0"
+    },
+    {
+     "P": "Vive les TD",
+     "W": "Bonjour",
+     "N": "11",
+     "NW": "7",
+     "NW1": "6",
+     "S2_0": "12",
+     "S2_1": "8",
+     "S2_2": "1",
+     "S3_0": "11",
+     "S3_1": "7",
+     "S3_2": "0"
+    },
+    {
+     "P": "Le langage C",
+     "W": "ESILV",
+     "N": "12",
+     "NW": "5",
+     "NW1": "4",
+     "S2_0": "13",
+     "S2_1": "6",
+     "S2_2": "1",
+     "S3_0": "12",
+     "S3_1": "5",
+     "S3_2": "0"
+    },
+    {
+     "P": "Une ligne de texte",
+     "W": "clavier",
+     "N": "18",
+     "NW": "7",
+     "NW1": "6",
+     "S2_0": "19",
+     "S2_1": "8",
+     "S2_2": "1",
+     "S3_0": "18",
+     "S3_1": "7",
+     "S3_2": "0"
+    },
+    {
      "P": "bonjour tout le monde",
-     "W": "langage",
+     "W": "Bonjour",
      "N": "21",
      "NW": "7",
      "NW1": "6",
@@ -1445,7 +1445,7 @@
    "notion": "6.3",
    "origine": "generee",
    "titre": "Lire une ligne proprement",
-   "enonce": "Écris un programme qui lit une ligne avec `fgets`, **retire le `'\\n'` final**, puis l'affiche entre crochets.\n\n**Exemple**\n```text\nEntrée :\n[[P]]\nSortie :\n[[[P]]]\n```",
+   "enonce": "Le but : lire une ligne avec `fgets` et enlever le `'\\n'` qu'il garde à la fin.\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. une ligne de texte.\n\n**Ce qu'il affiche** : la ligne entre crochets, sur une seule ligne.\n\n**Exemple**\n```text\nEntrée :\n[[P]]\nSortie :\n[[[P]]]\n```",
    "guidage": "**Plan** : 1. `fgets` range le `'\\n'` dans la chaîne → 2. `strcspn(s, \"\\n\")` donne sa position → 3. on y met un `'\\0'` → 4. afficher entre crochets.",
    "duree": 4,
    "etapes": [
@@ -1481,7 +1481,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Premier jalon : lis une ligne avec `fgets` et affiche-la entre crochets **sans** retirer le `'\\n'`. Regarde où atterrit le `]`.",
+     "consigne": "Premier jalon, sans retirer le `'\\n'` :\n1. lis la ligne : `char s[100];` puis `fgets(s, sizeof(s), stdin);` ;\n2. affiche `printf(\"[%s]\\n\", s);` et regarde où tombe le `]`.",
      "question": "Crochets sans retrait.",
      "verif": {
       "mode": "c",
@@ -1512,7 +1512,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Ajoute, juste après le `fgets`, l'instruction qui retire le `'\\n'` : le `]` doit rester sur la même ligne que le texte.",
+     "consigne": "Retire le `'\\n'` :\n1. juste après le `fgets`, ajoute `s[strcspn(s, \"\\n\")] = '\\0';` (et `#include <string.h>` en haut) ;\n2. l'affichage ne change pas : le `]` reste maintenant sur la même ligne.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -1548,45 +1548,45 @@
     }
    ],
    "vals": {
-    "P": "Le C, C'EST BIEN !",
-    "Q": "Je code en C",
-    "N": "18",
-    "S2_0": "[Le C, C'EST BIEN !\n]",
+    "P": "Bonjour ESILV",
+    "Q": "Vive les TD",
+    "N": "13",
+    "S2_0": "[Bonjour ESILV\n]",
     "S2_1": "[C\n]",
-    "S3_0": "[Le C, C'EST BIEN !]",
+    "S3_0": "[Bonjour ESILV]",
     "S3_1": "[C]",
-    "S3_2": "[Je code en C]"
+    "S3_2": "[Vive les TD]"
    },
    "variantes": [
     {
-     "P": "Le C, C'EST BIEN !",
-     "Q": "Je code en C",
-     "N": "18",
-     "S2_0": "[Le C, C'EST BIEN !\n]",
+     "P": "Bonjour ESILV",
+     "Q": "Vive les TD",
+     "N": "13",
+     "S2_0": "[Bonjour ESILV\n]",
      "S2_1": "[C\n]",
-     "S3_0": "[Le C, C'EST BIEN !]",
+     "S3_0": "[Bonjour ESILV]",
      "S3_1": "[C]",
-     "S3_2": "[Je code en C]"
+     "S3_2": "[Vive les TD]"
     },
     {
      "P": "Partiel de C demain",
-     "Q": "Bonjour ESILV",
+     "Q": "Une ligne de texte",
      "N": "19",
      "S2_0": "[Partiel de C demain\n]",
      "S2_1": "[C\n]",
      "S3_0": "[Partiel de C demain]",
      "S3_1": "[C]",
-     "S3_2": "[Bonjour ESILV]"
+     "S3_2": "[Une ligne de texte]"
     },
     {
-     "P": "Salut le monde",
-     "Q": "Le langage C",
-     "N": "14",
-     "S2_0": "[Salut le monde\n]",
+     "P": "Bonjour ESILV",
+     "Q": "Le C, C'EST BIEN !",
+     "N": "13",
+     "S2_0": "[Bonjour ESILV\n]",
      "S2_1": "[C\n]",
-     "S3_0": "[Salut le monde]",
+     "S3_0": "[Bonjour ESILV]",
      "S3_1": "[C]",
-     "S3_2": "[Le langage C]"
+     "S3_2": "[Le C, C'EST BIEN !]"
     },
     {
      "P": "Le C, C'EST BIEN !",
@@ -1597,6 +1597,26 @@
      "S3_0": "[Le C, C'EST BIEN !]",
      "S3_1": "[C]",
      "S3_2": "[Bonjour ESILV]"
+    },
+    {
+     "P": "Une ligne de texte",
+     "Q": "Le langage C",
+     "N": "18",
+     "S2_0": "[Une ligne de texte\n]",
+     "S2_1": "[C\n]",
+     "S3_0": "[Une ligne de texte]",
+     "S3_1": "[C]",
+     "S3_2": "[Le langage C]"
+    },
+    {
+     "P": "Hello World",
+     "Q": "Vive les TD",
+     "N": "11",
+     "S2_0": "[Hello World\n]",
+     "S2_1": "[C\n]",
+     "S3_0": "[Hello World]",
+     "S3_1": "[C]",
+     "S3_2": "[Vive les TD]"
     },
     {
      "P": "Salut le monde",
@@ -1610,31 +1630,11 @@
     },
     {
      "P": "Une ligne de texte",
-     "Q": "bonjour tout le monde",
+     "Q": "Salut le monde",
      "N": "18",
      "S2_0": "[Une ligne de texte\n]",
      "S2_1": "[C\n]",
      "S3_0": "[Une ligne de texte]",
-     "S3_1": "[C]",
-     "S3_2": "[bonjour tout le monde]"
-    },
-    {
-     "P": "Le C, C'EST BIEN !",
-     "Q": "Une ligne de texte",
-     "N": "18",
-     "S2_0": "[Le C, C'EST BIEN !\n]",
-     "S2_1": "[C\n]",
-     "S3_0": "[Le C, C'EST BIEN !]",
-     "S3_1": "[C]",
-     "S3_2": "[Une ligne de texte]"
-    },
-    {
-     "P": "Le langage C",
-     "Q": "Salut le monde",
-     "N": "12",
-     "S2_0": "[Le langage C\n]",
-     "S2_1": "[C\n]",
-     "S3_0": "[Le langage C]",
      "S3_1": "[C]",
      "S3_2": "[Salut le monde]"
     }
@@ -1646,7 +1646,7 @@
    "notion": "6.5",
    "origine": "generee",
    "titre": "Nom complet",
-   "enonce": "Écris un programme qui lit un prénom puis un nom (deux mots), construit dans un tableau `complet` la chaîne `Prénom Nom` avec `strcpy` et `strcat`, puis affiche `complet` et sa longueur.\n\n**Exemple**\n```text\nEntrée :\n[[PR]] [[NO]]\nSortie :\n[[PR]] [[NO]] [[L]]\n```",
+   "enonce": "Le but : assembler une chaîne à partir de morceaux avec `strcpy` et `strcat`.\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. un prénom (un mot) ;\n2. un nom (un mot).\n\n**Ce qu'il fait** :\n1. construit dans `char complet[100]` la chaîne `prénom nom`.\n\n**Ce qu'il affiche** : `complet`, une espace, puis sa longueur.\n\n**Exemple**\n```text\nEntrée :\n[[PR]] [[NO]]\nSortie :\n[[PR]] [[NO]] [[L]]\n```",
    "guidage": "**Plan** : 1. `strcpy(complet, prenom)` → 2. `strcat(complet, \" \")` → 3. `strcat(complet, nom)` → 4. afficher `complet` et `strlen(complet)`.\n\n**À retenir** : `strcpy` écrase, `strcat` ajoute à la fin.",
    "duree": 5,
    "etapes": [
@@ -1698,7 +1698,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Premier jalon : lis le prénom et le nom (`scanf`), construis `complet` avec `strcpy` puis deux `strcat` (l'espace, puis le nom), et affiche seulement `complet`.",
+     "consigne": "Premier jalon :\n1. lis le prénom et le nom dans deux tableaux de `char` ;\n2. `strcpy(complet, prenom);` puis `strcat(complet, \" \");` puis `strcat(complet, nom);` ;\n3. affiche `complet`.",
      "question": "Construis la chaîne.",
      "verif": {
       "mode": "c",
@@ -1729,7 +1729,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Affiche aussi la **longueur** de `complet` après la chaîne (avec `strlen`, converti en `int`).",
+     "consigne": "Ajoute la longueur :\n1. sur la même ligne, après une espace, affiche `(int)strlen(complet)` avec `%d`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -1761,90 +1761,18 @@
     }
    ],
    "vals": {
-    "PR": "Margaret",
-    "NO": "Hamilton",
-    "E1": "Ada Lovelace",
-    "LP": "8",
-    "LN": "8",
-    "L": "17",
-    "S3_0": "Margaret Hamilton",
-    "S3_1": "Ada Lovelace",
-    "S4_0": "Margaret Hamilton 17",
-    "S4_1": "Ada Lovelace 12"
+    "PR": "Alan",
+    "NO": "Turing",
+    "E1": "Margaret Hamilton",
+    "LP": "4",
+    "LN": "6",
+    "L": "11",
+    "S3_0": "Alan Turing",
+    "S3_1": "Margaret Hamilton",
+    "S4_0": "Alan Turing 11",
+    "S4_1": "Margaret Hamilton 17"
    },
    "variantes": [
-    {
-     "PR": "Margaret",
-     "NO": "Hamilton",
-     "E1": "Ada Lovelace",
-     "LP": "8",
-     "LN": "8",
-     "L": "17",
-     "S3_0": "Margaret Hamilton",
-     "S3_1": "Ada Lovelace",
-     "S4_0": "Margaret Hamilton 17",
-     "S4_1": "Ada Lovelace 12"
-    },
-    {
-     "PR": "Grace",
-     "NO": "Hopper",
-     "E1": "Linus Torvalds",
-     "LP": "5",
-     "LN": "6",
-     "L": "12",
-     "S3_0": "Grace Hopper",
-     "S3_1": "Linus Torvalds",
-     "S4_0": "Grace Hopper 12",
-     "S4_1": "Linus Torvalds 14"
-    },
-    {
-     "PR": "Alan",
-     "NO": "Turing",
-     "E1": "Ada Lovelace",
-     "LP": "4",
-     "LN": "6",
-     "L": "11",
-     "S3_0": "Alan Turing",
-     "S3_1": "Ada Lovelace",
-     "S4_0": "Alan Turing 11",
-     "S4_1": "Ada Lovelace 12"
-    },
-    {
-     "PR": "Margaret",
-     "NO": "Hamilton",
-     "E1": "Ken Thompson",
-     "LP": "8",
-     "LN": "8",
-     "L": "17",
-     "S3_0": "Margaret Hamilton",
-     "S3_1": "Ken Thompson",
-     "S4_0": "Margaret Hamilton 17",
-     "S4_1": "Ken Thompson 12"
-    },
-    {
-     "PR": "Linus",
-     "NO": "Torvalds",
-     "E1": "Dennis Ritchie",
-     "LP": "5",
-     "LN": "8",
-     "L": "14",
-     "S3_0": "Linus Torvalds",
-     "S3_1": "Dennis Ritchie",
-     "S4_0": "Linus Torvalds 14",
-     "S4_1": "Dennis Ritchie 14"
-    },
-    {
-     "PR": "Grace",
-     "NO": "Hopper",
-     "E1": "Alan Turing",
-     "LP": "5",
-     "LN": "6",
-     "L": "12",
-     "S3_0": "Grace Hopper",
-     "S3_1": "Alan Turing",
-     "S4_0": "Grace Hopper 12",
-     "S4_1": "Alan Turing 11"
-    },
     {
      "PR": "Alan",
      "NO": "Turing",
@@ -1858,16 +1786,88 @@
      "S4_1": "Margaret Hamilton 17"
     },
     {
+     "PR": "Alan",
+     "NO": "Turing",
+     "E1": "Linus Torvalds",
+     "LP": "4",
+     "LN": "6",
+     "L": "11",
+     "S3_0": "Alan Turing",
+     "S3_1": "Linus Torvalds",
+     "S4_0": "Alan Turing 11",
+     "S4_1": "Linus Torvalds 14"
+    },
+    {
+     "PR": "Ada",
+     "NO": "Lovelace",
+     "E1": "Grace Hopper",
+     "LP": "3",
+     "LN": "8",
+     "L": "12",
+     "S3_0": "Ada Lovelace",
+     "S3_1": "Grace Hopper",
+     "S4_0": "Ada Lovelace 12",
+     "S4_1": "Grace Hopper 12"
+    },
+    {
      "PR": "Ken",
      "NO": "Thompson",
-     "E1": "Linus Torvalds",
+     "E1": "Margaret Hamilton",
      "LP": "3",
      "LN": "8",
      "L": "12",
      "S3_0": "Ken Thompson",
-     "S3_1": "Linus Torvalds",
+     "S3_1": "Margaret Hamilton",
      "S4_0": "Ken Thompson 12",
+     "S4_1": "Margaret Hamilton 17"
+    },
+    {
+     "PR": "Margaret",
+     "NO": "Hamilton",
+     "E1": "Linus Torvalds",
+     "LP": "8",
+     "LN": "8",
+     "L": "17",
+     "S3_0": "Margaret Hamilton",
+     "S3_1": "Linus Torvalds",
+     "S4_0": "Margaret Hamilton 17",
      "S4_1": "Linus Torvalds 14"
+    },
+    {
+     "PR": "Ada",
+     "NO": "Lovelace",
+     "E1": "Ken Thompson",
+     "LP": "3",
+     "LN": "8",
+     "L": "12",
+     "S3_0": "Ada Lovelace",
+     "S3_1": "Ken Thompson",
+     "S4_0": "Ada Lovelace 12",
+     "S4_1": "Ken Thompson 12"
+    },
+    {
+     "PR": "Grace",
+     "NO": "Hopper",
+     "E1": "Margaret Hamilton",
+     "LP": "5",
+     "LN": "6",
+     "L": "12",
+     "S3_0": "Grace Hopper",
+     "S3_1": "Margaret Hamilton",
+     "S4_0": "Grace Hopper 12",
+     "S4_1": "Margaret Hamilton 17"
+    },
+    {
+     "PR": "Ada",
+     "NO": "Lovelace",
+     "E1": "Margaret Hamilton",
+     "LP": "3",
+     "LN": "8",
+     "L": "12",
+     "S3_0": "Ada Lovelace",
+     "S3_1": "Margaret Hamilton",
+     "S4_0": "Ada Lovelace 12",
+     "S4_1": "Margaret Hamilton 17"
     }
    ]
   },
@@ -1877,7 +1877,7 @@
    "notion": "6.5",
    "origine": "generee",
    "titre": "Ordre alphabétique",
-   "enonce": "Écris un programme qui lit deux mots et affiche `avant` si le premier vient avant le second dans l'ordre alphabétique (au sens de `strcmp`), `apres` s'il vient après, `egal` s'ils sont identiques.\n\n**Exemple**\n```text\nEntrée :\n[[A]] [[B]]\nSortie :\n[[S3_0]]\n```",
+   "enonce": "Le but : comparer deux chaînes avec `strcmp`.\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. un premier mot ;\n2. un second mot.\n\n**Ce qu'il affiche** : `avant` si le premier vient avant le second dans l'ordre alphabétique, `apres` s'il vient après, `egal` s'ils sont identiques.\n\n**Exemple**\n```text\nEntrée :\n[[A]] [[B]]\nSortie :\n[[S3_0]]\n```",
    "guidage": "**Plan** : `strcmp(a, b)` renvoie un nombre négatif, nul ou positif → un `if / else if / else` pour les trois cas.",
    "duree": 4,
    "etapes": [
@@ -1914,7 +1914,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Premier jalon : lis deux mots et affiche `egal` s'ils sont identiques, `different` sinon (avec `strcmp`).",
+     "consigne": "Premier jalon :\n1. lis les deux mots ;\n2. si `strcmp(a, b) == 0`, affiche `egal`, sinon `different`.",
      "question": "Égaux ou différents ?",
      "verif": {
       "mode": "c",
@@ -1945,7 +1945,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Distingue maintenant les trois cas selon le signe de `strcmp` : négatif → `avant`, positif → `apres`, nul → `egal`.",
+     "consigne": "Distingue les trois cas :\n1. range `int c = strcmp(a, b);` ;\n2. si `c < 0` → `avant` ; si `c > 0` → `apres` ; sinon → `egal`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -1981,7 +1981,7 @@
     }
    ],
    "vals": {
-    "A": "zebre",
+    "A": "porte",
     "B": "maison",
     "R": "positif",
     "AV": "après",
@@ -1993,18 +1993,7 @@
    },
    "variantes": [
     {
-     "A": "zebre",
-     "B": "maison",
-     "R": "positif",
-     "AV": "après",
-     "S2_0": "egal",
-     "S2_1": "different",
-     "S3_0": "apres",
-     "S3_1": "avant",
-     "S3_2": "egal"
-    },
-    {
-     "A": "pomme",
+     "A": "porte",
      "B": "maison",
      "R": "positif",
      "AV": "après",
@@ -2016,7 +2005,7 @@
     },
     {
      "A": "chien",
-     "B": "maison",
+     "B": "lune",
      "R": "negatif",
      "AV": "avant",
      "S2_0": "egal",
@@ -2026,8 +2015,8 @@
      "S3_2": "egal"
     },
     {
-     "A": "avion",
-     "B": "zebre",
+     "A": "maison",
+     "B": "table",
      "R": "negatif",
      "AV": "avant",
      "S2_0": "egal",
@@ -2037,8 +2026,19 @@
      "S3_2": "egal"
     },
     {
-     "A": "table",
+     "A": "arbre",
      "B": "pomme",
+     "R": "negatif",
+     "AV": "avant",
+     "S2_0": "egal",
+     "S2_1": "different",
+     "S3_0": "avant",
+     "S3_1": "apres",
+     "S3_2": "egal"
+    },
+    {
+     "A": "maison",
+     "B": "chien",
      "R": "positif",
      "AV": "après",
      "S2_0": "egal",
@@ -2048,18 +2048,7 @@
      "S3_2": "egal"
     },
     {
-     "A": "zebre",
-     "B": "avion",
-     "R": "positif",
-     "AV": "après",
-     "S2_0": "egal",
-     "S2_1": "different",
-     "S3_0": "apres",
-     "S3_1": "avant",
-     "S3_2": "egal"
-    },
-    {
-     "A": "zebre",
+     "A": "chien",
      "B": "arbre",
      "R": "positif",
      "AV": "après",
@@ -2070,8 +2059,19 @@
      "S3_2": "egal"
     },
     {
-     "A": "maison",
-     "B": "lune",
+     "A": "avion",
+     "B": "chat",
+     "R": "negatif",
+     "AV": "avant",
+     "S2_0": "egal",
+     "S2_1": "different",
+     "S3_0": "avant",
+     "S3_1": "apres",
+     "S3_2": "egal"
+    },
+    {
+     "A": "porte",
+     "B": "avion",
      "R": "positif",
      "AV": "après",
      "S2_0": "egal",
@@ -2088,7 +2088,7 @@
    "notion": "6.4",
    "origine": "generee",
    "titre": "Inverser un mot",
-   "enonce": "Écris un programme qui lit un mot et l'affiche à l'envers.\n\n**Exemple**\n```text\nEntrée :\n[[W]]\nSortie :\n[[INV]]\n```",
+   "enonce": "Le but : parcourir une chaîne à l'envers.\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. un mot.\n\n**Ce qu'il affiche** : ce mot à l'envers.\n\n**Exemple**\n```text\nEntrée :\n[[W]]\nSortie :\n[[INV]]\n```",
    "guidage": "**Plan** : 1. longueur `n` du mot → 2. boucle qui part du dernier indice (`n - 1`) et descend jusqu'à 0 → 3. afficher chaque caractère avec `%c`.",
    "duree": 4,
    "etapes": [
@@ -2124,7 +2124,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Premier jalon : lis un mot (`%99s`) et affiche sa longueur `n` (avec `strlen`).",
+     "consigne": "Premier jalon :\n1. lis le mot avec `scanf(\"%99s\", s);` ;\n2. `int n = strlen(s);` ;\n3. affiche `n`.",
      "question": "Affiche la longueur.",
      "verif": {
       "mode": "c",
@@ -2153,7 +2153,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Affiche maintenant le mot à l'envers : la boucle descendante affiche `s[i]` avec `%c`, puis un retour à la ligne après la boucle.",
+     "consigne": "Affiche à l'envers :\n1. remplace l'affichage de `n` par `for (int i = n - 1; i >= 0; i--) printf(\"%c\", s[i]);` ;\n2. termine par `printf(\"\\n\");`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -2183,100 +2183,87 @@
     }
    ],
    "vals": {
-    "W": "souris",
-    "W2": "octet",
-    "N": "6",
-    "N1": "5",
-    "INV": "siruos",
-    "S2_0": "6",
+    "W": "langage",
+    "W2": "Bonjour",
+    "N": "7",
+    "N1": "6",
+    "INV": "egagnal",
+    "S2_0": "7",
     "S2_1": "1",
-    "S2_2": "5",
-    "S3_0": "siruos",
+    "S2_2": "7",
+    "S3_0": "egagnal",
     "S3_1": "a",
-    "S3_2": "tetco"
+    "S3_2": "ruojnoB"
    },
    "variantes": [
     {
-     "W": "souris",
-     "W2": "octet",
-     "N": "6",
-     "N1": "5",
-     "INV": "siruos",
-     "S2_0": "6",
-     "S2_1": "1",
-     "S2_2": "5",
-     "S3_0": "siruos",
-     "S3_1": "a",
-     "S3_2": "tetco"
-    },
-    {
-     "W": "chaine",
-     "W2": "kayak",
-     "N": "6",
-     "N1": "5",
-     "INV": "eniahc",
-     "S2_0": "6",
-     "S2_1": "1",
-     "S2_2": "5",
-     "S3_0": "eniahc",
-     "S3_1": "a",
-     "S3_2": "kayak"
-    },
-    {
-     "W": "tableau",
-     "W2": "octet",
+     "W": "langage",
+     "W2": "Bonjour",
      "N": "7",
      "N1": "6",
-     "INV": "uaelbat",
+     "INV": "egagnal",
      "S2_0": "7",
      "S2_1": "1",
-     "S2_2": "5",
-     "S3_0": "uaelbat",
+     "S2_2": "7",
+     "S3_0": "egagnal",
      "S3_1": "a",
-     "S3_2": "tetco"
-    },
-    {
-     "W": "Bonjour",
-     "W2": "souris",
-     "N": "7",
-     "N1": "6",
-     "INV": "ruojnoB",
-     "S2_0": "7",
-     "S2_1": "1",
-     "S2_2": "6",
-     "S3_0": "ruojnoB",
-     "S3_1": "a",
-     "S3_2": "siruos"
-    },
-    {
-     "W": "ecran",
-     "W2": "Paris",
-     "N": "5",
-     "N1": "4",
-     "INV": "narce",
-     "S2_0": "5",
-     "S2_1": "1",
-     "S2_2": "5",
-     "S3_0": "narce",
-     "S3_1": "a",
-     "S3_2": "siraP"
+     "S3_2": "ruojnoB"
     },
     {
      "W": "Paris",
-     "W2": "ecran",
+     "W2": "langage",
      "N": "5",
      "N1": "4",
      "INV": "siraP",
      "S2_0": "5",
      "S2_1": "1",
-     "S2_2": "5",
+     "S2_2": "7",
      "S3_0": "siraP",
      "S3_1": "a",
-     "S3_2": "narce"
+     "S3_2": "egagnal"
+    },
+    {
+     "W": "clavier",
+     "W2": "tableau",
+     "N": "7",
+     "N1": "6",
+     "INV": "reivalc",
+     "S2_0": "7",
+     "S2_1": "1",
+     "S2_2": "7",
+     "S3_0": "reivalc",
+     "S3_1": "a",
+     "S3_2": "uaelbat"
+    },
+    {
+     "W": "radar",
+     "W2": "Bonjour",
+     "N": "5",
+     "N1": "4",
+     "INV": "radar",
+     "S2_0": "5",
+     "S2_1": "1",
+     "S2_2": "7",
+     "S3_0": "radar",
+     "S3_1": "a",
+     "S3_2": "ruojnoB"
     },
     {
      "W": "octet",
-     "W2": "langage",
+     "W2": "souris",
+     "N": "5",
+     "N1": "4",
+     "INV": "tetco",
+     "S2_0": "5",
+     "S2_1": "1",
+     "S2_2": "6",
+     "S3_0": "tetco",
+     "S3_1": "a",
+     "S3_2": "siruos"
+    },
+    {
+     "W": "octet",
+     "W2": "tableau",
      "N": "5",
      "N1": "4",
      "INV": "tetco",
@@ -2285,20 +2272,33 @@
      "S2_2": "7",
      "S3_0": "tetco",
      "S3_1": "a",
-     "S3_2": "egagnal"
+     "S3_2": "uaelbat"
     },
     {
-     "W": "tableau",
-     "W2": "kayak",
+     "W": "Paris",
+     "W2": "chaine",
+     "N": "5",
+     "N1": "4",
+     "INV": "siraP",
+     "S2_0": "5",
+     "S2_1": "1",
+     "S2_2": "6",
+     "S3_0": "siraP",
+     "S3_1": "a",
+     "S3_2": "eniahc"
+    },
+    {
+     "W": "langage",
+     "W2": "octet",
      "N": "7",
      "N1": "6",
-     "INV": "uaelbat",
+     "INV": "egagnal",
      "S2_0": "7",
      "S2_1": "1",
      "S2_2": "5",
-     "S3_0": "uaelbat",
+     "S3_0": "egagnal",
      "S3_1": "a",
-     "S3_2": "kayak"
+     "S3_2": "tetco"
     }
    ]
   },
@@ -2308,7 +2308,7 @@
    "notion": "6.4",
    "origine": "generee",
    "titre": "Palindrome",
-   "enonce": "Un **palindrome** se lit pareil dans les deux sens (comme `radar`). Écris un programme qui lit un mot et affiche `oui` si c'est un palindrome, `non` sinon.\n\n**Exemple**\n```text\nEntrée :\n[[W]]\nSortie :\n[[RW]]\n```",
+   "enonce": "Le but : comparer une chaîne avec elle-même lue à l'envers.\n\n**Rappel** : un palindrome se lit pareil dans les deux sens (comme `radar`).\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. un mot.\n\n**Ce qu'il affiche** : `oui` si c'est un palindrome, `non` sinon.\n\n**Exemple**\n```text\nEntrée :\n[[W]]\nSortie :\n[[RW]]\n```",
    "guidage": "**Idée** : on compare la première lettre avec la dernière, la deuxième avec l'avant-dernière, etc. Dès qu'une paire diffère, ce n'est pas un palindrome.",
    "duree": 5,
    "etapes": [
@@ -2344,7 +2344,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Premier jalon : lis un mot et affiche sa **première** et sa **dernière** lettre, séparées par une espace.",
+     "consigne": "Premier jalon :\n1. lis le mot ; `int n = strlen(s);` ;\n2. affiche `s[0]`, une espace, puis `s[n - 1]` (la première et la dernière lettre).",
      "question": "Première et dernière lettre.",
      "verif": {
       "mode": "c",
@@ -2369,7 +2369,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Compare toutes les paires `s[i]` / `s[n - 1 - i]` pour `i` de 0 à `n / 2` (exclu). Un indicateur à 1 au départ passe à 0 dès qu'une paire diffère ; affiche `oui` ou `non` à la fin.",
+     "consigne": "Compare toutes les paires :\n1. `int pal = 1;` ;\n2. `for (int i = 0; i < n / 2; i++)` : si `s[i] != s[n - 1 - i]`, `pal = 0;` ;\n3. affiche `oui` si `pal` vaut 1, `non` sinon.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -2403,100 +2403,100 @@
     }
    ],
    "vals": {
-    "W": "langage",
-    "X": "sos",
-    "Y": "toto",
-    "L": "8",
-    "RW": "non",
-    "NP": "4",
-    "S2_0": "l e",
-    "S2_1": "s s",
-    "S3_0": "non",
+    "W": "sos",
+    "X": "elle",
+    "Y": "radio",
+    "L": "5",
+    "RW": "oui",
+    "NP": "2",
+    "S2_0": "s s",
+    "S2_1": "e e",
+    "S3_0": "oui",
     "S3_1": "oui",
     "S3_2": "non",
     "S3_3": "non"
    },
    "variantes": [
     {
-     "W": "langage",
-     "X": "sos",
-     "Y": "toto",
-     "L": "8",
-     "RW": "non",
-     "NP": "4",
-     "S2_0": "l e",
-     "S2_1": "s s",
-     "S3_0": "non",
-     "S3_1": "oui",
-     "S3_2": "non",
-     "S3_3": "non"
-    },
-    {
-     "W": "ab",
-     "X": "rotor",
-     "Y": "toto",
-     "L": "4",
-     "RW": "non",
-     "NP": "2",
-     "S2_0": "a b",
-     "S2_1": "r r",
-     "S3_0": "non",
-     "S3_1": "oui",
-     "S3_2": "non",
-     "S3_3": "non"
-    },
-    {
-     "W": "kayaks",
+     "W": "sos",
      "X": "elle",
      "Y": "radio",
-     "L": "6",
-     "RW": "non",
-     "NP": "3",
-     "S2_0": "k s",
+     "L": "5",
+     "RW": "oui",
+     "NP": "2",
+     "S2_0": "s s",
      "S2_1": "e e",
+     "S3_0": "oui",
+     "S3_1": "oui",
+     "S3_2": "non",
+     "S3_3": "non"
+    },
+    {
+     "W": "bonjour",
+     "X": "rotor",
+     "Y": "bonjour",
+     "L": "8",
+     "RW": "non",
+     "NP": "4",
+     "S2_0": "b r",
+     "S2_1": "r r",
      "S3_0": "non",
      "S3_1": "oui",
      "S3_2": "non",
      "S3_3": "non"
     },
     {
+     "W": "kayak",
+     "X": "ete",
+     "Y": "radio",
+     "L": "6",
+     "RW": "oui",
+     "NP": "3",
+     "S2_0": "k k",
+     "S2_1": "e e",
+     "S3_0": "oui",
+     "S3_1": "oui",
+     "S3_2": "non",
+     "S3_3": "non"
+    },
+    {
+     "W": "rotor",
+     "X": "rotor",
+     "Y": "radio",
+     "L": "7",
+     "RW": "oui",
+     "NP": "3",
+     "S2_0": "r r",
+     "S2_1": "r r",
+     "S3_0": "oui",
+     "S3_1": "oui",
+     "S3_2": "non",
+     "S3_3": "non"
+    },
+    {
      "W": "toto",
-     "X": "sos",
-     "Y": "kayaks",
+     "X": "level",
+     "Y": "toto",
      "L": "4",
      "RW": "non",
      "NP": "2",
      "S2_0": "t o",
+     "S2_1": "l l",
+     "S3_0": "non",
+     "S3_1": "oui",
+     "S3_2": "non",
+     "S3_3": "non"
+    },
+    {
+     "W": "radar",
+     "X": "sos",
+     "Y": "bonjour",
+     "L": "7",
+     "RW": "oui",
+     "NP": "3",
+     "S2_0": "r r",
      "S2_1": "s s",
-     "S3_0": "non",
-     "S3_1": "oui",
-     "S3_2": "non",
-     "S3_3": "non"
-    },
-    {
-     "W": "langage",
-     "X": "non",
-     "Y": "kayaks",
-     "L": "8",
-     "RW": "non",
-     "NP": "4",
-     "S2_0": "l e",
-     "S2_1": "n n",
-     "S3_0": "non",
-     "S3_1": "oui",
-     "S3_2": "non",
-     "S3_3": "non"
-    },
-    {
-     "W": "toto",
-     "X": "rotor",
-     "Y": "kayaks",
-     "L": "8",
-     "RW": "non",
-     "NP": "4",
-     "S2_0": "t o",
-     "S2_1": "r r",
-     "S3_0": "non",
+     "S3_0": "oui",
      "S3_1": "oui",
      "S3_2": "non",
      "S3_3": "non"
@@ -2504,10 +2504,10 @@
     {
      "W": "kayaks",
      "X": "level",
-     "Y": "ab",
-     "L": "6",
+     "Y": "kayaks",
+     "L": "5",
      "RW": "non",
-     "NP": "3",
+     "NP": "2",
      "S2_0": "k s",
      "S2_1": "l l",
      "S3_0": "non",
@@ -2516,15 +2516,15 @@
      "S3_3": "non"
     },
     {
-     "W": "kayaks",
-     "X": "rotor",
-     "Y": "radio",
-     "L": "4",
-     "RW": "non",
-     "NP": "2",
-     "S2_0": "k s",
+     "W": "ete",
+     "X": "radar",
+     "Y": "kayaks",
+     "L": "9",
+     "RW": "oui",
+     "NP": "4",
+     "S2_0": "e e",
      "S2_1": "r r",
-     "S3_0": "non",
+     "S3_0": "oui",
      "S3_1": "oui",
      "S3_2": "non",
      "S3_3": "non"
@@ -2537,7 +2537,7 @@
    "notion": "6.4",
    "origine": "generee",
    "titre": "Compter les voyelles",
-   "enonce": "Écris un programme qui lit une ligne et affiche le nombre de **voyelles minuscules** qu'elle contient (`a e i o u y`).\n\n**Exemple**\n```text\nEntrée :\n[[P]]\nSortie :\n[[NV]]\n```",
+   "enonce": "Le but : compter les caractères d'une ligne qui appartiennent à une liste.\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. une ligne de texte.\n\n**Ce qu'il affiche** : le nombre de **voyelles minuscules** qu'elle contient (`a e i o u y`).\n\n**Exemple**\n```text\nEntrée :\n[[P]]\nSortie :\n[[NV]]\n```",
    "guidage": "**Plan** : parcourir la ligne ; pour chaque caractère, tester s'il vaut l'une des six voyelles (`||`) ; compter.",
    "duree": 4,
    "etapes": [
@@ -2573,7 +2573,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Premier jalon : lis une ligne avec `fgets` et affiche le nombre de lettres `e` qu'elle contient.",
+     "consigne": "Premier jalon, une seule voyelle :\n1. lis la ligne : `char s[100];` puis `fgets(s, sizeof(s), stdin);` ;\n2. parcours-la jusqu'au `'\\0'` et compte les `'e'` ;\n3. affiche ce nombre.",
      "question": "Compte les `e`.",
      "verif": {
       "mode": "c",
@@ -2598,7 +2598,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Compte toutes les voyelles minuscules `a e i o u y`, pas seulement les `e`.",
+     "consigne": "Toutes les voyelles :\n1. élargis la condition : `c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u' || c == 'y'` (avec `c = s[i]`) ;\n2. le reste ne change pas.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -2629,63 +2629,27 @@
     }
    ],
    "vals": {
-    "P": "Je code en C",
-    "W": "radar",
-    "NV": "4",
+    "P": "Vive les TD",
+    "W": "octet",
+    "NV": "3",
     "NW": "2",
-    "LV": "a, a",
-    "S2_0": "3",
+    "LV": "o, e",
+    "S2_0": "2",
     "S2_1": "1",
-    "S3_0": "4",
+    "S3_0": "3",
     "S3_1": "2",
     "S3_2": "1"
    },
    "variantes": [
     {
-     "P": "Je code en C",
-     "W": "radar",
-     "NV": "4",
-     "NW": "2",
-     "LV": "a, a",
-     "S2_0": "3",
-     "S2_1": "1",
-     "S3_0": "4",
-     "S3_1": "2",
-     "S3_2": "1"
-    },
-    {
-     "P": "Bonjour ESILV",
-     "W": "radar",
+     "P": "Vive les TD",
+     "W": "octet",
      "NV": "3",
      "NW": "2",
-     "LV": "a, a",
-     "S2_0": "0",
-     "S2_1": "1",
-     "S3_0": "3",
-     "S3_1": "2",
-     "S3_2": "1"
-    },
-    {
-     "P": "Hello World",
-     "W": "bonjour",
-     "NV": "3",
-     "NW": "3",
-     "LV": "o, o, u",
-     "S2_0": "1",
-     "S2_1": "1",
-     "S3_0": "3",
-     "S3_1": "2",
-     "S3_2": "1"
-    },
-    {
-     "P": "Le langage C",
-     "W": "paris",
-     "NV": "4",
-     "NW": "2",
-     "LV": "a, i",
+     "LV": "o, e",
      "S2_0": "2",
      "S2_1": "1",
-     "S3_0": "4",
+     "S3_0": "3",
      "S3_1": "2",
      "S3_2": "1"
     },
@@ -2695,6 +2659,54 @@
      "NV": "4",
      "NW": "2",
      "LV": "o, e",
+     "S2_0": "2",
+     "S2_1": "1",
+     "S3_0": "4",
+     "S3_1": "2",
+     "S3_2": "1"
+    },
+    {
+     "P": "bonjour tout le monde",
+     "W": "langage",
+     "NV": "8",
+     "NW": "3",
+     "LV": "a, a, e",
+     "S2_0": "2",
+     "S2_1": "1",
+     "S3_0": "8",
+     "S3_1": "2",
+     "S3_2": "1"
+    },
+    {
+     "P": "Partiel de C demain",
+     "W": "bonjour",
+     "NV": "7",
+     "NW": "3",
+     "LV": "o, o, u",
+     "S2_0": "3",
+     "S2_1": "1",
+     "S3_0": "7",
+     "S3_1": "2",
+     "S3_2": "1"
+    },
+    {
+     "P": "Le C, C'EST BIEN !",
+     "W": "langage",
+     "NV": "1",
+     "NW": "3",
+     "LV": "a, a, e",
+     "S2_0": "1",
+     "S2_1": "1",
+     "S3_0": "1",
+     "S3_1": "2",
+     "S3_2": "1"
+    },
+    {
+     "P": "Le langage C",
+     "W": "ecran",
+     "NV": "4",
+     "NW": "2",
+     "LV": "e, a",
      "S2_0": "2",
      "S2_1": "1",
      "S3_0": "4",
@@ -2714,26 +2726,14 @@
      "S3_2": "1"
     },
     {
-     "P": "bonjour tout le monde",
-     "W": "langage",
-     "NV": "8",
-     "NW": "3",
-     "LV": "a, a, e",
-     "S2_0": "2",
+     "P": "Je code en C",
+     "W": "tableau",
+     "NV": "4",
+     "NW": "4",
+     "LV": "a, e, a, u",
+     "S2_0": "3",
      "S2_1": "1",
-     "S3_0": "8",
-     "S3_1": "2",
-     "S3_2": "1"
-    },
-    {
-     "P": "bonjour tout le monde",
-     "W": "ecran",
-     "NV": "8",
-     "NW": "2",
-     "LV": "e, a",
-     "S2_0": "2",
-     "S2_1": "1",
-     "S3_0": "8",
+     "S3_0": "4",
      "S3_1": "2",
      "S3_2": "1"
     }
@@ -2745,7 +2745,7 @@
    "notion": "6.4",
    "origine": "generee",
    "titre": "Tout en majuscules",
-   "enonce": "Sans `toupper` : écris un programme qui lit une ligne et l'affiche **en majuscules** (seules les lettres minuscules changent, le reste est recopié tel quel).\n\n**Exemple**\n```text\nEntrée :\n[[P]]\nSortie :\n[[UP]]\n```",
+   "enonce": "Le but : transformer les lettres d'une chaîne grâce à leurs codes, **sans `toupper`**.\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. une ligne de texte.\n\n**Ce qu'il affiche** : la même ligne, avec les lettres minuscules passées en majuscules (les autres caractères ne changent pas).\n\n**Exemple**\n```text\nEntrée :\n[[P]]\nSortie :\n[[UP]]\n```",
    "guidage": "**Plan** : parcourir la ligne ; si `s[i]` est une minuscule, la transformer avec `s[i] - 'a' + 'A'` ; afficher la chaîne.\n\n**Astuce** : l'écart entre `'a'` et `'A'` est le même pour toutes les lettres.",
    "duree": 5,
    "etapes": [
@@ -2782,7 +2782,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Premier jalon : lis une ligne (en retirant son `'\\n'`) et réaffiche-la **telle quelle**.",
+     "consigne": "Premier jalon :\n1. lis la ligne : `char s[100];` puis `fgets(s, sizeof(s), stdin);` ;\n2. retire le `'\\n'` : `s[strcspn(s, \"\\n\")] = '\\0';` ;\n3. affiche la ligne telle quelle.",
      "question": "Réaffiche la ligne.",
      "verif": {
       "mode": "c",
@@ -2807,7 +2807,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Avant l'affichage, parcours la ligne et remplace chaque lettre minuscule par sa majuscule (les autres caractères ne changent pas).",
+     "consigne": "Passe en majuscules avant d'afficher :\n1. parcours la ligne jusqu'au `'\\0'` ;\n2. si `s[i]` est entre `'a'` et `'z'`, remplace-le par `s[i] - 'a' + 'A'` ;\n3. l'affichage ne change pas.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -2839,113 +2839,113 @@
     }
    ],
    "vals": {
-    "P": "Je code en C",
+    "P": "Vive les TD",
     "Q": "Partiel de C demain",
-    "C": "k",
-    "UP": "JE CODE EN C",
-    "PC": "10",
-    "PC1": "11",
-    "S2_0": "Je code en C",
+    "C": "h",
+    "UP": "VIVE LES TD",
+    "PC": "7",
+    "PC1": "8",
+    "S2_0": "Vive les TD",
     "S2_1": "Partiel de C demain",
-    "S3_0": "JE CODE EN C",
+    "S3_0": "VIVE LES TD",
     "S3_1": "PARTIEL DE C DEMAIN"
    },
    "variantes": [
     {
-     "P": "Je code en C",
+     "P": "Vive les TD",
      "Q": "Partiel de C demain",
+     "C": "h",
+     "UP": "VIVE LES TD",
+     "PC": "7",
+     "PC1": "8",
+     "S2_0": "Vive les TD",
+     "S2_1": "Partiel de C demain",
+     "S3_0": "VIVE LES TD",
+     "S3_1": "PARTIEL DE C DEMAIN"
+    },
+    {
+     "P": "Le langage C",
+     "Q": "Salut le monde",
+     "C": "h",
+     "UP": "LE LANGAGE C",
+     "PC": "7",
+     "PC1": "8",
+     "S2_0": "Le langage C",
+     "S2_1": "Salut le monde",
+     "S3_0": "LE LANGAGE C",
+     "S3_1": "SALUT LE MONDE"
+    },
+    {
+     "P": "Je code en C",
+     "Q": "Bonjour ESILV",
      "C": "k",
      "UP": "JE CODE EN C",
      "PC": "10",
      "PC1": "11",
      "S2_0": "Je code en C",
-     "S2_1": "Partiel de C demain",
+     "S2_1": "Bonjour ESILV",
      "S3_0": "JE CODE EN C",
-     "S3_1": "PARTIEL DE C DEMAIN"
+     "S3_1": "BONJOUR ESILV"
     },
     {
-     "P": "Salut le monde",
+     "P": "Hello World",
+     "Q": "Vive les TD",
+     "C": "w",
+     "UP": "HELLO WORLD",
+     "PC": "22",
+     "PC1": "23",
+     "S2_0": "Hello World",
+     "S2_1": "Vive les TD",
+     "S3_0": "HELLO WORLD",
+     "S3_1": "VIVE LES TD"
+    },
+    {
+     "P": "Vive les TD",
+     "Q": "bonjour tout le monde",
+     "C": "f",
+     "UP": "VIVE LES TD",
+     "PC": "5",
+     "PC1": "6",
+     "S2_0": "Vive les TD",
+     "S2_1": "bonjour tout le monde",
+     "S3_0": "VIVE LES TD",
+     "S3_1": "BONJOUR TOUT LE MONDE"
+    },
+    {
+     "P": "Bonjour ESILV",
+     "Q": "Le langage C",
+     "C": "k",
+     "UP": "BONJOUR ESILV",
+     "PC": "10",
+     "PC1": "11",
+     "S2_0": "Bonjour ESILV",
+     "S2_1": "Le langage C",
+     "S3_0": "BONJOUR ESILV",
+     "S3_1": "LE LANGAGE C"
+    },
+    {
+     "P": "bonjour tout le monde",
      "Q": "Je code en C",
      "C": "t",
-     "UP": "SALUT LE MONDE",
+     "UP": "BONJOUR TOUT LE MONDE",
      "PC": "19",
      "PC1": "20",
-     "S2_0": "Salut le monde",
+     "S2_0": "bonjour tout le monde",
      "S2_1": "Je code en C",
-     "S3_0": "SALUT LE MONDE",
+     "S3_0": "BONJOUR TOUT LE MONDE",
      "S3_1": "JE CODE EN C"
     },
     {
      "P": "Salut le monde",
-     "Q": "Une ligne de texte",
-     "C": "d",
-     "UP": "SALUT LE MONDE",
-     "PC": "3",
-     "PC1": "4",
-     "S2_0": "Salut le monde",
-     "S2_1": "Une ligne de texte",
-     "S3_0": "SALUT LE MONDE",
-     "S3_1": "UNE LIGNE DE TEXTE"
-    },
-    {
-     "P": "Salut le monde",
-     "Q": "Le C, C'EST BIEN !",
-     "C": "k",
-     "UP": "SALUT LE MONDE",
-     "PC": "10",
-     "PC1": "11",
-     "S2_0": "Salut le monde",
-     "S2_1": "Le C, C'EST BIEN !",
-     "S3_0": "SALUT LE MONDE",
-     "S3_1": "LE C, C'EST BIEN !"
-    },
-    {
-     "P": "Partiel de C demain",
-     "Q": "Hello World",
+     "Q": "bonjour tout le monde",
      "C": "m",
-     "UP": "PARTIEL DE C DEMAIN",
+     "UP": "SALUT LE MONDE",
      "PC": "12",
      "PC1": "13",
-     "S2_0": "Partiel de C demain",
-     "S2_1": "Hello World",
-     "S3_0": "PARTIEL DE C DEMAIN",
-     "S3_1": "HELLO WORLD"
-    },
-    {
-     "P": "Une ligne de texte",
-     "Q": "Partiel de C demain",
-     "C": "z",
-     "UP": "UNE LIGNE DE TEXTE",
-     "PC": "25",
-     "PC1": "26",
-     "S2_0": "Une ligne de texte",
-     "S2_1": "Partiel de C demain",
-     "S3_0": "UNE LIGNE DE TEXTE",
-     "S3_1": "PARTIEL DE C DEMAIN"
-    },
-    {
-     "P": "bonjour tout le monde",
-     "Q": "Le C, C'EST BIEN !",
-     "C": "c",
-     "UP": "BONJOUR TOUT LE MONDE",
-     "PC": "2",
-     "PC1": "3",
-     "S2_0": "bonjour tout le monde",
-     "S2_1": "Le C, C'EST BIEN !",
-     "S3_0": "BONJOUR TOUT LE MONDE",
-     "S3_1": "LE C, C'EST BIEN !"
-    },
-    {
-     "P": "Une ligne de texte",
-     "Q": "Hello World",
-     "C": "d",
-     "UP": "UNE LIGNE DE TEXTE",
-     "PC": "3",
-     "PC1": "4",
-     "S2_0": "Une ligne de texte",
-     "S2_1": "Hello World",
-     "S3_0": "UNE LIGNE DE TEXTE",
-     "S3_1": "HELLO WORLD"
+     "S2_0": "Salut le monde",
+     "S2_1": "bonjour tout le monde",
+     "S3_0": "SALUT LE MONDE",
+     "S3_1": "BONJOUR TOUT LE MONDE"
     }
    ]
   },
@@ -2955,7 +2955,7 @@
    "notion": "6.5",
    "origine": "generee",
    "titre": "Le mot de passe jamais accepté",
-   "enonce": "Ce programme lit un mot et doit afficher `ok` si c'est `secret`, `refuse` sinon. Il refuse toujours, même quand on tape `secret`.\n```c\n#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char mot[50];\n    scanf(\"%49s\", mot);\n    if (mot == \"secret\") {\n        printf(\"ok\\n\");\n    } else {\n        printf(\"refuse\\n\");\n    }\n    return 0;\n}\n```",
+   "enonce": "Ce programme lit un mot et doit afficher `ok` si c'est `secret`, `refuse` sinon. Il refuse toujours, même quand on tape `secret`.\n```c\n#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char mot[50];\n    scanf(\"%49s\", mot);\n    if (mot == \"secret\") {\n        printf(\"ok\\n\");\n    } else {\n        printf(\"refuse\\n\");\n    }\n    return 0;\n}\n```\n\n**À corriger** : la condition du `if`, avec `strcmp`.",
    "guidage": "**Diagnostic** : 1. que compare `mot == \"secret\"` ? → 2. quelle fonction compare le **contenu** ? → 3. que renvoie-t-elle si les chaînes sont égales ?",
    "duree": 3,
    "etapes": [
@@ -3008,7 +3008,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Corrige la condition du `if` avec `strcmp` pour que `secret` soit accepté (et lui seul : `Secret` avec une majuscule doit être refusé).",
+     "consigne": "**À faire** :\n1. remplace `mot == \"secret\"` par `strcmp(mot, \"secret\") == 0` ;\n2. ne change rien d'autre (`Secret` avec une majuscule doit toujours être refusé).",
      "question": "Corrige le programme.",
      "verif": {
       "mode": "c",
@@ -3044,20 +3044,26 @@
     }
    ],
    "vals": {
-    "X": "motdepasse",
+    "X": "admin",
     "S3_0": "ok",
     "S3_1": "refuse",
     "S3_2": "refuse"
    },
    "variantes": [
     {
-     "X": "motdepasse",
+     "X": "admin",
      "S3_0": "ok",
      "S3_1": "refuse",
      "S3_2": "refuse"
     },
     {
-     "X": "admin",
+     "X": "1234",
+     "S3_0": "ok",
+     "S3_1": "refuse",
+     "S3_2": "refuse"
+    },
+    {
+     "X": "secre",
      "S3_0": "ok",
      "S3_1": "refuse",
      "S3_2": "refuse"
@@ -3075,13 +3081,7 @@
      "S3_2": "refuse"
     },
     {
-     "X": "1234",
-     "S3_0": "ok",
-     "S3_1": "refuse",
-     "S3_2": "refuse"
-    },
-    {
-     "X": "secre",
+     "X": "motdepasse",
      "S3_0": "ok",
      "S3_1": "refuse",
      "S3_2": "refuse"
@@ -3094,7 +3094,7 @@
    "notion": "6.4",
    "origine": "generee",
    "titre": "Compter un caractère",
-   "enonce": "Écris un programme qui lit un caractère `c`, puis une ligne de texte (sur la ligne suivante), et affiche le nombre de fois où `c` apparaît dans la ligne.\n\n**Exemple**\n```text\nEntrée :\n[[C]]\n[[P]]\nSortie :\n[[N]]\n```",
+   "enonce": "Le but : lire un caractère, puis une ligne, et compter ce caractère dans la ligne.\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. un caractère `c` (sur la première ligne) ;\n2. une ligne de texte (sur la ligne suivante).\n\n**Ce qu'il affiche** : le nombre de fois où `c` apparaît dans la ligne.\n\n**Exemple**\n```text\nEntrée :\n[[C]]\n[[P]]\nSortie :\n[[N]]\n```",
    "guidage": "**Plan** : 1. lire `c` avec `scanf(\" %c\", &c)` → 2. `getchar()` pour consommer le `'\\n'` resté → 3. `fgets` pour la ligne → 4. compter `s[i] == c`.\n\n**Piège** : sans le `getchar()`, `fgets` lirait une ligne vide.",
    "duree": 5,
    "etapes": [
@@ -3131,7 +3131,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Premier jalon : lis le caractère `c`, consomme le `'\\n'` qui reste (par exemple avec `getchar();`), lis la ligne avec `fgets`, et affiche simplement le **premier caractère** de la ligne.",
+     "consigne": "Premier jalon :\n1. lis le caractère : `scanf(\" %c\", &c);` ;\n2. consomme la touche Entrée restée en attente : `getchar();` ;\n3. lis la ligne : `char s[100];` puis `fgets(s, sizeof(s), stdin);` ;\n4. affiche son premier caractère, `s[0]`.",
      "question": "Lis `c` puis la ligne.",
      "verif": {
       "mode": "c",
@@ -3156,7 +3156,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Compte maintenant les **occurrences** de `c` dans toute la ligne (jusqu'au `'\\0'`) et affiche ce nombre.",
+     "consigne": "Compte les occurrences :\n1. parcours la ligne jusqu'au `'\\0'` ;\n2. à chaque `s[i] == c`, ajoute 1 à un compteur ;\n3. affiche le compteur (à la place de `s[0]`).",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -3187,113 +3187,113 @@
     }
    ],
    "vals": {
-    "P": "Salut le monde",
-    "Q": "Vive les TD",
-    "C": "l",
-    "C2": "e",
-    "N": "2",
-    "S2_0": "S",
+    "P": "Hello World",
+    "Q": "Une ligne de texte",
+    "C": "r",
+    "C2": "a",
+    "N": "1",
+    "S2_0": "H",
     "S2_1": "a",
-    "S3_0": "2",
+    "S3_0": "1",
     "S3_1": "0",
-    "S3_2": "2"
+    "S3_2": "0"
    },
    "variantes": [
     {
-     "P": "Salut le monde",
-     "Q": "Vive les TD",
-     "C": "l",
-     "C2": "e",
-     "N": "2",
-     "S2_0": "S",
-     "S2_1": "a",
-     "S3_0": "2",
-     "S3_1": "0",
-     "S3_2": "2"
-    },
-    {
-     "P": "Je code en C",
-     "Q": "Bonjour ESILV",
-     "C": "d",
-     "C2": "o",
+     "P": "Hello World",
+     "Q": "Une ligne de texte",
+     "C": "r",
+     "C2": "a",
      "N": "1",
-     "S2_0": "J",
+     "S2_0": "H",
      "S2_1": "a",
      "S3_0": "1",
      "S3_1": "0",
-     "S3_2": "2"
+     "S3_2": "0"
     },
     {
-     "P": "bonjour tout le monde",
-     "Q": "Hello World",
-     "C": "d",
+     "P": "Bonjour ESILV",
+     "Q": "Le C, C'EST BIEN !",
+     "C": "r",
      "C2": "e",
      "N": "1",
-     "S2_0": "b",
+     "S2_0": "B",
      "S2_1": "a",
      "S3_0": "1",
      "S3_1": "0",
      "S3_2": "1"
     },
     {
-     "P": "Partiel de C demain",
-     "Q": "Vive les TD",
-     "C": "t",
-     "C2": "a",
-     "N": "1",
-     "S2_0": "P",
-     "S2_1": "a",
-     "S3_0": "1",
-     "S3_1": "0",
-     "S3_2": "0"
-    },
-    {
-     "P": "Partiel de C demain",
-     "Q": "Vive les TD",
+     "P": "bonjour tout le monde",
+     "Q": "Le C, C'EST BIEN !",
      "C": "n",
      "C2": "a",
+     "N": "2",
+     "S2_0": "b",
+     "S2_1": "a",
+     "S3_0": "2",
+     "S3_1": "0",
+     "S3_2": "0"
+    },
+    {
+     "P": "Salut le monde",
+     "Q": "bonjour tout le monde",
+     "C": "m",
+     "C2": "a",
      "N": "1",
-     "S2_0": "P",
+     "S2_0": "S",
      "S2_1": "a",
      "S3_0": "1",
      "S3_1": "0",
      "S3_2": "0"
     },
     {
-     "P": "Hello World",
-     "Q": "Le C, C'EST BIEN !",
-     "C": "l",
-     "C2": "o",
-     "N": "3",
-     "S2_0": "H",
-     "S2_1": "a",
-     "S3_0": "3",
-     "S3_1": "0",
-     "S3_2": "0"
-    },
-    {
-     "P": "Partiel de C demain",
+     "P": "Le langage C",
      "Q": "Vive les TD",
-     "C": "d",
-     "C2": "o",
-     "N": "2",
-     "S2_0": "P",
+     "C": "l",
+     "C2": "a",
+     "N": "1",
+     "S2_0": "L",
      "S2_1": "a",
-     "S3_0": "2",
+     "S3_0": "1",
      "S3_1": "0",
      "S3_2": "0"
     },
     {
-     "P": "Une ligne de texte",
-     "Q": "Je code en C",
-     "C": "t",
+     "P": "Le langage C",
+     "Q": "Une ligne de texte",
+     "C": "a",
      "C2": "e",
      "N": "2",
-     "S2_0": "U",
+     "S2_0": "L",
      "S2_1": "a",
      "S3_0": "2",
      "S3_1": "0",
-     "S3_2": "3"
+     "S3_2": "5"
+    },
+    {
+     "P": "Vive les TD",
+     "Q": "Je code en C",
+     "C": "i",
+     "C2": "o",
+     "N": "1",
+     "S2_0": "V",
+     "S2_1": "a",
+     "S3_0": "1",
+     "S3_1": "0",
+     "S3_2": "1"
+    },
+    {
+     "P": "Le langage C",
+     "Q": "Je code en C",
+     "C": "l",
+     "C2": "o",
+     "N": "1",
+     "S2_0": "L",
+     "S2_1": "a",
+     "S3_0": "1",
+     "S3_1": "0",
+     "S3_2": "1"
     }
    ]
   },
@@ -3303,7 +3303,7 @@
    "notion": "6.1",
    "origine": "cours",
    "titre": "Où s'arrête la chaîne ?",
-   "enonce": "Écris un programme qui part de `char mot[] = \"[[MOT]]\";` et compte **lui-même** ses caractères, en avançant case par case jusqu'au `'\\0'` (sans `strlen`). Il affiche ensuite le nombre de caractères visibles et le nombre de cases occupées :\n```text\n[[SORTIE]]\n```",
+   "enonce": "Le but : voir que c'est le `'\\0'` qui marque la fin d'une chaîne, en comptant ses caractères **soi-même** (sans `strlen`).\n\n**Au clavier** : rien, le programme ne lit aucune donnée.\n\n**La chaîne**, à recopier : `char mot[] = \"[[MOT]]\";`\n\n**Ce qu'il affiche** : le nombre de caractères visibles, puis le nombre de cases occupées (une de plus, pour le `'\\0'`).\n\n**Sortie attendue**\n```text\n[[SORTIE]]\n```",
    "guidage": "**Plan** : 1. combien de cases pour ce mot ? → 2. quelle condition arrête le parcours ? → 3. compter, puis afficher les deux nombres.\n\n**À retenir** : le `'\\0'` est la seule façon de savoir où finit le texte.",
    "duree": 4,
    "etapes": [
@@ -3340,7 +3340,7 @@
     },
     {
      "guideSeul": true,
-     "consigne": "Compte les caractères : `n` part de 0 et augmente tant que `mot[n]` n'est pas `'\\0'`. Affiche seulement `n`.",
+     "consigne": "Premier jalon :\n1. déclare la chaîne ; `int n = 0;` ;\n2. `while (mot[n] != '\\0') n++;` ;\n3. affiche `n`.",
      "question": "Compte les caractères.",
      "verif": {
       "mode": "c",
@@ -3366,7 +3366,7 @@
      ]
     },
     {
-     "consigne": "Termine : affiche sur une ligne `[[SORTIE]]`, c'est-à-dire le nombre de caractères puis le nombre de cases (une de plus, pour le `'\\0'`).",
+     "consigne": "Complète l'affichage :\n1. remplace le `printf` par `printf(\"%d caracteres, %d cases\\n\", n, n + 1);`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -3458,7 +3458,7 @@
    "notion": "6.2",
    "origine": "cours",
    "titre": "Un sigle lettre par lettre",
-   "enonce": "Écris un programme qui déclare `char sigle[4];`, le remplit **case par case** pour qu'il contienne la chaîne `\"[[S]]\"`, puis l'affiche avec `printf(\"%s\\n\", sigle);`.\n\nInterdit d'écrire `sigle = \"[[S]]\"` : on construit la chaîne à la main.",
+   "enonce": "Le but : construire une chaîne **case par case**, sans oublier le `'\\0'` final.\n\n**Au clavier** : rien, le programme ne lit aucune donnée.\n\n**Ce qu'il fait** :\n1. déclare `char sigle[4];` ;\n2. range une lettre dans chacune des cases 0, 1 et 2, pour former `\"[[S]]\"` ;\n3. met le `'\\0'` dans la case 3 ;\n4. affiche `sigle` avec `printf(\"%s\\n\", sigle);`.\n\nInterdit d'écrire `sigle = \"[[S]]\"` ou d'utiliser `strcpy`.\n\n**Sortie attendue**\n```text\n[[S]]\n```",
    "guidage": "**Plan** : 1. combien de cases faut-il ? → 2. que mettre dans la dernière ? → 3. remplir les cases une par une, puis afficher.\n\n**Piège** : sans le `'\\0'` final, `printf` ne sait pas où s'arrêter.",
    "duree": 4,
    "etapes": [
@@ -3495,7 +3495,7 @@
     },
     {
      "guideSeul": true,
-     "consigne": "Pour voir le résultat attendu, commence par la forme la plus simple : déclare `char sigle[] = \"[[S]]\";` (le compilateur ajoute le `'\\0'` tout seul) et affiche-la avec `%s`.",
+     "consigne": "Premier jalon, pour voir le résultat attendu :\n1. déclare `char sigle[] = \"[[S]]\";` (le compilateur ajoute le `'\\0'` tout seul) ;\n2. affiche-la avec `%s`.",
      "question": "Déclare et affiche le sigle.",
      "verif": {
       "mode": "c",
@@ -3515,7 +3515,7 @@
      ]
     },
     {
-     "consigne": "Maintenant, à la main : déclare `char sigle[4];`, range chaque lettre dans sa case (`sigle[0] = '[[C0]]';`…), mets le `'\\0'` dans la dernière, puis affiche.\n\nUn caractère seul s'écrit entre **apostrophes** : `'[[C0]]'`, pas `\"[[C0]]\"`.",
+     "consigne": "Construis-la à la main :\n1. remplace la déclaration par `char sigle[4];` ;\n2. `sigle[0] = '[[C0]]';`, `sigle[1] = '[[C1]]';`, `sigle[2] = '[[C2]]';` (un caractère s'écrit entre **apostrophes**) ;\n3. `sigle[3] = '\\0';` ;\n4. garde l'affichage.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",

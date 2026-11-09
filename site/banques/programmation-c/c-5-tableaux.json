@@ -233,49 +233,49 @@
    "explication": "Le nombre entre crochets, c'est le nombre de cases : ici **[[N]]**. Le type (`[[TYPE]]`) dit seulement ce que contient chaque case.",
    "vals": {
     "TYPE": "int",
-    "NOM": "notes",
-    "N": "8"
+    "NOM": "t",
+    "N": "9"
    },
    "variantes": [
     {
      "TYPE": "int",
+     "NOM": "t",
+     "N": "9"
+    },
+    {
+     "TYPE": "int",
+     "NOM": "t",
+     "N": "4"
+    },
+    {
+     "TYPE": "double",
+     "NOM": "temperatures",
+     "N": "10"
+    },
+    {
+     "TYPE": "int",
+     "NOM": "t",
+     "N": "5"
+    },
+    {
+     "TYPE": "int",
      "NOM": "notes",
+     "N": "6"
+    },
+    {
+     "TYPE": "char",
+     "NOM": "lettres",
      "N": "8"
     },
     {
      "TYPE": "int",
      "NOM": "notes",
-     "N": "4"
-    },
-    {
-     "TYPE": "int",
-     "NOM": "notes",
-     "N": "16"
+     "N": "10"
     },
     {
      "TYPE": "char",
      "NOM": "lettres",
-     "N": "15"
-    },
-    {
-     "TYPE": "int",
-     "NOM": "t",
-     "N": "12"
-    },
-    {
-     "TYPE": "int",
-     "NOM": "notes",
-     "N": "7"
-    },
-    {
-     "TYPE": "int",
-     "NOM": "notes",
-     "N": "9"
-    },
-    {
-     "TYPE": "double",
-     "NOM": "temperatures",
-     "N": "4"
+     "N": "16"
     }
    ]
   },
@@ -294,28 +294,10 @@
    "vals": {
     "TYPE": "int",
     "NOM": "scores",
-    "N": "12",
-    "M": "11"
+    "N": "13",
+    "M": "12"
    },
    "variantes": [
-    {
-     "TYPE": "int",
-     "NOM": "scores",
-     "N": "12",
-     "M": "11"
-    },
-    {
-     "TYPE": "double",
-     "NOM": "prix",
-     "N": "12",
-     "M": "11"
-    },
-    {
-     "TYPE": "char",
-     "NOM": "lettres",
-     "N": "10",
-     "M": "9"
-    },
     {
      "TYPE": "int",
      "NOM": "scores",
@@ -324,27 +306,45 @@
     },
     {
      "TYPE": "int",
-     "NOM": "scores",
-     "N": "7",
-     "M": "6"
+     "NOM": "notes",
+     "N": "6",
+     "M": "5"
     },
     {
      "TYPE": "double",
      "NOM": "temperatures",
-     "N": "14",
-     "M": "13"
-    },
-    {
-     "TYPE": "int",
-     "NOM": "t",
      "N": "5",
      "M": "4"
     },
     {
-     "TYPE": "int",
-     "NOM": "notes",
-     "N": "7",
-     "M": "6"
+     "TYPE": "double",
+     "NOM": "prix",
+     "N": "6",
+     "M": "5"
+    },
+    {
+     "TYPE": "double",
+     "NOM": "temperatures",
+     "N": "9",
+     "M": "8"
+    },
+    {
+     "TYPE": "double",
+     "NOM": "temperatures",
+     "N": "15",
+     "M": "14"
+    },
+    {
+     "TYPE": "double",
+     "NOM": "temperatures",
+     "N": "10",
+     "M": "9"
+    },
+    {
+     "TYPE": "double",
+     "NOM": "prix",
+     "N": "14",
+     "M": "13"
     }
    ]
   },
@@ -362,58 +362,58 @@
    "explication": "On n'a donné que 2 valeurs : elles remplissent `t[0]` et `t[1]`. Toutes les autres cases, dont `t[[[K]]]`, sont mises à **0**.",
    "vals": {
     "N": "5",
-    "A": "14",
-    "B": "20",
+    "A": "1",
+    "B": "2",
     "K": "4"
    },
    "variantes": [
     {
      "N": "5",
-     "A": "14",
-     "B": "20",
+     "A": "1",
+     "B": "2",
      "K": "4"
     },
     {
      "N": "9",
-     "A": "4",
+     "A": "17",
      "B": "13",
-     "K": "2"
-    },
-    {
-     "N": "9",
-     "A": "18",
-     "B": "7",
      "K": "7"
     },
     {
+     "N": "7",
+     "A": "3",
+     "B": "2",
+     "K": "4"
+    },
+    {
      "N": "6",
-     "A": "7",
-     "B": "10",
+     "A": "14",
+     "B": "11",
      "K": "3"
     },
     {
      "N": "5",
-     "A": "17",
-     "B": "15",
+     "A": "10",
+     "B": "20",
+     "K": "2"
+    },
+    {
+     "N": "5",
+     "A": "11",
+     "B": "11",
      "K": "3"
     },
     {
-     "N": "4",
-     "A": "19",
-     "B": "1",
-     "K": "3"
-    },
-    {
-     "N": "9",
-     "A": "18",
+     "N": "5",
+     "A": "2",
      "B": "3",
-     "K": "5"
+     "K": "4"
     },
     {
-     "N": "4",
-     "A": "1",
-     "B": "4",
-     "K": "3"
+     "N": "6",
+     "A": "2",
+     "B": "7",
+     "K": "2"
     }
    ]
   },
@@ -430,68 +430,68 @@
    "duree": 0.67,
    "explication": "La boucle additionne les 4 cases une par une : [[A]] + [[B]] + [[C]] + [[D]] = **[[S]]**.",
    "vals": {
-    "A": "7",
+    "A": "8",
     "B": "5",
-    "C": "4",
-    "D": "8",
-    "S": "24"
+    "C": "7",
+    "D": "5",
+    "S": "25"
    },
    "variantes": [
     {
-     "A": "7",
-     "B": "5",
-     "C": "4",
-     "D": "8",
-     "S": "24"
-    },
-    {
-     "A": "5",
-     "B": "9",
-     "C": "3",
-     "D": "0",
-     "S": "17"
-    },
-    {
-     "A": "7",
-     "B": "8",
-     "C": "7",
-     "D": "2",
-     "S": "24"
-    },
-    {
      "A": "8",
+     "B": "5",
+     "C": "7",
+     "D": "5",
+     "S": "25"
+    },
+    {
+     "A": "2",
      "B": "3",
-     "C": "3",
-     "D": "8",
-     "S": "22"
+     "C": "6",
+     "D": "9",
+     "S": "20"
     },
     {
-     "A": "7",
+     "A": "2",
      "B": "4",
-     "C": "0",
-     "D": "7",
-     "S": "18"
-    },
-    {
-     "A": "9",
-     "B": "4",
-     "C": "3",
-     "D": "1",
+     "C": "8",
+     "D": "3",
      "S": "17"
     },
     {
-     "A": "5",
-     "B": "2",
+     "A": "0",
+     "B": "3",
      "C": "6",
-     "D": "1",
-     "S": "14"
+     "D": "7",
+     "S": "16"
+    },
+    {
+     "A": "7",
+     "B": "6",
+     "C": "8",
+     "D": "7",
+     "S": "28"
+    },
+    {
+     "A": "4",
+     "B": "9",
+     "C": "2",
+     "D": "0",
+     "S": "15"
     },
     {
      "A": "1",
-     "B": "6",
-     "C": "9",
-     "D": "8",
-     "S": "24"
+     "B": "9",
+     "C": "4",
+     "D": "4",
+     "S": "18"
+    },
+    {
+     "A": "2",
+     "B": "5",
+     "C": "3",
+     "D": "4",
+     "S": "14"
     }
    ]
   },
@@ -535,68 +535,68 @@
    "duree": 0.67,
    "explication": "`i` vaut successivement [[IDX]], puis devient négatif et la boucle s'arrête. On affiche donc les cases correspondantes : **[[R]]**.",
    "vals": {
-    "TAB": "{10, 30, 50, 70, 40}",
+    "TAB": "{60, 70, 80, 40, 30}",
     "DEB": "3",
-    "PAS": "1",
-    "IDX": "3, 2, 1, 0",
-    "R": "70 50 30 10"
+    "PAS": "3",
+    "IDX": "3, 0",
+    "R": "40 60"
    },
    "variantes": [
     {
-     "TAB": "{10, 30, 50, 70, 40}",
-     "DEB": "3",
-     "PAS": "1",
-     "IDX": "3, 2, 1, 0",
-     "R": "70 50 30 10"
-    },
-    {
-     "TAB": "{40, 10, 80, 60, 90}",
-     "DEB": "3",
-     "PAS": "1",
-     "IDX": "3, 2, 1, 0",
-     "R": "60 80 10 40"
-    },
-    {
-     "TAB": "{50, 10, 70, 40, 20}",
+     "TAB": "{60, 70, 80, 40, 30}",
      "DEB": "3",
      "PAS": "3",
      "IDX": "3, 0",
-     "R": "40 50"
+     "R": "40 60"
     },
     {
-     "TAB": "{70, 80, 40, 20, 60}",
+     "TAB": "{60, 20, 10, 80, 90}",
+     "DEB": "4",
+     "PAS": "1",
+     "IDX": "4, 3, 2, 1, 0",
+     "R": "90 80 10 20 60"
+    },
+    {
+     "TAB": "{20, 50, 90, 60, 30}",
      "DEB": "3",
      "PAS": "2",
      "IDX": "3, 1",
-     "R": "20 80"
+     "R": "60 50"
     },
     {
-     "TAB": "{10, 70, 90, 80, 50}",
-     "DEB": "4",
-     "PAS": "2",
-     "IDX": "4, 2, 0",
-     "R": "50 90 10"
-    },
-    {
-     "TAB": "{10, 30, 40, 50, 80}",
-     "DEB": "4",
-     "PAS": "3",
-     "IDX": "4, 1",
-     "R": "80 30"
-    },
-    {
-     "TAB": "{60, 90, 20, 30, 70}",
+     "TAB": "{30, 20, 90, 60, 80}",
      "DEB": "3",
      "PAS": "1",
      "IDX": "3, 2, 1, 0",
-     "R": "30 20 90 60"
+     "R": "60 90 20 30"
     },
     {
-     "TAB": "{20, 60, 90, 80, 30}",
-     "DEB": "4",
+     "TAB": "{20, 50, 70, 80, 40}",
+     "DEB": "3",
+     "PAS": "2",
+     "IDX": "3, 1",
+     "R": "80 50"
+    },
+    {
+     "TAB": "{40, 10, 60, 70, 80}",
+     "DEB": "3",
+     "PAS": "2",
+     "IDX": "3, 1",
+     "R": "70 10"
+    },
+    {
+     "TAB": "{80, 70, 50, 30, 40}",
+     "DEB": "3",
      "PAS": "3",
-     "IDX": "4, 1",
-     "R": "30 60"
+     "IDX": "3, 0",
+     "R": "30 80"
+    },
+    {
+     "TAB": "{50, 70, 90, 80, 10}",
+     "DEB": "4",
+     "PAS": "1",
+     "IDX": "4, 3, 2, 1, 0",
+     "R": "10 80 90 70 50"
     }
    ]
   },
@@ -655,17 +655,62 @@
    "duree": 0.67,
    "explication": "Chaque ajout fait `tl++`, chaque suppression `tl--` : [[A]] + [[X]] − [[Y]] = **[[R]]**. La taille physique, elle, ne bouge jamais.",
    "vals": {
-    "TP": "10",
-    "A": "4",
-    "X": "1",
-    "Y": "2",
-    "XA": "1 élément",
-    "YS": "2 fois",
-    "R": "3"
+    "TP": "20",
+    "A": "6",
+    "X": "2",
+    "Y": "1",
+    "XA": "2 éléments",
+    "YS": "une fois",
+    "R": "7"
    },
    "variantes": [
     {
+     "TP": "20",
+     "A": "6",
+     "X": "2",
+     "Y": "1",
+     "XA": "2 éléments",
+     "YS": "une fois",
+     "R": "7"
+    },
+    {
      "TP": "10",
+     "A": "8",
+     "X": "3",
+     "Y": "3",
+     "XA": "3 éléments",
+     "YS": "3 fois",
+     "R": "8"
+    },
+    {
+     "TP": "15",
+     "A": "7",
+     "X": "3",
+     "Y": "2",
+     "XA": "3 éléments",
+     "YS": "2 fois",
+     "R": "8"
+    },
+    {
+     "TP": "20",
+     "A": "4",
+     "X": "3",
+     "Y": "3",
+     "XA": "3 éléments",
+     "YS": "3 fois",
+     "R": "4"
+    },
+    {
+     "TP": "15",
+     "A": "8",
+     "X": "3",
+     "Y": "2",
+     "XA": "3 éléments",
+     "YS": "2 fois",
+     "R": "9"
+    },
+    {
+     "TP": "15",
      "A": "4",
      "X": "1",
      "Y": "2",
@@ -674,67 +719,22 @@
      "R": "3"
     },
     {
-     "TP": "10",
-     "A": "6",
-     "X": "1",
-     "Y": "1",
-     "XA": "1 élément",
-     "YS": "une fois",
-     "R": "6"
-    },
-    {
-     "TP": "10",
-     "A": "5",
-     "X": "1",
-     "Y": "1",
-     "XA": "1 élément",
-     "YS": "une fois",
-     "R": "5"
-    },
-    {
-     "TP": "15",
-     "A": "4",
-     "X": "3",
-     "Y": "1",
-     "XA": "3 éléments",
-     "YS": "une fois",
-     "R": "6"
-    },
-    {
      "TP": "20",
-     "A": "2",
-     "X": "2",
-     "Y": "1",
-     "XA": "2 éléments",
-     "YS": "une fois",
+     "A": "4",
+     "X": "1",
+     "Y": "2",
+     "XA": "1 élément",
+     "YS": "2 fois",
      "R": "3"
     },
     {
      "TP": "15",
-     "A": "4",
-     "X": "2",
-     "Y": "1",
-     "XA": "2 éléments",
-     "YS": "une fois",
-     "R": "5"
-    },
-    {
-     "TP": "15",
-     "A": "5",
+     "A": "7",
      "X": "3",
      "Y": "1",
      "XA": "3 éléments",
      "YS": "une fois",
-     "R": "7"
-    },
-    {
-     "TP": "15",
-     "A": "6",
-     "X": "3",
-     "Y": "1",
-     "XA": "3 éléments",
-     "YS": "une fois",
-     "R": "8"
+     "R": "9"
     }
    ]
   },
@@ -803,41 +803,41 @@
    "duree": 0.33,
    "explication": "Avec `i <= [[N]]`, le dernier tour lit `t[[[N]]]`, qui n'existe pas : le dernier indice est [[M]]. Les autres boucles restent entre 0 et [[M]] (celle qui part de 1 saute juste la première case).",
    "vals": {
-    "N": "10",
-    "M": "9"
+    "N": "9",
+    "M": "8"
    },
    "variantes": [
     {
-     "N": "10",
-     "M": "9"
-    },
-    {
-     "N": "12",
-     "M": "11"
-    },
-    {
-     "N": "5",
-     "M": "4"
-    },
-    {
-     "N": "4",
-     "M": "3"
+     "N": "9",
+     "M": "8"
     },
     {
      "N": "7",
      "M": "6"
     },
     {
-     "N": "8",
-     "M": "7"
+     "N": "6",
+     "M": "5"
+    },
+    {
+     "N": "4",
+     "M": "3"
     },
     {
      "N": "11",
      "M": "10"
     },
     {
-     "N": "9",
-     "M": "8"
+     "N": "8",
+     "M": "7"
+    },
+    {
+     "N": "10",
+     "M": "9"
+    },
+    {
+     "N": "5",
+     "M": "4"
     }
    ]
   },
@@ -854,59 +854,59 @@
    "duree": 0.67,
    "explication": "`nb` augmente de 1 à chaque case égale à [[X]] : [[X]] apparaît aux indices [[POS]], donc **[[R]]** fois.",
    "vals": {
-    "TAB": "{5, 8, 8, 2, 5, 8}",
-    "X": "5",
-    "POS": "0, 4",
-    "R": "2"
+    "TAB": "{9, 7, 7, 7, 3, 7}",
+    "X": "9",
+    "POS": "0",
+    "R": "1"
    },
    "variantes": [
     {
-     "TAB": "{5, 8, 8, 2, 5, 8}",
-     "X": "5",
+     "TAB": "{9, 7, 7, 7, 3, 7}",
+     "X": "9",
+     "POS": "0",
+     "R": "1"
+    },
+    {
+     "TAB": "{4, 2, 3, 3, 2, 3}",
+     "X": "3",
+     "POS": "2, 3, 5",
+     "R": "3"
+    },
+    {
+     "TAB": "{8, 5, 8, 5, 4, 5}",
+     "X": "8",
+     "POS": "0, 2",
+     "R": "2"
+    },
+    {
+     "TAB": "{7, 4, 4, 4, 7, 3}",
+     "X": "7",
      "POS": "0, 4",
      "R": "2"
     },
     {
-     "TAB": "{4, 4, 5, 5, 5, 9}",
+     "TAB": "{4, 4, 7, 4, 4, 7}",
      "X": "4",
-     "POS": "0, 1",
-     "R": "2"
-    },
-    {
-     "TAB": "{7, 5, 7, 5, 9, 5}",
-     "X": "5",
-     "POS": "1, 3, 5",
-     "R": "3"
-    },
-    {
-     "TAB": "{2, 5, 5, 4, 2, 5}",
-     "X": "5",
-     "POS": "1, 2, 5",
-     "R": "3"
-    },
-    {
-     "TAB": "{2, 7, 8, 2, 2, 8}",
-     "X": "8",
-     "POS": "2, 5",
-     "R": "2"
-    },
-    {
-     "TAB": "{8, 3, 9, 3, 9, 9}",
-     "X": "9",
-     "POS": "2, 4, 5",
-     "R": "3"
-    },
-    {
-     "TAB": "{7, 5, 7, 7, 3, 3}",
-     "X": "3",
-     "POS": "4, 5",
-     "R": "2"
-    },
-    {
-     "TAB": "{8, 8, 8, 7, 7, 8}",
-     "X": "8",
-     "POS": "0, 1, 2, 5",
+     "POS": "0, 1, 3, 4",
      "R": "4"
+    },
+    {
+     "TAB": "{3, 3, 3, 5, 9, 5}",
+     "X": "3",
+     "POS": "0, 1, 2",
+     "R": "3"
+    },
+    {
+     "TAB": "{9, 4, 3, 4, 4, 4}",
+     "X": "9",
+     "POS": "0",
+     "R": "1"
+    },
+    {
+     "TAB": "{5, 5, 5, 5, 5, 5}",
+     "X": "5",
+     "POS": "0, 1, 2, 3, 4, 5",
+     "R": "6"
     }
    ]
   },
@@ -923,50 +923,50 @@
    "duree": 0.67,
    "explication": "La première case qui vaut [[X]] est à l'indice **[[R]]** ; le `break` arrête la boucle tout de suite, donc une éventuelle deuxième occurrence n'est jamais vue.",
    "vals": {
-    "TAB": "{3, 6, 5, 4, 1}",
-    "X": "6",
-    "R": "1"
+    "TAB": "{3, 2, 4, 7, 5}",
+    "X": "4",
+    "R": "2"
    },
    "variantes": [
     {
-     "TAB": "{3, 6, 5, 4, 1}",
-     "X": "6",
-     "R": "1"
+     "TAB": "{3, 2, 4, 7, 5}",
+     "X": "4",
+     "R": "2"
     },
     {
-     "TAB": "{9, 4, 7, 3, 2}",
+     "TAB": "{2, 6, 8, 3, 2}",
      "X": "2",
-     "R": "4"
+     "R": "0"
     },
     {
-     "TAB": "{1, 2, 8, 3, 5}",
-     "X": "3",
+     "TAB": "{5, 9, 7, 4, 4}",
+     "X": "4",
      "R": "3"
     },
     {
-     "TAB": "{4, 2, 9, 6, 2}",
-     "X": "2",
-     "R": "1"
+     "TAB": "{5, 2, 3, 8, 8}",
+     "X": "8",
+     "R": "3"
     },
     {
-     "TAB": "{6, 9, 5, 1, 6}",
-     "X": "6",
-     "R": "0"
-    },
-    {
-     "TAB": "{6, 2, 6, 3, 7}",
-     "X": "6",
-     "R": "0"
-    },
-    {
-     "TAB": "{4, 1, 5, 7, 6}",
+     "TAB": "{8, 4, 1, 7, 3}",
      "X": "4",
-     "R": "0"
+     "R": "1"
     },
     {
-     "TAB": "{9, 1, 5, 8, 7}",
-     "X": "1",
+     "TAB": "{8, 3, 6, 9, 3}",
+     "X": "3",
      "R": "1"
+    },
+    {
+     "TAB": "{3, 4, 7, 6, 1}",
+     "X": "1",
+     "R": "4"
+    },
+    {
+     "TAB": "{8, 8, 1, 3, 4}",
+     "X": "8",
+     "R": "0"
     }
    ]
   },
@@ -985,50 +985,50 @@
    "duree": 0.67,
    "explication": "Chaque valeur recule d'une case, et la première ([[P]]) fait le tour pour se placer à la fin : **[[R]]**.",
    "vals": {
-    "TAB": "{4, 8, 3, 6}",
-    "P": "4",
-    "R": "8 3 6 4"
+    "TAB": "{7, 1, 5, 9}",
+    "P": "7",
+    "R": "1 5 9 7"
    },
    "variantes": [
     {
-     "TAB": "{4, 8, 3, 6}",
-     "P": "4",
-     "R": "8 3 6 4"
-    },
-    {
-     "TAB": "{2, 4, 3, 6}",
-     "P": "2",
-     "R": "4 3 6 2"
-    },
-    {
-     "TAB": "{6, 3, 4, 7}",
-     "P": "6",
-     "R": "3 4 7 6"
-    },
-    {
-     "TAB": "{8, 6, 3, 2}",
-     "P": "8",
-     "R": "6 3 2 8"
-    },
-    {
-     "TAB": "{7, 9, 2, 1}",
+     "TAB": "{7, 1, 5, 9}",
      "P": "7",
-     "R": "9 2 1 7"
+     "R": "1 5 9 7"
     },
     {
-     "TAB": "{4, 6, 9, 1}",
-     "P": "4",
-     "R": "6 9 1 4"
+     "TAB": "{7, 4, 3, 6}",
+     "P": "7",
+     "R": "4 3 6 7"
     },
     {
-     "TAB": "{1, 5, 6, 2}",
+     "TAB": "{9, 5, 4, 2}",
+     "P": "9",
+     "R": "5 4 2 9"
+    },
+    {
+     "TAB": "{5, 7, 2, 3}",
+     "P": "5",
+     "R": "7 2 3 5"
+    },
+    {
+     "TAB": "{7, 5, 1, 6}",
+     "P": "7",
+     "R": "5 1 6 7"
+    },
+    {
+     "TAB": "{6, 3, 7, 2}",
+     "P": "6",
+     "R": "3 7 2 6"
+    },
+    {
+     "TAB": "{1, 2, 9, 7}",
      "P": "1",
-     "R": "5 6 2 1"
+     "R": "2 9 7 1"
     },
     {
-     "TAB": "{3, 5, 8, 6}",
-     "P": "3",
-     "R": "5 8 6 3"
+     "TAB": "{8, 7, 2, 3}",
+     "P": "8",
+     "R": "7 2 3 8"
     }
    ]
   },
@@ -1063,7 +1063,7 @@
    "notion": "5.1",
    "origine": "td",
    "titre": "Indices pairs entre accolades",
-   "enonce": "On a le tableau de [[N]] entiers `[[TAB]]`.\n\nÉcris un programme qui affiche, sur une seule ligne, les valeurs rangées dans les cases d'**indice pair** (cases 0, 2, 4…), entre accolades et séparées par des espaces.\n\n**Sortie attendue**\n```text\n[[RES]]\n```\n\n(Tableaux_chainex, intermédiaire ex. 1)",
+   "enonce": "Le but : parcourir un tableau en sautant une case sur deux. (Tableaux_chainex, intermédiaire ex. 1)\n\n**Au clavier** : rien, le programme ne lit aucune donnée.\n\n**Le tableau**, à recopier : `int t[[[N]]] = [[TAB]];`\n\n**Ce qu'il affiche** : sur une ligne, entre accolades et séparées par des espaces, les valeurs rangées dans les cases d'**indice pair** (cases 0, 2, 4…).\n\n**Sortie attendue**\n```text\n[[RES]]\n```",
    "guidage": "**Plan** : 1. repérer quelles cases ont un indice pair → 2. les parcourir en sautant une case sur deux → 3. ajouter les accolades autour.\n\n**Piège** : on parle de la **position** paire (l'indice), pas de la valeur paire.",
    "duree": 4,
    "etapes": [
@@ -1083,7 +1083,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Première version, sans les accolades : affiche les valeurs des cases d'indice pair, séparées par un espace.\n\nD'habitude, une boucle `for` avance d'une case à la fois avec `i++`. Ici tu veux sauter une case sur deux : fais avancer `i` de **2** à chaque tour.",
+     "consigne": "Premier jalon, sans les accolades :\n1. déclare le tableau ;\n2. `for (int i = 0; i < [[N]]; i += 2)` : `i` avance de 2 à chaque tour ;\n3. dans la boucle, affiche `t[i]` suivi d'une espace ;\n4. après la boucle, `printf(\"\\n\");`.",
      "question": "Affiche les valeurs des cases d'indice pair.",
      "verif": {
       "mode": "c",
@@ -1104,7 +1104,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Il ne reste qu'à habiller l'affichage : écris `{ ` avant la boucle et `}` après, le tout sur **une seule ligne** :\n```text\n[[RES]]\n```",
+     "consigne": "Ajoute les accolades :\n1. juste avant la boucle, `printf(\"{ \");` ;\n2. après la boucle, remplace `printf(\"\\n\");` par `printf(\"}\\n\");`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -1126,95 +1126,95 @@
     }
    ],
    "vals": {
-    "N": "11",
-    "TAB": "{13, 18, 11, 76, 5, 17, -25, -14, 28, -15, 86}",
-    "RES": "{ 13 11 5 -25 28 86 }",
-    "M": "10",
-    "NP": "6",
-    "MP": "10",
-    "S1_0": "13 11 5 -25 28 86 ",
-    "S2_0": "{ 13 11 5 -25 28 86 }"
+    "N": "10",
+    "TAB": "{47, 22, -16, 73, 71, 50, -13, 43, 13, 3}",
+    "RES": "{ 47 -16 71 -13 13 }",
+    "M": "9",
+    "NP": "5",
+    "MP": "8",
+    "S1_0": "47 -16 71 -13 13 ",
+    "S2_0": "{ 47 -16 71 -13 13 }"
    },
    "variantes": [
     {
-     "N": "11",
-     "TAB": "{13, 18, 11, 76, 5, 17, -25, -14, 28, -15, 86}",
-     "RES": "{ 13 11 5 -25 28 86 }",
-     "M": "10",
-     "NP": "6",
-     "MP": "10",
-     "S1_0": "13 11 5 -25 28 86 ",
-     "S2_0": "{ 13 11 5 -25 28 86 }"
+     "N": "10",
+     "TAB": "{47, 22, -16, 73, 71, 50, -13, 43, 13, 3}",
+     "RES": "{ 47 -16 71 -13 13 }",
+     "M": "9",
+     "NP": "5",
+     "MP": "8",
+     "S1_0": "47 -16 71 -13 13 ",
+     "S2_0": "{ 47 -16 71 -13 13 }"
     },
     {
-     "N": "11",
-     "TAB": "{19, -24, 68, 11, -1, 40, 30, -40, 94, 27, 78}",
-     "RES": "{ 19 68 -1 30 94 78 }",
-     "M": "10",
-     "NP": "6",
-     "MP": "10",
-     "S1_0": "19 68 -1 30 94 78 ",
-     "S2_0": "{ 19 68 -1 30 94 78 }"
+     "N": "10",
+     "TAB": "{21, 31, 26, -37, 54, 75, 39, 12, 68, 36}",
+     "RES": "{ 21 26 54 39 68 }",
+     "M": "9",
+     "NP": "5",
+     "MP": "8",
+     "S1_0": "21 26 54 39 68 ",
+     "S2_0": "{ 21 26 54 39 68 }"
     },
     {
      "N": "13",
-     "TAB": "{-3, 64, 53, 61, 15, 54, 25, 3, 58, 19, 93, 81, 74}",
-     "RES": "{ -3 53 15 25 58 93 74 }",
+     "TAB": "{-33, 95, 48, -6, 75, 79, 31, 71, -25, 43, 55, -5, 34}",
+     "RES": "{ -33 48 75 31 -25 55 34 }",
      "M": "12",
      "NP": "7",
      "MP": "12",
-     "S1_0": "-3 53 15 25 58 93 74 ",
-     "S2_0": "{ -3 53 15 25 58 93 74 }"
+     "S1_0": "-33 48 75 31 -25 55 34 ",
+     "S2_0": "{ -33 48 75 31 -25 55 34 }"
+    },
+    {
+     "N": "11",
+     "TAB": "{-38, -28, 37, 93, 23, 28, -24, 18, 22, 90, 35}",
+     "RES": "{ -38 37 23 -24 22 35 }",
+     "M": "10",
+     "NP": "6",
+     "MP": "10",
+     "S1_0": "-38 37 23 -24 22 35 ",
+     "S2_0": "{ -38 37 23 -24 22 35 }"
     },
     {
      "N": "12",
-     "TAB": "{-3, 37, -35, 96, 80, 77, 87, 65, 68, 25, 32, -24}",
-     "RES": "{ -3 -35 80 87 68 32 }",
+     "TAB": "{67, -27, -29, 99, -11, 81, 43, 20, 97, -6, 54, 5}",
+     "RES": "{ 67 -29 -11 43 97 54 }",
      "M": "11",
      "NP": "6",
      "MP": "10",
-     "S1_0": "-3 -35 80 87 68 32 ",
-     "S2_0": "{ -3 -35 80 87 68 32 }"
-    },
-    {
-     "N": "10",
-     "TAB": "{30, 1, 11, 50, 91, -4, -34, 94, 74, -1}",
-     "RES": "{ 30 11 91 -34 74 }",
-     "M": "9",
-     "NP": "5",
-     "MP": "8",
-     "S1_0": "30 11 91 -34 74 ",
-     "S2_0": "{ 30 11 91 -34 74 }"
-    },
-    {
-     "N": "13",
-     "TAB": "{30, 22, 5, -18, -4, -28, 23, 42, -16, -32, -30, 13, -31}",
-     "RES": "{ 30 5 -4 23 -16 -30 -31 }",
-     "M": "12",
-     "NP": "7",
-     "MP": "12",
-     "S1_0": "30 5 -4 23 -16 -30 -31 ",
-     "S2_0": "{ 30 5 -4 23 -16 -30 -31 }"
+     "S1_0": "67 -29 -11 43 97 54 ",
+     "S2_0": "{ 67 -29 -11 43 97 54 }"
     },
     {
      "N": "15",
-     "TAB": "{25, -4, 60, 89, -33, -34, 61, 97, 93, 66, 12, -37, 68, 3, 0}",
-     "RES": "{ 25 60 -33 61 93 12 68 0 }",
+     "TAB": "{32, -26, 83, 59, 35, -37, -39, 46, 17, 65, -17, 0, 12, 62, -5}",
+     "RES": "{ 32 83 35 -39 17 -17 12 -5 }",
      "M": "14",
      "NP": "8",
      "MP": "14",
-     "S1_0": "25 60 -33 61 93 12 68 0 ",
-     "S2_0": "{ 25 60 -33 61 93 12 68 0 }"
+     "S1_0": "32 83 35 -39 17 -17 12 -5 ",
+     "S2_0": "{ 32 83 35 -39 17 -17 12 -5 }"
     },
     {
-     "N": "10",
-     "TAB": "{-28, 97, 49, 42, 51, -17, -10, 19, 92, -38}",
-     "RES": "{ -28 49 51 -10 92 }",
-     "M": "9",
-     "NP": "5",
-     "MP": "8",
-     "S1_0": "-28 49 51 -10 92 ",
-     "S2_0": "{ -28 49 51 -10 92 }"
+     "N": "15",
+     "TAB": "{4, 72, -12, 55, 81, -39, 94, -2, 68, -35, 19, 98, -25, 92, 58}",
+     "RES": "{ 4 -12 81 94 68 19 -25 58 }",
+     "M": "14",
+     "NP": "8",
+     "MP": "14",
+     "S1_0": "4 -12 81 94 68 19 -25 58 ",
+     "S2_0": "{ 4 -12 81 94 68 19 -25 58 }"
+    },
+    {
+     "N": "13",
+     "TAB": "{-40, 49, -17, 87, -12, 30, -33, -26, 96, 8, 86, 23, -19}",
+     "RES": "{ -40 -17 -12 -33 96 86 -19 }",
+     "M": "12",
+     "NP": "7",
+     "MP": "12",
+     "S1_0": "-40 -17 -12 -33 96 86 -19 ",
+     "S2_0": "{ -40 -17 -12 -33 96 86 -19 }"
     }
    ]
   },
@@ -1224,7 +1224,7 @@
    "notion": "5.1",
    "origine": "td",
    "titre": "Produit des valeurs impaires",
-   "enonce": "On a le tableau de 14 entiers `[[TAB]]`.\n\nÉcris un programme qui **multiplie entre elles** toutes les valeurs **impaires** du tableau (négatives comprises) et affiche le produit obtenu.\n\n**Sortie attendue**\n```text\n[[P]]\n```\n\n(Tableaux_chainex, intermédiaire ex. 2)",
+   "enonce": "Le but : repérer les valeurs impaires (même négatives) et les multiplier. (Tableaux_chainex, intermédiaire ex. 2)\n\n**Au clavier** : rien, le programme ne lit aucune donnée.\n\n**Le tableau**, à recopier : `int t[14] = [[TAB]];`\n\n**Ce qu'il affiche** : le produit de toutes les valeurs **impaires** du tableau.\n\n**Sortie attendue**\n```text\n[[P]]\n```",
    "guidage": "**Plan** : 1. savoir reconnaître un entier impair, même négatif → 2. ne garder que ces valeurs → 3. les multiplier dans une variable qui part de **1**.\n\n**Piège** : en C, `-3 % 2` vaut `-1`, pas `1`.",
    "duree": 5,
    "etapes": [
@@ -1260,7 +1260,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Avant de multiplier, vérifie que tu repères bien les bonnes valeurs : affiche les valeurs **impaires** du tableau, séparées par un espace.",
+     "consigne": "Premier jalon, repérer les impairs :\n1. déclare le tableau ;\n2. `for (int i = 0; i < 14; i++)` : si `t[i] % 2 != 0`, affiche `t[i]` suivi d'une espace ;\n3. après la boucle, `printf(\"\\n\");`.",
      "question": "Affiche les valeurs impaires.",
      "verif": {
       "mode": "c",
@@ -1281,7 +1281,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Maintenant, au lieu d'afficher chaque valeur impaire, **multiplie-la** dans une variable `p`, et affiche seulement `p` à la fin.\n\nAttention à la valeur de départ de `p` : un produit qui commence à 0 reste toujours 0.",
+     "consigne": "Multiplie au lieu d'afficher :\n1. avant la boucle, `int p = 1;` (un produit part de 1) ;\n2. dans le `if`, remplace le `printf` par `p *= t[i];` ;\n3. après la boucle, affiche `p`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -1304,77 +1304,77 @@
     }
    ],
    "vals": {
-    "TAB": "{-6, 15, 15, 2, 17, 20, -2, 2, -3, 3, 20, -32, 16, -2}",
-    "P": "-34425",
-    "A": "5",
-    "Q": "-2",
-    "S2_0": "15 15 17 -3 3 ",
-    "S3_0": "-34425"
+    "TAB": "{-5, 30, 10, 24, -14, -22, 18, 15, 7, -6, -10, 17, -32, 22}",
+    "P": "-8925",
+    "A": "3",
+    "Q": "-1",
+    "S2_0": "-5 15 7 17 ",
+    "S3_0": "-8925"
    },
    "variantes": [
     {
-     "TAB": "{-6, 15, 15, 2, 17, 20, -2, 2, -3, 3, 20, -32, 16, -2}",
-     "P": "-34425",
+     "TAB": "{-5, 30, 10, 24, -14, -22, 18, 15, 7, -6, -10, 17, -32, 22}",
+     "P": "-8925",
+     "A": "3",
+     "Q": "-1",
+     "S2_0": "-5 15 7 17 ",
+     "S3_0": "-8925"
+    },
+    {
+     "TAB": "{13, -7, -6, -7, 20, 17, 10, -4, -6, -22, -14, 5, 9, -4}",
+     "P": "487305",
+     "A": "3",
+     "Q": "-1",
+     "S2_0": "13 -7 -7 17 5 9 ",
+     "S3_0": "487305"
+    },
+    {
+     "TAB": "{-3, -10, 17, 14, -6, 26, -5, -5, 16, -4, 11, 16, 28, 19}",
+     "P": "-266475",
+     "A": "3",
+     "Q": "-1",
+     "S2_0": "-3 17 -5 -5 11 19 ",
+     "S3_0": "-266475"
+    },
+    {
+     "TAB": "{19, -16, -30, -14, 16, -5, -6, 19, -8, 28, 9, 4, -22, -18}",
+     "P": "-16245",
+     "A": "7",
+     "Q": "-3",
+     "S2_0": "19 -5 19 9 ",
+     "S3_0": "-16245"
+    },
+    {
+     "TAB": "{-7, -28, -20, 30, -16, 11, 0, -5, 19, 18, 4, -32, -14, -10}",
+     "P": "7315",
+     "A": "9",
+     "Q": "-4",
+     "S2_0": "-7 11 -5 19 ",
+     "S3_0": "7315"
+    },
+    {
+     "TAB": "{-10, 17, 7, 10, 18, 28, 7, -7, -28, 28, 13, 7, 0, -32}",
+     "P": "-530621",
+     "A": "9",
+     "Q": "-4",
+     "S2_0": "17 7 7 -7 13 7 ",
+     "S3_0": "-530621"
+    },
+    {
+     "TAB": "{28, 19, -3, 28, 18, 22, 28, 15, -7, 17, 2, -14, -26, 13}",
+     "P": "1322685",
      "A": "5",
      "Q": "-2",
-     "S2_0": "15 15 17 -3 3 ",
-     "S3_0": "-34425"
+     "S2_0": "19 -3 15 -7 17 13 ",
+     "S3_0": "1322685"
     },
     {
-     "TAB": "{24, 22, 15, 10, 11, 15, -5, -6, 8, -7, -22, 0, 13, 28}",
-     "P": "1126125",
+     "TAB": "{14, 17, -2, -14, -7, -32, -2, 11, 13, 30, -18, 0, 28, 7}",
+     "P": "-119119",
      "A": "9",
      "Q": "-4",
-     "S2_0": "15 11 15 -5 -7 13 ",
-     "S3_0": "1126125"
-    },
-    {
-     "TAB": "{0, 5, 3, 13, 5, 13, 28, -8, 4, -7, 6, -24, 16, 11}",
-     "P": "-975975",
-     "A": "3",
-     "Q": "-1",
-     "S2_0": "5 3 13 5 13 -7 11 ",
-     "S3_0": "-975975"
-    },
-    {
-     "TAB": "{-3, -32, -30, -2, -2, 7, 22, -26, -26, -6, 9, 15, 11, -12}",
-     "P": "-31185",
-     "A": "7",
-     "Q": "-3",
-     "S2_0": "-3 7 9 15 11 ",
-     "S3_0": "-31185"
-    },
-    {
-     "TAB": "{-8, 11, 11, -12, -3, 10, -6, -30, 13, -24, 0, 18, -20, 9}",
-     "P": "-42471",
-     "A": "7",
-     "Q": "-3",
-     "S2_0": "11 11 -3 13 9 ",
-     "S3_0": "-42471"
-    },
-    {
-     "TAB": "{-7, 18, -24, 5, 19, 9, 18, 15, -8, -16, -3, 10, -8, 13}",
-     "P": "3501225",
-     "A": "9",
-     "Q": "-4",
-     "S2_0": "-7 5 19 9 15 -3 13 ",
-     "S3_0": "3501225"
-    },
-    {
-     "TAB": "{4, -16, 4, -5, 19, -18, 12, 22, -30, 4, 18, -28, 9, 7}",
-     "P": "-5985",
-     "A": "9",
-     "Q": "-4",
-     "S2_0": "-5 19 9 7 ",
-     "S3_0": "-5985"
-    },
-    {
-     "TAB": "{-7, -4, -12, 8, 10, 13, 12, -20, 16, 11, 26, 6, 11, -28}",
-     "P": "-11011",
-     "A": "3",
-     "Q": "-1",
-     "S2_0": "-7 13 11 11 ",
-     "S3_0": "-11011"
+     "S2_0": "17 -7 11 13 7 ",
+     "S3_0": "-119119"
     }
    ]
   },
@@ -1384,7 +1384,7 @@
    "notion": "5.1",
    "origine": "td",
    "titre": "Tableau de 25 cases",
-   "enonce": "Écris un programme qui crée un tableau de [[N]] entiers, met **toutes** les cases à 1, puis multiplie chaque case par **[[K]] fois son indice** (la case `i` devient `1 × [[K]] × i`). Affiche ensuite le tableau sur une ligne, valeurs séparées par un espace.\n\nL'affichage commence par `0 [[K]] [[K2]] [[K3]] …` (Tableaux_chainex, intermédiaire ex. 3, adapté).",
+   "enonce": "Le but : remplir un tableau avec une boucle, puis transformer chaque case. (Tableaux_chainex, intermédiaire ex. 3, adapté)\n\n**Au clavier** : rien, le programme ne lit aucune donnée.\n\n**Ce qu'il fait** :\n1. crée un tableau `t` de [[N]] entiers ;\n2. met **toutes** les cases à 1 ;\n3. multiplie chaque case `i` par `[[K]] * i`.\n\n**Ce qu'il affiche** : le tableau sur une ligne, valeurs séparées par une espace.\n\nL'affichage commence par `0 [[K]] [[K2]] [[K3]] …`",
    "guidage": "**Plan** : 1. déclarer [[N]] cases → 2. les mettre toutes à 1 → 3. multiplier chacune par `[[K]] * i` → 4. afficher.\n\n**Piège** : les indices vont de 0 à **[[M]]**, pas jusqu'à [[N]].",
    "duree": 4,
    "etapes": [
@@ -1419,7 +1419,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Commence sans la multiplication : déclare un tableau `t` de [[N]] entiers, mets **toutes les cases à 1** avec une boucle, puis affiche le tableau sur une ligne (valeurs séparées par un espace). Tu dois voir [[N]] fois `1`.",
+     "consigne": "Premier jalon, sans multiplication :\n1. déclare `int t[[[N]]];` ;\n2. première boucle `for (int i = 0; i < [[N]]; i++)` : `t[i] = 1;` ;\n3. seconde boucle : affiche `t[i]` suivi d'une espace ;\n4. termine par `printf(\"\\n\");`. Tu dois voir [[N]] fois `1`.",
      "question": "Remplis de 1 et affiche.",
      "verif": {
       "mode": "c",
@@ -1440,7 +1440,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Ajoute la multiplication : chaque case doit être multipliée par `[[K]] * i`, soit `t[i] = t[i] * ([[K]] * i);`. Tu peux la mettre dans la boucle de remplissage ou juste avant le `printf` de la boucle d'affichage.",
+     "consigne": "Ajoute la multiplication :\n1. dans la seconde boucle, **avant** le `printf`, ajoute `t[i] = t[i] * ([[K]] * i);` ;\n2. le reste ne change pas.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -1463,104 +1463,104 @@
     }
    ],
    "vals": {
-    "N": "24",
-    "K": "3",
-    "J": "4",
-    "M": "23",
-    "K2": "6",
-    "K3": "9",
-    "KJ": "12",
-    "S2_0": "1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 ",
-    "S3_0": "0 3 6 9 12 15 18 21 24 27 30 33 36 39 42 45 48 51 54 57 60 63 66 69 "
+    "N": "20",
+    "K": "4",
+    "J": "15",
+    "M": "19",
+    "K2": "8",
+    "K3": "12",
+    "KJ": "60",
+    "S2_0": "1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 ",
+    "S3_0": "0 4 8 12 16 20 24 28 32 36 40 44 48 52 56 60 64 68 72 76 "
    },
    "variantes": [
     {
-     "N": "24",
-     "K": "3",
-     "J": "4",
-     "M": "23",
-     "K2": "6",
-     "K3": "9",
-     "KJ": "12",
-     "S2_0": "1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 ",
-     "S3_0": "0 3 6 9 12 15 18 21 24 27 30 33 36 39 42 45 48 51 54 57 60 63 66 69 "
+     "N": "20",
+     "K": "4",
+     "J": "15",
+     "M": "19",
+     "K2": "8",
+     "K3": "12",
+     "KJ": "60",
+     "S2_0": "1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 ",
+     "S3_0": "0 4 8 12 16 20 24 28 32 36 40 44 48 52 56 60 64 68 72 76 "
     },
     {
      "N": "20",
      "K": "2",
-     "J": "11",
+     "J": "5",
      "M": "19",
      "K2": "4",
      "K3": "6",
-     "KJ": "22",
+     "KJ": "10",
      "S2_0": "1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 ",
      "S3_0": "0 2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 "
     },
     {
-     "N": "18",
+     "N": "20",
      "K": "2",
-     "J": "15",
-     "M": "17",
+     "J": "12",
+     "M": "19",
      "K2": "4",
      "K3": "6",
-     "KJ": "30",
-     "S2_0": "1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 ",
-     "S3_0": "0 2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32 34 "
-    },
-    {
-     "N": "27",
-     "K": "10",
-     "J": "25",
-     "M": "26",
-     "K2": "20",
-     "K3": "30",
-     "KJ": "250",
-     "S2_0": "1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 ",
-     "S3_0": "0 10 20 30 40 50 60 70 80 90 100 110 120 130 140 150 160 170 180 190 200 210 220 230 240 250 260 "
+     "KJ": "24",
+     "S2_0": "1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 ",
+     "S3_0": "0 2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 "
     },
     {
      "N": "17",
-     "K": "10",
-     "J": "14",
-     "M": "16",
-     "K2": "20",
-     "K3": "30",
-     "KJ": "140",
-     "S2_0": "1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 ",
-     "S3_0": "0 10 20 30 40 50 60 70 80 90 100 110 120 130 140 150 160 "
-    },
-    {
-     "N": "24",
      "K": "5",
-     "J": "11",
-     "M": "23",
+     "J": "6",
+     "M": "16",
      "K2": "10",
      "K3": "15",
-     "KJ": "55",
-     "S2_0": "1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 ",
-     "S3_0": "0 5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95 100 105 110 115 "
+     "KJ": "30",
+     "S2_0": "1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 ",
+     "S3_0": "0 5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 "
     },
     {
-     "N": "22",
-     "K": "3",
+     "N": "28",
+     "K": "4",
      "J": "13",
-     "M": "21",
-     "K2": "6",
-     "K3": "9",
-     "KJ": "39",
-     "S2_0": "1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 ",
-     "S3_0": "0 3 6 9 12 15 18 21 24 27 30 33 36 39 42 45 48 51 54 57 60 63 "
+     "M": "27",
+     "K2": "8",
+     "K3": "12",
+     "KJ": "52",
+     "S2_0": "1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 ",
+     "S3_0": "0 4 8 12 16 20 24 28 32 36 40 44 48 52 56 60 64 68 72 76 80 84 88 92 96 100 104 108 "
+    },
+    {
+     "N": "30",
+     "K": "2",
+     "J": "19",
+     "M": "29",
+     "K2": "4",
+     "K3": "6",
+     "KJ": "38",
+     "S2_0": "1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 ",
+     "S3_0": "0 2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 40 42 44 46 48 50 52 54 56 58 "
+    },
+    {
+     "N": "23",
+     "K": "4",
+     "J": "5",
+     "M": "22",
+     "K2": "8",
+     "K3": "12",
+     "KJ": "20",
+     "S2_0": "1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 ",
+     "S3_0": "0 4 8 12 16 20 24 28 32 36 40 44 48 52 56 60 64 68 72 76 80 84 88 "
     },
     {
      "N": "22",
-     "K": "10",
-     "J": "16",
+     "K": "4",
+     "J": "6",
      "M": "21",
-     "K2": "20",
-     "K3": "30",
-     "KJ": "160",
+     "K2": "8",
+     "K3": "12",
+     "KJ": "24",
      "S2_0": "1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 ",
-     "S3_0": "0 10 20 30 40 50 60 70 80 90 100 110 120 130 140 150 160 170 180 190 200 210 "
+     "S3_0": "0 4 8 12 16 20 24 28 32 36 40 44 48 52 56 60 64 68 72 76 80 84 "
     }
    ]
   },
@@ -1570,7 +1570,7 @@
    "notion": "5.1",
    "origine": "td",
    "titre": "Les jours de chaque mois",
-   "enonce": "Écris un programme qui range dans un tableau `jours` le nombre de jours de chacun des 12 mois d'une année **[[ANNEE]]** (`31, [[FEV]], 31, 30, 31, 30, 31, 31, 30, 31, 30, 31`), puis affiche une ligne par mois :\n```text\nMois 1 : 31 jours\nMois 2 : [[FEV]] jours\n…\nMois 12 : 31 jours\n```\n(Tableaux_chainex, intermédiaire ex. 4, adapté)",
+   "enonce": "Le but : ranger des données dans un tableau et les afficher avec leur numéro. (Tableaux_chainex, intermédiaire ex. 4, adapté)\n\n**Au clavier** : rien, le programme ne lit aucune donnée.\n\n**Le tableau** `jours` contient le nombre de jours de chaque mois d'une année **[[ANNEE]]** : `{31, [[FEV]], 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}`.\n\n**Ce qu'il affiche** : une ligne par mois, de la forme `Mois 1 : 31 jours`.\n\n**Sortie attendue**\n```text\nMois 1 : 31 jours\nMois 2 : [[FEV]] jours\n…\nMois 12 : 31 jours\n```",
    "guidage": "**Plan** : 1. un tableau de 12 entiers → 2. une boucle sur les 12 cases → 3. pour la case `i`, afficher `i + 1` (le numéro du mois) et `jours[i]` (son nombre de jours).\n\n**Piège** : janvier est rangé à l'indice 0, mais on l'affiche « Mois 1 ».",
    "duree": 4,
    "etapes": [
@@ -1606,7 +1606,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Première version : déclare le tableau `jours` (12 entiers) et affiche les 12 valeurs, **une par ligne**, sans texte autour pour l'instant.",
+     "consigne": "Premier jalon, les nombres seuls :\n1. déclare `int jours[12] = {31, [[FEV]], …};` ;\n2. `for (int i = 0; i < 12; i++)` : affiche `jours[i]` suivi de `\\n`.",
      "question": "Affiche les 12 durées.",
      "verif": {
       "mode": "c",
@@ -1627,7 +1627,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Ajoute le texte autour : chaque ligne doit devenir `Mois 1 : 31 jours`, `Mois 2 : [[FEV]] jours`… Ton `printf` affiche maintenant **deux** nombres : le numéro du mois, puis son nombre de jours.",
+     "consigne": "Ajoute le texte :\n1. remplace le `printf` par `printf(\"Mois %d : %d jours\\n\", i + 1, jours[i]);` ;\n2. `i + 1` parce que la case 0 correspond au mois 1.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -1649,66 +1649,21 @@
     }
    ],
    "vals": {
-    "ANNEE": "non bissextile",
-    "FEV": "28",
-    "MOIS": "mars",
-    "NM": "3",
-    "IM": "2",
-    "S2_0": "31\n28\n31\n30\n31\n30\n31\n31\n30\n31\n30\n31",
-    "S3_0": "Mois 1 : 31 jours\nMois 2 : 28 jours\nMois 3 : 31 jours\nMois 4 : 30 jours\nMois 5 : 31 jours\nMois 6 : 30 jours\nMois 7 : 31 jours\nMois 8 : 31 jours\nMois 9 : 30 jours\nMois 10 : 31 jours\nMois 11 : 30 jours\nMois 12 : 31 jours"
+    "ANNEE": "bissextile",
+    "FEV": "29",
+    "MOIS": "août",
+    "NM": "8",
+    "IM": "7",
+    "S2_0": "31\n29\n31\n30\n31\n30\n31\n31\n30\n31\n30\n31",
+    "S3_0": "Mois 1 : 31 jours\nMois 2 : 29 jours\nMois 3 : 31 jours\nMois 4 : 30 jours\nMois 5 : 31 jours\nMois 6 : 30 jours\nMois 7 : 31 jours\nMois 8 : 31 jours\nMois 9 : 30 jours\nMois 10 : 31 jours\nMois 11 : 30 jours\nMois 12 : 31 jours"
    },
    "variantes": [
     {
-     "ANNEE": "non bissextile",
-     "FEV": "28",
-     "MOIS": "mars",
-     "NM": "3",
-     "IM": "2",
-     "S2_0": "31\n28\n31\n30\n31\n30\n31\n31\n30\n31\n30\n31",
-     "S3_0": "Mois 1 : 31 jours\nMois 2 : 28 jours\nMois 3 : 31 jours\nMois 4 : 30 jours\nMois 5 : 31 jours\nMois 6 : 30 jours\nMois 7 : 31 jours\nMois 8 : 31 jours\nMois 9 : 30 jours\nMois 10 : 31 jours\nMois 11 : 30 jours\nMois 12 : 31 jours"
-    },
-    {
-     "ANNEE": "non bissextile",
-     "FEV": "28",
-     "MOIS": "mai",
-     "NM": "5",
-     "IM": "4",
-     "S2_0": "31\n28\n31\n30\n31\n30\n31\n31\n30\n31\n30\n31",
-     "S3_0": "Mois 1 : 31 jours\nMois 2 : 28 jours\nMois 3 : 31 jours\nMois 4 : 30 jours\nMois 5 : 31 jours\nMois 6 : 30 jours\nMois 7 : 31 jours\nMois 8 : 31 jours\nMois 9 : 30 jours\nMois 10 : 31 jours\nMois 11 : 30 jours\nMois 12 : 31 jours"
-    },
-    {
-     "ANNEE": "non bissextile",
-     "FEV": "28",
-     "MOIS": "juin",
-     "NM": "6",
-     "IM": "5",
-     "S2_0": "31\n28\n31\n30\n31\n30\n31\n31\n30\n31\n30\n31",
-     "S3_0": "Mois 1 : 31 jours\nMois 2 : 28 jours\nMois 3 : 31 jours\nMois 4 : 30 jours\nMois 5 : 31 jours\nMois 6 : 30 jours\nMois 7 : 31 jours\nMois 8 : 31 jours\nMois 9 : 30 jours\nMois 10 : 31 jours\nMois 11 : 30 jours\nMois 12 : 31 jours"
-    },
-    {
      "ANNEE": "bissextile",
      "FEV": "29",
-     "MOIS": "octobre",
-     "NM": "10",
-     "IM": "9",
-     "S2_0": "31\n29\n31\n30\n31\n30\n31\n31\n30\n31\n30\n31",
-     "S3_0": "Mois 1 : 31 jours\nMois 2 : 29 jours\nMois 3 : 31 jours\nMois 4 : 30 jours\nMois 5 : 31 jours\nMois 6 : 30 jours\nMois 7 : 31 jours\nMois 8 : 31 jours\nMois 9 : 30 jours\nMois 10 : 31 jours\nMois 11 : 30 jours\nMois 12 : 31 jours"
-    },
-    {
-     "ANNEE": "bissextile",
-     "FEV": "29",
-     "MOIS": "juillet",
-     "NM": "7",
-     "IM": "6",
-     "S2_0": "31\n29\n31\n30\n31\n30\n31\n31\n30\n31\n30\n31",
-     "S3_0": "Mois 1 : 31 jours\nMois 2 : 29 jours\nMois 3 : 31 jours\nMois 4 : 30 jours\nMois 5 : 31 jours\nMois 6 : 30 jours\nMois 7 : 31 jours\nMois 8 : 31 jours\nMois 9 : 30 jours\nMois 10 : 31 jours\nMois 11 : 30 jours\nMois 12 : 31 jours"
-    },
-    {
-     "ANNEE": "bissextile",
-     "FEV": "29",
-     "MOIS": "avril",
-     "NM": "4",
-     "IM": "3",
+     "MOIS": "août",
+     "NM": "8",
+     "IM": "7",
      "S2_0": "31\n29\n31\n30\n31\n30\n31\n31\n30\n31\n30\n31",
      "S3_0": "Mois 1 : 31 jours\nMois 2 : 29 jours\nMois 3 : 31 jours\nMois 4 : 30 jours\nMois 5 : 31 jours\nMois 6 : 30 jours\nMois 7 : 31 jours\nMois 8 : 31 jours\nMois 9 : 30 jours\nMois 10 : 31 jours\nMois 11 : 30 jours\nMois 12 : 31 jours"
     },
@@ -1722,13 +1677,58 @@
      "S3_0": "Mois 1 : 31 jours\nMois 2 : 29 jours\nMois 3 : 31 jours\nMois 4 : 30 jours\nMois 5 : 31 jours\nMois 6 : 30 jours\nMois 7 : 31 jours\nMois 8 : 31 jours\nMois 9 : 30 jours\nMois 10 : 31 jours\nMois 11 : 30 jours\nMois 12 : 31 jours"
     },
     {
+     "ANNEE": "non bissextile",
+     "FEV": "28",
+     "MOIS": "mars",
+     "NM": "3",
+     "IM": "2",
+     "S2_0": "31\n28\n31\n30\n31\n30\n31\n31\n30\n31\n30\n31",
+     "S3_0": "Mois 1 : 31 jours\nMois 2 : 28 jours\nMois 3 : 31 jours\nMois 4 : 30 jours\nMois 5 : 31 jours\nMois 6 : 30 jours\nMois 7 : 31 jours\nMois 8 : 31 jours\nMois 9 : 30 jours\nMois 10 : 31 jours\nMois 11 : 30 jours\nMois 12 : 31 jours"
+    },
+    {
+     "ANNEE": "non bissextile",
+     "FEV": "28",
+     "MOIS": "août",
+     "NM": "8",
+     "IM": "7",
+     "S2_0": "31\n28\n31\n30\n31\n30\n31\n31\n30\n31\n30\n31",
+     "S3_0": "Mois 1 : 31 jours\nMois 2 : 28 jours\nMois 3 : 31 jours\nMois 4 : 30 jours\nMois 5 : 31 jours\nMois 6 : 30 jours\nMois 7 : 31 jours\nMois 8 : 31 jours\nMois 9 : 30 jours\nMois 10 : 31 jours\nMois 11 : 30 jours\nMois 12 : 31 jours"
+    },
+    {
+     "ANNEE": "non bissextile",
+     "FEV": "28",
+     "MOIS": "septembre",
+     "NM": "9",
+     "IM": "8",
+     "S2_0": "31\n28\n31\n30\n31\n30\n31\n31\n30\n31\n30\n31",
+     "S3_0": "Mois 1 : 31 jours\nMois 2 : 28 jours\nMois 3 : 31 jours\nMois 4 : 30 jours\nMois 5 : 31 jours\nMois 6 : 30 jours\nMois 7 : 31 jours\nMois 8 : 31 jours\nMois 9 : 30 jours\nMois 10 : 31 jours\nMois 11 : 30 jours\nMois 12 : 31 jours"
+    },
+    {
+     "ANNEE": "non bissextile",
+     "FEV": "28",
+     "MOIS": "juillet",
+     "NM": "7",
+     "IM": "6",
+     "S2_0": "31\n28\n31\n30\n31\n30\n31\n31\n30\n31\n30\n31",
+     "S3_0": "Mois 1 : 31 jours\nMois 2 : 28 jours\nMois 3 : 31 jours\nMois 4 : 30 jours\nMois 5 : 31 jours\nMois 6 : 30 jours\nMois 7 : 31 jours\nMois 8 : 31 jours\nMois 9 : 30 jours\nMois 10 : 31 jours\nMois 11 : 30 jours\nMois 12 : 31 jours"
+    },
+    {
      "ANNEE": "bissextile",
      "FEV": "29",
-     "MOIS": "mai",
-     "NM": "5",
-     "IM": "4",
+     "MOIS": "juin",
+     "NM": "6",
+     "IM": "5",
      "S2_0": "31\n29\n31\n30\n31\n30\n31\n31\n30\n31\n30\n31",
      "S3_0": "Mois 1 : 31 jours\nMois 2 : 29 jours\nMois 3 : 31 jours\nMois 4 : 30 jours\nMois 5 : 31 jours\nMois 6 : 30 jours\nMois 7 : 31 jours\nMois 8 : 31 jours\nMois 9 : 30 jours\nMois 10 : 31 jours\nMois 11 : 30 jours\nMois 12 : 31 jours"
+    },
+    {
+     "ANNEE": "non bissextile",
+     "FEV": "28",
+     "MOIS": "avril",
+     "NM": "4",
+     "IM": "3",
+     "S2_0": "31\n28\n31\n30\n31\n30\n31\n31\n30\n31\n30\n31",
+     "S3_0": "Mois 1 : 31 jours\nMois 2 : 28 jours\nMois 3 : 31 jours\nMois 4 : 30 jours\nMois 5 : 31 jours\nMois 6 : 30 jours\nMois 7 : 31 jours\nMois 8 : 31 jours\nMois 9 : 30 jours\nMois 10 : 31 jours\nMois 11 : 30 jours\nMois 12 : 31 jours"
     }
    ]
   },
@@ -1738,7 +1738,7 @@
    "notion": "5.1",
    "origine": "td",
    "titre": "Saisie, somme et moyenne",
-   "enonce": "Écris un programme qui déclare un tableau de [[N]] entiers et les fait saisir au clavier. Il affiche ensuite le tableau sur une ligne, puis, sur la ligne suivante, la **somme** et la **moyenne** (avec 2 décimales).\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S3_0]]\n```\n\n(exercice du cours Tableaux)",
+   "enonce": "Le but : remplir un tableau au clavier, puis le parcourir pour calculer. (exercice du cours Tableaux)\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. les [[N]] valeurs du tableau (des entiers).\n\n**Ce qu'il affiche** : sur une première ligne, le tableau (valeurs séparées par une espace) ; sur la ligne suivante, la **somme** puis la **moyenne** avec 2 décimales.\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S3_0]]\n```",
    "guidage": "**Plan** : 1. remplir le tableau avec `scanf` dans une boucle → 2. l'afficher, en ajoutant chaque valeur à la somme au passage → 3. calculer une moyenne **réelle**.\n\n**Piège** : `s / [[N]]` avec deux `int` est une division entière : la partie décimale est perdue.",
    "duree": 5,
    "etapes": [
@@ -1774,7 +1774,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Déclare un tableau de [[N]] entiers, remplis-le au clavier avec une boucle, puis affiche-le sur une ligne (valeurs séparées par un espace).",
+     "consigne": "Premier jalon :\n1. déclare `int t[[[N]]];` ;\n2. boucle de saisie : `scanf(\"%d\", &t[i]);` ;\n3. boucle d'affichage : `t[i]` suivi d'une espace, puis `\\n` après la boucle.",
      "question": "Saisis puis affiche le tableau.",
      "verif": {
       "mode": "c",
@@ -1799,7 +1799,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Ajoute la somme et la moyenne sur une **deuxième ligne** : `somme moyenne`, la moyenne avec 2 décimales. Tu peux cumuler la somme pendant la boucle d'affichage.",
+     "consigne": "Ajoute la somme et la moyenne :\n1. avant l'affichage, `int s = 0;` ;\n2. dans la boucle d'affichage, ajoute `s += t[i];` ;\n3. après la boucle : `printf(\"\\n%d %.2f\\n\", s, s / [[N]].0);` (le `[[N]].0` rend la division réelle).",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -1826,113 +1826,113 @@
     }
    ],
    "vals": {
-    "N": "5",
-    "SS": "17",
-    "E0": "19 4 8 16 11",
-    "E1": "83 1 10 42 17",
-    "SD": "3",
-    "SR": "2",
-    "S2_0": "19 4 8 16 11 ",
-    "S2_1": "83 1 10 42 17 ",
-    "S3_0": "19 4 8 16 11 \n58 11.60",
-    "S3_1": "83 1 10 42 17 \n153 30.60"
+    "N": "6",
+    "SS": "45",
+    "E0": "18 9 10 11 -3 15",
+    "E1": "4 35 12 59 26 80",
+    "SD": "7",
+    "SR": "3",
+    "S2_0": "18 9 10 11 -3 15 ",
+    "S2_1": "4 35 12 59 26 80 ",
+    "S3_0": "18 9 10 11 -3 15 \n60 10.00",
+    "S3_1": "4 35 12 59 26 80 \n216 36.00"
    },
    "variantes": [
     {
-     "N": "5",
-     "SS": "17",
-     "E0": "19 4 8 16 11",
-     "E1": "83 1 10 42 17",
-     "SD": "3",
-     "SR": "2",
-     "S2_0": "19 4 8 16 11 ",
-     "S2_1": "83 1 10 42 17 ",
-     "S3_0": "19 4 8 16 11 \n58 11.60",
-     "S3_1": "83 1 10 42 17 \n153 30.60"
+     "N": "6",
+     "SS": "45",
+     "E0": "18 9 10 11 -3 15",
+     "E1": "4 35 12 59 26 80",
+     "SD": "7",
+     "SR": "3",
+     "S2_0": "18 9 10 11 -3 15 ",
+     "S2_1": "4 35 12 59 26 80 ",
+     "S3_0": "18 9 10 11 -3 15 \n60 10.00",
+     "S3_1": "4 35 12 59 26 80 \n216 36.00"
     },
     {
      "N": "5",
-     "SS": "31",
-     "E0": "12 5 -5 -5 14",
-     "E1": "28 74 94 57 19",
-     "SD": "6",
-     "SR": "1",
-     "S2_0": "12 5 -5 -5 14 ",
-     "S2_1": "28 74 94 57 19 ",
-     "S3_0": "12 5 -5 -5 14 \n21 4.20",
-     "S3_1": "28 74 94 57 19 \n272 54.40"
+     "SS": "43",
+     "E0": "4 5 18 2 15",
+     "E1": "40 68 23 3 82",
+     "SD": "8",
+     "SR": "3",
+     "S2_0": "4 5 18 2 15 ",
+     "S2_1": "40 68 23 3 82 ",
+     "S3_0": "4 5 18 2 15 \n44 8.80",
+     "S3_1": "40 68 23 3 82 \n216 43.20"
     },
     {
      "N": "6",
-     "SS": "11",
-     "E0": "18 8 7 20 9 14",
-     "E1": "25 52 38 81 9 21",
-     "SD": "1",
-     "SR": "5",
-     "S2_0": "18 8 7 20 9 14 ",
-     "S2_1": "25 52 38 81 9 21 ",
-     "S3_0": "18 8 7 20 9 14 \n76 12.67",
-     "S3_1": "25 52 38 81 9 21 \n226 37.67"
+     "SS": "38",
+     "E0": "18 -3 15 19 19 19",
+     "E1": "56 63 93 16 86 36",
+     "SD": "6",
+     "SR": "2",
+     "S2_0": "18 -3 15 19 19 19 ",
+     "S2_1": "56 63 93 16 86 36 ",
+     "S3_0": "18 -3 15 19 19 19 \n87 14.50",
+     "S3_1": "56 63 93 16 86 36 \n350 58.33"
     },
     {
      "N": "5",
-     "SS": "21",
-     "E0": "4 20 3 1 19",
-     "E1": "68 36 72 25 93",
-     "SD": "4",
+     "SS": "36",
+     "E0": "16 19 -3 11 15",
+     "E1": "38 26 39 80 30",
+     "SD": "7",
      "SR": "1",
-     "S2_0": "4 20 3 1 19 ",
-     "S2_1": "68 36 72 25 93 ",
-     "S3_0": "4 20 3 1 19 \n47 9.40",
-     "S3_1": "68 36 72 25 93 \n294 58.80"
+     "S2_0": "16 19 -3 11 15 ",
+     "S2_1": "38 26 39 80 30 ",
+     "S3_0": "16 19 -3 11 15 \n58 11.60",
+     "S3_1": "38 26 39 80 30 \n213 42.60"
     },
     {
      "N": "4",
-     "SS": "41",
-     "E0": "6 5 12 -4",
-     "E1": "90 86 74 50",
-     "SD": "10",
+     "SS": "19",
+     "E0": "9 5 1 18",
+     "E1": "78 47 98 41",
+     "SD": "4",
+     "SR": "3",
+     "S2_0": "9 5 1 18 ",
+     "S2_1": "78 47 98 41 ",
+     "S3_0": "9 5 1 18 \n33 8.25",
+     "S3_1": "78 47 98 41 \n264 66.00"
+    },
+    {
+     "N": "4",
+     "SS": "37",
+     "E0": "-4 11 12 13",
+     "E1": "24 42 87 72",
+     "SD": "9",
      "SR": "1",
-     "S2_0": "6 5 12 -4 ",
-     "S2_1": "90 86 74 50 ",
-     "S3_0": "6 5 12 -4 \n19 4.75",
-     "S3_1": "90 86 74 50 \n300 75.00"
+     "S2_0": "-4 11 12 13 ",
+     "S2_1": "24 42 87 72 ",
+     "S3_0": "-4 11 12 13 \n32 8.00",
+     "S3_1": "24 42 87 72 \n225 56.25"
     },
     {
-     "N": "5",
+     "N": "6",
      "SS": "27",
-     "E0": "20 19 -5 10 20",
-     "E1": "64 22 62 39 93",
-     "SD": "5",
-     "SR": "2",
-     "S2_0": "20 19 -5 10 20 ",
-     "S2_1": "64 22 62 39 93 ",
-     "S3_0": "20 19 -5 10 20 \n64 12.80",
-     "S3_1": "64 22 62 39 93 \n280 56.00"
+     "E0": "12 7 7 4 20 -1",
+     "E1": "84 17 0 21 31 32",
+     "SD": "4",
+     "SR": "3",
+     "S2_0": "12 7 7 4 20 -1 ",
+     "S2_1": "84 17 0 21 31 32 ",
+     "S3_0": "12 7 7 4 20 -1 \n49 8.17",
+     "S3_1": "84 17 0 21 31 32 \n185 30.83"
     },
     {
-     "N": "5",
-     "SS": "44",
-     "E0": "3 15 10 -1 5",
-     "E1": "86 84 6 89 14",
-     "SD": "8",
-     "SR": "4",
-     "S2_0": "3 15 10 -1 5 ",
-     "S2_1": "86 84 6 89 14 ",
-     "S3_0": "3 15 10 -1 5 \n32 6.40",
-     "S3_1": "86 84 6 89 14 \n279 55.80"
-    },
-    {
-     "N": "5",
-     "SS": "29",
-     "E0": "19 10 -3 4 -1",
-     "E1": "86 53 67 43 9",
-     "SD": "5",
-     "SR": "4",
-     "S2_0": "19 10 -3 4 -1 ",
-     "S2_1": "86 53 67 43 9 ",
-     "S3_0": "19 10 -3 4 -1 \n29 5.80",
-     "S3_1": "86 53 67 43 9 \n258 51.60"
+     "N": "6",
+     "SS": "19",
+     "E0": "14 11 -1 -1 8 15",
+     "E1": "5 12 51 35 98 42",
+     "SD": "3",
+     "SR": "1",
+     "S2_0": "14 11 -1 -1 8 15 ",
+     "S2_1": "5 12 51 35 98 42 ",
+     "S3_0": "14 11 -1 -1 8 15 \n46 7.67",
+     "S3_1": "5 12 51 35 98 42 \n243 40.50"
     }
    ]
   },
@@ -1942,7 +1942,7 @@
    "notion": "5.2",
    "origine": "td",
    "titre": "Ajouter puis supprimer",
-   "enonce": "Le tableau a une taille physique `TP = [[TP]]` (avec `#define`). Le programme lit d'abord la taille logique `tl` (au plus `TP`), puis les `tl` entiers du tableau, puis un entier `x`.\n\nIl **ajoute** `x` à la fin (seulement s'il reste de la place) et affiche le tableau ; puis il **supprime** le dernier élément (s'il y en a un) et affiche de nouveau le tableau. Un affichage par ligne.\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S4_0]]\n```\n\n(exercice du cours Tableaux)",
+   "enonce": "Le but : gérer la **taille logique** d'un tableau : le nombre de cases utilisées, qui change quand on ajoute ou supprime.\n\n**La taille physique** : `#define TP [[TP]]` et `int t[TP];` (elle ne change jamais).\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. la taille logique `tl` (au plus `TP`) ;\n2. les `tl` valeurs du tableau ;\n3. une valeur `x` à ajouter.\n\n**Ce qu'il fait** :\n1. ajoute `x` à la fin, **seulement s'il reste de la place** (`tl < TP`) ;\n2. affiche le tableau ;\n3. supprime le dernier élément (s'il y en a un) ;\n4. affiche de nouveau le tableau.\n\n**Ce qu'il affiche** : deux lignes, une par affichage.\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S4_0]]\n```",
    "guidage": "**Plan** : 1. lire `tl`, les `tl` valeurs, puis `x` → 2. ajouter : ranger `x` dans `t[tl]` puis `tl++` (seulement si `tl < TP`) → 3. afficher → 4. supprimer : un simple `tl--` (si `tl > 0`) → 5. afficher.\n\n**À retenir** : on ne touche jamais à la taille physique ; seule la taille **logique** change.",
    "duree": 7,
    "etapes": [
@@ -1979,7 +1979,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Écris le début du programme : `#define TP [[TP]]`, lis `tl`, les `tl` entiers, puis `x`. Ajoute `x` à la fin **seulement si `tl < TP`** (sinon le tableau est plein), et affiche le tableau sur une ligne.",
+     "consigne": "Premier jalon, l'ajout :\n1. en haut : `#define TP [[TP]]` ; dans `main` : `int t[TP], tl, x;` ;\n2. lis `tl`, puis les `tl` valeurs, puis `x` ;\n3. si `tl < TP` : `t[tl] = x;` puis `tl++;` ;\n4. affiche les `tl` cases sur une ligne.",
      "question": "Lis, ajoute et affiche.",
      "verif": {
       "mode": "c",
@@ -2024,7 +2024,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Termine : si `tl > 0`, supprime le dernier élément, puis affiche de nouveau le tableau sur une **deuxième ligne**.\n\nPense au cas où le tableau était déjà plein : `x` n'a pas pu être ajouté, et c'est alors une valeur d'origine qui disparaît.",
+     "consigne": "Ajoute la suppression :\n1. après le premier affichage, si `tl > 0` : `tl--;` (la dernière case n'est plus comptée, inutile de l'effacer) ;\n2. affiche de nouveau les `tl` cases, sur une deuxième ligne.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -2062,113 +2062,113 @@
     }
    ],
    "vals": {
-    "TP": "10",
-    "E0": "3\n18 45 30\n59",
-    "E1": "1\n4\n18",
-    "E2": "10\n8 6 4 8 8 6 7 9 1 2\n52",
-    "S2_0": "18 45 30 59 ",
-    "S2_1": "4 18 ",
-    "S2_2": "8 6 4 8 8 6 7 9 1 2 ",
-    "S4_0": "18 45 30 59 \n18 45 30 ",
-    "S4_1": "4 18 \n4 ",
-    "S4_2": "8 6 4 8 8 6 7 9 1 2 \n8 6 4 8 8 6 7 9 1 "
+    "TP": "12",
+    "E0": "6\n23 40 37 26 17 10\n70",
+    "E1": "1\n7\n19",
+    "E2": "12\n1 5 1 8 6 3 8 2 7 3 1 5\n73",
+    "S2_0": "23 40 37 26 17 10 70 ",
+    "S2_1": "7 19 ",
+    "S2_2": "1 5 1 8 6 3 8 2 7 3 1 5 ",
+    "S4_0": "23 40 37 26 17 10 70 \n23 40 37 26 17 10 ",
+    "S4_1": "7 19 \n7 ",
+    "S4_2": "1 5 1 8 6 3 8 2 7 3 1 5 \n1 5 1 8 6 3 8 2 7 3 1 "
    },
    "variantes": [
     {
+     "TP": "12",
+     "E0": "6\n23 40 37 26 17 10\n70",
+     "E1": "1\n7\n19",
+     "E2": "12\n1 5 1 8 6 3 8 2 7 3 1 5\n73",
+     "S2_0": "23 40 37 26 17 10 70 ",
+     "S2_1": "7 19 ",
+     "S2_2": "1 5 1 8 6 3 8 2 7 3 1 5 ",
+     "S4_0": "23 40 37 26 17 10 70 \n23 40 37 26 17 10 ",
+     "S4_1": "7 19 \n7 ",
+     "S4_2": "1 5 1 8 6 3 8 2 7 3 1 5 \n1 5 1 8 6 3 8 2 7 3 1 "
+    },
+    {
      "TP": "10",
-     "E0": "3\n18 45 30\n59",
-     "E1": "1\n4\n18",
-     "E2": "10\n8 6 4 8 8 6 7 9 1 2\n52",
-     "S2_0": "18 45 30 59 ",
-     "S2_1": "4 18 ",
-     "S2_2": "8 6 4 8 8 6 7 9 1 2 ",
-     "S4_0": "18 45 30 59 \n18 45 30 ",
-     "S4_1": "4 18 \n4 ",
-     "S4_2": "8 6 4 8 8 6 7 9 1 2 \n8 6 4 8 8 6 7 9 1 "
+     "E0": "4\n25 2 36 48\n54",
+     "E1": "1\n2\n17",
+     "E2": "10\n2 9 2 2 7 8 7 7 1 5\n68",
+     "S2_0": "25 2 36 48 54 ",
+     "S2_1": "2 17 ",
+     "S2_2": "2 9 2 2 7 8 7 7 1 5 ",
+     "S4_0": "25 2 36 48 54 \n25 2 36 48 ",
+     "S4_1": "2 17 \n2 ",
+     "S4_2": "2 9 2 2 7 8 7 7 1 5 \n2 9 2 2 7 8 7 7 1 "
     },
     {
      "TP": "12",
-     "E0": "5\n32 17 44 37 16\n76",
-     "E1": "1\n3\n14",
-     "E2": "12\n6 4 4 4 2 1 7 9 6 3 1 3\n24",
-     "S2_0": "32 17 44 37 16 76 ",
-     "S2_1": "3 14 ",
-     "S2_2": "6 4 4 4 2 1 7 9 6 3 1 3 ",
-     "S4_0": "32 17 44 37 16 76 \n32 17 44 37 16 ",
-     "S4_1": "3 14 \n3 ",
-     "S4_2": "6 4 4 4 2 1 7 9 6 3 1 3 \n6 4 4 4 2 1 7 9 6 3 1 "
-    },
-    {
-     "TP": "20",
-     "E0": "2\n2 45\n82",
-     "E1": "1\n7\n10",
-     "E2": "20\n8 6 4 9 1 8 1 3 7 7 2 5 7 4 3 5 8 8 5 5\n46",
-     "S2_0": "2 45 82 ",
-     "S2_1": "7 10 ",
-     "S2_2": "8 6 4 9 1 8 1 3 7 7 2 5 7 4 3 5 8 8 5 5 ",
-     "S4_0": "2 45 82 \n2 45 ",
-     "S4_1": "7 10 \n7 ",
-     "S4_2": "8 6 4 9 1 8 1 3 7 7 2 5 7 4 3 5 8 8 5 5 \n8 6 4 9 1 8 1 3 7 7 2 5 7 4 3 5 8 8 5 "
-    },
-    {
-     "TP": "15",
-     "E0": "3\n6 47 41\n89",
-     "E1": "1\n5\n15",
-     "E2": "15\n9 7 3 9 2 3 1 6 2 5 5 7 1 5 3\n47",
-     "S2_0": "6 47 41 89 ",
-     "S2_1": "5 15 ",
-     "S2_2": "9 7 3 9 2 3 1 6 2 5 5 7 1 5 3 ",
-     "S4_0": "6 47 41 89 \n6 47 41 ",
-     "S4_1": "5 15 \n5 ",
-     "S4_2": "9 7 3 9 2 3 1 6 2 5 5 7 1 5 3 \n9 7 3 9 2 3 1 6 2 5 5 7 1 5 "
+     "E0": "6\n24 14 46 13 16 15\n62",
+     "E1": "1\n1\n11",
+     "E2": "12\n8 2 4 9 5 5 3 4 4 9 9 8\n35",
+     "S2_0": "24 14 46 13 16 15 62 ",
+     "S2_1": "1 11 ",
+     "S2_2": "8 2 4 9 5 5 3 4 4 9 9 8 ",
+     "S4_0": "24 14 46 13 16 15 62 \n24 14 46 13 16 15 ",
+     "S4_1": "1 11 \n1 ",
+     "S4_2": "8 2 4 9 5 5 3 4 4 9 9 8 \n8 2 4 9 5 5 3 4 4 9 9 "
     },
     {
      "TP": "12",
-     "E0": "5\n50 27 13 36 28\n98",
-     "E1": "1\n8\n11",
-     "E2": "12\n6 3 4 2 5 9 7 3 6 5 2 8\n92",
-     "S2_0": "50 27 13 36 28 98 ",
-     "S2_1": "8 11 ",
-     "S2_2": "6 3 4 2 5 9 7 3 6 5 2 8 ",
-     "S4_0": "50 27 13 36 28 98 \n50 27 13 36 28 ",
-     "S4_1": "8 11 \n8 ",
-     "S4_2": "6 3 4 2 5 9 7 3 6 5 2 8 \n6 3 4 2 5 9 7 3 6 5 2 "
+     "E0": "6\n6 34 3 29 7 16\n54",
+     "E1": "1\n9\n10",
+     "E2": "12\n3 6 6 5 6 4 4 6 4 9 9 4\n29",
+     "S2_0": "6 34 3 29 7 16 54 ",
+     "S2_1": "9 10 ",
+     "S2_2": "3 6 6 5 6 4 4 6 4 9 9 4 ",
+     "S4_0": "6 34 3 29 7 16 54 \n6 34 3 29 7 16 ",
+     "S4_1": "9 10 \n9 ",
+     "S4_2": "3 6 6 5 6 4 4 6 4 9 9 4 \n3 6 6 5 6 4 4 6 4 9 9 "
     },
     {
-     "TP": "15",
-     "E0": "2\n10 48\n57",
-     "E1": "1\n9\n16",
-     "E2": "15\n2 6 3 1 7 7 4 3 6 9 8 6 6 6 6\n90",
-     "S2_0": "10 48 57 ",
-     "S2_1": "9 16 ",
-     "S2_2": "2 6 3 1 7 7 4 3 6 9 8 6 6 6 6 ",
-     "S4_0": "10 48 57 \n10 48 ",
-     "S4_1": "9 16 \n9 ",
-     "S4_2": "2 6 3 1 7 7 4 3 6 9 8 6 6 6 6 \n2 6 3 1 7 7 4 3 6 9 8 6 6 6 "
+     "TP": "10",
+     "E0": "4\n21 10 21 5\n73",
+     "E1": "1\n3\n17",
+     "E2": "10\n8 4 7 9 8 7 9 3 1 8\n17",
+     "S2_0": "21 10 21 5 73 ",
+     "S2_1": "3 17 ",
+     "S2_2": "8 4 7 9 8 7 9 3 1 8 ",
+     "S4_0": "21 10 21 5 73 \n21 10 21 5 ",
+     "S4_1": "3 17 \n3 ",
+     "S4_2": "8 4 7 9 8 7 9 3 1 8 \n8 4 7 9 8 7 9 3 1 "
     },
     {
-     "TP": "20",
-     "E0": "2\n22 43\n80",
-     "E1": "1\n8\n12",
-     "E2": "20\n2 5 7 1 4 9 5 2 2 2 9 9 3 4 2 8 3 9 9 9\n95",
-     "S2_0": "22 43 80 ",
-     "S2_1": "8 12 ",
-     "S2_2": "2 5 7 1 4 9 5 2 2 2 9 9 3 4 2 8 3 9 9 9 ",
-     "S4_0": "22 43 80 \n22 43 ",
-     "S4_1": "8 12 \n8 ",
-     "S4_2": "2 5 7 1 4 9 5 2 2 2 9 9 3 4 2 8 3 9 9 9 \n2 5 7 1 4 9 5 2 2 2 9 9 3 4 2 8 3 9 9 "
+     "TP": "12",
+     "E0": "2\n16 47\n52",
+     "E1": "1\n9\n11",
+     "E2": "12\n3 9 9 9 7 6 3 3 1 8 7 9\n23",
+     "S2_0": "16 47 52 ",
+     "S2_1": "9 11 ",
+     "S2_2": "3 9 9 9 7 6 3 3 1 8 7 9 ",
+     "S4_0": "16 47 52 \n16 47 ",
+     "S4_1": "9 11 \n9 ",
+     "S4_2": "3 9 9 9 7 6 3 3 1 8 7 9 \n3 9 9 9 7 6 3 3 1 8 7 "
     },
     {
-     "TP": "15",
-     "E0": "5\n38 5 44 34 48\n66",
-     "E1": "1\n1\n10",
-     "E2": "15\n7 5 9 7 2 8 7 7 4 1 8 5 4 3 1\n49",
-     "S2_0": "38 5 44 34 48 66 ",
-     "S2_1": "1 10 ",
-     "S2_2": "7 5 9 7 2 8 7 7 4 1 8 5 4 3 1 ",
-     "S4_0": "38 5 44 34 48 66 \n38 5 44 34 48 ",
-     "S4_1": "1 10 \n1 ",
-     "S4_2": "7 5 9 7 2 8 7 7 4 1 8 5 4 3 1 \n7 5 9 7 2 8 7 7 4 1 8 5 4 3 "
+     "TP": "12",
+     "E0": "3\n36 36 5\n80",
+     "E1": "1\n9\n18",
+     "E2": "12\n6 5 9 1 5 9 4 9 5 8 2 4\n71",
+     "S2_0": "36 36 5 80 ",
+     "S2_1": "9 18 ",
+     "S2_2": "6 5 9 1 5 9 4 9 5 8 2 4 ",
+     "S4_0": "36 36 5 80 \n36 36 5 ",
+     "S4_1": "9 18 \n9 ",
+     "S4_2": "6 5 9 1 5 9 4 9 5 8 2 4 \n6 5 9 1 5 9 4 9 5 8 2 "
+    },
+    {
+     "TP": "12",
+     "E0": "5\n39 19 34 50 24\n73",
+     "E1": "1\n9\n20",
+     "E2": "12\n2 2 3 7 9 9 2 5 5 6 1 9\n97",
+     "S2_0": "39 19 34 50 24 73 ",
+     "S2_1": "9 20 ",
+     "S2_2": "2 2 3 7 9 9 2 5 5 6 1 9 ",
+     "S4_0": "39 19 34 50 24 73 \n39 19 34 50 24 ",
+     "S4_1": "9 20 \n9 ",
+     "S4_2": "2 2 3 7 9 9 2 5 5 6 1 9 \n2 2 3 7 9 9 2 5 5 6 1 "
     }
    ]
   },
@@ -2178,7 +2178,7 @@
    "notion": "5.3",
    "origine": "generee",
    "titre": "Afficher un tableau",
-   "enonce": "Ce programme doit afficher les [[N]] valeurs du tableau, séparées par des espaces : `[[RES]]`. Il affiche pourtant tout autre chose.\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[[[N]]] = [[TAB]];\n    printf(\"%d\\n\", t);\n    return 0;\n}\n```",
+   "enonce": "Ce programme doit afficher les [[N]] valeurs du tableau, séparées par des espaces : `[[RES]]`. Il affiche pourtant tout autre chose.\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t[[[N]]] = [[TAB]];\n    printf(\"%d\\n\", t);\n    return 0;\n}\n```\n\n**À corriger** : l'affichage : un tableau s'affiche case par case.\n\n**Sortie attendue**\n```text\n[[RES]]\n```",
    "guidage": "**Diagnostic** : 1. que désigne vraiment `t` tout seul dans `printf(\"%d\\n\", t)` ? → 2. comment afficher chaque case ? → 3. corriger.\n\n**À retenir** : en C, un tableau ne s'affiche jamais d'un coup, mais case par case.",
    "duree": 3,
    "etapes": [
@@ -2215,7 +2215,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Corrige le programme : remplace le `printf` fautif par une boucle qui affiche chaque case suivie d'une espace, pour obtenir `[[RES]]`.",
+     "consigne": "**À faire** :\n1. supprime la ligne `printf(\"%d\\n\", t);` ;\n2. à sa place, `for (int i = 0; i < [[N]]; i++)` qui affiche `t[i]` suivi d'une espace ;\n3. après la boucle, `printf(\"\\n\");`.",
      "question": "Corrige le programme.",
      "verif": {
       "mode": "c",
@@ -2238,68 +2238,68 @@
     }
    ],
    "vals": {
-    "N": "5",
-    "M": "4",
-    "TAB": "{13, 14, 27, 38, 46}",
-    "RES": "13 14 27 38 46",
-    "S2_0": "13 14 27 38 46 "
+    "N": "4",
+    "M": "3",
+    "TAB": "{19, 43, 48, 58}",
+    "RES": "19 43 48 58",
+    "S2_0": "19 43 48 58 "
    },
    "variantes": [
     {
-     "N": "5",
-     "M": "4",
-     "TAB": "{13, 14, 27, 38, 46}",
-     "RES": "13 14 27 38 46",
-     "S2_0": "13 14 27 38 46 "
-    },
-    {
      "N": "4",
      "M": "3",
-     "TAB": "{4, 19, 44, 47}",
-     "RES": "4 19 44 47",
-     "S2_0": "4 19 44 47 "
+     "TAB": "{19, 43, 48, 58}",
+     "RES": "19 43 48 58",
+     "S2_0": "19 43 48 58 "
     },
     {
      "N": "3",
      "M": "2",
-     "TAB": "{10, 25, 48}",
-     "RES": "10 25 48",
-     "S2_0": "10 25 48 "
-    },
-    {
-     "N": "3",
-     "M": "2",
-     "TAB": "{6, 14, 20}",
-     "RES": "6 14 20",
-     "S2_0": "6 14 20 "
+     "TAB": "{26, 28, 32}",
+     "RES": "26 28 32",
+     "S2_0": "26 28 32 "
     },
     {
      "N": "4",
      "M": "3",
-     "TAB": "{3, 30, 31, 32}",
-     "RES": "3 30 31 32",
-     "S2_0": "3 30 31 32 "
+     "TAB": "{7, 14, 25, 46}",
+     "RES": "7 14 25 46",
+     "S2_0": "7 14 25 46 "
     },
     {
      "N": "5",
      "M": "4",
-     "TAB": "{9, 21, 23, 26, 43}",
-     "RES": "9 21 23 26 43",
-     "S2_0": "9 21 23 26 43 "
+     "TAB": "{2, 4, 35, 40, 43}",
+     "RES": "2 4 35 40 43",
+     "S2_0": "2 4 35 40 43 "
     },
     {
      "N": "5",
      "M": "4",
-     "TAB": "{24, 40, 41, 51, 60}",
-     "RES": "24 40 41 51 60",
-     "S2_0": "24 40 41 51 60 "
+     "TAB": "{4, 19, 20, 35, 40}",
+     "RES": "4 19 20 35 40",
+     "S2_0": "4 19 20 35 40 "
+    },
+    {
+     "N": "4",
+     "M": "3",
+     "TAB": "{27, 34, 45, 49}",
+     "RES": "27 34 45 49",
+     "S2_0": "27 34 45 49 "
     },
     {
      "N": "5",
      "M": "4",
-     "TAB": "{9, 14, 16, 41, 42}",
-     "RES": "9 14 16 41 42",
-     "S2_0": "9 14 16 41 42 "
+     "TAB": "{13, 25, 27, 29, 40}",
+     "RES": "13 25 27 29 40",
+     "S2_0": "13 25 27 29 40 "
+    },
+    {
+     "N": "4",
+     "M": "3",
+     "TAB": "{39, 40, 58, 60}",
+     "RES": "39 40 58 60",
+     "S2_0": "39 40 58 60 "
     }
    ]
   },
@@ -2309,7 +2309,7 @@
    "notion": "5.3",
    "origine": "generee",
    "titre": "Deux tableaux égaux ?",
-   "enonce": "Ce programme lit deux tableaux de [[N]] entiers et doit afficher `egaux` s'ils contiennent les mêmes valeurs dans le même ordre, `differents` sinon. Problème : il répond **toujours** `differents`.\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t1[[[N]]], t2[[[N]]];\n    for (int i = 0; i < [[N]]; i++) scanf(\"%d\", &t1[i]);\n    for (int i = 0; i < [[N]]; i++) scanf(\"%d\", &t2[i]);\n    if (t1 == t2) {\n        printf(\"egaux\\n\");\n    } else {\n        printf(\"differents\\n\");\n    }\n    return 0;\n}\n```",
+   "enonce": "Ce programme doit dire si deux tableaux de [[N]] entiers contiennent les mêmes valeurs dans le même ordre. Il répond **toujours** `differents`.\n```c\n#include <stdio.h>\n\nint main(void) {\n    int t1[[[N]]], t2[[[N]]];\n    for (int i = 0; i < [[N]]; i++) scanf(\"%d\", &t1[i]);\n    for (int i = 0; i < [[N]]; i++) scanf(\"%d\", &t2[i]);\n    if (t1 == t2) {\n        printf(\"egaux\\n\");\n    } else {\n        printf(\"differents\\n\");\n    }\n    return 0;\n}\n```\n\n**Au clavier** : les [[N]] valeurs du premier tableau, puis les [[N]] valeurs du second.\n\n**À corriger** : la comparaison : elle doit se faire case par case.\n\n**Ce qu'il affiche** : `egaux` ou `differents`.",
    "guidage": "**Diagnostic** : 1. que compare vraiment `t1 == t2` ? → 2. comment comparer les valeurs ? → 3. corriger.\n\n**Astuce** : pars du principe que les tableaux sont égaux, et change d'avis dès qu'une case diffère.",
    "duree": 5,
    "etapes": [
@@ -2346,7 +2346,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Corrige le programme : compare les deux tableaux **case par case** avec l'indicateur `egaux`, puis affiche `egaux` ou `differents` selon sa valeur.",
+     "consigne": "**À faire** :\n1. déclare `int egaux = 1;` (« jusqu'ici, tout est pareil ») ;\n2. après les lectures, `for (int i = 0; i < [[N]]; i++)` : si `t1[i] != t2[i]`, `egaux = 0;` ;\n3. remplace `if (t1 == t2)` par `if (egaux)`.",
      "question": "Corrige le programme.",
      "verif": {
       "mode": "c",
@@ -2386,11 +2386,11 @@
     }
    ],
    "vals": {
-    "N": "5",
-    "E0": "1 2 0 6 5\n1 2 0 6 5",
-    "E1": "1 2 0 6 5\n1 2 0 6 0",
-    "E2": "7 5 5 0 1\n0 5 5 0 1",
-    "E3": "2 8 8 2 8\n2 8 8 2 8",
+    "N": "4",
+    "E0": "2 4 8 0\n2 4 8 0",
+    "E1": "2 4 8 0\n2 4 8 4",
+    "E2": "8 5 9 3\n2 5 9 3",
+    "E3": "9 4 9 9\n9 4 9 9",
     "S2_0": "egaux",
     "S2_1": "differents",
     "S2_2": "differents",
@@ -2398,55 +2398,11 @@
    },
    "variantes": [
     {
-     "N": "5",
-     "E0": "1 2 0 6 5\n1 2 0 6 5",
-     "E1": "1 2 0 6 5\n1 2 0 6 0",
-     "E2": "7 5 5 0 1\n0 5 5 0 1",
-     "E3": "2 8 8 2 8\n2 8 8 2 8",
-     "S2_0": "egaux",
-     "S2_1": "differents",
-     "S2_2": "differents",
-     "S2_3": "egaux"
-    },
-    {
-     "N": "5",
-     "E0": "8 3 4 4 3\n8 3 4 4 3",
-     "E1": "8 3 4 4 3\n8 3 4 4 6",
-     "E2": "6 2 6 4 7\n0 2 6 4 7",
-     "E3": "1 6 6 6 4\n1 6 6 6 4",
-     "S2_0": "egaux",
-     "S2_1": "differents",
-     "S2_2": "differents",
-     "S2_3": "egaux"
-    },
-    {
-     "N": "3",
-     "E0": "5 3 2\n5 3 2",
-     "E1": "5 3 2\n5 3 9",
-     "E2": "3 8 1\n1 8 1",
-     "E3": "1 9 5\n1 9 5",
-     "S2_0": "egaux",
-     "S2_1": "differents",
-     "S2_2": "differents",
-     "S2_3": "egaux"
-    },
-    {
-     "N": "3",
-     "E0": "8 9 1\n8 9 1",
-     "E1": "8 9 1\n8 9 6",
-     "E2": "3 1 2\n6 1 2",
-     "E3": "2 5 3\n2 5 3",
-     "S2_0": "egaux",
-     "S2_1": "differents",
-     "S2_2": "differents",
-     "S2_3": "egaux"
-    },
-    {
-     "N": "3",
-     "E0": "0 6 9\n0 6 9",
-     "E1": "0 6 9\n0 6 1",
-     "E2": "3 6 8\n1 6 8",
-     "E3": "2 8 3\n2 8 3",
+     "N": "4",
+     "E0": "2 4 8 0\n2 4 8 0",
+     "E1": "2 4 8 0\n2 4 8 4",
+     "E2": "8 5 9 3\n2 5 9 3",
+     "E3": "9 4 9 9\n9 4 9 9",
      "S2_0": "egaux",
      "S2_1": "differents",
      "S2_2": "differents",
@@ -2454,21 +2410,10 @@
     },
     {
      "N": "4",
-     "E0": "9 6 5 7\n9 6 5 7",
-     "E1": "9 6 5 7\n9 6 5 3",
-     "E2": "1 7 6 2\n7 7 6 2",
-     "E3": "6 7 5 8\n6 7 5 8",
-     "S2_0": "egaux",
-     "S2_1": "differents",
-     "S2_2": "differents",
-     "S2_3": "egaux"
-    },
-    {
-     "N": "4",
-     "E0": "7 6 4 0\n7 6 4 0",
-     "E1": "7 6 4 0\n7 6 4 6",
-     "E2": "1 0 2 6\n6 0 2 6",
-     "E3": "7 2 9 1\n7 2 9 1",
+     "E0": "9 3 6 8\n9 3 6 8",
+     "E1": "9 3 6 8\n9 3 6 5",
+     "E2": "7 2 2 6\n4 2 2 6",
+     "E3": "2 7 3 8\n2 7 3 8",
      "S2_0": "egaux",
      "S2_1": "differents",
      "S2_2": "differents",
@@ -2476,10 +2421,65 @@
     },
     {
      "N": "3",
-     "E0": "0 7 6\n0 7 6",
-     "E1": "0 7 6\n0 7 8",
-     "E2": "6 6 5\n7 6 5",
-     "E3": "4 7 4\n4 7 4",
+     "E0": "0 8 4\n0 8 4",
+     "E1": "0 8 4\n0 8 6",
+     "E2": "1 6 4\n3 6 4",
+     "E3": "6 3 2\n6 3 2",
+     "S2_0": "egaux",
+     "S2_1": "differents",
+     "S2_2": "differents",
+     "S2_3": "egaux"
+    },
+    {
+     "N": "4",
+     "E0": "8 7 9 8\n8 7 9 8",
+     "E1": "8 7 9 8\n8 7 9 3",
+     "E2": "3 0 9 1\n9 0 9 1",
+     "E3": "7 5 9 5\n7 5 9 5",
+     "S2_0": "egaux",
+     "S2_1": "differents",
+     "S2_2": "differents",
+     "S2_3": "egaux"
+    },
+    {
+     "N": "5",
+     "E0": "8 9 5 6 8\n8 9 5 6 8",
+     "E1": "8 9 5 6 8\n8 9 5 6 5",
+     "E2": "0 6 7 0 8\n7 6 7 0 8",
+     "E3": "3 7 2 1 7\n3 7 2 1 7",
+     "S2_0": "egaux",
+     "S2_1": "differents",
+     "S2_2": "differents",
+     "S2_3": "egaux"
+    },
+    {
+     "N": "3",
+     "E0": "3 5 9\n3 5 9",
+     "E1": "3 5 9\n3 5 5",
+     "E2": "5 5 3\n1 5 3",
+     "E3": "8 8 7\n8 8 7",
+     "S2_0": "egaux",
+     "S2_1": "differents",
+     "S2_2": "differents",
+     "S2_3": "egaux"
+    },
+    {
+     "N": "4",
+     "E0": "6 6 8 4\n6 6 8 4",
+     "E1": "6 6 8 4\n6 6 8 8",
+     "E2": "6 0 6 8\n0 0 6 8",
+     "E3": "1 6 1 4\n1 6 1 4",
+     "S2_0": "egaux",
+     "S2_1": "differents",
+     "S2_2": "differents",
+     "S2_3": "egaux"
+    },
+    {
+     "N": "5",
+     "E0": "4 7 4 0 5\n4 7 4 0 5",
+     "E1": "4 7 4 0 5\n4 7 4 0 7",
+     "E2": "8 5 0 5 7\n5 5 0 5 7",
+     "E3": "5 7 8 8 3\n5 7 8 8 3",
      "S2_0": "egaux",
      "S2_1": "differents",
      "S2_2": "differents",
@@ -2493,7 +2493,7 @@
    "notion": "5.4",
    "origine": "td",
    "titre": "Recherche dans un tableau non trié",
-   "enonce": "Le tableau `[[TAB]]` contient 19 entiers, dans le désordre.\n\nÉcris un programme qui lit un entier `val` et affiche `trouve` si `val` est dans le tableau, `absent` sinon.\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S3_0]]\n```\n\n(Tableaux_chainex, intermédiaire ex. 5)",
+   "enonce": "Le but : chercher une valeur dans un tableau non trié. (Tableaux_chainex, intermédiaire ex. 5)\n\n**Le tableau**, à recopier : `int t[19] = [[TAB]];`\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. la valeur cherchée `val`.\n\n**Ce qu'il affiche** : `trouve` si `val` est dans le tableau, `absent` sinon.\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S3_0]]\n```",
    "guidage": "**Plan** : 1. un indicateur `trouve = 0` → 2. parcourir le tableau, et mettre `trouve = 1` si une case vaut `val` → 3. afficher selon l'indicateur.\n\n**Piège** : on ne peut dire « absent » qu'après avoir regardé **toutes** les cases.",
    "duree": 5,
    "etapes": [
@@ -2530,7 +2530,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Lis `val`, puis parcours le tableau avec un indicateur `trouve` : 0 au départ, 1 dès qu'une case vaut `val` (et `break` pour arrêter de chercher). Pour l'instant, affiche juste la valeur de l'indicateur : **1 ou 0**.",
+     "consigne": "Premier jalon :\n1. déclare le tableau, puis `int val, trouve = 0;` et lis `val` ;\n2. `for (int i = 0; i < 19; i++)` : si `t[i] == val`, `trouve = 1;` puis `break;` ;\n3. affiche `trouve` (1 ou 0).",
      "question": "Affiche l'indicateur (1 ou 0).",
      "verif": {
       "mode": "c",
@@ -2559,7 +2559,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Dernière touche : au lieu d'afficher 1 ou 0, affiche le **mot** `trouve` ou `absent` selon l'indicateur.",
+     "consigne": "Remplace l'affichage :\n1. au lieu de `printf(\"%d\\n\", trouve);`, écris `if (trouve) printf(\"trouve\\n\"); else printf(\"absent\\n\");`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -2593,11 +2593,11 @@
     }
    ],
    "vals": {
-    "TAB": "{-23, 125, -24, 82, 10, 18, 20, 115, 106, 43, 86, 117, 41, 97, 127, 116, -30, 111, -20}",
-    "E0": "117",
-    "E1": "66",
-    "E2": "-20",
-    "E3": "-23",
+    "TAB": "{24, 113, 55, 62, 109, 124, -7, 14, 120, 53, 56, 26, 99, 127, 43, 122, 107, 74, 105}",
+    "E0": "120",
+    "E1": "42",
+    "E2": "105",
+    "E3": "24",
     "S2_0": "1",
     "S2_1": "0",
     "S2_2": "1",
@@ -2608,11 +2608,11 @@
    },
    "variantes": [
     {
-     "TAB": "{-23, 125, -24, 82, 10, 18, 20, 115, 106, 43, 86, 117, 41, 97, 127, 116, -30, 111, -20}",
-     "E0": "117",
-     "E1": "66",
-     "E2": "-20",
-     "E3": "-23",
+     "TAB": "{24, 113, 55, 62, 109, 124, -7, 14, 120, 53, 56, 26, 99, 127, 43, 122, 107, 74, 105}",
+     "E0": "120",
+     "E1": "42",
+     "E2": "105",
+     "E3": "24",
      "S2_0": "1",
      "S2_1": "0",
      "S2_2": "1",
@@ -2622,95 +2622,95 @@
      "S3_3": "trouve"
     },
     {
-     "TAB": "{70, 104, 69, 47, -27, 31, 63, 33, 43, -24, 41, 71, 98, 9, 19, 59, 6, 122, 50}",
-     "E0": "69",
-     "E1": "18",
-     "E2": "50",
-     "E3": "70",
-     "S2_0": "1",
-     "S2_1": "0",
-     "S2_2": "1",
-     "S3_0": "trouve",
-     "S3_1": "absent",
-     "S3_2": "trouve",
-     "S3_3": "trouve"
-    },
-    {
-     "TAB": "{95, -13, 105, 27, 12, 34, 101, 22, -5, 122, 109, 36, 65, 28, 125, -25, 91, 113, 97}",
-     "E0": "-25",
-     "E1": "-26",
-     "E2": "97",
-     "E3": "95",
-     "S2_0": "1",
-     "S2_1": "0",
-     "S2_2": "1",
-     "S3_0": "trouve",
-     "S3_1": "absent",
-     "S3_2": "trouve",
-     "S3_3": "trouve"
-    },
-    {
-     "TAB": "{2, 75, 95, 91, 38, 7, -7, 19, 129, 77, 80, -1, 47, -29, 87, 128, 68, 116, 117}",
-     "E0": "87",
-     "E1": "-28",
-     "E2": "117",
-     "E3": "2",
-     "S2_0": "1",
-     "S2_1": "0",
-     "S2_2": "1",
-     "S3_0": "trouve",
-     "S3_1": "absent",
-     "S3_2": "trouve",
-     "S3_3": "trouve"
-    },
-    {
-     "TAB": "{42, 65, 83, 66, 108, 126, 58, 59, 113, 7, 52, -14, 107, 98, 71, 18, 112, -26, 93}",
-     "E0": "83",
-     "E1": "-19",
-     "E2": "93",
-     "E3": "42",
-     "S2_0": "1",
-     "S2_1": "0",
-     "S2_2": "1",
-     "S3_0": "trouve",
-     "S3_1": "absent",
-     "S3_2": "trouve",
-     "S3_3": "trouve"
-    },
-    {
-     "TAB": "{123, 111, 72, 41, 60, 122, 28, 23, 126, -20, 17, 101, -17, 130, 104, -2, 40, 74, 31}",
-     "E0": "74",
-     "E1": "7",
-     "E2": "31",
-     "E3": "123",
-     "S2_0": "1",
-     "S2_1": "0",
-     "S2_2": "1",
-     "S3_0": "trouve",
-     "S3_1": "absent",
-     "S3_2": "trouve",
-     "S3_3": "trouve"
-    },
-    {
-     "TAB": "{87, -17, 31, 35, -25, -21, 12, 114, 115, 76, 6, -7, 23, 24, 39, 14, 57, 118, 33}",
-     "E0": "14",
-     "E1": "4",
-     "E2": "33",
-     "E3": "87",
-     "S2_0": "1",
-     "S2_1": "0",
-     "S2_2": "1",
-     "S3_0": "trouve",
-     "S3_1": "absent",
-     "S3_2": "trouve",
-     "S3_3": "trouve"
-    },
-    {
-     "TAB": "{7, 4, 99, 97, 108, 11, 103, 78, -27, -16, 107, 88, -28, 61, -7, 84, 115, 49, 53}",
-     "E0": "107",
-     "E1": "105",
+     "TAB": "{74, -19, 11, 90, 52, -26, 37, 72, 32, 85, 27, 68, 114, 124, 117, 45, -3, 101, 53}",
+     "E0": "68",
+     "E1": "82",
      "E2": "53",
-     "E3": "7",
+     "E3": "74",
+     "S2_0": "1",
+     "S2_1": "0",
+     "S2_2": "1",
+     "S3_0": "trouve",
+     "S3_1": "absent",
+     "S3_2": "trouve",
+     "S3_3": "trouve"
+    },
+    {
+     "TAB": "{116, 5, -27, 104, 12, 128, 109, 112, 87, 65, 94, 18, 84, 126, -21, 13, 79, 41, 92}",
+     "E0": "126",
+     "E1": "100",
+     "E2": "92",
+     "E3": "116",
+     "S2_0": "1",
+     "S2_1": "0",
+     "S2_2": "1",
+     "S3_0": "trouve",
+     "S3_1": "absent",
+     "S3_2": "trouve",
+     "S3_3": "trouve"
+    },
+    {
+     "TAB": "{92, -3, 75, -25, 36, 81, 73, -1, 130, 15, 12, 79, 64, 13, -18, 31, 118, -11, 26}",
+     "E0": "81",
+     "E1": "-20",
+     "E2": "26",
+     "E3": "92",
+     "S2_0": "1",
+     "S2_1": "0",
+     "S2_2": "1",
+     "S3_0": "trouve",
+     "S3_1": "absent",
+     "S3_2": "trouve",
+     "S3_3": "trouve"
+    },
+    {
+     "TAB": "{56, 37, -14, 102, 45, 42, -20, 12, 69, 21, 115, 35, 68, -18, -5, 51, -9, 80, -1}",
+     "E0": "21",
+     "E1": "4",
+     "E2": "-1",
+     "E3": "56",
+     "S2_0": "1",
+     "S2_1": "0",
+     "S2_2": "1",
+     "S3_0": "trouve",
+     "S3_1": "absent",
+     "S3_2": "trouve",
+     "S3_3": "trouve"
+    },
+    {
+     "TAB": "{22, 109, 45, -16, -19, 38, 5, 89, 62, 35, 79, 49, -8, 111, 58, 2, 44, 6, 88}",
+     "E0": "49",
+     "E1": "-17",
+     "E2": "88",
+     "E3": "22",
+     "S2_0": "1",
+     "S2_1": "0",
+     "S2_2": "1",
+     "S3_0": "trouve",
+     "S3_1": "absent",
+     "S3_2": "trouve",
+     "S3_3": "trouve"
+    },
+    {
+     "TAB": "{113, 5, 39, 6, 111, 108, 109, 81, 41, -2, 89, 8, 45, 70, 121, -26, 38, 49, 78}",
+     "E0": "89",
+     "E1": "53",
+     "E2": "78",
+     "E3": "113",
+     "S2_0": "1",
+     "S2_1": "0",
+     "S2_2": "1",
+     "S3_0": "trouve",
+     "S3_1": "absent",
+     "S3_2": "trouve",
+     "S3_3": "trouve"
+    },
+    {
+     "TAB": "{109, 62, 30, 113, 40, 63, 70, -29, 107, 4, 68, -5, -24, 71, 78, 46, 8, 83, -25}",
+     "E0": "62",
+     "E1": "31",
+     "E2": "-25",
+     "E3": "109",
      "S2_0": "1",
      "S2_1": "0",
      "S2_2": "1",
@@ -2727,7 +2727,7 @@
    "notion": "5.4",
    "origine": "td",
    "titre": "Minimum et moyenne de N valeurs",
-   "enonce": "Écris un programme qui lit un entier `n` (au plus 100), puis `n` entiers qu'il range dans un tableau. Il affiche ensuite le **minimum** du tableau et la **moyenne** (2 décimales), sur une ligne.\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S3_0]]\n```\n\n(Tableaux_chainex, intermédiaire ex. 6 et 7)",
+   "enonce": "Le but : chercher le minimum et calculer la moyenne d'un tableau. (Tableaux_chainex, intermédiaire ex. 6 et 7)\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. le nombre de valeurs `n` (100 au plus) ;\n2. les `n` valeurs (des entiers).\n\n**Ce qu'il affiche** : le **minimum** puis la **moyenne** (2 décimales), sur une ligne.\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S3_0]]\n```",
    "guidage": "**Plan** : 1. lire `n` puis les `n` valeurs (tableau de taille physique 100) → 2. cumuler la somme pendant la saisie → 3. minimum : partir de `t[0]` puis comparer aux autres cases → 4. moyenne **réelle**.\n\n**Pièges** : démarrer `min` à 0 donne un faux résultat si toutes les valeurs sont positives ; `s / n` avec deux `int` est une division entière.",
    "duree": 6,
    "etapes": [
@@ -2748,7 +2748,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Lis `n` puis les `n` entiers dans un tableau de taille physique 100, et affiche seulement le **minimum**.",
+     "consigne": "Premier jalon, le minimum :\n1. déclare `int t[100], n;` ; lis `n` puis les `n` valeurs ;\n2. `int min = t[0];` (on part de la première valeur, jamais de 0) ;\n3. `for (int i = 1; i < n; i++)` : si `t[i] < min`, `min = t[i];` ;\n4. affiche `min`.",
      "question": "Lis les valeurs et affiche le minimum.",
      "verif": {
       "mode": "c",
@@ -2793,7 +2793,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Complète le programme : cumule aussi la somme `s` (dans la boucle de saisie, juste après chaque `scanf`), puis affiche sur une ligne `minimum moyenne`, la moyenne avec 2 décimales.",
+     "consigne": "Ajoute la moyenne :\n1. `int s = 0;` et, dans la boucle de saisie, `s += t[i];` juste après le `scanf` ;\n2. affiche `min` puis `(double)s / n` avec `%.2f`, sur une ligne.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -2824,104 +2824,104 @@
     }
    ],
    "vals": {
-    "E0": "5\n23 35 34 20 -1",
-    "E1": "1\n1",
-    "E2": "4\n33 47 39 16",
-    "S1_0": "-1",
-    "S1_1": "1",
-    "S1_2": "16",
-    "S3_0": "-1 22.20",
-    "S3_1": "1 1.00",
-    "S3_2": "16 33.75"
+    "E0": "7\n8 -7 38 26 12 15 1",
+    "E1": "1\n45",
+    "E2": "4\n78 7 36 87",
+    "S1_0": "-7",
+    "S1_1": "45",
+    "S1_2": "7",
+    "S3_0": "-7 13.29",
+    "S3_1": "45 45.00",
+    "S3_2": "7 52.00"
    },
    "variantes": [
     {
-     "E0": "5\n23 35 34 20 -1",
-     "E1": "1\n1",
-     "E2": "4\n33 47 39 16",
-     "S1_0": "-1",
-     "S1_1": "1",
-     "S1_2": "16",
-     "S3_0": "-1 22.20",
-     "S3_1": "1 1.00",
-     "S3_2": "16 33.75"
-    },
-    {
-     "E0": "5\n20 21 0 36 17",
-     "E1": "1\n33",
-     "E2": "4\n19 55 81 78",
-     "S1_0": "0",
-     "S1_1": "33",
-     "S1_2": "19",
-     "S3_0": "0 18.80",
-     "S3_1": "33 33.00",
-     "S3_2": "19 58.25"
-    },
-    {
-     "E0": "5\n39 32 25 -5 0",
-     "E1": "1\n19",
-     "E2": "4\n44 38 34 27",
-     "S1_0": "-5",
-     "S1_1": "19",
-     "S1_2": "27",
-     "S3_0": "-5 18.20",
-     "S3_1": "19 19.00",
-     "S3_2": "27 35.75"
-    },
-    {
-     "E0": "6\n-9 15 -4 -10 15 14",
-     "E1": "1\n20",
-     "E2": "4\n20 40 26 56",
-     "S1_0": "-10",
-     "S1_1": "20",
-     "S1_2": "20",
-     "S3_0": "-10 3.50",
-     "S3_1": "20 20.00",
-     "S3_2": "20 35.50"
-    },
-    {
-     "E0": "7\n-7 4 -2 39 33 -2 32",
-     "E1": "1\n47",
-     "E2": "4\n53 7 77 48",
+     "E0": "7\n8 -7 38 26 12 15 1",
+     "E1": "1\n45",
+     "E2": "4\n78 7 36 87",
      "S1_0": "-7",
-     "S1_1": "47",
+     "S1_1": "45",
      "S1_2": "7",
-     "S3_0": "-7 13.86",
-     "S3_1": "47 47.00",
-     "S3_2": "7 46.25"
+     "S3_0": "-7 13.29",
+     "S3_1": "45 45.00",
+     "S3_2": "7 52.00"
     },
     {
-     "E0": "7\n14 33 3 25 -1 18 28",
-     "E1": "1\n34",
-     "E2": "4\n75 9 48 67",
+     "E0": "7\n14 17 15 -1 7 10 5",
+     "E1": "1\n42",
+     "E2": "4\n9 79 85 60",
      "S1_0": "-1",
-     "S1_1": "34",
+     "S1_1": "42",
      "S1_2": "9",
-     "S3_0": "-1 17.14",
-     "S3_1": "34 34.00",
-     "S3_2": "9 49.75"
+     "S3_0": "-1 9.57",
+     "S3_1": "42 42.00",
+     "S3_2": "9 58.25"
     },
     {
-     "E0": "5\n29 -14 19 -6 24",
-     "E1": "1\n33",
-     "E2": "4\n43 67 31 55",
-     "S1_0": "-14",
-     "S1_1": "33",
-     "S1_2": "31",
-     "S3_0": "-14 10.40",
-     "S3_1": "33 33.00",
-     "S3_2": "31 49.00"
+     "E0": "4\n35 11 -20 -14",
+     "E1": "1\n-6",
+     "E2": "4\n49 82 6 15",
+     "S1_0": "-20",
+     "S1_1": "-6",
+     "S1_2": "6",
+     "S3_0": "-20 3.00",
+     "S3_1": "-6 -6.00",
+     "S3_2": "6 38.00"
     },
     {
-     "E0": "4\n27 28 -9 -5",
-     "E1": "1\n38",
-     "E2": "4\n7 5 12 44",
+     "E0": "6\n-4 -3 2 38 1 33",
+     "E1": "1\n6",
+     "E2": "4\n74 21 17 55",
+     "S1_0": "-4",
+     "S1_1": "6",
+     "S1_2": "17",
+     "S3_0": "-4 11.17",
+     "S3_1": "6 6.00",
+     "S3_2": "17 41.75"
+    },
+    {
+     "E0": "4\n-2 -12 -7 19",
+     "E1": "1\n8",
+     "E2": "4\n70 86 42 16",
+     "S1_0": "-12",
+     "S1_1": "8",
+     "S1_2": "16",
+     "S3_0": "-12 -0.50",
+     "S3_1": "8 8.00",
+     "S3_2": "16 53.50"
+    },
+    {
+     "E0": "7\n7 23 -17 -2 13 10 21",
+     "E1": "1\n47",
+     "E2": "4\n71 47 81 9",
+     "S1_0": "-17",
+     "S1_1": "47",
+     "S1_2": "9",
+     "S3_0": "-17 7.86",
+     "S3_1": "47 47.00",
+     "S3_2": "9 52.00"
+    },
+    {
+     "E0": "5\n27 23 29 -7 -9",
+     "E1": "1\n25",
+     "E2": "4\n15 12 77 26",
      "S1_0": "-9",
-     "S1_1": "38",
-     "S1_2": "5",
-     "S3_0": "-9 10.25",
-     "S3_1": "38 38.00",
-     "S3_2": "5 17.00"
+     "S1_1": "25",
+     "S1_2": "12",
+     "S3_0": "-9 12.60",
+     "S3_1": "25 25.00",
+     "S3_2": "12 32.50"
+    },
+    {
+     "E0": "6\n26 13 -17 -7 23 19",
+     "E1": "1\n31",
+     "E2": "4\n59 68 85 88",
+     "S1_0": "-17",
+     "S1_1": "31",
+     "S1_2": "59",
+     "S3_0": "-17 9.50",
+     "S3_1": "31 31.00",
+     "S3_2": "59 75.00"
     }
    ]
   },
@@ -2931,7 +2931,7 @@
    "notion": "5.4",
    "origine": "td",
    "titre": "Nombre d'occurrences",
-   "enonce": "Écris un programme qui lit `n`, puis `n` entiers, puis une valeur `val`, et affiche le **nombre de fois** où `val` apparaît dans le tableau.\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S3_0]]\n```\n\n(Tableaux_chainex, intermédiaire ex. 8)",
+   "enonce": "Le but : compter les occurrences d'une valeur dans un tableau. (Tableaux_chainex, intermédiaire ex. 8)\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. le nombre de valeurs `n` ;\n2. les `n` valeurs du tableau ;\n3. la valeur à compter `val`.\n\n**Ce qu'il affiche** : le nombre de cases qui valent `val`.\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S3_0]]\n```",
    "guidage": "**Plan** : 1. un compteur `nb` à 0 → 2. parcourir **toutes** les cases → 3. `nb++` à chaque case égale à `val` → 4. afficher `nb`.\n\n**Différence avec la recherche** : ici on ne s'arrête jamais avant la fin.",
    "duree": 5,
    "etapes": [
@@ -2951,7 +2951,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Pour vérifier que tu repères les bonnes cases : lis `n`, les `n` entiers puis `val`, et affiche les **indices** des cases égales à `val`, séparés par un espace.",
+     "consigne": "Premier jalon, repérer les cases :\n1. lis `n`, les `n` valeurs dans `t`, puis `val` ;\n2. `for (int i = 0; i < n; i++)` : si `t[i] == val`, affiche `i` suivi d'une espace ;\n3. termine par `\\n`.",
      "question": "Affiche les indices où se trouve `val`.",
      "verif": {
       "mode": "c",
@@ -2992,7 +2992,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Au lieu d'afficher les indices, **compte** les cases égales à `val` dans `nb`, et affiche seulement ce nombre à la fin.",
+     "consigne": "Compte au lieu d'afficher :\n1. avant la boucle, `int nb = 0;` ;\n2. dans le `if`, remplace le `printf` par `nb++;` ;\n3. après la boucle, affiche `nb`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -3023,93 +3023,93 @@
     }
    ],
    "vals": {
-    "E0": "6\n8 8 9 2 8 5\n8",
-    "E1": "6\n3 4 7 7 1 1\n7",
-    "E2": "3\n1 6 8\n3",
-    "S1_0": "0 1 4 ",
-    "S1_1": "2 3 ",
-    "S3_0": "3",
+    "E0": "8\n4 4 3 1 4 4 3 8\n3",
+    "E1": "4\n2 2 8 1\n2",
+    "E2": "5\n1 8 1 2 5\n4",
+    "S1_0": "2 6 ",
+    "S1_1": "0 1 ",
+    "S3_0": "2",
     "S3_1": "0",
     "S3_2": "2"
    },
    "variantes": [
     {
-     "E0": "6\n8 8 9 2 8 5\n8",
-     "E1": "6\n3 4 7 7 1 1\n7",
-     "E2": "3\n1 6 8\n3",
-     "S1_0": "0 1 4 ",
+     "E0": "8\n4 4 3 1 4 4 3 8\n3",
+     "E1": "4\n2 2 8 1\n2",
+     "E2": "5\n1 8 1 2 5\n4",
+     "S1_0": "2 6 ",
+     "S1_1": "0 1 ",
+     "S3_0": "2",
+     "S3_1": "0",
+     "S3_2": "2"
+    },
+    {
+     "E0": "7\n5 1 5 5 1 6 2\n5",
+     "E1": "4\n5 6 4 4\n4",
+     "E2": "4\n2 4 4 6\n3",
+     "S1_0": "0 2 3 ",
      "S1_1": "2 3 ",
      "S3_0": "3",
      "S3_1": "0",
      "S3_2": "2"
     },
     {
-     "E0": "5\n7 8 5 2 7\n7",
-     "E1": "4\n8 5 5 1\n5",
-     "E2": "5\n4 9 3 4 5\n6",
-     "S1_0": "0 4 ",
-     "S1_1": "1 2 ",
+     "E0": "6\n7 8 7 8 6 1\n7",
+     "E1": "5\n7 1 2 3 9\n3",
+     "E2": "5\n1 9 6 6 1\n3",
+     "S1_0": "0 2 ",
+     "S1_1": "3 ",
      "S3_0": "2",
+     "S3_1": "0",
+     "S3_2": "1"
+    },
+    {
+     "E0": "6\n9 8 8 9 2 8\n8",
+     "E1": "6\n4 2 2 1 4 6\n2",
+     "E2": "5\n4 6 6 7 5\n1",
+     "S1_0": "1 2 5 ",
+     "S1_1": "1 2 ",
+     "S3_0": "3",
      "S3_1": "0",
      "S3_2": "2"
     },
     {
-     "E0": "6\n2 7 8 9 8 9\n8",
-     "E1": "5\n8 3 8 5 1\n8",
-     "E2": "3\n7 1 7\n4",
-     "S1_0": "2 4 ",
+     "E0": "8\n4 7 2 7 6 2 3 7\n7",
+     "E1": "5\n4 4 4 6 4\n6",
+     "E2": "4\n4 7 4 1\n3",
+     "S1_0": "1 3 7 ",
+     "S1_1": "3 ",
+     "S3_0": "3",
+     "S3_1": "0",
+     "S3_2": "1"
+    },
+    {
+     "E0": "5\n4 4 5 4 3\n4",
+     "E1": "6\n6 6 8 7 2 1\n6",
+     "E2": "3\n1 9 1\n3",
+     "S1_0": "0 1 3 ",
+     "S1_1": "0 1 ",
+     "S3_0": "3",
+     "S3_1": "0",
+     "S3_2": "2"
+    },
+    {
+     "E0": "7\n7 7 4 8 8 4 9\n7",
+     "E1": "6\n5 8 5 8 8 4\n5",
+     "E2": "4\n7 9 7 7\n4",
+     "S1_0": "0 1 ",
      "S1_1": "0 2 ",
      "S3_0": "2",
      "S3_1": "0",
      "S3_2": "2"
     },
     {
-     "E0": "8\n6 1 3 8 1 2 1 7\n1",
-     "E1": "4\n5 6 4 5\n5",
-     "E2": "3\n2 4 2\n1",
-     "S1_0": "1 4 6 ",
-     "S1_1": "0 3 ",
+     "E0": "8\n8 6 1 6 9 6 3 7\n6",
+     "E1": "6\n9 5 1 2 5 6\n5",
+     "E2": "3\n2 1 8\n6",
+     "S1_0": "1 3 5 ",
+     "S1_1": "1 4 ",
      "S3_0": "3",
-     "S3_1": "0",
-     "S3_2": "2"
-    },
-    {
-     "E0": "5\n7 4 4 4 7\n4",
-     "E1": "5\n3 7 6 2 7\n6",
-     "E2": "3\n3 1 5\n6",
-     "S1_0": "1 2 3 ",
-     "S1_1": "2 ",
-     "S3_0": "3",
-     "S3_1": "0",
-     "S3_2": "1"
-    },
-    {
-     "E0": "8\n8 8 2 4 1 1 3 8\n1",
-     "E1": "4\n7 2 2 7\n2",
-     "E2": "4\n6 9 9 1\n3",
-     "S1_0": "4 5 ",
-     "S1_1": "1 2 ",
-     "S3_0": "2",
-     "S3_1": "0",
-     "S3_2": "2"
-    },
-    {
-     "E0": "6\n7 6 3 1 3 3\n3",
-     "E1": "6\n8 1 7 8 7 5\n5",
-     "E2": "4\n3 8 1 6\n5",
-     "S1_0": "2 4 5 ",
-     "S1_1": "5 ",
-     "S3_0": "3",
-     "S3_1": "0",
-     "S3_2": "1"
-    },
-    {
-     "E0": "5\n8 9 5 5 6\n5",
-     "E1": "5\n4 7 4 3 7\n4",
-     "E2": "3\n3 2 8\n6",
-     "S1_0": "2 3 ",
-     "S1_1": "0 2 ",
-     "S3_0": "2",
      "S3_1": "0",
      "S3_2": "2"
     }
@@ -3121,7 +3121,7 @@
    "notion": "5.4",
    "origine": "td",
    "titre": "Décalage circulaire à gauche",
-   "enonce": "Écris un programme qui lit `n`, puis `n` entiers, décale toutes les valeurs d'une case **vers la gauche de façon circulaire** (la première passe à la fin), puis affiche le tableau.\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S4_0]]\n```\n\n(Tableaux_chainex, intermédiaire ex. 9)",
+   "enonce": "Le but : décaler toutes les valeurs d'un tableau d'une case, sans en perdre. (Tableaux_chainex, intermédiaire ex. 9)\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. le nombre de valeurs `n` ;\n2. les `n` valeurs du tableau.\n\n**Ce qu'il fait** :\n1. décale chaque valeur d'une case **vers la gauche** ; la première fait le tour et se retrouve à la fin.\n\n**Ce qu'il affiche** : le tableau décalé, sur une ligne.\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S4_0]]\n```",
    "guidage": "**Plan** : 1. mettre `t[0]` de côté → 2. faire reculer chaque case d'un cran (`t[i] = t[i + 1]`, pour `i` de 0 à `n - 2`) → 3. replacer l'ancien premier dans la dernière case → 4. afficher.\n\n**Piège** : sans la sauvegarde, la première valeur est écrasée et perdue.",
    "duree": 6,
    "etapes": [
@@ -3173,7 +3173,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Version sans circularité : lis `n` et les `n` entiers, fais reculer les valeurs d'une case (la première est perdue, on ne la remet **pas** à la fin), puis affiche les `n - 1` premières cases.",
+     "consigne": "Premier jalon, décalage simple (la première valeur est perdue) :\n1. lis `n` puis les `n` valeurs dans `t` ;\n2. `for (int i = 0; i < n - 1; i++)` : `t[i] = t[i + 1];` ;\n3. affiche les `n - 1` premières cases.",
      "question": "Décale sans remettre le premier.",
      "verif": {
       "mode": "c",
@@ -3198,7 +3198,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Rends le décalage **circulaire** : sauvegarde `premier` avant la boucle de décalage, range-le dans la dernière case (`t[n - 1]`) juste après, puis affiche les **`n`** cases.",
+     "consigne": "Rends le décalage circulaire :\n1. **avant** la boucle de décalage, `int premier = t[0];` ;\n2. **après** la boucle, `t[n - 1] = premier;` ;\n3. affiche maintenant les `n` cases.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -3229,132 +3229,204 @@
     }
    ],
    "vals": {
-    "TAB": "{3, 9, 2, 4}",
-    "RES": "{9, 2, 4, 3}",
-    "P": "3",
-    "UN": "5",
-    "E0": "6\n34 32 40 49 30 37",
-    "E1": "3\n13 7 -14",
-    "S3_0": "32 40 49 30 37 ",
-    "S3_1": "7 -14 ",
-    "S4_0": "32 40 49 30 37 34 ",
-    "S4_1": "5 ",
-    "S4_2": "7 -14 13 "
+    "TAB": "{7, 4, 5, 8}",
+    "RES": "{4, 5, 8, 7}",
+    "P": "7",
+    "UN": "73",
+    "E0": "5\n35 3 38 43 26",
+    "E1": "6\n7 -15 13 12 -14 4",
+    "S3_0": "3 38 43 26 ",
+    "S3_1": "-15 13 12 -14 4 ",
+    "S4_0": "3 38 43 26 35 ",
+    "S4_1": "73 ",
+    "S4_2": "-15 13 12 -14 4 7 "
    },
    "variantes": [
     {
-     "TAB": "{3, 9, 2, 4}",
-     "RES": "{9, 2, 4, 3}",
-     "P": "3",
-     "UN": "5",
-     "E0": "6\n34 32 40 49 30 37",
-     "E1": "3\n13 7 -14",
-     "S3_0": "32 40 49 30 37 ",
-     "S3_1": "7 -14 ",
-     "S4_0": "32 40 49 30 37 34 ",
-     "S4_1": "5 ",
-     "S4_2": "7 -14 13 "
+     "TAB": "{7, 4, 5, 8}",
+     "RES": "{4, 5, 8, 7}",
+     "P": "7",
+     "UN": "73",
+     "E0": "5\n35 3 38 43 26",
+     "E1": "6\n7 -15 13 12 -14 4",
+     "S3_0": "3 38 43 26 ",
+     "S3_1": "-15 13 12 -14 4 ",
+     "S4_0": "3 38 43 26 35 ",
+     "S4_1": "73 ",
+     "S4_2": "-15 13 12 -14 4 7 "
     },
     {
-     "TAB": "{8, 7, 4, 9}",
-     "RES": "{7, 4, 9, 8}",
+     "TAB": "{1, 4, 2, 5}",
+     "RES": "{4, 2, 5, 1}",
+     "P": "1",
+     "UN": "4",
+     "E0": "6\n40 21 42 45 19 47",
+     "E1": "5\n8 13 -17 6 -15",
+     "S3_0": "21 42 45 19 47 ",
+     "S3_1": "13 -17 6 -15 ",
+     "S4_0": "21 42 45 19 47 40 ",
+     "S4_1": "4 ",
+     "S4_2": "13 -17 6 -15 8 "
+    },
+    {
+     "TAB": "{6, 7, 8, 1}",
+     "RES": "{7, 8, 1, 6}",
+     "P": "6",
+     "UN": "83",
+     "E0": "6\n18 33 9 35 27 47",
+     "E1": "5\n20 -15 -16 3 19",
+     "S3_0": "33 9 35 27 47 ",
+     "S3_1": "-15 -16 3 19 ",
+     "S4_0": "33 9 35 27 47 18 ",
+     "S4_1": "83 ",
+     "S4_2": "-15 -16 3 19 20 "
+    },
+    {
+     "TAB": "{8, 3, 4, 6}",
+     "RES": "{3, 4, 6, 8}",
      "P": "8",
-     "UN": "45",
-     "E0": "5\n34 28 41 18 37",
-     "E1": "6\n14 -5 5 9 -19 -11",
-     "S3_0": "28 41 18 37 ",
-     "S3_1": "-5 5 9 -19 -11 ",
-     "S4_0": "28 41 18 37 34 ",
-     "S4_1": "45 ",
-     "S4_2": "-5 5 9 -19 -11 14 "
+     "UN": "76",
+     "E0": "7\n2 45 29 31 30 35 41",
+     "E1": "3\n0 -2 -3",
+     "S3_0": "45 29 31 30 35 41 ",
+     "S3_1": "-2 -3 ",
+     "S4_0": "45 29 31 30 35 41 2 ",
+     "S4_1": "76 ",
+     "S4_2": "-2 -3 0 "
     },
     {
-     "TAB": "{8, 1, 6, 9}",
-     "RES": "{1, 6, 9, 8}",
-     "P": "8",
-     "UN": "3",
-     "E0": "7\n37 38 24 35 16 34 47",
-     "E1": "5\n-3 -9 -2 4 -12",
-     "S3_0": "38 24 35 16 34 47 ",
-     "S3_1": "-9 -2 4 -12 ",
-     "S4_0": "38 24 35 16 34 47 37 ",
-     "S4_1": "3 ",
-     "S4_2": "-9 -2 4 -12 -3 "
+     "TAB": "{6, 7, 8, 2}",
+     "RES": "{7, 8, 2, 6}",
+     "P": "6",
+     "UN": "48",
+     "E0": "4\n3 38 24 39",
+     "E1": "3\n-2 -18 14",
+     "S3_0": "38 24 39 ",
+     "S3_1": "-18 14 ",
+     "S4_0": "38 24 39 3 ",
+     "S4_1": "48 ",
+     "S4_2": "-18 14 -2 "
     },
     {
-     "TAB": "{8, 3, 1, 5}",
-     "RES": "{3, 1, 5, 8}",
-     "P": "8",
-     "UN": "23",
-     "E0": "5\n18 31 24 7 28",
-     "E1": "6\n3 20 1 -4 -10 9",
-     "S3_0": "31 24 7 28 ",
-     "S3_1": "20 1 -4 -10 9 ",
-     "S4_0": "31 24 7 28 18 ",
-     "S4_1": "23 ",
-     "S4_2": "20 1 -4 -10 9 3 "
-    },
-    {
-     "TAB": "{5, 1, 9, 2}",
-     "RES": "{1, 9, 2, 5}",
+     "TAB": "{5, 8, 6, 1}",
+     "RES": "{8, 6, 1, 5}",
      "P": "5",
-     "UN": "46",
-     "E0": "7\n17 39 35 26 23 40 27",
-     "E1": "5\n-2 8 -14 10 -8",
-     "S3_0": "39 35 26 23 40 27 ",
-     "S3_1": "8 -14 10 -8 ",
-     "S4_0": "39 35 26 23 40 27 17 ",
-     "S4_1": "46 ",
-     "S4_2": "8 -14 10 -8 -2 "
+     "UN": "56",
+     "E0": "6\n25 15 1 8 22 40",
+     "E1": "6\n20 11 0 -7 -6 -14",
+     "S3_0": "15 1 8 22 40 ",
+     "S3_1": "11 0 -7 -6 -14 ",
+     "S4_0": "15 1 8 22 40 25 ",
+     "S4_1": "56 ",
+     "S4_2": "11 0 -7 -6 -14 20 "
     },
     {
-     "TAB": "{5, 2, 3, 8}",
-     "RES": "{2, 3, 8, 5}",
-     "P": "5",
-     "UN": "96",
-     "E0": "6\n22 31 10 36 12 15",
-     "E1": "5\n16 3 15 10 -3",
-     "S3_0": "31 10 36 12 15 ",
-     "S3_1": "3 15 10 -3 ",
-     "S4_0": "31 10 36 12 15 22 ",
-     "S4_1": "96 ",
-     "S4_2": "3 15 10 -3 16 "
-    },
-    {
-     "TAB": "{2, 6, 9, 4}",
-     "RES": "{6, 9, 4, 2}",
-     "P": "2",
-     "UN": "78",
-     "E0": "4\n37 32 47 33",
-     "E1": "4\n-13 -15 -12 -9",
-     "S3_0": "32 47 33 ",
-     "S3_1": "-15 -12 -9 ",
-     "S4_0": "32 47 33 37 ",
-     "S4_1": "78 ",
-     "S4_2": "-15 -12 -9 -13 "
-    },
-    {
-     "TAB": "{9, 2, 4, 3}",
-     "RES": "{2, 4, 3, 9}",
+     "TAB": "{9, 3, 5, 6}",
+     "RES": "{3, 5, 6, 9}",
      "P": "9",
-     "UN": "59",
-     "E0": "6\n38 25 46 45 19 16",
-     "E1": "4\n7 -4 5 -20",
-     "S3_0": "25 46 45 19 16 ",
-     "S3_1": "-4 5 -20 ",
-     "S4_0": "25 46 45 19 16 38 ",
-     "S4_1": "59 ",
-     "S4_2": "-4 5 -20 7 "
+     "UN": "43",
+     "E0": "4\n17 7 31 8",
+     "E1": "6\n-12 8 15 -2 -16 20",
+     "S3_0": "7 31 8 ",
+     "S3_1": "8 15 -2 -16 20 ",
+     "S4_0": "7 31 8 17 ",
+     "S4_1": "43 ",
+     "S4_2": "8 15 -2 -16 20 -12 "
+    },
+    {
+     "TAB": "{6, 3, 2, 4}",
+     "RES": "{3, 2, 4, 6}",
+     "P": "6",
+     "UN": "77",
+     "E0": "7\n6 16 12 42 3 22 45",
+     "E1": "4\n8 -9 -3 10",
+     "S3_0": "16 12 42 3 22 45 ",
+     "S3_1": "-9 -3 10 ",
+     "S4_0": "16 12 42 3 22 45 6 ",
+     "S4_1": "77 ",
+     "S4_2": "-9 -3 10 8 "
     }
    ]
   },
   {
+   "0": "[",
+   "1": "o",
+   "2": "b",
+   "3": "j",
+   "4": "e",
+   "5": "c",
+   "6": "t",
+   "7": " ",
+   "8": "O",
+   "9": "b",
+   "10": "j",
+   "11": "e",
+   "12": "c",
+   "13": "t",
+   "14": "]",
+   "15": "\n",
+   "16": "\n",
+   "17": "S",
+   "18": "i",
+   "19": " ",
+   "20": "`",
+   "21": "v",
+   "22": "a",
+   "23": "l",
+   "24": "`",
+   "25": " ",
+   "26": "e",
+   "27": "s",
+   "28": "t",
+   "29": " ",
+   "30": "a",
+   "31": "b",
+   "32": "s",
+   "33": "e",
+   "34": "n",
+   "35": "t",
+   "36": "e",
+   "37": ",",
+   "38": " ",
+   "39": "r",
+   "40": "i",
+   "41": "e",
+   "42": "n",
+   "43": " ",
+   "44": "n",
+   "45": "e",
+   "46": " ",
+   "47": "s",
+   "48": "'",
+   "49": "a",
+   "50": "f",
+   "51": "f",
+   "52": "i",
+   "53": "c",
+   "54": "h",
+   "55": "e",
+   "56": " ",
+   "57": "p",
+   "58": "o",
+   "59": "u",
+   "60": "r",
+   "61": " ",
+   "62": "l",
+   "63": "'",
+   "64": "i",
+   "65": "n",
+   "66": "s",
+   "67": "t",
+   "68": "a",
+   "69": "n",
+   "70": "t",
+   "71": ".",
    "id": "c5-113",
    "type": "exo",
    "notion": "5.4",
    "origine": "td",
    "titre": "Position de la première occurrence",
-   "enonce": "Écris un programme qui lit `n`, puis `n` entiers, puis `val`, et affiche l'**indice de la première case** qui contient `val`, ou `-1` si `val` n'est pas dans le tableau.\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S3_0]]\n```\n\n(Tableaux_chainex, intermédiaire ex. 10)",
+   "enonce": "Le but : trouver la position d'une valeur, et gérer le cas où elle est absente. (Tableaux_chainex, intermédiaire ex. 10)\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. le nombre de valeurs `n` ;\n2. les `n` valeurs du tableau ;\n3. la valeur cherchée `val`.\n\n**Ce qu'il affiche** : l'indice de la **première** case qui vaut `val`, ou `-1` si elle n'y est pas.\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S3_0]]\n```",
    "guidage": "**Plan** : 1. `pos = -1` (la valeur « pas trouvé ») → 2. parcourir, et à la première case égale à `val` : `pos = i` puis `break` → 3. afficher `pos`.\n\n**Piège** : l'indice 0 est un vrai indice, donc 0 ne peut pas vouloir dire « absent ».",
    "duree": 5,
    "etapes": [
@@ -3414,7 +3486,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Gère maintenant l'absence : une variable `pos` démarre à -1, retient l'indice trouvé, et tu l'affiches **toujours** à la fin (une seule fois, après la boucle).",
+     "consigne": "Gère l'absence :\n1. avant la boucle, `int pos = -1;` ;\n2. dans le `if`, remplace le `printf` par `pos = i;` (garde le `break;`) ;\n3. après la boucle, affiche `pos` dans tous les cas.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -3445,38 +3517,38 @@
     }
    ],
    "vals": {
-    "TAB": "{4, 5, 2, 9, 2}",
-    "X": "2",
+    "TAB": "{9, 7, 3, 4, 3}",
+    "X": "3",
     "IX": "2",
-    "E0": "8\n1 11 26 14 29 22 15 14\n14",
-    "E1": "4\n9 10 11 20\n22",
-    "E2": "2\n3 3\n3",
-    "S2_0": "3",
+    "E0": "7\n27 1 9 13 20 21 21\n21",
+    "E1": "3\n20 14 12\n17",
+    "E2": "2\n9 9\n9",
+    "S2_0": "5",
     "S2_1": "0",
-    "S3_0": "3",
+    "S3_0": "5",
     "S3_1": "-1",
     "S3_2": "0"
    },
    "variantes": [
     {
-     "TAB": "{4, 5, 2, 9, 2}",
-     "X": "2",
+     "TAB": "{9, 7, 3, 4, 3}",
+     "X": "3",
      "IX": "2",
-     "E0": "8\n1 11 26 14 29 22 15 14\n14",
-     "E1": "4\n9 10 11 20\n22",
-     "E2": "2\n3 3\n3",
-     "S2_0": "3",
+     "E0": "7\n27 1 9 13 20 21 21\n21",
+     "E1": "3\n20 14 12\n17",
+     "E2": "2\n9 9\n9",
+     "S2_0": "5",
      "S2_1": "0",
-     "S3_0": "3",
+     "S3_0": "5",
      "S3_1": "-1",
      "S3_2": "0"
     },
     {
-     "TAB": "{4, 5, 2, 1, 2}",
-     "X": "2",
+     "TAB": "{1, 7, 4, 3, 4}",
+     "X": "4",
      "IX": "2",
-     "E0": "7\n12 9 14 17 7 24 24\n24",
-     "E1": "3\n1 11 27\n15",
+     "E0": "8\n27 26 14 24 9 12 7 12\n12",
+     "E1": "4\n19 29 20 18\n28",
      "E2": "2\n4 4\n4",
      "S2_0": "5",
      "S2_1": "0",
@@ -3485,38 +3557,12 @@
      "S3_2": "0"
     },
     {
-     "TAB": "{5, 4, 3, 8, 3}",
+     "TAB": "{5, 9, 7, 3, 3}",
      "X": "3",
-     "IX": "2",
-     "E0": "5\n20 8 9 13 13\n13",
-     "E1": "3\n2 4 26\n17",
-     "E2": "2\n1 1\n1",
-     "S2_0": "3",
-     "S2_1": "0",
-     "S3_0": "3",
-     "S3_1": "-1",
-     "S3_2": "0"
-    },
-    {
-     "TAB": "{9, 5, 6, 8, 6}",
-     "X": "6",
-     "IX": "2",
-     "E0": "6\n18 30 3 29 25 29\n29",
-     "E1": "4\n5 18 19 23\n17",
-     "E2": "2\n4 4\n4",
-     "S2_0": "3",
-     "S2_1": "0",
-     "S3_0": "3",
-     "S3_1": "-1",
-     "S3_2": "0"
-    },
-    {
-     "TAB": "{3, 7, 6, 9, 9}",
-     "X": "9",
      "IX": "3",
-     "E0": "6\n5 22 13 24 25 13\n13",
-     "E1": "3\n11 23 18\n3",
-     "E2": "2\n7 7\n7",
+     "E0": "6\n5 18 9 26 28 9\n9",
+     "E1": "4\n15 26 24 21\n28",
+     "E2": "2\n1 1\n1",
      "S2_0": "2",
      "S2_1": "0",
      "S3_0": "2",
@@ -3524,25 +3570,12 @@
      "S3_2": "0"
     },
     {
-     "TAB": "{2, 7, 1, 5, 7}",
-     "X": "7",
+     "TAB": "{9, 8, 7, 6, 8}",
+     "X": "8",
      "IX": "1",
-     "E0": "5\n2 9 1 19 19\n19",
-     "E1": "4\n24 13 11 1\n22",
-     "E2": "2\n4 4\n4",
-     "S2_0": "3",
-     "S2_1": "0",
-     "S3_0": "3",
-     "S3_1": "-1",
-     "S3_2": "0"
-    },
-    {
-     "TAB": "{6, 5, 9, 3, 3}",
-     "X": "3",
-     "IX": "3",
-     "E0": "6\n13 5 27 26 28 28\n28",
-     "E1": "5\n22 29 18 11 1\n17",
-     "E2": "2\n3 3\n3",
+     "E0": "6\n17 19 20 23 22 22\n22",
+     "E1": "5\n25 24 12 8 14\n26",
+     "E2": "2\n7 7\n7",
      "S2_0": "4",
      "S2_1": "0",
      "S3_0": "4",
@@ -3550,11 +3583,50 @@
      "S3_2": "0"
     },
     {
-     "TAB": "{3, 1, 8, 2, 1}",
-     "X": "1",
+     "TAB": "{9, 2, 5, 8, 2}",
+     "X": "2",
      "IX": "1",
-     "E0": "6\n23 5 14 2 19 19\n19",
-     "E1": "5\n5 10 26 8 17\n28",
+     "E0": "6\n1 2 15 19 25 25\n25",
+     "E1": "5\n24 15 2 19 30\n7",
+     "E2": "2\n5 5\n5",
+     "S2_0": "4",
+     "S2_1": "0",
+     "S3_0": "4",
+     "S3_1": "-1",
+     "S3_2": "0"
+    },
+    {
+     "TAB": "{5, 1, 9, 3, 9}",
+     "X": "9",
+     "IX": "2",
+     "E0": "6\n26 17 7 25 23 7\n7",
+     "E1": "3\n10 26 8\n13",
+     "E2": "2\n4 4\n4",
+     "S2_0": "2",
+     "S2_1": "0",
+     "S3_0": "2",
+     "S3_1": "-1",
+     "S3_2": "0"
+    },
+    {
+     "TAB": "{8, 9, 3, 7, 3}",
+     "X": "3",
+     "IX": "2",
+     "E0": "5\n21 29 28 11 11\n11",
+     "E1": "4\n27 9 26 4\n1",
+     "E2": "2\n6 6\n6",
+     "S2_0": "3",
+     "S2_1": "0",
+     "S3_0": "3",
+     "S3_1": "-1",
+     "S3_2": "0"
+    },
+    {
+     "TAB": "{1, 8, 9, 7, 7}",
+     "X": "7",
+     "IX": "3",
+     "E0": "6\n23 25 3 5 24 24\n24",
+     "E1": "5\n13 21 26 14 11\n24",
      "E2": "2\n4 4\n4",
      "S2_0": "4",
      "S2_1": "0",
@@ -3570,7 +3642,7 @@
    "notion": "5.4",
    "origine": "td",
    "titre": "Supprimer la première occurrence",
-   "enonce": "Sans utiliser de fonction toute prête : le programme lit `n`, puis `n` entiers, puis `val`. Il **supprime la première case** qui contient `val` (les cases suivantes reculent d'un cran pour boucher le trou) et affiche le tableau restant. Si `val` est absente, le tableau est affiché tel quel.\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S4_0]]\n```\n\n(Tableaux_chainex, intermédiaire ex. 11)",
+   "enonce": "Le but : supprimer une case au milieu d'un tableau, en faisant reculer les suivantes. (Tableaux_chainex, intermédiaire ex. 11)\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. le nombre de valeurs `n` ;\n2. les `n` valeurs du tableau ;\n3. la valeur à supprimer `val`.\n\n**Ce qu'il fait** :\n1. cherche la première case qui vaut `val` ;\n2. si elle existe, la supprime : chaque case suivante recule d'un cran, et le tableau a une valeur de moins ;\n3. sinon, ne change rien.\n\n**Ce qu'il affiche** : le tableau restant, sur une ligne.\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S4_0]]\n```",
    "guidage": "**Plan** : 1. trouver `pos`, l'indice de la 1re occurrence (comme à l'exo précédent) → 2. si `pos != -1`, boucher le trou : `t[i] = t[i + 1]` pour `i` de `pos` à `n - 2` → 3. `n--` → 4. afficher les `n` cases restantes.\n\n**Piège** : ne décale que si la valeur a été trouvée.",
    "duree": 7,
    "etapes": [
@@ -3590,7 +3662,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Première étape, déjà vue à l'exo précédent : lis `n`, les `n` entiers puis `val`, et affiche `pos`, l'indice de la première occurrence de `val` (ou `-1` si elle est absente).",
+     "consigne": "Premier jalon, trouver la case (comme à l'exo précédent) :\n1. lis `n`, les `n` valeurs dans `t`, puis `val` ;\n2. `int pos = -1;` puis une boucle qui met l'indice de la première occurrence dans `pos` (avec `break`) ;\n3. affiche `pos`.",
      "question": "Trouve `pos`.",
      "verif": {
       "mode": "c",
@@ -3651,7 +3723,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Assemble le tout : **si** `pos != -1`, bouche le trou avec la boucle puis fais `n--` ; ensuite affiche les `n` cases sur une ligne. Si `val` est absente, rien ne change et le tableau s'affiche en entier.",
+     "consigne": "Supprime la case :\n1. remplace l'affichage de `pos` par : si `pos != -1`, `for (int i = pos; i < n - 1; i++) t[i] = t[i + 1];` puis `n--;` ;\n2. affiche ensuite les `n` cases sur une ligne.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -3682,149 +3754,149 @@
     }
    ],
    "vals": {
-    "TAB": "{7, 5, 9, 8, 8}",
-    "X": "8",
-    "IX": "3",
+    "TAB": "{9, 6, 8, 7, 6}",
+    "X": "6",
+    "IX": "1",
     "V": "8",
-    "RES": "{7, 5, 9, 8}",
-    "E0": "5\n24 25 15 13 25\n25",
-    "E1": "5\n22 18 16 14 11\n27",
-    "E2": "4\n5 13 6 28\n5",
+    "RES": "{9, 8, 7, 6}",
+    "E0": "7\n23 11 13 5 21 25 11\n11",
+    "E1": "5\n19 3 29 12 1\n7",
+    "E2": "3\n4 6 14\n4",
     "S1_0": "1",
     "S1_1": "-1",
     "S1_2": "0",
-    "S4_0": "24 15 13 25 ",
-    "S4_1": "22 18 16 14 11 ",
-    "S4_2": "13 6 28 "
+    "S4_0": "23 13 5 21 25 11 ",
+    "S4_1": "19 3 29 12 1 ",
+    "S4_2": "6 14 "
    },
    "variantes": [
     {
-     "TAB": "{7, 5, 9, 8, 8}",
-     "X": "8",
-     "IX": "3",
+     "TAB": "{9, 6, 8, 7, 6}",
+     "X": "6",
+     "IX": "1",
      "V": "8",
-     "RES": "{7, 5, 9, 8}",
-     "E0": "5\n24 25 15 13 25\n25",
-     "E1": "5\n22 18 16 14 11\n27",
-     "E2": "4\n5 13 6 28\n5",
+     "RES": "{9, 8, 7, 6}",
+     "E0": "7\n23 11 13 5 21 25 11\n11",
+     "E1": "5\n19 3 29 12 1\n7",
+     "E2": "3\n4 6 14\n4",
      "S1_0": "1",
      "S1_1": "-1",
      "S1_2": "0",
-     "S4_0": "24 15 13 25 ",
-     "S4_1": "22 18 16 14 11 ",
-     "S4_2": "13 6 28 "
+     "S4_0": "23 13 5 21 25 11 ",
+     "S4_1": "19 3 29 12 1 ",
+     "S4_2": "6 14 "
     },
     {
-     "TAB": "{3, 5, 2, 7, 2}",
-     "X": "2",
-     "IX": "2",
-     "V": "7",
-     "RES": "{3, 5, 7, 2}",
-     "E0": "5\n18 22 8 14 22\n22",
-     "E1": "3\n26 19 2\n29",
-     "E2": "5\n22 18 28 24 1\n22",
-     "S1_0": "1",
-     "S1_1": "-1",
-     "S1_2": "0",
-     "S4_0": "18 8 14 22 ",
-     "S4_1": "26 19 2 ",
-     "S4_2": "18 28 24 1 "
-    },
-    {
-     "TAB": "{2, 5, 6, 9, 9}",
-     "X": "9",
-     "IX": "3",
+     "TAB": "{5, 6, 9, 8, 6}",
+     "X": "6",
+     "IX": "1",
      "V": "9",
-     "RES": "{2, 5, 6, 9}",
-     "E0": "7\n30 20 29 7 26 1 7\n7",
-     "E1": "4\n14 3 24 1\n18",
-     "E2": "4\n3 19 11 16\n3",
-     "S1_0": "3",
+     "RES": "{5, 9, 8, 6}",
+     "E0": "6\n28 26 21 11 30 30\n30",
+     "E1": "4\n2 5 24 15\n17",
+     "E2": "5\n19 11 23 27 16\n19",
+     "S1_0": "4",
      "S1_1": "-1",
      "S1_2": "0",
-     "S4_0": "30 20 29 26 1 7 ",
-     "S4_1": "14 3 24 1 ",
-     "S4_2": "19 11 16 "
+     "S4_0": "28 26 21 11 30 ",
+     "S4_1": "2 5 24 15 ",
+     "S4_2": "11 23 27 16 "
     },
     {
-     "TAB": "{5, 7, 2, 8, 8}",
-     "X": "8",
-     "IX": "3",
+     "TAB": "{9, 7, 6, 8, 6}",
+     "X": "6",
+     "IX": "2",
      "V": "8",
-     "RES": "{5, 7, 2, 8}",
-     "E0": "5\n25 15 6 29 29\n29",
-     "E1": "4\n11 28 22 8\n14",
-     "E2": "5\n9 14 20 2 18\n9",
+     "RES": "{9, 7, 8, 6}",
+     "E0": "7\n18 29 4 15 25 10 25\n25",
+     "E1": "3\n14 29 20\n2",
+     "E2": "4\n16 24 28 18\n16",
+     "S1_0": "4",
+     "S1_1": "-1",
+     "S1_2": "0",
+     "S4_0": "18 29 4 15 10 25 ",
+     "S4_1": "14 29 20 ",
+     "S4_2": "24 28 18 "
+    },
+    {
+     "TAB": "{4, 2, 7, 5, 5}",
+     "X": "5",
+     "IX": "3",
+     "V": "5",
+     "RES": "{4, 2, 7, 5}",
+     "E0": "6\n10 17 16 13 9 13\n13",
+     "E1": "4\n8 27 22 18\n10",
+     "E2": "5\n21 5 11 25 22\n21",
      "S1_0": "3",
      "S1_1": "-1",
      "S1_2": "0",
-     "S4_0": "25 15 6 29 ",
-     "S4_1": "11 28 22 8 ",
-     "S4_2": "14 20 2 18 "
+     "S4_0": "10 17 16 9 13 ",
+     "S4_1": "8 27 22 18 ",
+     "S4_2": "5 11 25 22 "
     },
     {
-     "TAB": "{2, 1, 7, 5, 2}",
-     "X": "2",
-     "IX": "0",
+     "TAB": "{7, 5, 2, 1, 5}",
+     "X": "5",
+     "IX": "1",
+     "V": "2",
+     "RES": "{7, 2, 1, 5}",
+     "E0": "5\n12 24 6 30 6\n6",
+     "E1": "5\n17 28 24 10 29\n3",
+     "E2": "4\n18 17 11 27\n18",
+     "S1_0": "2",
+     "S1_1": "-1",
+     "S1_2": "0",
+     "S4_0": "12 24 30 6 ",
+     "S4_1": "17 28 24 10 29 ",
+     "S4_2": "17 11 27 "
+    },
+    {
+     "TAB": "{4, 5, 6, 1, 6}",
+     "X": "6",
+     "IX": "2",
      "V": "1",
-     "RES": "{1, 7, 5, 2}",
-     "E0": "7\n30 2 3 28 23 11 23\n23",
-     "E1": "5\n7 1 19 23 12\n15",
-     "E2": "4\n9 29 14 12\n9",
-     "S1_0": "4",
+     "RES": "{4, 5, 1, 6}",
+     "E0": "5\n16 29 25 14 14\n14",
+     "E1": "3\n11 3 16\n28",
+     "E2": "5\n22 26 24 25 21\n22",
+     "S1_0": "3",
      "S1_1": "-1",
      "S1_2": "0",
-     "S4_0": "30 2 3 28 11 23 ",
-     "S4_1": "7 1 19 23 12 ",
-     "S4_2": "29 14 12 "
+     "S4_0": "16 29 25 14 ",
+     "S4_1": "11 3 16 ",
+     "S4_2": "26 24 25 21 "
     },
     {
-     "TAB": "{8, 1, 7, 2, 7}",
-     "X": "7",
-     "IX": "2",
-     "V": "2",
-     "RES": "{8, 1, 2, 7}",
-     "E0": "5\n17 3 8 19 3\n3",
-     "E1": "5\n15 18 29 24 1\n14",
-     "E2": "4\n7 21 10 18\n7",
-     "S1_0": "1",
-     "S1_1": "-1",
-     "S1_2": "0",
-     "S4_0": "17 8 19 3 ",
-     "S4_1": "15 18 29 24 1 ",
-     "S4_2": "21 10 18 "
-    },
-    {
-     "TAB": "{7, 9, 5, 3, 7}",
-     "X": "7",
-     "IX": "0",
-     "V": "9",
-     "RES": "{9, 5, 3, 7}",
-     "E0": "5\n14 5 7 18 5\n5",
-     "E1": "5\n17 2 7 26 18\n22",
-     "E2": "4\n7 23 1 19\n7",
-     "S1_0": "1",
-     "S1_1": "-1",
-     "S1_2": "0",
-     "S4_0": "14 7 18 5 ",
-     "S4_1": "17 2 7 26 18 ",
-     "S4_2": "23 1 19 "
-    },
-    {
-     "TAB": "{4, 8, 9, 2, 9}",
+     "TAB": "{1, 6, 4, 9, 9}",
      "X": "9",
-     "IX": "2",
-     "V": "2",
-     "RES": "{4, 8, 2, 9}",
-     "E0": "7\n2 8 23 4 27 3 27\n27",
-     "E1": "4\n23 25 24 7\n5",
-     "E2": "4\n24 1 25 27\n24",
-     "S1_0": "4",
+     "IX": "3",
+     "V": "9",
+     "RES": "{1, 6, 4, 9}",
+     "E0": "6\n19 13 24 1 22 1\n1",
+     "E1": "3\n16 24 15\n6",
+     "E2": "4\n3 14 15 1\n3",
+     "S1_0": "3",
      "S1_1": "-1",
      "S1_2": "0",
-     "S4_0": "2 8 23 4 3 27 ",
-     "S4_1": "23 25 24 7 ",
-     "S4_2": "1 25 27 "
+     "S4_0": "19 13 24 22 1 ",
+     "S4_1": "16 24 15 ",
+     "S4_2": "14 15 1 "
+    },
+    {
+     "TAB": "{5, 3, 1, 8, 8}",
+     "X": "8",
+     "IX": "3",
+     "V": "8",
+     "RES": "{5, 3, 1, 8}",
+     "E0": "6\n25 4 18 9 8 18\n18",
+     "E1": "3\n8 7 24\n14",
+     "E2": "3\n15 12 7\n15",
+     "S1_0": "2",
+     "S1_1": "-1",
+     "S1_2": "0",
+     "S4_0": "25 4 9 8 18 ",
+     "S4_1": "8 7 24 ",
+     "S4_2": "12 7 "
     }
    ]
   }

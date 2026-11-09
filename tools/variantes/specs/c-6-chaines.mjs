@@ -1,4 +1,5 @@
 /* Chapitre 6 : consignes réécrites + variantes (08/11/2026). Les exos 6-112 et 6-113 sont dans c-nouveaux-exos.mjs. */
+import {BLOC, but, rien, lit, fait, affiche, afaire, jalon, sortie, corriger} from "../redaction.mjs";
 const E = (k, o) => Object.fromEntries(Object.entries(o).map(([a, b]) => [`etapes.${k}.${a}`, b]));
 const ex = (e, s) => "**Exemple**\n```text\nEntrée :\n" + e + "\nSortie :\n" + s + "\n```";
 const tests = (...es) => es.map(e => ({entree: String(e), sortie: "@auto"}));
@@ -9,7 +10,7 @@ const NONPAL = ["bonjour", "ab", "chaine", "langage", "radio", "kayaks", "toto"]
 const VOY = "aeiouy";
 const cmp = (a, b) => a < b ? -1 : a > b ? 1 : 0;
 
-export default {
+const base = {
   banque: "programmation-c/c-6-chaines.json",
   n: 8,
   items: {
@@ -123,3 +124,57 @@ export default {
       deriver: v => ({N: [...v.P].filter(c => c === v.C).length})},
   },
 };
+
+/* ---------- format « Au clavier / Ce qu'il fait / Ce qu'il affiche » (09/11/2026), appliqué après la base ---------- */
+const J = (k, intro, ...xs) => E(k, {consigne: jalon(intro, ...xs)});
+const LIGNE = "`char s[100];` puis `fgets(s, sizeof(s), stdin);`";
+const format = {
+  banque: "programmation-c/c-6-chaines.json",
+  items: {
+    "c6-101": {set: {enonce: BLOC(but("reconnaître minuscules et majuscules grâce à leurs codes, **sans fonction prédéfinie** (`islower`, `isupper`, `ctype.h`… interdits). (Tableaux_chainex, intermédiaire ex. 12)"),
+        lit("une ligne de texte (espaces compris)."), affiche("le nombre de lettres **minuscules**, une espace, puis le nombre de lettres **majuscules**."), ex("[[P]]", "[[S3_0]]")),
+      ...J(2, "Premier jalon, les minuscules :", "lis la ligne : " + LIGNE + " ;", "`for (int i = 0; s[i] != '\\0'; i++)` : si `s[i] >= 'a' && s[i] <= 'z'`, ajoute 1 à `min` ;", "affiche `min`."),
+      ...J(3, "Ajoute les majuscules :", "dans la même boucle, si `s[i] >= 'A' && s[i] <= 'Z'`, ajoute 1 à `maj` ;", "affiche `min` puis `maj`, séparés par une espace.")}},
+    "c6-102": {set: {enonce: BLOC(but("parcourir une chaîne jusqu'à sa fin, sans `strlen`."), lit("une ligne de texte."), affiche("sa longueur, **sans compter** le `'\\n'` que `fgets` garde à la fin."), ex("[[P]]", "[[N]]")),
+      ...J(2, "Premier jalon :", "lis la ligne : " + LIGNE + " ;", "`int n = 0;` puis `while (s[n] != '\\0') n++;` ;", "affiche `n` (le `'\\n'` est encore compté à ce stade)."),
+      ...J(3, "Ne compte plus le `'\\n'` :", "change la condition du `while` en `s[n] != '\\0' && s[n] != '\\n'` ;", "le reste ne change pas.")}},
+    "c6-103": {set: {enonce: BLOC(but("lire une ligne avec `fgets` et enlever le `'\\n'` qu'il garde à la fin."), lit("une ligne de texte."), affiche("la ligne entre crochets, sur une seule ligne."), ex("[[P]]", "[[[P]]]")),
+      ...J(2, "Premier jalon, sans retirer le `'\\n'` :", "lis la ligne : " + LIGNE + " ;", "affiche `printf(\"[%s]\\n\", s);` et regarde où tombe le `]`."),
+      ...J(3, "Retire le `'\\n'` :", "juste après le `fgets`, ajoute `s[strcspn(s, \"\\n\")] = '\\0';` (et `#include <string.h>` en haut) ;", "l'affichage ne change pas : le `]` reste maintenant sur la même ligne.")}},
+    "c6-104": {set: {enonce: BLOC(but("assembler une chaîne à partir de morceaux avec `strcpy` et `strcat`."), lit("un prénom (un mot) ;", "un nom (un mot)."),
+        fait("construit dans `char complet[100]` la chaîne `prénom nom`."), affiche("`complet`, une espace, puis sa longueur."), ex("[[PR]] [[NO]]", "[[PR]] [[NO]] [[L]]")),
+      ...J(3, "Premier jalon :", "lis le prénom et le nom dans deux tableaux de `char` ;", "`strcpy(complet, prenom);` puis `strcat(complet, \" \");` puis `strcat(complet, nom);` ;", "affiche `complet`."),
+      ...J(4, "Ajoute la longueur :", "sur la même ligne, après une espace, affiche `(int)strlen(complet)` avec `%d`.")}},
+    "c6-105": {set: {enonce: BLOC(but("comparer deux chaînes avec `strcmp`."), lit("un premier mot ;", "un second mot."),
+        affiche("`avant` si le premier vient avant le second dans l'ordre alphabétique, `apres` s'il vient après, `egal` s'ils sont identiques."), ex("[[A]] [[B]]", "[[S3_0]]")),
+      ...J(2, "Premier jalon :", "lis les deux mots ;", "si `strcmp(a, b) == 0`, affiche `egal`, sinon `different`."),
+      ...J(3, "Distingue les trois cas :", "range `int c = strcmp(a, b);` ;", "si `c < 0` → `avant` ; si `c > 0` → `apres` ; sinon → `egal`.")}},
+    "c6-106": {set: {enonce: BLOC(but("parcourir une chaîne à l'envers."), lit("un mot."), affiche("ce mot à l'envers."), ex("[[W]]", "[[INV]]")),
+      ...J(2, "Premier jalon :", "lis le mot avec `scanf(\"%99s\", s);` ;", "`int n = strlen(s);` ;", "affiche `n`."),
+      ...J(3, "Affiche à l'envers :", "remplace l'affichage de `n` par `for (int i = n - 1; i >= 0; i--) printf(\"%c\", s[i]);` ;", "termine par `printf(\"\\n\");`.")}},
+    "c6-107": {set: {enonce: BLOC(but("comparer une chaîne avec elle-même lue à l'envers."), "**Rappel** : un palindrome se lit pareil dans les deux sens (comme `radar`).", lit("un mot."), affiche("`oui` si c'est un palindrome, `non` sinon."), ex("[[W]]", "[[RW]]")),
+      ...J(2, "Premier jalon :", "lis le mot ; `int n = strlen(s);` ;", "affiche `s[0]`, une espace, puis `s[n - 1]` (la première et la dernière lettre)."),
+      ...J(3, "Compare toutes les paires :", "`int pal = 1;` ;", "`for (int i = 0; i < n / 2; i++)` : si `s[i] != s[n - 1 - i]`, `pal = 0;` ;", "affiche `oui` si `pal` vaut 1, `non` sinon.")}},
+    "c6-108": {set: {enonce: BLOC(but("compter les caractères d'une ligne qui appartiennent à une liste."), lit("une ligne de texte."), affiche("le nombre de **voyelles minuscules** qu'elle contient (`a e i o u y`)."), ex("[[P]]", "[[NV]]")),
+      ...J(2, "Premier jalon, une seule voyelle :", "lis la ligne : " + LIGNE + " ;", "parcours-la jusqu'au `'\\0'` et compte les `'e'` ;", "affiche ce nombre."),
+      ...J(3, "Toutes les voyelles :", "élargis la condition : `c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u' || c == 'y'` (avec `c = s[i]`) ;", "le reste ne change pas.")}},
+    "c6-109": {set: {enonce: BLOC(but("transformer les lettres d'une chaîne grâce à leurs codes, **sans `toupper`**."), lit("une ligne de texte."), affiche("la même ligne, avec les lettres minuscules passées en majuscules (les autres caractères ne changent pas)."), ex("[[P]]", "[[UP]]")),
+      ...J(2, "Premier jalon :", "lis la ligne : " + LIGNE + " ;", "retire le `'\\n'` : `s[strcspn(s, \"\\n\")] = '\\0';` ;", "affiche la ligne telle quelle."),
+      ...J(3, "Passe en majuscules avant d'afficher :", "parcours la ligne jusqu'au `'\\0'` ;", "si `s[i]` est entre `'a'` et `'z'`, remplace-le par `s[i] - 'a' + 'A'` ;", "l'affichage ne change pas.")}},
+    "c6-110": {set: {enonce: BLOC("Ce programme lit un mot et doit afficher `ok` si c'est `secret`, `refuse` sinon. Il refuse toujours, même quand on tape `secret`.\n```c\n#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char mot[50];\n    scanf(\"%49s\", mot);\n    if (mot == \"secret\") {\n        printf(\"ok\\n\");\n    } else {\n        printf(\"refuse\\n\");\n    }\n    return 0;\n}\n```", corriger("la condition du `if`, avec `strcmp`.")),
+      ...J(3, "**À faire** :", "remplace `mot == \"secret\"` par `strcmp(mot, \"secret\") == 0` ;", "ne change rien d'autre (`Secret` avec une majuscule doit toujours être refusé).")}},
+    "c6-111": {set: {enonce: BLOC(but("lire un caractère, puis une ligne, et compter ce caractère dans la ligne."), lit("un caractère `c` (sur la première ligne) ;", "une ligne de texte (sur la ligne suivante)."), affiche("le nombre de fois où `c` apparaît dans la ligne."), ex("[[C]]\n[[P]]", "[[N]]")),
+      ...J(2, "Premier jalon :", "lis le caractère : `scanf(\" %c\", &c);` ;", "consomme la touche Entrée restée en attente : `getchar();` ;", "lis la ligne : " + LIGNE + " ;", "affiche son premier caractère, `s[0]`."),
+      ...J(3, "Compte les occurrences :", "parcours la ligne jusqu'au `'\\0'` ;", "à chaque `s[i] == c`, ajoute 1 à un compteur ;", "affiche le compteur (à la place de `s[0]`).")}},
+    "c6-112": {set: {enonce: BLOC(but("voir que c'est le `'\\0'` qui marque la fin d'une chaîne, en comptant ses caractères **soi-même** (sans `strlen`)."), rien, "**La chaîne**, à recopier : `char mot[] = \"[[MOT]]\";`",
+        affiche("le nombre de caractères visibles, puis le nombre de cases occupées (une de plus, pour le `'\\0'`)."), sortie("[[SORTIE]]")),
+      ...J(2, "Premier jalon :", "déclare la chaîne ; `int n = 0;` ;", "`while (mot[n] != '\\0') n++;` ;", "affiche `n`."),
+      ...J(3, "Complète l'affichage :", "remplace le `printf` par `printf(\"%d caracteres, %d cases\\n\", n, n + 1);`.")}},
+    "c6-113": {set: {enonce: BLOC(but("construire une chaîne **case par case**, sans oublier le `'\\0'` final."), rien,
+        fait("déclare `char sigle[4];` ;", "range une lettre dans chacune des cases 0, 1 et 2, pour former `\"[[S]]\"` ;", "met le `'\\0'` dans la case 3 ;", "affiche `sigle` avec `printf(\"%s\\n\", sigle);`."), "Interdit d'écrire `sigle = \"[[S]]\"` ou d'utiliser `strcpy`.", sortie("[[S]]")),
+      ...J(2, "Premier jalon, pour voir le résultat attendu :", "déclare `char sigle[] = \"[[S]]\";` (le compilateur ajoute le `'\\0'` tout seul) ;", "affiche-la avec `%s`."),
+      ...J(3, "Construis-la à la main :", "remplace la déclaration par `char sigle[4];` ;", "`sigle[0] = '[[C0]]';`, `sigle[1] = '[[C1]]';`, `sigle[2] = '[[C2]]';` (un caractère s'écrit entre **apostrophes**) ;", "`sigle[3] = '\\0';` ;", "garde l'affichage.")}},
+  },
+};
+
+export default [base, format];

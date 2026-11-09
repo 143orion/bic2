@@ -1,4 +1,6 @@
 /* Chapitre 7 : consignes réécrites + variantes (08/11/2026). L'exo 7-114 est dans c-nouveaux-exos.mjs. */
+import {BLOC, but, rien, lit, fait, affiche, afaire, jalon, sortie, corriger} from "../redaction.mjs";
+const c74d = "#include <stdio.h>\n\nvoid [[F]](int x) {\n    x = x + [[K]];\n}\n\nint main(void) {\n    int [[V]];\n    scanf(\"%d\", &[[V]]);\n    [[F]]([[V]]);\n    printf(\"%d\\n\", [[V]]);\n    return 0;\n}";
 const E = (k, o) => Object.fromEntries(Object.entries(o).map(([a, b]) => [`etapes.${k}.${a}`, b]));
 const ex = (e, s) => "**Exemple**\n```text\nEntrée :\n" + e + "\nSortie :\n" + s + "\n```";
 const tests = (...es) => es.map(e => ({entree: String(e), sortie: "@auto"}));
@@ -7,7 +9,7 @@ const liste = (R, n, a, b) => Array.from({length: n}, () => R.entre(a, b));
 const saisie = (n, t, ...plus) => [n, L(t), ...plus].join("\n");
 const dec = (x, n = 2) => (Math.round(x * 10**n) / 10**n).toFixed(n);
 
-export default {
+const base = {
   banque: "programmation-c/c-7-fonctions.json",
   n: 8,
   items: {
@@ -137,3 +139,69 @@ export default {
       }, tirer: R => ({A: R.entre(1, 50), B: R.entre(1, 50), E1: `${R.entre(-20, -1)} ${R.entre(1, 20)}`})},
   },
 };
+
+/* ---------- format « Au clavier / Ce qu'il fait / Ce qu'il affiche » (09/11/2026), appliqué après la base ---------- */
+const J = (k, intro, ...xs) => E(k, {consigne: jalon(intro, ...xs)});
+const SANS = "Premier jalon, **sans fonction**, tout dans `main` :";
+const format = {
+  banque: "programmation-c/c-7-fonctions.json",
+  items: {
+    "c7-101": {set: {enonce: BLOC(but("écrire sa première fonction, avec un **prototype** avant `main` et la **définition** après."), "**La fonction** `int carre(int x)` renvoie le carré de `x`.",
+        lit("un entier `n`."), affiche("`carre(n)`."), ex("[[N]]", "[[R]]")),
+      ...J(2, SANS, "lis `n` ;", "affiche `n * n`."),
+      ...J(3, "Passe à la fonction :", "avant `main`, le prototype : `int carre(int x);` ;", "après `main`, la définition : `int carre(int x) { return x * x; }` ;", "dans `main`, affiche `carre(n)` au lieu de `n * n`.")}},
+    "c7-102": {set: {enonce: BLOC(but("écrire une fonction qui **renvoie** une valeur, et une autre qui **affiche** sans rien renvoyer (`void`)."),
+        "**Les fonctions** :\n- `int maximum(int a, int b)` renvoie le plus grand des deux ;\n- `void afficher_ligne(int n)` affiche `n` tirets puis un retour à la ligne.",
+        lit("un entier `a` ;", "un entier `b`."), affiche("une ligne de tirets aussi longue que le maximum, puis le maximum sur la ligne suivante."), ex("[[A]] [[B]]", "[[S3_0]]")),
+      ...J(2, SANS, "lis `a` et `b` ;", "`int m = a > b ? a : b;` (ou un `if`) ;", "`for (int i = 0; i < m; i++) printf(\"-\");` puis `printf(\"\\n\");` ;", "affiche `m`."),
+      ...J(3, "Sors les deux morceaux dans des fonctions (avant `main`) :", "`maximum` contient le calcul de `m` et le renvoie avec `return` ;", "`afficher_ligne` contient la boucle des tirets et le `\\n` ;", "dans `main` : `int m = maximum(a, b);`, puis `afficher_ligne(m);`, puis l'affichage de `m`.")}},
+    "c7-103": {set: {enonce: BLOC(but("sortir un test dans une fonction qui renvoie 1 (vrai) ou 0 (faux)."), "**La fonction** `int est_pair(int n)` renvoie 1 si `n` est pair, 0 sinon.",
+        lit("le nombre de valeurs `N` ;", "les `N` valeurs (des entiers)."), affiche("combien de ces valeurs sont paires, en appelant `est_pair`."), ex("[[E0]]", "[[S3_0]]")),
+      ...J(2, SANS, "lis `N` ; `int nb = 0;` ;", "boucle de `N` tours : lis `x`, et si `x % 2 == 0`, `nb++;` ;", "affiche `nb`."),
+      ...J(3, "Sors le test dans la fonction :", "avant `main` : `int est_pair(int n) { return n % 2 == 0; }` ;", "dans la boucle, remplace le test par `if (est_pair(x)) nb++;`.")}},
+    "c7-104": {set: {enonce: BLOC(but("partager une variable entre plusieurs fonctions avec une variable **globale**."), "**La variable globale** `int appels = 0;` (en haut du fichier, hors de toute fonction).\n\n**La fonction** `void saluer(void)` affiche `Bonjour` et augmente `appels` de 1.",
+        lit("un entier `n`."), fait("appelle `saluer` `n` fois."), affiche("`n` lignes `Bonjour`, puis la valeur de `appels`."), ex("[[N]]", "[[S3_0]]")),
+      ...J(2, SANS, "lis `n` ; `int compteur = 0;` ;", "boucle de `n` tours : affiche `Bonjour` et fais `compteur++;` ;", "affiche `compteur`."),
+      ...J(3, "Passe à la globale et à la fonction :", "en haut du fichier : `int appels = 0;` ;", "avant `main` : `void saluer(void)` qui affiche `Bonjour` et fait `appels++;` ;", "dans `main`, la boucle appelle `saluer();` ; à la fin, affiche `appels` (supprime `compteur`).")}},
+    "c7-105": {set: {enonce: BLOC("Ce programme doit doubler `n` grâce à la fonction `doubler`, puis l'afficher : avec `[[N]]`, il devrait afficher `[[R]]`. Il affiche `[[N]]`.\n```c\n#include <stdio.h>\n\nvoid doubler(int x) {\n    x = x * 2;\n}\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    doubler(n);\n    printf(\"%d\\n\", n);\n    return 0;\n}\n```", corriger("`doubler` et son appel, en passant `n` **par adresse**.")),
+      ...J(3, "**À faire** :", "en-tête : `void doubler(int *x)` ;", "dans la fonction : `*x = *x * 2;` ;", "dans `main`, l'appel devient `doubler(&n);`.")}},
+    "c7-106": {set: {enonce: BLOC(but("modifier deux variables de `main` depuis une fonction, grâce à leurs adresses."), "**La fonction** `void echanger(int *a, int *b)` échange les deux valeurs pointées.",
+        lit("un entier `x` ;", "un entier `y`."), fait("appelle `echanger(&x, &y);`."), affiche("`x` puis `y` (donc dans l'ordre inverse de la saisie)."), ex("[[A]] [[B]]", "[[B]] [[A]]")),
+      ...J(3, SANS, "lis `x` et `y` ;", "`int temp = x; x = y; y = temp;` ;", "affiche `x` puis `y`."),
+      ...J(4, "Sors l'échange dans la fonction :", "avant `main` : `void echanger(int *a, int *b) { int temp = *a; *a = *b; *b = temp; }` ;", "dans `main`, remplace les trois lignes de l'échange par `echanger(&x, &y);`.")}},
+    "c7-107": {set: {enonce: BLOC(but("une fonction qui produit **deux** résultats en écrivant dans deux variables de `main`."), "**La fonction** `void diviser(int dividende, int diviseur, int *quotient, int *reste)` (exemple du cours) range le quotient dans `*quotient` et le reste dans `*reste`.",
+        lit("un entier `a` ;", "un entier `b`."), fait("appelle `diviser(a, b, &q, &r);`."), affiche("`q` puis `r`."), ex("[[A]] [[B]]", "[[Q]] [[R]]")),
+      ...J(3, SANS, "lis `a` et `b` ;", "`int q = a / b, r = a % b;` ;", "affiche `q r`."),
+      ...J(4, "Déplace les calculs dans la fonction :", "avant `main`, écris `diviser` : `*quotient = dividende / diviseur;` et `*reste = dividende % diviseur;` ;", "dans `main` : `int q, r;` puis `diviser(a, b, &q, &r);` ;", "l'affichage ne change pas.")}},
+    "c7-108": {set: {enonce: BLOC(but("découper un programme en trois fonctions qui travaillent sur le même tableau."), "**Les fonctions** (chacune reçoit le tableau `arr` et sa taille `taille`) :\n- `void remplir_tableau(int arr[], int taille)` lit les valeurs au clavier ;\n- `void afficher_tableau(int arr[], int taille)` affiche le tableau au format `[10, 20, 30]` ;\n- `int somme_tableau(int arr[], int taille)` renvoie la somme.",
+        lit("le nombre de valeurs `n` (100 au plus) ;", "les `n` valeurs."), affiche("le tableau au format `[a, b, c]`, puis la somme sur la ligne suivante."), ex("[[E0]]", "[[S4_0]]")),
+      ...J(3, SANS, "lis `n`, puis les `n` valeurs dans `int t[100]` ;", "affiche `[`, puis chaque valeur, suivie de `, ` sauf la dernière (`if (i < n - 1)`), puis `]` et `\\n` ;", "calcule et affiche la somme."),
+      ...J(4, "Découpe en trois fonctions (avant `main`) :", "`remplir_tableau` contient la boucle de saisie ;", "`afficher_tableau` contient l'affichage entre crochets ;", "`somme_tableau` calcule et **renvoie** la somme ;", "`main` ne fait plus que lire `n`, puis appeler `remplir_tableau(t, n);`, `afficher_tableau(t, n);` et afficher `somme_tableau(t, n)`.")}},
+    "c7-109": {set: {enonce: BLOC(but("une fonction qui teste une propriété d'un tableau et renvoie 1 ou 0."), "**La fonction** `int est_trie(int t[], int n)` renvoie 1 si le tableau est trié par ordre croissant (deux valeurs égales côte à côte sont acceptées), 0 sinon.",
+        lit("le nombre de valeurs `n` ;", "les `n` valeurs."), affiche("le résultat de `est_trie(t, n)`."), ex("[[E0]]", "[[S4_0]]")),
+      ...J(3, SANS, "lis `n` puis les `n` valeurs ; `int trie = 1;` ;", "`for (int i = 0; i < n - 1; i++)` : si `t[i] > t[i + 1]`, `trie = 0;` ;", "affiche `trie`."),
+      ...J(4, "Sors le test dans la fonction :", "avant `main`, `est_trie` contient la boucle : `return 0;` dès qu'une paire est en désordre, et `return 1;` après la boucle ;", "dans `main`, affiche `est_trie(t, n)`.")}},
+    "c7-110": {set: {enonce: BLOC(but("une fonction de recherche qui renvoie une position, ou -1."), "**La fonction** `int recherche_position(int t[], int n, int val)` renvoie l'indice de la première case qui vaut `val`, ou `-1` si `val` est absente.",
+        lit("le nombre de valeurs `n` ;", "les `n` valeurs ;", "la valeur cherchée `val`."), affiche("le résultat de la fonction."), ex("[[E0]]", "[[S4_0]]")),
+      ...J(3, SANS, "lis `n`, les `n` valeurs, puis `val` ; `int pos = -1;` ;", "`for (int i = 0; i < n; i++)` : si `t[i] == val`, `pos = i;` puis `break;` ;", "affiche `pos`."),
+      ...J(4, "Sors la recherche dans la fonction :", "avant `main`, `recherche_position` : dans la boucle, `return i;` dès que `t[i] == val` ; après la boucle, `return -1;` ;", "dans `main`, affiche `recherche_position(t, n, val)`.")}},
+    "c7-111": {set: {enonce: BLOC(but("voir qu'une fonction qui reçoit un tableau modifie l'**original**."), "**La fonction** `void sans_negatifs(int t[], int n)` remplace chaque valeur négative du tableau par 0.",
+        lit("le nombre de valeurs `n` ;", "les `n` valeurs."), fait("appelle `sans_negatifs(t, n)`."), affiche("le tableau, valeurs séparées par une espace."), ex("[[E0]]", "[[S3_0]]")),
+      ...J(2, SANS, "lis `n` puis les `n` valeurs ;", "`for (int i = 0; i < n; i++)` : si `t[i] < 0`, `t[i] = 0;` ;", "affiche le tableau."),
+      ...J(3, "Sors le remplacement dans la fonction :", "avant `main`, `void sans_negatifs(int t[], int n)` contient la boucle de remplacement ;", "dans `main`, remplace cette boucle par `sans_negatifs(t, n);` (avant l'affichage).")}},
+    "c7-112": {set: {enonce: BLOC(but("utiliser les fonctions de la bibliothèque mathématique dans sa propre fonction."), "**La fonction** `double hypotenuse(double a, double b)` renvoie $\\sqrt{a^2 + b^2}$, calculée avec `sqrt` et `pow` (`#include <math.h>`).",
+        lit("un réel `a` ;", "un réel `b`."), affiche("`hypotenuse(a, b)` avec 2 décimales."), ex("[[A]] [[B]]", "[[R]]")),
+      ...J(3, SANS, "lis `a` et `b` dans deux `double` (`%lf`) ;", "affiche `a * a + b * b` avec `%.2f`."),
+      ...J(4, "Passe à la fonction :", "en haut : `#include <math.h>` ;", "avant `main` : `double hypotenuse(double a, double b) { return sqrt(pow(a, 2) + pow(b, 2)); }` ;", "dans `main`, affiche `hypotenuse(a, b)` avec `%.2f`.")}},
+    "c7-113": {set: {enonce: BLOC(but("organiser un fichier comme un **module** : les prototypes d'abord, `main` ensuite, les définitions à la fin."),
+        "**Les fonctions** : `int addition(int a, int b)` et `int soustraction(int a, int b)`. Dans un vrai projet, les prototypes iraient dans `calculatrice.h` et les définitions dans `calculatrice.c` ; ici, tout tient dans un seul fichier.",
+        lit("un entier `a` ;", "un entier `b`."), affiche("`addition(a, b)` puis `soustraction(a, b)`, sur une ligne."), ex("[[A]] [[B]]", "[[S3_0]]")),
+      ...J(2, SANS, "lis `a` et `b` ;", "affiche `a + b` et `a - b`, sur une ligne."),
+      ...J(3, "Organise comme un module :", "tout en haut, sous `#include` : les deux prototypes (`int addition(int a, int b);` et `int soustraction(int a, int b);`) ;", "dans `main`, affiche `addition(a, b)` et `soustraction(a, b)` ;", "après `main`, les deux définitions (avec leur corps et leur `return`).")}},
+    "c7-114": {set: {enonce: BLOC("Ce programme lit `[[V]]` puis appelle `[[F]]` pour lui ajouter [[K]] [[UNITE]]. Il devrait afficher la nouvelle valeur, mais il réaffiche toujours celle de départ.\n```c\n" + c74d + "\n```",
+        corriger("la fonction et son appel, en faisant **renvoyer** le résultat avec `return` (pas de pointeur)."), ex("[[A]]", "[[R]]")),
+      ...J(2, "**À faire** :", "en-tête : remplace `void` par `int` : `int [[F]](int x)` ;", "dans la fonction : `return x + [[K]];` ;", "dans `main`, range le résultat : `[[V]] = [[F]]([[V]]);`.")}},
+  },
+};
+
+export default [base, format];

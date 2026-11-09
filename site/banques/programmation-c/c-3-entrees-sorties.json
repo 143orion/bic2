@@ -244,23 +244,17 @@
    "duree": 0.33,
    "explication": "Chaque format (`%d`, `%c`…) est remplacé par une valeur, dans l'ordre : [[K]] formats, donc **[[K]]** valeurs.",
    "vals": {
-    "K": "2",
-    "K1": "3",
-    "FMT": "%d - %d",
-    "ARGS": "a, b"
+    "K": "4",
+    "K1": "5",
+    "FMT": "%d et %d et %d et %d",
+    "ARGS": "a, b, c, d"
    },
    "variantes": [
     {
-     "K": "2",
-     "K1": "3",
-     "FMT": "%d - %d",
-     "ARGS": "a, b"
-    },
-    {
-     "K": "2",
-     "K1": "3",
-     "FMT": "%d et %d",
-     "ARGS": "a, b"
+     "K": "4",
+     "K1": "5",
+     "FMT": "%d et %d et %d et %d",
+     "ARGS": "a, b, c, d"
     },
     {
      "K": "3",
@@ -269,10 +263,10 @@
      "ARGS": "a, b, c"
     },
     {
-     "K": "4",
-     "K1": "5",
-     "FMT": "%d - %d - %d - %d",
-     "ARGS": "a, b, c, d"
+     "K": "3",
+     "K1": "4",
+     "FMT": "%d - %d - %d",
+     "ARGS": "a, b, c"
     },
     {
      "K": "2",
@@ -281,22 +275,28 @@
      "ARGS": "a, b"
     },
     {
-     "K": "3",
-     "K1": "4",
-     "FMT": "%d et %d et %d",
-     "ARGS": "a, b, c"
-    },
-    {
-     "K": "4",
-     "K1": "5",
-     "FMT": "%d et %d et %d et %d",
-     "ARGS": "a, b, c, d"
+     "K": "2",
+     "K1": "3",
+     "FMT": "%d - %d",
+     "ARGS": "a, b"
     },
     {
      "K": "4",
      "K1": "5",
      "FMT": "%d, %d, %d, %d",
      "ARGS": "a, b, c, d"
+    },
+    {
+     "K": "3",
+     "K1": "4",
+     "FMT": "%d et %d et %d",
+     "ARGS": "a, b, c"
+    },
+    {
+     "K": "2",
+     "K1": "3",
+     "FMT": "%d et %d",
+     "ARGS": "a, b"
     }
    ]
   },
@@ -343,41 +343,41 @@
    "duree": 0.67,
    "explication": "`%.2f` garde 2 chiffres après la virgule (en arrondissant) : **[[R]]**.",
    "vals": {
-    "X": "12.2304",
-    "R": "12.23"
+    "X": "15.9436",
+    "R": "15.94"
    },
    "variantes": [
     {
-     "X": "12.2304",
-     "R": "12.23"
+     "X": "15.9436",
+     "R": "15.94"
     },
     {
-     "X": "35.3928",
-     "R": "35.39"
+     "X": "25.8462",
+     "R": "25.85"
     },
     {
-     "X": "37.6125",
-     "R": "37.61"
+     "X": "10.2225",
+     "R": "10.22"
     },
     {
-     "X": "27.6483",
-     "R": "27.65"
+     "X": "29.0331",
+     "R": "29.03"
     },
     {
-     "X": "23.3113",
-     "R": "23.31"
+     "X": "26.3931",
+     "R": "26.39"
     },
     {
-     "X": "0.1482",
-     "R": "0.15"
+     "X": "49.9503",
+     "R": "49.95"
     },
     {
-     "X": "36.5779",
-     "R": "36.58"
+     "X": "43.5178",
+     "R": "43.52"
     },
     {
-     "X": "37.1093",
-     "R": "37.11"
+     "X": "3.3616",
+     "R": "3.36"
     }
    ]
   },
@@ -396,59 +396,59 @@
    "duree": 0.67,
    "explication": "`%x` affiche en hexadécimal : [[N]] = [[H]] × 16 + [[L]], soit **[[R]]**.",
    "vals": {
-    "N": "188",
-    "H": "11",
-    "L": "12",
-    "R": "bc"
+    "N": "197",
+    "H": "12",
+    "L": "5",
+    "R": "c5"
    },
    "variantes": [
     {
-     "N": "188",
-     "H": "11",
-     "L": "12",
-     "R": "bc"
-    },
-    {
-     "N": "53",
-     "H": "3",
+     "N": "197",
+     "H": "12",
      "L": "5",
-     "R": "35"
+     "R": "c5"
     },
     {
-     "N": "177",
-     "H": "11",
+     "N": "113",
+     "H": "7",
      "L": "1",
-     "R": "b1"
+     "R": "71"
     },
     {
-     "N": "244",
-     "H": "15",
-     "L": "4",
-     "R": "f4"
+     "N": "187",
+     "H": "11",
+     "L": "11",
+     "R": "bb"
     },
     {
-     "N": "92",
-     "H": "5",
-     "L": "12",
-     "R": "5c"
+     "N": "49",
+     "H": "3",
+     "L": "1",
+     "R": "31"
     },
     {
-     "N": "234",
-     "H": "14",
-     "L": "10",
-     "R": "ea"
-    },
-    {
-     "N": "128",
+     "N": "137",
      "H": "8",
-     "L": "0",
-     "R": "80"
+     "L": "9",
+     "R": "89"
     },
     {
-     "N": "46",
-     "H": "2",
+     "N": "120",
+     "H": "7",
+     "L": "8",
+     "R": "78"
+    },
+    {
+     "N": "126",
+     "H": "7",
      "L": "14",
-     "R": "2e"
+     "R": "7e"
+    },
+    {
+     "N": "54",
+     "H": "3",
+     "L": "6",
+     "R": "36"
     }
    ]
   },
@@ -601,7 +601,7 @@
    "notion": "3.3",
    "origine": "td",
    "titre": "Bonjour X",
-   "enonce": "Écris un programme qui lit un prénom (un seul mot) et affiche `Bonjour` suivi de ce prénom. (TD Premiers pas, exercice 2)\n\n**Exemple**\n```text\nEntrée :\n[[P0]]\nSortie :\nBonjour [[P0]]\n```",
+   "enonce": "Le but : lire un mot au clavier et le réutiliser dans l'affichage. (TD Premiers pas, exercice 2)\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. un prénom (un seul mot).\n\n**Ce qu'il affiche** : `Bonjour`, une espace, puis le prénom.\n\n**Exemple**\n```text\nEntrée :\n[[P0]]\nSortie :\nBonjour [[P0]]\n```",
    "guidage": "**Plan** : 1. un tableau de `char` pour ranger le prénom → 2. le lire avec `scanf` → 3. l'afficher avec `%s`.\n\n**Piège** : pas de `&` devant un tableau, et on limite le nombre de caractères lus.",
    "duree": 6.9,
    "etapes": [
@@ -654,7 +654,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Assemble le tout : déclaration, lecture, affichage, dans `main`.",
+     "consigne": "Assemble le tout dans `main` :\n1. déclare `char prenom[20];` ;\n2. lis-le avec `scanf(\"%19s\", prenom);` (pas de `&` devant un tableau) ;\n3. affiche `printf(\"Bonjour %s\\n\", prenom);`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -679,59 +679,59 @@
     }
    ],
    "vals": {
-    "P0": "Adam",
-    "P1": "Lina",
-    "S3_0": "Bonjour Adam",
-    "S3_1": "Bonjour Lina"
+    "P0": "Maya",
+    "P1": "Noah",
+    "S3_0": "Bonjour Maya",
+    "S3_1": "Bonjour Noah"
    },
    "variantes": [
     {
-     "P0": "Adam",
-     "P1": "Lina",
-     "S3_0": "Bonjour Adam",
-     "S3_1": "Bonjour Lina"
-    },
-    {
-     "P0": "Hugo",
-     "P1": "Yanis",
-     "S3_0": "Bonjour Hugo",
-     "S3_1": "Bonjour Yanis"
-    },
-    {
-     "P0": "Sami",
-     "P1": "Jade",
-     "S3_0": "Bonjour Sami",
-     "S3_1": "Bonjour Jade"
-    },
-    {
-     "P0": "Lea",
-     "P1": "Jade",
-     "S3_0": "Bonjour Lea",
-     "S3_1": "Bonjour Jade"
-    },
-    {
-     "P0": "Jade",
-     "P1": "Lina",
-     "S3_0": "Bonjour Jade",
-     "S3_1": "Bonjour Lina"
-    },
-    {
-     "P0": "Hugo",
-     "P1": "Jade",
-     "S3_0": "Bonjour Hugo",
-     "S3_1": "Bonjour Jade"
-    },
-    {
-     "P0": "Adam",
+     "P0": "Maya",
      "P1": "Noah",
-     "S3_0": "Bonjour Adam",
+     "S3_0": "Bonjour Maya",
      "S3_1": "Bonjour Noah"
     },
     {
-     "P0": "Yanis",
+     "P0": "Hugo",
+     "P1": "Lea",
+     "S3_0": "Bonjour Hugo",
+     "S3_1": "Bonjour Lea"
+    },
+    {
+     "P0": "Noah",
+     "P1": "Rayan",
+     "S3_0": "Bonjour Noah",
+     "S3_1": "Bonjour Rayan"
+    },
+    {
+     "P0": "Noah",
      "P1": "Lina",
-     "S3_0": "Bonjour Yanis",
+     "S3_0": "Bonjour Noah",
      "S3_1": "Bonjour Lina"
+    },
+    {
+     "P0": "Lina",
+     "P1": "Noah",
+     "S3_0": "Bonjour Lina",
+     "S3_1": "Bonjour Noah"
+    },
+    {
+     "P0": "Rayan",
+     "P1": "Maya",
+     "S3_0": "Bonjour Rayan",
+     "S3_1": "Bonjour Maya"
+    },
+    {
+     "P0": "Adam",
+     "P1": "Lina",
+     "S3_0": "Bonjour Adam",
+     "S3_1": "Bonjour Lina"
+    },
+    {
+     "P0": "Hugo",
+     "P1": "Jade",
+     "S3_0": "Bonjour Hugo",
+     "S3_1": "Bonjour Jade"
     }
    ]
   },
@@ -741,7 +741,7 @@
    "notion": "3.2",
    "origine": "td",
    "titre": "Quatre opérations sur deux entiers",
-   "enonce": "Écris un programme qui lit deux entiers `a` et `b`, puis affiche sur une ligne : leur somme, leur différence, leur produit, puis leur **quotient réel** avec 2 décimales. (TD Premiers pas, exercice 3)\n\n**Exemple**\n```text\nEntrée :\n[[A]] [[B]]\nSortie :\n[[S3_0]]\n```",
+   "enonce": "Le but : afficher plusieurs résultats avec un seul `printf`, dont un quotient **réel**. (TD Premiers pas, exercice 3)\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. un entier `a` ;\n2. un entier `b`.\n\n**Ce qu'il affiche** : sur une ligne : la somme, la différence, le produit, puis le quotient réel de `a` par `b` avec 2 décimales.\n\n**Exemple**\n```text\nEntrée :\n[[A]] [[B]]\nSortie :\n[[S3_0]]\n```",
    "guidage": "**Plan** : une lecture avec deux `%d`, puis un seul `printf` pour les quatre résultats.\n\n**Piège** : `a / b` entre deux `int` est une division entière ; pour obtenir [[QR]], il faut convertir un opérande en réel.",
    "duree": 8,
    "etapes": [
@@ -791,7 +791,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Écris le programme : lis `a` et `b`, puis affiche sur une ligne `somme différence produit quotient`, le quotient réel avec 2 décimales.",
+     "consigne": "Écris le programme :\n1. déclare `int a, b;` et lis-les avec un seul `scanf` ;\n2. affiche avec le format `\"%d %d %d %.2f\\n\"` ;\n3. les quatre valeurs : `a + b`, `a - b`, `a * b`, `(double)a / b`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -821,103 +821,103 @@
     }
    ],
    "vals": {
-    "A": "13",
-    "B": "2",
-    "E1": "97 6",
-    "Q": "6",
-    "RE": "1",
-    "QR": "6.50",
-    "S3_0": "15 11 26 6.50",
-    "S3_1": "103 91 582 16.17",
+    "A": "42",
+    "B": "8",
+    "E1": "97 4",
+    "Q": "5",
+    "RE": "2",
+    "QR": "5.25",
+    "S3_0": "50 34 336 5.25",
+    "S3_1": "101 93 388 24.25",
     "S3_2": "9 5 14 3.50"
    },
    "variantes": [
     {
-     "A": "13",
-     "B": "2",
-     "E1": "97 6",
-     "Q": "6",
-     "RE": "1",
-     "QR": "6.50",
-     "S3_0": "15 11 26 6.50",
-     "S3_1": "103 91 582 16.17",
+     "A": "42",
+     "B": "8",
+     "E1": "97 4",
+     "Q": "5",
+     "RE": "2",
+     "QR": "5.25",
+     "S3_0": "50 34 336 5.25",
+     "S3_1": "101 93 388 24.25",
      "S3_2": "9 5 14 3.50"
     },
     {
-     "A": "28",
+     "A": "21",
      "B": "5",
-     "E1": "49 6",
+     "E1": "80 7",
+     "Q": "4",
+     "RE": "1",
+     "QR": "4.20",
+     "S3_0": "26 16 105 4.20",
+     "S3_1": "87 73 560 11.43",
+     "S3_2": "9 5 14 3.50"
+    },
+    {
+     "A": "23",
+     "B": "2",
+     "E1": "68 7",
+     "Q": "11",
+     "RE": "1",
+     "QR": "11.50",
+     "S3_0": "25 21 46 11.50",
+     "S3_1": "75 61 476 9.71",
+     "S3_2": "9 5 14 3.50"
+    },
+    {
+     "A": "45",
+     "B": "8",
+     "E1": "10 3",
      "Q": "5",
-     "RE": "3",
-     "QR": "5.60",
-     "S3_0": "33 23 140 5.60",
-     "S3_1": "55 43 294 8.17",
+     "RE": "5",
+     "QR": "5.63",
+     "S3_0": "53 37 360 5.62",
+     "S3_1": "13 7 30 3.33",
+     "S3_2": "9 5 14 3.50"
+    },
+    {
+     "A": "12",
+     "B": "8",
+     "E1": "12 4",
+     "Q": "1",
+     "RE": "4",
+     "QR": "1.50",
+     "S3_0": "20 4 96 1.50",
+     "S3_1": "16 8 48 3.00",
      "S3_2": "9 5 14 3.50"
     },
     {
      "A": "20",
      "B": "8",
-     "E1": "41 4",
+     "E1": "73 4",
      "Q": "2",
      "RE": "4",
      "QR": "2.50",
      "S3_0": "28 12 160 2.50",
-     "S3_1": "45 37 164 10.25",
+     "S3_1": "77 69 292 18.25",
      "S3_2": "9 5 14 3.50"
     },
     {
-     "A": "44",
-     "B": "8",
-     "E1": "86 4",
-     "Q": "5",
-     "RE": "4",
-     "QR": "5.50",
-     "S3_0": "52 36 352 5.50",
-     "S3_1": "90 82 344 21.50",
-     "S3_2": "9 5 14 3.50"
-    },
-    {
-     "A": "8",
-     "B": "5",
-     "E1": "23 7",
-     "Q": "1",
-     "RE": "3",
-     "QR": "1.60",
-     "S3_0": "13 3 40 1.60",
-     "S3_1": "30 16 161 3.29",
-     "S3_2": "9 5 14 3.50"
-    },
-    {
-     "A": "43",
+     "A": "5",
      "B": "2",
-     "E1": "58 4",
-     "Q": "21",
+     "E1": "95 7",
+     "Q": "2",
      "RE": "1",
-     "QR": "21.50",
-     "S3_0": "45 41 86 21.50",
-     "S3_1": "62 54 232 14.50",
+     "QR": "2.50",
+     "S3_0": "7 3 10 2.50",
+     "S3_1": "102 88 665 13.57",
      "S3_2": "9 5 14 3.50"
     },
     {
-     "A": "28",
-     "B": "5",
-     "E1": "78 7",
-     "Q": "5",
-     "RE": "3",
-     "QR": "5.60",
-     "S3_0": "33 23 140 5.60",
-     "S3_1": "85 71 546 11.14",
-     "S3_2": "9 5 14 3.50"
-    },
-    {
-     "A": "35",
-     "B": "8",
-     "E1": "15 7",
-     "Q": "4",
-     "RE": "3",
-     "QR": "4.38",
-     "S3_0": "43 27 280 4.38",
-     "S3_1": "22 8 105 2.14",
+     "A": "23",
+     "B": "2",
+     "E1": "58 3",
+     "Q": "11",
+     "RE": "1",
+     "QR": "11.50",
+     "S3_0": "25 21 46 11.50",
+     "S3_1": "61 55 174 19.33",
      "S3_2": "9 5 14 3.50"
     }
    ]
@@ -937,59 +937,59 @@
    "duree": 0.67,
    "explication": "[[A]] = [[Q]] × [[B]] + [[R]] : la division entière donne [[Q]] et le reste vaut [[R]].",
    "vals": {
-    "A": "12",
-    "B": "6",
-    "Q": "2",
+    "A": "40",
+    "B": "4",
+    "Q": "10",
     "R": "0"
    },
    "variantes": [
     {
-     "A": "12",
-     "B": "6",
-     "Q": "2",
+     "A": "40",
+     "B": "4",
+     "Q": "10",
      "R": "0"
     },
     {
-     "A": "37",
-     "B": "3",
+     "A": "9",
+     "B": "5",
+     "Q": "1",
+     "R": "4"
+    },
+    {
+     "A": "7",
+     "B": "2",
+     "Q": "3",
+     "R": "1"
+    },
+    {
+     "A": "32",
+     "B": "7",
+     "Q": "4",
+     "R": "4"
+    },
+    {
+     "A": "25",
+     "B": "5",
+     "Q": "5",
+     "R": "0"
+    },
+    {
+     "A": "20",
+     "B": "2",
+     "Q": "10",
+     "R": "0"
+    },
+    {
+     "A": "25",
+     "B": "2",
      "Q": "12",
      "R": "1"
     },
     {
-     "A": "35",
-     "B": "2",
-     "Q": "17",
-     "R": "1"
-    },
-    {
-     "A": "36",
+     "A": "9",
      "B": "6",
-     "Q": "6",
-     "R": "0"
-    },
-    {
-     "A": "18",
-     "B": "5",
-     "Q": "3",
+     "Q": "1",
      "R": "3"
-    },
-    {
-     "A": "17",
-     "B": "3",
-     "Q": "5",
-     "R": "2"
-    },
-    {
-     "A": "24",
-     "B": "7",
-     "Q": "3",
-     "R": "3"
-    },
-    {
-     "A": "28",
-     "B": "6",
-     "Q": "4",
-     "R": "4"
     }
    ]
   },
@@ -1008,41 +1008,41 @@
    "duree": 0.67,
    "explication": "Les deux `%c` sont remplacés, dans l'ordre, par `[[X]]` puis `[[Y]]` ; les crochets sont du texte ordinaire.",
    "vals": {
-    "X": "A",
+    "X": "N",
     "Y": "G"
    },
    "variantes": [
     {
-     "X": "A",
+     "X": "N",
      "Y": "G"
     },
     {
-     "X": "I",
-     "Y": "F"
+     "X": "A",
+     "Y": "I"
     },
     {
-     "X": "U",
-     "Y": "J"
-    },
-    {
-     "X": "Y",
-     "Y": "R"
+     "X": "E",
+     "Y": "E"
     },
     {
      "X": "V",
-     "Y": "O"
-    },
-    {
-     "X": "W",
      "Y": "P"
     },
     {
-     "X": "L",
-     "Y": "Y"
+     "X": "H",
+     "Y": "Q"
     },
     {
-     "X": "L",
-     "Y": "G"
+     "X": "J",
+     "Y": "K"
+    },
+    {
+     "X": "X",
+     "Y": "W"
+    },
+    {
+     "X": "W",
+     "Y": "E"
     }
    ]
   },
@@ -1059,41 +1059,41 @@
    "duree": 0.67,
    "explication": "Un `char` est un petit entier : 'A' vaut 65, 'a' vaut 97, et les lettres se suivent. '[[C]]' vaut donc **[[R]]**.",
    "vals": {
-    "C": "z",
-    "R": "122"
+    "C": "P",
+    "R": "80"
    },
    "variantes": [
     {
-     "C": "z",
-     "R": "122"
+     "C": "P",
+     "R": "80"
     },
     {
-     "C": "r",
-     "R": "114"
+     "C": "e",
+     "R": "101"
+    },
+    {
+     "C": "E",
+     "R": "69"
     },
     {
      "C": "X",
      "R": "88"
     },
     {
-     "C": "k",
-     "R": "107"
+     "C": "H",
+     "R": "72"
+    },
+    {
+     "C": "M",
+     "R": "77"
     },
     {
      "C": "F",
      "R": "70"
     },
     {
-     "C": "P",
-     "R": "80"
-    },
-    {
-     "C": "R",
-     "R": "82"
-    },
-    {
-     "C": "S",
-     "R": "83"
+     "C": "B",
+     "R": "66"
     }
    ]
   },
@@ -1124,7 +1124,7 @@
    "notion": "3.2",
    "origine": "generee",
    "titre": "Ticket de caisse",
-   "enonce": "Écris un programme qui lit un prix unitaire (réel) puis une quantité (entier), et affiche sur une ligne le **total HT**, la **TVA à 20 %** et le **total TTC**, chacun avec 2 décimales.\n\n**Exemple**\n```text\nEntrée :\n[[P]] [[Q]]\nSortie :\n[[S3_0]]\n```",
+   "enonce": "Le but : lire un réel et un entier, et afficher des montants avec 2 décimales.\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. le prix unitaire d'un article (un réel) ;\n2. la quantité achetée (un entier).\n\n**Ce qu'il affiche** : sur une ligne, séparés par des espaces : le **total HT** (prix × quantité), la **TVA à 20 %** (HT × 0,2) et le **total TTC** (HT + TVA), chacun avec 2 décimales.\n\n**Exemple**\n```text\nEntrée :\n[[P]] [[Q]]\nSortie :\n[[S3_0]]\n```",
    "guidage": "**Plan** : 1. lire le prix (`%lf`) et la quantité (`%d`) → 2. HT = prix × quantité → 3. TVA = HT × 0,2 → 4. TTC = HT + TVA → 5. afficher avec `%.2f`.",
    "duree": 5,
    "etapes": [
@@ -1159,7 +1159,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Premier jalon : lis le prix (réel) et la quantité (entier) avec un seul `scanf`, et affiche **seulement le total HT**, avec 2 décimales.",
+     "consigne": "Premier jalon, le HT seul :\n1. déclare `double prix;` et `int q;` ;\n2. lis-les avec `scanf(\"%lf %d\", &prix, &q);` ;\n3. affiche `prix * q` avec `%.2f`.",
      "question": "Affiche le total HT.",
      "verif": {
       "mode": "c",
@@ -1188,7 +1188,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Ajoute la **TVA** (HT × 0,2) et le **TTC** (HT + TVA) : affiche `HT TVA TTC` sur une ligne, chacun avec 2 décimales.",
+     "consigne": "Complète :\n1. calcule `double ht = prix * q;`, `double tva = ht * 0.2;` et `double ttc = ht + tva;` ;\n2. affiche les trois sur une ligne, chacun avec `%.2f`, séparés par une espace.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -1219,121 +1219,121 @@
     }
    ],
    "vals": {
-    "P": "3.5",
-    "Q": "8",
-    "E1": "20.21 6",
-    "HT": "28.00",
-    "TVA": "5.60",
-    "S2_0": "28.00",
-    "S2_1": "121.26",
+    "P": "15",
+    "Q": "2",
+    "E1": "38.13 6",
+    "HT": "30.00",
+    "TVA": "6.00",
+    "S2_0": "30.00",
+    "S2_1": "228.78",
     "S2_2": "100.00",
-    "S3_0": "28.00 5.60 33.60",
-    "S3_1": "121.26 24.25 145.51",
+    "S3_0": "30.00 6.00 36.00",
+    "S3_1": "228.78 45.76 274.54",
     "S3_2": "100.00 20.00 120.00"
    },
    "variantes": [
     {
-     "P": "3.5",
-     "Q": "8",
-     "E1": "20.21 6",
-     "HT": "28.00",
-     "TVA": "5.60",
-     "S2_0": "28.00",
-     "S2_1": "121.26",
-     "S2_2": "100.00",
-     "S3_0": "28.00 5.60 33.60",
-     "S3_1": "121.26 24.25 145.51",
-     "S3_2": "100.00 20.00 120.00"
-    },
-    {
      "P": "15",
+     "Q": "2",
+     "E1": "38.13 6",
+     "HT": "30.00",
+     "TVA": "6.00",
+     "S2_0": "30.00",
+     "S2_1": "228.78",
+     "S2_2": "100.00",
+     "S3_0": "30.00 6.00 36.00",
+     "S3_1": "228.78 45.76 274.54",
+     "S3_2": "100.00 20.00 120.00"
+    },
+    {
+     "P": "7.5",
+     "Q": "2",
+     "E1": "4.79 4",
+     "HT": "15.00",
+     "TVA": "3.00",
+     "S2_0": "15.00",
+     "S2_1": "19.16",
+     "S2_2": "100.00",
+     "S3_0": "15.00 3.00 18.00",
+     "S3_1": "19.16 3.83 22.99",
+     "S3_2": "100.00 20.00 120.00"
+    },
+    {
+     "P": "20",
      "Q": "8",
-     "E1": "7.93 6",
-     "HT": "120.00",
-     "TVA": "24.00",
-     "S2_0": "120.00",
-     "S2_1": "47.58",
+     "E1": "45.47 5",
+     "HT": "160.00",
+     "TVA": "32.00",
+     "S2_0": "160.00",
+     "S2_1": "227.35",
      "S2_2": "100.00",
-     "S3_0": "120.00 24.00 144.00",
-     "S3_1": "47.58 9.52 57.10",
+     "S3_0": "160.00 32.00 192.00",
+     "S3_1": "227.35 45.47 272.82",
      "S3_2": "100.00 20.00 120.00"
     },
     {
-     "P": "3.5",
-     "Q": "6",
-     "E1": "19.68 5",
-     "HT": "21.00",
-     "TVA": "4.20",
-     "S2_0": "21.00",
-     "S2_1": "98.40",
-     "S2_2": "100.00",
-     "S3_0": "21.00 4.20 25.20",
-     "S3_1": "98.40 19.68 118.08",
-     "S3_2": "100.00 20.00 120.00"
-    },
-    {
-     "P": "15",
-     "Q": "8",
-     "E1": "24.90 2",
-     "HT": "120.00",
-     "TVA": "24.00",
-     "S2_0": "120.00",
-     "S2_1": "49.80",
-     "S2_2": "100.00",
-     "S3_0": "120.00 24.00 144.00",
-     "S3_1": "49.80 9.96 59.76",
-     "S3_2": "100.00 20.00 120.00"
-    },
-    {
-     "P": "15",
-     "Q": "6",
-     "E1": "32.12 6",
-     "HT": "90.00",
-     "TVA": "18.00",
-     "S2_0": "90.00",
-     "S2_1": "192.72",
-     "S2_2": "100.00",
-     "S3_0": "90.00 18.00 108.00",
-     "S3_1": "192.72 38.54 231.26",
-     "S3_2": "100.00 20.00 120.00"
-    },
-    {
-     "P": "3.5",
-     "Q": "6",
-     "E1": "48.64 6",
-     "HT": "21.00",
-     "TVA": "4.20",
-     "S2_0": "21.00",
-     "S2_1": "291.84",
-     "S2_2": "100.00",
-     "S3_0": "21.00 4.20 25.20",
-     "S3_1": "291.84 58.37 350.21",
-     "S3_2": "100.00 20.00 120.00"
-    },
-    {
-     "P": "3.5",
+     "P": "4",
      "Q": "4",
-     "E1": "26.64 2",
-     "HT": "14.00",
-     "TVA": "2.80",
-     "S2_0": "14.00",
-     "S2_1": "53.28",
+     "E1": "4.57 1",
+     "HT": "16.00",
+     "TVA": "3.20",
+     "S2_0": "16.00",
+     "S2_1": "4.57",
      "S2_2": "100.00",
-     "S3_0": "14.00 2.80 16.80",
-     "S3_1": "53.28 10.66 63.94",
+     "S3_0": "16.00 3.20 19.20",
+     "S3_1": "4.57 0.91 5.48",
      "S3_2": "100.00 20.00 120.00"
     },
     {
-     "P": "1.25",
-     "Q": "4",
-     "E1": "40.37 3",
-     "HT": "5.00",
-     "TVA": "1.00",
-     "S2_0": "5.00",
-     "S2_1": "121.11",
+     "P": "12.5",
+     "Q": "7",
+     "E1": "19.82 6",
+     "HT": "87.50",
+     "TVA": "17.50",
+     "S2_0": "87.50",
+     "S2_1": "118.92",
      "S2_2": "100.00",
-     "S3_0": "5.00 1.00 6.00",
-     "S3_1": "121.11 24.22 145.33",
+     "S3_0": "87.50 17.50 105.00",
+     "S3_1": "118.92 23.78 142.70",
+     "S3_2": "100.00 20.00 120.00"
+    },
+    {
+     "P": "20",
+     "Q": "8",
+     "E1": "36.65 2",
+     "HT": "160.00",
+     "TVA": "32.00",
+     "S2_0": "160.00",
+     "S2_1": "73.30",
+     "S2_2": "100.00",
+     "S3_0": "160.00 32.00 192.00",
+     "S3_1": "73.30 14.66 87.96",
+     "S3_2": "100.00 20.00 120.00"
+    },
+    {
+     "P": "15",
+     "Q": "2",
+     "E1": "16.56 2",
+     "HT": "30.00",
+     "TVA": "6.00",
+     "S2_0": "30.00",
+     "S2_1": "33.12",
+     "S2_2": "100.00",
+     "S3_0": "30.00 6.00 36.00",
+     "S3_1": "33.12 6.62 39.74",
+     "S3_2": "100.00 20.00 120.00"
+    },
+    {
+     "P": "15",
+     "Q": "4",
+     "E1": "32.22 5",
+     "HT": "60.00",
+     "TVA": "12.00",
+     "S2_0": "60.00",
+     "S2_1": "161.10",
+     "S2_2": "100.00",
+     "S3_0": "60.00 12.00 72.00",
+     "S3_1": "161.10 32.22 193.32",
      "S3_2": "100.00 20.00 120.00"
     }
    ]
@@ -1344,7 +1344,7 @@
    "notion": "3.3",
    "origine": "generee",
    "titre": "Le scanf qui ne lit rien",
-   "enonce": "Ce programme doit lire un âge (entier) et une taille en mètres (réel), puis les afficher. Il contient **deux** erreurs dans les `scanf`.\n```c\n#include <stdio.h>\n\nint main(void) {\n    int age;\n    double taille;\n    scanf(\"%d\", age);\n    scanf(\"%f\", &taille);\n    printf(\"%d %.2f\\n\", age, taille);\n    return 0;\n}\n```\n**Exemple**\n```text\nEntrée :\n[[A]] [[T]]\nSortie :\n[[S2_0]]\n```",
+   "enonce": "Ce programme doit lire un âge (entier) et une taille en mètres (réel), puis les afficher. Les deux `scanf` contiennent chacun une erreur.\n```c\n#include <stdio.h>\n\nint main(void) {\n    int age;\n    double taille;\n    scanf(\"%d\", age);\n    scanf(\"%f\", &taille);\n    printf(\"%d %.2f\\n\", age, taille);\n    return 0;\n}\n```\n\n**À corriger** : les deux lignes `scanf`, sans toucher au reste.\n\n**Exemple**\n```text\nEntrée :\n[[A]] [[T]]\nSortie :\n[[S2_0]]\n```",
    "guidage": "**Diagnostic** : 1. que reçoit `scanf` pour une variable ? → 2. quel format pour un `double` ? → 3. corriger les deux lignes.\n\n**À retenir** : `scanf` écrit dans la variable, il lui faut donc son **adresse** (`&`).",
    "duree": 3,
    "etapes": [
@@ -1382,7 +1382,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Corrige les **deux** `scanf` : le programme doit afficher l'âge puis la taille avec 2 décimales.",
+     "consigne": "**À faire** :\n1. premier `scanf` : ajoute le `&` qui manque devant `age` ;\n2. second `scanf` : remplace `%f` par `%lf` (le format d'un `double`) ;\n3. ne change rien d'autre.",
      "question": "Corrige le programme.",
      "verif": {
       "mode": "c",
@@ -1416,68 +1416,68 @@
     }
    ],
    "vals": {
-    "A": "23",
-    "T": "1.79",
-    "E1": "40 1.95",
-    "S2_0": "23 1.79",
-    "S2_1": "40 1.95"
+    "A": "30",
+    "T": "1.66",
+    "E1": "59 1.70",
+    "S2_0": "30 1.66",
+    "S2_1": "59 1.70"
    },
    "variantes": [
     {
-     "A": "23",
-     "T": "1.79",
-     "E1": "40 1.95",
-     "S2_0": "23 1.79",
-     "S2_1": "40 1.95"
-    },
-    {
-     "A": "17",
-     "T": "1.77",
-     "E1": "38 1.73",
-     "S2_0": "17 1.77",
-     "S2_1": "38 1.73"
-    },
-    {
-     "A": "23",
-     "T": "1.64",
-     "E1": "59 1.71",
-     "S2_0": "23 1.64",
-     "S2_1": "59 1.71"
+     "A": "30",
+     "T": "1.66",
+     "E1": "59 1.70",
+     "S2_0": "30 1.66",
+     "S2_1": "59 1.70"
     },
     {
      "A": "21",
-     "T": "1.89",
-     "E1": "56 1.61",
-     "S2_0": "21 1.89",
-     "S2_1": "56 1.61"
-    },
-    {
-     "A": "17",
-     "T": "1.92",
-     "E1": "55 1.57",
-     "S2_0": "17 1.92",
-     "S2_1": "55 1.57"
+     "T": "1.86",
+     "E1": "65 1.83",
+     "S2_0": "21 1.86",
+     "S2_1": "65 1.83"
     },
     {
      "A": "29",
      "T": "1.93",
-     "E1": "80 1.88",
+     "E1": "44 1.98",
      "S2_0": "29 1.93",
-     "S2_1": "80 1.88"
+     "S2_1": "44 1.98"
     },
     {
      "A": "21",
-     "T": "1.76",
-     "E1": "47 1.83",
-     "S2_0": "21 1.76",
-     "S2_1": "47 1.83"
+     "T": "1.66",
+     "E1": "71 1.82",
+     "S2_0": "21 1.66",
+     "S2_1": "71 1.82"
     },
     {
-     "A": "30",
-     "T": "1.78",
-     "E1": "61 1.73",
-     "S2_0": "30 1.78",
-     "S2_1": "61 1.73"
+     "A": "29",
+     "T": "1.61",
+     "E1": "45 1.88",
+     "S2_0": "29 1.61",
+     "S2_1": "45 1.88"
+    },
+    {
+     "A": "22",
+     "T": "1.69",
+     "E1": "80 1.95",
+     "S2_0": "22 1.69",
+     "S2_1": "80 1.95"
+    },
+    {
+     "A": "17",
+     "T": "1.66",
+     "E1": "38 1.60",
+     "S2_0": "17 1.66",
+     "S2_1": "38 1.60"
+    },
+    {
+     "A": "26",
+     "T": "1.92",
+     "E1": "39 1.57",
+     "S2_0": "26 1.92",
+     "S2_1": "39 1.57"
     }
    ]
   },
@@ -1487,7 +1487,7 @@
    "notion": "3.2",
    "origine": "generee",
    "titre": "Caractère et code ASCII",
-   "enonce": "Écris un programme qui lit **un caractère** et affiche ce caractère, une espace, puis son code ASCII.\n\n**Exemple**\n```text\nEntrée :\n[[C]]\nSortie :\n[[C]] [[CODE]]\n```",
+   "enonce": "Le but : voir qu'un caractère est aussi un nombre (son code ASCII).\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. un caractère.\n\n**Ce qu'il affiche** : ce caractère, une espace, puis son code ASCII.\n\n**Exemple**\n```text\nEntrée :\n[[C]]\nSortie :\n[[C]] [[CODE]]\n```",
    "guidage": "**Plan** : 1. lire un `char` avec `%c` → 2. l'afficher deux fois : en caractère (`%c`) puis en nombre (`%d`).\n\n**À retenir** : un `char` est un petit entier, son code ASCII.",
    "duree": 3,
    "etapes": [
@@ -1524,7 +1524,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Premier jalon : lis **un caractère** (`scanf(\" %c\", &c);`, l'espace avant `%c` ignore les blancs) et affiche-le seul.",
+     "consigne": "Premier jalon :\n1. déclare `char c;` ;\n2. lis-le avec `scanf(\" %c\", &c);` (l'espace avant `%c` saute les blancs) ;\n3. affiche-le avec `%c`.",
      "question": "Lis et affiche le caractère.",
      "verif": {
       "mode": "c",
@@ -1553,7 +1553,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Affiche le caractère **puis son code**, séparés par une espace : la même variable, une fois avec `%c`, une fois avec `%d`.",
+     "consigne": "Complète l'affichage :\n1. affiche la même variable deux fois dans un seul `printf` : une fois avec `%c`, une fois avec `%d` ;\n2. sépare-les par une espace : `printf(\"%c %d\\n\", c, c);`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -1583,112 +1583,112 @@
     }
    ],
    "vals": {
-    "C": "m",
-    "D": "n",
-    "CODE": "109",
-    "BASE": "`'a'` = 97",
-    "S2_0": "m",
-    "S2_1": "n",
+    "C": "T",
+    "D": "U",
+    "CODE": "84",
+    "BASE": "`'A'` = 65",
+    "S2_0": "T",
+    "S2_1": "U",
     "S2_2": "0",
-    "S3_0": "m 109",
-    "S3_1": "n 110",
+    "S3_0": "T 84",
+    "S3_1": "U 85",
     "S3_2": "0 48"
    },
    "variantes": [
     {
-     "C": "m",
-     "D": "n",
-     "CODE": "109",
-     "BASE": "`'a'` = 97",
-     "S2_0": "m",
-     "S2_1": "n",
-     "S2_2": "0",
-     "S3_0": "m 109",
-     "S3_1": "n 110",
-     "S3_2": "0 48"
-    },
-    {
-     "C": "d",
-     "D": "E",
-     "CODE": "100",
-     "BASE": "`'a'` = 97",
-     "S2_0": "d",
-     "S2_1": "E",
-     "S2_2": "0",
-     "S3_0": "d 100",
-     "S3_1": "E 69",
-     "S3_2": "0 48"
-    },
-    {
-     "C": "D",
-     "D": "N",
-     "CODE": "68",
+     "C": "T",
+     "D": "U",
+     "CODE": "84",
      "BASE": "`'A'` = 65",
-     "S2_0": "D",
-     "S2_1": "N",
+     "S2_0": "T",
+     "S2_1": "U",
      "S2_2": "0",
-     "S3_0": "D 68",
-     "S3_1": "N 78",
+     "S3_0": "T 84",
+     "S3_1": "U 85",
      "S3_2": "0 48"
     },
     {
-     "C": "Q",
-     "D": "A",
-     "CODE": "81",
+     "C": "B",
+     "D": "L",
+     "CODE": "66",
      "BASE": "`'A'` = 65",
-     "S2_0": "Q",
-     "S2_1": "A",
+     "S2_0": "B",
+     "S2_1": "L",
      "S2_2": "0",
-     "S3_0": "Q 81",
-     "S3_1": "A 65",
+     "S3_0": "B 66",
+     "S3_1": "L 76",
      "S3_2": "0 48"
     },
     {
-     "C": "q",
-     "D": "N",
-     "CODE": "113",
+     "C": "g",
+     "D": "u",
+     "CODE": "103",
      "BASE": "`'a'` = 97",
-     "S2_0": "q",
-     "S2_1": "N",
+     "S2_0": "g",
+     "S2_1": "u",
      "S2_2": "0",
-     "S3_0": "q 113",
-     "S3_1": "N 78",
+     "S3_0": "g 103",
+     "S3_1": "u 117",
+     "S3_2": "0 48"
+    },
+    {
+     "C": "K",
+     "D": "l",
+     "CODE": "75",
+     "BASE": "`'A'` = 65",
+     "S2_0": "K",
+     "S2_1": "l",
+     "S2_2": "0",
+     "S3_0": "K 75",
+     "S3_1": "l 108",
+     "S3_2": "0 48"
+    },
+    {
+     "C": "M",
+     "D": "L",
+     "CODE": "77",
+     "BASE": "`'A'` = 65",
+     "S2_0": "M",
+     "S2_1": "L",
+     "S2_2": "0",
+     "S3_0": "M 77",
+     "S3_1": "L 76",
+     "S3_2": "0 48"
+    },
+    {
+     "C": "W",
+     "D": "z",
+     "CODE": "87",
+     "BASE": "`'A'` = 65",
+     "S2_0": "W",
+     "S2_1": "z",
+     "S2_2": "0",
+     "S3_0": "W 87",
+     "S3_1": "z 122",
      "S3_2": "0 48"
     },
     {
      "C": "G",
-     "D": "h",
+     "D": "L",
      "CODE": "71",
      "BASE": "`'A'` = 65",
      "S2_0": "G",
-     "S2_1": "h",
+     "S2_1": "L",
      "S2_2": "0",
      "S3_0": "G 71",
-     "S3_1": "h 104",
+     "S3_1": "L 76",
      "S3_2": "0 48"
     },
     {
-     "C": "T",
-     "D": "h",
-     "CODE": "84",
-     "BASE": "`'A'` = 65",
-     "S2_0": "T",
-     "S2_1": "h",
+     "C": "b",
+     "D": "U",
+     "CODE": "98",
+     "BASE": "`'a'` = 97",
+     "S2_0": "b",
+     "S2_1": "U",
      "S2_2": "0",
-     "S3_0": "T 84",
-     "S3_1": "h 104",
-     "S3_2": "0 48"
-    },
-    {
-     "C": "Q",
-     "D": "H",
-     "CODE": "81",
-     "BASE": "`'A'` = 65",
-     "S2_0": "Q",
-     "S2_1": "H",
-     "S2_2": "0",
-     "S3_0": "Q 81",
-     "S3_1": "H 72",
+     "S3_0": "b 98",
+     "S3_1": "U 85",
      "S3_2": "0 48"
     }
    ]
@@ -1699,7 +1699,7 @@
    "notion": "3.3",
    "origine": "generee",
    "titre": "Fiche d'identité",
-   "enonce": "Écris un programme qui lit un prénom (un mot) puis un âge, et affiche exactement :\n```text\nPrenom : <prénom>\nAge : <âge> ans\n```\n**Exemple**\n```text\nEntrée :\n[[P0]] [[A0]]\nSortie :\nPrenom : [[P0]]\nAge : [[A0]] ans\n```",
+   "enonce": "Le but : lire un mot et un nombre, puis les afficher dans un texte mis en forme.\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. un prénom (un mot) ;\n2. un âge (un entier).\n\n**Ce qu'il affiche** : exactement deux lignes : `Prenom : <prénom>` puis `Age : <âge> ans`.\n\n**Exemple**\n```text\nEntrée :\n[[P0]] [[A0]]\nSortie :\nPrenom : [[P0]]\nAge : [[A0]] ans\n```",
    "guidage": "**Plan** : 1. un tableau `char prenom[20]` et un `int age` → 2. un seul `scanf` (`%19s %d`) → 3. deux `printf`.\n\n**À retenir** : pas de `&` devant `prenom` ; `%19s` limite la saisie à 19 caractères.",
    "duree": 4,
    "etapes": [
@@ -1721,7 +1721,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Premier jalon : lis le prénom puis l'âge avec un seul `scanf` (`prenom` sans `&`, `age` avec), et affiche **seulement** la ligne `Prenom : <prénom>`.",
+     "consigne": "Premier jalon, la première ligne :\n1. déclare `char prenom[20];` et `int age;` ;\n2. lis-les avec un seul `scanf(\"%19s %d\", prenom, &age);` (`prenom` sans `&`, `age` avec) ;\n3. affiche `Prenom : ` suivi du prénom.",
      "question": "Affiche la ligne du prénom.",
      "verif": {
       "mode": "c",
@@ -1746,7 +1746,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Ajoute la deuxième ligne : `Age : <âge> ans`.",
+     "consigne": "Ajoute la deuxième ligne :\n1. un second `printf` affiche `Age : `, l'âge, puis ` ans` ;\n2. n'oublie pas le `\\n` à la fin de chaque ligne.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -1772,95 +1772,95 @@
     }
    ],
    "vals": {
-    "P0": "Sami",
-    "P1": "Noah",
-    "A0": "25",
-    "A1": "36",
-    "S1_0": "Prenom : Sami",
-    "S1_1": "Prenom : Noah",
-    "S2_0": "Prenom : Sami\nAge : 25 ans",
-    "S2_1": "Prenom : Noah\nAge : 36 ans"
+    "P0": "Jade",
+    "P1": "Lea",
+    "A0": "20",
+    "A1": "37",
+    "S1_0": "Prenom : Jade",
+    "S1_1": "Prenom : Lea",
+    "S2_0": "Prenom : Jade\nAge : 20 ans",
+    "S2_1": "Prenom : Lea\nAge : 37 ans"
    },
    "variantes": [
     {
-     "P0": "Sami",
-     "P1": "Noah",
-     "A0": "25",
-     "A1": "36",
-     "S1_0": "Prenom : Sami",
-     "S1_1": "Prenom : Noah",
-     "S2_0": "Prenom : Sami\nAge : 25 ans",
-     "S2_1": "Prenom : Noah\nAge : 36 ans"
+     "P0": "Jade",
+     "P1": "Lea",
+     "A0": "20",
+     "A1": "37",
+     "S1_0": "Prenom : Jade",
+     "S1_1": "Prenom : Lea",
+     "S2_0": "Prenom : Jade\nAge : 20 ans",
+     "S2_1": "Prenom : Lea\nAge : 37 ans"
+    },
+    {
+     "P0": "Rayan",
+     "P1": "Jade",
+     "A0": "21",
+     "A1": "47",
+     "S1_0": "Prenom : Rayan",
+     "S1_1": "Prenom : Jade",
+     "S2_0": "Prenom : Rayan\nAge : 21 ans",
+     "S2_1": "Prenom : Jade\nAge : 47 ans"
     },
     {
      "P0": "Jade",
-     "P1": "Lea",
-     "A0": "25",
+     "P1": "Ines",
+     "A0": "17",
      "A1": "29",
      "S1_0": "Prenom : Jade",
-     "S1_1": "Prenom : Lea",
-     "S2_0": "Prenom : Jade\nAge : 25 ans",
-     "S2_1": "Prenom : Lea\nAge : 29 ans"
+     "S1_1": "Prenom : Ines",
+     "S2_0": "Prenom : Jade\nAge : 17 ans",
+     "S2_1": "Prenom : Ines\nAge : 29 ans"
+    },
+    {
+     "P0": "Rayan",
+     "P1": "Lina",
+     "A0": "22",
+     "A1": "55",
+     "S1_0": "Prenom : Rayan",
+     "S1_1": "Prenom : Lina",
+     "S2_0": "Prenom : Rayan\nAge : 22 ans",
+     "S2_1": "Prenom : Lina\nAge : 55 ans"
     },
     {
      "P0": "Maya",
-     "P1": "Lea",
-     "A0": "21",
-     "A1": "36",
+     "P1": "Adam",
+     "A0": "24",
+     "A1": "29",
      "S1_0": "Prenom : Maya",
-     "S1_1": "Prenom : Lea",
-     "S2_0": "Prenom : Maya\nAge : 21 ans",
-     "S2_1": "Prenom : Lea\nAge : 36 ans"
+     "S1_1": "Prenom : Adam",
+     "S2_0": "Prenom : Maya\nAge : 24 ans",
+     "S2_1": "Prenom : Adam\nAge : 29 ans"
     },
     {
      "P0": "Lea",
-     "P1": "Maya",
-     "A0": "21",
-     "A1": "30",
-     "S1_0": "Prenom : Lea",
-     "S1_1": "Prenom : Maya",
-     "S2_0": "Prenom : Lea\nAge : 21 ans",
-     "S2_1": "Prenom : Maya\nAge : 30 ans"
-    },
-    {
-     "P0": "Maya",
      "P1": "Jade",
-     "A0": "20",
-     "A1": "38",
-     "S1_0": "Prenom : Maya",
-     "S1_1": "Prenom : Jade",
-     "S2_0": "Prenom : Maya\nAge : 20 ans",
-     "S2_1": "Prenom : Jade\nAge : 38 ans"
-    },
-    {
-     "P0": "Lea",
-     "P1": "Noah",
-     "A0": "21",
-     "A1": "38",
+     "A0": "18",
+     "A1": "39",
      "S1_0": "Prenom : Lea",
-     "S1_1": "Prenom : Noah",
-     "S2_0": "Prenom : Lea\nAge : 21 ans",
-     "S2_1": "Prenom : Noah\nAge : 38 ans"
+     "S1_1": "Prenom : Jade",
+     "S2_0": "Prenom : Lea\nAge : 18 ans",
+     "S2_1": "Prenom : Jade\nAge : 39 ans"
     },
     {
-     "P0": "Ines",
-     "P1": "Maya",
-     "A0": "19",
-     "A1": "50",
-     "S1_0": "Prenom : Ines",
-     "S1_1": "Prenom : Maya",
-     "S2_0": "Prenom : Ines\nAge : 19 ans",
-     "S2_1": "Prenom : Maya\nAge : 50 ans"
+     "P0": "Sami",
+     "P1": "Rayan",
+     "A0": "24",
+     "A1": "60",
+     "S1_0": "Prenom : Sami",
+     "S1_1": "Prenom : Rayan",
+     "S2_0": "Prenom : Sami\nAge : 24 ans",
+     "S2_1": "Prenom : Rayan\nAge : 60 ans"
     },
     {
-     "P0": "Lina",
-     "P1": "Chloe",
-     "A0": "25",
-     "A1": "26",
-     "S1_0": "Prenom : Lina",
-     "S1_1": "Prenom : Chloe",
-     "S2_0": "Prenom : Lina\nAge : 25 ans",
-     "S2_1": "Prenom : Chloe\nAge : 26 ans"
+     "P0": "Adam",
+     "P1": "Yanis",
+     "A0": "18",
+     "A1": "38",
+     "S1_0": "Prenom : Adam",
+     "S1_1": "Prenom : Yanis",
+     "S2_0": "Prenom : Adam\nAge : 18 ans",
+     "S2_1": "Prenom : Yanis\nAge : 38 ans"
     }
    ]
   },
@@ -1870,7 +1870,7 @@
    "notion": "3.3",
    "origine": "generee",
    "titre": "Somme de trois réels",
-   "enonce": "Écris un programme qui lit trois nombres réels et affiche leur somme avec **une** décimale.\n\n**Exemple**\n```text\nEntrée :\n[[X]] [[Y]] [[Z]]\nSortie :\n[[SOM]]\n```",
+   "enonce": "Le but : lire des réels et choisir le nombre de décimales affichées.\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. trois nombres réels.\n\n**Ce qu'il affiche** : leur somme, avec **une** décimale.\n\n**Exemple**\n```text\nEntrée :\n[[X]] [[Y]] [[Z]]\nSortie :\n[[SOM]]\n```",
    "guidage": "**Plan** : 1. trois `double` → 2. un seul `scanf` avec trois `%lf` → 3. additionner → 4. afficher avec `%.1f`.",
    "duree": 3,
    "etapes": [
@@ -1908,7 +1908,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Premier jalon : lis les trois réels et affiche leur somme avec le format par défaut `%f` (qui donne 6 décimales).",
+     "consigne": "Premier jalon :\n1. déclare trois `double` et lis-les avec un seul `scanf(\"%lf %lf %lf\", …);` ;\n2. affiche leur somme avec `%f` (6 décimales par défaut).",
      "question": "Somme avec `%f`.",
      "verif": {
       "mode": "c",
@@ -1944,7 +1944,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Il ne reste qu'à changer le format : affiche la somme avec **une** décimale.",
+     "consigne": "Change seulement le format d'affichage :\n1. remplace `%f` par `%.1f` pour n'afficher qu'**une** décimale.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -1988,122 +1988,122 @@
     }
    ],
    "vals": {
-    "X": "4.4",
-    "Y": "4.9",
+    "X": "6.4",
+    "Y": "5.2",
     "Z": "7",
-    "E1": "-3 -1.5 17",
-    "SOM": "16.3",
-    "S2_0": "16.300000",
+    "E1": "-3 -5.5 14",
+    "SOM": "18.6",
+    "S2_0": "18.600000",
     "S2_1": "0.600000",
-    "S2_2": "12.500000",
-    "S3_0": "16.3",
+    "S2_2": "5.500000",
+    "S3_0": "18.6",
     "S3_1": "0.6",
-    "S3_2": "12.5"
+    "S3_2": "5.5"
    },
    "variantes": [
     {
-     "X": "4.4",
-     "Y": "4.9",
+     "X": "6.4",
+     "Y": "5.2",
      "Z": "7",
-     "E1": "-3 -1.5 17",
-     "SOM": "16.3",
-     "S2_0": "16.300000",
+     "E1": "-3 -5.5 14",
+     "SOM": "18.6",
+     "S2_0": "18.600000",
      "S2_1": "0.600000",
-     "S2_2": "12.500000",
-     "S3_0": "16.3",
+     "S2_2": "5.500000",
+     "S3_0": "18.6",
      "S3_1": "0.6",
-     "S3_2": "12.5"
+     "S3_2": "5.5"
     },
     {
-     "X": "6.1",
-     "Y": "8.9",
-     "Z": "5",
-     "E1": "-2 -3.5 19",
-     "SOM": "20.0",
-     "S2_0": "20.000000",
-     "S2_1": "0.600000",
-     "S2_2": "13.500000",
-     "S3_0": "20.0",
-     "S3_1": "0.6",
-     "S3_2": "13.5"
-    },
-    {
-     "X": "7.1",
-     "Y": "8.8",
-     "Z": "6",
-     "E1": "-5 -1.5 10",
-     "SOM": "21.9",
-     "S2_0": "21.900000",
-     "S2_1": "0.600000",
-     "S2_2": "3.500000",
-     "S3_0": "21.9",
-     "S3_1": "0.6",
-     "S3_2": "3.5"
-    },
-    {
-     "X": "8.8",
-     "Y": "7.9",
-     "Z": "4",
-     "E1": "-2 -2.5 13",
-     "SOM": "20.7",
-     "S2_0": "20.700000",
-     "S2_1": "0.600000",
-     "S2_2": "8.500000",
-     "S3_0": "20.7",
-     "S3_1": "0.6",
-     "S3_2": "8.5"
-    },
-    {
-     "X": "1.9",
-     "Y": "2.5",
-     "Z": "2",
-     "E1": "-3 -5.5 15",
-     "SOM": "6.4",
-     "S2_0": "6.400000",
-     "S2_1": "0.600000",
-     "S2_2": "6.500000",
-     "S3_0": "6.4",
-     "S3_1": "0.6",
-     "S3_2": "6.5"
-    },
-    {
-     "X": "9.2",
+     "X": "9.4",
      "Y": "8.3",
      "Z": "6",
-     "E1": "-1 -4.5 16",
-     "SOM": "23.5",
-     "S2_0": "23.500000",
+     "E1": "-3 -2.5 10",
+     "SOM": "23.7",
+     "S2_0": "23.700000",
      "S2_1": "0.600000",
-     "S2_2": "10.500000",
-     "S3_0": "23.5",
+     "S2_2": "4.500000",
+     "S3_0": "23.7",
      "S3_1": "0.6",
-     "S3_2": "10.5"
+     "S3_2": "4.5"
     },
     {
-     "X": "7.2",
-     "Y": "0.4",
-     "Z": "4",
-     "E1": "-1 -5.5 10",
+     "X": "5.8",
+     "Y": "4.9",
+     "Z": "2",
+     "E1": "-1 -3.5 12",
+     "SOM": "12.7",
+     "S2_0": "12.700000",
+     "S2_1": "0.600000",
+     "S2_2": "7.500000",
+     "S3_0": "12.7",
+     "S3_1": "0.6",
+     "S3_2": "7.5"
+    },
+    {
+     "X": "0.9",
+     "Y": "4.7",
+     "Z": "6",
+     "E1": "-4 -4.5 15",
      "SOM": "11.6",
      "S2_0": "11.600000",
      "S2_1": "0.600000",
-     "S2_2": "3.500000",
+     "S2_2": "6.500000",
      "S3_0": "11.6",
      "S3_1": "0.6",
-     "S3_2": "3.5"
+     "S3_2": "6.5"
     },
     {
-     "X": "0.4",
-     "Y": "1.8",
-     "Z": "9",
-     "E1": "-5 -2.5 14",
-     "SOM": "11.2",
-     "S2_0": "11.200000",
+     "X": "6.7",
+     "Y": "6.4",
+     "Z": "1",
+     "E1": "-1 -2.5 20",
+     "SOM": "14.1",
+     "S2_0": "14.100000",
+     "S2_1": "0.600000",
+     "S2_2": "16.500000",
+     "S3_0": "14.1",
+     "S3_1": "0.6",
+     "S3_2": "16.5"
+    },
+    {
+     "X": "4.2",
+     "Y": "4.2",
+     "Z": "1",
+     "E1": "-1 -5.5 7",
+     "SOM": "9.4",
+     "S2_0": "9.400000",
+     "S2_1": "0.600000",
+     "S2_2": "0.500000",
+     "S3_0": "9.4",
+     "S3_1": "0.6",
+     "S3_2": "0.5"
+    },
+    {
+     "X": "9.1",
+     "Y": "0.6",
+     "Z": "8",
+     "E1": "-5 -1.5 13",
+     "SOM": "17.7",
+     "S2_0": "17.700000",
      "S2_1": "0.600000",
      "S2_2": "6.500000",
-     "S3_0": "11.2",
+     "S3_0": "17.7",
      "S3_1": "0.6",
      "S3_2": "6.5"
+    },
+    {
+     "X": "2.2",
+     "Y": "7.9",
+     "Z": "4",
+     "E1": "-3 -3.5 20",
+     "SOM": "14.1",
+     "S2_0": "14.100000",
+     "S2_1": "0.600000",
+     "S2_2": "13.500000",
+     "S3_0": "14.1",
+     "S3_1": "0.6",
+     "S3_2": "13.5"
     }
    ]
   },
@@ -2113,7 +2113,7 @@
    "notion": "3.1",
    "origine": "cours",
    "titre": "Fiche d'identité",
-   "enonce": "Écris un programme qui déclare `int age = [[AGE]];` et `int progression = [[P]];`, puis affiche exactement ces trois lignes, en utilisant les variables pour les nombres :\n```text\n[[SORTIE]]\n```",
+   "enonce": "Le but : afficher des guillemets et le signe `%` dans un `printf`, et des valeurs prises dans des variables.\n\n**Au clavier** : rien, le programme ne lit aucune donnée.\n\n**Ce qu'il fait** :\n1. déclare `int age = [[AGE]];` et `int progression = [[P]];` ;\n2. affiche les trois lignes ci-dessous, en prenant les nombres **dans les variables** (avec `%d`), pas en les écrivant en dur.\n\n**Sortie attendue**\n```text\n[[SORTIE]]\n```",
    "guidage": "**Plan** : 1. savoir écrire un guillemet dans un texte → 2. savoir écrire le signe `%` → 3. un `printf` par ligne, avec `%d` pour chaque variable.\n\n**Piège** : le retour à la ligne n'est jamais automatique, chaque ligne finit par `\\n`.",
    "duree": 4,
    "etapes": [
@@ -2151,7 +2151,7 @@
     },
     {
      "guideSeul": true,
-     "consigne": "Commence par la première ligne seulement : `Fiche \"[[NOM]]\"`, guillemets compris.",
+     "consigne": "Premier jalon, la première ligne seulement :\n1. écris `printf(\"Fiche \\\"[[NOM]]\\\"\\n\");` : chaque guillemet à afficher s'écrit `\\\"`.",
      "question": "Affiche la première ligne.",
      "verif": {
       "mode": "c",
@@ -2171,7 +2171,7 @@
      ]
     },
     {
-     "consigne": "Ajoute les deux variables et les deux lignes suivantes :\n```text\nAge : [[AGE]] ans\nProgression : [[P]]%\n```\nLes nombres doivent venir des variables (`%d`), pas être écrits en dur dans le texte.",
+     "consigne": "Ajoute le reste :\n1. déclare `int age = [[AGE]];` et `int progression = [[P]];` ;\n2. deuxième ligne : `printf(\"Age : %d ans\\n\", age);` ;\n3. troisième ligne : `Progression : ` puis la variable, puis le signe `%`, qui s'écrit `%%` dans le texte.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",

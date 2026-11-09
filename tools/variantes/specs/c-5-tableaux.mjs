@@ -1,4 +1,5 @@
 /* Chapitre 5 (Tableaux) : variantes + consignes réécrites (échantillon du 08/11/2026). */
+import {BLOC, but, rien, lit, fait, affiche, afaire, jalon, sortie, corriger} from "../redaction.mjs";
 const T = a => "{" + a.join(", ") + "}", L = a => a.join(" ");
 const sol = c => "Une solution possible :\n```c\n" + c + "\n```";
 const E = (k, o) => Object.fromEntries(Object.entries(o).map(([a, b]) => [`etapes.${k}.${a}`, b]));
@@ -180,7 +181,7 @@ const c109b = c109a.replace(`    printf("%d\\n", trouve);`, `    if (trouve) pri
 const liste = (R, n, a, b) => Array.from({length: n}, () => R.entre(a, b));
 const saisie = (n, t, ...plus) => [n, L(t), ...plus].join("\n");
 
-export default {
+const base = {
   banque: "programmation-c/c-5-tableaux.json",
   n: 8,
   items: {
@@ -500,3 +501,67 @@ int main(void) {
     },
   },
 };
+
+/* ---------- format « Au clavier / Ce qu'il fait / Ce qu'il affiche » (09/11/2026), appliqué après la base ---------- */
+const J = (k, intro, ...xs) => E(k, {consigne: jalon(intro, ...xs)});
+const format = {
+  banque: "programmation-c/c-5-tableaux.json",
+  items: {
+    "c5-101": {set: {enonce: BLOC(but("parcourir un tableau en sautant une case sur deux. (Tableaux_chainex, intermédiaire ex. 1)"), rien, "**Le tableau**, à recopier : `int t[[[N]]] = [[TAB]];`",
+        affiche("sur une ligne, entre accolades et séparées par des espaces, les valeurs rangées dans les cases d'**indice pair** (cases 0, 2, 4…)."), sortie("[[RES]]")),
+      ...J(1, "Premier jalon, sans les accolades :", "déclare le tableau ;", "`for (int i = 0; i < [[N]]; i += 2)` : `i` avance de 2 à chaque tour ;", "dans la boucle, affiche `t[i]` suivi d'une espace ;", "après la boucle, `printf(\"\\n\");`."),
+      ...J(2, "Ajoute les accolades :", "juste avant la boucle, `printf(\"{ \");` ;", "après la boucle, remplace `printf(\"\\n\");` par `printf(\"}\\n\");`.")}},
+    "c5-102": {set: {enonce: BLOC(but("repérer les valeurs impaires (même négatives) et les multiplier. (Tableaux_chainex, intermédiaire ex. 2)"), rien, "**Le tableau**, à recopier : `int t[14] = [[TAB]];`",
+        affiche("le produit de toutes les valeurs **impaires** du tableau."), sortie("[[P]]")),
+      ...J(2, "Premier jalon, repérer les impairs :", "déclare le tableau ;", "`for (int i = 0; i < 14; i++)` : si `t[i] % 2 != 0`, affiche `t[i]` suivi d'une espace ;", "après la boucle, `printf(\"\\n\");`."),
+      ...J(3, "Multiplie au lieu d'afficher :", "avant la boucle, `int p = 1;` (un produit part de 1) ;", "dans le `if`, remplace le `printf` par `p *= t[i];` ;", "après la boucle, affiche `p`.")}},
+    "c5-103": {set: {enonce: BLOC(but("remplir un tableau avec une boucle, puis transformer chaque case. (Tableaux_chainex, intermédiaire ex. 3, adapté)"), rien,
+        fait("crée un tableau `t` de [[N]] entiers ;", "met **toutes** les cases à 1 ;", "multiplie chaque case `i` par `[[K]] * i`."), affiche("le tableau sur une ligne, valeurs séparées par une espace."), "L'affichage commence par `0 [[K]] [[K2]] [[K3]] …`"),
+      ...J(2, "Premier jalon, sans multiplication :", "déclare `int t[[[N]]];` ;", "première boucle `for (int i = 0; i < [[N]]; i++)` : `t[i] = 1;` ;", "seconde boucle : affiche `t[i]` suivi d'une espace ;", "termine par `printf(\"\\n\");`. Tu dois voir [[N]] fois `1`."),
+      ...J(3, "Ajoute la multiplication :", "dans la seconde boucle, **avant** le `printf`, ajoute `t[i] = t[i] * ([[K]] * i);` ;", "le reste ne change pas.")}},
+    "c5-104": {set: {enonce: BLOC(but("ranger des données dans un tableau et les afficher avec leur numéro. (Tableaux_chainex, intermédiaire ex. 4, adapté)"), rien,
+        "**Le tableau** `jours` contient le nombre de jours de chaque mois d'une année **[[ANNEE]]** : `{31, [[FEV]], 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}`.",
+        affiche("une ligne par mois, de la forme `Mois 1 : 31 jours`."), sortie("Mois 1 : 31 jours\nMois 2 : [[FEV]] jours\n…\nMois 12 : 31 jours")),
+      ...J(2, "Premier jalon, les nombres seuls :", "déclare `int jours[12] = {31, [[FEV]], …};` ;", "`for (int i = 0; i < 12; i++)` : affiche `jours[i]` suivi de `\\n`."),
+      ...J(3, "Ajoute le texte :", "remplace le `printf` par `printf(\"Mois %d : %d jours\\n\", i + 1, jours[i]);` ;", "`i + 1` parce que la case 0 correspond au mois 1.")}},
+    "c5-105": {set: {enonce: BLOC(but("remplir un tableau au clavier, puis le parcourir pour calculer. (exercice du cours Tableaux)"), lit("les [[N]] valeurs du tableau (des entiers)."),
+        affiche("sur une première ligne, le tableau (valeurs séparées par une espace) ; sur la ligne suivante, la **somme** puis la **moyenne** avec 2 décimales."), ex("[[E0]]", "[[S3_0]]")),
+      ...J(2, "Premier jalon :", "déclare `int t[[[N]]];` ;", "boucle de saisie : `scanf(\"%d\", &t[i]);` ;", "boucle d'affichage : `t[i]` suivi d'une espace, puis `\\n` après la boucle."),
+      ...J(3, "Ajoute la somme et la moyenne :", "avant l'affichage, `int s = 0;` ;", "dans la boucle d'affichage, ajoute `s += t[i];` ;", "après la boucle : `printf(\"\\n%d %.2f\\n\", s, s / [[N]].0);` (le `[[N]].0` rend la division réelle).")}},
+    "c5-106": {set: {enonce: BLOC(but("gérer la **taille logique** d'un tableau : le nombre de cases utilisées, qui change quand on ajoute ou supprime."), "**La taille physique** : `#define TP [[TP]]` et `int t[TP];` (elle ne change jamais).",
+        lit("la taille logique `tl` (au plus `TP`) ;", "les `tl` valeurs du tableau ;", "une valeur `x` à ajouter."),
+        fait("ajoute `x` à la fin, **seulement s'il reste de la place** (`tl < TP`) ;", "affiche le tableau ;", "supprime le dernier élément (s'il y en a un) ;", "affiche de nouveau le tableau."), affiche("deux lignes, une par affichage."), ex("[[E0]]", "[[S4_0]]")),
+      ...J(2, "Premier jalon, l'ajout :", "en haut : `#define TP [[TP]]` ; dans `main` : `int t[TP], tl, x;` ;", "lis `tl`, puis les `tl` valeurs, puis `x` ;", "si `tl < TP` : `t[tl] = x;` puis `tl++;` ;", "affiche les `tl` cases sur une ligne."),
+      ...J(4, "Ajoute la suppression :", "après le premier affichage, si `tl > 0` : `tl--;` (la dernière case n'est plus comptée, inutile de l'effacer) ;", "affiche de nouveau les `tl` cases, sur une deuxième ligne.")}},
+    "c5-107": {set: {enonce: BLOC("Ce programme doit afficher les [[N]] valeurs du tableau, séparées par des espaces : `[[RES]]`. Il affiche pourtant tout autre chose.\n```c\n" + c107d + "\n```", corriger("l'affichage : un tableau s'affiche case par case."), sortie("[[RES]]")),
+      ...J(2, "**À faire** :", "supprime la ligne `printf(\"%d\\n\", t);` ;", "à sa place, `for (int i = 0; i < [[N]]; i++)` qui affiche `t[i]` suivi d'une espace ;", "après la boucle, `printf(\"\\n\");`.")}},
+    "c5-108": {set: {enonce: BLOC("Ce programme doit dire si deux tableaux de [[N]] entiers contiennent les mêmes valeurs dans le même ordre. Il répond **toujours** `differents`.\n```c\n" + c108d + "\n```",
+        "**Au clavier** : les [[N]] valeurs du premier tableau, puis les [[N]] valeurs du second.", corriger("la comparaison : elle doit se faire case par case."), affiche("`egaux` ou `differents`.")),
+      ...J(2, "**À faire** :", "déclare `int egaux = 1;` (« jusqu'ici, tout est pareil ») ;", "après les lectures, `for (int i = 0; i < [[N]]; i++)` : si `t1[i] != t2[i]`, `egaux = 0;` ;", "remplace `if (t1 == t2)` par `if (egaux)`.")}},
+    "c5-109": {set: {enonce: BLOC(but("chercher une valeur dans un tableau non trié. (Tableaux_chainex, intermédiaire ex. 5)"), "**Le tableau**, à recopier : `int t[19] = [[TAB]];`",
+        lit("la valeur cherchée `val`."), affiche("`trouve` si `val` est dans le tableau, `absent` sinon."), ex("[[E0]]", "[[S3_0]]")),
+      ...J(2, "Premier jalon :", "déclare le tableau, puis `int val, trouve = 0;` et lis `val` ;", "`for (int i = 0; i < 19; i++)` : si `t[i] == val`, `trouve = 1;` puis `break;` ;", "affiche `trouve` (1 ou 0)."),
+      ...J(3, "Remplace l'affichage :", "au lieu de `printf(\"%d\\n\", trouve);`, écris `if (trouve) printf(\"trouve\\n\"); else printf(\"absent\\n\");`.")}},
+    "c5-110": {set: {enonce: BLOC(but("chercher le minimum et calculer la moyenne d'un tableau. (Tableaux_chainex, intermédiaire ex. 6 et 7)"), lit("le nombre de valeurs `n` (100 au plus) ;", "les `n` valeurs (des entiers)."),
+        affiche("le **minimum** puis la **moyenne** (2 décimales), sur une ligne."), ex("[[E0]]", "[[S3_0]]")),
+      ...J(1, "Premier jalon, le minimum :", "déclare `int t[100], n;` ; lis `n` puis les `n` valeurs ;", "`int min = t[0];` (on part de la première valeur, jamais de 0) ;", "`for (int i = 1; i < n; i++)` : si `t[i] < min`, `min = t[i];` ;", "affiche `min`."),
+      ...J(3, "Ajoute la moyenne :", "`int s = 0;` et, dans la boucle de saisie, `s += t[i];` juste après le `scanf` ;", "affiche `min` puis `(double)s / n` avec `%.2f`, sur une ligne.")}},
+    "c5-111": {set: {enonce: BLOC(but("compter les occurrences d'une valeur dans un tableau. (Tableaux_chainex, intermédiaire ex. 8)"), lit("le nombre de valeurs `n` ;", "les `n` valeurs du tableau ;", "la valeur à compter `val`."), affiche("le nombre de cases qui valent `val`."), ex("[[E0]]", "[[S3_0]]")),
+      ...J(1, "Premier jalon, repérer les cases :", "lis `n`, les `n` valeurs dans `t`, puis `val` ;", "`for (int i = 0; i < n; i++)` : si `t[i] == val`, affiche `i` suivi d'une espace ;", "termine par `\\n`."),
+      ...J(3, "Compte au lieu d'afficher :", "avant la boucle, `int nb = 0;` ;", "dans le `if`, remplace le `printf` par `nb++;` ;", "après la boucle, affiche `nb`.")}},
+    "c5-112": {set: {enonce: BLOC(but("décaler toutes les valeurs d'un tableau d'une case, sans en perdre. (Tableaux_chainex, intermédiaire ex. 9)"), lit("le nombre de valeurs `n` ;", "les `n` valeurs du tableau."),
+        fait("décale chaque valeur d'une case **vers la gauche** ; la première fait le tour et se retrouve à la fin."), affiche("le tableau décalé, sur une ligne."), ex("[[E0]]", "[[S4_0]]")),
+      ...J(3, "Premier jalon, décalage simple (la première valeur est perdue) :", "lis `n` puis les `n` valeurs dans `t` ;", "`for (int i = 0; i < n - 1; i++)` : `t[i] = t[i + 1];` ;", "affiche les `n - 1` premières cases."),
+      ...J(4, "Rends le décalage circulaire :", "**avant** la boucle de décalage, `int premier = t[0];` ;", "**après** la boucle, `t[n - 1] = premier;` ;", "affiche maintenant les `n` cases.")}},
+    "c5-113": {set: {enonce: BLOC(but("trouver la position d'une valeur, et gérer le cas où elle est absente. (Tableaux_chainex, intermédiaire ex. 10)"), lit("le nombre de valeurs `n` ;", "les `n` valeurs du tableau ;", "la valeur cherchée `val`."),
+        affiche("l'indice de la **première** case qui vaut `val`, ou `-1` si elle n'y est pas."), ex("[[E0]]", "[[S3_0]]")),
+      ...J(2, "Premier jalon :", "lis `n`, les `n` valeurs dans `t`, puis `val` ;", "`for (int i = 0; i < n; i++)` : si `t[i] == val`, affiche `i` puis `break;`.") + "\n\nSi `val` est absente, rien ne s'affiche pour l'instant.",
+      ...J(3, "Gère l'absence :", "avant la boucle, `int pos = -1;` ;", "dans le `if`, remplace le `printf` par `pos = i;` (garde le `break;`) ;", "après la boucle, affiche `pos` dans tous les cas.")}},
+    "c5-114": {set: {enonce: BLOC(but("supprimer une case au milieu d'un tableau, en faisant reculer les suivantes. (Tableaux_chainex, intermédiaire ex. 11)"), lit("le nombre de valeurs `n` ;", "les `n` valeurs du tableau ;", "la valeur à supprimer `val`."),
+        fait("cherche la première case qui vaut `val` ;", "si elle existe, la supprime : chaque case suivante recule d'un cran, et le tableau a une valeur de moins ;", "sinon, ne change rien."), affiche("le tableau restant, sur une ligne."), ex("[[E0]]", "[[S4_0]]")),
+      ...J(1, "Premier jalon, trouver la case (comme à l'exo précédent) :", "lis `n`, les `n` valeurs dans `t`, puis `val` ;", "`int pos = -1;` puis une boucle qui met l'indice de la première occurrence dans `pos` (avec `break`) ;", "affiche `pos`."),
+      ...J(4, "Supprime la case :", "remplace l'affichage de `pos` par : si `pos != -1`, `for (int i = pos; i < n - 1; i++) t[i] = t[i + 1];` puis `n--;` ;", "affiche ensuite les `n` cases sur une ligne.")}},
+  },
+};
+
+export default [base, format];

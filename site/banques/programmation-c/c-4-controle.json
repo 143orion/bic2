@@ -369,68 +369,68 @@
    "duree": 0.67,
    "explication": "[[X]] % 2 vaut [[M]] : la condition est [[VF]], c'est donc la branche [[QUI]] qui affiche **[[R]]**.",
    "vals": {
-    "X": "15",
-    "M": "1",
-    "VF": "fausse",
-    "QUI": "`else`",
-    "R": "2"
+    "X": "6",
+    "M": "0",
+    "VF": "vraie",
+    "QUI": "`if`",
+    "R": "1"
    },
    "variantes": [
     {
-     "X": "15",
-     "M": "1",
-     "VF": "fausse",
-     "QUI": "`else`",
-     "R": "2"
-    },
-    {
-     "X": "7",
-     "M": "1",
-     "VF": "fausse",
-     "QUI": "`else`",
-     "R": "2"
-    },
-    {
-     "X": "13",
-     "M": "1",
-     "VF": "fausse",
-     "QUI": "`else`",
-     "R": "2"
-    },
-    {
-     "X": "22",
+     "X": "6",
      "M": "0",
      "VF": "vraie",
      "QUI": "`if`",
      "R": "1"
     },
     {
-     "X": "10",
+     "X": "14",
      "M": "0",
      "VF": "vraie",
      "QUI": "`if`",
      "R": "1"
     },
     {
-     "X": "28",
+     "X": "26",
      "M": "0",
      "VF": "vraie",
      "QUI": "`if`",
      "R": "1"
     },
     {
-     "X": "9",
+     "X": "2",
+     "M": "0",
+     "VF": "vraie",
+     "QUI": "`if`",
+     "R": "1"
+    },
+    {
+     "X": "17",
      "M": "1",
      "VF": "fausse",
      "QUI": "`else`",
      "R": "2"
     },
     {
-     "X": "39",
+     "X": "36",
+     "M": "0",
+     "VF": "vraie",
+     "QUI": "`if`",
+     "R": "1"
+    },
+    {
+     "X": "11",
      "M": "1",
      "VF": "fausse",
      "QUI": "`else`",
      "R": "2"
+    },
+    {
+     "X": "18",
+     "M": "0",
+     "VF": "vraie",
+     "QUI": "`if`",
+     "R": "1"
     }
    ]
   },
@@ -596,50 +596,50 @@
    "duree": 0.67,
    "explication": "`i` prend toutes les valeurs de [[A]] à [[B]] **inclus** : [[B]] − [[A]] + 1 = **[[R]]** lignes.",
    "vals": {
-    "A": "5",
-    "B": "13",
-    "R": "9"
+    "A": "2",
+    "B": "12",
+    "R": "11"
    },
    "variantes": [
     {
-     "A": "5",
-     "B": "13",
-     "R": "9"
-    },
-    {
-     "A": "1",
+     "A": "2",
      "B": "12",
-     "R": "12"
-    },
-    {
-     "A": "4",
-     "B": "15",
-     "R": "12"
-    },
-    {
-     "A": "5",
-     "B": "10",
-     "R": "6"
+     "R": "11"
     },
     {
      "A": "2",
-     "B": "13",
-     "R": "12"
+     "B": "19",
+     "R": "18"
     },
     {
-     "A": "5",
-     "B": "8",
-     "R": "4"
-    },
-    {
-     "A": "5",
-     "B": "14",
+     "A": "1",
+     "B": "10",
      "R": "10"
     },
     {
-     "A": "0",
-     "B": "6",
-     "R": "7"
+     "A": "3",
+     "B": "18",
+     "R": "16"
+    },
+    {
+     "A": "1",
+     "B": "14",
+     "R": "14"
+    },
+    {
+     "A": "1",
+     "B": "13",
+     "R": "13"
+    },
+    {
+     "A": "1",
+     "B": "17",
+     "R": "17"
+    },
+    {
+     "A": "2",
+     "B": "9",
+     "R": "8"
     }
    ]
   },
@@ -656,17 +656,11 @@
    "duree": 0.67,
    "explication": "La boucle s'arrête la première fois que `i < [[N]]` est faux, c'est-à-dire quand `i` vaut **[[N]]**.",
    "vals": {
-    "N": "13"
+    "N": "6"
    },
    "variantes": [
     {
-     "N": "13"
-    },
-    {
-     "N": "10"
-    },
-    {
-     "N": "7"
+     "N": "6"
     },
     {
      "N": "8"
@@ -675,13 +669,19 @@
      "N": "16"
     },
     {
-     "N": "12"
+     "N": "20"
     },
     {
-     "N": "6"
+     "N": "13"
     },
     {
      "N": "4"
+    },
+    {
+     "N": "17"
+    },
+    {
+     "N": "19"
     }
    ]
   },
@@ -698,35 +698,15 @@
    "duree": 0.67,
    "explication": "`i` vaut [[SUITE]] : [[R]] valeurs sont strictement inférieures à [[N]], donc **[[R]]** tours.",
    "vals": {
-    "N": "100",
-    "R": "7",
-    "SUITE": "1, 2, 4, 8, 16, 32, 64"
+    "N": "20",
+    "R": "5",
+    "SUITE": "1, 2, 4, 8, 16"
    },
    "variantes": [
-    {
-     "N": "100",
-     "R": "7",
-     "SUITE": "1, 2, 4, 8, 16, 32, 64"
-    },
-    {
-     "N": "33",
-     "R": "6",
-     "SUITE": "1, 2, 4, 8, 16, 32"
-    },
-    {
-     "N": "200",
-     "R": "8",
-     "SUITE": "1, 2, 4, 8, 16, 32, 64, 128"
-    },
     {
      "N": "20",
      "R": "5",
      "SUITE": "1, 2, 4, 8, 16"
-    },
-    {
-     "N": "1000",
-     "R": "10",
-     "SUITE": "1, 2, 4, 8, 16, 32, 64, 128, 256, 512"
     },
     {
      "N": "10",
@@ -734,12 +714,32 @@
      "SUITE": "1, 2, 4, 8"
     },
     {
-     "N": "500",
-     "R": "9",
-     "SUITE": "1, 2, 4, 8, 16, 32, 64, 128, 256"
+     "N": "200",
+     "R": "8",
+     "SUITE": "1, 2, 4, 8, 16, 32, 64, 128"
+    },
+    {
+     "N": "50",
+     "R": "6",
+     "SUITE": "1, 2, 4, 8, 16, 32"
+    },
+    {
+     "N": "1000",
+     "R": "10",
+     "SUITE": "1, 2, 4, 8, 16, 32, 64, 128, 256, 512"
+    },
+    {
+     "N": "100",
+     "R": "7",
+     "SUITE": "1, 2, 4, 8, 16, 32, 64"
     },
     {
      "N": "64",
+     "R": "6",
+     "SUITE": "1, 2, 4, 8, 16, 32"
+    },
+    {
+     "N": "33",
      "R": "6",
      "SUITE": "1, 2, 4, 8, 16, 32"
     }
@@ -836,30 +836,12 @@
    "duree": 0.67,
    "explication": "[[EXP]]",
    "vals": {
-    "A": "4",
-    "B": "4",
-    "R": "0",
-    "EXP": "`i < 4` est faux dès le départ (4 n'est pas inférieur à 4) : la boucle ne fait **aucun** tour."
+    "A": "6",
+    "B": "8",
+    "R": "2",
+    "EXP": "`i` passe de 6 à 8 : **2** tours."
    },
    "variantes": [
-    {
-     "A": "4",
-     "B": "4",
-     "R": "0",
-     "EXP": "`i < 4` est faux dès le départ (4 n'est pas inférieur à 4) : la boucle ne fait **aucun** tour."
-    },
-    {
-     "A": "9",
-     "B": "9",
-     "R": "0",
-     "EXP": "`i < 9` est faux dès le départ (9 n'est pas inférieur à 9) : la boucle ne fait **aucun** tour."
-    },
-    {
-     "A": "5",
-     "B": "6",
-     "R": "1",
-     "EXP": "`i` passe de 5 à 6 : **1** tours."
-    },
     {
      "A": "6",
      "B": "8",
@@ -867,28 +849,46 @@
      "EXP": "`i` passe de 6 à 8 : **2** tours."
     },
     {
-     "A": "8",
-     "B": "8",
-     "R": "0",
-     "EXP": "`i < 8` est faux dès le départ (8 n'est pas inférieur à 8) : la boucle ne fait **aucun** tour."
-    },
-    {
-     "A": "3",
-     "B": "7",
-     "R": "4",
-     "EXP": "`i` passe de 3 à 7 : **4** tours."
-    },
-    {
-     "A": "3",
+     "A": "4",
      "B": "3",
      "R": "0",
-     "EXP": "`i < 3` est faux dès le départ (3 n'est pas inférieur à 3) : la boucle ne fait **aucun** tour."
+     "EXP": "`i < 3` est faux dès le départ (4 n'est pas inférieur à 3) : la boucle ne fait **aucun** tour."
     },
     {
-     "A": "0",
-     "B": "3",
+     "A": "6",
+     "B": "6",
+     "R": "0",
+     "EXP": "`i < 6` est faux dès le départ (6 n'est pas inférieur à 6) : la boucle ne fait **aucun** tour."
+    },
+    {
+     "A": "1",
+     "B": "4",
      "R": "3",
-     "EXP": "`i` passe de 0 à 3 : **3** tours."
+     "EXP": "`i` passe de 1 à 4 : **3** tours."
+    },
+    {
+     "A": "4",
+     "B": "4",
+     "R": "0",
+     "EXP": "`i < 4` est faux dès le départ (4 n'est pas inférieur à 4) : la boucle ne fait **aucun** tour."
+    },
+    {
+     "A": "5",
+     "B": "5",
+     "R": "0",
+     "EXP": "`i < 5` est faux dès le départ (5 n'est pas inférieur à 5) : la boucle ne fait **aucun** tour."
+    },
+    {
+     "A": "6",
+     "B": "4",
+     "R": "0",
+     "EXP": "`i < 4` est faux dès le départ (6 n'est pas inférieur à 4) : la boucle ne fait **aucun** tour."
+    },
+    {
+     "A": "9",
+     "B": "9",
+     "R": "0",
+     "EXP": "`i < 9` est faux dès le départ (9 n'est pas inférieur à 9) : la boucle ne fait **aucun** tour."
     }
    ]
   },
@@ -1045,15 +1045,25 @@
    "duree": 0.67,
    "explication": "Les multiples de [[K]] déclenchent `continue`, qui saute le `printf` : on n'affiche que les autres, **[[R]]**.",
    "vals": {
-    "N": "10",
-    "K": "4",
-    "R": "1 2 3 5 6 7 9"
+    "N": "9",
+    "K": "2",
+    "R": "1 3 5 7"
    },
    "variantes": [
     {
-     "N": "10",
-     "K": "4",
-     "R": "1 2 3 5 6 7 9"
+     "N": "9",
+     "K": "2",
+     "R": "1 3 5 7"
+    },
+    {
+     "N": "7",
+     "K": "3",
+     "R": "1 2 4 5"
+    },
+    {
+     "N": "12",
+     "K": "2",
+     "R": "1 3 5 7 9 11"
     },
     {
      "N": "10",
@@ -1061,34 +1071,24 @@
      "R": "1 3 5 7 9"
     },
     {
-     "N": "9",
-     "K": "2",
-     "R": "1 3 5 7"
-    },
-    {
-     "N": "12",
-     "K": "3",
-     "R": "1 2 4 5 7 8 10 11"
-    },
-    {
-     "N": "7",
+     "N": "6",
      "K": "2",
      "R": "1 3 5"
     },
     {
-     "N": "9",
+     "N": "7",
      "K": "4",
-     "R": "1 2 3 5 6 7"
+     "R": "1 2 3 5 6"
     },
     {
      "N": "11",
-     "K": "3",
-     "R": "1 2 4 5 7 8 10"
+     "K": "4",
+     "R": "1 2 3 5 6 7 9 10"
     },
     {
      "N": "8",
-     "K": "2",
-     "R": "1 3 5 7"
+     "K": "4",
+     "R": "1 2 3 5 6 7"
     }
    ]
   },
@@ -1105,17 +1105,17 @@
    "duree": 0.67,
    "explication": "Les tours `i = 0` à `i = [[K1]]` vont jusqu'au bout ; à `i = [[K]]`, `break` sort tout de suite : **[[K]]** tours complets.",
    "vals": {
-    "K": "7",
-    "K1": "6"
+    "K": "5",
+    "K1": "4"
    },
    "variantes": [
     {
-     "K": "7",
-     "K1": "6"
+     "K": "5",
+     "K1": "4"
     },
     {
-     "K": "2",
-     "K1": "1"
+     "K": "7",
+     "K1": "6"
     },
     {
      "K": "3",
@@ -1126,16 +1126,16 @@
      "K1": "5"
     },
     {
-     "K": "5",
-     "K1": "4"
+     "K": "8",
+     "K1": "7"
     },
     {
      "K": "4",
      "K1": "3"
     },
     {
-     "K": "8",
-     "K1": "7"
+     "K": "2",
+     "K1": "1"
     }
    ]
   },
@@ -1145,7 +1145,7 @@
    "notion": "4.1",
    "origine": "td",
    "titre": "Majeur ou mineur",
-   "enonce": "Écris un programme qui lit un âge et affiche `majeur` si la personne a au moins 18 ans, `mineur` sinon. (TD Premiers pas, exercice 4)\n\n**Exemple**\n```text\nEntrée :\n[[A]]\nSortie :\n[[S3_0]]\n```",
+   "enonce": "Le but : choisir entre deux affichages avec `if / else`. (TD Premiers pas, exercice 4)\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. un âge (un entier).\n\n**Ce qu'il affiche** : `majeur` si l'âge est au moins 18, `mineur` sinon.\n\n**Exemple**\n```text\nEntrée :\n[[A]]\nSortie :\n[[S3_0]]\n```",
    "guidage": "**Plan** : lire l'âge → tester `age >= 18` → deux branches.\n\n**Piège** : 18 est majeur (≥), pas > .",
    "duree": 5.6,
    "etapes": [
@@ -1198,7 +1198,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Écris le programme : lis l'âge, puis un `if / else` qui affiche `majeur` ou `mineur` (en minuscules).",
+     "consigne": "Écris le programme :\n1. lis l'âge dans `int age` ;\n2. `if (age >= 18)` → affiche `majeur` ;\n3. `else` → affiche `mineur`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -1231,8 +1231,8 @@
     }
    ],
    "vals": {
-    "A": "44",
-    "B": "52",
+    "A": "51",
+    "B": "49",
     "S3_0": "majeur",
     "S3_1": "majeur",
     "S3_2": "mineur",
@@ -1240,64 +1240,64 @@
    },
    "variantes": [
     {
-     "A": "44",
-     "B": "52",
+     "A": "51",
+     "B": "49",
      "S3_0": "majeur",
      "S3_1": "majeur",
      "S3_2": "mineur",
      "S3_3": "majeur"
     },
     {
-     "A": "18",
-     "B": "81",
+     "A": "76",
+     "B": "22",
      "S3_0": "majeur",
      "S3_1": "majeur",
      "S3_2": "mineur",
      "S3_3": "majeur"
     },
     {
-     "A": "71",
-     "B": "83",
+     "A": "76",
+     "B": "23",
      "S3_0": "majeur",
      "S3_1": "majeur",
      "S3_2": "mineur",
      "S3_3": "majeur"
     },
     {
-     "A": "40",
+     "A": "66",
+     "B": "39",
+     "S3_0": "majeur",
+     "S3_1": "majeur",
+     "S3_2": "mineur",
+     "S3_3": "majeur"
+    },
+    {
+     "A": "25",
+     "B": "42",
+     "S3_0": "majeur",
+     "S3_1": "majeur",
+     "S3_2": "mineur",
+     "S3_3": "majeur"
+    },
+    {
+     "A": "17",
      "B": "60",
-     "S3_0": "majeur",
-     "S3_1": "majeur",
-     "S3_2": "mineur",
-     "S3_3": "majeur"
-    },
-    {
-     "A": "12",
-     "B": "84",
      "S3_0": "mineur",
      "S3_1": "majeur",
      "S3_2": "mineur",
      "S3_3": "majeur"
     },
     {
-     "A": "53",
-     "B": "25",
-     "S3_0": "majeur",
+     "A": "13",
+     "B": "52",
+     "S3_0": "mineur",
      "S3_1": "majeur",
      "S3_2": "mineur",
      "S3_3": "majeur"
     },
     {
-     "A": "53",
-     "B": "90",
-     "S3_0": "majeur",
-     "S3_1": "majeur",
-     "S3_2": "mineur",
-     "S3_3": "majeur"
-    },
-    {
-     "A": "26",
-     "B": "40",
+     "A": "35",
+     "B": "57",
      "S3_0": "majeur",
      "S3_1": "majeur",
      "S3_2": "mineur",
@@ -1311,7 +1311,7 @@
    "notion": "4.1",
    "origine": "td",
    "titre": "Positif, négatif ou nul",
-   "enonce": "Écris un programme qui lit un entier et affiche `positif`, `negatif` ou `nul` (sans accent). (TD Premiers pas, exercice 7)\n\n**Exemple**\n```text\nEntrée :\n[[A]]\nSortie :\n[[S3_0]]\n```",
+   "enonce": "Le but : distinguer trois cas avec `if / else if / else`. (TD Premiers pas, exercice 7)\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. un entier `n`.\n\n**Ce qu'il affiche** : `positif`, `negatif` ou `nul` (sans accent).\n\n**Exemple**\n```text\nEntrée :\n[[A]]\nSortie :\n[[S3_0]]\n```",
    "guidage": "**Plan** : trois cas, donc `if / else if / else`.\n\n**Piège** : l'ordre des tests. Zéro n'est ni positif ni négatif.",
    "duree": 5.4,
    "etapes": [
@@ -1361,7 +1361,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Écris le programme : lis `n`, puis `if (n > 0)` → `positif`, `else if (n < 0)` → `negatif`, `else` → `nul`.",
+     "consigne": "Écris le programme :\n1. lis `n` ;\n2. `if (n > 0)` → `positif` ;\n3. `else if (n < 0)` → `negatif` ;\n4. `else` → `nul`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -1390,66 +1390,66 @@
     }
    ],
    "vals": {
-    "A": "-44",
-    "B": "-22",
-    "S3_0": "negatif",
+    "A": "5",
+    "B": "-10",
+    "S3_0": "positif",
     "S3_1": "nul",
     "S3_2": "negatif"
    },
    "variantes": [
     {
-     "A": "-44",
-     "B": "-22",
-     "S3_0": "negatif",
+     "A": "5",
+     "B": "-10",
+     "S3_0": "positif",
      "S3_1": "nul",
      "S3_2": "negatif"
     },
     {
-     "A": "-36",
-     "B": "-33",
-     "S3_0": "negatif",
-     "S3_1": "nul",
-     "S3_2": "negatif"
-    },
-    {
-     "A": "-17",
+     "A": "-87",
      "B": "-49",
      "S3_0": "negatif",
      "S3_1": "nul",
      "S3_2": "negatif"
     },
     {
-     "A": "-39",
-     "B": "-48",
+     "A": "-99",
+     "B": "-25",
      "S3_0": "negatif",
      "S3_1": "nul",
      "S3_2": "negatif"
     },
     {
      "A": "87",
-     "B": "-49",
+     "B": "-1",
      "S3_0": "positif",
      "S3_1": "nul",
      "S3_2": "negatif"
     },
     {
-     "A": "28",
-     "B": "-11",
+     "A": "36",
+     "B": "-10",
      "S3_0": "positif",
      "S3_1": "nul",
      "S3_2": "negatif"
     },
     {
-     "A": "21",
-     "B": "-47",
-     "S3_0": "positif",
+     "A": "-41",
+     "B": "-32",
+     "S3_0": "negatif",
      "S3_1": "nul",
      "S3_2": "negatif"
     },
     {
-     "A": "45",
-     "B": "-2",
-     "S3_0": "positif",
+     "A": "-54",
+     "B": "-9",
+     "S3_0": "negatif",
+     "S3_1": "nul",
+     "S3_2": "negatif"
+    },
+    {
+     "A": "-90",
+     "B": "-48",
+     "S3_0": "negatif",
      "S3_1": "nul",
      "S3_2": "negatif"
     }
@@ -1461,7 +1461,7 @@
    "notion": "4.1",
    "origine": "td",
    "titre": "Maximum et minimum de trois entiers",
-   "enonce": "Écris un programme qui lit trois entiers `a`, `b`, `c` et affiche, sur une ligne, le **maximum** puis le **minimum**. (TD Premiers pas, exercice 8)\n\n**Exemple**\n```text\nEntrée :\n[[A]] [[B]] [[C]]\nSortie :\n[[MAX]] [[MIN]]\n```",
+   "enonce": "Le but : trouver le plus grand et le plus petit de trois nombres avec des `if`. (TD Premiers pas, exercice 8)\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. trois entiers `a`, `b`, `c`.\n\n**Ce qu'il affiche** : le maximum puis le minimum, sur une ligne.\n\n**Exemple**\n```text\nEntrée :\n[[A]] [[B]] [[C]]\nSortie :\n[[MAX]] [[MIN]]\n```",
    "guidage": "**Méthode** : on part de `max = a`, puis on compare à `b`, puis à `c`, en remplaçant `max` chaque fois qu'on trouve plus grand. Même chose pour `min`. On déroule la méthode à la main avec `a = [[A]]`, `b = [[B]]`, `c = [[C]]`.",
    "duree": 7.5,
    "etapes": [
@@ -1511,7 +1511,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Écris le programme : lis `a`, `b`, `c`, calcule `max` et `min` avec la méthode ci-dessus, puis affiche `max min`.",
+     "consigne": "Écris le programme :\n1. lis `a`, `b`, `c` ;\n2. `int max = a;` puis `if (b > max) max = b;` puis `if (c > max) max = c;` ;\n3. même chose pour `min` avec `<` ;\n4. affiche `max min`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -1541,131 +1541,131 @@
     }
    ],
    "vals": {
-    "A": "-2",
-    "B": "28",
-    "C": "-1",
-    "E1": "-29 -28 -20",
-    "M1": "28",
+    "A": "21",
+    "B": "23",
+    "C": "37",
+    "E1": "-12 -12 -12",
+    "M1": "23",
     "R1": "oui",
-    "R2": "non",
-    "MAX": "28",
-    "MIN": "-2",
-    "S3_0": "28 -2",
+    "R2": "oui",
+    "MAX": "37",
+    "MIN": "21",
+    "S3_0": "37 21",
     "S3_1": "5 5",
-    "S3_2": "-20 -29"
+    "S3_2": "-12 -12"
    },
    "variantes": [
     {
-     "A": "-2",
-     "B": "28",
-     "C": "-1",
-     "E1": "-29 -28 -20",
-     "M1": "28",
+     "A": "21",
+     "B": "23",
+     "C": "37",
+     "E1": "-12 -12 -12",
+     "M1": "23",
+     "R1": "oui",
+     "R2": "oui",
+     "MAX": "37",
+     "MIN": "21",
+     "S3_0": "37 21",
+     "S3_1": "5 5",
+     "S3_2": "-12 -12"
+    },
+    {
+     "A": "-18",
+     "B": "26",
+     "C": "-19",
+     "E1": "-30 -6 -22",
+     "M1": "26",
      "R1": "oui",
      "R2": "non",
-     "MAX": "28",
-     "MIN": "-2",
-     "S3_0": "28 -2",
+     "MAX": "26",
+     "MIN": "-19",
+     "S3_0": "26 -19",
      "S3_1": "5 5",
-     "S3_2": "-20 -29"
+     "S3_2": "-6 -30"
     },
     {
      "A": "24",
-     "B": "1",
-     "C": "-17",
-     "E1": "-19 -4 -17",
+     "B": "16",
+     "C": "-9",
+     "E1": "-19 -15 -26",
      "M1": "24",
      "R1": "non",
      "R2": "non",
      "MAX": "24",
-     "MIN": "-17",
-     "S3_0": "24 -17",
+     "MIN": "-9",
+     "S3_0": "24 -9",
      "S3_1": "5 5",
-     "S3_2": "-4 -19"
+     "S3_2": "-15 -26"
     },
     {
-     "A": "20",
-     "B": "-18",
-     "C": "-5",
-     "E1": "-2 -4 -17",
-     "M1": "20",
+     "A": "-2",
+     "B": "-14",
+     "C": "-10",
+     "E1": "-24 -15 -9",
+     "M1": "-2",
      "R1": "non",
      "R2": "non",
-     "MAX": "20",
-     "MIN": "-18",
-     "S3_0": "20 -18",
+     "MAX": "-2",
+     "MIN": "-14",
+     "S3_0": "-2 -14",
      "S3_1": "5 5",
-     "S3_2": "-2 -17"
+     "S3_2": "-9 -24"
     },
     {
-     "A": "-19",
-     "B": "28",
-     "C": "16",
-     "E1": "-30 -16 -17",
-     "M1": "28",
-     "R1": "oui",
+     "A": "26",
+     "B": "-20",
+     "C": "17",
+     "E1": "-6 -5 -3",
+     "M1": "26",
+     "R1": "non",
      "R2": "non",
-     "MAX": "28",
-     "MIN": "-19",
-     "S3_0": "28 -19",
+     "MAX": "26",
+     "MIN": "-20",
+     "S3_0": "26 -20",
      "S3_1": "5 5",
-     "S3_2": "-16 -30"
+     "S3_2": "-3 -6"
     },
     {
      "A": "13",
-     "B": "17",
-     "C": "-2",
-     "E1": "-27 -3 -26",
-     "M1": "17",
+     "B": "34",
+     "C": "39",
+     "E1": "-23 -3 -17",
+     "M1": "34",
      "R1": "oui",
-     "R2": "non",
-     "MAX": "17",
-     "MIN": "-2",
-     "S3_0": "17 -2",
+     "R2": "oui",
+     "MAX": "39",
+     "MIN": "13",
+     "S3_0": "39 13",
      "S3_1": "5 5",
-     "S3_2": "-3 -27"
+     "S3_2": "-3 -23"
     },
     {
-     "A": "24",
-     "B": "-7",
-     "C": "1",
-     "E1": "-10 -15 -26",
-     "M1": "24",
+     "A": "-2",
+     "B": "28",
+     "C": "-11",
+     "E1": "-22 -14 -18",
+     "M1": "28",
+     "R1": "oui",
+     "R2": "non",
+     "MAX": "28",
+     "MIN": "-11",
+     "S3_0": "28 -11",
+     "S3_1": "5 5",
+     "S3_2": "-14 -22"
+    },
+    {
+     "A": "18",
+     "B": "-13",
+     "C": "-17",
+     "E1": "-17 -5 -24",
+     "M1": "18",
      "R1": "non",
      "R2": "non",
-     "MAX": "24",
-     "MIN": "-7",
-     "S3_0": "24 -7",
-     "S3_1": "5 5",
-     "S3_2": "-10 -26"
-    },
-    {
-     "A": "-17",
-     "B": "31",
-     "C": "-12",
-     "E1": "-13 -5 -29",
-     "M1": "31",
-     "R1": "oui",
-     "R2": "non",
-     "MAX": "31",
+     "MAX": "18",
      "MIN": "-17",
-     "S3_0": "31 -17",
+     "S3_0": "18 -17",
      "S3_1": "5 5",
-     "S3_2": "-5 -29"
-    },
-    {
-     "A": "40",
-     "B": "35",
-     "C": "0",
-     "E1": "-16 -26 -11",
-     "M1": "40",
-     "R1": "non",
-     "R2": "non",
-     "MAX": "40",
-     "MIN": "0",
-     "S3_0": "40 0",
-     "S3_1": "5 5",
-     "S3_2": "-11 -26"
+     "S3_2": "-5 -24"
     }
    ]
   },
@@ -1675,7 +1675,7 @@
    "notion": "4.1",
    "origine": "td",
    "titre": "Moyenne et mention",
-   "enonce": "Écris un programme qui lit 4 notes entières et affiche la moyenne avec 2 décimales, une espace, puis une **mention** : `A` si la moyenne est au moins 16, `B` si elle est au moins 12, `C` sinon. (TD Premiers pas, exercice 9)\n\n**Exemple**\n```text\nEntrée :\n[[N1]] [[N2]] [[N3]] [[N4]]\nSortie :\n[[S3_0]]\n```",
+   "enonce": "Le but : calculer une moyenne puis choisir une mention avec `if / else if / else`. (TD Premiers pas, exercice 9)\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. quatre notes (des entiers).\n\n**Ce qu'il fait** :\n1. calcule la moyenne réelle ;\n2. choisit la mention : `A` si la moyenne est au moins 16, `B` si elle est au moins 12, `C` sinon.\n\n**Ce qu'il affiche** : la moyenne avec 2 décimales, une espace, puis la mention.\n\n**Exemple**\n```text\nEntrée :\n[[N1]] [[N2]] [[N3]] [[N4]]\nSortie :\n[[S3_0]]\n```",
    "guidage": "**Piège** : une division entière ferait perdre les décimales ; la moyenne est réelle.",
    "duree": 7.3,
    "etapes": [
@@ -1726,7 +1726,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Écris le programme : lis les 4 notes, calcule la moyenne réelle, puis choisis la mention avec `if / else if / else`. Affiche `moyenne mention`.",
+     "consigne": "Écris le programme :\n1. lis les 4 notes ;\n2. `double moy = (n1 + n2 + n3 + n4) / 4.0;` ;\n3. `if (moy >= 16)` → mention `A`, `else if (moy >= 12)` → `B`, `else` → `C` ;\n4. affiche `moy` avec `%.2f`, une espace, puis la mention avec `%c`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -1755,120 +1755,120 @@
     }
    ],
    "vals": {
-    "N1": "14",
-    "N2": "7",
+    "N1": "17",
+    "N2": "8",
     "N3": "17",
-    "N4": "13",
-    "E1": "10 4 10 7",
-    "SOM": "51",
-    "MOY": "12.75",
+    "N4": "12",
+    "E1": "10 11 11 10",
+    "SOM": "54",
+    "MOY": "13.50",
     "MEN": "B",
-    "S3_0": "12.75 B",
+    "S3_0": "13.50 B",
     "S3_1": "17.50 A",
-    "S3_2": "7.75 C"
+    "S3_2": "10.50 C"
    },
    "variantes": [
     {
-     "N1": "14",
-     "N2": "7",
+     "N1": "17",
+     "N2": "8",
      "N3": "17",
-     "N4": "13",
-     "E1": "10 4 10 7",
-     "SOM": "51",
-     "MOY": "12.75",
+     "N4": "12",
+     "E1": "10 11 11 10",
+     "SOM": "54",
+     "MOY": "13.50",
      "MEN": "B",
-     "S3_0": "12.75 B",
+     "S3_0": "13.50 B",
+     "S3_1": "17.50 A",
+     "S3_2": "10.50 C"
+    },
+    {
+     "N1": "14",
+     "N2": "13",
+     "N3": "7",
+     "N4": "16",
+     "E1": "2 2 2 7",
+     "SOM": "50",
+     "MOY": "12.50",
+     "MEN": "B",
+     "S3_0": "12.50 B",
+     "S3_1": "17.50 A",
+     "S3_2": "3.25 C"
+    },
+    {
+     "N1": "20",
+     "N2": "13",
+     "N3": "10",
+     "N4": "18",
+     "E1": "11 11 8 10",
+     "SOM": "61",
+     "MOY": "15.25",
+     "MEN": "B",
+     "S3_0": "15.25 B",
+     "S3_1": "17.50 A",
+     "S3_2": "10.00 C"
+    },
+    {
+     "N1": "16",
+     "N2": "14",
+     "N3": "16",
+     "N4": "13",
+     "E1": "11 5 5 10",
+     "SOM": "59",
+     "MOY": "14.75",
+     "MEN": "B",
+     "S3_0": "14.75 B",
      "S3_1": "17.50 A",
      "S3_2": "7.75 C"
     },
     {
-     "N1": "13",
-     "N2": "10",
-     "N3": "17",
-     "N4": "7",
-     "E1": "7 11 6 4",
-     "SOM": "47",
-     "MOY": "11.75",
-     "MEN": "C",
-     "S3_0": "11.75 C",
-     "S3_1": "17.50 A",
-     "S3_2": "7.00 C"
-    },
-    {
-     "N1": "10",
-     "N2": "7",
-     "N3": "10",
-     "N4": "13",
-     "E1": "9 9 6 5",
-     "SOM": "40",
-     "MOY": "10.00",
-     "MEN": "C",
-     "S3_0": "10.00 C",
-     "S3_1": "17.50 A",
-     "S3_2": "7.25 C"
-    },
-    {
-     "N1": "12",
-     "N2": "19",
-     "N3": "12",
-     "N4": "14",
-     "E1": "7 9 7 9",
-     "SOM": "57",
-     "MOY": "14.25",
-     "MEN": "B",
-     "S3_0": "14.25 B",
-     "S3_1": "17.50 A",
-     "S3_2": "8.00 C"
-    },
-    {
-     "N1": "14",
-     "N2": "14",
-     "N3": "8",
-     "N4": "15",
-     "E1": "11 4 9 10",
-     "SOM": "51",
-     "MOY": "12.75",
-     "MEN": "B",
-     "S3_0": "12.75 B",
-     "S3_1": "17.50 A",
-     "S3_2": "8.50 C"
-    },
-    {
-     "N1": "12",
-     "N2": "14",
-     "N3": "19",
-     "N4": "18",
-     "E1": "11 7 6 10",
-     "SOM": "63",
-     "MOY": "15.75",
-     "MEN": "B",
-     "S3_0": "15.75 B",
-     "S3_1": "17.50 A",
-     "S3_2": "8.50 C"
-    },
-    {
-     "N1": "11",
-     "N2": "6",
-     "N3": "6",
-     "N4": "14",
-     "E1": "8 4 3 7",
-     "SOM": "37",
-     "MOY": "9.25",
-     "MEN": "C",
-     "S3_0": "9.25 C",
-     "S3_1": "17.50 A",
-     "S3_2": "5.50 C"
-    },
-    {
-     "N1": "12",
-     "N2": "8",
-     "N3": "18",
+     "N1": "6",
+     "N2": "18",
+     "N3": "14",
      "N4": "6",
-     "E1": "5 8 5 6",
+     "E1": "9 4 10 8",
      "SOM": "44",
      "MOY": "11.00",
      "MEN": "C",
      "S3_0": "11.00 C",
+     "S3_1": "17.50 A",
+     "S3_2": "7.75 C"
+    },
+    {
+     "N1": "8",
+     "N2": "7",
+     "N3": "10",
+     "N4": "17",
+     "E1": "5 5 6 4",
+     "SOM": "42",
+     "MOY": "10.50",
+     "MEN": "C",
+     "S3_0": "10.50 C",
+     "S3_1": "17.50 A",
+     "S3_2": "5.00 C"
+    },
+    {
+     "N1": "12",
+     "N2": "10",
+     "N3": "15",
+     "N4": "16",
+     "E1": "3 11 7 10",
+     "SOM": "53",
+     "MOY": "13.25",
+     "MEN": "B",
+     "S3_0": "13.25 B",
+     "S3_1": "17.50 A",
+     "S3_2": "7.75 C"
+    },
+    {
+     "N1": "10",
+     "N2": "17",
+     "N3": "16",
+     "N4": "10",
+     "E1": "2 7 7 8",
+     "SOM": "53",
+     "MOY": "13.25",
+     "MEN": "B",
+     "S3_0": "13.25 B",
      "S3_1": "17.50 A",
      "S3_2": "6.00 C"
     }
@@ -1880,7 +1880,7 @@
    "notion": "4.1",
    "origine": "td",
    "titre": "Année bissextile",
-   "enonce": "Une année est **bissextile** si elle est multiple de 4 mais pas de 100, **ou** si elle est multiple de 400. Écris un programme qui lit une année et affiche `1` si elle est bissextile, `0` sinon. (TD Premiers pas, exercice 13)\n\n**Exemple**\n```text\nEntrée :\n[[Y]]\nSortie :\n[[RY]]\n```",
+   "enonce": "Le but : traduire une règle en une condition avec `&&` et `||`. (TD Premiers pas, exercice 13)\n\n**La règle** : une année est bissextile si elle est multiple de 4 mais pas de 100, **ou** si elle est multiple de 400.\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. une année.\n\n**Ce qu'il affiche** : `1` si elle est bissextile, `0` sinon.\n\n**Exemple**\n```text\nEntrée :\n[[Y]]\nSortie :\n[[RY]]\n```",
    "guidage": "**Plan** : une seule condition combinée avec `&&` et `||`.\n\n**Piège** : 1900 est multiple de 100 sans l'être de 400 ; 2000 l'est.",
    "duree": 7.5,
    "etapes": [
@@ -1931,7 +1931,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Écris le programme : lis l'année et affiche directement la valeur de la condition (elle vaut 1 ou 0), ou utilise un `if / else`.",
+     "consigne": "Écris le programme :\n1. lis l'année dans `int an` ;\n2. si `(an % 4 == 0 && an % 100 != 0) || an % 400 == 0`, affiche `1`, sinon `0`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -1965,28 +1965,56 @@
     }
    ],
    "vals": {
-    "Y1": "1700",
-    "Y2": "1996",
-    "Y": "1993",
+    "Y1": "2200",
+    "Y2": "2025",
+    "Y": "2025",
     "R1": "0",
-    "R2": "1",
+    "R2": "0",
     "RY": "0",
-    "EXP1": "1700 est multiple de 100 sans l'être de 400 : pas bissextile (**0**).",
-    "EXP2": "1996 est multiple de 4 et pas de 100 : bissextile (**1**).",
+    "EXP1": "2200 est multiple de 100 sans l'être de 400 : pas bissextile (**0**).",
+    "EXP2": "2025 n'est pas multiple de 4 : pas bissextile (**0**).",
     "S3_0": "0",
     "S3_1": "0",
     "S3_2": "1",
-    "S3_3": "1"
+    "S3_3": "0"
    },
    "variantes": [
     {
-     "Y1": "1700",
+     "Y1": "2200",
+     "Y2": "2025",
+     "Y": "2025",
+     "R1": "0",
+     "R2": "0",
+     "RY": "0",
+     "EXP1": "2200 est multiple de 100 sans l'être de 400 : pas bissextile (**0**).",
+     "EXP2": "2025 n'est pas multiple de 4 : pas bissextile (**0**).",
+     "S3_0": "0",
+     "S3_1": "0",
+     "S3_2": "1",
+     "S3_3": "0"
+    },
+    {
+     "Y1": "1900",
+     "Y2": "2028",
+     "Y": "2012",
+     "R1": "0",
+     "R2": "1",
+     "RY": "1",
+     "EXP1": "1900 est multiple de 100 sans l'être de 400 : pas bissextile (**0**).",
+     "EXP2": "2028 est multiple de 4 et pas de 100 : bissextile (**1**).",
+     "S3_0": "1",
+     "S3_1": "0",
+     "S3_2": "1",
+     "S3_3": "1"
+    },
+    {
+     "Y1": "1900",
      "Y2": "1996",
-     "Y": "1993",
+     "Y": "2014",
      "R1": "0",
      "R2": "1",
      "RY": "0",
-     "EXP1": "1700 est multiple de 100 sans l'être de 400 : pas bissextile (**0**).",
+     "EXP1": "1900 est multiple de 100 sans l'être de 400 : pas bissextile (**0**).",
      "EXP2": "1996 est multiple de 4 et pas de 100 : bissextile (**1**).",
      "S3_0": "0",
      "S3_1": "0",
@@ -1994,102 +2022,74 @@
      "S3_3": "1"
     },
     {
-     "Y1": "2200",
-     "Y2": "2023",
-     "Y": "2003",
-     "R1": "0",
-     "R2": "0",
-     "RY": "0",
-     "EXP1": "2200 est multiple de 100 sans l'être de 400 : pas bissextile (**0**).",
-     "EXP2": "2023 n'est pas multiple de 4 : pas bissextile (**0**).",
-     "S3_0": "0",
-     "S3_1": "0",
-     "S3_2": "1",
-     "S3_3": "0"
-    },
-    {
-     "Y1": "1700",
-     "Y2": "2400",
-     "Y": "1999",
-     "R1": "0",
-     "R2": "1",
-     "RY": "0",
-     "EXP1": "1700 est multiple de 100 sans l'être de 400 : pas bissextile (**0**).",
-     "EXP2": "2400 est multiple de 400 : bissextile (**1**).",
-     "S3_0": "0",
-     "S3_1": "0",
-     "S3_2": "1",
-     "S3_3": "1"
-    },
-    {
-     "Y1": "1700",
-     "Y2": "2028",
-     "Y": "1999",
-     "R1": "0",
-     "R2": "1",
-     "RY": "0",
-     "EXP1": "1700 est multiple de 100 sans l'être de 400 : pas bissextile (**0**).",
-     "EXP2": "2028 est multiple de 4 et pas de 100 : bissextile (**1**).",
-     "S3_0": "0",
-     "S3_1": "0",
-     "S3_2": "1",
-     "S3_3": "1"
-    },
-    {
-     "Y1": "2200",
-     "Y2": "1600",
-     "Y": "2009",
-     "R1": "0",
-     "R2": "1",
-     "RY": "0",
-     "EXP1": "2200 est multiple de 100 sans l'être de 400 : pas bissextile (**0**).",
-     "EXP2": "1600 est multiple de 400 : bissextile (**1**).",
-     "S3_0": "0",
-     "S3_1": "0",
-     "S3_2": "1",
-     "S3_3": "1"
-    },
-    {
      "Y1": "1900",
-     "Y2": "1600",
-     "Y": "2003",
+     "Y2": "1996",
+     "Y": "2016",
      "R1": "0",
      "R2": "1",
-     "RY": "0",
+     "RY": "1",
      "EXP1": "1900 est multiple de 100 sans l'être de 400 : pas bissextile (**0**).",
-     "EXP2": "1600 est multiple de 400 : bissextile (**1**).",
-     "S3_0": "0",
-     "S3_1": "0",
-     "S3_2": "1",
-     "S3_3": "1"
-    },
-    {
-     "Y1": "1900",
-     "Y2": "2028",
-     "Y": "2023",
-     "R1": "0",
-     "R2": "1",
-     "RY": "0",
-     "EXP1": "1900 est multiple de 100 sans l'être de 400 : pas bissextile (**0**).",
-     "EXP2": "2028 est multiple de 4 et pas de 100 : bissextile (**1**).",
-     "S3_0": "0",
+     "EXP2": "1996 est multiple de 4 et pas de 100 : bissextile (**1**).",
+     "S3_0": "1",
      "S3_1": "0",
      "S3_2": "1",
      "S3_3": "1"
     },
     {
      "Y1": "1800",
-     "Y2": "2019",
-     "Y": "2008",
+     "Y2": "2028",
+     "Y": "2018",
      "R1": "0",
-     "R2": "0",
-     "RY": "1",
+     "R2": "1",
+     "RY": "0",
      "EXP1": "1800 est multiple de 100 sans l'être de 400 : pas bissextile (**0**).",
-     "EXP2": "2019 n'est pas multiple de 4 : pas bissextile (**0**).",
-     "S3_0": "1",
+     "EXP2": "2028 est multiple de 4 et pas de 100 : bissextile (**1**).",
+     "S3_0": "0",
      "S3_1": "0",
      "S3_2": "1",
-     "S3_3": "0"
+     "S3_3": "1"
+    },
+    {
+     "Y1": "2200",
+     "Y2": "2028",
+     "Y": "2013",
+     "R1": "0",
+     "R2": "1",
+     "RY": "0",
+     "EXP1": "2200 est multiple de 100 sans l'être de 400 : pas bissextile (**0**).",
+     "EXP2": "2028 est multiple de 4 et pas de 100 : bissextile (**1**).",
+     "S3_0": "0",
+     "S3_1": "0",
+     "S3_2": "1",
+     "S3_3": "1"
+    },
+    {
+     "Y1": "2200",
+     "Y2": "1996",
+     "Y": "2015",
+     "R1": "0",
+     "R2": "1",
+     "RY": "0",
+     "EXP1": "2200 est multiple de 100 sans l'être de 400 : pas bissextile (**0**).",
+     "EXP2": "1996 est multiple de 4 et pas de 100 : bissextile (**1**).",
+     "S3_0": "0",
+     "S3_1": "0",
+     "S3_2": "1",
+     "S3_3": "1"
+    },
+    {
+     "Y1": "1900",
+     "Y2": "2024",
+     "Y": "1998",
+     "R1": "0",
+     "R2": "1",
+     "RY": "0",
+     "EXP1": "1900 est multiple de 100 sans l'être de 400 : pas bissextile (**0**).",
+     "EXP2": "2024 est multiple de 4 et pas de 100 : bissextile (**1**).",
+     "S3_0": "0",
+     "S3_1": "0",
+     "S3_2": "1",
+     "S3_3": "1"
     }
    ]
   },
@@ -2099,7 +2099,7 @@
    "notion": "4.2",
    "origine": "td",
    "titre": "Calculatrice avec switch",
-   "enonce": "Écris une petite calculatrice : le programme lit `a op b` (par exemple `12 + 4`), où `op` est `+`, `-`, `*` ou `/`, et affiche le résultat entier. Pour une division par 0, il affiche `erreur`. (TD Premiers pas, exercice 12)\n\n**Exemple**\n```text\nEntrée :\n[[A]] [[OP]] [[B]]\nSortie :\n[[S4_0]]\n```",
+   "enonce": "Le but : choisir l'opération à faire avec un `switch` sur un caractère. (TD Premiers pas, exercice 12)\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. un entier `a` ;\n2. un opérateur `op` : `+`, `-`, `*` ou `/` ;\n3. un entier `b`.\n\nLes trois sont tapés sur une ligne, par exemple `12 + 4`.\n\n**Ce qu'il affiche** : le résultat entier de `a op b`, ou `erreur` pour une division par 0.\n\n**Exemple**\n```text\nEntrée :\n[[A]] [[OP]] [[B]]\nSortie :\n[[S4_0]]\n```",
    "guidage": "**Plan** : lire `a`, l'opérateur (`char`) puis `b` ; un `switch` sur l'opérateur.\n\n**Piège** : la division par 0 doit être refusée.",
    "duree": 9.4,
    "etapes": [
@@ -2166,7 +2166,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Écris le programme : lis `a`, l'opérateur (avec `\" %c\"`), puis `b` ; un `switch (op)` calcule et affiche le résultat. Dans le cas `'/'`, affiche `erreur` si `b` vaut 0.",
+     "consigne": "Écris le programme :\n1. déclare `int a, b;` et `char op;` ;\n2. lis `a`, puis l'opérateur avec `scanf(\" %c\", &op);`, puis `b` ;\n3. `switch (op)` : un `case` par opérateur (`case '+':` …), chacun avec son `printf` et son `break;` ;\n4. dans `case '/':`, si `b == 0` affiche `erreur`, sinon `a / b`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -2203,131 +2203,131 @@
     }
    ],
    "vals": {
-    "A": "28",
-    "B": "7",
-    "OP": "*",
-    "A2": "27",
-    "B2": "6",
-    "E1": "2 * 3",
-    "Q": "4",
-    "S4_0": "196",
-    "S4_1": "4",
+    "A": "25",
+    "B": "2",
+    "OP": "+",
+    "A2": "10",
+    "B2": "4",
+    "E1": "13 * 13",
+    "Q": "2",
+    "S4_0": "27",
+    "S4_1": "2",
     "S4_2": "-2",
     "S4_3": "erreur",
-    "S4_4": "6"
+    "S4_4": "169"
    },
    "variantes": [
     {
-     "A": "28",
-     "B": "7",
+     "A": "25",
+     "B": "2",
+     "OP": "+",
+     "A2": "10",
+     "B2": "4",
+     "E1": "13 * 13",
+     "Q": "2",
+     "S4_0": "27",
+     "S4_1": "2",
+     "S4_2": "-2",
+     "S4_3": "erreur",
+     "S4_4": "169"
+    },
+    {
+     "A": "38",
+     "B": "3",
+     "OP": "-",
+     "A2": "41",
+     "B2": "5",
+     "E1": "2 * 15",
+     "Q": "8",
+     "S4_0": "35",
+     "S4_1": "8",
+     "S4_2": "-2",
+     "S4_3": "erreur",
+     "S4_4": "30"
+    },
+    {
+     "A": "50",
+     "B": "20",
      "OP": "*",
-     "A2": "27",
-     "B2": "6",
-     "E1": "2 * 3",
+     "A2": "34",
+     "B2": "4",
+     "E1": "11 * 2",
+     "Q": "8",
+     "S4_0": "1000",
+     "S4_1": "8",
+     "S4_2": "-2",
+     "S4_3": "erreur",
+     "S4_4": "22"
+    },
+    {
+     "A": "12",
+     "B": "15",
+     "OP": "+",
+     "A2": "44",
+     "B2": "9",
+     "E1": "4 * 7",
      "Q": "4",
-     "S4_0": "196",
+     "S4_0": "27",
      "S4_1": "4",
      "S4_2": "-2",
      "S4_3": "erreur",
-     "S4_4": "6"
+     "S4_4": "28"
     },
     {
-     "A": "2",
-     "B": "19",
-     "OP": "+",
-     "A2": "21",
-     "B2": "3",
-     "E1": "4 * 9",
+     "A": "46",
+     "B": "4",
+     "OP": "-",
+     "A2": "56",
+     "B2": "8",
+     "E1": "8 * 13",
      "Q": "7",
-     "S4_0": "21",
+     "S4_0": "42",
      "S4_1": "7",
      "S4_2": "-2",
      "S4_3": "erreur",
-     "S4_4": "36"
+     "S4_4": "104"
     },
     {
-     "A": "21",
+     "A": "44",
      "B": "5",
-     "OP": "+",
-     "A2": "18",
-     "B2": "2",
-     "E1": "14 * 4",
-     "Q": "9",
-     "S4_0": "26",
-     "S4_1": "9",
-     "S4_2": "-2",
-     "S4_3": "erreur",
-     "S4_4": "56"
-    },
-    {
-     "A": "1",
-     "B": "14",
-     "OP": "+",
-     "A2": "26",
-     "B2": "6",
-     "E1": "6 * 11",
-     "Q": "4",
-     "S4_0": "15",
-     "S4_1": "4",
-     "S4_2": "-2",
-     "S4_3": "erreur",
-     "S4_4": "66"
-    },
-    {
-     "A": "47",
-     "B": "13",
-     "OP": "+",
-     "A2": "24",
+     "OP": "-",
+     "A2": "7",
      "B2": "3",
-     "E1": "11 * 14",
-     "Q": "8",
-     "S4_0": "60",
-     "S4_1": "8",
+     "E1": "4 * 13",
+     "Q": "2",
+     "S4_0": "39",
+     "S4_1": "2",
      "S4_2": "-2",
      "S4_3": "erreur",
-     "S4_4": "154"
+     "S4_4": "52"
     },
     {
-     "A": "32",
+     "A": "28",
      "B": "12",
-     "OP": "+",
-     "A2": "49",
-     "B2": "9",
-     "E1": "5 * 2",
+     "OP": "*",
+     "A2": "35",
+     "B2": "6",
+     "E1": "14 * 15",
      "Q": "5",
-     "S4_0": "44",
+     "S4_0": "336",
      "S4_1": "5",
      "S4_2": "-2",
      "S4_3": "erreur",
-     "S4_4": "10"
+     "S4_4": "210"
     },
     {
-     "A": "48",
-     "B": "15",
-     "OP": "+",
-     "A2": "18",
-     "B2": "3",
-     "E1": "3 * 2",
-     "Q": "6",
-     "S4_0": "63",
-     "S4_1": "6",
+     "A": "50",
+     "B": "18",
+     "OP": "-",
+     "A2": "48",
+     "B2": "9",
+     "E1": "10 * 4",
+     "Q": "5",
+     "S4_0": "32",
+     "S4_1": "5",
      "S4_2": "-2",
      "S4_3": "erreur",
-     "S4_4": "6"
-    },
-    {
-     "A": "5",
-     "B": "6",
-     "OP": "*",
-     "A2": "59",
-     "B2": "7",
-     "E1": "12 * 2",
-     "Q": "8",
-     "S4_0": "30",
-     "S4_1": "8",
-     "S4_2": "-2",
-     "S4_3": "erreur",
-     "S4_4": "24"
+     "S4_4": "40"
     }
    ]
   },
@@ -2337,7 +2337,7 @@
    "notion": "4.3",
    "origine": "td",
    "titre": "Somme de 1 à N",
-   "enonce": "Écris un programme qui lit `N` et affiche la somme 1 + 2 + … + N. (TD Premiers pas, exercice 2)\n\n**Exemple**\n```text\nEntrée :\n[[N]]\nSortie :\n[[R]]\n```",
+   "enonce": "Le but : additionner avec une boucle et un accumulateur. (TD Premiers pas, exercice 2)\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. un entier `N`.\n\n**Ce qu'il affiche** : la somme 1 + 2 + … + N.\n\n**Exemple**\n```text\nEntrée :\n[[N]]\nSortie :\n[[R]]\n```",
    "guidage": "**Plan** : un accumulateur `somme` qui part de 0, une boucle de 1 à N qui ajoute `i` à chaque tour, et on vérifie avec la formule $\\frac{N(N+1)}{2}$.",
    "duree": 6.9,
    "etapes": [
@@ -2401,7 +2401,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Écris le programme : lis `N`, accumule `i` pour `i` allant de 1 à `N`, puis affiche la somme.",
+     "consigne": "Écris le programme :\n1. lis `N` ;\n2. `int somme = 0;` ;\n3. `for (int i = 1; i <= N; i++)` : ajoute `i` à `somme` ;\n4. après la boucle, affiche `somme`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -2435,94 +2435,94 @@
     }
    ],
    "vals": {
-    "N": "9",
-    "N2": "61",
-    "N1": "10",
-    "R": "45",
-    "S4_0": "45",
+    "N": "8",
+    "N2": "59",
+    "N1": "9",
+    "R": "36",
+    "S4_0": "36",
     "S4_1": "1",
-    "S4_2": "1891",
+    "S4_2": "1770",
     "S4_3": "0"
    },
    "variantes": [
     {
-     "N": "9",
-     "N2": "61",
-     "N1": "10",
-     "R": "45",
-     "S4_0": "45",
-     "S4_1": "1",
-     "S4_2": "1891",
-     "S4_3": "0"
-    },
-    {
-     "N": "15",
-     "N2": "51",
-     "N1": "16",
-     "R": "120",
-     "S4_0": "120",
-     "S4_1": "1",
-     "S4_2": "1326",
-     "S4_3": "0"
-    },
-    {
-     "N": "4",
-     "N2": "26",
-     "N1": "5",
-     "R": "10",
-     "S4_0": "10",
-     "S4_1": "1",
-     "S4_2": "351",
-     "S4_3": "0"
-    },
-    {
      "N": "8",
-     "N2": "57",
+     "N2": "59",
      "N1": "9",
      "R": "36",
      "S4_0": "36",
      "S4_1": "1",
-     "S4_2": "1653",
+     "S4_2": "1770",
      "S4_3": "0"
     },
     {
-     "N": "10",
-     "N2": "78",
-     "N1": "11",
-     "R": "55",
-     "S4_0": "55",
+     "N": "9",
+     "N2": "45",
+     "N1": "10",
+     "R": "45",
+     "S4_0": "45",
      "S4_1": "1",
-     "S4_2": "3081",
+     "S4_2": "1035",
      "S4_3": "0"
     },
     {
-     "N": "14",
-     "N2": "49",
-     "N1": "15",
-     "R": "105",
-     "S4_0": "105",
+     "N": "15",
+     "N2": "41",
+     "N1": "16",
+     "R": "120",
+     "S4_0": "120",
      "S4_1": "1",
-     "S4_2": "1225",
-     "S4_3": "0"
-    },
-    {
-     "N": "6",
-     "N2": "23",
-     "N1": "7",
-     "R": "21",
-     "S4_0": "21",
-     "S4_1": "1",
-     "S4_2": "276",
+     "S4_2": "861",
      "S4_3": "0"
     },
     {
      "N": "13",
-     "N2": "100",
+     "N2": "29",
      "N1": "14",
      "R": "91",
      "S4_0": "91",
      "S4_1": "1",
-     "S4_2": "5050",
+     "S4_2": "435",
+     "S4_3": "0"
+    },
+    {
+     "N": "12",
+     "N2": "88",
+     "N1": "13",
+     "R": "78",
+     "S4_0": "78",
+     "S4_1": "1",
+     "S4_2": "3916",
+     "S4_3": "0"
+    },
+    {
+     "N": "13",
+     "N2": "28",
+     "N1": "14",
+     "R": "91",
+     "S4_0": "91",
+     "S4_1": "1",
+     "S4_2": "406",
+     "S4_3": "0"
+    },
+    {
+     "N": "5",
+     "N2": "73",
+     "N1": "6",
+     "R": "15",
+     "S4_0": "15",
+     "S4_1": "1",
+     "S4_2": "2701",
+     "S4_3": "0"
+    },
+    {
+     "N": "7",
+     "N2": "73",
+     "N1": "8",
+     "R": "28",
+     "S4_0": "28",
+     "S4_1": "1",
+     "S4_2": "2701",
      "S4_3": "0"
     }
    ]
@@ -2533,7 +2533,7 @@
    "notion": "4.3",
    "origine": "td",
    "titre": "Factorielle",
-   "enonce": "La factorielle de N, notée N!, vaut 1 × 2 × … × N (et 0! = 1). Écris un programme qui lit N et affiche N!. (TD Premiers pas, exercice 4)\n\n**Exemple**\n```text\nEntrée :\n[[N]]\nSortie :\n[[R]]\n```",
+   "enonce": "Le but : multiplier avec une boucle : calculer la factorielle N! = 1 × 2 × … × N (avec 0! = 1). (TD Premiers pas, exercice 4)\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. un entier `N`.\n\n**Ce qu'il affiche** : N!.\n\n**Exemple**\n```text\nEntrée :\n[[N]]\nSortie :\n[[R]]\n```",
    "guidage": "**Plan** : accumulateur multiplicatif initialisé à 1 (et non 0).\n\n**Piège** : un accumulateur à 0 donnerait toujours 0.",
    "duree": 6.6,
    "etapes": [
@@ -2582,7 +2582,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Écris le programme : lis `N`, multiplie `fact` par `i` pour `i` de 1 à `N`, puis affiche `fact`. Avec N = 0, la boucle ne tourne pas et `fact` reste à 1 : c'est bien 0! = 1.",
+     "consigne": "Écris le programme :\n1. lis `N` ;\n2. `int fact = 1;` (un produit part de 1) ;\n3. `for (int i = 1; i <= N; i++)` : `fact *= i;` ;\n4. affiche `fact`. Avec N = 0, la boucle ne tourne pas et on affiche bien 1.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -2612,48 +2612,75 @@
     }
    ],
    "vals": {
-    "N": "6",
-    "N2": "8",
-    "R": "720",
-    "PROD": "1 × 2 × 3 × 4 × 5 × 6",
-    "S3_0": "720",
+    "N": "4",
+    "N2": "9",
+    "R": "24",
+    "PROD": "1 × 2 × 3 × 4",
+    "S3_0": "24",
     "S3_1": "1",
-    "S3_2": "40320"
+    "S3_2": "362880"
    },
    "variantes": [
     {
-     "N": "6",
-     "N2": "8",
-     "R": "720",
-     "PROD": "1 × 2 × 3 × 4 × 5 × 6",
-     "S3_0": "720",
-     "S3_1": "1",
-     "S3_2": "40320"
-    },
-    {
      "N": "4",
-     "N2": "8",
+     "N2": "9",
      "R": "24",
      "PROD": "1 × 2 × 3 × 4",
      "S3_0": "24",
      "S3_1": "1",
+     "S3_2": "362880"
+    },
+    {
+     "N": "3",
+     "N2": "8",
+     "R": "6",
+     "PROD": "1 × 2 × 3",
+     "S3_0": "6",
+     "S3_1": "1",
      "S3_2": "40320"
     },
     {
+     "N": "6",
+     "N2": "12",
+     "R": "720",
+     "PROD": "1 × 2 × 3 × 4 × 5 × 6",
+     "S3_0": "720",
+     "S3_1": "1",
+     "S3_2": "479001600"
+    },
+    {
      "N": "5",
-     "N2": "9",
+     "N2": "12",
      "R": "120",
      "PROD": "1 × 2 × 3 × 4 × 5",
      "S3_0": "120",
      "S3_1": "1",
-     "S3_2": "362880"
+     "S3_2": "479001600"
     },
     {
-     "N": "5",
+     "N": "4",
+     "N2": "11",
+     "R": "24",
+     "PROD": "1 × 2 × 3 × 4",
+     "S3_0": "24",
+     "S3_1": "1",
+     "S3_2": "39916800"
+    },
+    {
+     "N": "6",
+     "N2": "11",
+     "R": "720",
+     "PROD": "1 × 2 × 3 × 4 × 5 × 6",
+     "S3_0": "720",
+     "S3_1": "1",
+     "S3_2": "39916800"
+    },
+    {
+     "N": "3",
      "N2": "10",
-     "R": "120",
-     "PROD": "1 × 2 × 3 × 4 × 5",
-     "S3_0": "120",
+     "R": "6",
+     "PROD": "1 × 2 × 3",
+     "S3_0": "6",
      "S3_1": "1",
      "S3_2": "3628800"
     },
@@ -2665,33 +2692,6 @@
      "S3_0": "5040",
      "S3_1": "1",
      "S3_2": "3628800"
-    },
-    {
-     "N": "3",
-     "N2": "12",
-     "R": "6",
-     "PROD": "1 × 2 × 3",
-     "S3_0": "6",
-     "S3_1": "1",
-     "S3_2": "479001600"
-    },
-    {
-     "N": "6",
-     "N2": "12",
-     "R": "720",
-     "PROD": "1 × 2 × 3 × 4 × 5 × 6",
-     "S3_0": "720",
-     "S3_1": "1",
-     "S3_2": "479001600"
-    },
-    {
-     "N": "3",
-     "N2": "9",
-     "R": "6",
-     "PROD": "1 × 2 × 3",
-     "S3_0": "6",
-     "S3_1": "1",
-     "S3_2": "362880"
     }
    ]
   },
@@ -2701,7 +2701,7 @@
    "notion": "4.3",
    "origine": "td",
    "titre": "Puissance par multiplications successives",
-   "enonce": "Écris un programme qui lit `X` et `n`, puis affiche $X^n$ calculé par **multiplications successives** (sans fonction toute prête). (Tableaux_chainex, exercice 3)\n\n**Exemple**\n```text\nEntrée :\n[[X]] [[N]]\nSortie :\n[[R]]\n```",
+   "enonce": "Le but : calculer une puissance par multiplications successives, sans fonction toute prête. (Tableaux_chainex, exercice 3)\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. la base `X` ;\n2. l'exposant `n` (positif ou nul).\n\n**Ce qu'il affiche** : $X^n$.\n\n**Exemple**\n```text\nEntrée :\n[[X]] [[N]]\nSortie :\n[[R]]\n```",
    "guidage": "**Plan** : `res` initialisé à 1, puis n multiplications par X.\n\n**Piège** : n tours exactement.",
    "duree": 6.5,
    "etapes": [
@@ -2751,7 +2751,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Écris le programme : lis `X` et `n`, pars de `res = 1`, et multiplie `res` par `X` à chaque tour de la boucle. Avec n = 0, la boucle ne tourne pas : `res` reste 1.",
+     "consigne": "Écris le programme :\n1. lis `X` et `n` ;\n2. `int res = 1;` ;\n3. `for (int i = 1; i <= n; i++)` : `res *= X;` ;\n4. affiche `res`. Avec n = 0, on affiche bien 1.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -2782,85 +2782,85 @@
    ],
    "vals": {
     "X": "2",
-    "N": "3",
-    "E1": "9 4",
-    "R": "8",
-    "S3_0": "8",
+    "N": "5",
+    "E1": "7 1",
+    "R": "32",
+    "S3_0": "32",
     "S3_1": "1",
-    "S3_2": "6561"
+    "S3_2": "7"
    },
    "variantes": [
     {
      "X": "2",
-     "N": "3",
-     "E1": "9 4",
-     "R": "8",
-     "S3_0": "8",
-     "S3_1": "1",
-     "S3_2": "6561"
-    },
-    {
-     "X": "4",
      "N": "5",
-     "E1": "3 3",
-     "R": "1024",
-     "S3_0": "1024",
+     "E1": "7 1",
+     "R": "32",
+     "S3_0": "32",
      "S3_1": "1",
-     "S3_2": "27"
-    },
-    {
-     "X": "5",
-     "N": "5",
-     "E1": "9 4",
-     "R": "3125",
-     "S3_0": "3125",
-     "S3_1": "1",
-     "S3_2": "6561"
-    },
-    {
-     "X": "4",
-     "N": "8",
-     "E1": "9 3",
-     "R": "65536",
-     "S3_0": "65536",
-     "S3_1": "1",
-     "S3_2": "729"
-    },
-    {
-     "X": "4",
-     "N": "7",
-     "E1": "8 1",
-     "R": "16384",
-     "S3_0": "16384",
-     "S3_1": "1",
-     "S3_2": "8"
-    },
-    {
-     "X": "3",
-     "N": "5",
-     "E1": "2 4",
-     "R": "243",
-     "S3_0": "243",
-     "S3_1": "1",
-     "S3_2": "16"
+     "S3_2": "7"
     },
     {
      "X": "2",
-     "N": "7",
-     "E1": "3 2",
-     "R": "128",
-     "S3_0": "128",
-     "S3_1": "1",
-     "S3_2": "9"
-    },
-    {
-     "X": "4",
-     "N": "4",
-     "E1": "3 2",
+     "N": "8",
+     "E1": "9 4",
      "R": "256",
      "S3_0": "256",
      "S3_1": "1",
-     "S3_2": "9"
+     "S3_2": "6561"
+    },
+    {
+     "X": "3",
+     "N": "3",
+     "E1": "9 4",
+     "R": "27",
+     "S3_0": "27",
+     "S3_1": "1",
+     "S3_2": "6561"
+    },
+    {
+     "X": "2",
+     "N": "4",
+     "E1": "6 2",
+     "R": "16",
+     "S3_0": "16",
+     "S3_1": "1",
+     "S3_2": "36"
+    },
+    {
+     "X": "2",
+     "N": "3",
+     "E1": "4 1",
+     "R": "8",
+     "S3_0": "8",
+     "S3_1": "1",
+     "S3_2": "4"
+    },
+    {
+     "X": "5",
+     "N": "7",
+     "E1": "7 2",
+     "R": "78125",
+     "S3_0": "78125",
+     "S3_1": "1",
+     "S3_2": "49"
+    },
+    {
+     "X": "2",
+     "N": "4",
+     "E1": "9 4",
+     "R": "16",
+     "S3_0": "16",
+     "S3_1": "1",
+     "S3_2": "6561"
+    },
+    {
+     "X": "3",
+     "N": "4",
+     "E1": "7 1",
+     "R": "81",
+     "S3_0": "81",
+     "S3_1": "1",
+     "S3_2": "7"
     }
    ]
   },
@@ -2870,7 +2870,7 @@
    "notion": "4.3",
    "origine": "td",
    "titre": "Triangle numérique",
-   "enonce": "Écris un programme qui lit `N` et affiche un triangle de nombres : la ligne `l` contient les nombres de 1 à `l`, séparés par des espaces. (TD Premiers pas, exercice 18)\n\n**Exemple**\n```text\nEntrée :\n[[N]]\nSortie :\n[[TRI]]\n```",
+   "enonce": "Le but : imbriquer deux boucles pour dessiner un triangle de nombres. (TD Premiers pas, exercice 18)\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. un entier `N`.\n\n**Ce qu'il affiche** : `N` lignes : la ligne `l` contient les nombres de 1 à `l`, séparés par des espaces.\n\n**Exemple**\n```text\nEntrée :\n[[N]]\nSortie :\n[[TRI]]\n```",
    "guidage": "**Plan** : deux boucles imbriquées. La boucle **extérieure** choisit la ligne `l` (de 1 à N) ; la boucle **intérieure** affiche les nombres de 1 à `l` ; après la boucle intérieure, on passe à la ligne.",
    "duree": 7.9,
    "etapes": [
@@ -2920,7 +2920,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Écris le programme avec les deux boucles imbriquées, et un `printf(\"\\n\")` après la boucle intérieure pour finir chaque ligne.",
+     "consigne": "Écris le programme :\n1. lis `N` ;\n2. boucle extérieure `for (int l = 1; l <= N; l++)` (une ligne par tour) ;\n3. à l'intérieur, boucle `for (int c = 1; c <= l; c++)` qui affiche `c` suivi d'une espace ;\n4. après la boucle intérieure (toujours dans l'extérieure), `printf(\"\\n\");`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -2947,76 +2947,76 @@
    ],
    "vals": {
     "N": "6",
-    "N2": "7",
+    "N2": "6",
     "TOT": "21",
     "TRI": "1\n1 2\n1 2 3\n1 2 3 4\n1 2 3 4 5\n1 2 3 4 5 6",
     "S3_0": "1 \n1 2 \n1 2 3 \n1 2 3 4 \n1 2 3 4 5 \n1 2 3 4 5 6 ",
-    "S3_1": "1 \n1 2 \n1 2 3 \n1 2 3 4 \n1 2 3 4 5 \n1 2 3 4 5 6 \n1 2 3 4 5 6 7 "
+    "S3_1": "1 \n1 2 \n1 2 3 \n1 2 3 4 \n1 2 3 4 5 \n1 2 3 4 5 6 "
    },
    "variantes": [
     {
      "N": "6",
-     "N2": "7",
+     "N2": "6",
      "TOT": "21",
      "TRI": "1\n1 2\n1 2 3\n1 2 3 4\n1 2 3 4 5\n1 2 3 4 5 6",
      "S3_0": "1 \n1 2 \n1 2 3 \n1 2 3 4 \n1 2 3 4 5 \n1 2 3 4 5 6 ",
-     "S3_1": "1 \n1 2 \n1 2 3 \n1 2 3 4 \n1 2 3 4 5 \n1 2 3 4 5 6 \n1 2 3 4 5 6 7 "
-    },
-    {
-     "N": "4",
-     "N2": "6",
-     "TOT": "10",
-     "TRI": "1\n1 2\n1 2 3\n1 2 3 4",
-     "S3_0": "1 \n1 2 \n1 2 3 \n1 2 3 4 ",
      "S3_1": "1 \n1 2 \n1 2 3 \n1 2 3 4 \n1 2 3 4 5 \n1 2 3 4 5 6 "
     },
     {
-     "N": "6",
-     "N2": "5",
-     "TOT": "21",
-     "TRI": "1\n1 2\n1 2 3\n1 2 3 4\n1 2 3 4 5\n1 2 3 4 5 6",
-     "S3_0": "1 \n1 2 \n1 2 3 \n1 2 3 4 \n1 2 3 4 5 \n1 2 3 4 5 6 ",
-     "S3_1": "1 \n1 2 \n1 2 3 \n1 2 3 4 \n1 2 3 4 5 "
-    },
-    {
      "N": "3",
-     "N2": "4",
+     "N2": "2",
      "TOT": "6",
      "TRI": "1\n1 2\n1 2 3",
      "S3_0": "1 \n1 2 \n1 2 3 ",
+     "S3_1": "1 \n1 2 "
+    },
+    {
+     "N": "6",
+     "N2": "3",
+     "TOT": "21",
+     "TRI": "1\n1 2\n1 2 3\n1 2 3 4\n1 2 3 4 5\n1 2 3 4 5 6",
+     "S3_0": "1 \n1 2 \n1 2 3 \n1 2 3 4 \n1 2 3 4 5 \n1 2 3 4 5 6 ",
+     "S3_1": "1 \n1 2 \n1 2 3 "
+    },
+    {
+     "N": "5",
+     "N2": "5",
+     "TOT": "15",
+     "TRI": "1\n1 2\n1 2 3\n1 2 3 4\n1 2 3 4 5",
+     "S3_0": "1 \n1 2 \n1 2 3 \n1 2 3 4 \n1 2 3 4 5 ",
+     "S3_1": "1 \n1 2 \n1 2 3 \n1 2 3 4 \n1 2 3 4 5 "
+    },
+    {
+     "N": "6",
+     "N2": "2",
+     "TOT": "21",
+     "TRI": "1\n1 2\n1 2 3\n1 2 3 4\n1 2 3 4 5\n1 2 3 4 5 6",
+     "S3_0": "1 \n1 2 \n1 2 3 \n1 2 3 4 \n1 2 3 4 5 \n1 2 3 4 5 6 ",
+     "S3_1": "1 \n1 2 "
+    },
+    {
+     "N": "5",
+     "N2": "3",
+     "TOT": "15",
+     "TRI": "1\n1 2\n1 2 3\n1 2 3 4\n1 2 3 4 5",
+     "S3_0": "1 \n1 2 \n1 2 3 \n1 2 3 4 \n1 2 3 4 5 ",
+     "S3_1": "1 \n1 2 \n1 2 3 "
+    },
+    {
+     "N": "6",
+     "N2": "4",
+     "TOT": "21",
+     "TRI": "1\n1 2\n1 2 3\n1 2 3 4\n1 2 3 4 5\n1 2 3 4 5 6",
+     "S3_0": "1 \n1 2 \n1 2 3 \n1 2 3 4 \n1 2 3 4 5 \n1 2 3 4 5 6 ",
      "S3_1": "1 \n1 2 \n1 2 3 \n1 2 3 4 "
     },
     {
      "N": "4",
-     "N2": "3",
+     "N2": "4",
      "TOT": "10",
      "TRI": "1\n1 2\n1 2 3\n1 2 3 4",
      "S3_0": "1 \n1 2 \n1 2 3 \n1 2 3 4 ",
-     "S3_1": "1 \n1 2 \n1 2 3 "
-    },
-    {
-     "N": "4",
-     "N2": "2",
-     "TOT": "10",
-     "TRI": "1\n1 2\n1 2 3\n1 2 3 4",
-     "S3_0": "1 \n1 2 \n1 2 3 \n1 2 3 4 ",
-     "S3_1": "1 \n1 2 "
-    },
-    {
-     "N": "3",
-     "N2": "3",
-     "TOT": "6",
-     "TRI": "1\n1 2\n1 2 3",
-     "S3_0": "1 \n1 2 \n1 2 3 ",
-     "S3_1": "1 \n1 2 \n1 2 3 "
-    },
-    {
-     "N": "6",
-     "N2": "3",
-     "TOT": "21",
-     "TRI": "1\n1 2\n1 2 3\n1 2 3 4\n1 2 3 4 5\n1 2 3 4 5 6",
-     "S3_0": "1 \n1 2 \n1 2 3 \n1 2 3 4 \n1 2 3 4 5 \n1 2 3 4 5 6 ",
-     "S3_1": "1 \n1 2 \n1 2 3 "
+     "S3_1": "1 \n1 2 \n1 2 3 \n1 2 3 4 "
     }
    ]
   },
@@ -3026,7 +3026,7 @@
    "notion": "4.4",
    "origine": "td",
    "titre": "Notes jusqu'à une valeur négative",
-   "enonce": "Écris un programme qui lit des notes jusqu'à la première note **négative** (qui sert juste à dire « fini » et n'est pas comptée). Il affiche ensuite sur une ligne : le nombre de notes, la moyenne (2 décimales), la meilleure, la pire et le nombre d'admis (note ≥ 10). On suppose qu'il y a au moins une note. (TD Premiers pas, exercice 15)\n\n**Exemple**\n```text\nEntrée :\n[[SAI]]\nSortie :\n[[S4_0]]\n```",
+   "enonce": "Le but : lire des valeurs tant qu'elles sont valides, avec une boucle `while`. (TD Premiers pas, exercice 15)\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. des notes (entiers positifs ou nuls), les unes après les autres ;\n2. une note **négative** pour dire « fini » (elle n'est pas comptée).\n\nIl y a toujours au moins une note valide.\n\n**Ce qu'il affiche** : sur une ligne : le nombre de notes, la moyenne (2 décimales), la meilleure note, la pire, et le nombre d'admis (note ≥ 10).\n\n**Exemple**\n```text\nEntrée :\n[[SAI]]\nSortie :\n[[S4_0]]\n```",
    "guidage": "**Plan** : lire une première note, puis `while (note >= 0)` : traiter la note (compteur, somme, max, min, admis), puis lire la suivante. Le négatif final arrête la boucle sans être traité.",
    "duree": 10.2,
    "etapes": [
@@ -3092,7 +3092,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Écris le programme complet. Initialise `max` et `min` avec la **première** note lue (pas avec 0), puis mets-les à jour dans la boucle.",
+     "consigne": "Écris le programme :\n1. lis une première note ; `max` et `min` partent de cette note ;\n2. `while (note >= 0)` : compte la note, ajoute-la à la somme, mets à jour `max` et `min`, compte-la si elle est ≥ 10, puis **lis la note suivante** (dernière instruction de la boucle) ;\n3. après la boucle, affiche `nb moyenne max min admis`, la moyenne en réel avec `%.2f`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -3122,113 +3122,113 @@
     }
    ],
    "vals": {
-    "SAI": "5 13 11 4 19 -1",
-    "E1": "10 15 18 -2",
-    "T": "5,13,11,4,19",
-    "NB": "5",
-    "SOM": "52",
-    "MOY": "10.40",
-    "ADM": "3",
-    "S4_0": "5 10.40 19 4 3",
+    "SAI": "10 10 15 11 -1",
+    "E1": "17 4 -9",
+    "T": "10,10,15,11",
+    "NB": "4",
+    "SOM": "46",
+    "MOY": "11.50",
+    "ADM": "4",
+    "S4_0": "4 11.50 15 10 4",
     "S4_1": "2 10.00 10 10 2",
-    "S4_2": "3 14.33 18 10 3"
+    "S4_2": "2 10.50 17 4 1"
    },
    "variantes": [
     {
-     "SAI": "5 13 11 4 19 -1",
-     "E1": "10 15 18 -2",
-     "T": "5,13,11,4,19",
-     "NB": "5",
-     "SOM": "52",
-     "MOY": "10.40",
-     "ADM": "3",
-     "S4_0": "5 10.40 19 4 3",
+     "SAI": "10 10 15 11 -1",
+     "E1": "17 4 -9",
+     "T": "10,10,15,11",
+     "NB": "4",
+     "SOM": "46",
+     "MOY": "11.50",
+     "ADM": "4",
+     "S4_0": "4 11.50 15 10 4",
      "S4_1": "2 10.00 10 10 2",
-     "S4_2": "3 14.33 18 10 3"
+     "S4_2": "2 10.50 17 4 1"
     },
     {
-     "SAI": "10 14 5 7 -1",
-     "E1": "14 12 15 10 1 -2",
-     "T": "10,14,5,7",
-     "NB": "4",
-     "SOM": "36",
+     "SAI": "18 20 10 19 16 -1",
+     "E1": "13 19 11 16 12 -3",
+     "T": "18,20,10,19,16",
+     "NB": "5",
+     "SOM": "83",
+     "MOY": "16.60",
+     "ADM": "5",
+     "S4_0": "5 16.60 20 10 5",
+     "S4_1": "2 10.00 10 10 2",
+     "S4_2": "5 14.20 19 11 5"
+    },
+    {
+     "SAI": "12 5 9 18 11 -1",
+     "E1": "20 8 -1",
+     "T": "12,5,9,18,11",
+     "NB": "5",
+     "SOM": "55",
+     "MOY": "11.00",
+     "ADM": "3",
+     "S4_0": "5 11.00 18 5 3",
+     "S4_1": "2 10.00 10 10 2",
+     "S4_2": "2 14.00 20 8 1"
+    },
+    {
+     "SAI": "13 8 11 8 5 -1",
+     "E1": "18 19 16 13 -8",
+     "T": "13,8,11,8,5",
+     "NB": "5",
+     "SOM": "45",
      "MOY": "9.00",
      "ADM": "2",
-     "S4_0": "4 9.00 14 5 2",
+     "S4_0": "5 9.00 13 5 2",
      "S4_1": "2 10.00 10 10 2",
-     "S4_2": "5 10.40 15 1 4"
+     "S4_2": "4 16.50 19 13 4"
     },
     {
-     "SAI": "9 15 14 19 -1",
-     "E1": "0 5 4 -4",
-     "T": "9,15,14,19",
-     "NB": "4",
-     "SOM": "57",
-     "MOY": "14.25",
-     "ADM": "3",
-     "S4_0": "4 14.25 19 9 3",
-     "S4_1": "2 10.00 10 10 2",
-     "S4_2": "3 3.00 5 0 0"
-    },
-    {
-     "SAI": "15 4 6 12 17 -1",
-     "E1": "8 6 7 -3",
-     "T": "15,4,6,12,17",
-     "NB": "5",
-     "SOM": "54",
-     "MOY": "10.80",
-     "ADM": "3",
-     "S4_0": "5 10.80 17 4 3",
-     "S4_1": "2 10.00 10 10 2",
-     "S4_2": "3 7.00 8 6 0"
-    },
-    {
-     "SAI": "15 8 10 12 -1",
-     "E1": "4 10 14 9 -5",
-     "T": "15,8,10,12",
-     "NB": "4",
-     "SOM": "45",
-     "MOY": "11.25",
-     "ADM": "3",
-     "S4_0": "4 11.25 15 8 3",
-     "S4_1": "2 10.00 10 10 2",
-     "S4_2": "4 9.25 14 4 2"
-    },
-    {
-     "SAI": "17 12 15 9 -1",
-     "E1": "8 3 6 -9",
-     "T": "17,12,15,9",
-     "NB": "4",
-     "SOM": "53",
-     "MOY": "13.25",
-     "ADM": "3",
-     "S4_0": "4 13.25 17 9 3",
-     "S4_1": "2 10.00 10 10 2",
-     "S4_2": "3 5.67 8 3 0"
-    },
-    {
-     "SAI": "6 20 19 -1",
-     "E1": "6 10 -9",
-     "T": "6,20,19",
+     "SAI": "13 15 11 -1",
+     "E1": "13 5 5 0 -2",
+     "T": "13,15,11",
      "NB": "3",
-     "SOM": "45",
-     "MOY": "15.00",
-     "ADM": "2",
-     "S4_0": "3 15.00 20 6 2",
+     "SOM": "39",
+     "MOY": "13.00",
+     "ADM": "3",
+     "S4_0": "3 13.00 15 11 3",
      "S4_1": "2 10.00 10 10 2",
-     "S4_2": "2 8.00 10 6 1"
+     "S4_2": "4 5.75 13 0 1"
     },
     {
-     "SAI": "3 20 13 11 -1",
-     "E1": "14 16 11 15 -5",
-     "T": "3,20,13,11",
+     "SAI": "5 6 20 8 -1",
+     "E1": "9 4 10 -4",
+     "T": "5,6,20,8",
      "NB": "4",
-     "SOM": "47",
-     "MOY": "11.75",
-     "ADM": "3",
-     "S4_0": "4 11.75 20 3 3",
+     "SOM": "39",
+     "MOY": "9.75",
+     "ADM": "1",
+     "S4_0": "4 9.75 20 5 1",
      "S4_1": "2 10.00 10 10 2",
-     "S4_2": "4 14.00 16 11 4"
+     "S4_2": "3 7.67 10 4 1"
+    },
+    {
+     "SAI": "17 9 15 15 -1",
+     "E1": "6 9 -9",
+     "T": "17,9,15,15",
+     "NB": "4",
+     "SOM": "56",
+     "MOY": "14.00",
+     "ADM": "3",
+     "S4_0": "4 14.00 17 9 3",
+     "S4_1": "2 10.00 10 10 2",
+     "S4_2": "2 7.50 9 6 0"
+    },
+    {
+     "SAI": "13 17 8 12 16 -1",
+     "E1": "2 19 -3",
+     "T": "13,17,8,12,16",
+     "NB": "5",
+     "SOM": "66",
+     "MOY": "13.20",
+     "ADM": "4",
+     "S4_0": "5 13.20 17 8 4",
+     "S4_1": "2 10.00 10 10 2",
+     "S4_2": "2 10.50 19 2 1"
     }
    ]
   },
@@ -3238,7 +3238,7 @@
    "notion": "4.4",
    "origine": "td",
    "titre": "Somme des chiffres et miroir d'un entier",
-   "enonce": "Écris un programme qui lit un entier positif et affiche la **somme de ses chiffres**. (TD Premiers pas, exercices 9 et 10)\n\n**Exemple**\n```text\nEntrée :\n[[N]]\nSortie :\n[[SC]]\n```",
+   "enonce": "Le but : découper un nombre en chiffres avec `% 10` et `/ 10`. (TD Premiers pas, exercices 9 et 10)\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. un entier positif `n`.\n\n**Ce qu'il affiche** : la somme de ses chiffres.\n\n**Exemple**\n```text\nEntrée :\n[[N]]\nSortie :\n[[SC]]\n```",
    "guidage": "**Plan** : `n % 10` donne le dernier chiffre, `n / 10` l'enlève. On répète tant que `n > 0`, en ajoutant chaque chiffre à la somme.",
    "duree": 7,
    "etapes": [
@@ -3303,7 +3303,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Écris le programme : lis `n`, puis tant que `n > 0`, ajoute `n % 10` à la somme et fais `n /= 10`. Affiche la somme.",
+     "consigne": "Écris le programme :\n1. lis `n` ; `int somme = 0;` ;\n2. `while (n > 0)` : ajoute `n % 10` (le dernier chiffre) à `somme`, puis `n /= 10` (on l'enlève) ;\n3. affiche `somme`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -3333,113 +3333,113 @@
     }
    ],
    "vals": {
-    "N": "8837",
-    "N2": "31220",
-    "D": "7",
-    "Q": "883",
-    "SC": "26",
-    "DET": "8 + 8 + 3 + 7",
-    "MIR": "7388",
-    "S4_0": "26",
+    "N": "6878",
+    "N2": "63447",
+    "D": "8",
+    "Q": "687",
+    "SC": "29",
+    "DET": "6 + 8 + 7 + 8",
+    "MIR": "8786",
+    "S4_0": "29",
     "S4_1": "9",
-    "S4_2": "8"
+    "S4_2": "24"
    },
    "variantes": [
     {
-     "N": "8837",
-     "N2": "31220",
-     "D": "7",
-     "Q": "883",
+     "N": "6878",
+     "N2": "63447",
+     "D": "8",
+     "Q": "687",
+     "SC": "29",
+     "DET": "6 + 8 + 7 + 8",
+     "MIR": "8786",
+     "S4_0": "29",
+     "S4_1": "9",
+     "S4_2": "24"
+    },
+    {
+     "N": "3673",
+     "N2": "25671",
+     "D": "3",
+     "Q": "367",
+     "SC": "19",
+     "DET": "3 + 6 + 7 + 3",
+     "MIR": "3763",
+     "S4_0": "19",
+     "S4_1": "9",
+     "S4_2": "21"
+    },
+    {
+     "N": "7694",
+     "N2": "36193",
+     "D": "4",
+     "Q": "769",
      "SC": "26",
-     "DET": "8 + 8 + 3 + 7",
-     "MIR": "7388",
+     "DET": "7 + 6 + 9 + 4",
+     "MIR": "4967",
      "S4_0": "26",
      "S4_1": "9",
-     "S4_2": "8"
+     "S4_2": "22"
     },
     {
-     "N": "5245",
-     "N2": "14055",
-     "D": "5",
-     "Q": "524",
-     "SC": "16",
-     "DET": "5 + 2 + 4 + 5",
-     "MIR": "5425",
-     "S4_0": "16",
-     "S4_1": "9",
-     "S4_2": "15"
-    },
-    {
-     "N": "3239",
-     "N2": "41093",
-     "D": "9",
-     "Q": "323",
-     "SC": "17",
-     "DET": "3 + 2 + 3 + 9",
-     "MIR": "9323",
-     "S4_0": "17",
-     "S4_1": "9",
-     "S4_2": "17"
-    },
-    {
-     "N": "4593",
-     "N2": "94784",
-     "D": "3",
-     "Q": "459",
+     "N": "1596",
+     "N2": "88490",
+     "D": "6",
+     "Q": "159",
      "SC": "21",
-     "DET": "4 + 5 + 9 + 3",
-     "MIR": "3954",
+     "DET": "1 + 5 + 9 + 6",
+     "MIR": "6951",
      "S4_0": "21",
      "S4_1": "9",
-     "S4_2": "32"
+     "S4_2": "29"
     },
     {
-     "N": "9541",
-     "N2": "61316",
+     "N": "7872",
+     "N2": "60653",
+     "D": "2",
+     "Q": "787",
+     "SC": "24",
+     "DET": "7 + 8 + 7 + 2",
+     "MIR": "2787",
+     "S4_0": "24",
+     "S4_1": "9",
+     "S4_2": "20"
+    },
+    {
+     "N": "8091",
+     "N2": "59997",
      "D": "1",
-     "Q": "954",
-     "SC": "19",
-     "DET": "9 + 5 + 4 + 1",
-     "MIR": "1459",
-     "S4_0": "19",
+     "Q": "809",
+     "SC": "18",
+     "DET": "8 + 0 + 9 + 1",
+     "MIR": "1908",
+     "S4_0": "18",
+     "S4_1": "9",
+     "S4_2": "39"
+    },
+    {
+     "N": "1440",
+     "N2": "81206",
+     "D": "0",
+     "Q": "144",
+     "SC": "9",
+     "DET": "1 + 4 + 4 + 0",
+     "MIR": "441",
+     "S4_0": "9",
      "S4_1": "9",
      "S4_2": "17"
     },
     {
-     "N": "9585",
-     "N2": "19056",
-     "D": "5",
-     "Q": "958",
-     "SC": "27",
-     "DET": "9 + 5 + 8 + 5",
-     "MIR": "5859",
-     "S4_0": "27",
+     "N": "4006",
+     "N2": "52174",
+     "D": "6",
+     "Q": "400",
+     "SC": "10",
+     "DET": "4 + 0 + 0 + 6",
+     "MIR": "6004",
+     "S4_0": "10",
      "S4_1": "9",
-     "S4_2": "21"
-    },
-    {
-     "N": "6003",
-     "N2": "73461",
-     "D": "3",
-     "Q": "600",
-     "SC": "9",
-     "DET": "6 + 0 + 0 + 3",
-     "MIR": "3006",
-     "S4_0": "9",
-     "S4_1": "9",
-     "S4_2": "21"
-    },
-    {
-     "N": "9325",
-     "N2": "81012",
-     "D": "5",
-     "Q": "932",
-     "SC": "19",
-     "DET": "9 + 3 + 2 + 5",
-     "MIR": "5239",
-     "S4_0": "19",
-     "S4_1": "9",
-     "S4_2": "12"
+     "S4_2": "19"
     }
    ]
   },
@@ -3449,7 +3449,7 @@
    "notion": "4.5",
    "origine": "td",
    "titre": "Mot de passe en 3 essais",
-   "enonce": "Le code secret est `1234`. Écris un programme qui lit **jusqu'à 3** codes : dès que le bon code est tapé, il affiche `ok` ; après 3 échecs, il affiche `bloque`. (TD Premiers pas, exercice 12)\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S3_0]]\n```",
+   "enonce": "Le but : répéter une saisie avec `do-while`, en limitant le nombre d'essais. (TD Premiers pas, exercice 12)\n\n**Le code secret** est `1234`.\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. jusqu'à 3 codes (des entiers), un par essai.\n\n**Ce qu'il affiche** : `ok` dès que le bon code est tapé (on arrête alors de lire), ou `bloque` après 3 codes faux.\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S3_0]]\n```",
    "guidage": "**Plan** : une boucle `do-while` (on demande au moins une fois) qui continue tant que le code est faux **et** qu'il reste des essais. Après la boucle, on regarde pourquoi elle s'est arrêtée.",
    "duree": 7.6,
    "etapes": [
@@ -3499,7 +3499,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Écris le programme : `do { lire un code ; essais++ ; si c'est 1234, ok = 1 } while (…)`. Après la boucle, affiche `ok` ou `bloque` selon `ok`.",
+     "consigne": "Écris le programme :\n1. `int code, essais = 0, ok = 0;` ;\n2. `do { … } while (ok == 0 && essais < 3);` ;\n3. dans la boucle : lis `code`, fais `essais++`, et si `code == 1234`, mets `ok = 1` ;\n4. après la boucle : affiche `ok` si `ok` vaut 1, `bloque` sinon.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -3528,65 +3528,65 @@
     }
    ],
    "vals": {
-    "E0": "1074 1234",
-    "E1": "5081 5241 3237",
+    "E0": "1050 1234",
+    "E1": "1192 6853 7748",
     "S3_0": "ok",
     "S3_1": "bloque",
     "S3_2": "ok"
    },
    "variantes": [
     {
-     "E0": "1074 1234",
-     "E1": "5081 5241 3237",
+     "E0": "1050 1234",
+     "E1": "1192 6853 7748",
      "S3_0": "ok",
      "S3_1": "bloque",
      "S3_2": "ok"
     },
     {
-     "E0": "9891 9298 1234",
-     "E1": "3679 1087 1217",
+     "E0": "7409 4997 1234",
+     "E1": "1035 1099 1110",
      "S3_0": "ok",
      "S3_1": "bloque",
      "S3_2": "ok"
     },
     {
-     "E0": "6882 1234",
-     "E1": "1186 1783 1110",
+     "E0": "7024 1234",
+     "E1": "4853 1056 1118",
      "S3_0": "ok",
      "S3_1": "bloque",
      "S3_2": "ok"
     },
     {
-     "E0": "9732 4934 1234",
-     "E1": "3352 8987 1131",
+     "E0": "4021 4965 1234",
+     "E1": "1054 1164 1094",
      "S3_0": "ok",
      "S3_1": "bloque",
      "S3_2": "ok"
     },
     {
-     "E0": "8403 1234",
-     "E1": "7192 1121 6295",
+     "E0": "5762 1084 1234",
+     "E1": "1204 1158 1213",
      "S3_0": "ok",
      "S3_1": "bloque",
      "S3_2": "ok"
     },
     {
-     "E0": "9691 1234",
-     "E1": "9040 1174 4819",
+     "E0": "1844 4850 1234",
+     "E1": "1101 2189 4267",
      "S3_0": "ok",
      "S3_1": "bloque",
      "S3_2": "ok"
     },
     {
-     "E0": "1088 1216 1234",
-     "E1": "4622 4769 1071",
+     "E0": "1179 1234",
+     "E1": "1223 1195 5626",
      "S3_0": "ok",
      "S3_1": "bloque",
      "S3_2": "ok"
     },
     {
-     "E0": "1197 9424 1234",
-     "E1": "1125 8796 1026",
+     "E0": "1082 3382 1234",
+     "E1": "3690 1142 1014",
      "S3_0": "ok",
      "S3_1": "bloque",
      "S3_2": "ok"
@@ -3599,7 +3599,7 @@
    "notion": "4.6",
    "origine": "td",
    "titre": "Nombre premier",
-   "enonce": "Un nombre est **premier** s'il a exactement deux diviseurs : 1 et lui-même (donc 1 n'est pas premier). Écris un programme qui lit `n` et affiche `premier` ou `non premier`. On ne teste les diviseurs que jusqu'à $\\sqrt{n}$. (TD Premiers pas, exercice 13)\n\n**Exemple**\n```text\nEntrée :\n[[N]]\nSortie :\n[[RN]]\n```",
+   "enonce": "Le but : chercher un diviseur avec une boucle, et s'arrêter dès qu'on en trouve un. (TD Premiers pas, exercice 13)\n\n**Rappel** : un nombre est premier s'il a exactement deux diviseurs, 1 et lui-même (donc 1 n'est pas premier). Il suffit de chercher un diviseur jusqu'à $\\sqrt{n}$.\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. un entier `n`.\n\n**Ce qu'il affiche** : `premier` ou `non premier`.\n\n**Exemple**\n```text\nEntrée :\n[[N]]\nSortie :\n[[RN]]\n```",
    "guidage": "**Plan** : on cherche un diviseur `d` entre 2 et $\\sqrt{n}$ ; s'il y en a un, `n` n'est pas premier. Pas besoin d'aller plus loin : si `n = d × e` avec `d` > $\\sqrt{n}$, alors `e` < $\\sqrt{n}$ et on l'aurait déjà trouvé.",
    "duree": 8.7,
    "etapes": [
@@ -3650,7 +3650,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Écris le programme : un indicateur `premier` (1 si `n ≥ 2`, 0 sinon), une boucle `for (int d = 2; d * d <= n; d++)` qui le met à 0 et fait `break` au premier diviseur, puis l'affichage.",
+     "consigne": "Écris le programme :\n1. lis `n` ; `int premier = (n >= 2);` (1 et moins ne sont pas premiers) ;\n2. `for (int d = 2; d * d <= n; d++)` : si `n % d == 0`, mets `premier = 0` puis `break;` ;\n3. affiche `premier` ou `non premier` selon l'indicateur.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -3687,24 +3687,80 @@
     }
    ],
    "vals": {
-    "N": "29",
-    "N1": "37",
-    "N2": "101",
-    "RAC": "6",
-    "A1": "0",
-    "EXP": "Aucun nombre de 2 à 6 ne divise 37 : **0**, il est premier.",
+    "N": "37",
+    "N1": "85",
+    "N2": "97",
+    "RAC": "9",
+    "A1": "1",
+    "EXP": "Oui : 85 = 5 × 17, donc **1** (et 85 n'est pas premier).",
     "RN": "premier",
     "S3_0": "premier",
     "S3_1": "non premier",
     "S3_2": "premier",
-    "S3_3": "premier",
+    "S3_3": "non premier",
     "S3_4": "premier"
    },
    "variantes": [
     {
+     "N": "37",
+     "N1": "85",
+     "N2": "97",
+     "RAC": "9",
+     "A1": "1",
+     "EXP": "Oui : 85 = 5 × 17, donc **1** (et 85 n'est pas premier).",
+     "RN": "premier",
+     "S3_0": "premier",
+     "S3_1": "non premier",
+     "S3_2": "premier",
+     "S3_3": "non premier",
+     "S3_4": "premier"
+    },
+    {
+     "N": "31",
+     "N1": "49",
+     "N2": "143",
+     "RAC": "7",
+     "A1": "1",
+     "EXP": "Oui : 49 = 7 × 7, donc **1** (et 49 n'est pas premier).",
+     "RN": "premier",
+     "S3_0": "premier",
+     "S3_1": "non premier",
+     "S3_2": "premier",
+     "S3_3": "non premier",
+     "S3_4": "non premier"
+    },
+    {
      "N": "29",
+     "N1": "77",
+     "N2": "169",
+     "RAC": "8",
+     "A1": "1",
+     "EXP": "Oui : 77 = 7 × 11, donc **1** (et 77 n'est pas premier).",
+     "RN": "premier",
+     "S3_0": "premier",
+     "S3_1": "non premier",
+     "S3_2": "premier",
+     "S3_3": "non premier",
+     "S3_4": "non premier"
+    },
+    {
+     "N": "91",
+     "N1": "53",
+     "N2": "89",
+     "RAC": "7",
+     "A1": "0",
+     "EXP": "Aucun nombre de 2 à 7 ne divise 53 : **0**, il est premier.",
+     "RN": "non premier",
+     "S3_0": "non premier",
+     "S3_1": "non premier",
+     "S3_2": "premier",
+     "S3_3": "premier",
+     "S3_4": "premier"
+    },
+    {
+     "N": "31",
      "N1": "37",
-     "N2": "101",
+     "N2": "169",
      "RAC": "6",
      "A1": "0",
      "EXP": "Aucun nombre de 2 à 6 ne divise 37 : **0**, il est premier.",
@@ -3713,105 +3769,49 @@
      "S3_1": "non premier",
      "S3_2": "premier",
      "S3_3": "premier",
-     "S3_4": "premier"
+     "S3_4": "non premier"
     },
     {
-     "N": "49",
-     "N1": "77",
-     "N2": "101",
-     "RAC": "8",
+     "N": "91",
+     "N1": "49",
+     "N2": "143",
+     "RAC": "7",
      "A1": "1",
-     "EXP": "Oui : 77 = 7 × 11, donc **1** (et 77 n'est pas premier).",
+     "EXP": "Oui : 49 = 7 × 7, donc **1** (et 49 n'est pas premier).",
      "RN": "non premier",
      "S3_0": "non premier",
      "S3_1": "non premier",
      "S3_2": "premier",
      "S3_3": "non premier",
+     "S3_4": "non premier"
+    },
+    {
+     "N": "47",
+     "N1": "61",
+     "N2": "97",
+     "RAC": "7",
+     "A1": "0",
+     "EXP": "Aucun nombre de 2 à 7 ne divise 61 : **0**, il est premier.",
+     "RN": "premier",
+     "S3_0": "premier",
+     "S3_1": "non premier",
+     "S3_2": "premier",
+     "S3_3": "premier",
      "S3_4": "premier"
     },
     {
      "N": "77",
-     "N1": "77",
-     "N2": "101",
-     "RAC": "8",
-     "A1": "1",
-     "EXP": "Oui : 77 = 7 × 11, donc **1** (et 77 n'est pas premier).",
-     "RN": "non premier",
-     "S3_0": "non premier",
-     "S3_1": "non premier",
-     "S3_2": "premier",
-     "S3_3": "non premier",
-     "S3_4": "premier"
-    },
-    {
-     "N": "29",
-     "N1": "77",
-     "N2": "169",
-     "RAC": "8",
-     "A1": "1",
-     "EXP": "Oui : 77 = 7 × 11, donc **1** (et 77 n'est pas premier).",
-     "RN": "premier",
-     "S3_0": "premier",
-     "S3_1": "non premier",
-     "S3_2": "premier",
-     "S3_3": "non premier",
-     "S3_4": "non premier"
-    },
-    {
-     "N": "31",
-     "N1": "29",
-     "N2": "89",
-     "RAC": "5",
+     "N1": "37",
+     "N2": "121",
+     "RAC": "6",
      "A1": "0",
-     "EXP": "Aucun nombre de 2 à 5 ne divise 29 : **0**, il est premier.",
-     "RN": "premier",
-     "S3_0": "premier",
-     "S3_1": "non premier",
-     "S3_2": "premier",
-     "S3_3": "premier",
-     "S3_4": "premier"
-    },
-    {
-     "N": "43",
-     "N1": "29",
-     "N2": "143",
-     "RAC": "5",
-     "A1": "0",
-     "EXP": "Aucun nombre de 2 à 5 ne divise 29 : **0**, il est premier.",
-     "RN": "premier",
-     "S3_0": "premier",
-     "S3_1": "non premier",
-     "S3_2": "premier",
-     "S3_3": "premier",
-     "S3_4": "non premier"
-    },
-    {
-     "N": "49",
-     "N1": "53",
-     "N2": "169",
-     "RAC": "7",
-     "A1": "0",
-     "EXP": "Aucun nombre de 2 à 7 ne divise 53 : **0**, il est premier.",
+     "EXP": "Aucun nombre de 2 à 6 ne divise 37 : **0**, il est premier.",
      "RN": "non premier",
      "S3_0": "non premier",
      "S3_1": "non premier",
      "S3_2": "premier",
      "S3_3": "premier",
      "S3_4": "non premier"
-    },
-    {
-     "N": "41",
-     "N1": "53",
-     "N2": "89",
-     "RAC": "7",
-     "A1": "0",
-     "EXP": "Aucun nombre de 2 à 7 ne divise 53 : **0**, il est premier.",
-     "RN": "premier",
-     "S3_0": "premier",
-     "S3_1": "non premier",
-     "S3_2": "premier",
-     "S3_3": "premier",
-     "S3_4": "premier"
     }
    ]
   },
@@ -3821,7 +3821,7 @@
    "notion": "4.4",
    "origine": "td",
    "titre": "PGCD et Fibonacci",
-   "enonce": "Le **PGCD** de deux entiers est leur plus grand diviseur commun. L'algorithme d'Euclide le calcule ainsi : on remplace `(a, b)` par `(b, a % b)` jusqu'à ce que `b` vaille 0 ; le PGCD est alors `a`. Écris un programme qui lit `a` et `b` (positifs) et affiche leur PGCD. (TD Premiers pas, exercices 15 et 16)\n\n**Exemple**\n```text\nEntrée :\n[[A]] [[B]]\nSortie :\n[[G]]\n```",
+   "enonce": "Le but : répéter un calcul jusqu'à une condition d'arrêt : l'algorithme d'Euclide. (TD Premiers pas, exercices 15 et 16)\n\n**L'algorithme** : on remplace `(a, b)` par `(b, a % b)` jusqu'à ce que `b` vaille 0 ; le PGCD (plus grand diviseur commun) est alors `a`.\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. deux entiers positifs `a` et `b`.\n\n**Ce qu'il affiche** : leur PGCD.\n\n**Exemple**\n```text\nEntrée :\n[[A]] [[B]]\nSortie :\n[[G]]\n```",
    "guidage": "**Euclide** : tant que `b != 0`, on remplace (a, b) par (b, a % b).\n**Fibonacci** : chaque terme est la somme des deux précédents.",
    "duree": 7.5,
    "etapes": [
@@ -3871,7 +3871,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Écris le programme : lis `a` et `b`, puis tant que `b != 0` : `r = a % b; a = b; b = r;`. Affiche `a` à la fin.",
+     "consigne": "Écris le programme :\n1. lis `a` et `b` ;\n2. `while (b != 0)` : `int r = a % b; a = b; b = r;` ;\n3. affiche `a`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -3901,131 +3901,131 @@
     }
    ],
    "vals": {
-    "A": "44",
-    "B": "40",
-    "K": "11",
-    "E1": "104 72",
-    "Q1": "1",
+    "A": "28",
+    "B": "8",
+    "K": "8",
+    "E1": "30 24",
+    "Q1": "3",
     "R1": "4",
     "G": "4",
-    "SUITE": "(40, 4) → (4, 0)",
-    "F": "55",
+    "SUITE": "(8, 4) → (4, 0)",
+    "F": "13",
     "S3_0": "4",
     "S3_1": "1",
-    "S3_2": "8"
+    "S3_2": "6"
    },
    "variantes": [
     {
-     "A": "44",
-     "B": "40",
-     "K": "11",
-     "E1": "104 72",
-     "Q1": "1",
+     "A": "28",
+     "B": "8",
+     "K": "8",
+     "E1": "30 24",
+     "Q1": "3",
      "R1": "4",
      "G": "4",
-     "SUITE": "(40, 4) → (4, 0)",
-     "F": "55",
-     "S3_0": "4",
-     "S3_1": "1",
-     "S3_2": "8"
-    },
-    {
-     "A": "132",
-     "B": "72",
-     "K": "8",
-     "E1": "105 14",
-     "Q1": "1",
-     "R1": "60",
-     "G": "12",
-     "SUITE": "(72, 60) → (60, 12) → (12, 0)",
+     "SUITE": "(8, 4) → (4, 0)",
      "F": "13",
-     "S3_0": "12",
-     "S3_1": "1",
-     "S3_2": "7"
-    },
-    {
-     "A": "55",
-     "B": "40",
-     "K": "7",
-     "E1": "81 18",
-     "Q1": "1",
-     "R1": "15",
-     "G": "5",
-     "SUITE": "(40, 15) → (15, 10) → (10, 5) → (5, 0)",
-     "F": "8",
-     "S3_0": "5",
-     "S3_1": "1",
-     "S3_2": "9"
-    },
-    {
-     "A": "16",
-     "B": "6",
-     "K": "7",
-     "E1": "22 8",
-     "Q1": "2",
-     "R1": "4",
-     "G": "2",
-     "SUITE": "(6, 4) → (4, 2) → (2, 0)",
-     "F": "8",
-     "S3_0": "2",
-     "S3_1": "1",
-     "S3_2": "2"
-    },
-    {
-     "A": "70",
-     "B": "49",
-     "K": "7",
-     "E1": "60 24",
-     "Q1": "1",
-     "R1": "21",
-     "G": "7",
-     "SUITE": "(49, 21) → (21, 7) → (7, 0)",
-     "F": "8",
-     "S3_0": "7",
-     "S3_1": "1",
-     "S3_2": "12"
-    },
-    {
-     "A": "18",
-     "B": "4",
-     "K": "9",
-     "E1": "42 24",
-     "Q1": "4",
-     "R1": "2",
-     "G": "2",
-     "SUITE": "(4, 2) → (2, 0)",
-     "F": "21",
-     "S3_0": "2",
+     "S3_0": "4",
      "S3_1": "1",
      "S3_2": "6"
     },
     {
-     "A": "44",
-     "B": "32",
-     "K": "9",
-     "E1": "63 56",
-     "Q1": "1",
-     "R1": "12",
-     "G": "4",
-     "SUITE": "(32, 12) → (12, 8) → (8, 4) → (4, 0)",
-     "F": "21",
-     "S3_0": "4",
-     "S3_1": "1",
-     "S3_2": "7"
-    },
-    {
-     "A": "55",
+     "A": "60",
      "B": "35",
-     "K": "8",
-     "E1": "60 48",
+     "K": "11",
+     "E1": "60 24",
      "Q1": "1",
-     "R1": "20",
+     "R1": "25",
      "G": "5",
-     "SUITE": "(35, 20) → (20, 15) → (15, 5) → (5, 0)",
-     "F": "13",
+     "SUITE": "(35, 25) → (25, 10) → (10, 5) → (5, 0)",
+     "F": "55",
      "S3_0": "5",
      "S3_1": "1",
      "S3_2": "12"
+    },
+    {
+     "A": "44",
+     "B": "36",
+     "K": "9",
+     "E1": "80 10",
+     "Q1": "1",
+     "R1": "8",
+     "G": "4",
+     "SUITE": "(36, 8) → (8, 4) → (4, 0)",
+     "F": "21",
+     "S3_0": "4",
+     "S3_1": "1",
+     "S3_2": "10"
+    },
+    {
+     "A": "36",
+     "B": "30",
+     "K": "7",
+     "E1": "120 32",
+     "Q1": "1",
+     "R1": "6",
+     "G": "6",
+     "SUITE": "(30, 6) → (6, 0)",
+     "F": "8",
+     "S3_0": "6",
+     "S3_1": "1",
+     "S3_2": "8"
+    },
+    {
+     "A": "36",
+     "B": "24",
+     "K": "10",
+     "E1": "72 27",
+     "Q1": "1",
+     "R1": "12",
+     "G": "12",
+     "SUITE": "(24, 12) → (12, 0)",
+     "F": "34",
+     "S3_0": "12",
+     "S3_1": "1",
+     "S3_2": "9"
+    },
+    {
+     "A": "72",
+     "B": "30",
+     "K": "11",
+     "E1": "80 15",
+     "Q1": "2",
+     "R1": "12",
+     "G": "6",
+     "SUITE": "(30, 12) → (12, 6) → (6, 0)",
+     "F": "55",
+     "S3_0": "6",
+     "S3_1": "1",
+     "S3_2": "5"
+    },
+    {
+     "A": "45",
+     "B": "35",
+     "K": "7",
+     "E1": "24 28",
+     "Q1": "1",
+     "R1": "10",
+     "G": "5",
+     "SUITE": "(35, 10) → (10, 5) → (5, 0)",
+     "F": "8",
+     "S3_0": "5",
+     "S3_1": "1",
+     "S3_2": "4"
+    },
+    {
+     "A": "42",
+     "B": "30",
+     "K": "10",
+     "E1": "20 16",
+     "Q1": "1",
+     "R1": "12",
+     "G": "6",
+     "SUITE": "(30, 12) → (12, 6) → (6, 0)",
+     "F": "34",
+     "S3_0": "6",
+     "S3_1": "1",
+     "S3_2": "4"
     }
    ]
   },
@@ -4035,7 +4035,7 @@
    "notion": "4.4",
    "origine": "td",
    "titre": "Division euclidienne par soustractions",
-   "enonce": "Écris un programme qui lit `a` et `b` et affiche le **quotient** et le **reste** de la division de `a` par `b`, calculés uniquement avec des **soustractions** (sans `/` ni `%`). (Tableaux_chainex, exercice 2)\n\n**Exemple**\n```text\nEntrée :\n[[A]] [[B]]\nSortie :\n[[Q]] [[RE]]\n```",
+   "enonce": "Le but : retrouver la division euclidienne avec des soustractions, sans `/` ni `%`. (Tableaux_chainex, exercice 2)\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. un entier `a` ;\n2. un entier `b` (strictement positif).\n\n**Ce qu'il affiche** : le quotient puis le reste de `a` par `b`.\n\n**Exemple**\n```text\nEntrée :\n[[A]] [[B]]\nSortie :\n[[Q]] [[RE]]\n```",
    "guidage": "**Idée** : on retire `b` de `a` tant que c'est possible. Le nombre de soustractions est le quotient ; ce qui reste dans `a` est le reste.",
    "duree": 7.6,
    "etapes": [
@@ -4085,7 +4085,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Écris le programme : un compteur `q` à 0, puis `while (a >= b) { a -= b; q++; }`. Affiche `q` puis `a`.",
+     "consigne": "Écris le programme :\n1. lis `a` et `b` ; `int q = 0;` ;\n2. `while (a >= b)` : `a -= b; q++;` ;\n3. affiche `q` puis `a` (ce qui reste de `a` est le reste).",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -4115,42 +4115,15 @@
     }
    ],
    "vals": {
-    "A": "55",
-    "B": "4",
-    "Q": "13",
-    "RE": "3",
-    "S3_0": "13 3",
+    "A": "42",
+    "B": "9",
+    "Q": "4",
+    "RE": "6",
+    "S3_0": "4 6",
     "S3_1": "5 0",
     "S3_2": "0 3"
    },
    "variantes": [
-    {
-     "A": "55",
-     "B": "4",
-     "Q": "13",
-     "RE": "3",
-     "S3_0": "13 3",
-     "S3_1": "5 0",
-     "S3_2": "0 3"
-    },
-    {
-     "A": "57",
-     "B": "4",
-     "Q": "14",
-     "RE": "1",
-     "S3_0": "14 1",
-     "S3_1": "5 0",
-     "S3_2": "0 3"
-    },
-    {
-     "A": "39",
-     "B": "3",
-     "Q": "13",
-     "RE": "0",
-     "S3_0": "13 0",
-     "S3_1": "5 0",
-     "S3_2": "0 3"
-    },
     {
      "A": "42",
      "B": "9",
@@ -4161,38 +4134,65 @@
      "S3_2": "0 3"
     },
     {
-     "A": "38",
-     "B": "7",
-     "Q": "5",
-     "RE": "3",
-     "S3_0": "5 3",
+     "A": "47",
+     "B": "5",
+     "Q": "9",
+     "RE": "2",
+     "S3_0": "9 2",
      "S3_1": "5 0",
      "S3_2": "0 3"
     },
     {
-     "A": "22",
+     "A": "10",
      "B": "8",
-     "Q": "2",
-     "RE": "6",
-     "S3_0": "2 6",
+     "Q": "1",
+     "RE": "2",
+     "S3_0": "1 2",
      "S3_1": "5 0",
      "S3_2": "0 3"
     },
     {
-     "A": "36",
-     "B": "5",
-     "Q": "7",
+     "A": "41",
+     "B": "8",
+     "Q": "5",
      "RE": "1",
-     "S3_0": "7 1",
+     "S3_0": "5 1",
      "S3_1": "5 0",
      "S3_2": "0 3"
     },
     {
-     "A": "59",
+     "A": "32",
+     "B": "6",
+     "Q": "5",
+     "RE": "2",
+     "S3_0": "5 2",
+     "S3_1": "5 0",
+     "S3_2": "0 3"
+    },
+    {
+     "A": "33",
      "B": "5",
-     "Q": "11",
-     "RE": "4",
-     "S3_0": "11 4",
+     "Q": "6",
+     "RE": "3",
+     "S3_0": "6 3",
+     "S3_1": "5 0",
+     "S3_2": "0 3"
+    },
+    {
+     "A": "55",
+     "B": "7",
+     "Q": "7",
+     "RE": "6",
+     "S3_0": "7 6",
+     "S3_1": "5 0",
+     "S3_2": "0 3"
+    },
+    {
+     "A": "53",
+     "B": "4",
+     "Q": "13",
+     "RE": "1",
+     "S3_0": "13 1",
      "S3_1": "5 0",
      "S3_2": "0 3"
     }
@@ -4204,7 +4204,7 @@
    "notion": "4.3",
    "origine": "td",
    "titre": "Carré parfait",
-   "enonce": "Un entier `x` est un **carré parfait** s'il existe un entier `y` tel que `y × y = x` (par exemple 49 = 7 × 7). Écris un programme qui lit `x` et affiche `invalide` si `x ≤ 0`, sinon `1` si `x` est un carré parfait et `0` sinon, **sans** racine carrée. (Tableaux_chainex, exercice 5)\n\n**Exemple**\n```text\nEntrée :\n[[X1]]\nSortie :\n[[R1]]\n```",
+   "enonce": "Le but : tester tous les candidats avec une boucle, sans racine carrée. (Tableaux_chainex, exercice 5)\n\n**Rappel** : `x` est un carré parfait s'il existe un entier `y` tel que `y × y = x` (comme 49 = 7 × 7).\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. un entier `x`.\n\n**Ce qu'il affiche** : `invalide` si `x ≤ 0` ; sinon `1` si `x` est un carré parfait, `0` sinon.\n\n**Exemple**\n```text\nEntrée :\n[[X1]]\nSortie :\n[[R1]]\n```",
    "guidage": "**Plan** : boucle sur `y` tant que `y * y <= x` ; `carre = 1` dès que `y * y == x`.\n\n**Piège** : un entier positif est requis : le programme le vérifie d'abord.",
    "duree": 7.3,
    "etapes": [
@@ -4254,7 +4254,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Écris le programme : si `x <= 0`, affiche `invalide` ; sinon, essaie `y = 1, 2, 3…` tant que `y * y <= x`, et regarde si l'un d'eux donne exactement `x`.",
+     "consigne": "Écris le programme :\n1. lis `x` ; si `x <= 0`, affiche `invalide` ;\n2. sinon : `int carre = 0;` puis `for (int y = 1; y * y <= x; y++)` : si `y * y == x`, `carre = 1;` ;\n3. affiche `carre`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -4287,12 +4287,12 @@
     }
    ],
    "vals": {
-    "X1": "64",
-    "X2": "27",
+    "X1": "16",
+    "X2": "38",
     "R1": "1",
-    "E1": "64 = 8 × 8 : **1**.",
+    "E1": "16 = 4 × 4 : **1**.",
     "R2": "0",
-    "E2": "5² = 25 et 6² = 36 encadrent 27 : aucun entier ne convient, **0**.",
+    "E2": "6² = 36 et 7² = 49 encadrent 38 : aucun entier ne convient, **0**.",
     "S3_0": "1",
     "S3_1": "0",
     "S3_2": "1",
@@ -4300,98 +4300,98 @@
    },
    "variantes": [
     {
-     "X1": "64",
-     "X2": "27",
+     "X1": "16",
+     "X2": "38",
      "R1": "1",
-     "E1": "64 = 8 × 8 : **1**.",
+     "E1": "16 = 4 × 4 : **1**.",
      "R2": "0",
-     "E2": "5² = 25 et 6² = 36 encadrent 27 : aucun entier ne convient, **0**.",
+     "E2": "6² = 36 et 7² = 49 encadrent 38 : aucun entier ne convient, **0**.",
      "S3_0": "1",
      "S3_1": "0",
      "S3_2": "1",
      "S3_3": "invalide"
     },
     {
-     "X1": "16",
-     "X2": "198",
+     "X1": "170",
+     "X2": "169",
+     "R1": "0",
+     "E1": "13² = 169 et 14² = 196 encadrent 170 : aucun entier ne convient, **0**.",
+     "R2": "1",
+     "E2": "169 = 13 × 13 : **1**.",
+     "S3_0": "0",
+     "S3_1": "1",
+     "S3_2": "1",
+     "S3_3": "invalide"
+    },
+    {
+     "X1": "121",
+     "X2": "50",
      "R1": "1",
-     "E1": "16 = 4 × 4 : **1**.",
+     "E1": "121 = 11 × 11 : **1**.",
      "R2": "0",
-     "E2": "14² = 196 et 15² = 225 encadrent 198 : aucun entier ne convient, **0**.",
+     "E2": "7² = 49 et 8² = 64 encadrent 50 : aucun entier ne convient, **0**.",
      "S3_0": "1",
      "S3_1": "0",
+     "S3_2": "1",
+     "S3_3": "invalide"
+    },
+    {
+     "X1": "64",
+     "X2": "145",
+     "R1": "1",
+     "E1": "64 = 8 × 8 : **1**.",
+     "R2": "0",
+     "E2": "12² = 144 et 13² = 169 encadrent 145 : aucun entier ne convient, **0**.",
+     "S3_0": "1",
+     "S3_1": "0",
+     "S3_2": "1",
+     "S3_3": "invalide"
+    },
+    {
+     "X1": "25",
+     "X2": "197",
+     "R1": "1",
+     "E1": "25 = 5 × 5 : **1**.",
+     "R2": "0",
+     "E2": "14² = 196 et 15² = 225 encadrent 197 : aucun entier ne convient, **0**.",
+     "S3_0": "1",
+     "S3_1": "0",
+     "S3_2": "1",
+     "S3_3": "invalide"
+    },
+    {
+     "X1": "28",
+     "X2": "144",
+     "R1": "0",
+     "E1": "5² = 25 et 6² = 36 encadrent 28 : aucun entier ne convient, **0**.",
+     "R2": "1",
+     "E2": "144 = 12 × 12 : **1**.",
+     "S3_0": "0",
+     "S3_1": "1",
+     "S3_2": "1",
+     "S3_3": "invalide"
+    },
+    {
+     "X1": "39",
+     "X2": "49",
+     "R1": "0",
+     "E1": "6² = 36 et 7² = 49 encadrent 39 : aucun entier ne convient, **0**.",
+     "R2": "1",
+     "E2": "49 = 7 × 7 : **1**.",
+     "S3_0": "0",
+     "S3_1": "1",
      "S3_2": "1",
      "S3_3": "invalide"
     },
     {
      "X1": "49",
-     "X2": "17",
+     "X2": "65",
      "R1": "1",
      "E1": "49 = 7 × 7 : **1**.",
      "R2": "0",
-     "E2": "4² = 16 et 5² = 25 encadrent 17 : aucun entier ne convient, **0**.",
+     "E2": "8² = 64 et 9² = 81 encadrent 65 : aucun entier ne convient, **0**.",
      "S3_0": "1",
      "S3_1": "0",
-     "S3_2": "1",
-     "S3_3": "invalide"
-    },
-    {
-     "X1": "16",
-     "X2": "10",
-     "R1": "1",
-     "E1": "16 = 4 × 4 : **1**.",
-     "R2": "0",
-     "E2": "3² = 9 et 4² = 16 encadrent 10 : aucun entier ne convient, **0**.",
-     "S3_0": "1",
-     "S3_1": "0",
-     "S3_2": "1",
-     "S3_3": "invalide"
-    },
-    {
-     "X1": "18",
-     "X2": "64",
-     "R1": "0",
-     "E1": "4² = 16 et 5² = 25 encadrent 18 : aucun entier ne convient, **0**.",
-     "R2": "1",
-     "E2": "64 = 8 × 8 : **1**.",
-     "S3_0": "0",
-     "S3_1": "1",
-     "S3_2": "1",
-     "S3_3": "invalide"
-    },
-    {
-     "X1": "50",
-     "X2": "225",
-     "R1": "0",
-     "E1": "7² = 49 et 8² = 64 encadrent 50 : aucun entier ne convient, **0**.",
-     "R2": "1",
-     "E2": "225 = 15 × 15 : **1**.",
-     "S3_0": "0",
-     "S3_1": "1",
-     "S3_2": "1",
-     "S3_3": "invalide"
-    },
-    {
-     "X1": "100",
-     "X2": "124",
-     "R1": "1",
-     "E1": "100 = 10 × 10 : **1**.",
-     "R2": "0",
-     "E2": "11² = 121 et 12² = 144 encadrent 124 : aucun entier ne convient, **0**.",
-     "S3_0": "1",
-     "S3_1": "0",
-     "S3_2": "1",
-     "S3_3": "invalide"
-    },
-    {
-     "X1": "147",
-     "X2": "16",
-     "R1": "0",
-     "E1": "12² = 144 et 13² = 169 encadrent 147 : aucun entier ne convient, **0**.",
-     "R2": "1",
-     "E2": "16 = 4 × 4 : **1**.",
-     "S3_0": "0",
-     "S3_1": "1",
      "S3_2": "1",
      "S3_3": "invalide"
     }
@@ -4410,19 +4410,14 @@
    "duree": 0.67,
    "explication": "La boucle intérieure fait [[B]] tours, et elle est relancée à chacun des [[A]] tours de la boucle extérieure : [[A]] × [[B]] = **[[R]]**.",
    "vals": {
-    "A": "5",
-    "B": "2",
-    "R": "10"
+    "A": "6",
+    "B": "3",
+    "R": "18"
    },
    "variantes": [
     {
-     "A": "5",
-     "B": "2",
-     "R": "10"
-    },
-    {
-     "A": "3",
-     "B": "6",
+     "A": "6",
+     "B": "3",
      "R": "18"
     },
     {
@@ -4431,29 +4426,34 @@
      "R": "9"
     },
     {
+     "A": "6",
+     "B": "5",
+     "R": "30"
+    },
+    {
+     "A": "6",
+     "B": "6",
+     "R": "36"
+    },
+    {
+     "A": "4",
+     "B": "3",
+     "R": "12"
+    },
+    {
      "A": "5",
      "B": "3",
      "R": "15"
     },
     {
-     "A": "2",
-     "B": "6",
-     "R": "12"
-    },
-    {
-     "A": "5",
-     "B": "5",
-     "R": "25"
-    },
-    {
-     "A": "4",
-     "B": "2",
-     "R": "8"
-    },
-    {
      "A": "3",
+     "B": "6",
+     "R": "18"
+    },
+    {
+     "A": "6",
      "B": "2",
-     "R": "6"
+     "R": "12"
     }
    ]
   },
@@ -4507,30 +4507,15 @@
    "duree": 0.67,
    "explication": "`n` vaut successivement [[SUITE]] : la boucle a fait **[[R]]** tours.",
    "vals": {
-    "N": "50",
-    "R": "5",
-    "SUITE": "50, 25, 12, 6, 3, 1"
+    "N": "1000",
+    "R": "9",
+    "SUITE": "1000, 500, 250, 125, 62, 31, 15, 7, 3, 1"
    },
    "variantes": [
     {
-     "N": "50",
-     "R": "5",
-     "SUITE": "50, 25, 12, 6, 3, 1"
-    },
-    {
-     "N": "100",
-     "R": "6",
-     "SUITE": "100, 50, 25, 12, 6, 3, 1"
-    },
-    {
-     "N": "500",
-     "R": "8",
-     "SUITE": "500, 250, 125, 62, 31, 15, 7, 3, 1"
-    },
-    {
-     "N": "200",
-     "R": "7",
-     "SUITE": "200, 100, 50, 25, 12, 6, 3, 1"
+     "N": "1000",
+     "R": "9",
+     "SUITE": "1000, 500, 250, 125, 62, 31, 15, 7, 3, 1"
     },
     {
      "N": "37",
@@ -4543,14 +4528,29 @@
      "SUITE": "20, 10, 5, 2, 1"
     },
     {
-     "N": "1000",
-     "R": "9",
-     "SUITE": "1000, 500, 250, 125, 62, 31, 15, 7, 3, 1"
+     "N": "500",
+     "R": "8",
+     "SUITE": "500, 250, 125, 62, 31, 15, 7, 3, 1"
+    },
+    {
+     "N": "50",
+     "R": "5",
+     "SUITE": "50, 25, 12, 6, 3, 1"
     },
     {
      "N": "64",
      "R": "6",
      "SUITE": "64, 32, 16, 8, 4, 2, 1"
+    },
+    {
+     "N": "100",
+     "R": "6",
+     "SUITE": "100, 50, 25, 12, 6, 3, 1"
+    },
+    {
+     "N": "200",
+     "R": "7",
+     "SUITE": "200, 100, 50, 25, 12, 6, 3, 1"
     }
    ]
   },
@@ -4590,32 +4590,32 @@
    "duree": 0.67,
    "explication": "`x = 0` n'est pas une comparaison mais une **affectation** : `x` reçoit 0, et l'expression vaut 0 (faux). On passe donc dans le `else`, qui affiche la nouvelle valeur de `x` : **x=0**.",
    "vals": {
-    "X": "88"
+    "X": "46"
    },
    "variantes": [
     {
-     "X": "88"
+     "X": "46"
     },
     {
-     "X": "23"
+     "X": "53"
     },
     {
-     "X": "79"
-    },
-    {
-     "X": "20"
-    },
-    {
-     "X": "66"
+     "X": "34"
     },
     {
      "X": "99"
     },
     {
-     "X": "89"
+     "X": "45"
     },
     {
-     "X": "98"
+     "X": "5"
+    },
+    {
+     "X": "51"
+    },
+    {
+     "X": "11"
     }
    ]
   },
@@ -4625,7 +4625,7 @@
    "notion": "4.1",
    "origine": "generee",
    "titre": "Tarif du cinéma",
-   "enonce": "Écris un programme qui lit un âge et affiche le prix de la place de cinéma : `5` pour moins de 12 ans, `7` de 12 à 25 ans **ou** à partir de 65 ans, `10` sinon.\n\n**Exemple**\n```text\nEntrée :\n[[A]]\nSortie :\n[[S3_0]]\n```",
+   "enonce": "Le but : enchaîner des conditions avec `else if`, dont une contient un « ou ».\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. un âge.\n\n**Ce qu'il affiche** : le prix de la place de cinéma : `5` pour moins de 12 ans ; `7` de 12 à 25 ans **ou** à partir de 65 ans ; `10` sinon.\n\n**Exemple**\n```text\nEntrée :\n[[A]]\nSortie :\n[[S3_0]]\n```",
    "guidage": "**Plan** : 1. traiter le cas le plus strict d'abord (`age < 12`) → 2. `else if` pour le tarif réduit → 3. `else` pour le plein tarif.\n\n**À retenir** : le tarif réduit combine deux conditions avec `||` (OU).",
    "duree": 5,
    "etapes": [
@@ -4661,7 +4661,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Premier jalon : lis un âge et affiche `5` s'il est inférieur à 12, `10` sinon (un seul `if / else`).",
+     "consigne": "Premier jalon, deux tarifs seulement :\n1. lis l'âge ;\n2. `if (age < 12)` → affiche `5` ;\n3. `else` → affiche `10`.",
      "question": "`5` ou `10`.",
      "verif": {
       "mode": "c",
@@ -4690,7 +4690,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Intercale un `else if` pour le tarif réduit (`7`) entre le `if` et le `else`.",
+     "consigne": "Ajoute le tarif réduit :\n1. entre le `if` et le `else`, ajoute `else if (age <= 25 || age >= 65)` → affiche `7` ;\n2. le reste ne change pas.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -4733,15 +4733,15 @@
     }
    ],
    "vals": {
-    "A0": "50",
-    "A": "15",
-    "B": "32",
-    "P0": "10",
-    "EXP": "50 ans, entre 26 et 64 ans : plein tarif **10**.",
+    "A0": "71",
+    "A": "42",
+    "B": "63",
+    "P0": "7",
+    "EXP": "71 ans, 65 ans ou plus : tarif réduit **7**.",
     "S2_0": "10",
     "S2_1": "10",
     "S2_2": "10",
-    "S3_0": "7",
+    "S3_0": "10",
     "S3_1": "7",
     "S3_2": "7",
     "S3_3": "10",
@@ -4750,11 +4750,43 @@
    },
    "variantes": [
     {
-     "A0": "50",
-     "A": "15",
-     "B": "32",
-     "P0": "10",
-     "EXP": "50 ans, entre 26 et 64 ans : plein tarif **10**.",
+     "A0": "71",
+     "A": "42",
+     "B": "63",
+     "P0": "7",
+     "EXP": "71 ans, 65 ans ou plus : tarif réduit **7**.",
+     "S2_0": "10",
+     "S2_1": "10",
+     "S2_2": "10",
+     "S3_0": "10",
+     "S3_1": "7",
+     "S3_2": "7",
+     "S3_3": "10",
+     "S3_4": "7",
+     "S3_5": "10"
+    },
+    {
+     "A0": "5",
+     "A": "42",
+     "B": "56",
+     "P0": "5",
+     "EXP": "5 ans, moins de 12 ans : **5**.",
+     "S2_0": "10",
+     "S2_1": "10",
+     "S2_2": "10",
+     "S3_0": "10",
+     "S3_1": "7",
+     "S3_2": "7",
+     "S3_3": "10",
+     "S3_4": "7",
+     "S3_5": "10"
+    },
+    {
+     "A0": "15",
+     "A": "12",
+     "B": "50",
+     "P0": "7",
+     "EXP": "15 ans, entre 12 et 25 ans : tarif réduit **7**.",
      "S2_0": "10",
      "S2_1": "10",
      "S2_2": "10",
@@ -4766,111 +4798,79 @@
      "S3_5": "10"
     },
     {
-     "A0": "48",
-     "A": "45",
+     "A0": "77",
+     "A": "50",
+     "B": "35",
+     "P0": "7",
+     "EXP": "77 ans, 65 ans ou plus : tarif réduit **7**.",
+     "S2_0": "10",
+     "S2_1": "10",
+     "S2_2": "10",
+     "S3_0": "10",
+     "S3_1": "7",
+     "S3_2": "7",
+     "S3_3": "10",
+     "S3_4": "7",
+     "S3_5": "10"
+    },
+    {
+     "A0": "10",
+     "A": "38",
+     "B": "42",
+     "P0": "5",
+     "EXP": "10 ans, moins de 12 ans : **5**.",
+     "S2_0": "10",
+     "S2_1": "10",
+     "S2_2": "10",
+     "S3_0": "10",
+     "S3_1": "7",
+     "S3_2": "7",
+     "S3_3": "10",
+     "S3_4": "7",
+     "S3_5": "10"
+    },
+    {
+     "A0": "36",
+     "A": "48",
+     "B": "36",
+     "P0": "10",
+     "EXP": "36 ans, entre 26 et 64 ans : plein tarif **10**.",
+     "S2_0": "10",
+     "S2_1": "10",
+     "S2_2": "10",
+     "S3_0": "10",
+     "S3_1": "7",
+     "S3_2": "7",
+     "S3_3": "10",
+     "S3_4": "7",
+     "S3_5": "10"
+    },
+    {
+     "A0": "8",
+     "A": "71",
+     "B": "33",
+     "P0": "5",
+     "EXP": "8 ans, moins de 12 ans : **5**.",
+     "S2_0": "10",
+     "S2_1": "10",
+     "S2_2": "10",
+     "S3_0": "7",
+     "S3_1": "7",
+     "S3_2": "7",
+     "S3_3": "10",
+     "S3_4": "7",
+     "S3_5": "10"
+    },
+    {
+     "A0": "47",
+     "A": "29",
      "B": "58",
      "P0": "10",
-     "EXP": "48 ans, entre 26 et 64 ans : plein tarif **10**.",
+     "EXP": "47 ans, entre 26 et 64 ans : plein tarif **10**.",
      "S2_0": "10",
      "S2_1": "10",
      "S2_2": "10",
      "S3_0": "10",
-     "S3_1": "7",
-     "S3_2": "7",
-     "S3_3": "10",
-     "S3_4": "7",
-     "S3_5": "10"
-    },
-    {
-     "A0": "46",
-     "A": "8",
-     "B": "44",
-     "P0": "10",
-     "EXP": "46 ans, entre 26 et 64 ans : plein tarif **10**.",
-     "S2_0": "5",
-     "S2_1": "10",
-     "S2_2": "10",
-     "S3_0": "5",
-     "S3_1": "7",
-     "S3_2": "7",
-     "S3_3": "10",
-     "S3_4": "7",
-     "S3_5": "10"
-    },
-    {
-     "A0": "44",
-     "A": "35",
-     "B": "59",
-     "P0": "10",
-     "EXP": "44 ans, entre 26 et 64 ans : plein tarif **10**.",
-     "S2_0": "10",
-     "S2_1": "10",
-     "S2_2": "10",
-     "S3_0": "10",
-     "S3_1": "7",
-     "S3_2": "7",
-     "S3_3": "10",
-     "S3_4": "7",
-     "S3_5": "10"
-    },
-    {
-     "A0": "9",
-     "A": "33",
-     "B": "45",
-     "P0": "5",
-     "EXP": "9 ans, moins de 12 ans : **5**.",
-     "S2_0": "10",
-     "S2_1": "10",
-     "S2_2": "10",
-     "S3_0": "10",
-     "S3_1": "7",
-     "S3_2": "7",
-     "S3_3": "10",
-     "S3_4": "7",
-     "S3_5": "10"
-    },
-    {
-     "A0": "31",
-     "A": "56",
-     "B": "54",
-     "P0": "10",
-     "EXP": "31 ans, entre 26 et 64 ans : plein tarif **10**.",
-     "S2_0": "10",
-     "S2_1": "10",
-     "S2_2": "10",
-     "S3_0": "10",
-     "S3_1": "7",
-     "S3_2": "7",
-     "S3_3": "10",
-     "S3_4": "7",
-     "S3_5": "10"
-    },
-    {
-     "A0": "17",
-     "A": "76",
-     "B": "31",
-     "P0": "7",
-     "EXP": "17 ans, entre 12 et 25 ans : tarif réduit **7**.",
-     "S2_0": "10",
-     "S2_1": "10",
-     "S2_2": "10",
-     "S3_0": "7",
-     "S3_1": "7",
-     "S3_2": "7",
-     "S3_3": "10",
-     "S3_4": "7",
-     "S3_5": "10"
-    },
-    {
-     "A0": "29",
-     "A": "88",
-     "B": "55",
-     "P0": "10",
-     "EXP": "29 ans, entre 26 et 64 ans : plein tarif **10**.",
-     "S2_0": "10",
-     "S2_1": "10",
-     "S2_2": "10",
-     "S3_0": "7",
      "S3_1": "7",
      "S3_2": "7",
      "S3_3": "10",
@@ -4885,7 +4885,7 @@
    "notion": "4.2",
    "origine": "generee",
    "titre": "Jour de la semaine",
-   "enonce": "Écris un programme qui lit un numéro de 1 à 7 et affiche le jour correspondant en minuscules (`lundi`, `mardi`, …, `dimanche`), ou `invalide` pour tout autre nombre. Utilise un `switch`.\n\n**Exemple**\n```text\nEntrée :\n[[N]]\nSortie :\n[[J]]\n```",
+   "enonce": "Le but : choisir parmi plusieurs valeurs avec un `switch`.\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. un numéro (un entier).\n\n**Ce qu'il affiche** : le jour correspondant en minuscules (`1` → `lundi`, …, `7` → `dimanche`), ou `invalide` pour tout autre nombre.\n\n**Exemple**\n```text\nEntrée :\n[[N]]\nSortie :\n[[J]]\n```",
    "guidage": "**Plan** : un `switch (j)` ; un `case` par jour, chacun terminé par `break` ; `default` pour les autres nombres.",
    "duree": 5,
    "etapes": [
@@ -4924,7 +4924,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Premier jalon : lis un numéro et, avec un `switch`, affiche `lundi`, `mardi` ou `mercredi` pour 1, 2 ou 3, et `invalide` sinon.",
+     "consigne": "Premier jalon, trois jours :\n1. lis le numéro dans `int n` ;\n2. `switch (n)` avec `case 1:`, `case 2:`, `case 3:` qui affichent `lundi`, `mardi`, `mercredi`, chacun suivi de `break;` ;\n3. `default:` affiche `invalide`.",
      "question": "Trois jours + `default`.",
      "verif": {
       "mode": "c",
@@ -4963,7 +4963,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Complète avec les quatre autres jours : 4 `jeudi`, 5 `vendredi`, 6 `samedi`, 7 `dimanche`.",
+     "consigne": "Complète :\n1. ajoute `case 4:` à `case 7:` (`jeudi`, `vendredi`, `samedi`, `dimanche`), chacun avec son `break;` ;\n2. garde le `default:`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -5007,14 +5007,14 @@
     }
    ],
    "vals": {
-    "N": "3",
-    "J": "mercredi",
-    "M": "13",
+    "N": "1",
+    "J": "lundi",
+    "M": "11",
     "S2_0": "lundi",
     "S2_1": "mercredi",
     "S2_2": "invalide",
     "S2_3": "invalide",
-    "S3_0": "mercredi",
+    "S3_0": "lundi",
     "S3_1": "lundi",
     "S3_2": "dimanche",
     "S3_3": "invalide",
@@ -5022,14 +5022,14 @@
    },
    "variantes": [
     {
-     "N": "3",
-     "J": "mercredi",
-     "M": "13",
+     "N": "1",
+     "J": "lundi",
+     "M": "11",
      "S2_0": "lundi",
      "S2_1": "mercredi",
      "S2_2": "invalide",
      "S2_3": "invalide",
-     "S3_0": "mercredi",
+     "S3_0": "lundi",
      "S3_1": "lundi",
      "S3_2": "dimanche",
      "S3_3": "invalide",
@@ -5038,26 +5038,12 @@
     {
      "N": "3",
      "J": "mercredi",
-     "M": "10",
+     "M": "20",
      "S2_0": "lundi",
      "S2_1": "mercredi",
      "S2_2": "invalide",
      "S2_3": "invalide",
      "S3_0": "mercredi",
-     "S3_1": "lundi",
-     "S3_2": "dimanche",
-     "S3_3": "invalide",
-     "S3_4": "invalide"
-    },
-    {
-     "N": "2",
-     "J": "mardi",
-     "M": "8",
-     "S2_0": "lundi",
-     "S2_1": "mercredi",
-     "S2_2": "invalide",
-     "S2_3": "invalide",
-     "S3_0": "mardi",
      "S3_1": "lundi",
      "S3_2": "dimanche",
      "S3_3": "invalide",
@@ -5066,7 +5052,7 @@
     {
      "N": "4",
      "J": "jeudi",
-     "M": "10",
+     "M": "17",
      "S2_0": "lundi",
      "S2_1": "mercredi",
      "S2_2": "invalide",
@@ -5078,28 +5064,42 @@
      "S3_4": "invalide"
     },
     {
-     "N": "2",
-     "J": "mardi",
-     "M": "16",
+     "N": "1",
+     "J": "lundi",
+     "M": "18",
      "S2_0": "lundi",
      "S2_1": "mercredi",
      "S2_2": "invalide",
      "S2_3": "invalide",
-     "S3_0": "mardi",
+     "S3_0": "lundi",
      "S3_1": "lundi",
      "S3_2": "dimanche",
      "S3_3": "invalide",
      "S3_4": "invalide"
     },
     {
-     "N": "5",
-     "J": "vendredi",
-     "M": "12",
+     "N": "1",
+     "J": "lundi",
+     "M": "19",
      "S2_0": "lundi",
      "S2_1": "mercredi",
      "S2_2": "invalide",
      "S2_3": "invalide",
-     "S3_0": "vendredi",
+     "S3_0": "lundi",
+     "S3_1": "lundi",
+     "S3_2": "dimanche",
+     "S3_3": "invalide",
+     "S3_4": "invalide"
+    },
+    {
+     "N": "4",
+     "J": "jeudi",
+     "M": "15",
+     "S2_0": "lundi",
+     "S2_1": "mercredi",
+     "S2_2": "invalide",
+     "S2_3": "invalide",
+     "S3_0": "jeudi",
      "S3_1": "lundi",
      "S3_2": "dimanche",
      "S3_3": "invalide",
@@ -5108,7 +5108,7 @@
     {
      "N": "7",
      "J": "dimanche",
-     "M": "13",
+     "M": "10",
      "S2_0": "lundi",
      "S2_1": "mercredi",
      "S2_2": "invalide",
@@ -5120,14 +5120,14 @@
      "S3_4": "invalide"
     },
     {
-     "N": "7",
-     "J": "dimanche",
-     "M": "20",
+     "N": "6",
+     "J": "samedi",
+     "M": "17",
      "S2_0": "lundi",
      "S2_1": "mercredi",
      "S2_2": "invalide",
      "S2_3": "invalide",
-     "S3_0": "dimanche",
+     "S3_0": "samedi",
      "S3_1": "lundi",
      "S3_2": "dimanche",
      "S3_3": "invalide",
@@ -5141,7 +5141,7 @@
    "notion": "4.2",
    "origine": "generee",
    "titre": "Le switch bavard",
-   "enonce": "Ce programme doit afficher **un seul** mot selon le chiffre lu : `un`, `deux`, `trois`, sinon `autre`. Avec `1`, il en affiche pourtant quatre.\n```c\n#include <stdio.h>\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    switch (n) {\n        case 1: printf(\"un\\n\");\n        case 2: printf(\"deux\\n\");\n        case 3: printf(\"trois\\n\");\n        default: printf(\"autre\\n\");\n    }\n    return 0;\n}\n```",
+   "enonce": "Ce programme doit afficher **un seul** mot selon le chiffre lu : `un`, `deux`, `trois`, sinon `autre`. Avec `1`, il en affiche pourtant quatre.\n```c\n#include <stdio.h>\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    switch (n) {\n        case 1: printf(\"un\\n\");\n        case 2: printf(\"deux\\n\");\n        case 3: printf(\"trois\\n\");\n        default: printf(\"autre\\n\");\n    }\n    return 0;\n}\n```\n\n**À corriger** : le `switch`, pour qu'un seul mot s'affiche.",
    "guidage": "**Diagnostic** : 1. combien de mots s'affichent pour `n = 1` ? → 2. d'où viennent les trois autres ? → 3. corriger la fin de chaque `case`.",
    "duree": 3,
    "etapes": [
@@ -5178,7 +5178,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Corrige le programme : ajoute un `break;` à la fin de chaque `case`, pour qu'il n'affiche **qu'un seul** mot.",
+     "consigne": "**À faire** :\n1. à la fin des lignes `case 1`, `case 2` et `case 3`, ajoute `break;` ;\n2. exécute avec plusieurs chiffres : un seul mot doit s'afficher.",
      "question": "Corrige le programme.",
      "verif": {
       "mode": "c",
@@ -5212,9 +5212,9 @@
     }
    ],
    "vals": {
-    "N": "1",
-    "M": "26",
-    "NB": "4",
+    "N": "2",
+    "M": "75",
+    "NB": "3",
     "S2_0": "un",
     "S2_1": "deux",
     "S2_2": "trois",
@@ -5222,8 +5222,26 @@
    },
    "variantes": [
     {
+     "N": "2",
+     "M": "75",
+     "NB": "3",
+     "S2_0": "un",
+     "S2_1": "deux",
+     "S2_2": "trois",
+     "S2_3": "autre"
+    },
+    {
+     "N": "2",
+     "M": "85",
+     "NB": "3",
+     "S2_0": "un",
+     "S2_1": "deux",
+     "S2_2": "trois",
+     "S2_3": "autre"
+    },
+    {
      "N": "1",
-     "M": "26",
+     "M": "33",
      "NB": "4",
      "S2_0": "un",
      "S2_1": "deux",
@@ -5231,36 +5249,9 @@
      "S2_3": "autre"
     },
     {
-     "N": "2",
-     "M": "91",
-     "NB": "3",
-     "S2_0": "un",
-     "S2_1": "deux",
-     "S2_2": "trois",
-     "S2_3": "autre"
-    },
-    {
-     "N": "2",
-     "M": "23",
-     "NB": "3",
-     "S2_0": "un",
-     "S2_1": "deux",
-     "S2_2": "trois",
-     "S2_3": "autre"
-    },
-    {
-     "N": "2",
-     "M": "51",
-     "NB": "3",
-     "S2_0": "un",
-     "S2_1": "deux",
-     "S2_2": "trois",
-     "S2_3": "autre"
-    },
-    {
-     "N": "3",
-     "M": "32",
-     "NB": "2",
+     "N": "1",
+     "M": "54",
+     "NB": "4",
      "S2_0": "un",
      "S2_1": "deux",
      "S2_2": "trois",
@@ -5268,7 +5259,7 @@
     },
     {
      "N": "1",
-     "M": "39",
+     "M": "88",
      "NB": "4",
      "S2_0": "un",
      "S2_1": "deux",
@@ -5277,7 +5268,7 @@
     },
     {
      "N": "3",
-     "M": "65",
+     "M": "33",
      "NB": "2",
      "S2_0": "un",
      "S2_1": "deux",
@@ -5286,7 +5277,16 @@
     },
     {
      "N": "2",
-     "M": "53",
+     "M": "56",
+     "NB": "3",
+     "S2_0": "un",
+     "S2_1": "deux",
+     "S2_2": "trois",
+     "S2_3": "autre"
+    },
+    {
+     "N": "2",
+     "M": "37",
      "NB": "3",
      "S2_0": "un",
      "S2_1": "deux",
@@ -5301,7 +5301,7 @@
    "notion": "4.1",
    "origine": "generee",
    "titre": "Toujours « non nul »",
-   "enonce": "Ce programme doit afficher `nul` si l'entier lu vaut 0, `non nul` sinon. Il se trompe toujours.\n```c\n#include <stdio.h>\n\nint main(void) {\n    int x;\n    scanf(\"%d\", &x);\n    if (x = 0) {\n        printf(\"nul\\n\");\n    } else {\n        printf(\"non nul\\n\");\n    }\n    return 0;\n}\n```",
+   "enonce": "Ce programme doit afficher `nul` si l'entier lu vaut 0, `non nul` sinon. Il se trompe toujours.\n```c\n#include <stdio.h>\n\nint main(void) {\n    int x;\n    scanf(\"%d\", &x);\n    if (x = 0) {\n        printf(\"nul\\n\");\n    } else {\n        printf(\"non nul\\n\");\n    }\n    return 0;\n}\n```\n\n**À corriger** : la condition du `if`.",
    "guidage": "**Diagnostic** : 1. que fait `x = 0` dans la condition ? → 2. quel opérateur teste l'égalité ? → 3. corriger.\n\n**Piège** : `=` affecte, `==` compare.",
    "duree": 3,
    "etapes": [
@@ -5339,7 +5339,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Corrige la condition du `if` (un seul caractère à ajouter) pour que le programme affiche `nul` seulement quand `x` vaut 0.",
+     "consigne": "**À faire** :\n1. dans `if (x = 0)`, remplace `=` (qui **affecte**) par `==` (qui **compare**) ;\n2. ne change rien d'autre.",
      "question": "Corrige le programme.",
      "verif": {
       "mode": "c",
@@ -5369,65 +5369,65 @@
     }
    ],
    "vals": {
-    "A": "30",
-    "B": "-60",
+    "A": "39",
+    "B": "-7",
     "S2_0": "nul",
     "S2_1": "non nul",
     "S2_2": "non nul"
    },
    "variantes": [
     {
-     "A": "30",
-     "B": "-60",
+     "A": "39",
+     "B": "-7",
      "S2_0": "nul",
      "S2_1": "non nul",
      "S2_2": "non nul"
     },
     {
-     "A": "29",
-     "B": "-37",
+     "A": "93",
+     "B": "-30",
      "S2_0": "nul",
      "S2_1": "non nul",
      "S2_2": "non nul"
     },
     {
-     "A": "79",
-     "B": "-94",
+     "A": "95",
+     "B": "-44",
      "S2_0": "nul",
      "S2_1": "non nul",
      "S2_2": "non nul"
     },
     {
-     "A": "41",
-     "B": "-53",
+     "A": "93",
+     "B": "-7",
      "S2_0": "nul",
      "S2_1": "non nul",
      "S2_2": "non nul"
     },
     {
-     "A": "77",
-     "B": "-76",
+     "A": "24",
+     "B": "-71",
      "S2_0": "nul",
      "S2_1": "non nul",
      "S2_2": "non nul"
     },
     {
-     "A": "91",
-     "B": "-41",
+     "A": "58",
+     "B": "-87",
      "S2_0": "nul",
      "S2_1": "non nul",
      "S2_2": "non nul"
     },
     {
-     "A": "44",
-     "B": "-15",
+     "A": "67",
+     "B": "-67",
      "S2_0": "nul",
      "S2_1": "non nul",
      "S2_2": "non nul"
     },
     {
-     "A": "30",
-     "B": "-77",
+     "A": "19",
+     "B": "-97",
      "S2_0": "nul",
      "S2_1": "non nul",
      "S2_2": "non nul"
@@ -5440,7 +5440,7 @@
    "notion": "4.3",
    "origine": "td",
    "titre": "Table de multiplication",
-   "enonce": "Écris un programme qui lit `n` et affiche sa table de multiplication : `n×1`, `n×2`, …, `n×10`, un résultat par ligne. (TD Premiers pas, exercice 7)\n\n**Exemple**\n```text\nEntrée :\n[[N]]\nSortie :\n[[TAB]]\n```",
+   "enonce": "Le but : remplacer des lignes répétitives par une boucle `for`. (TD Premiers pas, exercice 7)\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. un entier `n`.\n\n**Ce qu'il affiche** : la table de multiplication de `n` : `n×1`, `n×2`, …, `n×10`, un résultat par ligne.\n\n**Exemple**\n```text\nEntrée :\n[[N]]\nSortie :\n[[TAB]]\n```",
    "guidage": "**Plan** : 1. repérer ce qui change à chaque ligne (le multiplicateur de 1 à 10) → 2. une boucle `for` pour le faire varier → 3. afficher `n * i`.",
    "duree": 4,
    "etapes": [
@@ -5476,7 +5476,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Premier jalon, **sans boucle** : lis `n` et affiche `n×1`, `n×2` et `n×3`, un résultat par ligne (trois `printf`). Tu vas voir que c'est répétitif…",
+     "consigne": "Premier jalon, **sans boucle** :\n1. lis `n` ;\n2. trois `printf` à la suite : `n * 1`, `n * 2`, `n * 3`, chacun suivi de `\\n`.",
      "question": "Trois lignes à la main.",
      "verif": {
       "mode": "c",
@@ -5501,7 +5501,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Remplace ces lignes répétitives par **une boucle `for`** : un seul `printf(\"%d\\n\", n * i);` dans la boucle, avec `i` de 1 à 10.",
+     "consigne": "Remplace les trois `printf` par une boucle :\n1. `for (int i = 1; i <= 10; i++)` ;\n2. dans la boucle, un seul `printf(\"%d\\n\", n * i);`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -5528,88 +5528,55 @@
     }
    ],
    "vals": {
-    "N": "9",
-    "N2": "18",
-    "K": "9",
-    "NK": "81",
-    "TAB": "9\n18\n27\n36\n45\n54\n63\n72\n81\n90",
-    "S2_0": "9\n18\n27",
-    "S2_1": "18\n36\n54",
-    "S3_0": "9\n18\n27\n36\n45\n54\n63\n72\n81\n90",
-    "S3_1": "18\n36\n54\n72\n90\n108\n126\n144\n162\n180"
+    "N": "8",
+    "N2": "20",
+    "K": "5",
+    "NK": "40",
+    "TAB": "8\n16\n24\n32\n40\n48\n56\n64\n72\n80",
+    "S2_0": "8\n16\n24",
+    "S2_1": "20\n40\n60",
+    "S3_0": "8\n16\n24\n32\n40\n48\n56\n64\n72\n80",
+    "S3_1": "20\n40\n60\n80\n100\n120\n140\n160\n180\n200"
    },
    "variantes": [
     {
-     "N": "9",
-     "N2": "18",
-     "K": "9",
-     "NK": "81",
-     "TAB": "9\n18\n27\n36\n45\n54\n63\n72\n81\n90",
-     "S2_0": "9\n18\n27",
-     "S2_1": "18\n36\n54",
-     "S3_0": "9\n18\n27\n36\n45\n54\n63\n72\n81\n90",
-     "S3_1": "18\n36\n54\n72\n90\n108\n126\n144\n162\n180"
-    },
-    {
-     "N": "7",
-     "N2": "17",
-     "K": "6",
-     "NK": "42",
-     "TAB": "7\n14\n21\n28\n35\n42\n49\n56\n63\n70",
-     "S2_0": "7\n14\n21",
-     "S2_1": "17\n34\n51",
-     "S3_0": "7\n14\n21\n28\n35\n42\n49\n56\n63\n70",
-     "S3_1": "17\n34\n51\n68\n85\n102\n119\n136\n153\n170"
-    },
-    {
-     "N": "4",
+     "N": "8",
      "N2": "20",
-     "K": "6",
-     "NK": "24",
-     "TAB": "4\n8\n12\n16\n20\n24\n28\n32\n36\n40",
-     "S2_0": "4\n8\n12",
+     "K": "5",
+     "NK": "40",
+     "TAB": "8\n16\n24\n32\n40\n48\n56\n64\n72\n80",
+     "S2_0": "8\n16\n24",
      "S2_1": "20\n40\n60",
-     "S3_0": "4\n8\n12\n16\n20\n24\n28\n32\n36\n40",
+     "S3_0": "8\n16\n24\n32\n40\n48\n56\n64\n72\n80",
      "S3_1": "20\n40\n60\n80\n100\n120\n140\n160\n180\n200"
     },
     {
+     "N": "4",
+     "N2": "24",
+     "K": "7",
+     "NK": "28",
+     "TAB": "4\n8\n12\n16\n20\n24\n28\n32\n36\n40",
+     "S2_0": "4\n8\n12",
+     "S2_1": "24\n48\n72",
+     "S3_0": "4\n8\n12\n16\n20\n24\n28\n32\n36\n40",
+     "S3_1": "24\n48\n72\n96\n120\n144\n168\n192\n216\n240"
+    },
+    {
      "N": "5",
-     "N2": "23",
+     "N2": "24",
      "K": "4",
      "NK": "20",
      "TAB": "5\n10\n15\n20\n25\n30\n35\n40\n45\n50",
      "S2_0": "5\n10\n15",
-     "S2_1": "23\n46\n69",
+     "S2_1": "24\n48\n72",
      "S3_0": "5\n10\n15\n20\n25\n30\n35\n40\n45\n50",
-     "S3_1": "23\n46\n69\n92\n115\n138\n161\n184\n207\n230"
-    },
-    {
-     "N": "11",
-     "N2": "17",
-     "K": "9",
-     "NK": "99",
-     "TAB": "11\n22\n33\n44\n55\n66\n77\n88\n99\n110",
-     "S2_0": "11\n22\n33",
-     "S2_1": "17\n34\n51",
-     "S3_0": "11\n22\n33\n44\n55\n66\n77\n88\n99\n110",
-     "S3_1": "17\n34\n51\n68\n85\n102\n119\n136\n153\n170"
-    },
-    {
-     "N": "3",
-     "N2": "19",
-     "K": "3",
-     "NK": "9",
-     "TAB": "3\n6\n9\n12\n15\n18\n21\n24\n27\n30",
-     "S2_0": "3\n6\n9",
-     "S2_1": "19\n38\n57",
-     "S3_0": "3\n6\n9\n12\n15\n18\n21\n24\n27\n30",
-     "S3_1": "19\n38\n57\n76\n95\n114\n133\n152\n171\n190"
+     "S3_1": "24\n48\n72\n96\n120\n144\n168\n192\n216\n240"
     },
     {
      "N": "12",
      "N2": "13",
-     "K": "5",
-     "NK": "60",
+     "K": "6",
+     "NK": "72",
      "TAB": "12\n24\n36\n48\n60\n72\n84\n96\n108\n120",
      "S2_0": "12\n24\n36",
      "S2_1": "13\n26\n39",
@@ -5617,15 +5584,48 @@
      "S3_1": "13\n26\n39\n52\n65\n78\n91\n104\n117\n130"
     },
     {
-     "N": "12",
-     "N2": "14",
+     "N": "6",
+     "N2": "17",
+     "K": "4",
+     "NK": "24",
+     "TAB": "6\n12\n18\n24\n30\n36\n42\n48\n54\n60",
+     "S2_0": "6\n12\n18",
+     "S2_1": "17\n34\n51",
+     "S3_0": "6\n12\n18\n24\n30\n36\n42\n48\n54\n60",
+     "S3_1": "17\n34\n51\n68\n85\n102\n119\n136\n153\n170"
+    },
+    {
+     "N": "3",
+     "N2": "24",
+     "K": "6",
+     "NK": "18",
+     "TAB": "3\n6\n9\n12\n15\n18\n21\n24\n27\n30",
+     "S2_0": "3\n6\n9",
+     "S2_1": "24\n48\n72",
+     "S3_0": "3\n6\n9\n12\n15\n18\n21\n24\n27\n30",
+     "S3_1": "24\n48\n72\n96\n120\n144\n168\n192\n216\n240"
+    },
+    {
+     "N": "4",
+     "N2": "25",
      "K": "3",
-     "NK": "36",
-     "TAB": "12\n24\n36\n48\n60\n72\n84\n96\n108\n120",
-     "S2_0": "12\n24\n36",
-     "S2_1": "14\n28\n42",
-     "S3_0": "12\n24\n36\n48\n60\n72\n84\n96\n108\n120",
-     "S3_1": "14\n28\n42\n56\n70\n84\n98\n112\n126\n140"
+     "NK": "12",
+     "TAB": "4\n8\n12\n16\n20\n24\n28\n32\n36\n40",
+     "S2_0": "4\n8\n12",
+     "S2_1": "25\n50\n75",
+     "S3_0": "4\n8\n12\n16\n20\n24\n28\n32\n36\n40",
+     "S3_1": "25\n50\n75\n100\n125\n150\n175\n200\n225\n250"
+    },
+    {
+     "N": "11",
+     "N2": "16",
+     "K": "4",
+     "NK": "44",
+     "TAB": "11\n22\n33\n44\n55\n66\n77\n88\n99\n110",
+     "S2_0": "11\n22\n33",
+     "S2_1": "16\n32\n48",
+     "S3_0": "11\n22\n33\n44\n55\n66\n77\n88\n99\n110",
+     "S3_1": "16\n32\n48\n64\n80\n96\n112\n128\n144\n160"
     }
    ]
   },
@@ -5635,7 +5635,7 @@
    "notion": "4.3",
    "origine": "td",
    "titre": "Compter les pairs",
-   "enonce": "Écris un programme qui lit `N` et affiche le **nombre** d'entiers pairs entre 1 et `N` (inclus). (TD Premiers pas, exercice 3)\n\n**Exemple**\n```text\nEntrée :\n[[N]]\nSortie :\n[[R]]\n```",
+   "enonce": "Le but : compter avec une boucle et une condition. (TD Premiers pas, exercice 3)\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. un entier `N`.\n\n**Ce qu'il affiche** : le **nombre** d'entiers pairs entre 1 et `N` (inclus).\n\n**Exemple**\n```text\nEntrée :\n[[N]]\nSortie :\n[[R]]\n```",
    "guidage": "**Plan** : 1. parcourir 1 … N → 2. tester si `i` est pair → 3. compter dans `nb` → 4. afficher `nb` à la fin.",
    "duree": 4,
    "etapes": [
@@ -5671,7 +5671,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Premier jalon : lis `N` et **affiche** les entiers pairs de 1 à `N`, séparés par une espace.",
+     "consigne": "Premier jalon, on affiche avant de compter :\n1. lis `N` ;\n2. `for (int i = 1; i <= N; i++)` : si `i % 2 == 0`, affiche `i` suivi d'une espace.",
      "question": "Affiche les pairs.",
      "verif": {
       "mode": "c",
@@ -5700,7 +5700,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Au lieu d'**afficher** chaque nombre pair, **compte-les** dans une variable `nb` (qui part de 0), et affiche seulement `nb` à la fin.",
+     "consigne": "Compte au lieu d'afficher :\n1. avant la boucle, `int nb = 0;` ;\n2. dans le `if`, remplace le `printf` par `nb++;` ;\n3. après la boucle, affiche `nb`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -5732,111 +5732,111 @@
    ],
    "vals": {
     "N": "22",
-    "N2": "86",
+    "N2": "97",
     "R": "11",
     "DER": "22",
     "S2_0": "2 4 6 8 10 12 14 16 18 20 22 ",
-    "S2_1": "2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 40 42 44 46 48 50 52 54 56 58 60 62 64 66 68 70 72 74 76 78 80 82 84 86 ",
+    "S2_1": "2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 40 42 44 46 48 50 52 54 56 58 60 62 64 66 68 70 72 74 76 78 80 82 84 86 88 90 92 94 96 ",
     "S2_2": "",
     "S3_0": "11",
-    "S3_1": "43",
+    "S3_1": "48",
     "S3_2": "0"
    },
    "variantes": [
     {
      "N": "22",
-     "N2": "86",
+     "N2": "97",
      "R": "11",
      "DER": "22",
      "S2_0": "2 4 6 8 10 12 14 16 18 20 22 ",
-     "S2_1": "2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 40 42 44 46 48 50 52 54 56 58 60 62 64 66 68 70 72 74 76 78 80 82 84 86 ",
+     "S2_1": "2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 40 42 44 46 48 50 52 54 56 58 60 62 64 66 68 70 72 74 76 78 80 82 84 86 88 90 92 94 96 ",
      "S2_2": "",
      "S3_0": "11",
-     "S3_1": "43",
+     "S3_1": "48",
      "S3_2": "0"
     },
     {
-     "N": "26",
-     "N2": "39",
-     "R": "13",
-     "DER": "26",
-     "S2_0": "2 4 6 8 10 12 14 16 18 20 22 24 26 ",
-     "S2_1": "2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 ",
+     "N": "24",
+     "N2": "79",
+     "R": "12",
+     "DER": "24",
+     "S2_0": "2 4 6 8 10 12 14 16 18 20 22 24 ",
+     "S2_1": "2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 40 42 44 46 48 50 52 54 56 58 60 62 64 66 68 70 72 74 76 78 ",
      "S2_2": "",
-     "S3_0": "13",
-     "S3_1": "19",
+     "S3_0": "12",
+     "S3_1": "39",
      "S3_2": "0"
     },
     {
-     "N": "30",
-     "N2": "82",
-     "R": "15",
-     "DER": "30",
-     "S2_0": "2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 ",
-     "S2_1": "2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 40 42 44 46 48 50 52 54 56 58 60 62 64 66 68 70 72 74 76 78 80 82 ",
+     "N": "14",
+     "N2": "69",
+     "R": "7",
+     "DER": "14",
+     "S2_0": "2 4 6 8 10 12 14 ",
+     "S2_1": "2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 40 42 44 46 48 50 52 54 56 58 60 62 64 66 68 ",
      "S2_2": "",
-     "S3_0": "15",
-     "S3_1": "41",
+     "S3_0": "7",
+     "S3_1": "34",
      "S3_2": "0"
     },
     {
-     "N": "17",
-     "N2": "58",
-     "R": "8",
-     "DER": "16",
-     "S2_0": "2 4 6 8 10 12 14 16 ",
-     "S2_1": "2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 40 42 44 46 48 50 52 54 56 58 ",
-     "S2_2": "",
-     "S3_0": "8",
-     "S3_1": "29",
-     "S3_2": "0"
-    },
-    {
-     "N": "17",
-     "N2": "59",
-     "R": "8",
-     "DER": "16",
-     "S2_0": "2 4 6 8 10 12 14 16 ",
-     "S2_1": "2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 40 42 44 46 48 50 52 54 56 58 ",
-     "S2_2": "",
-     "S3_0": "8",
-     "S3_1": "29",
-     "S3_2": "0"
-    },
-    {
-     "N": "20",
-     "N2": "56",
+     "N": "21",
+     "N2": "40",
      "R": "10",
      "DER": "20",
      "S2_0": "2 4 6 8 10 12 14 16 18 20 ",
-     "S2_1": "2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 40 42 44 46 48 50 52 54 56 ",
+     "S2_1": "2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 40 ",
      "S2_2": "",
      "S3_0": "10",
-     "S3_1": "28",
+     "S3_1": "20",
+     "S3_2": "0"
+    },
+    {
+     "N": "11",
+     "N2": "51",
+     "R": "5",
+     "DER": "10",
+     "S2_0": "2 4 6 8 10 ",
+     "S2_1": "2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 40 42 44 46 48 50 ",
+     "S2_2": "",
+     "S3_0": "5",
+     "S3_1": "25",
      "S3_2": "0"
     },
     {
      "N": "19",
-     "N2": "91",
+     "N2": "81",
      "R": "9",
      "DER": "18",
      "S2_0": "2 4 6 8 10 12 14 16 18 ",
-     "S2_1": "2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 40 42 44 46 48 50 52 54 56 58 60 62 64 66 68 70 72 74 76 78 80 82 84 86 88 90 ",
+     "S2_1": "2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 40 42 44 46 48 50 52 54 56 58 60 62 64 66 68 70 72 74 76 78 80 ",
      "S2_2": "",
      "S3_0": "9",
-     "S3_1": "45",
+     "S3_1": "40",
      "S3_2": "0"
     },
     {
-     "N": "8",
-     "N2": "74",
-     "R": "4",
-     "DER": "8",
-     "S2_0": "2 4 6 8 ",
-     "S2_1": "2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 40 42 44 46 48 50 52 54 56 58 60 62 64 66 68 70 72 74 ",
+     "N": "16",
+     "N2": "83",
+     "R": "8",
+     "DER": "16",
+     "S2_0": "2 4 6 8 10 12 14 16 ",
+     "S2_1": "2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 40 42 44 46 48 50 52 54 56 58 60 62 64 66 68 70 72 74 76 78 80 82 ",
      "S2_2": "",
-     "S3_0": "4",
-     "S3_1": "37",
+     "S3_0": "8",
+     "S3_1": "41",
+     "S3_2": "0"
+    },
+    {
+     "N": "19",
+     "N2": "87",
+     "R": "9",
+     "DER": "18",
+     "S2_0": "2 4 6 8 10 12 14 16 18 ",
+     "S2_1": "2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 40 42 44 46 48 50 52 54 56 58 60 62 64 66 68 70 72 74 76 78 80 82 84 86 ",
+     "S2_2": "",
+     "S3_0": "9",
+     "S3_1": "43",
      "S3_2": "0"
     }
    ]
@@ -5847,7 +5847,7 @@
    "notion": "4.3",
    "origine": "td",
    "titre": "Suite de Fibonacci",
-   "enonce": "La suite de Fibonacci commence par 0 et 1, puis chaque terme est la somme des deux précédents : 0, 1, 1, 2, 3, 5, 8… Écris un programme qui lit `n` (1 ≤ n ≤ 40) et affiche les `n` premiers termes, séparés par des espaces. (TD Premiers pas, exercice 16)\n\n**Exemple**\n```text\nEntrée :\n[[N]]\nSortie :\n[[FIB]]\n```",
+   "enonce": "Le but : faire avancer deux variables à chaque tour de boucle. (TD Premiers pas, exercice 16)\n\n**La suite de Fibonacci** commence par 0 et 1 ; chaque terme suivant est la somme des deux précédents : 0, 1, 1, 2, 3, 5, 8…\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. un entier `n` (entre 1 et 40).\n\n**Ce qu'il affiche** : les `n` premiers termes, séparés par des espaces.\n\n**Exemple**\n```text\nEntrée :\n[[N]]\nSortie :\n[[FIB]]\n```",
    "guidage": "**Plan** : deux variables `a` et `b` contiennent les deux derniers termes. À chaque tour : afficher `a`, calculer `suivant = a + b`, puis décaler (`a` prend la valeur de `b`, `b` celle de `suivant`).",
    "duree": 6,
    "etapes": [
@@ -5899,7 +5899,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Premier jalon pour la structure : lis `n` et affiche `0 1 2 …` (les `n` premiers entiers) en affichant `a` puis en faisant `a++`, dans une boucle de `n` tours.",
+     "consigne": "Premier jalon, la structure de la boucle :\n1. lis `n` ; `int a = 0;` ;\n2. boucle de `n` tours : affiche `a` suivi d'une espace, puis `a++` ;\n3. tu dois obtenir `0 1 2 3 …`.",
      "question": "`a` avance de 1.",
      "verif": {
       "mode": "c",
@@ -5924,7 +5924,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Remplace `a++` par l'avancement de Fibonacci : ajoute `b = 1` au départ, puis à chaque tour calcule `suivant`, et décale `a` et `b`.",
+     "consigne": "Remplace `a++` par l'avancement de Fibonacci :\n1. ajoute `int b = 1;` à côté de `a` ;\n2. dans la boucle, après l'affichage de `a` : `int suivant = a + b;` puis `a = b;` puis `b = suivant;`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -5955,140 +5955,140 @@
     }
    ],
    "vals": {
-    "N": "6",
-    "N2": "17",
-    "K": "9",
-    "FIB": "0 1 1 2 3 5",
-    "DEBUT": "0 1 1 2 3 5 8 13 21",
-    "NEXT": "34",
-    "P1": "13",
-    "P2": "21",
-    "S3_0": "0 1 2 3 4 5 ",
+    "N": "8",
+    "N2": "20",
+    "K": "5",
+    "FIB": "0 1 1 2 3 5 8 13",
+    "DEBUT": "0 1 1 2 3",
+    "NEXT": "5",
+    "P1": "2",
+    "P2": "3",
+    "S3_0": "0 1 2 3 4 5 6 7 ",
     "S3_1": "0 ",
-    "S4_0": "0 1 1 2 3 5 ",
+    "S4_0": "0 1 1 2 3 5 8 13 ",
     "S4_1": "0 ",
-    "S4_2": "0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987 "
+    "S4_2": "0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987 1597 2584 4181 "
    },
    "variantes": [
     {
-     "N": "6",
-     "N2": "17",
-     "K": "9",
-     "FIB": "0 1 1 2 3 5",
-     "DEBUT": "0 1 1 2 3 5 8 13 21",
-     "NEXT": "34",
-     "P1": "13",
-     "P2": "21",
-     "S3_0": "0 1 2 3 4 5 ",
+     "N": "8",
+     "N2": "20",
+     "K": "5",
+     "FIB": "0 1 1 2 3 5 8 13",
+     "DEBUT": "0 1 1 2 3",
+     "NEXT": "5",
+     "P1": "2",
+     "P2": "3",
+     "S3_0": "0 1 2 3 4 5 6 7 ",
      "S3_1": "0 ",
-     "S4_0": "0 1 1 2 3 5 ",
+     "S4_0": "0 1 1 2 3 5 8 13 ",
      "S4_1": "0 ",
-     "S4_2": "0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987 "
+     "S4_2": "0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987 1597 2584 4181 "
     },
     {
-     "N": "12",
+     "N": "11",
+     "N2": "16",
+     "K": "8",
+     "FIB": "0 1 1 2 3 5 8 13 21 34 55",
+     "DEBUT": "0 1 1 2 3 5 8 13",
+     "NEXT": "21",
+     "P1": "8",
+     "P2": "13",
+     "S3_0": "0 1 2 3 4 5 6 7 8 9 10 ",
+     "S3_1": "0 ",
+     "S4_0": "0 1 1 2 3 5 8 13 21 34 55 ",
+     "S4_1": "0 ",
+     "S4_2": "0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 "
+    },
+    {
+     "N": "13",
      "N2": "23",
      "K": "9",
-     "FIB": "0 1 1 2 3 5 8 13 21 34 55 89",
+     "FIB": "0 1 1 2 3 5 8 13 21 34 55 89 144",
      "DEBUT": "0 1 1 2 3 5 8 13 21",
      "NEXT": "34",
      "P1": "13",
      "P2": "21",
-     "S3_0": "0 1 2 3 4 5 6 7 8 9 10 11 ",
+     "S3_0": "0 1 2 3 4 5 6 7 8 9 10 11 12 ",
      "S3_1": "0 ",
-     "S4_0": "0 1 1 2 3 5 8 13 21 34 55 89 ",
+     "S4_0": "0 1 1 2 3 5 8 13 21 34 55 89 144 ",
      "S4_1": "0 ",
      "S4_2": "0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987 1597 2584 4181 6765 10946 17711 "
     },
     {
      "N": "13",
      "N2": "16",
-     "K": "5",
-     "FIB": "0 1 1 2 3 5 8 13 21 34 55 89 144",
-     "DEBUT": "0 1 1 2 3",
-     "NEXT": "5",
-     "P1": "2",
-     "P2": "3",
-     "S3_0": "0 1 2 3 4 5 6 7 8 9 10 11 12 ",
-     "S3_1": "0 ",
-     "S4_0": "0 1 1 2 3 5 8 13 21 34 55 89 144 ",
-     "S4_1": "0 ",
-     "S4_2": "0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 "
-    },
-    {
-     "N": "13",
-     "N2": "20",
-     "K": "9",
-     "FIB": "0 1 1 2 3 5 8 13 21 34 55 89 144",
-     "DEBUT": "0 1 1 2 3 5 8 13 21",
-     "NEXT": "34",
-     "P1": "13",
-     "P2": "21",
-     "S3_0": "0 1 2 3 4 5 6 7 8 9 10 11 12 ",
-     "S3_1": "0 ",
-     "S4_0": "0 1 1 2 3 5 8 13 21 34 55 89 144 ",
-     "S4_1": "0 ",
-     "S4_2": "0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987 1597 2584 4181 "
-    },
-    {
-     "N": "7",
-     "N2": "15",
-     "K": "9",
-     "FIB": "0 1 1 2 3 5 8",
-     "DEBUT": "0 1 1 2 3 5 8 13 21",
-     "NEXT": "34",
-     "P1": "13",
-     "P2": "21",
-     "S3_0": "0 1 2 3 4 5 6 ",
-     "S3_1": "0 ",
-     "S4_0": "0 1 1 2 3 5 8 ",
-     "S4_1": "0 ",
-     "S4_2": "0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 "
-    },
-    {
-     "N": "11",
-     "N2": "17",
-     "K": "6",
-     "FIB": "0 1 1 2 3 5 8 13 21 34 55",
-     "DEBUT": "0 1 1 2 3 5",
-     "NEXT": "8",
-     "P1": "3",
-     "P2": "5",
-     "S3_0": "0 1 2 3 4 5 6 7 8 9 10 ",
-     "S3_1": "0 ",
-     "S4_0": "0 1 1 2 3 5 8 13 21 34 55 ",
-     "S4_1": "0 ",
-     "S4_2": "0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987 "
-    },
-    {
-     "N": "10",
-     "N2": "16",
-     "K": "5",
-     "FIB": "0 1 1 2 3 5 8 13 21 34",
-     "DEBUT": "0 1 1 2 3",
-     "NEXT": "5",
-     "P1": "2",
-     "P2": "3",
-     "S3_0": "0 1 2 3 4 5 6 7 8 9 ",
-     "S3_1": "0 ",
-     "S4_0": "0 1 1 2 3 5 8 13 21 34 ",
-     "S4_1": "0 ",
-     "S4_2": "0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 "
-    },
-    {
-     "N": "9",
-     "N2": "21",
      "K": "8",
-     "FIB": "0 1 1 2 3 5 8 13 21",
+     "FIB": "0 1 1 2 3 5 8 13 21 34 55 89 144",
      "DEBUT": "0 1 1 2 3 5 8 13",
      "NEXT": "21",
      "P1": "8",
      "P2": "13",
+     "S3_0": "0 1 2 3 4 5 6 7 8 9 10 11 12 ",
+     "S3_1": "0 ",
+     "S4_0": "0 1 1 2 3 5 8 13 21 34 55 89 144 ",
+     "S4_1": "0 ",
+     "S4_2": "0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 "
+    },
+    {
+     "N": "14",
+     "N2": "22",
+     "K": "7",
+     "FIB": "0 1 1 2 3 5 8 13 21 34 55 89 144 233",
+     "DEBUT": "0 1 1 2 3 5 8",
+     "NEXT": "13",
+     "P1": "5",
+     "P2": "8",
+     "S3_0": "0 1 2 3 4 5 6 7 8 9 10 11 12 13 ",
+     "S3_1": "0 ",
+     "S4_0": "0 1 1 2 3 5 8 13 21 34 55 89 144 233 ",
+     "S4_1": "0 ",
+     "S4_2": "0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987 1597 2584 4181 6765 10946 "
+    },
+    {
+     "N": "9",
+     "N2": "15",
+     "K": "5",
+     "FIB": "0 1 1 2 3 5 8 13 21",
+     "DEBUT": "0 1 1 2 3",
+     "NEXT": "5",
+     "P1": "2",
+     "P2": "3",
      "S3_0": "0 1 2 3 4 5 6 7 8 ",
      "S3_1": "0 ",
      "S4_0": "0 1 1 2 3 5 8 13 21 ",
      "S4_1": "0 ",
-     "S4_2": "0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987 1597 2584 4181 6765 "
+     "S4_2": "0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 "
+    },
+    {
+     "N": "8",
+     "N2": "23",
+     "K": "8",
+     "FIB": "0 1 1 2 3 5 8 13",
+     "DEBUT": "0 1 1 2 3 5 8 13",
+     "NEXT": "21",
+     "P1": "8",
+     "P2": "13",
+     "S3_0": "0 1 2 3 4 5 6 7 ",
+     "S3_1": "0 ",
+     "S4_0": "0 1 1 2 3 5 8 13 ",
+     "S4_1": "0 ",
+     "S4_2": "0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987 1597 2584 4181 6765 10946 17711 "
+    },
+    {
+     "N": "6",
+     "N2": "25",
+     "K": "5",
+     "FIB": "0 1 1 2 3 5",
+     "DEBUT": "0 1 1 2 3",
+     "NEXT": "5",
+     "P1": "2",
+     "P2": "3",
+     "S3_0": "0 1 2 3 4 5 ",
+     "S3_1": "0 ",
+     "S4_0": "0 1 1 2 3 5 ",
+     "S4_1": "0 ",
+     "S4_2": "0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987 1597 2584 4181 6765 10946 17711 28657 46368 "
     }
    ]
   },
@@ -6098,7 +6098,7 @@
    "notion": "4.3",
    "origine": "td",
    "titre": "Nombres premiers jusqu'à N",
-   "enonce": "Écris un programme qui lit `N` et affiche tous les nombres **premiers** inférieurs ou égaux à `N`, séparés par des espaces. (TD Premiers pas, exercice 14)\n\n**Exemple**\n```text\nEntrée :\n[[N]]\nSortie :\n[[PR]]\n```",
+   "enonce": "Le but : imbriquer deux boucles : une qui essaie chaque nombre, une qui cherche ses diviseurs. (TD Premiers pas, exercice 14)\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. un entier `N`.\n\n**Ce qu'il affiche** : tous les nombres premiers de 2 à `N`, séparés par des espaces.\n\n**Exemple**\n```text\nEntrée :\n[[N]]\nSortie :\n[[PR]]\n```",
    "guidage": "**Plan** : deux boucles imbriquées. L'extérieure essaie chaque candidat `k` de 2 à N ; l'intérieure cherche un diviseur `d` de `k` (jusqu'à $\\sqrt{k}$). Si elle n'en trouve aucun, `k` est premier : on l'affiche.",
    "duree": 7,
    "etapes": [
@@ -6150,7 +6150,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Premier jalon, pour un seul nombre : lis `n` (au moins 2) et affiche `1` s'il est premier, `0` sinon, avec un indicateur `premier` et la boucle sur `d`.",
+     "consigne": "Premier jalon, tester **un seul** nombre :\n1. lis `n` (au moins 2) ; `int premier = 1;` ;\n2. `for (int d = 2; d * d <= n; d++)` : si `n % d == 0`, `premier = 0;` ;\n3. affiche `premier` (1 ou 0).",
      "question": "Un nombre premier ?",
      "verif": {
       "mode": "c",
@@ -6183,7 +6183,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Généralise : une boucle extérieure essaie **chaque** `k` de 2 à `N`, refait le test du jalon précédent, et affiche `k` s'il est premier.",
+     "consigne": "Généralise à tous les nombres jusqu'à `N` :\n1. lis `N` ;\n2. boucle extérieure `for (int k = 2; k <= N; k++)` ;\n3. à l'intérieur, refais le test du jalon pour `k` (indicateur remis à 1 à chaque `k`) ;\n4. si `k` est premier, affiche-le suivi d'une espace.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -6214,59 +6214,27 @@
     }
    ],
    "vals": {
-    "N": "17",
-    "N2": "47",
-    "K": "9",
-    "P2": "31",
-    "PR": "2 3 5 7 11 13 17",
+    "N": "21",
+    "N2": "43",
+    "K": "15",
+    "P2": "49",
+    "PR": "2 3 5 7 11 13 17 19",
     "KP": "0",
-    "KE": "9 = 3 × 3 : il n'est pas premier (**0**).",
+    "KE": "15 = 3 × 5 : il n'est pas premier (**0**).",
     "S3_0": "0",
     "S3_1": "1",
-    "S3_2": "1",
+    "S3_2": "0",
     "S3_3": "0",
-    "S4_0": "2 3 5 7 11 13 17 ",
+    "S4_0": "2 3 5 7 11 13 17 19 ",
     "S4_1": "2 ",
-    "S4_2": "2 3 5 7 11 13 17 19 23 29 31 37 41 43 47 "
+    "S4_2": "2 3 5 7 11 13 17 19 23 29 31 37 41 43 "
    },
    "variantes": [
     {
-     "N": "17",
-     "N2": "47",
-     "K": "9",
-     "P2": "31",
-     "PR": "2 3 5 7 11 13 17",
-     "KP": "0",
-     "KE": "9 = 3 × 3 : il n'est pas premier (**0**).",
-     "S3_0": "0",
-     "S3_1": "1",
-     "S3_2": "1",
-     "S3_3": "0",
-     "S4_0": "2 3 5 7 11 13 17 ",
-     "S4_1": "2 ",
-     "S4_2": "2 3 5 7 11 13 17 19 23 29 31 37 41 43 47 "
-    },
-    {
-     "N": "13",
-     "N2": "65",
-     "K": "21",
-     "P2": "31",
-     "PR": "2 3 5 7 11 13",
-     "KP": "0",
-     "KE": "21 = 3 × 7 : il n'est pas premier (**0**).",
-     "S3_0": "0",
-     "S3_1": "1",
-     "S3_2": "1",
-     "S3_3": "0",
-     "S4_0": "2 3 5 7 11 13 ",
-     "S4_1": "2 ",
-     "S4_2": "2 3 5 7 11 13 17 19 23 29 31 37 41 43 47 53 59 61 "
-    },
-    {
-     "N": "20",
-     "N2": "61",
+     "N": "21",
+     "N2": "43",
      "K": "15",
-     "P2": "51",
+     "P2": "49",
      "PR": "2 3 5 7 11 13 17 19",
      "KP": "0",
      "KE": "15 = 3 × 5 : il n'est pas premier (**0**).",
@@ -6275,88 +6243,120 @@
      "S3_2": "0",
      "S3_3": "0",
      "S4_0": "2 3 5 7 11 13 17 19 ",
-     "S4_1": "2 ",
-     "S4_2": "2 3 5 7 11 13 17 19 23 29 31 37 41 43 47 53 59 61 "
-    },
-    {
-     "N": "23",
-     "N2": "43",
-     "K": "11",
-     "P2": "31",
-     "PR": "2 3 5 7 11 13 17 19 23",
-     "KP": "1",
-     "KE": "Aucun diviseur entre 2 et 3 : 11 est premier (**1**).",
-     "S3_0": "1",
-     "S3_1": "1",
-     "S3_2": "1",
-     "S3_3": "0",
-     "S4_0": "2 3 5 7 11 13 17 19 23 ",
      "S4_1": "2 ",
      "S4_2": "2 3 5 7 11 13 17 19 23 29 31 37 41 43 "
     },
     {
-     "N": "39",
-     "N2": "61",
-     "K": "9",
-     "P2": "49",
-     "PR": "2 3 5 7 11 13 17 19 23 29 31 37",
-     "KP": "0",
-     "KE": "9 = 3 × 3 : il n'est pas premier (**0**).",
-     "S3_0": "0",
-     "S3_1": "1",
-     "S3_2": "0",
-     "S3_3": "0",
-     "S4_0": "2 3 5 7 11 13 17 19 23 29 31 37 ",
-     "S4_1": "2 ",
-     "S4_2": "2 3 5 7 11 13 17 19 23 29 31 37 41 43 47 53 59 61 "
-    },
-    {
-     "N": "13",
-     "N2": "50",
-     "K": "19",
-     "P2": "51",
-     "PR": "2 3 5 7 11 13",
-     "KP": "1",
-     "KE": "Aucun diviseur entre 2 et 4 : 19 est premier (**1**).",
-     "S3_0": "1",
-     "S3_1": "1",
-     "S3_2": "0",
-     "S3_3": "0",
-     "S4_0": "2 3 5 7 11 13 ",
-     "S4_1": "2 ",
-     "S4_2": "2 3 5 7 11 13 17 19 23 29 31 37 41 43 47 "
-    },
-    {
-     "N": "20",
-     "N2": "41",
-     "K": "15",
-     "P2": "39",
-     "PR": "2 3 5 7 11 13 17 19",
-     "KP": "0",
-     "KE": "15 = 3 × 5 : il n'est pas premier (**0**).",
-     "S3_0": "0",
-     "S3_1": "1",
-     "S3_2": "0",
-     "S3_3": "0",
-     "S4_0": "2 3 5 7 11 13 17 19 ",
-     "S4_1": "2 ",
-     "S4_2": "2 3 5 7 11 13 17 19 23 29 31 37 41 "
-    },
-    {
-     "N": "32",
-     "N2": "68",
+     "N": "28",
+     "N2": "66",
      "K": "17",
-     "P2": "51",
-     "PR": "2 3 5 7 11 13 17 19 23 29 31",
+     "P2": "39",
+     "PR": "2 3 5 7 11 13 17 19 23",
      "KP": "1",
      "KE": "Aucun diviseur entre 2 et 4 : 17 est premier (**1**).",
      "S3_0": "1",
      "S3_1": "1",
      "S3_2": "0",
      "S3_3": "0",
+     "S4_0": "2 3 5 7 11 13 17 19 23 ",
+     "S4_1": "2 ",
+     "S4_2": "2 3 5 7 11 13 17 19 23 29 31 37 41 43 47 53 59 61 "
+    },
+    {
+     "N": "22",
+     "N2": "45",
+     "K": "13",
+     "P2": "37",
+     "PR": "2 3 5 7 11 13 17 19",
+     "KP": "1",
+     "KE": "Aucun diviseur entre 2 et 3 : 13 est premier (**1**).",
+     "S3_0": "1",
+     "S3_1": "1",
+     "S3_2": "1",
+     "S3_3": "0",
+     "S4_0": "2 3 5 7 11 13 17 19 ",
+     "S4_1": "2 ",
+     "S4_2": "2 3 5 7 11 13 17 19 23 29 31 37 41 43 "
+    },
+    {
+     "N": "34",
+     "N2": "63",
+     "K": "13",
+     "P2": "39",
+     "PR": "2 3 5 7 11 13 17 19 23 29 31",
+     "KP": "1",
+     "KE": "Aucun diviseur entre 2 et 3 : 13 est premier (**1**).",
+     "S3_0": "1",
+     "S3_1": "1",
+     "S3_2": "0",
+     "S3_3": "0",
      "S4_0": "2 3 5 7 11 13 17 19 23 29 31 ",
      "S4_1": "2 ",
-     "S4_2": "2 3 5 7 11 13 17 19 23 29 31 37 41 43 47 53 59 61 67 "
+     "S4_2": "2 3 5 7 11 13 17 19 23 29 31 37 41 43 47 53 59 61 "
+    },
+    {
+     "N": "38",
+     "N2": "55",
+     "K": "17",
+     "P2": "31",
+     "PR": "2 3 5 7 11 13 17 19 23 29 31 37",
+     "KP": "1",
+     "KE": "Aucun diviseur entre 2 et 4 : 17 est premier (**1**).",
+     "S3_0": "1",
+     "S3_1": "1",
+     "S3_2": "1",
+     "S3_3": "0",
+     "S4_0": "2 3 5 7 11 13 17 19 23 29 31 37 ",
+     "S4_1": "2 ",
+     "S4_2": "2 3 5 7 11 13 17 19 23 29 31 37 41 43 47 53 "
+    },
+    {
+     "N": "21",
+     "N2": "48",
+     "K": "27",
+     "P2": "51",
+     "PR": "2 3 5 7 11 13 17 19",
+     "KP": "0",
+     "KE": "27 = 3 × 9 : il n'est pas premier (**0**).",
+     "S3_0": "0",
+     "S3_1": "1",
+     "S3_2": "0",
+     "S3_3": "0",
+     "S4_0": "2 3 5 7 11 13 17 19 ",
+     "S4_1": "2 ",
+     "S4_2": "2 3 5 7 11 13 17 19 23 29 31 37 41 43 47 "
+    },
+    {
+     "N": "16",
+     "N2": "50",
+     "K": "23",
+     "P2": "49",
+     "PR": "2 3 5 7 11 13",
+     "KP": "1",
+     "KE": "Aucun diviseur entre 2 et 4 : 23 est premier (**1**).",
+     "S3_0": "1",
+     "S3_1": "1",
+     "S3_2": "0",
+     "S3_3": "0",
+     "S4_0": "2 3 5 7 11 13 ",
+     "S4_1": "2 ",
+     "S4_2": "2 3 5 7 11 13 17 19 23 29 31 37 41 43 47 "
+    },
+    {
+     "N": "27",
+     "N2": "62",
+     "K": "27",
+     "P2": "51",
+     "PR": "2 3 5 7 11 13 17 19 23",
+     "KP": "0",
+     "KE": "27 = 3 × 9 : il n'est pas premier (**0**).",
+     "S3_0": "0",
+     "S3_1": "1",
+     "S3_2": "0",
+     "S3_3": "0",
+     "S4_0": "2 3 5 7 11 13 17 19 23 ",
+     "S4_1": "2 ",
+     "S4_2": "2 3 5 7 11 13 17 19 23 29 31 37 41 43 47 53 59 61 "
     }
    ]
   },
@@ -6366,7 +6366,7 @@
    "notion": "4.3",
    "origine": "td",
    "titre": "Multiplication par additions",
-   "enonce": "Écris un programme qui lit deux entiers positifs `a` et `b` et affiche `a × b` calculé avec des **additions successives**, sans utiliser l'opérateur `*`. (Tableaux_chainex, exercice 1)\n\n**Exemple**\n```text\nEntrée :\n[[A]] [[B]]\nSortie :\n[[R]]\n```",
+   "enonce": "Le but : remplacer une multiplication par une boucle d'additions. (Tableaux_chainex, exercice 1)\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. un entier positif `a` ;\n2. un entier positif `b`.\n\n**Ce qu'il affiche** : `a × b`, calculé **sans** l'opérateur `*`.\n\n**Exemple**\n```text\nEntrée :\n[[A]] [[B]]\nSortie :\n[[R]]\n```",
    "guidage": "**Plan** : `res` part de 0 ; on lui ajoute `a`, `b` fois.\n\n**Contrainte** : pas d'opérateur `*`.",
    "duree": 4,
    "etapes": [
@@ -6402,7 +6402,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Premier jalon : lis `a` et affiche `a + a + a` (c'est-à-dire `a × 3`), **sans** `*` ni boucle.",
+     "consigne": "Premier jalon :\n1. lis `a` ;\n2. affiche `a + a + a` (c'est `a × 3`), sans `*` ni boucle.",
      "question": "Trois additions à la main.",
      "verif": {
       "mode": "c",
@@ -6427,7 +6427,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Lis maintenant `a` **et** `b`, et répète l'addition `b` fois avec une boucle `for` (toujours sans `*`). `res` part de 0.",
+     "consigne": "Généralise avec une boucle :\n1. lis `a` **et** `b` ; `int res = 0;` ;\n2. `for (int i = 0; i < b; i++)` : `res += a;` ;\n3. affiche `res`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -6464,113 +6464,113 @@
     }
    ],
    "vals": {
-    "A": "14",
-    "B": "5",
-    "C": "21",
-    "E1": "13 2",
-    "R": "70",
-    "S2_0": "42",
-    "S2_1": "63",
-    "S3_0": "70",
+    "A": "7",
+    "B": "3",
+    "C": "20",
+    "E1": "14 2",
+    "R": "21",
+    "S2_0": "21",
+    "S2_1": "60",
+    "S3_0": "21",
     "S3_1": "0",
-    "S3_2": "26"
+    "S3_2": "28"
    },
    "variantes": [
     {
-     "A": "14",
-     "B": "5",
-     "C": "21",
-     "E1": "13 2",
-     "R": "70",
-     "S2_0": "42",
-     "S2_1": "63",
-     "S3_0": "70",
-     "S3_1": "0",
-     "S3_2": "26"
-    },
-    {
      "A": "7",
-     "B": "2",
-     "C": "22",
-     "E1": "29 5",
-     "R": "14",
+     "B": "3",
+     "C": "20",
+     "E1": "14 2",
+     "R": "21",
      "S2_0": "21",
-     "S2_1": "66",
-     "S3_0": "14",
+     "S2_1": "60",
+     "S3_0": "21",
      "S3_1": "0",
-     "S3_2": "145"
-    },
-    {
-     "A": "5",
-     "B": "2",
-     "C": "10",
-     "E1": "28 6",
-     "R": "10",
-     "S2_0": "15",
-     "S2_1": "30",
-     "S3_0": "10",
-     "S3_1": "0",
-     "S3_2": "168"
-    },
-    {
-     "A": "6",
-     "B": "6",
-     "C": "37",
-     "E1": "15 4",
-     "R": "36",
-     "S2_0": "18",
-     "S2_1": "111",
-     "S3_0": "36",
-     "S3_1": "0",
-     "S3_2": "60"
+     "S3_2": "28"
     },
     {
      "A": "12",
      "B": "3",
-     "C": "15",
-     "E1": "15 3",
+     "C": "12",
+     "E1": "27 3",
      "R": "36",
      "S2_0": "36",
-     "S2_1": "45",
+     "S2_1": "36",
      "S3_0": "36",
      "S3_1": "0",
-     "S3_2": "45"
+     "S3_2": "81"
+    },
+    {
+     "A": "9",
+     "B": "6",
+     "C": "10",
+     "E1": "26 2",
+     "R": "54",
+     "S2_0": "27",
+     "S2_1": "30",
+     "S3_0": "54",
+     "S3_1": "0",
+     "S3_2": "52"
     },
     {
      "A": "11",
-     "B": "4",
-     "C": "19",
-     "E1": "14 3",
-     "R": "44",
+     "B": "5",
+     "C": "39",
+     "E1": "11 2",
+     "R": "55",
      "S2_0": "33",
-     "S2_1": "57",
-     "S3_0": "44",
+     "S2_1": "117",
+     "S3_0": "55",
      "S3_1": "0",
-     "S3_2": "42"
+     "S3_2": "22"
     },
     {
-     "A": "10",
-     "B": "2",
-     "C": "12",
-     "E1": "29 2",
-     "R": "20",
-     "S2_0": "30",
-     "S2_1": "36",
-     "S3_0": "20",
+     "A": "5",
+     "B": "5",
+     "C": "11",
+     "E1": "24 4",
+     "R": "25",
+     "S2_0": "15",
+     "S2_1": "33",
+     "S3_0": "25",
      "S3_1": "0",
-     "S3_2": "58"
+     "S3_2": "96"
     },
     {
      "A": "4",
-     "B": "8",
-     "C": "37",
-     "E1": "29 4",
-     "R": "32",
+     "B": "9",
+     "C": "14",
+     "E1": "20 5",
+     "R": "36",
      "S2_0": "12",
-     "S2_1": "111",
-     "S3_0": "32",
+     "S2_1": "42",
+     "S3_0": "36",
      "S3_1": "0",
-     "S3_2": "116"
+     "S3_2": "100"
+    },
+    {
+     "A": "8",
+     "B": "5",
+     "C": "24",
+     "E1": "13 5",
+     "R": "40",
+     "S2_0": "24",
+     "S2_1": "72",
+     "S3_0": "40",
+     "S3_1": "0",
+     "S3_2": "65"
+    },
+    {
+     "A": "14",
+     "B": "9",
+     "C": "18",
+     "E1": "26 2",
+     "R": "126",
+     "S2_0": "42",
+     "S2_1": "54",
+     "S3_0": "126",
+     "S3_1": "0",
+     "S3_2": "52"
     }
    ]
   },
@@ -6580,7 +6580,7 @@
    "notion": "4.4",
    "origine": "td",
    "titre": "Compter les positifs",
-   "enonce": "Écris un programme qui lit `N`, puis `N` entiers, et affiche combien sont **strictement** positifs. (TD Premiers pas, exercice 6)\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S3_0]]\n```",
+   "enonce": "Le but : compter les valeurs qui vérifient une condition, au fil de la saisie. (TD Premiers pas, exercice 6)\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. le nombre de valeurs `N` ;\n2. les `N` valeurs (des entiers).\n\n**Ce qu'il affiche** : combien de ces valeurs sont **strictement** positives (0 ne compte pas).\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S3_0]]\n```",
    "guidage": "**Plan** : `nb = 0` ; une boucle de `N` tours ; à chaque tour : lire `x`, et `nb++` si `x > 0`.",
    "duree": 5,
    "etapes": [
@@ -6616,7 +6616,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Premier jalon : lis `N`, puis les `N` entiers un par un dans `x` (pas besoin de tableau), et affiche leur **somme**.",
+     "consigne": "Premier jalon :\n1. lis `N` ;\n2. `for` de `N` tours : lis une valeur dans `x` et ajoute-la à une somme ;\n3. affiche la somme.",
      "question": "Lis N valeurs et somme-les.",
      "verif": {
       "mode": "c",
@@ -6641,7 +6641,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Au lieu de les additionner, **compte** ceux qui sont strictement positifs, et affiche ce compte.",
+     "consigne": "Compte au lieu d'additionner :\n1. remplace la somme par un compteur `nb = 0` ;\n2. dans la boucle, après la lecture : si `x > 0`, `nb++;` ;\n3. affiche `nb`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -6672,112 +6672,112 @@
     }
    ],
    "vals": {
-    "VALS": "7 1 -1 5 8",
-    "E0": "5\n7 1 -1 5 8",
-    "E1": "3\n18 -19 -9",
-    "T": "7,1,-1,5,8",
-    "NP": "4",
-    "S2_0": "20",
-    "S2_1": "-10",
-    "S3_0": "4",
+    "VALS": "1 -4 -3 -2 1",
+    "E0": "5\n1 -4 -3 -2 1",
+    "E1": "3\n-15 -7 7",
+    "T": "1,-4,-3,-2,1",
+    "NP": "2",
+    "S2_0": "-7",
+    "S2_1": "-15",
+    "S3_0": "2",
     "S3_1": "1",
     "S3_2": "0"
    },
    "variantes": [
     {
-     "VALS": "7 1 -1 5 8",
-     "E0": "5\n7 1 -1 5 8",
-     "E1": "3\n18 -19 -9",
-     "T": "7,1,-1,5,8",
-     "NP": "4",
-     "S2_0": "20",
-     "S2_1": "-10",
-     "S3_0": "4",
+     "VALS": "1 -4 -3 -2 1",
+     "E0": "5\n1 -4 -3 -2 1",
+     "E1": "3\n-15 -7 7",
+     "T": "1,-4,-3,-2,1",
+     "NP": "2",
+     "S2_0": "-7",
+     "S2_1": "-15",
+     "S3_0": "2",
      "S3_1": "1",
      "S3_2": "0"
     },
     {
-     "VALS": "5 0 -2 2 -2",
-     "E0": "5\n5 0 -2 2 -2",
-     "E1": "2\n6 12",
-     "T": "5,0,-2,2,-2",
+     "VALS": "8 -2 -6 -9 4",
+     "E0": "5\n8 -2 -6 -9 4",
+     "E1": "5\n-3 -2 10 -4 -4",
+     "T": "8,-2,-6,-9,4",
      "NP": "2",
-     "S2_0": "3",
-     "S2_1": "18",
+     "S2_0": "-5",
+     "S2_1": "-3",
      "S3_0": "2",
-     "S3_1": "2",
+     "S3_1": "1",
      "S3_2": "0"
     },
     {
-     "VALS": "1 -3 6 2 1",
-     "E0": "5\n1 -3 6 2 1",
-     "E1": "3\n12 14 -2",
-     "T": "1,-3,6,2,1",
-     "NP": "4",
-     "S2_0": "7",
-     "S2_1": "24",
-     "S3_0": "4",
-     "S3_1": "2",
-     "S3_2": "0"
-    },
-    {
-     "VALS": "9 -9 -4 9 -6",
-     "E0": "5\n9 -9 -4 9 -6",
-     "E1": "5\n20 -9 4 13 -6",
-     "T": "9,-9,-4,9,-6",
-     "NP": "2",
-     "S2_0": "-1",
-     "S2_1": "22",
-     "S3_0": "2",
-     "S3_1": "3",
-     "S3_2": "0"
-    },
-    {
-     "VALS": "-1 -9 -1 -4 -5",
-     "E0": "5\n-1 -9 -1 -4 -5",
-     "E1": "4\n16 -4 -13 9",
-     "T": "-1,-9,-1,-4,-5",
-     "NP": "0",
-     "S2_0": "-20",
-     "S2_1": "8",
-     "S3_0": "0",
-     "S3_1": "2",
-     "S3_2": "0"
-    },
-    {
-     "VALS": "4 -6 -4 5 1",
-     "E0": "5\n4 -6 -4 5 1",
-     "E1": "5\n0 4 -5 14 -6",
-     "T": "4,-6,-4,5,1",
+     "VALS": "4 -4 9 1 -4",
+     "E0": "5\n4 -4 9 1 -4",
+     "E1": "2\n9 20",
+     "T": "4,-4,9,1,-4",
      "NP": "3",
-     "S2_0": "0",
-     "S2_1": "7",
+     "S2_0": "6",
+     "S2_1": "29",
      "S3_0": "3",
      "S3_1": "2",
      "S3_2": "0"
     },
     {
-     "VALS": "-8 -4 0 -4 8",
-     "E0": "5\n-8 -4 0 -4 8",
-     "E1": "4\n-5 6 -16 3",
-     "T": "-8,-4,0,-4,8",
+     "VALS": "-5 6 -1 1 9",
+     "E0": "5\n-5 6 -1 1 9",
+     "E1": "2\n-13 -8",
+     "T": "-5,6,-1,1,9",
+     "NP": "3",
+     "S2_0": "10",
+     "S2_1": "-21",
+     "S3_0": "3",
+     "S3_1": "0",
+     "S3_2": "0"
+    },
+    {
+     "VALS": "-3 5 7 -3 4",
+     "E0": "5\n-3 5 7 -3 4",
+     "E1": "2\n10 2",
+     "T": "-3,5,7,-3,4",
+     "NP": "3",
+     "S2_0": "10",
+     "S2_1": "12",
+     "S3_0": "3",
+     "S3_1": "2",
+     "S3_2": "0"
+    },
+    {
+     "VALS": "-4 9 -9 -3 -7",
+     "E0": "5\n-4 9 -9 -3 -7",
+     "E1": "6\n-6 12 -7 13 -12 -6",
+     "T": "-4,9,-9,-3,-7",
      "NP": "1",
-     "S2_0": "-8",
-     "S2_1": "-12",
+     "S2_0": "-14",
+     "S2_1": "-6",
      "S3_0": "1",
      "S3_1": "2",
      "S3_2": "0"
     },
     {
-     "VALS": "-1 1 -3 0 0",
-     "E0": "5\n-1 1 -3 0 0",
-     "E1": "2\n-19 18",
-     "T": "-1,1,-3,0,0",
+     "VALS": "4 -3 -1 -7 -3",
+     "E0": "5\n4 -3 -1 -7 -3",
+     "E1": "2\n-3 1",
+     "T": "4,-3,-1,-7,-3",
      "NP": "1",
-     "S2_0": "-3",
-     "S2_1": "-1",
+     "S2_0": "-10",
+     "S2_1": "-2",
      "S3_0": "1",
      "S3_1": "1",
+     "S3_2": "0"
+    },
+    {
+     "VALS": "4 6 8 -4 -6",
+     "E0": "5\n4 6 8 -4 -6",
+     "E1": "3\n-2 -19 -17",
+     "T": "4,6,8,-4,-6",
+     "NP": "3",
+     "S2_0": "8",
+     "S2_1": "-38",
+     "S3_0": "3",
+     "S3_1": "0",
      "S3_2": "0"
     }
    ]
@@ -6788,7 +6788,7 @@
    "notion": "4.4",
    "origine": "td",
    "titre": "Miroir d'un entier",
-   "enonce": "Écris un programme qui lit un entier positif et affiche son **miroir** (ses chiffres à l'envers). (TD Premiers pas, exercice 10)\n\n**Exemple**\n```text\nEntrée :\n[[N]]\nSortie :\n[[MIR]]\n```",
+   "enonce": "Le but : construire un nombre chiffre par chiffre. (TD Premiers pas, exercice 10)\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. un entier positif `n`.\n\n**Ce qu'il affiche** : son **miroir** : ses chiffres dans l'ordre inverse.\n\n**Exemple**\n```text\nEntrée :\n[[N]]\nSortie :\n[[MIR]]\n```",
    "guidage": "**Plan** : `while (n > 0)` ; à chaque tour on prend le dernier chiffre (`n % 10`), on l'ajoute à la fin du miroir (`miroir * 10 + chiffre`), puis on retire ce chiffre (`n /= 10`).",
    "duree": 5,
    "etapes": [
@@ -6823,7 +6823,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Premier jalon : lis un entier positif et affiche ses chiffres **un par ligne**, en partant du dernier (`n % 10` puis `n /= 10`, tant que `n > 0`).",
+     "consigne": "Premier jalon, les chiffres un par un :\n1. lis `n` ;\n2. `while (n > 0)` : affiche `n % 10` (le dernier chiffre) suivi de `\\n`, puis `n /= 10;`.",
      "question": "Chiffres à l'envers, un par ligne.",
      "verif": {
       "mode": "c",
@@ -6864,7 +6864,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Au lieu d'afficher chaque chiffre, construis le **nombre** miroir dans `miroir` (qui part de 0) avec l'instruction précédente, et affiche-le à la fin.",
+     "consigne": "Construis le nombre miroir au lieu d'afficher les chiffres :\n1. avant la boucle, `int miroir = 0;` ;\n2. dans la boucle, remplace le `printf` par `miroir = miroir * 10 + n % 10;` ;\n3. après la boucle, affiche `miroir`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -6895,102 +6895,102 @@
     }
    ],
    "vals": {
-    "N": "90339",
+    "N": "66159",
     "D": "9",
-    "Q": "9033",
-    "MIR": "93309",
-    "S2_0": "9\n3\n3\n0\n9",
+    "Q": "6615",
+    "MIR": "95166",
+    "S2_0": "9\n5\n1\n6\n6",
     "S2_1": "7\n0\n9",
-    "S4_0": "93309",
+    "S4_0": "95166",
     "S4_1": "7",
     "S4_2": "21"
    },
    "variantes": [
     {
-     "N": "90339",
+     "N": "66159",
      "D": "9",
-     "Q": "9033",
-     "MIR": "93309",
-     "S2_0": "9\n3\n3\n0\n9",
+     "Q": "6615",
+     "MIR": "95166",
+     "S2_0": "9\n5\n1\n6\n6",
      "S2_1": "7\n0\n9",
-     "S4_0": "93309",
+     "S4_0": "95166",
      "S4_1": "7",
      "S4_2": "21"
     },
     {
-     "N": "56011",
-     "D": "1",
-     "Q": "5601",
-     "MIR": "11065",
-     "S2_0": "1\n1\n0\n6\n5",
+     "N": "16478",
+     "D": "8",
+     "Q": "1647",
+     "MIR": "87461",
+     "S2_0": "8\n7\n4\n6\n1",
      "S2_1": "7\n0\n9",
-     "S4_0": "11065",
+     "S4_0": "87461",
      "S4_1": "7",
      "S4_2": "21"
     },
     {
-     "N": "93551",
-     "D": "1",
-     "Q": "9355",
-     "MIR": "15539",
-     "S2_0": "1\n5\n5\n3\n9",
-     "S2_1": "7\n0\n9",
-     "S4_0": "15539",
-     "S4_1": "7",
-     "S4_2": "21"
-    },
-    {
-     "N": "77760",
-     "D": "0",
-     "Q": "7776",
-     "MIR": "6777",
-     "S2_0": "0\n6\n7\n7\n7",
-     "S2_1": "7\n0\n9",
-     "S4_0": "6777",
-     "S4_1": "7",
-     "S4_2": "21"
-    },
-    {
-     "N": "84856",
-     "D": "6",
-     "Q": "8485",
-     "MIR": "65848",
-     "S2_0": "6\n5\n8\n4\n8",
-     "S2_1": "7\n0\n9",
-     "S4_0": "65848",
-     "S4_1": "7",
-     "S4_2": "21"
-    },
-    {
-     "N": "17577",
-     "D": "7",
-     "Q": "1757",
-     "MIR": "77571",
-     "S2_0": "7\n7\n5\n7\n1",
-     "S2_1": "7\n0\n9",
-     "S4_0": "77571",
-     "S4_1": "7",
-     "S4_2": "21"
-    },
-    {
-     "N": "8527",
-     "D": "7",
-     "Q": "852",
-     "MIR": "7258",
-     "S2_0": "7\n2\n5\n8",
-     "S2_1": "7\n0\n9",
-     "S4_0": "7258",
-     "S4_1": "7",
-     "S4_2": "21"
-    },
-    {
-     "N": "45664",
+     "N": "27094",
      "D": "4",
-     "Q": "4566",
-     "MIR": "46654",
-     "S2_0": "4\n6\n6\n5\n4",
+     "Q": "2709",
+     "MIR": "49072",
+     "S2_0": "4\n9\n0\n7\n2",
      "S2_1": "7\n0\n9",
-     "S4_0": "46654",
+     "S4_0": "49072",
+     "S4_1": "7",
+     "S4_2": "21"
+    },
+    {
+     "N": "50795",
+     "D": "5",
+     "Q": "5079",
+     "MIR": "59705",
+     "S2_0": "5\n9\n7\n0\n5",
+     "S2_1": "7\n0\n9",
+     "S4_0": "59705",
+     "S4_1": "7",
+     "S4_2": "21"
+    },
+    {
+     "N": "90524",
+     "D": "4",
+     "Q": "9052",
+     "MIR": "42509",
+     "S2_0": "4\n2\n5\n0\n9",
+     "S2_1": "7\n0\n9",
+     "S4_0": "42509",
+     "S4_1": "7",
+     "S4_2": "21"
+    },
+    {
+     "N": "55505",
+     "D": "5",
+     "Q": "5550",
+     "MIR": "50555",
+     "S2_0": "5\n0\n5\n5\n5",
+     "S2_1": "7\n0\n9",
+     "S4_0": "50555",
+     "S4_1": "7",
+     "S4_2": "21"
+    },
+    {
+     "N": "76785",
+     "D": "5",
+     "Q": "7678",
+     "MIR": "58767",
+     "S2_0": "5\n8\n7\n6\n7",
+     "S2_1": "7\n0\n9",
+     "S4_0": "58767",
+     "S4_1": "7",
+     "S4_2": "21"
+    },
+    {
+     "N": "6693",
+     "D": "3",
+     "Q": "669",
+     "MIR": "3966",
+     "S2_0": "3\n9\n6\n6",
+     "S2_1": "7\n0\n9",
+     "S4_0": "3966",
      "S4_1": "7",
      "S4_2": "21"
     }
@@ -7002,7 +7002,7 @@
    "notion": "4.4",
    "origine": "td",
    "titre": "Nombre de chiffres",
-   "enonce": "Écris un programme qui lit un entier positif et affiche son **nombre de chiffres**, sans le convertir en texte. (0 a 1 chiffre.) (TD Premiers pas, exercice 11)\n\n**Exemple**\n```text\nEntrée :\n[[N]]\nSortie :\n[[NC]]\n```",
+   "enonce": "Le but : compter les chiffres d'un nombre avec des divisions par 10, sans le convertir en texte. (TD Premiers pas, exercice 11)\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. un entier positif `n`.\n\n**Ce qu'il affiche** : son nombre de chiffres (0 a 1 chiffre).\n\n**Exemple**\n```text\nEntrée :\n[[N]]\nSortie :\n[[NC]]\n```",
    "guidage": "Un nombre a **au moins un chiffre** : le compteur part de 1. Tant que `n >= 10`, retire un chiffre en divisant par 10 et compte-le.",
    "duree": 4,
    "etapes": [
@@ -7037,7 +7037,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Premier jalon : lis un entier positif et affiche le **nombre de divisions par 10** nécessaires pour le ramener sous 10 (`while (n >= 10) { n /= 10; nb++; }`, avec `nb` qui part de 0).",
+     "consigne": "Premier jalon :\n1. lis `n` ; `int nb = 0;` ;\n2. `while (n >= 10)` : `n /= 10; nb++;` ;\n3. affiche `nb` (le nombre de divisions).",
      "question": "Compte les divisions.",
      "verif": {
       "mode": "c",
@@ -7066,7 +7066,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Le nombre de chiffres, c'est une division de plus que ce compteur. Change seulement la valeur de départ de `nb` pour que `0` ait 1 chiffre et `[[N]]` en ait [[NC]].",
+     "consigne": "Une seule modification :\n1. fais partir `nb` de **1** au lieu de 0 (un nombre a toujours au moins un chiffre) ;\n2. le reste ne change pas.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -7101,40 +7101,26 @@
     }
    ],
    "vals": {
-    "N": "97443",
-    "N2": "100000",
+    "N": "40702",
+    "N2": "10",
     "ND": "4",
     "NC": "5",
-    "SUITE": "97443 → 9744 → 974 → 97 → 9",
+    "SUITE": "40702 → 4070 → 407 → 40 → 4",
     "S2_0": "4",
     "S2_1": "0",
-    "S2_2": "5",
+    "S2_2": "1",
     "S3_0": "5",
     "S3_1": "1",
-    "S3_2": "6",
+    "S3_2": "2",
     "S3_3": "1"
    },
    "variantes": [
     {
-     "N": "97443",
-     "N2": "100000",
-     "ND": "4",
-     "NC": "5",
-     "SUITE": "97443 → 9744 → 974 → 97 → 9",
-     "S2_0": "4",
-     "S2_1": "0",
-     "S2_2": "5",
-     "S3_0": "5",
-     "S3_1": "1",
-     "S3_2": "6",
-     "S3_3": "1"
-    },
-    {
-     "N": "35234",
+     "N": "40702",
      "N2": "10",
      "ND": "4",
      "NC": "5",
-     "SUITE": "35234 → 3523 → 352 → 35 → 3",
+     "SUITE": "40702 → 4070 → 407 → 40 → 4",
      "S2_0": "4",
      "S2_1": "0",
      "S2_2": "1",
@@ -7144,87 +7130,101 @@
      "S3_3": "1"
     },
     {
-     "N": "5701",
-     "N2": "100000",
-     "ND": "3",
-     "NC": "4",
-     "SUITE": "5701 → 570 → 57 → 5",
-     "S2_0": "3",
-     "S2_1": "0",
-     "S2_2": "5",
-     "S3_0": "4",
-     "S3_1": "1",
-     "S3_2": "6",
-     "S3_3": "1"
-    },
-    {
-     "N": "7140",
-     "N2": "100000",
-     "ND": "3",
-     "NC": "4",
-     "SUITE": "7140 → 714 → 71 → 7",
-     "S2_0": "3",
-     "S2_1": "0",
-     "S2_2": "5",
-     "S3_0": "4",
-     "S3_1": "1",
-     "S3_2": "6",
-     "S3_3": "1"
-    },
-    {
-     "N": "6626",
-     "N2": "100000",
-     "ND": "3",
-     "NC": "4",
-     "SUITE": "6626 → 662 → 66 → 6",
-     "S2_0": "3",
-     "S2_1": "0",
-     "S2_2": "5",
-     "S3_0": "4",
-     "S3_1": "1",
-     "S3_2": "6",
-     "S3_3": "1"
-    },
-    {
-     "N": "8053",
+     "N": "503",
      "N2": "1000000",
-     "ND": "3",
-     "NC": "4",
-     "SUITE": "8053 → 805 → 80 → 8",
-     "S2_0": "3",
+     "ND": "2",
+     "NC": "3",
+     "SUITE": "503 → 50 → 5",
+     "S2_0": "2",
      "S2_1": "0",
      "S2_2": "6",
-     "S3_0": "4",
+     "S3_0": "3",
      "S3_1": "1",
      "S3_2": "7",
      "S3_3": "1"
     },
     {
-     "N": "76649",
-     "N2": "10",
+     "N": "70362",
+     "N2": "1000000",
      "ND": "4",
      "NC": "5",
-     "SUITE": "76649 → 7664 → 766 → 76 → 7",
+     "SUITE": "70362 → 7036 → 703 → 70 → 7",
      "S2_0": "4",
      "S2_1": "0",
-     "S2_2": "1",
+     "S2_2": "6",
      "S3_0": "5",
      "S3_1": "1",
-     "S3_2": "2",
+     "S3_2": "7",
      "S3_3": "1"
     },
     {
-     "N": "888",
+     "N": "702",
      "N2": "10",
      "ND": "2",
      "NC": "3",
-     "SUITE": "888 → 88 → 8",
+     "SUITE": "702 → 70 → 7",
      "S2_0": "2",
      "S2_1": "0",
      "S2_2": "1",
      "S3_0": "3",
      "S3_1": "1",
      "S3_2": "2",
+     "S3_3": "1"
+    },
+    {
+     "N": "40623",
+     "N2": "1000000",
+     "ND": "4",
+     "NC": "5",
+     "SUITE": "40623 → 4062 → 406 → 40 → 4",
+     "S2_0": "4",
+     "S2_1": "0",
+     "S2_2": "6",
+     "S3_0": "5",
+     "S3_1": "1",
+     "S3_2": "7",
+     "S3_3": "1"
+    },
+    {
+     "N": "27564",
+     "N2": "100000",
+     "ND": "4",
+     "NC": "5",
+     "SUITE": "27564 → 2756 → 275 → 27 → 2",
+     "S2_0": "4",
+     "S2_1": "0",
+     "S2_2": "5",
+     "S3_0": "5",
+     "S3_1": "1",
+     "S3_2": "6",
+     "S3_3": "1"
+    },
+    {
+     "N": "20456",
+     "N2": "10",
+     "ND": "4",
+     "NC": "5",
+     "SUITE": "20456 → 2045 → 204 → 20 → 2",
+     "S2_0": "4",
+     "S2_1": "0",
+     "S2_2": "1",
+     "S3_0": "5",
+     "S3_1": "1",
+     "S3_2": "2",
+     "S3_3": "1"
+    },
+    {
+     "N": "956",
+     "N2": "100000",
+     "ND": "2",
+     "NC": "3",
+     "SUITE": "956 → 95 → 9",
+     "S2_0": "2",
+     "S2_1": "0",
+     "S2_2": "5",
+     "S3_0": "3",
+     "S3_1": "1",
+     "S3_2": "6",
      "S3_3": "1"
     }
    ]
@@ -7235,7 +7235,7 @@
    "notion": "4.4",
    "origine": "generee",
    "titre": "La boucle qui ne s'arrête pas",
-   "enonce": "Ce programme doit afficher les entiers de 1 à [[N]], un par ligne. Exécute-le : il tourne sans fin.\n```c\n#include <stdio.h>\n\nint main(void) {\n    int i = 1;\n    while (i <= [[N]]) {\n        printf(\"%d\\n\", i);\n    }\n    return 0;\n}\n```",
+   "enonce": "Ce programme doit afficher les entiers de 1 à [[N]], un par ligne. Exécute-le : il tourne sans fin.\n```c\n#include <stdio.h>\n\nint main(void) {\n    int i = 1;\n    while (i <= [[N]]) {\n        printf(\"%d\\n\", i);\n    }\n    return 0;\n}\n```\n\n**À corriger** : la boucle, pour qu'elle s'arrête après [[N]].",
    "guidage": "**Diagnostic** : 1. quelle variable pilote la condition ? → 2. qui la modifie dans la boucle ? → 3. corriger.",
    "duree": 3,
    "etapes": [
@@ -7273,7 +7273,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Corrige le programme : ajoute dans la boucle, après le `printf`, l'instruction qui fait avancer `i`. Il doit afficher les entiers de 1 à [[N]], puis s'arrêter.",
+     "consigne": "**À faire** :\n1. dans la boucle, juste après le `printf`, ajoute `i++;` ;\n2. exécute : le programme doit afficher 1 à [[N]] puis s'arrêter.",
      "question": "Corrige le programme.",
      "verif": {
       "mode": "c",
@@ -7305,12 +7305,8 @@
      "S2_0": "1\n2\n3\n4\n5\n6\n7\n8"
     },
     {
-     "N": "6",
-     "S2_0": "1\n2\n3\n4\n5\n6"
-    },
-    {
-     "N": "4",
-     "S2_0": "1\n2\n3\n4"
+     "N": "3",
+     "S2_0": "1\n2\n3"
     },
     {
      "N": "9",
@@ -7321,12 +7317,16 @@
      "S2_0": "1\n2\n3\n4\n5\n6\n7"
     },
     {
-     "N": "3",
-     "S2_0": "1\n2\n3"
-    },
-    {
      "N": "5",
      "S2_0": "1\n2\n3\n4\n5"
+    },
+    {
+     "N": "6",
+     "S2_0": "1\n2\n3\n4\n5\n6"
+    },
+    {
+     "N": "4",
+     "S2_0": "1\n2\n3\n4"
     }
    ]
   },
@@ -7336,7 +7336,7 @@
    "notion": "4.5",
    "origine": "generee",
    "titre": "Saisie contrôlée",
-   "enonce": "Écris un programme qui lit des entiers jusqu'à en obtenir un compris entre 1 et 10 (inclus), puis affiche le **nombre d'essais** et la **valeur acceptée**.\n\n**Exemple**\n```text\nEntrée :\n[[SAI]]\nSortie :\n[[S3_0]]\n```",
+   "enonce": "Le but : redemander une saisie tant qu'elle n'est pas valide, avec `do-while`.\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. des entiers, jusqu'à en obtenir un compris entre 1 et 10 (inclus).\n\n**Ce qu'il affiche** : le nombre d'essais, une espace, puis la valeur acceptée.\n\n**Exemple**\n```text\nEntrée :\n[[SAI]]\nSortie :\n[[S3_0]]\n```",
    "guidage": "**Plan** : `do { lire v ; compter l'essai } while (v est hors de [1 ; 10]);`, puis afficher les essais et la valeur.\n\n**À retenir** : le `do-while` exécute le corps **au moins une fois**.",
    "duree": 5,
    "etapes": [
@@ -7372,7 +7372,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Premier jalon : lis **une** valeur `v` et affiche `1` si elle est entre 1 et 10 (inclus), `0` sinon.",
+     "consigne": "Premier jalon, une seule saisie :\n1. lis un entier `v` ;\n2. affiche `1` si `v >= 1 && v <= 10`, `0` sinon.",
      "question": "Une valeur valide ?",
      "verif": {
       "mode": "c",
@@ -7405,7 +7405,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Transforme en **`do-while`** : `do { lire v ; essais++ ; } while (v est hors de [1 ; 10]);`, puis affiche `essais valeur`.",
+     "consigne": "Répète la saisie :\n1. `int v, essais = 0;` ;\n2. `do { scanf(\"%d\", &v); essais++; } while (v < 1 || v > 10);` ;\n3. affiche `essais` puis `v`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -7442,122 +7442,122 @@
     }
    ],
    "vals": {
-    "SAI": "21 40 10",
-    "NE": "3",
-    "V1": "4",
-    "E1": "29 -12 43 7",
+    "SAI": "-3 5",
+    "NE": "2",
+    "V1": "6",
+    "E1": "27 21 18 5",
     "S2_0": "1",
     "S2_1": "0",
     "S2_2": "0",
     "S2_3": "1",
-    "S3_0": "3 10",
+    "S3_0": "2 5",
     "S3_1": "1 5",
-    "S3_2": "4 7"
+    "S3_2": "4 5"
    },
    "variantes": [
     {
-     "SAI": "21 40 10",
-     "NE": "3",
-     "V1": "4",
-     "E1": "29 -12 43 7",
-     "S2_0": "1",
-     "S2_1": "0",
-     "S2_2": "0",
-     "S2_3": "1",
-     "S3_0": "3 10",
-     "S3_1": "1 5",
-     "S3_2": "4 7"
-    },
-    {
-     "SAI": "49 3",
+     "SAI": "-3 5",
      "NE": "2",
-     "V1": "3",
-     "E1": "-18 29 -2 2",
+     "V1": "6",
+     "E1": "27 21 18 5",
      "S2_0": "1",
      "S2_1": "0",
      "S2_2": "0",
      "S2_3": "1",
-     "S3_0": "2 3",
+     "S3_0": "2 5",
      "S3_1": "1 5",
-     "S3_2": "4 2"
+     "S3_2": "4 5"
     },
     {
-     "SAI": "-16 39 8",
-     "NE": "3",
-     "V1": "9",
-     "E1": "32 -19 46 7",
+     "SAI": "48 -5 20 10",
+     "NE": "4",
+     "V1": "10",
+     "E1": "35 -4 47 6",
      "S2_0": "1",
      "S2_1": "0",
      "S2_2": "0",
      "S2_3": "1",
-     "S3_0": "3 8",
-     "S3_1": "1 5",
-     "S3_2": "4 7"
-    },
-    {
-     "SAI": "19 47 2",
-     "NE": "3",
-     "V1": "9",
-     "E1": "26 12 25 4",
-     "S2_0": "1",
-     "S2_1": "0",
-     "S2_2": "0",
-     "S2_3": "1",
-     "S3_0": "3 2",
-     "S3_1": "1 5",
-     "S3_2": "4 4"
-    },
-    {
-     "SAI": "14 4",
-     "NE": "2",
-     "V1": "7",
-     "E1": "32 37 -11 6",
-     "S2_0": "1",
-     "S2_1": "0",
-     "S2_2": "0",
-     "S2_3": "1",
-     "S3_0": "2 4",
+     "S3_0": "4 10",
      "S3_1": "1 5",
      "S3_2": "4 6"
     },
     {
-     "SAI": "-6 10",
+     "SAI": "21 5",
+     "NE": "2",
+     "V1": "4",
+     "E1": "37 25 -13 5",
+     "S2_0": "1",
+     "S2_1": "0",
+     "S2_2": "0",
+     "S2_3": "1",
+     "S3_0": "2 5",
+     "S3_1": "1 5",
+     "S3_2": "4 5"
+    },
+    {
+     "SAI": "-11 10",
      "NE": "2",
      "V1": "1",
-     "E1": "40 -13 -4 6",
+     "E1": "0 36 28 1",
      "S2_0": "1",
      "S2_1": "0",
      "S2_2": "0",
      "S2_3": "1",
      "S3_0": "2 10",
      "S3_1": "1 5",
+     "S3_2": "4 1"
+    },
+    {
+     "SAI": "-20 -12 3",
+     "NE": "3",
+     "V1": "1",
+     "E1": "-15 14 -1 6",
+     "S2_0": "1",
+     "S2_1": "0",
+     "S2_2": "0",
+     "S2_3": "1",
+     "S3_0": "3 3",
+     "S3_1": "1 5",
      "S3_2": "4 6"
     },
     {
-     "SAI": "32 13 10",
-     "NE": "3",
-     "V1": "6",
-     "E1": "-20 17 -1 9",
+     "SAI": "-16 10",
+     "NE": "2",
+     "V1": "9",
+     "E1": "12 -17 -8 10",
      "S2_0": "1",
      "S2_1": "0",
      "S2_2": "0",
      "S2_3": "1",
-     "S3_0": "3 10",
+     "S3_0": "2 10",
      "S3_1": "1 5",
-     "S3_2": "4 9"
+     "S3_2": "4 10"
     },
     {
-     "SAI": "-5 -7 -9 2",
-     "NE": "4",
-     "V1": "4",
-     "E1": "-4 26 38 7",
+     "SAI": "-17 3",
+     "NE": "2",
+     "V1": "6",
+     "E1": "29 45 16 1",
      "S2_0": "1",
      "S2_1": "0",
      "S2_2": "0",
      "S2_3": "1",
-     "S3_0": "4 2",
+     "S3_0": "2 3",
      "S3_1": "1 5",
-     "S3_2": "4 7"
+     "S3_2": "4 1"
+    },
+    {
+     "SAI": "-2 -1 -16 9",
+     "NE": "4",
+     "V1": "6",
+     "E1": "-17 41 37 5",
+     "S2_0": "1",
+     "S2_1": "0",
+     "S2_2": "0",
+     "S2_3": "1",
+     "S3_0": "4 9",
+     "S3_1": "1 5",
+     "S3_2": "4 5"
     }
    ]
   },
@@ -7567,7 +7567,7 @@
    "notion": "4.5",
    "origine": "td",
    "titre": "Deviner un nombre",
-   "enonce": "Le nombre secret est `42` (`#define SECRET 42`). Le programme lit des propositions jusqu'à trouver : il affiche `plus` si le secret est plus grand que la proposition, `moins` s'il est plus petit, et pour finir `trouve` suivi du nombre d'essais. (TD Premiers pas, exercice 17)\n\n**Exemple**\n```text\nEntrée :\n[[SAI]]\nSortie :\n[[S3_0]]\n```",
+   "enonce": "Le but : une boucle de jeu avec `do-while` : on recommence tant que ce n'est pas gagné. (TD Premiers pas, exercice 17)\n\n**Le nombre secret** est `42` (`#define SECRET 42`).\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. des propositions (des entiers), jusqu'à trouver le secret.\n\n**Ce qu'il affiche** : pour chaque proposition fausse, `plus` (le secret est plus grand) ou `moins` (il est plus petit), une par ligne ; à la fin, `trouve` suivi du nombre d'essais.\n\n**Exemple**\n```text\nEntrée :\n[[SAI]]\nSortie :\n[[S3_0]]\n```",
    "guidage": "**Plan** : `do { lire p ; compter ; afficher plus/moins } while (p != SECRET);`, puis `trouve` et le nombre d'essais.",
    "duree": 7,
    "etapes": [
@@ -7605,7 +7605,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Premier jalon : avec `#define SECRET 42`, lis **une** proposition et affiche `plus`, `moins` ou `trouve`.",
+     "consigne": "Premier jalon, une seule proposition :\n1. en haut : `#define SECRET 42` ;\n2. lis `p` ;\n3. affiche `plus` si `p < SECRET`, `moins` si `p > SECRET`, `trouve` sinon.",
      "question": "Un seul essai.",
      "verif": {
       "mode": "c",
@@ -7634,7 +7634,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Mets le tout dans un `do-while` : redemande tant que `p != SECRET`, compte les essais, affiche `plus`/`moins` seulement quand c'est raté, et termine par `trouve <essais>`.",
+     "consigne": "Répète jusqu'à trouver :\n1. `int p, essais = 0;` ;\n2. `do { … } while (p != SECRET);` ;\n3. dans la boucle : lis `p`, `essais++`, puis affiche `plus` ou `moins` seulement si `p` n'est pas le secret ;\n4. après la boucle : `printf(\"trouve %d\\n\", essais);`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -7664,9 +7664,9 @@
     }
    ],
    "vals": {
-    "P": "49",
-    "SAI": "69 93 42",
-    "E1": "14 82 82 9 42",
+    "P": "63",
+    "SAI": "99 49 42",
+    "E1": "26 24 30 8 42",
     "PM": "moins",
     "CMP": "plus petit",
     "S2_0": "moins",
@@ -7674,13 +7674,13 @@
     "S2_2": "trouve",
     "S3_0": "moins\nmoins\ntrouve 3",
     "S3_1": "trouve 1",
-    "S3_2": "plus\nmoins\nmoins\nplus\ntrouve 5"
+    "S3_2": "plus\nplus\nplus\nplus\ntrouve 5"
    },
    "variantes": [
     {
-     "P": "49",
-     "SAI": "69 93 42",
-     "E1": "14 82 82 9 42",
+     "P": "63",
+     "SAI": "99 49 42",
+     "E1": "26 24 30 8 42",
      "PM": "moins",
      "CMP": "plus petit",
      "S2_0": "moins",
@@ -7688,12 +7688,12 @@
      "S2_2": "trouve",
      "S3_0": "moins\nmoins\ntrouve 3",
      "S3_1": "trouve 1",
-     "S3_2": "plus\nmoins\nmoins\nplus\ntrouve 5"
+     "S3_2": "plus\nplus\nplus\nplus\ntrouve 5"
     },
     {
-     "P": "55",
-     "SAI": "99 35 42",
-     "E1": "69 50 16 62 42",
+     "P": "79",
+     "SAI": "62 40 42",
+     "E1": "79 60 2 80 42",
      "PM": "moins",
      "CMP": "plus petit",
      "S2_0": "moins",
@@ -7704,9 +7704,9 @@
      "S3_2": "moins\nmoins\nplus\nmoins\ntrouve 5"
     },
     {
-     "P": "26",
-     "SAI": "3 61 42",
-     "E1": "24 65 55 24 42",
+     "P": "13",
+     "SAI": "16 54 42",
+     "E1": "39 28 35 23 42",
      "PM": "plus",
      "CMP": "plus grand",
      "S2_0": "plus",
@@ -7714,28 +7714,15 @@
      "S2_2": "trouve",
      "S3_0": "plus\nmoins\ntrouve 3",
      "S3_1": "trouve 1",
-     "S3_2": "plus\nmoins\nmoins\nplus\ntrouve 5"
+     "S3_2": "plus\nplus\nplus\nplus\ntrouve 5"
     },
     {
-     "P": "25",
-     "SAI": "75 57 42",
-     "E1": "79 96 53 64 42",
+     "P": "20",
+     "SAI": "47 52 42",
+     "E1": "71 88 13 56 42",
      "PM": "plus",
      "CMP": "plus grand",
      "S2_0": "plus",
-     "S2_1": "plus",
-     "S2_2": "trouve",
-     "S3_0": "moins\nmoins\ntrouve 3",
-     "S3_1": "trouve 1",
-     "S3_2": "moins\nmoins\nmoins\nmoins\ntrouve 5"
-    },
-    {
-     "P": "73",
-     "SAI": "72 67 42",
-     "E1": "98 58 1 65 42",
-     "PM": "moins",
-     "CMP": "plus petit",
-     "S2_0": "moins",
      "S2_1": "plus",
      "S2_2": "trouve",
      "S3_0": "moins\nmoins\ntrouve 3",
@@ -7743,9 +7730,9 @@
      "S3_2": "moins\nmoins\nplus\nmoins\ntrouve 5"
     },
     {
-     "P": "51",
-     "SAI": "87 41 42",
-     "E1": "20 18 82 79 42",
+     "P": "48",
+     "SAI": "91 30 42",
+     "E1": "28 89 92 66 42",
      "PM": "moins",
      "CMP": "plus petit",
      "S2_0": "moins",
@@ -7753,33 +7740,46 @@
      "S2_2": "trouve",
      "S3_0": "moins\nplus\ntrouve 3",
      "S3_1": "trouve 1",
-     "S3_2": "plus\nplus\nmoins\nmoins\ntrouve 5"
+     "S3_2": "plus\nmoins\nmoins\nmoins\ntrouve 5"
     },
     {
-     "P": "55",
-     "SAI": "26 21 42",
-     "E1": "41 23 94 89 42",
+     "P": "59",
+     "SAI": "48 35 42",
+     "E1": "21 90 1 76 42",
      "PM": "moins",
      "CMP": "plus petit",
      "S2_0": "moins",
      "S2_1": "plus",
      "S2_2": "trouve",
-     "S3_0": "plus\nplus\ntrouve 3",
-     "S3_1": "trouve 1",
-     "S3_2": "plus\nplus\nmoins\nmoins\ntrouve 5"
-    },
-    {
-     "P": "27",
-     "SAI": "3 30 42",
-     "E1": "21 49 6 43 42",
-     "PM": "plus",
-     "CMP": "plus grand",
-     "S2_0": "plus",
-     "S2_1": "plus",
-     "S2_2": "trouve",
-     "S3_0": "plus\nplus\ntrouve 3",
+     "S3_0": "moins\nplus\ntrouve 3",
      "S3_1": "trouve 1",
      "S3_2": "plus\nmoins\nplus\nmoins\ntrouve 5"
+    },
+    {
+     "P": "51",
+     "SAI": "57 14 42",
+     "E1": "40 49 78 5 42",
+     "PM": "moins",
+     "CMP": "plus petit",
+     "S2_0": "moins",
+     "S2_1": "plus",
+     "S2_2": "trouve",
+     "S3_0": "moins\nplus\ntrouve 3",
+     "S3_1": "trouve 1",
+     "S3_2": "plus\nmoins\nmoins\nplus\ntrouve 5"
+    },
+    {
+     "P": "69",
+     "SAI": "37 59 42",
+     "E1": "93 7 15 55 42",
+     "PM": "moins",
+     "CMP": "plus petit",
+     "S2_0": "moins",
+     "S2_1": "plus",
+     "S2_2": "trouve",
+     "S3_0": "plus\nmoins\ntrouve 3",
+     "S3_1": "trouve 1",
+     "S3_2": "moins\nplus\nplus\nmoins\ntrouve 5"
     }
    ]
   },
@@ -7789,7 +7789,7 @@
    "notion": "4.6",
    "origine": "generee",
    "titre": "Somme jusqu'au premier négatif",
-   "enonce": "Écris un programme qui lit au plus 10 entiers et affiche la somme de ceux qui sont lus **avant le premier nombre négatif** (le négatif n'est pas compté, et on arrête de lire avec `break`).\n\n**Exemple**\n```text\nEntrée :\n[[SAI]]\nSortie :\n[[R]]\n```",
+   "enonce": "Le but : sortir d'une boucle avant la fin avec `break`.\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. au plus 10 entiers.\n\nOn s'arrête de lire au premier nombre **négatif**, qui n'est pas compté.\n\n**Ce qu'il affiche** : la somme des nombres lus avant le premier négatif.\n\n**Exemple**\n```text\nEntrée :\n[[SAI]]\nSortie :\n[[R]]\n```",
    "guidage": "**Plan** : une boucle `for` de 10 tours ; dans chaque tour : lire `x`, **sortir avec `break`** si `x < 0`, sinon ajouter à la somme.",
    "duree": 5,
    "etapes": [
@@ -7826,7 +7826,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Premier jalon : lis **10** entiers dans une boucle et affiche leur somme (sans t'occuper des négatifs pour l'instant).",
+     "consigne": "Premier jalon, sans s'occuper des négatifs :\n1. `int s = 0, x;` ;\n2. `for (int i = 0; i < 10; i++)` : lis `x` et ajoute-le à `s` ;\n3. affiche `s`.",
      "question": "Somme de 10 entiers.",
      "verif": {
       "mode": "c",
@@ -7851,7 +7851,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Arrête-toi **au premier négatif** : dans la boucle, juste après la lecture, s'il est négatif, `break` (avant de l'ajouter).",
+     "consigne": "Arrête-toi au premier négatif :\n1. dans la boucle, juste après la lecture : `if (x < 0) break;` ;\n2. l'ajout à `s` reste **après** ce test, pour que le négatif ne soit pas compté.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -7888,112 +7888,112 @@
     }
    ],
    "vals": {
-    "SAI": "4 16 19 4 12 -5 5 3",
-    "K": "5",
-    "DIX": "18 24 1 3 25 29 3 15 4 4",
-    "R": "55",
-    "DET": "4 + 16 + 19 + 4 + 12",
-    "S2_0": "126",
+    "SAI": "0 16 10 -1 4 8",
+    "K": "3",
+    "DIX": "0 0 14 25 30 10 3 21 11 25",
+    "R": "26",
+    "DET": "0 + 16 + 10",
+    "S2_0": "139",
     "S2_1": "50",
-    "S3_0": "55",
-    "S3_1": "126",
+    "S3_0": "26",
+    "S3_1": "139",
     "S3_2": "0"
    },
    "variantes": [
     {
-     "SAI": "4 16 19 4 12 -5 5 3",
-     "K": "5",
-     "DIX": "18 24 1 3 25 29 3 15 4 4",
-     "R": "55",
-     "DET": "4 + 16 + 19 + 4 + 12",
-     "S2_0": "126",
-     "S2_1": "50",
-     "S3_0": "55",
-     "S3_1": "126",
-     "S3_2": "0"
-    },
-    {
-     "SAI": "3 14 1 -5 2 7",
+     "SAI": "0 16 10 -1 4 8",
      "K": "3",
-     "DIX": "7 30 23 11 29 5 12 28 27 9",
-     "R": "18",
-     "DET": "3 + 14 + 1",
-     "S2_0": "181",
-     "S2_1": "50",
-     "S3_0": "18",
-     "S3_1": "181",
-     "S3_2": "0"
-    },
-    {
-     "SAI": "19 3 18 -6 4 9",
-     "K": "3",
-     "DIX": "21 10 18 24 13 7 0 18 25 3",
-     "R": "40",
-     "DET": "19 + 3 + 18",
+     "DIX": "0 0 14 25 30 10 3 21 11 25",
+     "R": "26",
+     "DET": "0 + 16 + 10",
      "S2_0": "139",
      "S2_1": "50",
-     "S3_0": "40",
+     "S3_0": "26",
      "S3_1": "139",
      "S3_2": "0"
     },
     {
-     "SAI": "1 4 8 7 13 -2 8 2",
-     "K": "5",
-     "DIX": "17 17 5 0 20 10 20 11 15 17",
-     "R": "33",
-     "DET": "1 + 4 + 8 + 7 + 13",
-     "S2_0": "132",
-     "S2_1": "50",
-     "S3_0": "33",
-     "S3_1": "132",
-     "S3_2": "0"
-    },
-    {
-     "SAI": "16 20 19 -8 1 2",
-     "K": "3",
-     "DIX": "6 1 9 23 4 5 2 26 28 4",
-     "R": "55",
-     "DET": "16 + 20 + 19",
-     "S2_0": "108",
-     "S2_1": "50",
-     "S3_0": "55",
-     "S3_1": "108",
-     "S3_2": "0"
-    },
-    {
-     "SAI": "2 10 0 16 14 -5 4 3",
-     "K": "5",
-     "DIX": "21 20 2 2 0 28 10 11 7 5",
-     "R": "42",
-     "DET": "2 + 10 + 0 + 16 + 14",
-     "S2_0": "106",
-     "S2_1": "50",
-     "S3_0": "42",
-     "S3_1": "106",
-     "S3_2": "0"
-    },
-    {
-     "SAI": "19 9 9 10 -3 5 1",
+     "SAI": "8 3 4 2 -7 4 5",
      "K": "4",
-     "DIX": "20 21 5 24 16 10 20 26 20 6",
-     "R": "47",
-     "DET": "19 + 9 + 9 + 10",
-     "S2_0": "168",
+     "DIX": "7 29 4 16 22 6 19 3 0 30",
+     "R": "17",
+     "DET": "8 + 3 + 4 + 2",
+     "S2_0": "136",
      "S2_1": "50",
-     "S3_0": "47",
-     "S3_1": "168",
+     "S3_0": "17",
+     "S3_1": "136",
      "S3_2": "0"
     },
     {
-     "SAI": "9 3 -4 1 5",
-     "K": "2",
-     "DIX": "6 13 11 3 27 26 0 26 18 4",
-     "R": "12",
-     "DET": "9 + 3",
-     "S2_0": "134",
+     "SAI": "4 8 2 5 -7 5 1",
+     "K": "4",
+     "DIX": "12 26 26 22 17 18 11 3 21 30",
+     "R": "19",
+     "DET": "4 + 8 + 2 + 5",
+     "S2_0": "186",
      "S2_1": "50",
-     "S3_0": "12",
-     "S3_1": "134",
+     "S3_0": "19",
+     "S3_1": "186",
+     "S3_2": "0"
+    },
+    {
+     "SAI": "8 7 14 -6 9 6",
+     "K": "3",
+     "DIX": "28 10 13 7 0 26 27 8 28 29",
+     "R": "29",
+     "DET": "8 + 7 + 14",
+     "S2_0": "176",
+     "S2_1": "50",
+     "S3_0": "29",
+     "S3_1": "176",
+     "S3_2": "0"
+    },
+    {
+     "SAI": "7 19 0 10 -1 6 3",
+     "K": "4",
+     "DIX": "3 28 23 5 11 22 3 16 29 4",
+     "R": "36",
+     "DET": "7 + 19 + 0 + 10",
+     "S2_0": "144",
+     "S2_1": "50",
+     "S3_0": "36",
+     "S3_1": "144",
+     "S3_2": "0"
+    },
+    {
+     "SAI": "6 7 20 20 -7 9 1",
+     "K": "4",
+     "DIX": "11 18 18 0 17 9 4 4 24 26",
+     "R": "53",
+     "DET": "6 + 7 + 20 + 20",
+     "S2_0": "131",
+     "S2_1": "50",
+     "S3_0": "53",
+     "S3_1": "131",
+     "S3_2": "0"
+    },
+    {
+     "SAI": "2 19 9 -9 7 2",
+     "K": "3",
+     "DIX": "22 3 2 27 10 24 20 25 9 6",
+     "R": "30",
+     "DET": "2 + 19 + 9",
+     "S2_0": "148",
+     "S2_1": "50",
+     "S3_0": "30",
+     "S3_1": "148",
+     "S3_2": "0"
+    },
+    {
+     "SAI": "4 13 -9 1 6",
+     "K": "2",
+     "DIX": "10 8 29 29 22 5 4 26 19 6",
+     "R": "17",
+     "DET": "4 + 13",
+     "S2_0": "158",
+     "S2_1": "50",
+     "S3_0": "17",
+     "S3_1": "158",
      "S3_2": "0"
     }
    ]
@@ -8004,7 +8004,7 @@
    "notion": "4.6",
    "origine": "generee",
    "titre": "Somme des impairs avec continue",
-   "enonce": "Écris un programme qui lit `N` et affiche la somme des entiers **impairs** de 1 à `N`, en sautant les pairs avec `continue`.\n\n**Exemple**\n```text\nEntrée :\n[[N]]\nSortie :\n[[R]]\n```\n\n([[DET]])",
+   "enonce": "Le but : sauter certains tours de boucle avec `continue`.\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. un entier `N`.\n\n**Ce qu'il affiche** : la somme des entiers **impairs** de 1 à `N`, en sautant les pairs avec `continue`.\n\n**Exemple**\n```text\nEntrée :\n[[N]]\nSortie :\n[[R]]\n```\n\n([[DET]])",
    "guidage": "**Plan** : parcourir 1 … N ; si `i` est pair → `continue` (on saute le reste du tour) ; sinon ajouter `i`.",
    "duree": 4,
    "etapes": [
@@ -8042,7 +8042,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Premier jalon : lis `N` et affiche la somme de **tous** les entiers de 1 à `N`.",
+     "consigne": "Premier jalon :\n1. lis `N` ; `int s = 0;` ;\n2. `for (int i = 1; i <= N; i++)` : `s += i;` ;\n3. affiche `s`.",
      "question": "Somme de 1 à N.",
      "verif": {
       "mode": "c",
@@ -8071,7 +8071,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Ne garde que les **impairs** : au début du corps de la boucle, `if (i % 2 == 0) continue;` fait sauter l'ajout pour les pairs.",
+     "consigne": "Saute les pairs :\n1. au début du corps de la boucle, ajoute `if (i % 2 == 0) continue;` ;\n2. le `s += i;` reste après : il n'est plus exécuté pour les pairs.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -8108,113 +8108,113 @@
     }
    ],
    "vals": {
-    "N": "14",
-    "N2": "27",
-    "R": "49",
-    "DET": "1 + 3 + 5 + 7 + 9 + 11 + 13",
-    "S2_0": "105",
+    "N": "9",
+    "N2": "56",
+    "R": "25",
+    "DET": "1 + 3 + 5 + 7 + 9",
+    "S2_0": "45",
     "S2_1": "1",
-    "S2_2": "378",
-    "S3_0": "49",
+    "S2_2": "1596",
+    "S3_0": "25",
     "S3_1": "1",
-    "S3_2": "196"
+    "S3_2": "784"
    },
    "variantes": [
     {
-     "N": "14",
-     "N2": "27",
+     "N": "9",
+     "N2": "56",
+     "R": "25",
+     "DET": "1 + 3 + 5 + 7 + 9",
+     "S2_0": "45",
+     "S2_1": "1",
+     "S2_2": "1596",
+     "S3_0": "25",
+     "S3_1": "1",
+     "S3_2": "784"
+    },
+    {
+     "N": "11",
+     "N2": "38",
+     "R": "36",
+     "DET": "1 + 3 + 5 + 7 + 9 + 11",
+     "S2_0": "66",
+     "S2_1": "1",
+     "S2_2": "741",
+     "S3_0": "36",
+     "S3_1": "1",
+     "S3_2": "361"
+    },
+    {
+     "N": "7",
+     "N2": "59",
+     "R": "16",
+     "DET": "1 + 3 + 5 + 7",
+     "S2_0": "28",
+     "S2_1": "1",
+     "S2_2": "1770",
+     "S3_0": "16",
+     "S3_1": "1",
+     "S3_2": "900"
+    },
+    {
+     "N": "15",
+     "N2": "35",
+     "R": "64",
+     "DET": "1 + 3 + 5 + 7 + 9 + 11 + 13 + 15",
+     "S2_0": "120",
+     "S2_1": "1",
+     "S2_2": "630",
+     "S3_0": "64",
+     "S3_1": "1",
+     "S3_2": "324"
+    },
+    {
+     "N": "13",
+     "N2": "22",
      "R": "49",
      "DET": "1 + 3 + 5 + 7 + 9 + 11 + 13",
-     "S2_0": "105",
+     "S2_0": "91",
      "S2_1": "1",
-     "S2_2": "378",
+     "S2_2": "253",
+     "S3_0": "49",
+     "S3_1": "1",
+     "S3_2": "121"
+    },
+    {
+     "N": "13",
+     "N2": "28",
+     "R": "49",
+     "DET": "1 + 3 + 5 + 7 + 9 + 11 + 13",
+     "S2_0": "91",
+     "S2_1": "1",
+     "S2_2": "406",
      "S3_0": "49",
      "S3_1": "1",
      "S3_2": "196"
     },
     {
-     "N": "13",
-     "N2": "20",
-     "R": "49",
-     "DET": "1 + 3 + 5 + 7 + 9 + 11 + 13",
-     "S2_0": "91",
-     "S2_1": "1",
-     "S2_2": "210",
-     "S3_0": "49",
-     "S3_1": "1",
-     "S3_2": "100"
-    },
-    {
-     "N": "15",
-     "N2": "57",
-     "R": "64",
-     "DET": "1 + 3 + 5 + 7 + 9 + 11 + 13 + 15",
-     "S2_0": "120",
-     "S2_1": "1",
-     "S2_2": "1653",
-     "S3_0": "64",
-     "S3_1": "1",
-     "S3_2": "841"
-    },
-    {
-     "N": "5",
-     "N2": "19",
-     "R": "9",
-     "DET": "1 + 3 + 5",
-     "S2_0": "15",
-     "S2_1": "1",
-     "S2_2": "190",
-     "S3_0": "9",
-     "S3_1": "1",
-     "S3_2": "100"
-    },
-    {
-     "N": "11",
-     "N2": "44",
-     "R": "36",
-     "DET": "1 + 3 + 5 + 7 + 9 + 11",
-     "S2_0": "66",
-     "S2_1": "1",
-     "S2_2": "990",
-     "S3_0": "36",
-     "S3_1": "1",
-     "S3_2": "484"
-    },
-    {
      "N": "12",
-     "N2": "41",
+     "N2": "56",
      "R": "36",
      "DET": "1 + 3 + 5 + 7 + 9 + 11",
      "S2_0": "78",
      "S2_1": "1",
-     "S2_2": "861",
+     "S2_2": "1596",
      "S3_0": "36",
      "S3_1": "1",
-     "S3_2": "441"
+     "S3_2": "784"
     },
     {
-     "N": "10",
-     "N2": "50",
-     "R": "25",
-     "DET": "1 + 3 + 5 + 7 + 9",
-     "S2_0": "55",
+     "N": "5",
+     "N2": "58",
+     "R": "9",
+     "DET": "1 + 3 + 5",
+     "S2_0": "15",
      "S2_1": "1",
-     "S2_2": "1275",
-     "S3_0": "25",
+     "S2_2": "1711",
+     "S3_0": "9",
      "S3_1": "1",
-     "S3_2": "625"
-    },
-    {
-     "N": "9",
-     "N2": "33",
-     "R": "25",
-     "DET": "1 + 3 + 5 + 7 + 9",
-     "S2_0": "45",
-     "S2_1": "1",
-     "S2_2": "561",
-     "S3_0": "25",
-     "S3_1": "1",
-     "S3_2": "289"
+     "S3_2": "841"
     }
    ]
   },
@@ -8224,7 +8224,7 @@
    "notion": "4.3",
    "origine": "td",
    "titre": "Pyramide d'étoiles",
-   "enonce": "Écris un programme qui lit `N` et affiche un triangle d'étoiles aligné à gauche : la ligne `l` contient `l` étoiles. (TD Premiers pas, exercice 19)\n\n**Exemple**\n```text\nEntrée :\n[[N]]\nSortie :\n[[TRI]]\n```",
+   "enonce": "Le but : imbriquer deux boucles pour dessiner un triangle d'étoiles. (TD Premiers pas, exercice 19)\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. un entier `N`.\n\n**Ce qu'il affiche** : `N` lignes : la ligne `l` contient `l` étoiles `*`.\n\n**Exemple**\n```text\nEntrée :\n[[N]]\nSortie :\n[[TRI]]\n```",
    "guidage": "**Plan** : une boucle extérieure sur les lignes `l` de 1 à N ; pour chaque ligne, une boucle intérieure qui affiche `l` étoiles, puis un `\\n`.",
    "duree": 5,
    "etapes": [
@@ -8260,7 +8260,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Premier jalon : lis `n` et affiche **une seule ligne** de `n` étoiles (puis un retour à la ligne).",
+     "consigne": "Premier jalon, une seule ligne :\n1. lis `n` ;\n2. `for (int c = 0; c < n; c++)` : affiche `*` ;\n3. après la boucle, `printf(\"\\n\");`.",
      "question": "Une ligne d'étoiles.",
      "verif": {
       "mode": "c",
@@ -8289,7 +8289,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Répète cette ligne pour `l` allant de 1 à `n` : une boucle extérieure sur `l`, et la boucle du jalon (qui affiche maintenant `l` étoiles) à l'intérieur.",
+     "consigne": "Répète la ligne :\n1. entoure ce que tu as écrit d'une boucle `for (int l = 1; l <= n; l++)` ;\n2. dans la boucle intérieure, remplace `n` par `l` (la ligne `l` a `l` étoiles).",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -8319,94 +8319,34 @@
     }
    ],
    "vals": {
-    "N": "5",
-    "N2": "6",
-    "K": "9",
-    "TRI": "*\n**\n***\n****\n*****",
-    "S2_0": "*****",
+    "N": "7",
+    "N2": "7",
+    "K": "6",
+    "TRI": "*\n**\n***\n****\n*****\n******\n*******",
+    "S2_0": "*******",
     "S2_1": "*",
-    "S2_2": "******",
-    "S3_0": "*\n**\n***\n****\n*****",
+    "S2_2": "*******",
+    "S3_0": "*\n**\n***\n****\n*****\n******\n*******",
     "S3_1": "*",
-    "S3_2": "*\n**\n***\n****\n*****\n******"
+    "S3_2": "*\n**\n***\n****\n*****\n******\n*******"
    },
    "variantes": [
     {
-     "N": "5",
-     "N2": "6",
-     "K": "9",
-     "TRI": "*\n**\n***\n****\n*****",
-     "S2_0": "*****",
-     "S2_1": "*",
-     "S2_2": "******",
-     "S3_0": "*\n**\n***\n****\n*****",
-     "S3_1": "*",
-     "S3_2": "*\n**\n***\n****\n*****\n******"
-    },
-    {
-     "N": "6",
-     "N2": "2",
-     "K": "8",
-     "TRI": "*\n**\n***\n****\n*****\n******",
-     "S2_0": "******",
-     "S2_1": "*",
-     "S2_2": "**",
-     "S3_0": "*\n**\n***\n****\n*****\n******",
-     "S3_1": "*",
-     "S3_2": "*\n**"
-    },
-    {
-     "N": "5",
-     "N2": "5",
-     "K": "3",
-     "TRI": "*\n**\n***\n****\n*****",
-     "S2_0": "*****",
-     "S2_1": "*",
-     "S2_2": "*****",
-     "S3_0": "*\n**\n***\n****\n*****",
-     "S3_1": "*",
-     "S3_2": "*\n**\n***\n****\n*****"
-    },
-    {
      "N": "7",
-     "N2": "4",
-     "K": "7",
+     "N2": "7",
+     "K": "6",
      "TRI": "*\n**\n***\n****\n*****\n******\n*******",
      "S2_0": "*******",
      "S2_1": "*",
-     "S2_2": "****",
+     "S2_2": "*******",
      "S3_0": "*\n**\n***\n****\n*****\n******\n*******",
      "S3_1": "*",
-     "S3_2": "*\n**\n***\n****"
-    },
-    {
-     "N": "6",
-     "N2": "3",
-     "K": "4",
-     "TRI": "*\n**\n***\n****\n*****\n******",
-     "S2_0": "******",
-     "S2_1": "*",
-     "S2_2": "***",
-     "S3_0": "*\n**\n***\n****\n*****\n******",
-     "S3_1": "*",
-     "S3_2": "*\n**\n***"
-    },
-    {
-     "N": "6",
-     "N2": "4",
-     "K": "6",
-     "TRI": "*\n**\n***\n****\n*****\n******",
-     "S2_0": "******",
-     "S2_1": "*",
-     "S2_2": "****",
-     "S3_0": "*\n**\n***\n****\n*****\n******",
-     "S3_1": "*",
-     "S3_2": "*\n**\n***\n****"
+     "S3_2": "*\n**\n***\n****\n*****\n******\n*******"
     },
     {
      "N": "4",
      "N2": "2",
-     "K": "5",
+     "K": "9",
      "TRI": "*\n**\n***\n****",
      "S2_0": "****",
      "S2_1": "*",
@@ -8416,16 +8356,76 @@
      "S3_2": "*\n**"
     },
     {
+     "N": "3",
+     "N2": "2",
+     "K": "8",
+     "TRI": "*\n**\n***",
+     "S2_0": "***",
+     "S2_1": "*",
+     "S2_2": "**",
+     "S3_0": "*\n**\n***",
+     "S3_1": "*",
+     "S3_2": "*\n**"
+    },
+    {
+     "N": "5",
+     "N2": "8",
+     "K": "5",
+     "TRI": "*\n**\n***\n****\n*****",
+     "S2_0": "*****",
+     "S2_1": "*",
+     "S2_2": "********",
+     "S3_0": "*\n**\n***\n****\n*****",
+     "S3_1": "*",
+     "S3_2": "*\n**\n***\n****\n*****\n******\n*******\n********"
+    },
+    {
+     "N": "3",
+     "N2": "8",
+     "K": "9",
+     "TRI": "*\n**\n***",
+     "S2_0": "***",
+     "S2_1": "*",
+     "S2_2": "********",
+     "S3_0": "*\n**\n***",
+     "S3_1": "*",
+     "S3_2": "*\n**\n***\n****\n*****\n******\n*******\n********"
+    },
+    {
      "N": "7",
-     "N2": "4",
-     "K": "2",
+     "N2": "5",
+     "K": "9",
      "TRI": "*\n**\n***\n****\n*****\n******\n*******",
      "S2_0": "*******",
      "S2_1": "*",
-     "S2_2": "****",
+     "S2_2": "*****",
      "S3_0": "*\n**\n***\n****\n*****\n******\n*******",
      "S3_1": "*",
-     "S3_2": "*\n**\n***\n****"
+     "S3_2": "*\n**\n***\n****\n*****"
+    },
+    {
+     "N": "5",
+     "N2": "3",
+     "K": "8",
+     "TRI": "*\n**\n***\n****\n*****",
+     "S2_0": "*****",
+     "S2_1": "*",
+     "S2_2": "***",
+     "S3_0": "*\n**\n***\n****\n*****",
+     "S3_1": "*",
+     "S3_2": "*\n**\n***"
+    },
+    {
+     "N": "5",
+     "N2": "2",
+     "K": "4",
+     "TRI": "*\n**\n***\n****\n*****",
+     "S2_0": "*****",
+     "S2_1": "*",
+     "S2_2": "**",
+     "S3_0": "*\n**\n***\n****\n*****",
+     "S3_1": "*",
+     "S3_2": "*\n**"
     }
    ]
   }

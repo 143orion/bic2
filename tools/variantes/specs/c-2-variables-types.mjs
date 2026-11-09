@@ -1,13 +1,14 @@
 /* Chapitre 2 : consignes réécrites + variantes (08/11/2026). */
+import {BLOC, but, rien, lit, fait, affiche, afaire, jalon, ex, sortie, corriger} from "../redaction.mjs";
 const sol = c => "Une solution possible :\n```c\n" + c + "\n```";
 const E = (k, o) => Object.fromEntries(Object.entries(o).map(([a, b]) => [`etapes.${k}.${a}`, b]));
-const ex = (e, s) => "**Exemple**\n```text\nEntrée :\n" + e + "\nSortie :\n" + s + "\n```";
+const ex0 = (e, s) => "**Exemple**\n```text\nEntrée :\n" + e + "\nSortie :\n" + s + "\n```";
 const tests = (...es) => es.map(e => ({entree: e, sortie: "@auto"}));
 const dec = (x, n = 2) => (Math.round(x * 10**n) / 10**n).toFixed(n);
 const c109d = "#include <stdio.h>\n\nint main(void) {\n    int a = [[A]], b = [[B]];\n    double r = a / b;\n    printf(\"%.2f\\n\", r);\n    return 0;\n}";
 const c109 = c109d.replace("double r = a / b;", "double r = (double)a / b;");
 
-export default {
+const base = {
   banque: "programmation-c/c-2-variables-types.json",
   n: 8,
   items: {
@@ -159,3 +160,65 @@ export default {
     },
   },
 };
+
+/* ---------- format « Au clavier / Ce qu'il fait / Ce qu'il affiche » (09/11/2026), appliqué après la base ---------- */
+const format = {
+  banque: "programmation-c/c-2-variables-types.json",
+  items: {
+    "c2-101": {set: {
+      enonce: BLOC(but("utiliser les cinq opérateurs arithmétiques du C. (TD Premiers pas, exercice 3)"), lit("un entier `a` ;", "un entier `b`."),
+        affiche("sur une ligne, séparés par des espaces : la somme `a + b`, la différence `a - b`, le produit `a * b`, le quotient entier `a / b` et le reste `a % b`."), ex("[[E0]]", "[[S5_0]]")),
+      ...E(5, {consigne: jalon("Écris le programme :", "déclare `int a, b;` ;", "lis-les avec un seul `scanf(\"%d %d\", &a, &b);` ;", "affiche les cinq résultats avec un seul `printf` contenant cinq `%d`, dans l'ordre somme, différence, produit, quotient, reste.")}),
+    }},
+    "c2-102": {set: {
+      enonce: BLOC(but("convertir des degrés Celsius en Fahrenheit avec la formule $F = C \\times \\frac{9}{5} + 32$, sans tomber dans le piège de la division entière. (TD Premiers pas, exercice 5)"),
+        lit("une température en °C (un entier)."), affiche("la température en °F, avec 2 décimales."), ex("[[C]]", "[[F2]]")),
+      ...E(3, {consigne: jalon("Écris le programme :", "lis la température dans `int c` ;", "calcule `double f = c * 9.0 / 5 + 32;` (le `9.0` rend le calcul réel) ;", "affiche `f` avec `%.2f`.")}),
+    }},
+    "c2-103": {set: {
+      enonce: BLOC(but("convertir une distance de kilomètres en miles (1 mile = 1,609344 km, donc miles = km / 1.609344). (TD Premiers pas, exercice 6)"),
+        lit("une distance en km (un réel)."), affiche("la distance en miles, avec 2 décimales."), ex("[[KM]]", "[[MI]]")),
+      ...E(2, {consigne: jalon("Écris le programme :", "déclare `double km;` ;", "lis-le avec `scanf(\"%lf\", &km);` (`%lf` pour un `double`) ;", "affiche `km / 1.609344` avec `%.2f`.")}),
+    }},
+    "c2-104": {set: {
+      enonce: BLOC(but("échanger les valeurs de deux variables sans rien perdre."), lit("un entier `a` ;", "un entier `b`."),
+        fait("échange les valeurs de `a` et `b` à l'aide d'une variable temporaire `tmp`."), affiche("`a` puis `b`, séparés par une espace (donc dans l'ordre inverse de la saisie)."), ex("[[A]] [[B]]", "[[B]] [[A]]")),
+      ...E(2, {consigne: jalon("Premier jalon, sans échange :", "déclare `int a, b;` et lis-les ;", "affiche `a` puis `b`, séparés par une espace.") + "\n\nPour l'instant, le programme réaffiche les deux nombres dans l'ordre de la saisie."}),
+      ...E(3, {consigne: jalon("Entre la lecture et l'affichage, ajoute l'échange :", "`int tmp = a;` (on met `a` de côté) ;", "`a = b;` ;", "`b = tmp;` ;", "le `printf` ne change pas.")}),
+    }},
+    "c2-105": {set: {
+      enonce: BLOC(but("utiliser une constante définie avec `#define` dans un calcul."), "**La constante** : `#define PI 3.14159`, en haut du fichier.",
+        lit("le rayon d'un disque (un réel)."), affiche("sur une ligne, l'**aire** ($\\pi r^2$) puis le **périmètre** ($2 \\pi r$) du disque, chacun avec 2 décimales."), ex("[[R]]", "[[S4_0]]")),
+      ...E(3, {consigne: jalon("Premier jalon, l'aire seule :", "en haut du fichier : `#define PI 3.14159` ;", "dans `main`, déclare `double r;` et lis-le avec `%lf` ;", "affiche `PI * r * r` avec `%.2f`.")}),
+      ...E(4, {consigne: jalon("Ajoute le périmètre :", "sur la même ligne que l'aire, après une espace, affiche `2 * PI * r` avec `%.2f` ;", "un seul `printf` peut afficher les deux : `printf(\"%.2f %.2f\\n\", …, …);`.")}),
+    }},
+    "c2-106": {set: {
+      enonce: BLOC(but("voir combien d'octets occupe chaque type, avec `sizeof`."), rien, affiche("sur une ligne, séparées par des espaces, les tailles en octets de `char`, `int` et `double`, obtenues avec `sizeof`."), sortie("1 4 8")),
+      ...E(2, {consigne: jalon("Premier jalon :", "dans `main`, affiche seulement la taille d'un `int` : `printf(\"%d\\n\", (int)sizeof(int));` ;", "le `(int)` convertit le résultat de `sizeof` pour pouvoir l'afficher avec `%d`.")}),
+      ...E(3, {consigne: jalon("Complète :", "affiche les trois tailles dans l'ordre `char`, `int`, `double`, sur une ligne, séparées par une espace ;", "un seul `printf` avec trois `%d` et trois `(int)sizeof(…)`.")}),
+    }},
+    "c2-107": {set: {
+      enonce: BLOC(but("découper une durée avec la division entière et le modulo."), lit("une durée en secondes (un entier)."),
+        affiche("cette durée en heures, minutes et secondes : trois nombres séparés par des espaces."), ex("[[S]]", "[[H]] [[M]] [[SE]]") + "\n\n([[S]] s = [[H]] h [[M]] min [[SE]] s)"),
+      ...E(2, {consigne: jalon("Premier jalon, heures et minutes :", "lis la durée dans `int s` ;", "heures : `s / 3600` ;", "minutes : `(s % 3600) / 60` (ce qui reste après les heures, en minutes) ;", "affiche les deux, séparées par une espace.")}),
+      ...E(3, {consigne: jalon("Ajoute les secondes :", "les secondes restantes valent `s % 60` ;", "affiche-les en troisième position, après une espace.")}),
+    }},
+    "c2-108": {set: {
+      enonce: BLOC(but("calculer une moyenne **réelle** à partir d'entiers."), lit("trois entiers."), affiche("leur moyenne, avec 2 décimales."), ex("[[A]] [[B]] [[C]]", "[[MOY]]")),
+      ...E(2, {consigne: jalon("Premier jalon :", "déclare `int a, b, c;` et lis-les avec un seul `scanf` ;", "affiche leur somme.")}),
+      ...E(3, {consigne: jalon("Remplace la somme par la moyenne :", "calcule `(a + b + c) / 3.0` (le `3.0` rend la division réelle) ;", "affiche-la avec `%.2f`.")}),
+    }},
+    "c2-109": {set: {
+      enonce: BLOC("Ce programme doit afficher `[[R]]` ([[A]] divisé par [[B]]), mais il affiche `[[FAUX]]`.\n```c\n" + c109d + "\n```", corriger("la ligne du calcul, **sans changer** les types de `a` et `b`."), sortie("[[R]]")),
+      ...E(2, {consigne: jalon("**À faire** :", "ne touche pas à la ligne `int a = [[A]], b = [[B]];` ;", "dans la ligne du calcul, convertis `a` en réel **avant** la division : `(double)a / b` ;", "exécute : tu dois obtenir `[[R]]`.")}),
+    }},
+    "c2-110": {set: {
+      enonce: BLOC(but("voir qu'en C, une condition est une valeur (1 si elle est vraie, 0 sinon)."), lit("un entier `n`."),
+        fait("range dans une variable `int est_pair` le résultat de la condition « `n` est pair »."), affiche("`est_pair`, donc `1` si `n` est pair, `0` sinon (sans `if`)."), ex("[[N]]", "[[R]]")),
+      ...E(2, {consigne: jalon("Premier jalon :", "lis un entier dans `int n` ;", "affiche `n % 2` (le reste de la division par 2 : `0` ou `1`).")}),
+      ...E(3, {consigne: jalon("Remplace l'affichage :", "déclare `int est_pair = (n % 2 == 0);` ;", "affiche `est_pair`.") + "\n\nAucun `if` : la comparaison vaut déjà 1 ou 0. (Attention, pour un nombre négatif impair, `n % 2` vaut -1 : c'est pour ça qu'on compare à 0.)"}),
+    }},
+  },
+};
+
+export default [base, format];
