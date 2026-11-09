@@ -465,12 +465,12 @@ function ecouterJournal(){
 /* catalogue = toutes les banques : seule source des types et durées */
 async function chargerCatalogue(){
   try{
-    const r = await fetch("modules/liste.json"); if(!r.ok) return;
+    const r = await fetch("modules/liste.json", {cache:"no-cache"}); if(!r.ok) return;
     const liste = await r.json(); if(!Array.isArray(liste)) return;
     const cat = {}; E.modVals = {};
     liste.forEach(m => { if(m && m.id && m.xp && typeof m.xp === "object") E.modVals[m.id] = m.xp; });
     await Promise.all(liste.map(async m => {
-      const chs = await Promise.all((m.chapitres || []).map(ch => fetch(`banques/${m.id}/${ch}.json`).then(x => x.ok ? x.json() : null).catch(() => null)));
+      const chs = await Promise.all((m.chapitres || []).map(ch => fetch(`banques/${m.id}/${ch}.json`, {cache:"no-cache"}).then(x => x.ok ? x.json() : null).catch(() => null)));
       chs.forEach(j => { if(j) ajouterAuCatalogue(cat, j, m.id); });
       poserPositions(cat, chs);
     }));

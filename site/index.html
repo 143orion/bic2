@@ -772,7 +772,7 @@ function rendreVue(){
 function tout(r, E){ rendreProfil(r, E); rendreAnnonce(E); rendreEvals(E); rendreModules(r, E); rendreVue(); }
 if(VUES.includes(location.hash.slice(1))){ entrer(false); afficherVue(); } else demarrer();
 
-const pListe = fetch("modules/liste.json").then(r => r.ok ? r.json() : []).catch(() => []).then(l => { modulesListe = Array.isArray(l) ? l : []; });
+const pListe = fetch("modules/liste.json", {cache:"no-cache"}).then(r => r.ok ? r.json() : []).catch(() => []).then(l => { modulesListe = Array.isArray(l) ? l : []; });
 Promise.all([M.init(), pListe]).then(([E]) => {
   M.on(tout);
   let plusTard = false; try{ plusTard = !!sessionStorage.getItem("bic2.pseudoPlusTard"); }catch(e){}

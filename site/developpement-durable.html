@@ -533,12 +533,12 @@ function appliquerTheme(t){
   if(t.bg) r.setProperty("--m-bg", t.bg); if(t.fg) r.setProperty("--m-fg", t.fg); if(t.ac) r.setProperty("--m-ac", t.ac);
   if(t.onAc) r.setProperty("--m-on-ac", t.onAc); if(t.font) r.setProperty("--m-font", t.font);
 }
-const liste = await fetch("modules/liste.json").then(r => r.ok ? r.json() : []).catch(() => []);
+const liste = await fetch("modules/liste.json", {cache:"no-cache"}).then(r => r.ok ? r.json() : []).catch(() => []);
 const mod = (Array.isArray(liste) && liste.find(m => m.id === MOD)) || {id:MOD, nom:"Développement durable", chapitres:[]};
 appliquerTheme(mod.theme || {});
 M.monterHeader({page:"module", module:{id:MOD, nom:mod.nom}});
 const pInit = M.init({module:MOD});
-const chs = (await Promise.all((mod.chapitres || []).map(ch => fetch(`banques/${MOD}/${ch}.json`).then(r => r.ok ? r.json() : null).catch(() => null)))).filter(Boolean).sort((a, b) => a.ordre - b.ordre);
+const chs = (await Promise.all((mod.chapitres || []).map(ch => fetch(`banques/${MOD}/${ch}.json`, {cache:"no-cache"}).then(r => r.ok ? r.json() : null).catch(() => null)))).filter(Boolean).sort((a, b) => a.ordre - b.ordre);
 const cle = {"dd-1-principes":"principes","dd-2-limites":"limites","dd-3-entreprises":"entreprises","dd-4-territoires":"territoires","dd-5-debats":"debats","dd-6-gouvernance":"gouvernance","dd-7-modeles":"modeles","dd-8-complexite":"complexite","dd-9-esprit-critique":"critique"};
 chs.forEach((ch, k) => {
   ch.module = MOD; M.charger(ch);

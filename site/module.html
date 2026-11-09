@@ -1719,7 +1719,7 @@ function jouerMock(it, zone, opts = {}){
    ===================================================================== */
 const idMod = decodeURIComponent(location.hash.slice(1));
 addEventListener("hashchange", () => location.reload());
-const liste = await fetch("modules/liste.json").then(r => r.ok ? r.json() : []).catch(() => []);
+const liste = await fetch("modules/liste.json", {cache:"no-cache"}).then(r => r.ok ? r.json() : []).catch(() => []);
 const mod = Array.isArray(liste) && liste.find(m => m.id === idMod);
 S.mod = mod ? Object.assign({}, mod) : {id:idMod || "?", nom:"Module introuvable"};
 document.title = S.mod.nom + " · BIC2.exe";
@@ -1743,7 +1743,7 @@ if(mod.ext){   /* extension du module : modèles de schémas, générateurs de v
   await new Promise(res => { const sc = document.createElement("script"); sc.src = `modules/${mod.id}.js`; sc.onload = sc.onerror = res; document.head.appendChild(sc); });
   const x = window.EXT_MODULE || {}; ["schemas","generateurs","labos"].forEach(k => Object.assign(EXT[k], x[k] || {}));
 }
-const chs = await Promise.all((mod.chapitres || []).map(ch => fetch(`banques/${mod.id}/${ch}.json`).then(r => r.ok ? r.json() : null).catch(() => null)));
+const chs = await Promise.all((mod.chapitres || []).map(ch => fetch(`banques/${mod.id}/${ch}.json`, {cache:"no-cache"}).then(r => r.ok ? r.json() : null).catch(() => null)));
 S.chapitres = chs.filter(Boolean).sort((a, b) => (a.ordre ?? 0) - (b.ordre ?? 0));
 for(const c of S.chapitres){
   c.module = c.module || mod.id;
