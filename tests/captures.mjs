@@ -192,7 +192,7 @@ const SCENARIOS = {
   /* parcours complet : Neo demande → Adam voit la demande, valide → Neo entre ; Omar refusé */
   async admin(app){
     const neo = await page(app); await neo.goto(URL0 + "index.html?mock=neo&reset");
-    await neo.waitForSelector("#a-pseudo"); await neo.fill("#a-pseudo", "Neo_42"); await neo.fill("#a-prenom", "Néo"); await neo.fill("#a-nom", "Anderson");
+    await neo.waitForSelector("#a-pseudo"); await neo.fill("#a-pseudo", "Neo_42"); await neo.fill("#a-prenom", "Néo"); await neo.fill("#a-nom", "Anderson"); await neo.selectOption("#a-promo", "BIC2");
     await neo.click("#acces [type=submit]"); await neo.waitForSelector("#acces .acces-ok");
     const pg = await neo.context().newPage();
     pg.on("pageerror", e => erreurs.push(`[${app}] admin: ${e.message}`));
