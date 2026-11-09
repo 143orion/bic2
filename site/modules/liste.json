@@ -47,9 +47,9 @@
   "items": 336
  },
  {
-  "id": "developpement-durable",
+  "id": "dev-durable",
   "nom": "Développement durable",
-  "icone": "DD",
+  "icone": "☘",
   "theme": {
    "bg": "#1a1d1a",
    "fg": "#d8ddd6",

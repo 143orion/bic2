@@ -31,7 +31,7 @@
    liens [[…]] qui luisent. Classes préfixées dd- (aucun conflit avec theme.css).
    ===================================================================== */
 html{scrollbar-gutter:stable;overflow-y:scroll}
-#dd{--dd-bord:rgba(207,207,207,.15);--dd-gris:#8a8a8a;--dd-ok:#7ee787;--dd-rv:#ff8f00;--dd-rouge:#ff4d4d;--dd-lien:#8fd9a8;
+#dd{--dd-bord:rgba(207,207,207,.15);--dd-gris:#8a8a8a;--dd-ok:#7ee787;--dd-rv:#ff8f00;--dd-rouge:#ff4d4d;--dd-lien:color-mix(in srgb,var(--m-ac) 55%,#fff);--dd-lien2:color-mix(in srgb,var(--m-ac) 35%,#fff);
   --dd-serif:'Newsreader',Georgia,serif;--dd-mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
   --dd-grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   max-width:1360px;margin:0 auto;padding:16px 20px 80px;color:var(--m-fg);font:14px/1.6 var(--dd-mono)}
@@ -86,13 +86,13 @@ body.dd-intro .dd-mk.f2{animation:dd-pulse .7s ease-in-out 2}
 .dd-rep th,.dd-rep td{border:1px solid var(--dd-bord);padding:6px 8px;text-align:left;vertical-align:top}.dd-rep th{background:rgba(255,255,255,.05);color:#fff}
 .dd-odd{columns:2;column-gap:28px}
 .dd-src{display:inline-block;font:600 10px/1.6 var(--dd-mono);padding:0 6px;border-radius:999px;margin-right:4px;vertical-align:2px}
-.dd-src.s{background:rgba(79,157,105,.25);color:#9fe0b3}.dd-src.o{background:rgba(127,73,180,.3);color:#b893e0}.dd-src.c{background:rgba(255,143,0,.18);color:#ffc069}
+.dd-src.s{background:color-mix(in srgb,var(--m-ac) 25%,transparent);color:var(--dd-lien)}.dd-src.o{background:rgba(127,73,180,.3);color:#b893e0}.dd-src.c{background:rgba(255,143,0,.18);color:#ffc069}
 .dd-piege,.dd-astuce{padding:8px 12px;border-radius:8px;border:1px solid rgba(255,107,107,.4);background:rgba(255,107,107,.06);font-size:15px}
 .dd-astuce{border-color:color-mix(in srgb,var(--m-ac) 60%,transparent);background:color-mix(in srgb,var(--m-ac) 10%,transparent)}
 .dd-prov{display:inline-block;font:italic 10px/1.6 var(--dd-mono);padding:0 7px;border-radius:999px;background:rgba(255,255,255,.07);color:var(--dd-gris);margin-top:4px}
-.dd-wl{color:var(--dd-lien);text-decoration:none;text-shadow:0 0 6px rgba(79,157,105,.45);cursor:pointer}
+.dd-wl{color:var(--dd-lien);text-decoration:none;text-shadow:0 0 6px color-mix(in srgb,var(--m-ac) 45%,transparent);cursor:pointer}
 .dd-wl::before{content:"[[";opacity:.35;font:.8em var(--dd-mono)}.dd-wl::after{content:"]]";opacity:.35;font:.8em var(--dd-mono)}
-.dd-wl:hover{color:#b6efc8;text-shadow:0 0 10px rgba(79,157,105,.8)}
+.dd-wl:hover{color:var(--dd-lien2);text-shadow:0 0 10px color-mix(in srgb,var(--m-ac) 80%,transparent)}
 .dd-ref{border:none;background:none;color:var(--violet-clair,#b893e0);text-decoration:underline;padding:0;font:inherit}
 .dd-pn{display:flex;justify-content:space-between;gap:10px;margin:18px 0 6px;flex-wrap:wrap}
 .dd-bl{margin-top:16px;padding-top:12px;border-top:1px solid var(--dd-bord)}.dd-bl small{color:var(--dd-gris)}
@@ -104,7 +104,7 @@ body.dd-intro .dd-mk.f2{animation:dd-pulse .7s ease-in-out 2}
 .dd-essb{padding:10px 14px;border-radius:8px;background:rgba(255,255,255,.03);border:1px solid var(--dd-bord)}
 .dd-h3{color:#fff;font-size:15px;margin:18px 0 6px}.dd-parc{padding-left:22px}.dd-parc li{margin:6px 0}.dd-parc small{display:block;color:var(--dd-gris);font:15px/1.5 var(--dd-serif)}
 .dd-vide{color:var(--dd-gris);font-style:italic}.dd-mob{margin-bottom:14px;padding:10px 12px;border-radius:8px;border:1px dashed var(--dd-bord)}
-.dd-btn{padding:7px 15px;border-radius:8px;border:none;background:var(--m-ac);color:var(--m-on-ac);font-weight:600;box-shadow:0 0 14px rgba(79,157,105,.35)}
+.dd-btn{padding:7px 15px;border-radius:8px;border:none;background:var(--m-ac);color:var(--m-on-ac);font-weight:600;box-shadow:0 0 14px color-mix(in srgb,var(--m-ac) 35%,transparent)}
 .dd-btn.sec{background:transparent;border:1px solid var(--dd-bord);color:var(--m-fg);box-shadow:none}
 .dd-btn:disabled{opacity:.4;cursor:default}
 .dd-acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
@@ -154,12 +154,12 @@ body.dd-intro .dd-mk.f2{animation:dd-pulse .7s ease-in-out 2}
 .dd-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;padding:26px;border-radius:14px;border:1px solid var(--dd-bord);background:var(--m-bg);overflow:auto}
 .dd-face.v{transform:rotateY(180deg);background-image:var(--dd-grain)}
 .dd-recto{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;cursor:pointer;
-  background:linear-gradient(90deg,transparent 46px,rgba(79,157,105,.55) 46px 47px,transparent 47px),repeating-linear-gradient(transparent 0 31px,rgba(216,221,214,.06) 31px 32px),var(--m-bg)}
+  background:linear-gradient(90deg,transparent 46px,color-mix(in srgb,var(--m-ac) 55%,transparent) 46px 47px,transparent 47px),repeating-linear-gradient(transparent 0 31px,rgba(216,221,214,.06) 31px 32px),var(--m-bg)}
 .dd-recto h2{font:600 28px/1.3 var(--dd-serif);color:#fff;max-width:620px;margin:10px 0 16px}
 .dd-recto .meta{position:absolute;top:14px;left:58px;font-size:11px;color:var(--dd-gris)}.dd-recto .dd-force{position:absolute;top:14px;right:18px}
 .dd-consigne{font-size:12px;color:var(--dd-gris);padding:6px 10px;border-radius:6px;background:rgba(255,255,255,.04);margin-bottom:8px}
-.dd-cit{cursor:pointer;background:linear-gradient(transparent 58%,rgba(79,157,105,.32) 58%);transition:background .15s}
-.dd-cit:hover{background:linear-gradient(transparent 50%,rgba(79,157,105,.45) 50%)}
+.dd-cit{cursor:pointer;background:linear-gradient(transparent 58%,color-mix(in srgb,var(--m-ac) 32%,transparent) 58%);transition:background .15s}
+.dd-cit:hover{background:linear-gradient(transparent 50%,color-mix(in srgb,var(--m-ac) 45%,transparent) 50%)}
 .dd-cit.ko{background:linear-gradient(transparent 58%,rgba(255,77,77,.35) 58%);color:#ffb3b3}.dd-cit.ko b{color:#ffb3b3}
 .dd-cit.ko::after{content:"✗";font-size:.75em;margin-left:3px;color:var(--dd-rouge)}
 .dd-vfoot{display:flex;align-items:center;gap:14px;margin-top:14px;padding:10px 14px;border-radius:10px;border:1px solid var(--dd-bord);background:rgba(255,255,255,.03);flex-wrap:wrap}
@@ -185,7 +185,7 @@ body.dd-intro .dd-mk.f2{animation:dd-pulse .7s ease-in-out 2}
 <script>
 (async () => {
 "use strict";
-const M = window.moteur, MOD = "developpement-durable";
+const M = window.moteur, MOD = "dev-durable";
 const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const melange = a => { a = [...a]; for(let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random()*(i+1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };

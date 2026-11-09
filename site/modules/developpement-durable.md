@@ -1,8 +1,8 @@
-# Module « Développement durable »
+# Module « Développement durable » (`dev-durable`)
 
 Cours ESILV d'introduction au développement durable (9 cours de la Direction Soft Skills, DD & Carrières). L'éval se fait en **questions ouvertes** (quiz de 5 questions notées de 0 à 4, toutes les 2 séances) : le module sert surtout à **restituer le cours** avec le plus de détails possible.
 
-C'est une **exception au gabarit** des autres modules : il a sa **propre page**, `site/developpement-durable.html` (champ `page` de `liste.json`), qui réutilise `xp.js` mais pas le lecteur `module.html`. Rien de ce module ne s'applique aux autres.
+Identifiant **`dev-durable`** : c'est celui du placeholder créé dans le panel, que le module remplace (sa carte, son icône ☘ et l'éval du calendrier s'y rattachent). C'est une **exception au gabarit** des autres modules : il a sa **propre page**, `site/developpement-durable.html` (champ `page` de `liste.json`), qui réutilise `xp.js` mais pas le lecteur `module.html`. Rien de ce module ne s'applique aux autres.
 
 ## Structure de la page
 - **Cours** en notes liées (style Obsidian), sur 3 colonnes :
@@ -21,15 +21,15 @@ C'est une **exception au gabarit** des autres modules : il a sa **propre page**,
 - Le reste suit GAMIFICATION.md (une fois par jour, maîtrise, rattrapage, progression dans le module, plafonds).
 
 ## D.A. « Carnet phosphorescent »
-- Couleurs (`theme` de `liste.json`) : fenêtres `#1a1d1a`, texte `#d8ddd6`, accent vert `#4f9d69`, texte sur accent blanc. Fond de page et header = D.A. du hub.
+- Couleurs (`theme` de `liste.json`) : celles du placeholder du panel (fond des fenêtres `bg`, accent `ac`). Toute la page en dérive (liens, halos, surlignages via `color-mix` sur `--m-ac`). Fond de page et header = D.A. du hub.
 - Notes, réponses et cartes en **Newsreader** (serif de lecture, Google Fonts) ; interface en JetBrains Mono.
 - Grain de papier + lignes CRT très légères sur les fenêtres ; liens `[[…]]` verts qui luisent ; étiquettes `#tags` ; flashcards en fiches bristol lignées avec marge verte ; éléments à citer surlignés.
 - Classes préfixées `dd-` (aucun conflit avec `theme.css`).
 
-## Format des banques (`site/banques/developpement-durable/<chapitre>.json`)
+## Format des banques (`site/banques/dev-durable/<chapitre>.json`)
 Format propre au module (les notions sont des notes atomiques partagées entre cours) :
 ```js
-{ id: "dd-1-principes", module: "developpement-durable", titre, ordre, sources: [...],
+{ id: "dd-1-principes", module: "dev-durable", titre, ordre, sources: [...],
   essentiel: ["…"],                       // « L'essentiel » du cours (HTML simple, jetons {S} {O} {C})
   fil: ["dd", "principes", …],            // ordre de lecture ; peut citer des notes rangées dans un autre cours
   notions: [ { id: "externalite", titre, o: "slides" | "dit en cours" | "complément" | "slides + complément",
