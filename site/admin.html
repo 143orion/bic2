@@ -88,7 +88,7 @@
         <table class="tableau"><thead><tr><th>Placeholder</th><th>Icône</th><th>Fond</th><th>Accent</th><th></th></tr></thead><tbody id="t-ph"></tbody></table>
       </div>
       <div class="fenetre" data-titre="modules.ini — affichage dans le hub">
-        <table class="tableau"><thead><tr><th>Module</th><th>Visible</th><th>Ordre</th><th>Icône</th><th>Chapitres</th><th title="Multiplicateur d'XP à la dernière notion du module (×1 à la première, progression linéaire). 1 = désactivé.">XP fin de module ×</th></tr></thead><tbody id="t-mods"></tbody></table>
+        <table class="tableau"><thead><tr><th>Module</th><th>Visible</th><th>Ordre</th><th>Icône</th><th>Chapitres</th><th title="Multiplicateur d'XP à la dernière notion du module (×1 à la première, progression linéaire). 1 = désactivé.">XP fin de module ×</th><th title="XP d'un QCM juste dans ce module (vide = valeur de liste.json, sinon réglage global).">XP QCM</th><th title="XP max d'un QCM multi (au prorata) dans ce module.">XP QCM multi</th><th title="Effort compté pour un QCM multi de ce module, en secondes.">Effort multi (s)</th></tr></thead><tbody id="t-mods"></tbody></table>
         <p class="vide-txt" id="mods-vide" hidden>Aucun module pour l'instant : ils apparaissent ici dès qu'un module est créé (fichier modules/liste.json).</p>
       </div>
       <div class="fenetre" data-titre="durees.ini — durée théorique des exos (minutes)">
@@ -509,13 +509,16 @@ function xpRendue(q){
   const x = it.type === "qcm" ? v.qcm : it.type === "qcm-multi" ? v.qcmMulti : it.type === "trous" ? v.trous : it.type === "saisie" ? prod(d0 || v.dureeSaisie) : it.type === "exo" ? prod(d0 || 1)*v.modeGuide : null;
   return x == null ? null : Math.round(x);
 }
+/* case vide = pas de réglage propre au module (liste.json, puis valeur globale) */
+function num(tr, f, k){ const x = tr.querySelector(`[data-f="${f}"]`).value.trim(); return x === "" || !isFinite(+x) ? "" : Math.max(0, +x)*k; }
 async function rendreModules(){
   rendrePh();
   const reg = (E.config && E.config.modules) || {};
   $("mods-vide").hidden = !!modulesListe.length;
   $("t-mods").innerHTML = modulesListe.map((m, k) => { const r = reg[m.id] || {};
     return `<tr data-m="${esc(m.id)}"><td>${esc(m.nom)} <small class="vide-txt">${esc(m.id)}${m.bientot ? " · bientôt" : ""}</small></td><td><input type="checkbox" data-f="visible" ${r.visible === false ? "" : "checked"}></td>
-      <td><input class="entree" type="number" data-f="ordre" value="${r.ordre ?? k}"></td><td><input class="entree" data-f="icone" value="${esc(r.icone ?? m.icone ?? "")}"></td><td>${(m.chapitres || []).length}</td><td><input class="entree" type="number" step="0.05" min="1" max="3" data-f="progMax" value="${r.progMax ?? ((M.DEFAUT || {}).progressionMax ?? 1.5)}"></td></tr>`; }).join("");
+      <td><input class="entree" type="number" data-f="ordre" value="${r.ordre ?? k}"></td><td><input class="entree" data-f="icone" value="${esc(r.icone ?? m.icone ?? "")}"></td><td>${(m.chapitres || []).length}</td><td><input class="entree" type="number" step="0.05" min="1" max="3" data-f="progMax" value="${r.progMax ?? ((M.DEFAUT || {}).progressionMax ?? 1.5)}"></td>${(() => { const D = M.DEFAUT || {}, b = m.xp || {}, pl = (k, d) => b[k] != null ? b[k] : d, v = k => r[k] != null && r[k] !== "" ? r[k] : "";
+      return `<td><input class="entree" type="number" min="0" step="1" data-f="xpQcm" value="${v("xpQcm")}" placeholder="${pl("xpQcm", D.qcm ?? 7)}"></td><td><input class="entree" type="number" min="0" step="1" data-f="xpQcmMulti" value="${v("xpQcmMulti")}" placeholder="${pl("xpQcmMulti", D.qcmMulti ?? 10)}"></td><td><input class="entree" type="number" min="5" step="5" data-f="effortQcmMulti" value="${v("effortQcmMulti") === "" ? "" : Math.round(60*r.effortQcmMulti)}" placeholder="${Math.round(60*pl("effortQcmMulti", D.effortQcmMulti ?? .5))}"></td>`; })()}</tr>`; }).join("");
   const exos = [];
   await Promise.all(modulesListe.flatMap(m => (m.chapitres || []).map(ch => fetch(`banques/${m.id}/${ch}.json`).then(r => r.ok ? r.json() : null).catch(() => null)
     .then(j => { if(j && j.items) j.items.forEach(it => { ITEMS[it.id] = it; if(it.type === "exo") exos.push({id:it.id, m:m.id, ch, d:it.duree, n:(it.etapes || []).length}); }); }))));
@@ -550,7 +553,8 @@ $("t-ph").addEventListener("click", async e => { const b = e.target.closest("[da
   try{ await sauverPh(l, "Placeholder supprimé"); }catch(err){ toast("Échec : " + (err.message || err)); } });
 $("save-mods").onclick = e => occupe(e.currentTarget, $("msg-mods"), async () => {
   const modules = {}, durees = {};
-  document.querySelectorAll("#t-mods tr[data-m]").forEach(tr => { modules[tr.dataset.m] = {visible:tr.querySelector('[data-f="visible"]').checked, ordre:+tr.querySelector('[data-f="ordre"]').value || 0, icone:tr.querySelector('[data-f="icone"]').value, progMax:Math.max(1, Math.min(3, +tr.querySelector('[data-f="progMax"]').value || 1))}; });
+  document.querySelectorAll("#t-mods tr[data-m]").forEach(tr => { modules[tr.dataset.m] = {visible:tr.querySelector('[data-f="visible"]').checked, ordre:+tr.querySelector('[data-f="ordre"]').value || 0, icone:tr.querySelector('[data-f="icone"]').value, progMax:Math.max(1, Math.min(3, +tr.querySelector('[data-f="progMax"]').value || 1)),
+    xpQcm:num(tr, "xpQcm", 1), xpQcmMulti:num(tr, "xpQcmMulti", 1), effortQcmMulti:num(tr, "effortQcmMulti", 1/60)}; });
   document.querySelectorAll("[data-duree]").forEach(i => { if(i.value !== "" && +i.value > 0) durees[i.dataset.duree] = +i.value; });
   const nouveau = Object.assign(clone(E.config), {modules, durees, maj:Date.now()});
   if(!nouveau.valeurs) nouveau.valeurs = clone(D);

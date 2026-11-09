@@ -1,0 +1,298 @@
+{
+ "id": "dd-4-territoires",
+ "module": "developpement-durable",
+ "titre": "Le DD dans les territoires",
+ "ordre": 4,
+ "sources": [
+  "Slides « Le DD dans les territoires »",
+  "notes de cours de la classe"
+ ],
+ "essentiel": [
+  "Rio 1992, <b>chapitre 28 de l'Agenda 21</b> : les collectivités font leur propre Agenda 21 (Agenda 21 local), avec consultation de la population.",
+  "Cadre français <b>2006</b> : 5 finalités et 5 principes de méthode.",
+  "Compétences des <b>régions</b>, <b>départements</b>, <b>communes</b> : chacune répond à des ODD.",
+  "Les collectivités sont <b>donneuses d'ordre</b> (clauses sociales et environnementales des marchés publics), au contact des habitants, et animent la dynamique de territoire."
+ ],
+ "fil": [
+  "rio1992",
+  "agenda21",
+  "competences-collectivites",
+  "engagements-collectivites",
+  "cop",
+  "subsidiarite"
+ ],
+ "notions": [
+  {
+   "id": "rio1992",
+   "titre": "Sommet de la Terre de Rio (1992)",
+   "o": "slides + complément",
+   "corps": "Tournant : adopte l'[[agenda21|Agenda 21]] et trois conventions (climat, [[biodiversite]], désertification), d'où naissent les [[cop|COP]]. La Déclaration de Rio fait du partenariat un principe fondamental : voir [[gouvernance]]."
+  },
+  {
+   "id": "agenda21",
+   "titre": "Agenda 21 local",
+   "o": "slides",
+   "corps": "Chapitre 28 de l'Agenda 21 de [[rio1992|Rio]] : les collectivités font leur propre programme, avec consultation de la population. Cadre français 2006 : 5 finalités et 5 principes de méthode (amélioration continue, [[participation]], pilotage, transversalité, évaluation partagée). Ses valeurs ont essaimé vers la [[rse|RSE]]."
+  },
+  {
+   "id": "cop",
+   "titre": "COP (Conférence des parties)",
+   "o": "complément",
+   "corps": "Organe de décision d'une convention internationale : les États signataires font le bilan et fixent des objectifs. COP climat annuelle depuis 1995 ; COP21 = Accord de Paris (2015). Héritage de [[rio1992|Rio]]."
+  },
+  {
+   "id": "competences-collectivites",
+   "titre": "Compétences des collectivités et ODD",
+   "o": "slides",
+   "corps": "Chaque échelon agit sur des [[odd|ODD]] par ses compétences :\n- **Régions** : transports non urbains, formation professionnelle, développement économique, aménagement du territoire et environnement (SRADDET, déchets, eau), fonds européens.\n- **Départements** : action sociale (ASE, RSA, handicap, précarité énergétique), collèges, voirie rurale, SDIS.\n- **Communes** : urbanisme (PLU, ZAC), écoles, culture, sport, voirie, police du maire, état civil et élections."
+  },
+  {
+   "id": "engagements-collectivites",
+   "titre": "Les leviers des collectivités",
+   "o": "slides",
+   "corps": "- **Donneuses d'ordres** : par les marchés publics, elles imposent des clauses sociales et environnementales à leurs prestataires.\n- **Au contact des habitants** : le DD devient un sujet de [[participation]] et de dialogue.\n- **Animatrices du territoire** : elles mobilisent les autres acteurs, car elles ne peuvent pas agir seules (ex. réduction des gaz à effet de serre). Voir [[gouvernance]]."
+  }
+ ],
+ "questions": [
+  {
+   "id": "dd-q-sommets-cop",
+   "force": 1,
+   "q": "Qu'est-ce qu'un Sommet de la Terre ? Et une COP ?",
+   "rep": "<p><b>Sommet de la Terre.</b> {O} Les pays se réunissent pour parler d'environnement et signer des conventions. {C} Ce sont des conférences <b>décennales</b> de l'ONU : Stockholm <b>1972</b> (la première), Nairobi 1982, <b>Rio 1992</b>, Johannesburg 2002, Rio+20 2012 (qui lance le processus des ODD). {S} Les slides les montrent de 1972 à 2012.</p>\n  <p><b>Rio 1992, le tournant.</b> {O} Le sommet de Rio marque le début des grandes décisions. {C} Il adopte trois conventions : <b>climat</b> (CCNUCC), <b>biodiversité</b>, <b>désertification</b>. {S} Il produit l'<b>Agenda 21</b>, dont le chapitre 28 lance les Agendas 21 locaux, et la Déclaration de Rio fait du <b>partenariat</b> un principe fondamental.</p>\n  <p><b>COP.</b> {O} Conférence des parties : les acteurs qui viennent signer un accord. {C} C'est l'<b>organe de décision</b> d'une convention internationale : les États « parties » (signataires) se réunissent pour faire le bilan et fixer de nouveaux objectifs. La COP climat se réunit chaque année depuis <b>1995</b> (Berlin) ; COP3 = protocole de Kyoto (1997) ; <b>COP21</b> = Accord de Paris (2015). Il existe aussi des COP biodiversité et désertification. {S} À la COP21, 9 nouvelles coalitions se sont créées.</p>",
+   "pts": [
+    "<b>décennales</b>",
+    "<b>1972</b>",
+    "<b>Rio 1992</b>",
+    "<b>climat</b>",
+    "<b>biodiversité</b>",
+    "<b>désertification</b>",
+    "<b>Agenda 21</b>",
+    "<b>organe de décision</b>",
+    "<b>1995</b>",
+    "<b>COP21</b>"
+   ],
+   "src": [
+    [
+     "Vie publique : qu'est-ce qu'une COP ?",
+     "https://www.vie-publique.fr/fiches/274834-quest-ce-quune-cop"
+    ],
+    [
+     "Ministère de la Transition écologique : décryptage des COP",
+     "https://www.ecologie.gouv.fr/decryptage-des-cop-conferences-internationales-lutte-contre-dereglement-climatique"
+    ]
+   ],
+   "notes": [
+    "rio1992",
+    "cop",
+    "agenda21"
+   ]
+  }
+ ],
+ "dates": [
+  {
+   "annee": "1992",
+   "texte": "Sommet de la Terre de Rio : Agenda 21, conventions climat, biodiversité, désertification"
+  },
+  {
+   "annee": "1995",
+   "texte": "COP1 climat (Berlin)"
+  },
+  {
+   "annee": "2006",
+   "texte": "Cadre français des Agendas 21 locaux (5 finalités, 5 principes)"
+  }
+ ],
+ "items": [
+  {
+   "id": "dd-4-qcm-01",
+   "type": "qcm",
+   "notion": "agenda21",
+   "enonce": "Quel chapitre de l'Agenda 21 de Rio appelle les collectivités à faire leur propre Agenda 21 ?",
+   "choix": [
+    "Chapitre 28",
+    "Chapitre 1",
+    "Chapitre 17",
+    "Chapitre 40"
+   ],
+   "leurres": [],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "explication": "Le chapitre 28 donne naissance à l'Agenda 21 local.",
+   "duree": 0.33
+  },
+  {
+   "id": "dd-4-qcm-02",
+   "type": "qcm",
+   "notion": "cop",
+   "enonce": "Que désigne une COP ?",
+   "choix": [
+    "L'organe de décision d'une convention internationale",
+    "Une ONG environnementale",
+    "Une norme ISO",
+    "Un label européen"
+   ],
+   "leurres": [
+    "Un organisme de certification",
+    "Un sommet décennal de l'ONU"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "explication": "Conférence des parties : les États signataires d'une convention se réunissent pour décider de sa mise en œuvre.",
+   "duree": 0.33
+  },
+  {
+   "id": "dd-4-qcm-03",
+   "type": "qcm",
+   "notion": "agenda21",
+   "enonce": "Combien de finalités compte le cadre français des Agendas 21 locaux (2006) ?",
+   "choix": [
+    "5",
+    "3",
+    "8",
+    "17"
+   ],
+   "leurres": [
+    "4",
+    "9"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "explication": "5 finalités (climat, biodiversité, cohésion, épanouissement, production et consommation responsables) et 5 principes de méthode.",
+   "duree": 0.33
+  },
+  {
+   "id": "dd-4-qcm-04",
+   "type": "qcm",
+   "notion": "competences-collectivites",
+   "enonce": "Quel échelon gère les collèges ?",
+   "choix": [
+    "Le département",
+    "La région",
+    "La commune",
+    "L'État seul"
+   ],
+   "leurres": [
+    "L'intercommunalité"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "explication": "Départements : collèges ; régions : formation professionnelle et lycées ; communes : écoles.",
+   "duree": 0.33
+  },
+  {
+   "id": "dd-4-qcm-05",
+   "type": "qcm",
+   "notion": "engagements-collectivites",
+   "enonce": "Par quel moyen les collectivités influencent-elles leurs fournisseurs ?",
+   "choix": [
+    "Les marchés publics",
+    "Les monnaies locales",
+    "Les labels privés",
+    "Les COP"
+   ],
+   "leurres": [
+    "La loi PACTE"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "explication": "Donneuses d'ordres, elles intègrent des clauses sociales et environnementales dans les marchés publics.",
+   "duree": 0.33
+  },
+  {
+   "id": "dd-4-vf-01",
+   "type": "qcm-multi",
+   "notion": "agenda21",
+   "enonce": "L'Agenda 21",
+   "affirmations": [
+    {
+     "t": "Il est issu du Sommet de la Terre de Rio (1992).",
+     "vrai": true
+    },
+    {
+     "t": "Son chapitre 28 lance les Agendas 21 locaux.",
+     "vrai": true
+    },
+    {
+     "t": "La participation fait partie de ses principes de méthode.",
+     "vrai": true
+    },
+    {
+     "t": "Il a été adopté en 2015.",
+     "vrai": false
+    },
+    {
+     "t": "Il ne concerne que les entreprises.",
+     "vrai": false
+    },
+    {
+     "t": "Ses valeurs ont inspiré la RSE et la RSO.",
+     "vrai": true
+    },
+    {
+     "t": "Il fixe 17 objectifs.",
+     "vrai": false
+    }
+   ],
+   "explication": "Rio 1992 ; cadre français 2006 : 5 finalités, 5 principes.",
+   "duree": 0.75
+  },
+  {
+   "id": "dd-4-vf-02",
+   "type": "qcm-multi",
+   "notion": "cop",
+   "enonce": "Sommets de la Terre et COP",
+   "affirmations": [
+    {
+     "t": "Le premier Sommet de la Terre a eu lieu à Stockholm en 1972.",
+     "vrai": true
+    },
+    {
+     "t": "Rio 1992 a adopté une convention sur le climat.",
+     "vrai": true
+    },
+    {
+     "t": "La COP21 a abouti à l'Accord de Paris.",
+     "vrai": true
+    },
+    {
+     "t": "Une COP réunit les États signataires d'une convention.",
+     "vrai": true
+    },
+    {
+     "t": "Les COP climat ont lieu tous les dix ans.",
+     "vrai": false
+    },
+    {
+     "t": "Le protocole de Kyoto date de 2015.",
+     "vrai": false
+    },
+    {
+     "t": "Seule la convention climat a des COP.",
+     "vrai": false
+    }
+   ],
+   "explication": "COP climat annuelle depuis 1995 ; Kyoto = COP3 (1997) ; il existe aussi des COP biodiversité et désertification.",
+   "duree": 0.75
+  }
+ ]
+}

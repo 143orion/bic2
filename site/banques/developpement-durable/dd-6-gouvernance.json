@@ -1,0 +1,193 @@
+{
+ "id": "dd-6-gouvernance",
+ "module": "developpement-durable",
+ "titre": "Gouvernance et démarche multi-acteurs",
+ "ordre": 6,
+ "sources": [
+  "Slides « Gouvernance et démarche multi-acteurs »",
+  "notes de cours de la classe"
+ ],
+ "essentiel": [
+  "<b>Gouvernance</b> : du grec <i>kubernân</i> (piloter un navire) ; revient dans les années 1990 au sens d'une gestion qui associe la société civile.",
+  "Les <b>partenariats</b> sont un principe fondamental depuis Rio ; <b>ODD 17</b> = pilier de l'Agenda 2030 (le plus de cibles).",
+  "<b>Partie prenante</b> (<i>stakeholder</i>) : tout acteur dont les intérêts sont affectés par une décision.",
+  "Dialoguer avec ses parties prenantes : enjeu stratégique et réglementaire (vigilance 2017, PACTE 2019).",
+  "<b>Participation citoyenne</b> : de l'information à la participation, impliquer pour limiter les conflits."
+ ],
+ "fil": [
+  "gouvernance",
+  "partenariats",
+  "gouvernance-partagee",
+  "partie-prenante",
+  "dialogue-pp",
+  "participation",
+  "participation-citoyenne"
+ ],
+ "notions": [
+  {
+   "id": "gouvernance",
+   "titre": "Gouvernance",
+   "o": "slides",
+   "corps": "Manière dont un projet est piloté. Du grec *kubernân*, piloter un navire. Depuis les années 1990 : gouverner en associant la société civile. Gouvernance du DD = partenariats multi-acteurs (ODD 17, voir [[odd]]), dialogue avec les [[partie-prenante|parties prenantes]] et [[participation]] des citoyens."
+  },
+  {
+   "id": "partenariats",
+   "titre": "Les partenariats, impératif de gouvernance",
+   "o": "slides",
+   "corps": "Depuis la **Déclaration de Rio**, le partenariat est un principe fondamental : « un partenariat mondial sur une base nouvelle et équitable ». Coalitions autour d'ambitions communes (9 nouvelles à la COP21, voir [[cop]]). L'**ODD 17** fait des partenariats le moyen indispensable des 16 autres ; c'est l'ODD qui a le plus de cibles (voir [[odd]])."
+  },
+  {
+   "id": "gouvernance-partagee",
+   "titre": "Gouvernance partagée",
+   "o": "slides",
+   "corps": "Le DD étant un objectif d'**intérêt général**, sa [[gouvernance]] doit être partagée : mutualisation des moyens, prise en compte des expertises (notamment de terrain), portage plus solide, **acceptabilité** et accompagnement au changement."
+  },
+  {
+   "id": "dialogue-pp",
+   "titre": "Dialoguer avec ses parties prenantes",
+   "o": "slides",
+   "corps": "Pour les collectivités comme pour les entreprises, c'est un **principe de méthode** (les 5 principes de l'[[agenda21|Agenda 21]]) et, pour les entreprises, de plus en plus un **enjeu réglementaire** : [[vigilance|devoir de vigilance]] (2017), déclaration extra-financière, [[pacte|loi PACTE]] (2019). Voir [[partie-prenante]]."
+  },
+  {
+   "id": "participation-citoyenne",
+   "titre": "Participation citoyenne",
+   "o": "slides + complément",
+   "corps": "On passe de l'**information** à la **participation** des citoyens. Impliquer en amont permet de **limiter les conflits** et rend les projets plus acceptables. Degrés souvent distingués : informer, consulter, concerter, co-construire. C'est la mise en œuvre du principe de [[participation]]."
+  }
+ ],
+ "questions": [
+  {
+   "id": "dd-q-gouvernance",
+   "force": 1,
+   "q": "Qu'est-ce que la gouvernance ?",
+   "rep": "<p><b>Définition simple.</b> {O} La gouvernance, c'est la <b>manière dont un projet est piloté</b> : qui a quel rôle, quels objectifs, comment on décide.</p>\n  <p><b>Origine.</b> {S} Du grec <i>kubernân</i>, « piloter un navire ou un char » (Platon l'applique aux hommes), puis du latin <i>gubernare</i>. Au 13e siècle, synonyme de « gouvernement ». Le mot revient au début des <b>années 1990</b> avec un sens nouveau : une manière de gouverner qui se détache de l'institution « gouvernement » et repose sur la <b>participation de la société civile</b>, c'est-à-dire de tous les acteurs autres que l'État.</p>\n  <p><b>Gouvernance du DD.</b> {S} Elle s'organise à plusieurs échelles (internationale, nationale, locale) et repose sur les <b>partenariats multi-acteurs</b> (principe fondamental depuis Rio ; ODD 17). Une <b>gouvernance partagée</b> permet : mutualisation des moyens, prise en compte des expertises de terrain, portage plus solide, acceptabilité et accompagnement au changement.</p>",
+   "pts": [
+    "<b>manière dont un projet est piloté</b>",
+    "<i>kubernân</i>",
+    "<b>années 1990</b>",
+    "<b>participation de la société civile</b>",
+    "<b>partenariats multi-acteurs</b>",
+    "<b>gouvernance partagée</b>"
+   ],
+   "src": [],
+   "notes": [
+    "gouvernance",
+    "partie-prenante"
+   ]
+  }
+ ],
+ "dates": [],
+ "items": [
+  {
+   "id": "dd-6-qcm-01",
+   "type": "qcm",
+   "notion": "gouvernance",
+   "enonce": "Que signifie le grec kubernân, à l'origine de « gouvernance » ?",
+   "choix": [
+    "Piloter un navire ou un char",
+    "Voter",
+    "Décider seul",
+    "Partager le pouvoir"
+   ],
+   "leurres": [
+    "Écrire une loi"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "explication": "Kubernân = piloter un navire ou un char ; Platon l'applique aux hommes.",
+   "duree": 0.33
+  },
+  {
+   "id": "dd-6-qcm-02",
+   "type": "qcm",
+   "notion": "partenariats",
+   "enonce": "Quel ODD fait des partenariats le moyen des 16 autres ?",
+   "choix": [
+    "ODD 17",
+    "ODD 1",
+    "ODD 13",
+    "ODD 16"
+   ],
+   "leurres": [
+    "ODD 11"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "explication": "L'ODD 17 (partenariats) est le pilier de l'Agenda 2030 et a le plus de cibles.",
+   "duree": 0.33
+  },
+  {
+   "id": "dd-6-qcm-03",
+   "type": "qcm",
+   "notion": "partie-prenante",
+   "enonce": "De quel mot anglais vient « partie prenante » ?",
+   "choix": [
+    "Stakeholder",
+    "Shareholder",
+    "Stakeout",
+    "Partnership"
+   ],
+   "leurres": [
+    "Benchmark"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "explication": "Stakeholder : tout acteur dont les intérêts sont affectés ; à ne pas confondre avec shareholder (actionnaire).",
+   "duree": 0.33
+  },
+  {
+   "id": "dd-6-vf-01",
+   "type": "qcm-multi",
+   "notion": "gouvernance-partagee",
+   "enonce": "Gouvernance et parties prenantes",
+   "affirmations": [
+    {
+     "t": "La gouvernance partagée favorise l'acceptabilité.",
+     "vrai": true
+    },
+    {
+     "t": "Une partie prenante est uniquement un actionnaire.",
+     "vrai": false
+    },
+    {
+     "t": "Le dialogue avec les parties prenantes est un enjeu réglementaire pour les entreprises.",
+     "vrai": true
+    },
+    {
+     "t": "La gouvernance désigne uniquement le gouvernement.",
+     "vrai": false
+    },
+    {
+     "t": "Impliquer les citoyens limite les conflits.",
+     "vrai": true
+    },
+    {
+     "t": "La gouvernance se joue à plusieurs échelles.",
+     "vrai": true
+    },
+    {
+     "t": "Le mot revient dans les années 1990.",
+     "vrai": true
+    },
+    {
+     "t": "Les partenariats sont absents de l'Agenda 2030.",
+     "vrai": false
+    }
+   ],
+   "explication": "Partie prenante = tout acteur affecté ; gouvernance = manière de piloter, avec la société civile.",
+   "duree": 0.75
+  }
+ ]
+}

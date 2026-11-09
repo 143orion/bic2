@@ -45,5 +45,35 @@
    "c-10-structures"
   ],
   "items": 336
+ },
+ {
+  "id": "developpement-durable",
+  "nom": "Développement durable",
+  "icone": "DD",
+  "theme": {
+   "bg": "#1a1d1a",
+   "fg": "#d8ddd6",
+   "ac": "#4f9d69",
+   "onAc": "#ffffff",
+   "font": "'JetBrains Mono',ui-monospace,monospace"
+  },
+  "page": "developpement-durable.html",
+  "chapitres": [
+   "dd-1-principes",
+   "dd-2-limites",
+   "dd-3-entreprises",
+   "dd-4-territoires",
+   "dd-5-debats",
+   "dd-6-gouvernance",
+   "dd-7-modeles",
+   "dd-8-complexite",
+   "dd-9-esprit-critique"
+  ],
+  "items": 56,
+  "xp": {
+   "xpQcm": 10,
+   "xpQcmMulti": 20,
+   "effortQcmMulti": 0.75
+  }
  }
 ]

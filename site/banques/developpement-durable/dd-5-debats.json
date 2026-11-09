@@ -1,0 +1,178 @@
+{
+ "id": "dd-5-debats",
+ "module": "developpement-durable",
+ "titre": "Débats et controverses",
+ "ordre": 5,
+ "sources": [
+  "Slides « Débats et controverses »",
+  "notes de cours de la classe"
+ ],
+ "essentiel": [
+  "Le DD, un <b>oxymore</b> ? Critiqué comme compromis contradictoire, trop large (→ greenwashing) ou trop contraignant.",
+  "Des Sommets de la Terre (1972-2012) aux 8 OMD puis aux 17 ODD.",
+  "<b>Croissance verte</b> (OCDE) ou <b>décroissance</b> (née avec le rapport Meadows, 1972) ?",
+  "Engagement éthique ou <b>greenwashing</b> ? Effondrement, dystopies, la technologie va-t-elle sauver le monde ?"
+ ],
+ "fil": [
+  "oxymore",
+  "croissance-verte",
+  "decroissance",
+  "greenwashing",
+  "effondrement",
+  "techno-solution"
+ ],
+ "notions": [
+  {
+   "id": "oxymore",
+   "titre": "Le DD, un oxymore ?",
+   "o": "slides",
+   "corps": "Le terme est remis en question : **contradiction** entre produire des richesses et protéger les ressources (oxymore), notion **trop large** et donc interprétable à souhait (porte ouverte au [[greenwashing]]), ou ensemble de **contraintes** jugées incompatibles avec les entreprises. Le débat traverse l'histoire des Sommets de la Terre (1972-2012), des 8 [[omd|OMD]] aux 17 [[odd|ODD]]."
+  },
+  {
+   "id": "croissance-verte",
+   "titre": "Croissance verte",
+   "o": "slides",
+   "corps": "Définition de l'OCDE : « promouvoir la croissance économique et le développement tout en veillant à ce que les actifs naturels continuent de fournir les ressources et services environnementaux dont dépend notre bien-être ». Elle parie sur la conciliation par l'innovation (voir [[techno-solution]]) ; elle s'oppose à la [[decroissance]]."
+  },
+  {
+   "id": "decroissance",
+   "titre": "Décroissance",
+   "o": "slides",
+   "corps": "Le terme apparaît avec le **rapport Meadows** (*The Limits to Growth*, 1972). Il ne veut pas dire « décroître » au sens littéral : il refuse de faire de la **croissance économique le premier indicateur** de développement et de bien-être, au nom de la finitude des ressources. Le rapport montrait que la croissance creuse l'écart entre riches et pauvres et mène à un effondrement. Voir aussi [[modele-dominant]] et [[donut]]."
+  },
+  {
+   "id": "greenwashing",
+   "titre": "Greenwashing",
+   "o": "slides + complément",
+   "corps": "Engagement éthique ou **écoblanchiment** ? Le greenwashing consiste à se donner une image écologique trompeuse, par une communication qui exagère ou invente des bénéfices environnementaux. Le flou du terme « développement durable » le facilite (voir [[oxymore]]). Pour juger une démarche : sources, preuves, labels sérieux (voir [[norme-certif-label]]) et [[esprit-critique]]."
+  },
+  {
+   "id": "effondrement",
+   "titre": "Et si tout s'effondre ?",
+   "o": "slides + complément",
+   "corps": "Le cours évoque l'imaginaire de l'effondrement et les **dystopies** (ex. *Paris en 2084*, jeu *Remember Me*, 2014). Ces récits prolongent l'alerte du rapport Meadows (voir [[decroissance]]) ; ils peuvent mobiliser… ou décourager. À aborder avec [[esprit-critique]]."
+  },
+  {
+   "id": "techno-solution",
+   "titre": "La technologie va-t-elle sauver le monde ?",
+   "o": "slides + complément",
+   "corps": "Question ouverte du cours. La technologie peut réduire des impacts, mais elle a ses limites : l'[[effet-rebond]] (plus efficace → plus utilisé), les [[conflit-enjeux|conflits d'enjeux]] (renouvelables contre biodiversité) et le coût énergétique du numérique (data centers, voir [[medias-dd]]). C'est le pari de la [[croissance-verte]]."
+  }
+ ],
+ "questions": [],
+ "dates": [
+  {
+   "annee": "1972",
+   "texte": "1er Sommet de la Terre (Stockholm) · rapport Meadows · effet papillon (Lorenz)"
+  }
+ ],
+ "items": [
+  {
+   "id": "dd-5-qcm-01",
+   "type": "qcm",
+   "notion": "decroissance",
+   "enonce": "De quel texte vient le terme de décroissance ?",
+   "choix": [
+    "Le rapport Meadows (1972)",
+    "Le rapport Brundtland",
+    "L'Agenda 2030",
+    "La loi PACTE"
+   ],
+   "leurres": [
+    "Le Livre vert de l'UE"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "explication": "The Limits to Growth (1972) remet en cause la croissance comme premier indicateur de bien-être.",
+   "duree": 0.33
+  },
+  {
+   "id": "dd-5-qcm-02",
+   "type": "qcm",
+   "notion": "croissance-verte",
+   "enonce": "Quelle organisation a défini la croissance verte citée dans le cours ?",
+   "choix": [
+    "L'OCDE",
+    "L'OIT",
+    "Le GIEC",
+    "L'AFNOR"
+   ],
+   "leurres": [
+    "L'UNESCO"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "explication": "Définition de l'OCDE : croissance tout en préservant les actifs naturels.",
+   "duree": 0.33
+  },
+  {
+   "id": "dd-5-qcm-03",
+   "type": "qcm",
+   "notion": "oxymore",
+   "enonce": "Pourquoi certains disent-ils que le DD est un oxymore ?",
+   "choix": [
+    "Il associerait deux idées contradictoires : produire plus et préserver",
+    "Il est trop récent",
+    "Il ne concerne que les pays riches",
+    "Il est imposé par la loi"
+   ],
+   "leurres": [
+    "Il n'a pas de définition"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "explication": "Oxymore = contradiction entre développement (production de richesses) et protection des ressources.",
+   "duree": 0.33
+  },
+  {
+   "id": "dd-5-vf-01",
+   "type": "qcm-multi",
+   "notion": "greenwashing",
+   "enonce": "Débats autour du DD",
+   "affirmations": [
+    {
+     "t": "La croissance verte vise à concilier croissance et préservation des actifs naturels.",
+     "vrai": true
+    },
+    {
+     "t": "La décroissance veut dire décroître au sens littéral.",
+     "vrai": false
+    },
+    {
+     "t": "Un terme trop large favorise le greenwashing.",
+     "vrai": true
+    },
+    {
+     "t": "Le rapport Meadows date de 1972.",
+     "vrai": true
+    },
+    {
+     "t": "Le greenwashing est une démarche certifiée.",
+     "vrai": false
+    },
+    {
+     "t": "L'effet rebond peut annuler un progrès technique.",
+     "vrai": true
+    },
+    {
+     "t": "La croissance verte est définie par le rapport Meadows.",
+     "vrai": false
+    }
+   ],
+   "explication": "La décroissance refuse la croissance comme premier indicateur ; la croissance verte est définie par l'OCDE.",
+   "duree": 0.75
+  }
+ ]
+}

@@ -81,6 +81,12 @@ function valeursPour(cfgDoc, jour){
   return Object.assign({}, DEFAUT, cfgDoc && cfgDoc.valeurs);
 }
 
+/* XP des QCM et effort du QCM multi, réglables par module : panel (config.modules[id]) > liste.json (champ xp) > valeur globale */
+function valeursModule(cfgDoc, modVals, id, v){
+  const r = (cfgDoc && cfgDoc.modules && cfgDoc.modules[id]) || {}, b = (modVals && modVals[id]) || {};
+  const g = (k, def) => r[k] != null && r[k] !== "" && isFinite(+r[k]) ? +r[k] : b[k] != null && isFinite(+b[k]) ? +b[k] : def;
+  return {qcm:g("xpQcm", v.qcm), qcmMulti:g("xpQcmMulti", v.qcmMulti), effortQcmMulti:g("effortQcmMulti", v.effortQcmMulti)};
+}
 /* progression dans le module : ×1 sur la 1re notion → ×progMax sur la dernière (linéaire sur le parcours de notions) */
 const bornerProg = x => Math.max(1, Math.min(3, isFinite(+x) ? +x : 1));
 function progMaxModule(cfgDoc, id, v){
@@ -106,7 +112,7 @@ function calculer(evenements, ctx = {}){
 
   /* Le journal est écrit par le joueur : on ne lui fait pas confiance.
      Type, durée, module, nb d'étapes viennent des BANQUES (ctx.catalogue) ; le reste est borné. */
-  const cat = ctx.catalogue || null, tMax = now + 5*6e4, TYPES = ["qcm","qcm-multi","saisie","trous","exo","controle"];
+  const modVals = ctx.modVals || {}, cat = ctx.catalogue || null, tMax = now + 5*6e4, TYPES = ["qcm","qcm-multi","saisie","trous","exo","controle"];
   const propre = e => {
     if(!e || typeof e !== "object" || typeof e.i !== "string" || e.i.length > 40 || typeof e.q !== "string" || e.q.length > 120) return null;
     const t = +e.t; if(!isFinite(t) || t <= 0 || t > tMax) return null;
@@ -114,6 +120,7 @@ function calculer(evenements, ctx = {}){
       e:Math.max(0, Math.floor(+e.e || 0)), ne:Math.max(1, Math.floor(+e.ne || 1)), h:Math.max(0, Math.min(10, Math.floor(+e.h || 0)))};
     if(e.tm != null && isFinite(+e.tm)) x.tm = Math.max(0, +e.tm);
     if(e.sd != null && isFinite(+e.sd)) x.sd = Math.max(0, +e.sd);
+    if(e.s != null && isFinite(+e.s)) x.s = Math.max(0, Math.min(1, +e.s));   // QCM multi : part juste (prorata)
     if(cat){
       const it = cat[e.q]; if(!it) return null;
       x.ty = it.type; x.d = +it.duree || 0; x.m = it.module; x.c = it.chapitre; x.ne = it.etapes || 1; x.pos = Math.max(0, Math.min(1, +it.pos || 0));
@@ -125,6 +132,7 @@ function calculer(evenements, ctx = {}){
       }
     } else { x.d = Math.min(x.d, 120); if(x.sd != null) x.sd = Math.min(x.sd, x.d); }
     if(!TYPES.includes(x.ty) || x.e >= x.ne) return null;
+    if(x.ty === "qcm-multi" && x.s != null) x.ok = x.s >= .999 ? 1 : 0; else delete x.s;
     if(x.ty === "exo"){ x.r = String(e.r || "?").slice(0,40); x.mo = (e.mo === "mock" || e.mo === "classique") && !x.h ? e.mo : "guide"; }  // classique / mock avec indices = guidé
     return x;
   };
@@ -178,15 +186,16 @@ function calculer(evenements, ctx = {}){
     } else {
       const it = items[e.q] || (items[e.q] = {jours:new Set(), maitrise:false, bonusDonne:false, cred:"", erreur:false, m:e.m});
       const prod = e.ty === "saisie";
-      effort = (prod ? v.effortSaisie : (e.ty === "qcm-multi" || e.ty === "trous") ? v.effortQcmMulti : v.effortQcm) * (it.maitrise ? .5 : 1);
+      const vm = valeursModule(cfgDoc, modVals, e.m, v);
+      effort = (prod ? v.effortSaisie : e.ty === "qcm-multi" ? vm.effortQcmMulti : e.ty === "trous" ? v.effortQcmMulti : v.effortQcm) * (it.maitrise ? .5 : 1);
       if(ok){
-        if(e.ty === "qcm-multi"){ xp = v.qcmMulti; f.push("QCM multi"); }
+        if(e.ty === "qcm-multi"){ xp = vm.qcmMulti; f.push("QCM multi"); }
         else if(e.ty === "trous"){ xp = v.trous; f.push("code à trous"); }
         else if(prod){
           const d = durees[e.q] != null ? +durees[e.q] : (e.d || v.dureeSaisie);
           const conc = Math.min(1 + d/v.concentrationDiv, v.concentrationMax);
           xp = v.xpParMinute * d * v.formatProduction * conc; f.push("tapée ×"+fmt(v.formatProduction));
-        } else { xp = v.qcm; f.push("QCM"); }
+        } else { xp = vm.qcm; f.push("QCM"); }
         if(it.cred === jour){ xp *= v.repetitionJour; f.push("déjà faite aujourd'hui ×"+fmt(v.repetitionJour)); }
         else {
           it.cred = jour;
@@ -199,17 +208,24 @@ function calculer(evenements, ctx = {}){
           if(!it.bonusDonne){ it.bonusDonne = true; bonus += v.maitriseBonus; f.push("✓ Maîtrisée ! +"+v.maitriseBonus); }
         }
         m.reussies.add(e.q);
-      } else { it.erreur = true; it.maitrise = false; it.jours.clear(); }
+      } else {
+        /* QCM multi partiellement juste : XP au prorata, mais l'item reste une erreur (précision, rattrapage) */
+        if(e.ty === "qcm-multi" && e.s > 0){
+          xp = vm.qcmMulti * e.s; f.push("QCM multi " + Math.round(e.s*100) + " %");
+          if(it.cred === jour){ xp *= v.repetitionJour; f.push("déjà faite aujourd'hui ×"+fmt(v.repetitionJour)); } else it.cred = jour;
+        }
+        it.erreur = true; it.maitrise = false; it.jours.clear();
+      }
     }
     if(corrige){ const rs = ctx.corrections && ctx.corrections.raisons, r = rs && rs[e.q]; f.push("item corrigé : XP rendue" + (r ? " — " + r : "")); }
-    if(ok && e.ty !== "controle" && xp > 0){
+    if(e.ty !== "controle" && xp > 0){
       const pm = progMaxModule(cfgDoc, e.m, v), mp = 1 + (pm - 1)*(e.pos || 0);
       if(mp > 1.005){ xp *= mp; f.push("progression ×"+fmt(mp)); }
     }
     if(ok && e.h){ const h = Math.min(e.h, v.indicesMax); xp *= Math.max(0, 1 - v.indiceCout*h); f.push(h+" indice"+(h>1?"s":"")+" −"+Math.round(v.indiceCout*h*100)+" %"); }
     const cum = effortJour[jour] || 0, plus = evl ? v.plafondEvalBonus : 0;
     const pm = cum < v.plafondSeuil1 + plus ? 1 : cum < v.plafondSeuil2 + plus ? v.plafondMult2 : v.plafondMult3;
-    if(ok && pm < 1){ xp *= pm; f.push("plafond du jour ×"+fmt(pm)); }
+    if(xp > 0 && pm < 1){ xp *= pm; f.push("plafond du jour ×"+fmt(pm)); }
     effortJour[jour] = cum + effort;
     const d = {i:e.i, t:e.t, q:e.q, m:e.m, ty:e.ty, jour, ok, xp, bonus, effort, f, contestable, maitrise};
     details[e.i] = d; parOrdre.push(d);
@@ -316,7 +332,7 @@ function tousLesEvenements(){
   for(const evs of Object.values(E.miens)) for(const e of evs) m.set(e.i, e);
   return [...m.values()];
 }
-function contexte(extra){ return Object.assign({config:E.config, calendrier:E.calendrier, decisions:E.decisions, corrections:E.corrections, catalogue:E.catalogue}, extra); }
+function contexte(extra){ return Object.assign({config:E.config, calendrier:E.calendrier, decisions:E.decisions, corrections:E.corrections, catalogue:E.catalogue, modVals:E.modVals}, extra); }
 function recalculer(){
   E.res = calculer(tousLesEvenements(), contexte());
   E.ecouteurs.forEach(fn => { try{ fn(E.res, E); }catch(err){ console.error(err); } });
@@ -451,7 +467,8 @@ async function chargerCatalogue(){
   try{
     const r = await fetch("modules/liste.json"); if(!r.ok) return;
     const liste = await r.json(); if(!Array.isArray(liste)) return;
-    const cat = {};
+    const cat = {}; E.modVals = {};
+    liste.forEach(m => { if(m && m.id && m.xp && typeof m.xp === "object") E.modVals[m.id] = m.xp; });
     await Promise.all(liste.map(async m => {
       const chs = await Promise.all((m.chapitres || []).map(ch => fetch(`banques/${m.id}/${ch}.json`).then(x => x.ok ? x.json() : null).catch(() => null)));
       chs.forEach(j => { if(j) ajouterAuCatalogue(cat, j, m.id); });
@@ -536,7 +553,9 @@ function finExo(id){ delete E.runs[id]; E.exoEnCours = 0; }
 function reponse(id, correct, tempsMis, extra = {}){
   const it = E.items[id] || extra.item;
   if(!it){ console.warn("[xp.js] item inconnu, appelle moteur.charger(chapitre) d'abord :", id); return null; }
+  if(it.type === "qcm-multi" && extra.score != null && isFinite(+extra.score)) correct = +extra.score >= .999;
   const ev = {i:nouvelId(), t:Date.now(), q:id, m:it.module, c:it.chapitre, ty:it.type, ok:correct ? 1 : 0, d:it.duree};
+  if(it.type === "qcm-multi" && extra.score != null && isFinite(+extra.score)) ev.s = Math.round(Math.max(0, Math.min(1, +extra.score))*1000)/1000;
   if(tempsMis != null) ev.tm = Math.round(tempsMis*10)/10;
   if(extra.indices) ev.h = extra.indices;
   if(it.type === "exo"){
@@ -550,6 +569,8 @@ function reponse(id, correct, tempsMis, extra = {}){
   return d;
 }
 
+/* flashcards : statut « sue » / « à revoir » rangé dans le journal, sans aucune XP (type ignoré par le calcul) */
+function noter(id, sue, module){ ajouter({i:nouvelId(), t:Date.now(), q:String(id).slice(0,120), m:String(module || E.moduleCourant || "").slice(0,60), ty:"carte", ok:sue ? 1 : 0}); }
 async function ecrireListe(chemin, item){
   if(E.mode !== "synchro") return false;
   const ref = E.db.doc(chemin);
@@ -754,11 +775,11 @@ setInterval(() => {
 }, 4200);
 
 window.moteur = {
-  init, charger, debutExo, finExo, reponse, contester, signaler, definirPseudo, definirPlaque, idControle,
+  init, charger, debutExo, finExo, reponse, noter, contester, signaler, definirPseudo, definirPlaque, idControle,
   plaque, placeholders, plaquesDebloquees, plaqueEquipee, moduleComplet, palierDe,
   monterHeader, bulle, son, titreHTML, GLYPHS,
   on(fn){ E.ecouteurs.add(fn); if(E.res) fn(E.res, E); return () => E.ecouteurs.delete(fn); },
   etat: () => E.res, interne: E, evenements: tousLesEvenements, contexte,
-  calculer, xpClassement, valeursPour, progMaxModule, niveauDe, rangDe, DEFAUT, RANGS, outils:{jourDe, plusJours, ecartJours, fmt, nf, esc, ymd}
+  calculer, xpClassement, valeursPour, valeursModule, progMaxModule, niveauDe, rangDe, DEFAUT, RANGS, outils:{jourDe, plusJours, ecartJours, fmt, nf, esc, ymd}
 };
 })();

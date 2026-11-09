@@ -1,0 +1,159 @@
+{
+ "id": "dd-9-esprit-critique",
+ "module": "developpement-durable",
+ "titre": "Construire son esprit critique",
+ "ordre": 9,
+ "sources": [
+  "Slides « Construire son esprit critique »",
+  "notes de cours de la classe"
+ ],
+ "essentiel": [
+  "Esprit <b>critique</b> ≠ esprit <b>de critique</b> (dénigrement systématique).",
+  "Le <b>doute</b> méthodique (Claude Bernard 1865, Bachelard 1934) ; doute ≠ dogme.",
+  "Indispensable face à la désinformation, aux biais et à la polarisation (cas ChatGPT).",
+  "Outils : fact-checking, débunkage, <b>méthode des 5 pourquoi</b> (aller aux causes racines)."
+ ],
+ "fil": [
+  "esprit-critique",
+  "doute-dogme",
+  "pourquoi-critique",
+  "cinq-pourquoi"
+ ],
+ "notions": [
+  {
+   "id": "esprit-critique",
+   "titre": "Esprit critique",
+   "o": "slides",
+   "corps": "Ne jamais admettre une affirmation sans en avoir **reconnu la légitimité rationnelle** ou éprouvé la valeur. À ne pas confondre avec l'**esprit de critique**, dénigrement systématique. Il repose sur le [[doute-dogme|doute méthodique]], n'est jamais acquis et s'exerce. Appliqué au DD : analyser des problèmes complexes, questionner normes et pratiques, chercher des informations étayées, connaître ses **biais cognitifs**, distinguer faits et interprétations."
+  },
+  {
+   "id": "doute-dogme",
+   "titre": "Le doute, pas le dogme",
+   "o": "slides",
+   "corps": "Claude Bernard (1865) : le grand principe expérimental est le **doute** philosophique, qui laisse à l'esprit sa liberté. Gaston Bachelard (1934) : « avant tout, il faut savoir poser des problèmes ». Un **dogme** est une doctrine jugée indiscutable ; le doute de l'[[esprit-critique]] est une démarche **réfléchie, volontaire et méthodique**."
+  },
+  {
+   "id": "pourquoi-critique",
+   "titre": "Pourquoi l'esprit critique aujourd'hui",
+   "o": "slides",
+   "corps": "Désinformation, fatigue mentale, difficulté à garder son esprit critique, **renforcement des biais**, **polarisation** de la société (voir [[bulle-filtre]]) ; le cas ChatGPT, qui produit des textes plausibles sans garantie d'exactitude. « Ce qui est affirmé sans preuve peut être rejeté sans preuve » (C. Hitchens). Outils : fact-checking, debunking, [[cinq-pourquoi]]."
+  },
+  {
+   "id": "cinq-pourquoi",
+   "titre": "La méthode des 5 pourquoi",
+   "o": "slides",
+   "corps": "Demander « pourquoi ? » plusieurs fois de suite pour dépasser la première réponse et trouver la **cause racine** d'un problème. Atouts : analyse approfondie, identification des causes profondes, remise en question continue, approche **systématique et itérative**. Un outil de l'[[esprit-critique]]."
+  }
+ ],
+ "questions": [],
+ "dates": [],
+ "items": [
+  {
+   "id": "dd-9-qcm-01",
+   "type": "qcm",
+   "notion": "esprit-critique",
+   "enonce": "Qu'est-ce qui distingue l'esprit critique de l'esprit de critique ?",
+   "choix": [
+    "L'esprit de critique dénigre systématiquement",
+    "Ils sont synonymes",
+    "L'esprit critique refuse toute information",
+    "L'esprit de critique repose sur le doute méthodique"
+   ],
+   "leurres": [
+    "L'esprit critique est inné"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "explication": "Esprit critique : vérifier la légitimité d'une affirmation. Esprit de critique : dénigrement systématique.",
+   "duree": 0.33
+  },
+  {
+   "id": "dd-9-qcm-02",
+   "type": "qcm",
+   "notion": "cinq-pourquoi",
+   "enonce": "À quoi sert la méthode des 5 pourquoi ?",
+   "choix": [
+    "Trouver la cause racine d'un problème",
+    "Trouver cinq solutions",
+    "Classer les sources",
+    "Voter une décision"
+   ],
+   "leurres": [
+    "Résumer un texte"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "explication": "Répéter « pourquoi ? » pour aller au-delà de la première réponse, jusqu'à la cause profonde.",
+   "duree": 0.33
+  },
+  {
+   "id": "dd-9-qcm-03",
+   "type": "qcm",
+   "notion": "doute-dogme",
+   "enonce": "Selon le cours, le doute de l'esprit critique est…",
+   "choix": [
+    "réfléchi, volontaire et méthodique",
+    "un refus de tout croire",
+    "un dogme",
+    "une opinion"
+   ],
+   "leurres": [
+    "une émotion"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "explication": "Le doute est une démarche réfléchie, volontaire et méthodique, à l'opposé du dogme.",
+   "duree": 0.33
+  },
+  {
+   "id": "dd-9-vf-01",
+   "type": "qcm-multi",
+   "notion": "esprit-critique",
+   "enonce": "L'esprit critique",
+   "affirmations": [
+    {
+     "t": "Il repose sur le doute méthodique.",
+     "vrai": true
+    },
+    {
+     "t": "Il est acquis une fois pour toutes.",
+     "vrai": false
+    },
+    {
+     "t": "Il consiste à dénigrer systématiquement.",
+     "vrai": false
+    },
+    {
+     "t": "Il implique de connaître ses biais cognitifs.",
+     "vrai": true
+    },
+    {
+     "t": "Distinguer faits et interprétations en fait partie.",
+     "vrai": true
+    },
+    {
+     "t": "Un dogme est une doctrine jugée indiscutable.",
+     "vrai": true
+    },
+    {
+     "t": "Claude Bernard prônait l'adhésion sans examen.",
+     "vrai": false
+    }
+   ],
+   "explication": "L'esprit critique s'exerce ; il n'est jamais acquis.",
+   "duree": 0.75
+  }
+ ]
+}

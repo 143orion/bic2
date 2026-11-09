@@ -432,6 +432,7 @@ function rendreModules(r, E){
     c.addEventListener("pointerenter", e => { if(e.pointerType === "mouse" && performance.now() - modulesDepuis >= 1000) M.son("hover"); });
     c.addEventListener("click", () => {
       M.son("tap");
+      if(m.page && /^[a-z0-9-]+\.html$/.test(m.page)) return void (location.href = m.page);   // module à page dédiée (ex. développement durable)
       if(lecteurDispo === false) return toast("Le lecteur de modules (module.html) n'est pas encore construit");
       location.href = "module.html#" + encodeURIComponent(m.id);
     });

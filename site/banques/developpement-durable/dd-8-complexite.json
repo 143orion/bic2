@@ -1,0 +1,224 @@
+{
+ "id": "dd-8-complexite",
+ "module": "developpement-durable",
+ "titre": "Comprendre la complexité",
+ "ordre": 8,
+ "sources": [
+  "Slides « Comprendre la complexité »",
+  "notes de cours de la classe"
+ ],
+ "essentiel": [
+  "<b>Système</b>, <b>systémie</b>, <b>approche systémique</b> ; complexité = <i>cum plexus</i>, « tissé ensemble ».",
+  "Monde interconnecté, <b>Grande Accélération</b>, <b>effet papillon</b> (Lorenz, 1972).",
+  "Lutter contre le climat est complexe : <b>effet rebond</b>, <b>conflit d'enjeux</b> (barrage hydroélectrique et biodiversité).",
+  "Médias : « if it bleeds, it leads », défiance, <b>bulles de filtre</b> ; croiser les sources."
+ ],
+ "fil": [
+  "systeme",
+  "systemie",
+  "approche-systemique",
+  "complexite",
+  "effet-papillon",
+  "effet-rebond",
+  "conflit-enjeux",
+  "education-filles",
+  "medias-dd",
+  "bulle-filtre"
+ ],
+ "notions": [
+  {
+   "id": "approche-systemique",
+   "titre": "Approche systémique",
+   "o": "slides",
+   "corps": "Façon d'aborder un problème en considérant **l'ensemble des interactions** entre les éléments d'un [[systeme|système]], pour comprendre les relations complexes et les impacts possibles des décisions. Exemple du cours : la durabilité d'une ville (infrastructures, transports, habitants, économie locale). C'est le **fondement du DD** : les [[limites|limites planétaires]] sont connectées, et l'on évalue son impact au regard des 17 [[odd|ODD]]."
+  },
+  {
+   "id": "systeme",
+   "titre": "Système",
+   "o": "slides",
+   "corps": "Ensemble d'**éléments interconnectés** (personnes, organismes, idées, processus) qui interagissent selon des règles, dans des **limites** définies ; il peut être ouvert ou fermé. Le modéliser, c'est décrire ses éléments, leurs **interactions** et sa **frontière**. Exemple : une forêt, le cycle de l'eau. Voir [[systemie]] et [[approche-systemique]]."
+  },
+  {
+   "id": "systemie",
+   "titre": "Systémie",
+   "o": "slides",
+   "corps": "L'**étude des systèmes** et de leur fonctionnement : relations entre éléments, interactions, **rétroactions**. Exemple : comprendre comment des pratiques agricoles touchent la production, mais aussi les sols, l'eau et la [[biodiversite]]. Voir [[systeme]]."
+  },
+  {
+   "id": "complexite",
+   "titre": "Complexité",
+   "o": "slides",
+   "corps": "Du latin *cum* (avec) et *plexus* (tissé) : « ce qui est tissé ensemble ». La notion insiste sur la diversité des parties **et surtout leurs interactions**. Nous vivons dans un monde **interconnecté** (mondialisation) : la dégradation d'un élément peut avoir des effets inattendus ailleurs (voir [[effet-papillon]], [[grande-acceleration]]). Edgar Morin appelle à une pensée globale contre la spécialisation."
+  },
+  {
+   "id": "effet-papillon",
+   "titre": "Effet papillon",
+   "o": "slides",
+   "corps": "« Le battement d'ailes d'un papillon au Brésil peut-il provoquer une tornade au Texas ? » (Edward Lorenz, 1972). Exemples du cours : une infection à Wuhan devenue pandémie mondiale ; l'invasion de l'Ukraine qui risque de provoquer des famines ; banques « too big to fail », prix de l'énergie et géopolitique. Voir [[complexite]]."
+  },
+  {
+   "id": "effet-rebond",
+   "titre": "Effet rebond",
+   "o": "slides",
+   "corps": "Améliorer l'efficacité d'un produit pousse à l'**utiliser davantage**, ce qui annule le bénéfice. Exemple du cours : une voiture plus économe qu'on utilise plus. Une raison pour laquelle la technologie seule ne suffit pas (voir [[techno-solution]])."
+  },
+  {
+   "id": "conflit-enjeux",
+   "titre": "Conflit d'enjeux",
+   "o": "slides",
+   "corps": "Une solution bonne pour un enjeu peut nuire à un autre : les énergies renouvelables sont décarbonées mais parfois nocives pour la [[biodiversite]] (exemple du **barrage hydroélectrique**). D'où l'[[approche-systemique]]."
+  },
+  {
+   "id": "education-filles",
+   "titre": "Des leviers inattendus : l'éducation des filles",
+   "o": "slides",
+   "corps": "Si toutes les filles terminaient leurs études secondaires, il y aurait d'ici 2050 environ **840 millions de personnes en moins** que prévu ; confier des responsabilités à plus de femmes peut conduire à de **meilleures politiques climatiques**. Un exemple de [[complexite]] : agir sur le social agit sur le climat."
+  },
+  {
+   "id": "medias-dd",
+   "titre": "Médias, internet et DD",
+   "o": "slides",
+   "corps": "- « **If it bleeds, it leads** » : les médias favorisent conflits et visions extrêmes pour l'audience ; la violence baisse depuis 5 siècles mais semble augmenter.\n- Défiance et complotisme : des sources mêlent vrai et théories farfelues.\n- Conseils : distinguer l'information « chaude » de la « froide », **croiser les sources**, vérifier leur sérieux, connaître l'intérêt de l'auteur, éviter les avis tranchés et l'info en continu.\n- Internet : expression des consom'acteurs, intelligence collective… mais aussi gros consommateur d'énergie (data centers). Voir [[bulle-filtre]]."
+  },
+  {
+   "id": "bulle-filtre",
+   "titre": "Polarisation et bulle de filtre",
+   "o": "slides",
+   "corps": "Les **algorithmes de recommandation** (moteurs de recherche, e-commerce, vidéos, réseaux sociaux) enferment chacun dans ce qui lui ressemble : radicalisation des points de vue, tensions, impossibilité de se faire entendre. Pour garder une distance critique, il faut **sortir de sa bulle** et chercher un regard extérieur (voir [[esprit-critique]])."
+  }
+ ],
+ "questions": [],
+ "dates": [],
+ "items": [
+  {
+   "id": "dd-8-qcm-01",
+   "type": "qcm",
+   "notion": "complexite",
+   "enonce": "Que signifie l'étymologie de « complexité » ?",
+   "choix": [
+    "Ce qui est tissé ensemble",
+    "Ce qui est compliqué",
+    "Ce qui est caché",
+    "Ce qui est infini"
+   ],
+   "leurres": [
+    "Ce qui est contradictoire"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "explication": "Cum (avec) + plexus (tissé) : la notion insiste sur les interactions entre les parties.",
+   "duree": 0.33
+  },
+  {
+   "id": "dd-8-qcm-02",
+   "type": "qcm",
+   "notion": "effet-rebond",
+   "enonce": "Une voiture plus économe qu'on utilise davantage illustre…",
+   "choix": [
+    "l'effet rebond",
+    "l'effet papillon",
+    "le conflit d'enjeux",
+    "la bulle de filtre"
+   ],
+   "leurres": [
+    "l'oxymore"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "explication": "Effet rebond : le gain d'efficacité est annulé par une utilisation accrue.",
+   "duree": 0.33
+  },
+  {
+   "id": "dd-8-qcm-03",
+   "type": "qcm",
+   "notion": "conflit-enjeux",
+   "enonce": "Le barrage hydroélectrique illustre…",
+   "choix": [
+    "un conflit d'enjeux (énergie décarbonée contre biodiversité)",
+    "l'effet rebond",
+    "l'effet papillon",
+    "la décroissance"
+   ],
+   "leurres": [
+    "l'économie de fonctionnalité"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "explication": "Une solution bonne pour le climat peut nuire à la biodiversité.",
+   "duree": 0.33
+  },
+  {
+   "id": "dd-8-qcm-04",
+   "type": "qcm",
+   "notion": "effet-papillon",
+   "enonce": "Qui a formulé l'effet papillon, et quand ?",
+   "choix": [
+    "Edward Lorenz, 1972",
+    "Edgar Morin, 1990",
+    "Kate Raworth, 2012",
+    "Buffon, 1778"
+   ],
+   "leurres": [
+    "Meadows, 1972"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "explication": "« Le battement d'ailes d'un papillon au Brésil peut-il provoquer une tornade au Texas ? » (Lorenz, 1972).",
+   "duree": 0.33
+  },
+  {
+   "id": "dd-8-vf-01",
+   "type": "qcm-multi",
+   "notion": "medias-dd",
+   "enonce": "Médias, réseaux et esprit critique",
+   "affirmations": [
+    {
+     "t": "« If it bleeds, it leads » : les médias favorisent les conflits.",
+     "vrai": true
+    },
+    {
+     "t": "Les algorithmes de recommandation peuvent enfermer dans une bulle.",
+     "vrai": true
+    },
+    {
+     "t": "Il faut éviter de croiser les sources.",
+     "vrai": false
+    },
+    {
+     "t": "Internet consomme beaucoup d'énergie (data centers).",
+     "vrai": true
+    },
+    {
+     "t": "La violence augmente constamment depuis 5 siècles.",
+     "vrai": false
+    },
+    {
+     "t": "Connaître l'intérêt de l'auteur aide à juger une info.",
+     "vrai": true
+    },
+    {
+     "t": "Les chaînes d'info en continu sont recommandées.",
+     "vrai": false
+    }
+   ],
+   "explication": "Croiser les sources, sortir de sa bulle, distinguer info chaude et froide.",
+   "duree": 0.75
+  }
+ ]
+}

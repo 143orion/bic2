@@ -1,0 +1,434 @@
+{
+ "id": "dd-3-entreprises",
+ "module": "developpement-durable",
+ "titre": "Le DD dans les entreprises",
+ "ordre": 3,
+ "sources": [
+  "Slides « Le DD dans les entreprises »",
+  "notes de cours de la classe"
+ ],
+ "essentiel": [
+  "Dès les années 1980, remise en cause de l'entreprise « profit seul », en réaction aux catastrophes (Bhopal, Amoco Cadiz, Rana Plaza).",
+  "<b>Jalons</b> : OCDE 1976, OIT 1977, GRI 1997, Pacte mondial 2000, <b>NRE 2001</b>, Grenelle 2007-2010, <b>ISO 26000</b> et <b>Grenelle II 2010</b>, Sapin 2 2016, <b>vigilance 2017</b>, <b>PACTE 2019</b>.",
+  "<b>RSE</b> (ISO 26000) : responsabilité d'une organisation vis-à-vis des impacts de ses décisions sur la société et l'environnement.",
+  "Aller <b>au-delà de la loi</b> avec ses parties prenantes ; ODD qui concernent surtout les entreprises : 4, 5, 7, 8, 11, 12, 13, 16, 17.",
+  "Enjeux : performance économique (~13 % d'écart, France Stratégie 2016), sociale (64 % des millennials), attente sociétale.",
+  "<b>Norme</b>, <b>certification</b>, <b>label</b> : trois niveaux de garantie."
+ ],
+ "fil": [
+  "jalons-rse",
+  "loi-nre",
+  "vigilance",
+  "pacte",
+  "rse",
+  "partie-prenante",
+  "rse-au-dela",
+  "rse-enjeux",
+  "rse-evolution",
+  "norme-certif-label"
+ ],
+ "notions": [
+  {
+   "id": "partie-prenante",
+   "titre": "Partie prenante",
+   "o": "slides",
+   "corps": "(*stakeholder*) Tout acteur dont les intérêts sont affectés par une décision : salariés, clients, fournisseurs, actionnaires, acteurs du territoire. Les prendre en compte fait partie de la définition de la [[rse|RSE]] ; c'est aussi une obligation ([[vigilance]], [[pacte]])."
+  },
+  {
+   "id": "rse",
+   "titre": "RSE (ISO 26000)",
+   "o": "slides",
+   "corps": "Responsabilité d'une organisation vis-à-vis des impacts de ses décisions sur la société et l'environnement : éthique et transparence, attentes des [[partie-prenante|parties prenantes]], respect des lois. Manière dont l'entreprise contribue au [[dd|DD]] et aux [[odd|ODD]]. Encadrée par les lois [[loi-nre|NRE]], [[vigilance]], [[pacte|PACTE]]."
+  },
+  {
+   "id": "loi-nre",
+   "titre": "Loi NRE (2001)",
+   "o": "slides",
+   "corps": "Nouvelles Régulations Économiques : obligation de reporting extra-financier pour les entreprises cotées (impacts sociaux et environnementaux). Étendue par Grenelle II (2010). Premier jalon français de la [[rse|RSE]]."
+  },
+  {
+   "id": "vigilance",
+   "titre": "Loi sur le devoir de vigilance (2017)",
+   "o": "slides + complément",
+   "corps": "Responsabilité des sociétés mères envers leurs fournisseurs et sous-traitants ; plan de vigilance. Votée après le Rana Plaza (2013). Oblige à dialoguer avec ses [[partie-prenante|parties prenantes]]."
+  },
+  {
+   "id": "pacte",
+   "titre": "Loi PACTE (2019)",
+   "o": "slides + complément",
+   "corps": "Toutes les entreprises prennent en compte les enjeux sociaux et environnementaux ; possibilité d'une raison d'être et du statut d'entreprise à mission. Dernier jalon de la [[rse|RSE]] dans le cours."
+  },
+  {
+   "id": "jalons-rse",
+   "titre": "Les grands jalons de la responsabilité des entreprises",
+   "o": "slides",
+   "corps": "- 1976 : principes de l'OCDE pour les multinationales · 1977 : déclaration tripartite de l'OIT\n- 1997 : Global Reporting Initiative (PNUE + CERES) · 2000 : Pacte mondial de l'ONU\n- 2001 : Livre vert de l'UE et [[loi-nre|loi NRE]] · 2007-2010 : Grenelle de l'Environnement\n- 2010 : ISO 26000 et loi Grenelle II · 2011 : stratégie RSE de l'UE · 2015 : loi transition énergétique\n- 2016 : loi Sapin 2 · 2017 : [[vigilance|devoir de vigilance]] · 2019 : [[pacte|loi PACTE]]\nContexte : dès les années 1980, remise en cause de l'entreprise « profit seul », sur fond de mondialisation et de catastrophes (Bhopal, Amoco Cadiz, Rana Plaza)."
+  },
+  {
+   "id": "rse-au-dela",
+   "titre": "Aller au-delà de la réglementation",
+   "o": "slides",
+   "corps": "Une démarche [[rse|RSE]] cherche un impact positif sur la société, le respect de l'environnement **et** la viabilité économique, en équilibre construit avec les [[partie-prenante|parties prenantes]]. Les entreprises engagées vont **volontairement** au-delà du cadre légal. Pour les activités à fort impact (mines, pétrole), cela suppose de **revoir le business model** (objectif 2 °C, biodiversité). ODD qui concernent surtout les entreprises : 4, 5, 7, 8, 11, 12, 13, 16, 17 (voir [[odd]])."
+  },
+  {
+   "id": "rse-enjeux",
+   "titre": "Pourquoi la RSE : les enjeux",
+   "o": "slides",
+   "corps": "- **Performance économique** : environ 13 % d'écart de performance en moyenne en faveur des entreprises qui pratiquent la RSE (France Stratégie, 2016).\n- **Performance sociale** : fidéliser, coopérer, donner du sens, attirer (64 % des millennials refuseraient un emploi sans fort engagement RSE).\n- **Attente sociétale** : 51 % des Français pensent qu'une entreprise doit être utile à la société ; Manifeste étudiant pour un réveil écologique (2018).\n- **Performance globale** : valorisation, différenciation, innovation, optimisation (réduction des coûts et des impacts)."
+  },
+  {
+   "id": "rse-evolution",
+   "titre": "Évolution de la RSE",
+   "o": "dit en cours",
+   "corps": "- **RSE « bêta »** (années 1980) : philanthropie, mécénat ; soigner la réputation.\n- **RSE 1.0** (1995-2010) : réduire les impacts négatifs (« less bad ») : chartes, certifications ISO, écoconception.\n- **RSE 2.0** (depuis 2010) : chercher un impact positif (« more good »), modèles durables, innovation.\nEn résumé : d'une logique de dons à une **stratégie** (voir [[rse]])."
+  },
+  {
+   "id": "norme-certif-label",
+   "titre": "Norme, certification, label",
+   "o": "slides",
+   "corps": "- **Norme** : document de référence approuvé par un institut de normalisation (ex. AFNOR) ; pas forcément obligatoire ; fixe des **moyens** (protocole d'essai) ou des **résultats** (niveau d'exigence).\n- **Certification** : un **organisme accrédité** atteste la conformité d'un produit, d'un service ou d'un système de management ; encadrée par le code de la consommation ; facultative. Ex. ISO 9001 (qualité), ISO 14001 (environnement).\n- **Label** : ensemble d'exigences, organisme public ou privé ; **beaucoup moins encadré**.\nNorme = la règle → certification = le contrôle → label = un signe, moins garanti."
+  }
+ ],
+ "questions": [
+  {
+   "id": "dd-q-lois",
+   "force": 2,
+   "q": "Quelles sont les grandes lois sur la responsabilité des entreprises ? (dates)",
+   "rep": "<table><tr><th>Date</th><th>Loi</th><th>Ce qu'elle impose</th></tr>\n  <tr><td><b>2001</b></td><td><b>NRE</b> (Nouvelles Régulations Économiques)</td><td>{S} Obligation de <b>reporting extra-financier</b> pour les entreprises cotées : rapport annuel listant les impacts sociaux et environnementaux de leurs activités. {O} Améliorer la transparence.</td></tr>\n  <tr><td><b>2010</b></td><td><b>Grenelle II</b></td><td>{S} Obligation de <b>rapport RSE</b> ; élargit l'information aux filiales des entreprises concernées par la NRE. (Suite du Grenelle de l'Environnement, 2007-2010.)</td></tr>\n  <tr><td><b>2017</b></td><td><b>Devoir de vigilance</b></td><td>{S} Responsabilité élargie aux <b>fournisseurs et sous-traitants</b> (sociétés mères et donneuses d'ordre). {C} Loi du 27 mars 2017, votée après l'effondrement du <b>Rana Plaza</b> (2013) ; vise les entreprises d'au moins 5 000 salariés en France ou 10 000 dans le monde, qui doivent publier un <b>plan de vigilance</b>.</td></tr>\n  <tr><td><b>2019</b></td><td><b>PACTE</b></td><td>{S} Prise en compte des enjeux sociaux et environnementaux pour <b>toutes</b> les entreprises ; possibilité de devenir <b>entreprise à mission</b>. {C} Loi du 22 mai 2019 : la société est « gérée dans son intérêt social, en prenant en considération les enjeux sociaux et environnementaux » (art. 1833 du Code civil) ; elle peut se doter d'une <b>raison d'être</b>.</td></tr></table>\n  <p><b>Autres jalons</b> {S} : OCDE 1976 · OIT 1977 · GRI 1997 · Pacte mondial de l'ONU 2000 · Livre vert UE 2001 · ISO 26000 2010 · stratégie RSE de l'UE 2011 · transition énergétique 2015 · Sapin 2 2016 (transparence, corruption).</p>\n  <p class=\"piege\"><b>Piège :</b> NRE = Nouvelles Régulations <b>Économiques</b>. Le Grenelle, c'est 2007-2010, pas les années 60.</p>",
+   "pts": [
+    "<b>2001</b>",
+    "<b>reporting extra-financier</b>",
+    "<b>2010</b>",
+    "<b>rapport RSE</b>",
+    "<b>2017</b>",
+    "<b>fournisseurs et sous-traitants</b>",
+    "<b>Rana Plaza</b>",
+    "<b>2019</b>",
+    "<b>entreprise à mission</b>",
+    "<b>raison d'être</b>"
+   ],
+   "src": [
+    [
+     "Direction générale du Trésor : devoir de vigilance",
+     "https://www.tresor.economie.gouv.fr/Articles/2017/05/09/devoir-de-vigilance-des-societes-meres-et-des-entreprises-donneuses-d-ordre"
+    ],
+    [
+     "Squire Patton Boggs : raison d'être et loi PACTE",
+     "https://larevue.squirepattonboggs.com/raison-detre-et-interet-social-des-entreprises-depuis-la-loi-pacte.html"
+    ]
+   ],
+   "notes": [
+    "loi-nre",
+    "vigilance",
+    "pacte"
+   ]
+  },
+  {
+   "id": "dd-q-rse-iso",
+   "force": 1,
+   "q": "Qu'est-ce que la RSE ? Que signifie ISO et que dit l'ISO 26000 ?",
+   "rep": "<p><b>ISO</b> = <i>International Organization for Standardization</i>, l'organisation internationale de normalisation. {S} La norme <b>ISO 26000</b> (2010) porte sur la <b>responsabilité sociétale des organisations</b>. {C} Elle donne des lignes directrices et n'est pas certifiable.</p>\n  <p><b>La RSE selon l'ISO 26000.</b> {S} C'est la responsabilité d'une organisation vis-à-vis des <b>impacts de ses décisions et de ses activités</b> sur la société et sur l'environnement. Elle se traduit par :</p>\n  <ul><li>un comportement <b>transparent et éthique</b> qui contribue au DD, y compris à la santé et au bien-être de la société ;</li>\n  <li>la prise en compte des <b>attentes des parties prenantes</b> ;</li>\n  <li>le respect des <b>lois</b> en vigueur et la compatibilité avec les normes internationales.</li></ul>\n  <p>{S} Pour définir le périmètre de sa responsabilité, l'entreprise traite <b>7 questions centrales</b> {C} : gouvernance de l'organisation, droits de l'homme, relations et conditions de travail, environnement, loyauté des pratiques, questions relatives aux consommateurs, communautés et développement local.</p>\n  <p><b>Évolution.</b> {O} RSE « bêta » (années 1980 : philanthropie, mécénat) → RSE 1.0 (1995-2010 : réduire les impacts négatifs, « less bad ») → RSE 2.0 (depuis 2010 : impact positif, « more good »).</p>\n  <p><b>Pourquoi.</b> {S} Performance économique (~13 % d'écart en moyenne, France Stratégie 2016), performance sociale (64 % des millennials refuseraient un emploi sans engagement RSE fort), attente sociétale. {S} DD et RSE : la RSE est la manière dont l'entreprise contribue au DD.</p>",
+   "pts": [
+    "<i>International Organization for Standardization</i>",
+    "<b>ISO 26000</b>",
+    "<b>responsabilité sociétale des organisations</b>",
+    "<b>impacts de ses décisions et de ses activités</b>",
+    "<b>transparent et éthique</b>",
+    "<b>attentes des parties prenantes</b>",
+    "<b>lois</b>",
+    "<b>7 questions centrales</b>",
+    "RSE « bêta »"
+   ],
+   "src": [],
+   "notes": [
+    "rse",
+    "partie-prenante"
+   ]
+  },
+  {
+   "id": "dd-q-norme-certif-label",
+   "force": 1,
+   "q": "Quelle différence entre une norme, une certification et un label ?",
+   "rep": "<table><tr><th></th><th>Ce que c'est</th><th>Garantie</th></tr>\n  <tr><td><b>Norme</b></td><td>{S} Document de référence approuvé par un institut de normalisation reconnu (ex. <b>AFNOR</b>). Pas forcément obligatoire. Elle fixe soit des <b>moyens</b> (protocole d'essai, manière de tester), soit des <b>résultats</b> (niveau d'exigence).</td><td>La règle de référence</td></tr>\n  <tr><td><b>Certification</b></td><td>{S} Procédure par laquelle un <b>organisme accrédité</b> certifie la qualité et la conformité d'un produit, d'un service ou d'un système de management. Encadrée par le <b>code de la consommation</b>, non obligatoire, elle donne de la visibilité. Elle s'appuie sur des normes. Ex. <b>ISO 9001</b> (qualité), <b>ISO 14001</b> (environnement).</td><td>Forte : contrôle du respect des normes</td></tr>\n  <tr><td><b>Label</b></td><td>{S} Ensemble d'exigences auxquelles les produits ou services labellisés doivent répondre. Peut venir d'un organisme <b>public ou privé</b>.</td><td>Plus faible : beaucoup moins encadré</td></tr></table>\n  <p class=\"astuce\"><b>À retenir :</b> norme = la règle → certification = le contrôle de la règle → label = un signe de reconnaissance, moins encadré.</p>",
+   "pts": [
+    "<b>AFNOR</b>",
+    "<b>moyens</b>",
+    "<b>résultats</b>",
+    "<b>organisme accrédité</b>",
+    "<b>code de la consommation</b>",
+    "<b>ISO 9001</b>",
+    "<b>public ou privé</b>",
+    "beaucoup moins encadré"
+   ],
+   "src": [],
+   "notes": [
+    "rse"
+   ]
+  }
+ ],
+ "dates": [
+  {
+   "annee": "1976",
+   "texte": "Principes directeurs de l'OCDE pour les multinationales"
+  },
+  {
+   "annee": "1977",
+   "texte": "Déclaration tripartite de l'OIT"
+  },
+  {
+   "annee": "1997",
+   "texte": "Global Reporting Initiative · COP3 : protocole de Kyoto"
+  },
+  {
+   "annee": "2000",
+   "texte": "Pacte mondial de l'ONU · 8 Objectifs du Millénaire (jusqu'en 2015)"
+  },
+  {
+   "annee": "2001",
+   "texte": "Loi NRE : reporting extra-financier · Livre vert de l'UE"
+  },
+  {
+   "annee": "2007-2010",
+   "texte": "Grenelle de l'Environnement"
+  },
+  {
+   "annee": "2010",
+   "texte": "ISO 26000 · loi Grenelle II (rapport RSE)"
+  },
+  {
+   "annee": "2013",
+   "texte": "Effondrement du Rana Plaza (Bangladesh)"
+  },
+  {
+   "annee": "2016",
+   "texte": "Loi Sapin 2"
+  },
+  {
+   "annee": "2017",
+   "texte": "Loi sur le devoir de vigilance (27 mars)"
+  },
+  {
+   "annee": "2019",
+   "texte": "Loi PACTE (22 mai) : raison d'être, entreprise à mission"
+  }
+ ],
+ "items": [
+  {
+   "id": "dd-3-qcm-01",
+   "type": "qcm",
+   "notion": "loi-nre",
+   "enonce": "Que signifie le sigle NRE ?",
+   "choix": [
+    "Nouvelles Régulations Économiques",
+    "Nouvelle Réglementation Énergétique",
+    "Normes de Responsabilité des Entreprises",
+    "Nouveau Reporting Environnemental"
+   ],
+   "leurres": [],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "explication": "Loi NRE (2001) : Nouvelles Régulations Économiques. Piège fréquent dans les notes !",
+   "duree": 0.33
+  },
+  {
+   "id": "dd-3-qcm-02",
+   "type": "qcm",
+   "notion": "vigilance",
+   "enonce": "Quel drame est à l'origine de la loi sur le devoir de vigilance ?",
+   "choix": [
+    "Rana Plaza",
+    "Bhopal",
+    "Amoco Cadiz",
+    "AZF"
+   ],
+   "leurres": [
+    "Fukushima",
+    "Deepwater Horizon"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "explication": "L'effondrement du Rana Plaza (Bangladesh, 2013) a conduit à la loi du 27 mars 2017.",
+   "duree": 0.33
+  },
+  {
+   "id": "dd-3-qcm-03",
+   "type": "qcm",
+   "notion": "rse",
+   "enonce": "Quelle norme internationale définit la responsabilité sociétale des organisations ?",
+   "choix": [
+    "ISO 26000",
+    "ISO 9001",
+    "ISO 14001",
+    "ISO 27001"
+   ],
+   "leurres": [
+    "ISO 50001"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "explication": "ISO 26000 (2010) : responsabilité sociétale des organisations. ISO 9001 = qualité, 14001 = environnement.",
+   "duree": 0.33
+  },
+  {
+   "id": "dd-3-qcm-04",
+   "type": "qcm",
+   "notion": "pacte",
+   "enonce": "Que permet la loi PACTE (2019) ?",
+   "choix": [
+    "Devenir entreprise à mission",
+    "Créer les monnaies locales",
+    "Imposer le reporting aux cotées",
+    "Fixer les 17 ODD"
+   ],
+   "leurres": [
+    "Créer le devoir de vigilance"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "explication": "PACTE : enjeux sociaux et environnementaux pour toutes les entreprises, raison d'être, entreprise à mission.",
+   "duree": 0.33
+  },
+  {
+   "id": "dd-3-qcm-05",
+   "type": "qcm",
+   "notion": "rse-evolution",
+   "enonce": "La « RSE 1.0 » (1995-2010) vise surtout à…",
+   "choix": [
+    "réduire les impacts négatifs (« less bad »)",
+    "avoir un impact positif (« more good »)",
+    "faire du mécénat",
+    "supprimer le profit"
+   ],
+   "leurres": [
+    "remplacer l'État"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "explication": "Bêta = philanthropie ; 1.0 = less bad ; 2.0 = more good.",
+   "duree": 0.33
+  },
+  {
+   "id": "dd-3-qcm-06",
+   "type": "qcm",
+   "notion": "norme-certif-label",
+   "enonce": "Lequel est le moins encadré ?",
+   "choix": [
+    "Un label",
+    "Une certification",
+    "Une norme AFNOR",
+    "Une norme ISO"
+   ],
+   "leurres": [
+    "Un audit accrédité"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "explication": "Un label peut venir d'un organisme public ou privé : beaucoup moins encadré qu'une certification.",
+   "duree": 0.33
+  },
+  {
+   "id": "dd-3-vf-01",
+   "type": "qcm-multi",
+   "notion": "rse",
+   "enonce": "Norme, certification, label",
+   "affirmations": [
+    {
+     "t": "Une certification est délivrée par un organisme accrédité.",
+     "vrai": true
+    },
+    {
+     "t": "Un label est plus encadré qu'une certification.",
+     "vrai": false
+    },
+    {
+     "t": "L'AFNOR est un institut de normalisation.",
+     "vrai": true
+    },
+    {
+     "t": "Une norme est toujours obligatoire.",
+     "vrai": false
+    },
+    {
+     "t": "ISO 14001 est une certification environnementale.",
+     "vrai": true
+    },
+    {
+     "t": "Un label peut venir d'un organisme privé.",
+     "vrai": true
+    },
+    {
+     "t": "La certification est encadrée par le code de la consommation.",
+     "vrai": true
+    },
+    {
+     "t": "Une certification est obligatoire pour vendre en France.",
+     "vrai": false
+    }
+   ],
+   "explication": "Label = moins encadré ; une norme n'est pas forcément obligatoire.",
+   "duree": 0.75
+  },
+  {
+   "id": "dd-3-vf-02",
+   "type": "qcm-multi",
+   "notion": "pacte",
+   "enonce": "Les lois sur la responsabilité des entreprises",
+   "affirmations": [
+    {
+     "t": "La loi NRE date de 2001.",
+     "vrai": true
+    },
+    {
+     "t": "La loi PACTE crée l'entreprise à mission.",
+     "vrai": true
+    },
+    {
+     "t": "Le devoir de vigilance concerne aussi les sous-traitants.",
+     "vrai": true
+    },
+    {
+     "t": "Grenelle II date des années 1960.",
+     "vrai": false
+    },
+    {
+     "t": "La loi Grenelle II impose un rapport RSE.",
+     "vrai": true
+    },
+    {
+     "t": "La loi Sapin 2 date de 2016.",
+     "vrai": true
+    },
+    {
+     "t": "La loi PACTE date de 2001.",
+     "vrai": false
+    }
+   ],
+   "explication": "Grenelle de l'Environnement : 2007-2010 ; Grenelle II : 2010.",
+   "duree": 0.75
+  }
+ ]
+}

@@ -1,0 +1,207 @@
+{
+ "id": "dd-7-modeles",
+ "module": "developpement-durable",
+ "titre": "Nouveaux modèles économiques",
+ "ordre": 7,
+ "sources": [
+  "Slides « Les nouveaux modèles économiques »",
+  "notes de cours de la classe"
+ ],
+ "essentiel": [
+  "Remise en cause du modèle dominant (rapport Meadows 1972).",
+  "<b>Économie circulaire</b> : partager, réutiliser, réparer, rénover, recycler.",
+  "<b>Économie de la fonctionnalité</b> : vendre l'usage, pas la propriété.",
+  "<b>Économie collaborative</b> : partage entre particuliers, via des plateformes.",
+  "<b>ESS</b> : associations, coopératives, mutuelles, fondations ; résolution de l'ONU du 18 avril 2023.",
+  "<b>Monnaies locales complémentaires</b> : base légale avec la loi ESS du 31 juillet 2014 (art. 16)."
+ ],
+ "fil": [
+  "modele-dominant",
+  "eco-circulaire",
+  "eco-fonctionnalite",
+  "eco-collaborative",
+  "ess",
+  "monnaies-locales"
+ ],
+ "notions": [
+  {
+   "id": "modele-dominant",
+   "titre": "Remise en question du modèle dominant",
+   "o": "slides",
+   "corps": "Le modèle économique fondé sur la croissance et l'extraction est remis en cause depuis le **rapport Meadows** (1972, voir [[decroissance]]) ; l'Agence européenne de l'environnement (2021) pose aussi la question d'une croissance sans limite. Alternatives : [[eco-circulaire]], [[eco-fonctionnalite]], [[eco-collaborative]], [[ess]], [[monnaies-locales]]."
+  },
+  {
+   "id": "eco-circulaire",
+   "titre": "Économie circulaire",
+   "o": "slides",
+   "corps": "Modèle de production et de consommation qui consiste à **partager, réutiliser, réparer, rénover et recycler** les produits et matériaux le plus longtemps possible, pour qu'ils gardent leur valeur. On allonge le cycle de vie pour réduire matières premières et déchets (contre le modèle linéaire « extraire, produire, jeter »)."
+  },
+  {
+   "id": "eco-fonctionnalite",
+   "titre": "Économie de la fonctionnalité",
+   "o": "slides",
+   "corps": "On vend l'**usage** d'un bien, pas le bien lui-même : le producteur en reste **propriétaire** tout au long de son cycle de vie et l'usager paie une valeur d'usage. Le producteur a alors intérêt à fabriquer des biens durables et réparables."
+  },
+  {
+   "id": "eco-collaborative",
+   "titre": "Économie collaborative",
+   "o": "slides",
+   "corps": "Aussi appelée « économie de partage » : échange, partage et collaboration **entre particuliers** (biens, services, temps, savoirs), avec ou sans argent, souvent via des **plateformes**. Usage plutôt que possession, mise en relation directe, préoccupations environnementales."
+  },
+  {
+   "id": "ess",
+   "titre": "Économie sociale et solidaire (ESS)",
+   "o": "slides",
+   "corps": "Structures fondées sur l'**utilité sociale**, la coopération et l'ancrage local ; but : le partage et la solidarité, pas l'enrichissement personnel. Primauté de l'humain sur le capital, gestion collective. Statuts : **associations, coopératives, mutuelles, fondations**. Racines : mouvement ouvrier du XIXe siècle (sociétés de secours mutuels, coopératives). Le **18 avril 2023**, l'ONU adopte une résolution sur l'ESS au service du DD."
+  },
+  {
+   "id": "monnaies-locales",
+   "titre": "Monnaies locales complémentaires",
+   "o": "slides",
+   "corps": "Monnaies **complémentaires** de l'euro (adossées à lui), utilisables sur un **territoire restreint** et pour certains biens et services, gérées par une association avec un établissement financier. Base légale : **loi ESS du 31 juillet 2014** (art. 16), si elles sont émises par des structures de l'[[ess]]."
+  }
+ ],
+ "questions": [],
+ "dates": [
+  {
+   "annee": "2014",
+   "texte": "Loi ESS du 31 juillet : base légale des monnaies locales"
+  },
+  {
+   "annee": "2023",
+   "texte": "18 avril : résolution de l'ONU sur l'ESS"
+  }
+ ],
+ "items": [
+  {
+   "id": "dd-7-qcm-01",
+   "type": "qcm",
+   "notion": "eco-fonctionnalite",
+   "enonce": "Dans l'économie de la fonctionnalité, qui reste propriétaire du bien ?",
+   "choix": [
+    "Le producteur",
+    "L'usager",
+    "L'État",
+    "Une coopérative"
+   ],
+   "leurres": [
+    "Une plateforme"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "explication": "On paie l'usage ; le producteur garde la propriété tout au long du cycle de vie.",
+   "duree": 0.33
+  },
+  {
+   "id": "dd-7-qcm-02",
+   "type": "qcm",
+   "notion": "ess",
+   "enonce": "Quel statut ne fait pas partie de l'ESS ?",
+   "choix": [
+    "Société anonyme cotée",
+    "Association",
+    "Coopérative",
+    "Mutuelle"
+   ],
+   "leurres": [
+    "Fondation"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "explication": "ESS : associations, coopératives, mutuelles, fondations.",
+   "duree": 0.33
+  },
+  {
+   "id": "dd-7-qcm-03",
+   "type": "qcm",
+   "notion": "monnaies-locales",
+   "enonce": "Quelle loi donne une base légale aux monnaies locales ?",
+   "choix": [
+    "La loi ESS du 31 juillet 2014",
+    "La loi NRE de 2001",
+    "La loi PACTE de 2019",
+    "La loi Grenelle II"
+   ],
+   "leurres": [
+    "La loi Sapin 2"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "explication": "Article 16 de la loi ESS du 31 juillet 2014.",
+   "duree": 0.33
+  },
+  {
+   "id": "dd-7-qcm-04",
+   "type": "qcm",
+   "notion": "eco-circulaire",
+   "enonce": "Quel modèle s'oppose à « extraire, produire, jeter » ?",
+   "choix": [
+    "L'économie circulaire",
+    "L'économie linéaire",
+    "La croissance verte",
+    "Le greenwashing"
+   ],
+   "leurres": [
+    "La mondialisation"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "explication": "L'économie circulaire prolonge la vie des produits : partager, réutiliser, réparer, rénover, recycler.",
+   "duree": 0.33
+  },
+  {
+   "id": "dd-7-vf-01",
+   "type": "qcm-multi",
+   "notion": "ess",
+   "enonce": "Nouveaux modèles économiques",
+   "affirmations": [
+    {
+     "t": "L'économie circulaire prolonge le cycle de vie des produits.",
+     "vrai": true
+    },
+    {
+     "t": "Dans l'économie de la fonctionnalité, l'usager devient propriétaire.",
+     "vrai": false
+    },
+    {
+     "t": "L'ESS place l'humain avant le capital.",
+     "vrai": true
+    },
+    {
+     "t": "Une monnaie locale remplace l'euro.",
+     "vrai": false
+    },
+    {
+     "t": "L'économie collaborative passe souvent par des plateformes.",
+     "vrai": true
+    },
+    {
+     "t": "L'ONU a adopté une résolution sur l'ESS en 2023.",
+     "vrai": true
+    },
+    {
+     "t": "Les monnaies locales sont utilisables partout en France.",
+     "vrai": false
+    }
+   ],
+   "explication": "Monnaie locale : complémentaire, sur un territoire restreint ; fonctionnalité : le producteur reste propriétaire.",
+   "duree": 0.75
+  }
+ ]
+}

@@ -332,6 +332,48 @@ const SCENARIOS = {
     await attendre(300);
     if(!(await pg.$('.ex-cartes'))) erreurs.push(`[${app}] panneau : « S'entraîner » n'ouvre pas les Exos sur la notion`);
     return pg;
+  },
+  /* module Développement durable (page dédiée) : notes liées, QCM (XP du module), « Coche les vérités » au prorata, flashcards notées sans XP */
+  async developpementDurable(app){
+    const pg = await page(app); await pg.goto(URL0 + "developpement-durable.html?mock=mia&reset");
+    await pg.waitForSelector("#dd-pg", {timeout:15000}); await attendre(800);
+    await pg.click('#dd-pg [data-go="dd"]'); await attendre(200);
+    if(!(await pg.$('#dd-pg .dd-wl[data-n="piliers"]'))) erreurs.push(`[${app}] DD : les liens entre notes ne s'affichent pas`);
+    if(app === "ordi"){
+      await pg.click('#dd-pg .dd-wl[data-n="piliers"]'); await attendre(200);
+      if(!/3 piliers/.test(await pg.textContent("#dd-pk"))) erreurs.push(`[${app}] DD : le lien ne s'ouvre pas dans la colonne de droite`);
+    }
+    await capture(pg, `dd-cours-${app}`);
+    /* QCM : la bonne réponse rapporte l'XP du module (10, réglée dans liste.json) */
+    await pg.click('#dd-tete .dd-tab[data-v="exo"]'); await pg.click('[data-a="go"]'); await attendre(2300);
+    const nOpt = (await pg.$$("#dd-chx .dd-opt")).length;
+    if(nOpt !== 4) erreurs.push(`[${app}] DD : un QCM devrait proposer 4 réponses (${nOpt})`);
+    const avant = await pg.evaluate(() => moteur.etat().total);
+    await pg.click("#dd-chx .dd-opt >> nth=0"); await attendre(300);   /* seul le 1er clic compte : juste si aucune réponse n'est marquée fausse */
+    const juste = !(await pg.$("#dd-chx .dd-opt.ko"));
+    const gainQ = (await pg.evaluate(() => moteur.etat().total)) - avant;
+    if(juste && gainQ < 10) erreurs.push(`[${app}] DD : QCM juste mais +${gainQ} XP (10 attendus)`);
+    if(!juste && gainQ !== 0) erreurs.push(`[${app}] DD : QCM faux mais +${gainQ} XP`);
+    /* Coche les vérités : on coche exactement la moitié des vraies → XP au prorata, item compté faux */
+    await pg.click('[data-a="quit"]'); await pg.click('#dd-tete .dd-seg [data-s="vf"]'); await pg.click('[data-a="go"]'); await attendre(200);
+    const n = (await pg.$$(".dd-vfa")).length;
+    if(n !== 6) erreurs.push(`[${app}] DD : « Coche les vérités » devrait tirer 6 affirmations (${n})`);
+    const a0 = await pg.evaluate(() => moteur.etat().total);
+    await pg.click('[data-a="val"]'); await attendre(200);   /* rien coché : 0 XP */
+    const ev = await pg.evaluate(() => moteur.evenements().filter(e => e.ty === "qcm-multi").at(-1));
+    if(!ev || ev.s !== 0 || ev.ok) erreurs.push(`[${app}] DD : score partiel absent du journal (${JSON.stringify(ev)})`);
+    if((await pg.evaluate(() => moteur.etat().total)) !== a0) erreurs.push(`[${app}] DD : « Coche les vérités » sans case cochée rapporte de l'XP`);
+    if(/0 XP/.test(await pg.textContent(".dd-fbk"))) erreurs.push(`[${app}] DD : mention « 0 XP » affichée`);
+    await capture(pg, `dd-verites-${app}`);
+    /* flashcards : statut rangé dans le journal, sans XP */
+    await pg.click('[data-a="quit"]'); await pg.click('#dd-tete .dd-seg [data-s="cartes"]'); await pg.click(".dd-recto"); await attendre(700);
+    const a1 = await pg.evaluate(() => moteur.etat().total);
+    await pg.click('[data-a="next"]'); await attendre(200);
+    const carte = await pg.evaluate(() => moteur.evenements().filter(e => e.ty === "carte"));
+    if(!carte.length || !carte[0].ok) erreurs.push(`[${app}] DD : la flashcard n'est pas notée « sue »`);
+    if((await pg.evaluate(() => moteur.etat().total)) !== a1) erreurs.push(`[${app}] DD : une flashcard a rapporté de l'XP`);
+    await capture(pg, `dd-cartes-${app}`);
+    return pg;
   }
 };
 
