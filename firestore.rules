@@ -119,14 +119,20 @@ service cloud.firestore {
       allow delete: if admin() || (moi(uid) && resource.data.statut == 'refusee');
     }
 
-    // Identité réelle (prénom, nom, e-mail du compte) : le joueur lui-même et l'admin,
-    // PERSONNE d'autre. Séparée de joueurs/ pour que la classe ne voie que le pseudo.
+    // Identité réelle (prénom, nom, e-mail du compte, promo BIC1/2/3) : le joueur lui-même
+    // et l'admin, PERSONNE d'autre. Séparée de joueurs/ pour que la classe ne voie que le pseudo.
+    // L'admin ne peut changer que la promo (réglage manuel des comptes déjà inscrits).
+    function promoOk() { return !('promo' in nouveau()) || nouveau().promo in ['BIC1', 'BIC2', 'BIC3']; }
     match /identites/{uid} {
       allow read: if moi(uid) || admin();
       allow create, update: if moi(uid)
-                    && seulement(['prenom', 'nom', 'email'])
+                    && seulement(['prenom', 'nom', 'email', 'promo'])
                     && texte(nouveau().prenom, 40) && texte(nouveau().nom, 40)
-                    && nouveau().email == request.auth.token.get('email', '');
+                    && nouveau().email == request.auth.token.get('email', '')
+                    && promoOk();
+      allow update: if admin()
+                    && nouveau().diff(resource.data).affectedKeys().hasOnly(['promo'])
+                    && promoOk();
       allow delete: if moi(uid) || admin();
     }
 

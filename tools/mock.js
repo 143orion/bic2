@@ -31,7 +31,7 @@ function demo(){
     s["membres/"+uid] = {depuis:Date.now() - 30*864e5};
     s["pseudos/"+pseudo.toLowerCase()] = {uid};
     s["joueurs/"+uid] = Object.assign({pseudo, cree:1, maj:1}, plaque ? {plaque} : {});
-    s["identites/"+uid] = {prenom, nom, email:uid + "@example.com"};
+    s["identites/"+uid] = Object.assign({prenom, nom, email:uid + "@example.com"}, uid === "mia" ? {} : {promo:uid === "lucas" ? "BIC1" : "BIC2"});
     if(cl) s["classement/"+uid] = cl;
   };
   joueur("kenza", "Kenza", "r10", {jours:jours(300, 2000, 100), serie:12, modules:{"complement-electronique":{xp:9000, reussies:66, exos:18, maitrisees:30}}}, "Kenza", "B.");
@@ -42,9 +42,9 @@ function demo(){
   joueur("mia", "Mia", "r1", {jours:jours(5, 200, 15), serie:1, modules:{}}, "Mia", "L.");
   s["pseudos/adam"] = {uid:"adam"}; s["joueurs/adam"] = {pseudo:"Adam", plaque:"r1", cree:1, maj:1};
   /* deux demandes en attente + une refusée */
-  s["pseudos/le_sage"] = {uid:"lea"}; s["identites/lea"] = {prenom:"Léa", nom:"Fontaine", email:"lea.fontaine@gmail.com"};
+  s["pseudos/le_sage"] = {uid:"lea"}; s["identites/lea"] = {prenom:"Léa", nom:"Fontaine", email:"lea.fontaine@gmail.com", promo:"BIC3"};
   s["demandes/lea"] = {pseudo:"Le_Sage", cree:Date.now() - 3*3600e3, statut:"attente"};
-  s["pseudos/x.0r"] = {uid:"omar"}; s["identites/omar"] = {prenom:"Omar", nom:"Benali", email:"omar.b@gmail.com"};
+  s["pseudos/x.0r"] = {uid:"omar"}; s["identites/omar"] = {prenom:"Omar", nom:"Benali", email:"omar.b@gmail.com", promo:"BIC1"};
   s["demandes/omar"] = {pseudo:"x.0r", cree:Date.now() - 20*60e3, statut:"attente"};
   s["identites/eve"] = {prenom:"Ève", nom:"Inconnue", email:"eve@example.com"};
   s["demandes/eve"] = {pseudo:"eve", cree:Date.now() - 2*864e5, statut:"refusee", traite:Date.now() - 864e5};
@@ -96,7 +96,11 @@ function autorise(op, chemin, uid, apres, avant){
     if(op === "update") return admin;
     if(op === "delete") return admin || (moi && avant && avant.statut === "refusee");
   }
-  if(col === "identites") return op === "read" || op === "delete" ? (moi || admin) : moi;
+  if(col === "identites"){
+    if(op === "read" || op === "delete") return moi || admin;
+    if(op === "update" && admin && !moi){ const a = avant || {}, n = apres[chemin] || {}; return Object.keys(Object.assign({}, a, n)).every(k => k === "promo" || JSON.stringify(a[k]) === JSON.stringify(n[k])) && ["BIC1","BIC2","BIC3"].includes(n.promo); }
+    return moi;
+  }
   if(col === "membres") return op === "read" ? (moi || admin) : admin;
   return false;
 }

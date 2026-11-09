@@ -47,7 +47,7 @@ const SCENARIOS = {
     await pg.evaluate(() => window.__mock.connexionSuivante("neo"));
     await pg.click("#acces .acces-google"); await pg.waitForSelector("#a-pseudo");
     await attendre(300); await capture(pg, `acces-2-formulaire-${app}`);
-    await pg.fill("#a-pseudo", "Mia"); await pg.fill("#a-prenom", "Néo"); await pg.fill("#a-nom", "Anderson");
+    await pg.fill("#a-pseudo", "Mia"); await pg.fill("#a-prenom", "Néo"); await pg.fill("#a-nom", "Anderson"); await pg.selectOption("#a-promo", "BIC2");
     await pg.click("#acces [type=submit]"); await pg.waitForSelector("#acces .erreur-txt:not(:empty)");
     await capture(pg, `acces-3-pseudo-pris-${app}`);
     await pg.fill("#a-pseudo", "Neo_42"); await pg.click("#acces [type=submit]");

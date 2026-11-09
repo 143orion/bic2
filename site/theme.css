@@ -1086,7 +1086,7 @@ html.acces-ouvert,html.acces-ouvert body{overflow:hidden}
 .acces p{margin:0 0 12px;font-size:13px;line-height:1.55;color:var(--gris)}
 .acces p b{color:var(--blanc)}
 .acces-form{display:flex;flex-direction:column;gap:10px}
-.acces-form .champ input{font-size:16px}
+.acces-form .champ input,.acces-form .champ select{font-size:16px}
 .acces-duo{display:grid;grid-template-columns:1fr 1fr;gap:10px}.acces-duo .champ{min-width:0}.acces-form .champ input{width:100%;box-sizing:border-box}
 .acces-aide{font-size:11.5px;line-height:1.45;color:var(--gris-2);margin-top:-4px}
 .acces-prive{color:var(--violet-pale)}

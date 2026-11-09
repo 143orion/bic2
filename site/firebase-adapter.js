@@ -18,6 +18,7 @@
 const CFG = window.BIC2_FIREBASE || {};
 const VERSION = CFG.sdk || "13.1.0";
 const PSEUDO_OK = /^[A-Za-z0-9_.\-]{3,16}$/;
+const PROMOS = ["BIC1", "BIC2", "BIC3"];
 
 /* ---------- mode émulateur (tests locaux) : ?emu dans l'adresse, gardé pour la session ---------- */
 let EMU = false;
@@ -134,8 +135,9 @@ function outilsAcces(fs, adminUid){
   const maintenant = () => Date.now();
   return {
     /* côté joueur */
-    async demander(u, {pseudo, prenom, nom}){
+    async demander(u, {pseudo, prenom, nom, promo}){
       pseudo = String(pseudo || "").trim(); prenom = String(prenom || "").trim(); nom = String(nom || "").trim();
+      if(!PROMOS.includes(promo)) throw Object.assign(new Error("Choisis ta promo (BIC1, BIC2 ou BIC3)"), {code:"promo"});
       if(!PSEUDO_OK.test(pseudo)) throw Object.assign(new Error("Pseudo : 3 à 16 caractères (lettres, chiffres, _ . -)"), {code:"pseudo_invalide"});
       if(!prenom || !nom || prenom.length > 40 || nom.length > 40) throw Object.assign(new Error("Prénom et nom obligatoires (40 caractères max)"), {code:"identite"});
       const resa = fs.doc("pseudos/" + pseudo.toLowerCase());
@@ -143,7 +145,7 @@ function outilsAcces(fs, adminUid){
       if(pris && pris.exists && pris.data().uid !== u.uid) throw Object.assign(new Error("Ce pseudo est déjà pris"), {code:"pseudo_pris"});
       const b = fs.batch();
       if(!pris || !pris.exists) b.set(resa, {uid:u.uid});
-      b.set(fs.doc("identites/" + u.uid), {prenom, nom, email:u.email || ""});
+      b.set(fs.doc("identites/" + u.uid), {prenom, nom, email:u.email || "", promo});
       b.set(fs.doc("demandes/" + u.uid), {pseudo, cree:maintenant(), statut:"attente"});
       try{ await b.commit(); }
       catch(err){ if(err.code === "permission-denied") throw Object.assign(new Error("Ce pseudo est déjà pris"), {code:"pseudo_pris"}); throw err; }
@@ -158,6 +160,12 @@ function outilsAcces(fs, adminUid){
       return fs.collection("demandes").onSnapshot(s => cb(s.docs.map(d => Object.assign({uid:d.id}, d.data()))), err || (e => console.warn(e)));
     },
     async identite(uid){ const s = await fs.doc("identites/" + uid).get(); return s.exists ? s.data() : null; },
+    /* réglage manuel de la promo d'un joueur (Adam seul : les règles n'autorisent que ce champ) */
+    async definirPromo(uid, promo){
+      if(!PROMOS.includes(promo)) throw new Error("Promo inconnue");
+      await fs.doc("identites/" + uid).update({promo});
+    },
+    PROMOS,
     async valider(uid){
       const d = await fs.doc("demandes/" + uid).get(); if(!d.exists) throw new Error("Demande introuvable");
       const {pseudo} = d.data(), t = maintenant();
@@ -258,7 +266,7 @@ function ecranConnexion(auth){
         h("li", {texte:"Adam valide chaque demande pour que seule la classe soit dans le classement (pas d'inconnus ni de faux comptes)."}),
         h("li", {texte:"Si le site était ouvert à tout le monde, n'importe qui pourrait remplir la base de données (elle est gratuite, donc limitée) et la faire saturer : plus personne ne pourrait enregistrer sa progression."}),
         h("li", {texte:"Seul Adam peut modifier le site : tu joues, sans risque de casser quoi que ce soit."}),
-        h("li", {texte:"Ce que les autres voient : ton pseudo, ton niveau et ton XP, rien d'autre. Ton prénom et ton nom ne sont visibles que par Adam. Le détail de tes réponses reste privé, même pour lui."})));
+        h("li", {texte:"Ce que les autres voient : ton pseudo, ton niveau et ton XP, rien d'autre. Ton prénom, ton nom et ta promo ne sont visibles que par Adam. Le détail de tes réponses reste privé, même pour lui."})));
     const q = h("button", {class:"acces-q", type:"button", "aria-expanded":"false", "aria-controls":"acces-pourquoi", title:"Pourquoi ce processus ?", texte:"?"});
     q.addEventListener("click", () => { const o = aide.hidden; aide.hidden = !o; q.setAttribute("aria-expanded", String(o)); });
     fenetre("connexion.exe", "Connexion",
@@ -278,14 +286,16 @@ function ecranFormulaire(auth, acces, u){
       h("div", {class:"acces-duo"},
         champ("Prénom", "a-prenom", {maxlength:40, autocomplete:"given-name"}),
         champ("Nom", "a-nom", {maxlength:40, autocomplete:"family-name"})),
-      h("small", {class:"acces-aide acces-prive", texte:"🔒 Prénom et nom : visibles uniquement par Adam, pour savoir qui tu es."}),
+      h("label", {class:"champ"}, "Promo", h("select", {id:"a-promo", required:true},
+        h("option", {value:"", texte:"Choisis ta promo…"}), ...PROMOS.map(p => h("option", {value:p, texte:p})))),
+      h("small", {class:"acces-aide acces-prive", texte:"🔒 Prénom, nom et promo : visibles uniquement par Adam, pour savoir qui tu es."}),
       h("p", {class:"acces-compte"}, "Compte Google : ", h("b", {texte:u.email || u.uid})),
       h("div", {class:"actions"}, h("button", {class:"btn plein", type:"submit", texte:"Envoyer la demande"}), err));
     form.addEventListener("submit", async e => {
       e.preventDefault(); err.textContent = "";
       const v = id => form.querySelector("#" + id).value;
       const btn = form.querySelector("[type=submit]"); btn.disabled = true;
-      try{ await acces.demander(u, {pseudo:v("a-pseudo"), prenom:v("a-prenom"), nom:v("a-nom")}); /* l'écoute de la demande affiche l'attente */ }
+      try{ await acces.demander(u, {pseudo:v("a-pseudo"), prenom:v("a-prenom"), nom:v("a-nom"), promo:v("a-promo")}); /* l'écoute de la demande affiche l'attente */ }
       catch(ex){ err.textContent = ex.message || "Envoi impossible"; btn.disabled = false; }
     });
     fenetre("demande.exe", "Demande d'accès", form, lienSortie(auth));

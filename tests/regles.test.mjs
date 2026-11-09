@@ -98,6 +98,16 @@ test("demande : pseudo invalide, statut forcé, e-mail d'un autre → refusé", 
   b.set(doc(db, "demandes/neo"), {pseudo: "Neo", cree: 1, statut: "validee"});
   await assertFails(b.commit());
 });
+test("promo : BIC1/2/3 seulement ; l'admin ne change que la promo", async () => {
+  const db = nouveau();
+  await assertFails(setDoc(doc(db, "identites/neo"), {prenom: "Néo", nom: "A", email: "neo@gmail.com", promo: "BIC9"}));
+  await assertSucceeds(setDoc(doc(db, "identites/neo"), {prenom: "Néo", nom: "A", email: "neo@gmail.com", promo: "BIC2"}));
+  await assertFails(updateDoc(doc(ctx("eve"), "identites/neo"), {promo: "BIC1"}));
+  const a = admin();
+  await assertSucceeds(updateDoc(doc(a, "identites/neo"), {promo: "BIC3"}));
+  await assertFails(updateDoc(doc(a, "identites/neo"), {promo: "BIC4"}));
+  await assertFails(updateDoc(doc(a, "identites/neo"), {nom: "Pirate"}));
+});
 test("non validé : ne voit pas les demandes ni les identités des autres", async () => {
   await demander(nouveau(), "neo", "Neo");
   const db = ctx("eve");
