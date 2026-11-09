@@ -1022,68 +1022,68 @@
     }
    ],
    "vals": {
-    "MSG": "C'est parti !",
-    "F": "hello",
-    "X": "hello",
-    "BUG": "#include <stdio.h>\n\nint main(void) {\n    printf(\"C'est parti !\\n\";\n    return 0;\n}",
+    "MSG": "Premier programme",
+    "F": "premier",
+    "X": "premier",
+    "BUG": "#include <stdio.h>\n\nint main(void) {\n    printf(\"Premier programme\\n\";\n    return 0;\n}",
     "QUOI": "il manquait la parenthèse `)` qui ferme le `printf`",
     "QUOI_MAJ": "Compte les parenthèses de la ligne du `printf`.",
-    "S2_0": "C'est parti !"
+    "S2_0": "Premier programme"
    },
    "variantes": [
     {
-     "MSG": "C'est parti !",
-     "F": "hello",
-     "X": "hello",
-     "BUG": "#include <stdio.h>\n\nint main(void) {\n    printf(\"C'est parti !\\n\";\n    return 0;\n}",
+     "MSG": "Premier programme",
+     "F": "premier",
+     "X": "premier",
+     "BUG": "#include <stdio.h>\n\nint main(void) {\n    printf(\"Premier programme\\n\";\n    return 0;\n}",
      "QUOI": "il manquait la parenthèse `)` qui ferme le `printf`",
      "QUOI_MAJ": "Compte les parenthèses de la ligne du `printf`.",
+     "S2_0": "Premier programme"
+    },
+    {
+     "MSG": "C'est parti !",
+     "F": "bonjour",
+     "X": "bonjour",
+     "BUG": "#include <stdio.h>\n\nint main(void) {\n    printf(\"C'est parti !\\n\");\n    return 0;\n",
+     "QUOI": "il manquait l'accolade `}` qui ferme `main`",
+     "QUOI_MAJ": "Compte les accolades : chaque `{` a besoin de son `}`.",
      "S2_0": "C'est parti !"
+    },
+    {
+     "MSG": "Bienvenue en C",
+     "F": "premier",
+     "X": "premier",
+     "BUG": "#include <stdio.h>\n\nint main(void) {\n    printf(\"Bienvenue en C\\n\");\n    return 0;\n",
+     "QUOI": "il manquait l'accolade `}` qui ferme `main`",
+     "QUOI_MAJ": "Compte les accolades : chaque `{` a besoin de son `}`.",
+     "S2_0": "Bienvenue en C"
     },
     {
      "MSG": "Bonjour ESILV !",
-     "F": "main",
-     "X": "prog",
-     "BUG": "#include <stdio.h>\n\nint main(void) {\n    printf(\"Bonjour ESILV !\\n\");\n    return 0;\n",
-     "QUOI": "il manquait l'accolade `}` qui ferme `main`",
-     "QUOI_MAJ": "Compte les accolades : chaque `{` a besoin de son `}`.",
+     "F": "hello",
+     "X": "hello",
+     "BUG": "#include <stdio.h>\n\nint main(void) {\n    printf(\"Bonjour ESILV !\\n\")\n    return 0;\n}",
+     "QUOI": "il manquait le `;` à la fin de la ligne du `printf`",
+     "QUOI_MAJ": "Il manque un caractère à la fin de la ligne du `printf`.",
      "S2_0": "Bonjour ESILV !"
     },
     {
-     "MSG": "Hello, world!",
-     "F": "premier",
-     "X": "premier",
-     "BUG": "#include <stdio.h>\n\nint main(void) {\n    printf(\"Hello, world!\\n\");\n    return 0;\n",
-     "QUOI": "il manquait l'accolade `}` qui ferme `main`",
-     "QUOI_MAJ": "Compte les accolades : chaque `{` a besoin de son `}`.",
-     "S2_0": "Hello, world!"
-    },
-    {
-     "MSG": "C'est parti !",
-     "F": "premier",
-     "X": "premier",
-     "BUG": "#include <stdio.h>\n\nint main(void) {\n    printf(\"C'est parti !\\n\");\n    return 0\n}",
+     "MSG": "Ca compile !",
+     "F": "bonjour",
+     "X": "bonjour",
+     "BUG": "#include <stdio.h>\n\nint main(void) {\n    printf(\"Ca compile !\\n\");\n    return 0\n}",
      "QUOI": "il manquait le `;` après `return 0`",
      "QUOI_MAJ": "Il manque un caractère à la fin de la ligne du `return`.",
-     "S2_0": "C'est parti !"
+     "S2_0": "Ca compile !"
     },
     {
-     "MSG": "C'est parti !",
-     "F": "main",
-     "X": "prog",
-     "BUG": "#include <stdio.h>\n\nint main(void) {\n    printf(\"C'est parti !\\n\";\n    return 0;\n}",
+     "MSG": "Premier programme",
+     "F": "tp1",
+     "X": "tp1",
+     "BUG": "#include <stdio.h>\n\nint main(void) {\n    printf(\"Premier programme\\n\";\n    return 0;\n}",
      "QUOI": "il manquait la parenthèse `)` qui ferme le `printf`",
      "QUOI_MAJ": "Compte les parenthèses de la ligne du `printf`.",
-     "S2_0": "C'est parti !"
-    },
-    {
-     "MSG": "Hello, world!",
-     "F": "main",
-     "X": "prog",
-     "BUG": "#include <stdio.h>\n\nint main(void) {\n    printf(\"Hello, world!\\n\";\n    return 0;\n}",
-     "QUOI": "il manquait la parenthèse `)` qui ferme le `printf`",
-     "QUOI_MAJ": "Compte les parenthèses de la ligne du `printf`.",
-     "S2_0": "Hello, world!"
+     "S2_0": "Premier programme"
     }
    ]
   }

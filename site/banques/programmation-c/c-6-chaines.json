@@ -3411,20 +3411,12 @@
      "S3_0": "7 caracteres, 8 cases"
     },
     {
-     "MOT": "souris",
-     "N": "6",
-     "N1": "7",
-     "SORTIE": "6 caracteres, 7 cases",
-     "S2_0": "6",
-     "S3_0": "6 caracteres, 7 cases"
-    },
-    {
-     "MOT": "variable",
-     "N": "8",
-     "N1": "9",
-     "SORTIE": "8 caracteres, 9 cases",
-     "S2_0": "8",
-     "S3_0": "8 caracteres, 9 cases"
+     "MOT": "clavier",
+     "N": "7",
+     "N1": "8",
+     "SORTIE": "7 caracteres, 8 cases",
+     "S2_0": "7",
+     "S3_0": "7 caracteres, 8 cases"
     },
     {
      "MOT": "reseau",
@@ -3435,20 +3427,28 @@
      "S3_0": "6 caracteres, 7 cases"
     },
     {
-     "MOT": "compilateur",
-     "N": "11",
-     "N1": "12",
-     "SORTIE": "11 caracteres, 12 cases",
-     "S2_0": "11",
-     "S3_0": "11 caracteres, 12 cases"
+     "MOT": "fichier",
+     "N": "7",
+     "N1": "8",
+     "SORTIE": "7 caracteres, 8 cases",
+     "S2_0": "7",
+     "S3_0": "7 caracteres, 8 cases"
     },
     {
-     "MOT": "programme",
-     "N": "9",
-     "N1": "10",
-     "SORTIE": "9 caracteres, 10 cases",
-     "S2_0": "9",
-     "S3_0": "9 caracteres, 10 cases"
+     "MOT": "octet",
+     "N": "5",
+     "N1": "6",
+     "SORTIE": "5 caracteres, 6 cases",
+     "S2_0": "5",
+     "S3_0": "5 caracteres, 6 cases"
+    },
+    {
+     "MOT": "variable",
+     "N": "8",
+     "N1": "9",
+     "SORTIE": "8 caracteres, 9 cases",
+     "S2_0": "8",
+     "S3_0": "8 caracteres, 9 cases"
     }
    ]
   },
@@ -3555,14 +3555,22 @@
     }
    ],
    "vals": {
-    "S": "PDF",
-    "C0": "P",
-    "C1": "D",
-    "C2": "F",
-    "S2_0": "PDF",
-    "S3_0": "PDF"
+    "S": "SSD",
+    "C0": "S",
+    "C1": "S",
+    "C2": "D",
+    "S2_0": "SSD",
+    "S3_0": "SSD"
    },
    "variantes": [
+    {
+     "S": "SSD",
+     "C0": "S",
+     "C1": "S",
+     "C2": "D",
+     "S2_0": "SSD",
+     "S3_0": "SSD"
+    },
     {
      "S": "PDF",
      "C0": "P",
@@ -3570,30 +3578,6 @@
      "C2": "F",
      "S2_0": "PDF",
      "S3_0": "PDF"
-    },
-    {
-     "S": "BIC",
-     "C0": "B",
-     "C1": "I",
-     "C2": "C",
-     "S2_0": "BIC",
-     "S3_0": "BIC"
-    },
-    {
-     "S": "CPU",
-     "C0": "C",
-     "C1": "P",
-     "C2": "U",
-     "S2_0": "CPU",
-     "S3_0": "CPU"
-    },
-    {
-     "S": "URL",
-     "C0": "U",
-     "C1": "R",
-     "C2": "L",
-     "S2_0": "URL",
-     "S3_0": "URL"
     },
     {
      "S": "DNS",
@@ -3610,6 +3594,22 @@
      "C2": "P",
      "S2_0": "TCP",
      "S3_0": "TCP"
+    },
+    {
+     "S": "CPU",
+     "C0": "C",
+     "C1": "P",
+     "C2": "U",
+     "S2_0": "CPU",
+     "S3_0": "CPU"
+    },
+    {
+     "S": "SQL",
+     "C0": "S",
+     "C1": "Q",
+     "C2": "L",
+     "S2_0": "SQL",
+     "S3_0": "SQL"
     }
    ]
   }

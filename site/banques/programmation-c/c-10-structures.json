@@ -424,32 +424,32 @@
      "R": "12"
     },
     {
-     "S": "13",
-     "R": "14"
+     "S": "7",
+     "R": "8"
     },
     {
-     "S": "16",
-     "R": "17"
-    },
-    {
-     "S": "5",
-     "R": "6"
+     "S": "10",
+     "R": "11"
     },
     {
      "S": "3",
      "R": "4"
     },
     {
-     "S": "17",
-     "R": "18"
+     "S": "2",
+     "R": "3"
     },
     {
-     "S": "14",
-     "R": "15"
+     "S": "4",
+     "R": "5"
     },
     {
-     "S": "18",
-     "R": "19"
+     "S": "5",
+     "R": "6"
+    },
+    {
+     "S": "0",
+     "R": "1"
     }
    ]
   },
@@ -466,33 +466,33 @@
    "duree": 0.67,
    "explication": "Les constantes sont numérotées à partir de 0 : `LUNDI` = 0, `MARDI` = 1… donc `[[J]]` = **[[R]]**.",
    "vals": {
-    "J": "DIMANCHE",
-    "R": "6"
+    "J": "SAMEDI",
+    "R": "5"
    },
    "variantes": [
-    {
-     "J": "DIMANCHE",
-     "R": "6"
-    },
-    {
-     "J": "VENDREDI",
-     "R": "4"
-    },
     {
      "J": "SAMEDI",
      "R": "5"
     },
     {
-     "J": "JEUDI",
-     "R": "3"
+     "J": "DIMANCHE",
+     "R": "6"
+    },
+    {
+     "J": "MARDI",
+     "R": "1"
     },
     {
      "J": "MERCREDI",
      "R": "2"
     },
     {
-     "J": "MARDI",
-     "R": "1"
+     "J": "JEUDI",
+     "R": "3"
+    },
+    {
+     "J": "VENDREDI",
+     "R": "4"
     }
    ]
   },
@@ -596,50 +596,50 @@
    "duree": 0.67,
    "explication": "`b = a` **copie** tous les champs au moment où la ligne s'exécute. Changer `a.x` ensuite ne touche pas `b` : `b.x` vaut toujours **[[X]]**.",
    "vals": {
-    "X": "4",
-    "Y": "3",
-    "Z": "33"
+    "X": "5",
+    "Y": "6",
+    "Z": "40"
    },
    "variantes": [
     {
-     "X": "4",
-     "Y": "3",
-     "Z": "33"
-    },
-    {
-     "X": "4",
-     "Y": "9",
-     "Z": "20"
-    },
-    {
-     "X": "2",
-     "Y": "5",
-     "Z": "47"
-    },
-    {
-     "X": "9",
-     "Y": "4",
-     "Z": "15"
-    },
-    {
-     "X": "9",
-     "Y": "6",
-     "Z": "42"
-    },
-    {
-     "X": "7",
-     "Y": "5",
-     "Z": "35"
-    },
-    {
-     "X": "2",
-     "Y": "8",
-     "Z": "39"
-    },
-    {
      "X": "5",
+     "Y": "6",
+     "Z": "40"
+    },
+    {
+     "X": "8",
+     "Y": "5",
+     "Z": "36"
+    },
+    {
+     "X": "8",
+     "Y": "4",
+     "Z": "34"
+    },
+    {
+     "X": "2",
+     "Y": "9",
+     "Z": "13"
+    },
+    {
+     "X": "3",
+     "Y": "7",
+     "Z": "24"
+    },
+    {
+     "X": "9",
      "Y": "2",
      "Z": "15"
+    },
+    {
+     "X": "2",
+     "Y": "9",
+     "Z": "25"
+    },
+    {
+     "X": "1",
+     "Y": "3",
+     "Z": "24"
     }
    ]
   },
@@ -722,34 +722,24 @@
    "explication": "La fonction reçoit l'**adresse** de `emp`, elle modifie donc l'original : [[S]] + [[P]] % = **[[R]]**.",
    "vals": {
     "S": "20000",
-    "P": "20",
-    "R": "24000"
+    "P": "2.5",
+    "R": "20500"
    },
    "variantes": [
     {
      "S": "20000",
-     "P": "20",
-     "R": "24000"
+     "P": "2.5",
+     "R": "20500"
     },
     {
-     "S": "20000",
-     "P": "10",
-     "R": "22000"
-    },
-    {
-     "S": "35000",
-     "P": "20",
+     "S": "40000",
+     "P": "5",
      "R": "42000"
     },
     {
-     "S": "20000",
-     "P": "5",
-     "R": "21000"
-    },
-    {
-     "S": "2000",
-     "P": "2.5",
-     "R": "2050"
+     "S": "30000",
+     "P": "20",
+     "R": "36000"
     },
     {
      "S": "40000",
@@ -757,14 +747,24 @@
      "R": "41000"
     },
     {
-     "S": "20000",
+     "S": "25000",
      "P": "2.5",
-     "R": "20500"
+     "R": "25624.999999999996"
+    },
+    {
+     "S": "3000",
+     "P": "20",
+     "R": "3600"
     },
     {
      "S": "35000",
      "P": "5",
      "R": "36750"
+    },
+    {
+     "S": "35000",
+     "P": "10",
+     "R": "38500"
     }
    ]
   },
@@ -781,113 +781,113 @@
    "duree": 0.67,
    "explication": "L'indice [[K]] désigne l'élément n° [[K1]] (on compte à partir de 0) : [[QUI]], qui a **[[R]]**.",
    "vals": {
-    "N1": "Ines",
-    "N2": "Bob",
-    "N3": "Charlie",
-    "A": "18",
-    "B": "17",
-    "C": "10",
-    "K": "2",
-    "K1": "3",
-    "R": "10",
+    "N1": "Lea",
+    "N2": "Charlie",
+    "N3": "Nora",
+    "A": "8",
+    "B": "13",
+    "C": "15",
+    "K": "1",
+    "K1": "2",
+    "R": "13",
     "QUI": "Charlie"
    },
    "variantes": [
     {
-     "N1": "Ines",
-     "N2": "Bob",
-     "N3": "Charlie",
-     "A": "18",
-     "B": "17",
-     "C": "10",
-     "K": "2",
-     "K1": "3",
-     "R": "10",
+     "N1": "Lea",
+     "N2": "Charlie",
+     "N3": "Nora",
+     "A": "8",
+     "B": "13",
+     "C": "15",
+     "K": "1",
+     "K1": "2",
+     "R": "13",
      "QUI": "Charlie"
     },
     {
-     "N1": "Ines",
-     "N2": "Charlie",
-     "N3": "Bob",
+     "N1": "Charlie",
+     "N2": "Lea",
+     "N3": "Maya",
      "A": "11",
-     "B": "9",
+     "B": "14",
+     "C": "17",
+     "K": "2",
+     "K1": "3",
+     "R": "17",
+     "QUI": "Maya"
+    },
+    {
+     "N1": "Maya",
+     "N2": "Yann",
+     "N3": "Hugo",
+     "A": "19",
+     "B": "10",
      "C": "8",
      "K": "2",
      "K1": "3",
      "R": "8",
-     "QUI": "Bob"
+     "QUI": "Hugo"
     },
     {
-     "N1": "Sami",
-     "N2": "Hugo",
-     "N3": "Ines",
-     "A": "18",
-     "B": "9",
-     "C": "11",
-     "K": "2",
-     "K1": "3",
-     "R": "11",
-     "QUI": "Ines"
-    },
-    {
-     "N1": "Ines",
-     "N2": "Sami",
-     "N3": "Zoe",
-     "A": "15",
-     "B": "8",
-     "C": "9",
-     "K": "0",
-     "K1": "1",
-     "R": "15",
-     "QUI": "Ines"
-    },
-    {
-     "N1": "Hugo",
-     "N2": "Yann",
-     "N3": "Zoe",
+     "N1": "Zoe",
+     "N2": "Nora",
+     "N3": "Theo",
      "A": "11",
      "B": "17",
      "C": "12",
      "K": "0",
      "K1": "1",
      "R": "11",
-     "QUI": "Hugo"
+     "QUI": "Zoe"
     },
     {
-     "N1": "Ines",
-     "N2": "Maya",
-     "N3": "Charlie",
-     "A": "12",
-     "B": "20",
-     "C": "15",
-     "K": "1",
-     "K1": "2",
-     "R": "20",
-     "QUI": "Maya"
-    },
-    {
-     "N1": "Ines",
-     "N2": "Maya",
-     "N3": "Bob",
-     "A": "10",
+     "N1": "Theo",
+     "N2": "Nora",
+     "N3": "Hugo",
+     "A": "14",
      "B": "18",
-     "C": "19",
+     "C": "10",
+     "K": "0",
+     "K1": "1",
+     "R": "14",
+     "QUI": "Theo"
+    },
+    {
+     "N1": "Theo",
+     "N2": "Hugo",
+     "N3": "Ines",
+     "A": "15",
+     "B": "18",
+     "C": "9",
      "K": "1",
      "K1": "2",
      "R": "18",
-     "QUI": "Maya"
+     "QUI": "Hugo"
+    },
+    {
+     "N1": "Bob",
+     "N2": "Zoe",
+     "N3": "Maya",
+     "A": "16",
+     "B": "20",
+     "C": "11",
+     "K": "0",
+     "K1": "1",
+     "R": "16",
+     "QUI": "Bob"
     },
     {
      "N1": "Zoe",
-     "N2": "Lea",
-     "N3": "Bob",
-     "A": "20",
-     "B": "8",
-     "C": "15",
-     "K": "0",
-     "K1": "1",
-     "R": "20",
-     "QUI": "Zoe"
+     "N2": "Yann",
+     "N3": "Alice",
+     "A": "19",
+     "B": "10",
+     "C": "18",
+     "K": "2",
+     "K1": "3",
+     "R": "18",
+     "QUI": "Alice"
     }
    ]
   },
@@ -946,28 +946,16 @@
    "duree": 0.67,
    "explication": "`f` reçoit une **copie** de `emp` (passage par valeur) : elle met la copie à [[Z]], l'original garde **[[A]]**.",
    "vals": {
-    "A": "44",
+    "A": "57",
     "Z": "99"
    },
    "variantes": [
     {
-     "A": "44",
+     "A": "57",
      "Z": "99"
     },
     {
-     "A": "42",
-     "Z": "100"
-    },
-    {
-     "A": "27",
-     "Z": "18"
-    },
-    {
-     "A": "52",
-     "Z": "18"
-    },
-    {
-     "A": "27",
+     "A": "50",
      "Z": "0"
     },
     {
@@ -975,11 +963,23 @@
      "Z": "99"
     },
     {
-     "A": "56",
+     "A": "55",
+     "Z": "0"
+    },
+    {
+     "A": "54",
+     "Z": "100"
+    },
+    {
+     "A": "43",
+     "Z": "0"
+    },
+    {
+     "A": "22",
      "Z": "18"
     },
     {
-     "A": "44",
+     "A": "22",
      "Z": "100"
     }
    ]
@@ -990,12 +990,12 @@
    "notion": "10.3",
    "origine": "generee",
    "titre": "Distance d'un point à l'origine",
-   "enonce": "Définis `typedef struct { double x; double y; } Point;`. Écris un programme qui lit les coordonnées d'un point dans une variable `Point`, puis affiche sa distance à l'origine, $\\sqrt{x^2 + y^2}$, avec 2 décimales.\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S3_0]]\n```",
-   "guidage": "**Plan** : 1. le type `Point` regroupe deux `double` → 2. `Point p;` → 3. `scanf(\"%lf %lf\", &p.x, &p.y);` (on donne l'adresse **de chaque champ**) → 4. `sqrt(p.x * p.x + p.y * p.y)`, avec `<math.h>`.",
+   "enonce": "Le but : regrouper deux valeurs qui vont ensemble (les coordonnées d'un point) dans une **structure**.\n\n**Le type** : `typedef struct { double x; double y; } Point;` (à écrire avant `main`).\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. l'abscisse `x` du point (un réel) ;\n2. son ordonnée `y` (un réel).\n\n**Ce qu'il fait** :\n1. range les deux nombres dans une variable `Point p` ;\n2. affiche la distance du point à l'origine, $\\sqrt{x^2 + y^2}$, avec 2 décimales.\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S3_0]]\n```",
+   "guidage": "**Plan** : 1. `Point p;` → 2. `scanf(\"%lf %lf\", &p.x, &p.y);` (on donne l'adresse **de chaque champ**) → 3. `sqrt(p.x * p.x + p.y * p.y)`, avec `#include <math.h>`.",
    "duree": 5,
    "etapes": [
     {
-     "consigne": "Les champs d'une structure s'atteignent avec un point, entre le nom de la variable et le nom du champ. Pour une variable `p` de type `Point`, écris l'expression qui désigne son champ `x`.",
+     "consigne": "On atteint un champ d'une structure avec un point, entre le nom de la variable et le nom du champ. Pour une variable `p` de type `Point`, écris l'expression qui désigne son champ `x`.",
      "question": "Désigner le champ `x` de `p` ?",
      "verif": {
       "mode": "regex",
@@ -1027,7 +1027,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Premier jalon, sans structure : avec deux `double x, y` ordinaires, lis deux réels et affiche `x * x + y * y` (le carré de la distance) avec 2 décimales.",
+     "consigne": "Premier jalon, **sans** structure :\n1. déclare deux réels `double x, y;` ;\n2. lis-les avec `scanf(\"%lf %lf\", &x, &y);` ;\n3. affiche `x * x + y * y` (le carré de la distance) avec 2 décimales.",
      "question": "Distance au carré.",
      "verif": {
       "mode": "c",
@@ -1052,7 +1052,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Regroupe `x` et `y` dans le type `Point` (déclaré avant `main`), lis dans `p.x` et `p.y`, puis affiche la **distance** `sqrt(p.x * p.x + p.y * p.y)` avec 2 décimales. N'oublie pas `#include <math.h>` pour `sqrt`.",
+     "consigne": "Passe à la structure :\n1. avant `main`, déclare le type `Point` ;\n2. dans `main`, remplace `x` et `y` par une variable `Point p;` et lis dans `p.x` et `p.y` ;\n3. affiche la **distance** `sqrt(p.x * p.x + p.y * p.y)` avec 2 décimales (ajoute `#include <math.h>` en haut).",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -1094,84 +1094,84 @@
    ],
    "vals": {
     "E0": "1 1",
-    "E1": "-7 2",
+    "E1": "-9 5",
     "S2_0": "2.00",
-    "S2_1": "53.00",
+    "S2_1": "106.00",
     "S3_0": "1.41",
-    "S3_1": "7.28",
+    "S3_1": "10.30",
     "S3_2": "10.00"
    },
    "variantes": [
     {
      "E0": "1 1",
-     "E1": "-7 2",
+     "E1": "-9 5",
      "S2_0": "2.00",
-     "S2_1": "53.00",
+     "S2_1": "106.00",
      "S3_0": "1.41",
-     "S3_1": "7.28",
+     "S3_1": "10.30",
+     "S3_2": "10.00"
+    },
+    {
+     "E0": "9 12",
+     "E1": "-6 4",
+     "S2_0": "225.00",
+     "S2_1": "52.00",
+     "S3_0": "15.00",
+     "S3_1": "7.21",
      "S3_2": "10.00"
     },
     {
      "E0": "3 4",
-     "E1": "-2 5",
+     "E1": "-7 9",
      "S2_0": "25.00",
-     "S2_1": "29.00",
-     "S3_0": "5.00",
-     "S3_1": "5.39",
-     "S3_2": "10.00"
-    },
-    {
-     "E0": "8 15",
-     "E1": "3 4",
-     "S2_0": "289.00",
-     "S2_1": "25.00",
-     "S3_0": "17.00",
-     "S3_1": "5.00",
-     "S3_2": "10.00"
-    },
-    {
-     "E0": "2 3",
-     "E1": "-2 6",
-     "S2_0": "13.00",
-     "S2_1": "40.00",
-     "S3_0": "3.61",
-     "S3_1": "6.32",
-     "S3_2": "10.00"
-    },
-    {
-     "E0": "8 15",
-     "E1": "1 9",
-     "S2_0": "289.00",
-     "S2_1": "82.00",
-     "S3_0": "17.00",
-     "S3_1": "9.06",
-     "S3_2": "10.00"
-    },
-    {
-     "E0": "3 4",
-     "E1": "0 9",
-     "S2_0": "25.00",
-     "S2_1": "81.00",
-     "S3_0": "5.00",
-     "S3_1": "9.00",
-     "S3_2": "10.00"
-    },
-    {
-     "E0": "7 24",
-     "E1": "-9 7",
-     "S2_0": "625.00",
      "S2_1": "130.00",
-     "S3_0": "25.00",
+     "S3_0": "5.00",
      "S3_1": "11.40",
      "S3_2": "10.00"
     },
     {
      "E0": "1 1",
-     "E1": "9 7",
+     "E1": "-7 7",
      "S2_0": "2.00",
-     "S2_1": "130.00",
+     "S2_1": "98.00",
      "S3_0": "1.41",
-     "S3_1": "11.40",
+     "S3_1": "9.90",
+     "S3_2": "10.00"
+    },
+    {
+     "E0": "6 8",
+     "E1": "-2 4",
+     "S2_0": "100.00",
+     "S2_1": "20.00",
+     "S3_0": "10.00",
+     "S3_1": "4.47",
+     "S3_2": "10.00"
+    },
+    {
+     "E0": "1 1",
+     "E1": "-4 6",
+     "S2_0": "2.00",
+     "S2_1": "52.00",
+     "S3_0": "1.41",
+     "S3_1": "7.21",
+     "S3_2": "10.00"
+    },
+    {
+     "E0": "9 12",
+     "E1": "-5 8",
+     "S2_0": "225.00",
+     "S2_1": "89.00",
+     "S3_0": "15.00",
+     "S3_1": "9.43",
+     "S3_2": "10.00"
+    },
+    {
+     "E0": "8 15",
+     "E1": "7 1",
+     "S2_0": "289.00",
+     "S2_1": "50.00",
+     "S3_0": "17.00",
+     "S3_1": "7.07",
      "S3_2": "10.00"
     }
    ]
@@ -1182,12 +1182,12 @@
    "notion": "10.2",
    "origine": "generee",
    "titre": "Week-end ou pas",
-   "enonce": "Définis `typedef enum { LUNDI, MARDI, MERCREDI, JEUDI, VENDREDI, SAMEDI, DIMANCHE } Jour;`. Le programme lit un numéro de jour (0 à 6) dans une variable `Jour` et affiche `week-end` pour `SAMEDI` et `DIMANCHE`, `semaine` sinon, avec un `switch` sur les constantes de l'énumération.\n\n**Exemple**\n```text\nEntrée :\n[[N0]]\nSortie :\n[[S3_0]]\n```\n\n([[N0]] correspond à `[[J0]]`)",
+   "enonce": "Le but : donner des **noms** aux valeurs 0 à 6 avec une énumération, et s'en servir dans un `switch`.\n\n**Le type** : `typedef enum { LUNDI, MARDI, MERCREDI, JEUDI, VENDREDI, SAMEDI, DIMANCHE } Jour;` (avant `main`). `LUNDI` vaut 0, `MARDI` 1… `DIMANCHE` 6.\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. un numéro de jour entre 0 et 6.\n\n**Ce qu'il fait** :\n1. range ce numéro dans une variable `Jour j` ;\n2. avec un `switch (j)`, affiche `week-end` si c'est `SAMEDI` ou `DIMANCHE`, `semaine` sinon.\n\n**Exemple**\n```text\nEntrée :\n[[N0]]\nSortie :\n[[S3_0]]\n```\n\n([[N0]] correspond à `[[J0]]`.)",
    "guidage": "**Plan** : 1. `typedef enum { LUNDI, …, DIMANCHE } Jour;` : les constantes valent 0, 1, …, 6 → 2. lire `n`, puis `Jour j = n;` → 3. `switch (j)` : `case SAMEDI:` et `case DIMANCHE:` partagent un même bloc, `default:` gère le reste.",
    "duree": 5,
    "etapes": [
     {
-     "consigne": "Dans une énumération, les constantes sont numérotées automatiquement à partir de 0, dans l'ordre. Quelle valeur entière a `SAMEDI` ?",
+     "consigne": "Dans une énumération, les constantes sont numérotées automatiquement à partir de 0, dans l'ordre où on les écrit. Quelle valeur entière a `SAMEDI` ?",
      "question": "Valeur de `SAMEDI` ?",
      "verif": {
       "mode": "numerique",
@@ -1218,7 +1218,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Premier jalon, sans `enum` : lis `n` (0 à 6) et affiche `week-end` si `n` vaut 5 ou 6, `semaine` sinon, avec un simple `if`.",
+     "consigne": "Premier jalon, **sans** `enum` :\n1. lis un entier `n` (de 0 à 6) ;\n2. si `n` vaut 5 ou 6, affiche `week-end`, sinon `semaine` (un simple `if`).",
      "question": "Version avec `if`.",
      "verif": {
       "mode": "c",
@@ -1247,7 +1247,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Remplace les nombres par l'énumération : déclare le type `Jour` avant `main`, mets `n` dans `Jour j`, et décide avec un `switch (j)` : `case SAMEDI:` `case DIMANCHE:` → `week-end`, `default:` → `semaine`.",
+     "consigne": "Passe à l'énumération :\n1. avant `main`, déclare le type `Jour` ;\n2. après la lecture, écris `Jour j = n;` ;\n3. remplace le `if` par `switch (j)` : `case SAMEDI: case DIMANCHE:` → `week-end` (puis `break;`), `default:` → `semaine`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -1291,9 +1291,9 @@
     }
    ],
    "vals": {
-    "N0": "1",
-    "J0": "MARDI",
-    "N1": "5",
+    "N0": "2",
+    "J0": "MERCREDI",
+    "N1": "6",
     "S2_0": "semaine",
     "S2_1": "week-end",
     "S2_2": "week-end",
@@ -1303,66 +1303,6 @@
     "S3_3": "semaine"
    },
    "variantes": [
-    {
-     "N0": "1",
-     "J0": "MARDI",
-     "N1": "5",
-     "S2_0": "semaine",
-     "S2_1": "week-end",
-     "S2_2": "week-end",
-     "S3_0": "semaine",
-     "S3_1": "week-end",
-     "S3_2": "week-end",
-     "S3_3": "semaine"
-    },
-    {
-     "N0": "1",
-     "J0": "MARDI",
-     "N1": "6",
-     "S2_0": "semaine",
-     "S2_1": "week-end",
-     "S2_2": "week-end",
-     "S3_0": "semaine",
-     "S3_1": "week-end",
-     "S3_2": "week-end",
-     "S3_3": "semaine"
-    },
-    {
-     "N0": "6",
-     "J0": "DIMANCHE",
-     "N1": "3",
-     "S2_0": "week-end",
-     "S2_1": "semaine",
-     "S2_2": "week-end",
-     "S3_0": "week-end",
-     "S3_1": "semaine",
-     "S3_2": "week-end",
-     "S3_3": "semaine"
-    },
-    {
-     "N0": "5",
-     "J0": "SAMEDI",
-     "N1": "1",
-     "S2_0": "week-end",
-     "S2_1": "semaine",
-     "S2_2": "week-end",
-     "S3_0": "week-end",
-     "S3_1": "semaine",
-     "S3_2": "week-end",
-     "S3_3": "semaine"
-    },
-    {
-     "N0": "3",
-     "J0": "JEUDI",
-     "N1": "5",
-     "S2_0": "semaine",
-     "S2_1": "week-end",
-     "S2_2": "week-end",
-     "S3_0": "semaine",
-     "S3_1": "week-end",
-     "S3_2": "week-end",
-     "S3_3": "semaine"
-    },
     {
      "N0": "2",
      "J0": "MERCREDI",
@@ -1376,8 +1316,8 @@
      "S3_3": "semaine"
     },
     {
-     "N0": "5",
-     "J0": "SAMEDI",
+     "N0": "6",
+     "J0": "DIMANCHE",
      "N1": "2",
      "S2_0": "week-end",
      "S2_1": "semaine",
@@ -1388,14 +1328,74 @@
      "S3_3": "semaine"
     },
     {
+     "N0": "4",
+     "J0": "VENDREDI",
+     "N1": "5",
+     "S2_0": "semaine",
+     "S2_1": "week-end",
+     "S2_2": "week-end",
+     "S3_0": "semaine",
+     "S3_1": "week-end",
+     "S3_2": "week-end",
+     "S3_3": "semaine"
+    },
+    {
+     "N0": "4",
+     "J0": "VENDREDI",
+     "N1": "6",
+     "S2_0": "semaine",
+     "S2_1": "week-end",
+     "S2_2": "week-end",
+     "S3_0": "semaine",
+     "S3_1": "week-end",
+     "S3_2": "week-end",
+     "S3_3": "semaine"
+    },
+    {
+     "N0": "0",
+     "J0": "LUNDI",
+     "N1": "5",
+     "S2_0": "semaine",
+     "S2_1": "week-end",
+     "S2_2": "week-end",
+     "S3_0": "semaine",
+     "S3_1": "week-end",
+     "S3_2": "week-end",
+     "S3_3": "semaine"
+    },
+    {
+     "N0": "0",
+     "J0": "LUNDI",
+     "N1": "6",
+     "S2_0": "semaine",
+     "S2_1": "week-end",
+     "S2_2": "week-end",
+     "S3_0": "semaine",
+     "S3_1": "week-end",
+     "S3_2": "week-end",
+     "S3_3": "semaine"
+    },
+    {
      "N0": "5",
      "J0": "SAMEDI",
-     "N1": "3",
+     "N1": "0",
      "S2_0": "week-end",
      "S2_1": "semaine",
      "S2_2": "week-end",
      "S3_0": "week-end",
      "S3_1": "semaine",
+     "S3_2": "week-end",
+     "S3_3": "semaine"
+    },
+    {
+     "N0": "1",
+     "J0": "MARDI",
+     "N1": "5",
+     "S2_0": "semaine",
+     "S2_1": "week-end",
+     "S2_2": "week-end",
+     "S3_0": "semaine",
+     "S3_1": "week-end",
      "S3_2": "week-end",
      "S3_3": "semaine"
     }
@@ -1407,12 +1407,12 @@
    "notion": "10.4",
    "origine": "generee",
    "titre": "Fiche avec date de naissance",
-   "enonce": "Définis `Date` (jour, mois, annee) puis `Personne` (un nom de 30 caractères et un champ `Date naissance`). Le programme lit un nom puis une date (`jour mois annee`) et affiche `nom j/m/aaaa age`, où `age` est l'âge atteint en 2026 (2026 − année).\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S3_0]]\n```",
-   "guidage": "**Plan** : 1. `Date` regroupe 3 `int` → 2. `Personne` contient `char nom[30]` **et** une `Date` : une structure peut en contenir une autre → 3. on enchaîne les points : `p.naissance.jour` → 4. âge = `2026 - p.naissance.annee`.",
+   "enonce": "Le but : mettre une structure **dans** une autre (une personne a une date de naissance).\n\n**Les types** (avant `main`) :\n- `Date` : trois entiers `jour`, `mois`, `annee` ;\n- `Personne` : un nom `char nom[30]` et un champ `Date naissance`.\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. un nom (un mot) ;\n2. le jour, le mois et l'année de naissance.\n\n**Ce qu'il fait** :\n1. range tout dans une variable `Personne p` ;\n2. affiche sur une ligne : le nom, la date au format `j/m/aaaa`, puis l'âge atteint en 2026 (2026 − année).\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S3_0]]\n```",
+   "guidage": "**À retenir** : pour atteindre un champ d'une structure qui est elle-même dans une structure, on enchaîne les points : `p.naissance.jour`.",
    "duree": 6,
    "etapes": [
     {
-     "consigne": "Dans `Personne`, la date de naissance est un champ comme un autre : un type, puis un nom. Écris la déclaration de ce champ (type `Date`, nom `naissance`).",
+     "consigne": "Dans `Personne`, la date de naissance est un champ comme un autre : un type, puis un nom, puis `;`. Écris la déclaration de ce champ (type `Date`, nom `naissance`).",
      "question": "Champ date de naissance ?",
      "verif": {
       "mode": "regex",
@@ -1445,7 +1445,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Premier jalon, avec `Date` seulement : lis un nom (dans `char nom[30]`) puis `jour mois annee` dans une `Date d`, et affiche `nom j/m/a`.",
+     "consigne": "Premier jalon, avec `Date` seulement :\n1. avant `main`, déclare le type `Date` ;\n2. dans `main`, déclare `char nom[30];` et `Date d;` ;\n3. lis le nom, puis `d.jour`, `d.mois`, `d.annee` ;\n4. affiche `nom j/m/aaaa`.",
      "question": "Date seule.",
      "verif": {
       "mode": "c",
@@ -1470,7 +1470,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Ajoute le type `Personne` (nom + `Date naissance`), lis directement dans `p.nom` et `p.naissance.…`, et affiche en plus l'âge atteint en 2026 en fin de ligne.",
+     "consigne": "Ajoute le type `Personne` :\n1. déclare `Personne` (un `nom` et une `Date naissance`) ;\n2. dans `main`, une seule variable `Personne p;` : lis dans `p.nom`, `p.naissance.jour`, etc. ;\n3. affiche comme avant, et ajoute en fin de ligne l'âge : `2026 - p.naissance.annee`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -1502,77 +1502,77 @@
     }
    ],
    "vals": {
-    "E0": "Bob 20 3 1965",
-    "E1": "Lea 8 9 1983",
-    "S2_0": "Bob 20/3/1965",
-    "S2_1": "Lea 8/9/1983",
-    "S3_0": "Bob 20/3/1965 61",
-    "S3_1": "Lea 8/9/1983 43"
+    "E0": "Zoe 28 7 1998",
+    "E1": "Yann 19 10 2005",
+    "S2_0": "Zoe 28/7/1998",
+    "S2_1": "Yann 19/10/2005",
+    "S3_0": "Zoe 28/7/1998 28",
+    "S3_1": "Yann 19/10/2005 21"
    },
    "variantes": [
     {
-     "E0": "Bob 20 3 1965",
-     "E1": "Lea 8 9 1983",
-     "S2_0": "Bob 20/3/1965",
-     "S2_1": "Lea 8/9/1983",
-     "S3_0": "Bob 20/3/1965 61",
-     "S3_1": "Lea 8/9/1983 43"
+     "E0": "Zoe 28 7 1998",
+     "E1": "Yann 19 10 2005",
+     "S2_0": "Zoe 28/7/1998",
+     "S2_1": "Yann 19/10/2005",
+     "S3_0": "Zoe 28/7/1998 28",
+     "S3_1": "Yann 19/10/2005 21"
     },
     {
-     "E0": "Theo 25 1 1958",
-     "E1": "Ines 17 7 1959",
-     "S2_0": "Theo 25/1/1958",
-     "S2_1": "Ines 17/7/1959",
-     "S3_0": "Theo 25/1/1958 68",
-     "S3_1": "Ines 17/7/1959 67"
+     "E0": "Zoe 6 3 1968",
+     "E1": "Yann 13 3 2007",
+     "S2_0": "Zoe 6/3/1968",
+     "S2_1": "Yann 13/3/2007",
+     "S3_0": "Zoe 6/3/1968 58",
+     "S3_1": "Yann 13/3/2007 19"
     },
     {
-     "E0": "Nora 28 11 1956",
-     "E1": "Ines 27 12 1974",
-     "S2_0": "Nora 28/11/1956",
-     "S2_1": "Ines 27/12/1974",
-     "S3_0": "Nora 28/11/1956 70",
-     "S3_1": "Ines 27/12/1974 52"
+     "E0": "Alice 25 5 1953",
+     "E1": "Yann 7 2 1959",
+     "S2_0": "Alice 25/5/1953",
+     "S2_1": "Yann 7/2/1959",
+     "S3_0": "Alice 25/5/1953 73",
+     "S3_1": "Yann 7/2/1959 67"
     },
     {
-     "E0": "Sami 1 2 1952",
-     "E1": "Bob 24 4 1999",
-     "S2_0": "Sami 1/2/1952",
-     "S2_1": "Bob 24/4/1999",
-     "S3_0": "Sami 1/2/1952 74",
-     "S3_1": "Bob 24/4/1999 27"
+     "E0": "Yann 19 1 1972",
+     "E1": "Bob 13 1 1968",
+     "S2_0": "Yann 19/1/1972",
+     "S2_1": "Bob 13/1/1968",
+     "S3_0": "Yann 19/1/1972 54",
+     "S3_1": "Bob 13/1/1968 58"
     },
     {
-     "E0": "Sami 14 3 1984",
-     "E1": "Nora 15 12 2001",
-     "S2_0": "Sami 14/3/1984",
-     "S2_1": "Nora 15/12/2001",
-     "S3_0": "Sami 14/3/1984 42",
-     "S3_1": "Nora 15/12/2001 25"
+     "E0": "Bob 6 10 1957",
+     "E1": "Yann 17 10 1969",
+     "S2_0": "Bob 6/10/1957",
+     "S2_1": "Yann 17/10/1969",
+     "S3_0": "Bob 6/10/1957 69",
+     "S3_1": "Yann 17/10/1969 57"
     },
     {
-     "E0": "Yann 11 11 1992",
-     "E1": "Lea 11 1 1985",
-     "S2_0": "Yann 11/11/1992",
-     "S2_1": "Lea 11/1/1985",
-     "S3_0": "Yann 11/11/1992 34",
-     "S3_1": "Lea 11/1/1985 41"
+     "E0": "Ines 18 5 1976",
+     "E1": "Lea 2 1 1982",
+     "S2_0": "Ines 18/5/1976",
+     "S2_1": "Lea 2/1/1982",
+     "S3_0": "Ines 18/5/1976 50",
+     "S3_1": "Lea 2/1/1982 44"
     },
     {
-     "E0": "Bob 28 12 1970",
-     "E1": "Zoe 28 2 1965",
-     "S2_0": "Bob 28/12/1970",
-     "S2_1": "Zoe 28/2/1965",
-     "S3_0": "Bob 28/12/1970 56",
-     "S3_1": "Zoe 28/2/1965 61"
+     "E0": "Ines 27 6 2004",
+     "E1": "Alice 6 7 1989",
+     "S2_0": "Ines 27/6/2004",
+     "S2_1": "Alice 6/7/1989",
+     "S3_0": "Ines 27/6/2004 22",
+     "S3_1": "Alice 6/7/1989 37"
     },
     {
-     "E0": "Sami 13 6 1992",
-     "E1": "Zoe 23 4 2006",
-     "S2_0": "Sami 13/6/1992",
-     "S2_1": "Zoe 23/4/2006",
-     "S3_0": "Sami 13/6/1992 34",
-     "S3_1": "Zoe 23/4/2006 20"
+     "E0": "Alice 4 6 1978",
+     "E1": "Sami 3 8 1982",
+     "S2_0": "Alice 4/6/1978",
+     "S2_1": "Sami 3/8/1982",
+     "S3_0": "Alice 4/6/1978 48",
+     "S3_1": "Sami 3/8/1982 44"
     }
    ]
   },
@@ -1582,8 +1582,8 @@
    "notion": "10.5",
    "origine": "generee",
    "titre": "Augmenter un salaire",
-   "enonce": "Reprends l'exemple du cours : `typedef struct { char nom[50]; int age; double salaire; } Employe;` et `void augmenter_salaire(Employe *e, double pourcentage)`. `main` lit un nom, un âge, un salaire et un pourcentage, appelle la fonction **avec l'adresse** de l'employé, puis affiche le nouveau salaire avec 2 décimales.\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S3_0]]\n```",
-   "guidage": "**Plan** : 1. la fonction reçoit l'**adresse** d'un `Employe` → 2. avec un pointeur sur structure, on atteint les champs par la flèche `->` : `e->salaire` → 3. `main` appelle `augmenter_salaire(&emp, pct)`.",
+   "enonce": "Le but : modifier une structure **à travers un pointeur**, depuis une fonction.\n\n**Le type** : `typedef struct { char nom[50]; int age; double salaire; } Employe;`\n\n**La fonction** `void augmenter_salaire(Employe *e, double pourcentage)` augmente le salaire de l'employé pointé par `e` du pourcentage donné (salaire × (1 + pourcentage / 100)).\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. le nom de l'employé (un mot) ;\n2. son âge ;\n3. son salaire ;\n4. le pourcentage d'augmentation.\n\n**Ce qu'il fait** :\n1. appelle `augmenter_salaire(&emp, pct)` ;\n2. affiche le nouveau salaire avec 2 décimales.\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S3_0]]\n```",
+   "guidage": "**À retenir** : avec un pointeur sur structure, on atteint les champs avec la flèche : `e->salaire` (c'est la même chose que `(*e).salaire`).",
    "duree": 6,
    "etapes": [
     {
@@ -1603,7 +1603,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Pour que la fonction modifie le vrai `emp` de `main` (et pas une copie), on lui donne son adresse. Écris l'appel de `augmenter_salaire` pour `emp` avec le pourcentage `pct`.",
+     "consigne": "Pour que la fonction modifie le vrai `emp` de `main` (et pas une copie), on lui donne son **adresse**. Écris l'appel de `augmenter_salaire` pour `emp`, avec le pourcentage `pct`.",
      "question": "Appel de la fonction ?",
      "verif": {
       "mode": "regex",
@@ -1619,7 +1619,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Premier jalon, sans fonction : lis le nom, l'âge, le salaire et le pourcentage dans un `Employe emp` et un `double pct`, augmente `emp.salaire` du pourcentage directement dans `main`, et affiche-le avec 2 décimales.",
+     "consigne": "Premier jalon, **sans** fonction :\n1. déclare le type `Employe`, puis dans `main` une variable `Employe emp;` et un `double pct;` ;\n2. lis le nom, l'âge, le salaire et le pourcentage (`%49s %d %lf %lf`) ;\n3. augmente directement `emp.salaire` : `emp.salaire = emp.salaire * (1 + pct / 100);` ;\n4. affiche `emp.salaire` avec 2 décimales.",
      "question": "Augmentation dans `main`.",
      "verif": {
       "mode": "c",
@@ -1644,7 +1644,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Déplace l'augmentation dans `void augmenter_salaire(Employe *e, double pourcentage)` : dans la fonction, `emp.salaire` devient `e->salaire`. `main` l'appelle avec `&emp`, puis affiche le salaire.",
+     "consigne": "Déplace l'augmentation dans la fonction :\n1. écris `void augmenter_salaire(Employe *e, double pourcentage)` avant `main` ; dans la fonction, `emp.salaire` devient `e->salaire` ;\n2. dans `main`, remplace le calcul par `augmenter_salaire(&emp, pct);` ;\n3. l'affichage ne change pas.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -1681,77 +1681,77 @@
     }
    ],
    "vals": {
-    "E0": "Zoe 29 2500 20",
-    "E1": "Theo 23 2500 4",
-    "S2_0": "3000.00",
-    "S2_1": "2600.00",
-    "S3_0": "3000.00",
-    "S3_1": "2600.00"
+    "E0": "Lea 50 2500 2.5",
+    "E1": "Bob 35 1800 4",
+    "S2_0": "2562.50",
+    "S2_1": "1872.00",
+    "S3_0": "2562.50",
+    "S3_1": "1872.00"
    },
    "variantes": [
     {
-     "E0": "Zoe 29 2500 20",
-     "E1": "Theo 23 2500 4",
-     "S2_0": "3000.00",
-     "S2_1": "2600.00",
-     "S3_0": "3000.00",
-     "S3_1": "2600.00"
+     "E0": "Lea 50 2500 2.5",
+     "E1": "Bob 35 1800 4",
+     "S2_0": "2562.50",
+     "S2_1": "1872.00",
+     "S3_0": "2562.50",
+     "S3_1": "1872.00"
     },
     {
-     "E0": "Maya 24 3200 2.5",
-     "E1": "Theo 37 4700 4",
-     "S2_0": "3280.00",
-     "S2_1": "4888.00",
-     "S3_0": "3280.00",
-     "S3_1": "4888.00"
+     "E0": "Lea 60 35000 20",
+     "E1": "Charlie 58 4400 12.5",
+     "S2_0": "42000.00",
+     "S2_1": "4950.00",
+     "S3_0": "42000.00",
+     "S3_1": "4950.00"
     },
     {
-     "E0": "Zoe 25 2500 20",
-     "E1": "Bob 43 1600 12.5",
-     "S2_0": "3000.00",
-     "S2_1": "1800.00",
-     "S3_0": "3000.00",
-     "S3_1": "1800.00"
+     "E0": "Yann 53 35000 5",
+     "E1": "Hugo 50 5000 3",
+     "S2_0": "36750.00",
+     "S2_1": "5150.00",
+     "S3_0": "36750.00",
+     "S3_1": "5150.00"
     },
     {
-     "E0": "Yann 21 2000 2.5",
-     "E1": "Sami 52 2800 12.5",
+     "E0": "Alice 22 1800 20",
+     "E1": "Charlie 23 3800 12.5",
+     "S2_0": "2160.00",
+     "S2_1": "4275.00",
+     "S3_0": "2160.00",
+     "S3_1": "4275.00"
+    },
+    {
+     "E0": "Hugo 47 2000 2.5",
+     "E1": "Sami 23 2600 3",
      "S2_0": "2050.00",
-     "S2_1": "3150.00",
+     "S2_1": "2678.00",
      "S3_0": "2050.00",
-     "S3_1": "3150.00"
+     "S3_1": "2678.00"
     },
     {
-     "E0": "Zoe 55 3200 2.5",
-     "E1": "Charlie 47 3600 3",
-     "S2_0": "3280.00",
-     "S2_1": "3708.00",
-     "S3_0": "3280.00",
-     "S3_1": "3708.00"
+     "E0": "Sami 57 1800 10",
+     "E1": "Hugo 38 4300 12.5",
+     "S2_0": "1980.00",
+     "S2_1": "4837.50",
+     "S3_0": "1980.00",
+     "S3_1": "4837.50"
     },
     {
-     "E0": "Charlie 57 35000 20",
-     "E1": "Nora 26 4500 12.5",
-     "S2_0": "42000.00",
-     "S2_1": "5062.50",
-     "S3_0": "42000.00",
-     "S3_1": "5062.50"
+     "E0": "Yann 27 1800 2.5",
+     "E1": "Charlie 59 4300 3",
+     "S2_0": "1845.00",
+     "S2_1": "4429.00",
+     "S3_0": "1845.00",
+     "S3_1": "4429.00"
     },
     {
-     "E0": "Sami 29 35000 20",
-     "E1": "Hugo 59 3300 12.5",
-     "S2_0": "42000.00",
-     "S2_1": "3712.50",
-     "S3_0": "42000.00",
-     "S3_1": "3712.50"
-    },
-    {
-     "E0": "Zoe 41 2000 5",
-     "E1": "Maya 22 3900 12.5",
-     "S2_0": "2100.00",
-     "S2_1": "4387.50",
-     "S3_0": "2100.00",
-     "S3_1": "4387.50"
+     "E0": "Lea 51 35000 5",
+     "E1": "Nora 28 4600 4",
+     "S2_0": "36750.00",
+     "S2_1": "4784.00",
+     "S3_0": "36750.00",
+     "S3_1": "4784.00"
     }
    ]
   },
@@ -1761,12 +1761,12 @@
    "notion": "10.6",
    "origine": "generee",
    "titre": "La classe",
-   "enonce": "Définis `typedef struct { char nom[30]; int note; } Etudiant;`. Le programme lit `n` (au plus 50), puis `n` lignes `nom note`, rangées dans un **tableau d'`Etudiant`**. Il affiche la moyenne (2 décimales) puis le nom du meilleur étudiant (le premier en cas d'égalité).\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S3_0]]\n```",
-   "guidage": "**Plan** : 1. `Etudiant classe[50];` → 2. à chaque tour, lire `classe[i].nom` et `&classe[i].note` → 3. cumuler la somme → 4. retenir l'**indice** `best` du meilleur → 5. moyenne réelle.",
+   "enonce": "Le but : un **tableau de structures**, où chaque case regroupe le nom et la note d'un étudiant.\n\n**Le type** : `typedef struct { char nom[30]; int note; } Etudiant;`\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. le nombre d'étudiants `n` (50 au plus) ;\n2. puis, pour chacun, une ligne `nom note`.\n\n**Ce qu'il fait** :\n1. range tout dans un tableau `Etudiant classe[50]` ;\n2. affiche la moyenne des notes (2 décimales), une espace, puis le **nom** de l'étudiant qui a la meilleure note (le premier en cas d'égalité).\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S3_0]]\n```",
+   "guidage": "**Plan** : 1. à chaque tour, lire `classe[i].nom` et `&classe[i].note` → 2. cumuler la somme → 3. retenir l'**indice** `best` du meilleur, pour retrouver son nom à la fin → 4. moyenne réelle.",
    "duree": 7,
    "etapes": [
     {
-     "consigne": "Écris le `scanf` qui lit le nom puis la note de l'étudiant d'indice `i` (`nom note`, nom limité à 29 caractères). Rappel : le nom est un tableau (pas de `&`), la note est un entier (avec `&`).",
+     "consigne": "Écris le `scanf` qui lit le nom puis la note de l'étudiant d'indice `i`, au format `nom note` (nom limité à 29 caractères : `%29s`). Rappel : le nom est un tableau (pas de `&`), la note un entier (avec `&`).",
      "question": "Lecture de l'étudiant `i` ?",
      "verif": {
       "mode": "regex",
@@ -1782,7 +1782,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "`best` est l'indice du meilleur étudiant trouvé jusqu'ici. Écris la condition (sans `if`) qui est vraie quand l'étudiant `i` a une note **strictement** meilleure (pour garder le premier en cas d'égalité).",
+     "consigne": "`best` est l'indice du meilleur étudiant trouvé jusqu'ici. Écris la condition (sans `if`) qui est vraie quand l'étudiant `i` a une note **strictement** meilleure que celle de `classe[best]` (strictement, pour garder le premier en cas d'égalité).",
      "question": "Condition « meilleur » ?",
      "verif": {
       "mode": "regex",
@@ -1798,7 +1798,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Premier jalon, sans structure : lis `n` puis `n` notes seules (des entiers), et affiche la moyenne (2 décimales) puis l'**indice** de la meilleure note.",
+     "consigne": "Premier jalon, **sans** structure, avec des notes seules :\n1. lis `n`, puis `n` notes (des entiers) dans `int notes[50]` ;\n2. affiche la moyenne (2 décimales), une espace, puis l'**indice** de la meilleure note.",
      "question": "Moyenne et indice du meilleur.",
      "verif": {
       "mode": "c",
@@ -1823,7 +1823,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Range maintenant le nom **et** la note dans un tableau `Etudiant classe[50]` (type déclaré avant `main`), et affiche à la fin la moyenne puis le **nom** du meilleur : `classe[best].nom`.",
+     "consigne": "Passe au tableau de structures :\n1. avant `main`, déclare le type `Etudiant` ;\n2. remplace `int notes[50]` par `Etudiant classe[50]` et lis `nom note` pour chacun ;\n3. à la fin, affiche la moyenne puis le **nom** du meilleur : `classe[best].nom`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -1855,95 +1855,95 @@
     }
    ],
    "vals": {
-    "E0": "3\nMaya 12\nHugo 8\nNora 7",
-    "E1": "2\nAlice 11\nNora 17",
-    "F0": "3\n12\n8\n7",
-    "F1": "2\n11\n17",
-    "S2_0": "9.00 0",
-    "S2_1": "14.00 1",
-    "S3_0": "9.00 Maya",
-    "S3_1": "14.00 Nora"
+    "E0": "5\nInes 15\nBob 18\nSami 20\nTheo 16\nCharlie 16",
+    "E1": "2\nTheo 9\nAlice 18",
+    "F0": "5\n15\n18\n20\n16\n16",
+    "F1": "2\n9\n18",
+    "S2_0": "17.00 2",
+    "S2_1": "13.50 1",
+    "S3_0": "17.00 Sami",
+    "S3_1": "13.50 Alice"
    },
    "variantes": [
     {
-     "E0": "3\nMaya 12\nHugo 8\nNora 7",
-     "E1": "2\nAlice 11\nNora 17",
-     "F0": "3\n12\n8\n7",
-     "F1": "2\n11\n17",
-     "S2_0": "9.00 0",
-     "S2_1": "14.00 1",
-     "S3_0": "9.00 Maya",
-     "S3_1": "14.00 Nora"
-    },
-    {
-     "E0": "5\nHugo 9\nLea 19\nSami 10\nNora 15\nCharlie 13",
-     "E1": "2\nNora 17\nZoe 14",
-     "F0": "5\n9\n19\n10\n15\n13",
-     "F1": "2\n17\n14",
-     "S2_0": "13.20 1",
-     "S2_1": "15.50 0",
-     "S3_0": "13.20 Lea",
-     "S3_1": "15.50 Nora"
-    },
-    {
-     "E0": "4\nNora 10\nHugo 19\nLea 15\nCharlie 17",
-     "E1": "2\nAlice 11\nInes 16",
-     "F0": "4\n10\n19\n15\n17",
-     "F1": "2\n11\n16",
-     "S2_0": "15.25 1",
+     "E0": "5\nInes 15\nBob 18\nSami 20\nTheo 16\nCharlie 16",
+     "E1": "2\nTheo 9\nAlice 18",
+     "F0": "5\n15\n18\n20\n16\n16",
+     "F1": "2\n9\n18",
+     "S2_0": "17.00 2",
      "S2_1": "13.50 1",
-     "S3_0": "15.25 Hugo",
-     "S3_1": "13.50 Ines"
+     "S3_0": "17.00 Sami",
+     "S3_1": "13.50 Alice"
     },
     {
-     "E0": "4\nAlice 10\nCharlie 6\nMaya 18\nLea 11",
-     "E1": "2\nLea 17\nMaya 17",
-     "F0": "4\n10\n6\n18\n11",
-     "F1": "2\n17\n17",
-     "S2_0": "11.25 2",
-     "S2_1": "17.00 0",
-     "S3_0": "11.25 Maya",
-     "S3_1": "17.00 Lea"
+     "E0": "3\nNora 13\nTheo 10\nHugo 16",
+     "E1": "2\nCharlie 13\nAlice 12",
+     "F0": "3\n13\n10\n16",
+     "F1": "2\n13\n12",
+     "S2_0": "13.00 2",
+     "S2_1": "12.50 0",
+     "S3_0": "13.00 Hugo",
+     "S3_1": "12.50 Charlie"
     },
     {
-     "E0": "5\nTheo 8\nLea 7\nAlice 18\nYann 18\nZoe 15",
-     "E1": "2\nAlice 16\nNora 6",
-     "F0": "5\n8\n7\n18\n18\n15",
-     "F1": "2\n16\n6",
-     "S2_0": "13.20 2",
+     "E0": "3\nSami 6\nYann 7\nBob 20",
+     "E1": "2\nZoe 17\nNora 5",
+     "F0": "3\n6\n7\n20",
+     "F1": "2\n17\n5",
+     "S2_0": "11.00 2",
      "S2_1": "11.00 0",
-     "S3_0": "13.20 Alice",
-     "S3_1": "11.00 Alice"
+     "S3_0": "11.00 Bob",
+     "S3_1": "11.00 Zoe"
     },
     {
-     "E0": "4\nAlice 14\nLea 10\nBob 10\nZoe 20",
-     "E1": "2\nAlice 15\nMaya 19",
-     "F0": "4\n14\n10\n10\n20",
-     "F1": "2\n15\n19",
-     "S2_0": "13.50 3",
-     "S2_1": "17.00 1",
-     "S3_0": "13.50 Zoe",
-     "S3_1": "17.00 Maya"
+     "E0": "3\nInes 11\nZoe 12\nCharlie 11",
+     "E1": "2\nCharlie 16\nZoe 5",
+     "F0": "3\n11\n12\n11",
+     "F1": "2\n16\n5",
+     "S2_0": "11.33 1",
+     "S2_1": "10.50 0",
+     "S3_0": "11.33 Zoe",
+     "S3_1": "10.50 Charlie"
     },
     {
-     "E0": "3\nSami 10\nAlice 7\nCharlie 14",
-     "E1": "2\nMaya 16\nYann 19",
-     "F0": "3\n10\n7\n14",
-     "F1": "2\n16\n19",
-     "S2_0": "10.33 2",
-     "S2_1": "17.50 1",
-     "S3_0": "10.33 Charlie",
-     "S3_1": "17.50 Yann"
+     "E0": "4\nMaya 17\nLea 8\nYann 19\nTheo 15",
+     "E1": "2\nMaya 20\nInes 7",
+     "F0": "4\n17\n8\n19\n15",
+     "F1": "2\n20\n7",
+     "S2_0": "14.75 2",
+     "S2_1": "13.50 0",
+     "S3_0": "14.75 Yann",
+     "S3_1": "13.50 Maya"
     },
     {
-     "E0": "4\nSami 5\nTheo 13\nLea 11\nYann 17",
-     "E1": "2\nInes 19\nCharlie 7",
-     "F0": "4\n5\n13\n11\n17",
-     "F1": "2\n19\n7",
-     "S2_0": "11.50 3",
-     "S2_1": "13.00 0",
-     "S3_0": "11.50 Yann",
-     "S3_1": "13.00 Ines"
+     "E0": "4\nMaya 15\nHugo 7\nBob 14\nAlice 7",
+     "E1": "2\nLea 12\nMaya 5",
+     "F0": "4\n15\n7\n14\n7",
+     "F1": "2\n12\n5",
+     "S2_0": "10.75 0",
+     "S2_1": "8.50 0",
+     "S3_0": "10.75 Maya",
+     "S3_1": "8.50 Lea"
+    },
+    {
+     "E0": "3\nLea 11\nCharlie 5\nHugo 19",
+     "E1": "2\nZoe 12\nNora 9",
+     "F0": "3\n11\n5\n19",
+     "F1": "2\n12\n9",
+     "S2_0": "11.67 2",
+     "S2_1": "10.50 0",
+     "S3_0": "11.67 Hugo",
+     "S3_1": "10.50 Zoe"
+    },
+    {
+     "E0": "4\nZoe 8\nMaya 12\nSami 9\nLea 7",
+     "E1": "2\nCharlie 12\nNora 19",
+     "F0": "4\n8\n12\n9\n7",
+     "F1": "2\n12\n19",
+     "S2_0": "9.00 1",
+     "S2_1": "15.50 1",
+     "S3_0": "9.00 Maya",
+     "S3_1": "15.50 Nora"
     }
    ]
   },
@@ -1953,8 +1953,8 @@
    "notion": "10.6",
    "origine": "generee",
    "titre": "Annuaire dynamique",
-   "enonce": "Définis `typedef struct { char nom[30]; char tel[15]; } Contact;`. Le programme lit `n`, alloue un annuaire de `n` contacts avec `calloc`, lit les `n` lignes `nom tel`, puis lit un nom à chercher et affiche son téléphone, ou `inconnu`. Il libère l'annuaire à la fin.\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S3_0]]\n```",
-   "guidage": "**Plan** : 1. `calloc(n, sizeof(Contact))` : `sizeof` marche aussi sur un type structure → 2. test `NULL`, lecture des contacts → 3. lire le nom cherché → 4. comparer les noms avec `strcmp(…) == 0` → 5. afficher le téléphone ou `inconnu` → 6. `free`.",
+   "enonce": "Le but : un **annuaire** dont la taille est choisie à l'exécution (tableau de structures alloué avec `calloc`).\n\n**Le type** : `typedef struct { char nom[30]; char tel[15]; } Contact;`\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. le nombre de contacts `n` ;\n2. puis, pour chacun, une ligne `nom telephone` ;\n3. enfin, le nom à chercher.\n\n**Ce qu'il fait** :\n1. réserve avec `calloc` un tableau de `n` contacts et y range les contacts ;\n2. cherche le premier contact qui porte le nom cherché ;\n3. affiche son téléphone, ou `inconnu` si personne ne porte ce nom ;\n4. libère l'annuaire.\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S3_0]]\n```",
+   "guidage": "**Plan** : 1. `calloc(n, sizeof(Contact))` : `sizeof` marche aussi sur un type structure → 2. test `NULL`, lecture des contacts → 3. lire le nom cherché → 4. comparer les noms avec `strcmp(…) == 0` (jamais `==` sur des chaînes) → 5. afficher → 6. `free`.",
    "duree": 8,
    "etapes": [
     {
@@ -1990,7 +1990,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Premier jalon, avec un tableau ordinaire `Contact annuaire[50]` : lis `n`, les `n` contacts (`nom tel`), puis le nom cherché, et affiche le téléphone du premier contact qui porte ce nom, ou `inconnu`.",
+     "consigne": "Premier jalon, avec un tableau ordinaire :\n1. déclare `Contact annuaire[50]` et `char cherche[30]` ;\n2. lis `n`, puis les `n` contacts (`%29s %14s`), puis `cherche` ;\n3. parcours l'annuaire : au premier nom égal à `cherche`, affiche son `tel` et arrête-toi ;\n4. si personne n'a été trouvé, affiche `inconnu`.",
      "question": "Annuaire statique.",
      "verif": {
       "mode": "c",
@@ -2015,7 +2015,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Remplace le tableau `Contact annuaire[50]` par un bloc de `n` contacts obtenu avec `calloc` (après la lecture de `n`, avec le test `NULL`), et libère-le avec `free` à la fin.",
+     "consigne": "Passe en mémoire dynamique :\n1. supprime `Contact annuaire[50]` ;\n2. après la lecture de `n` : `Contact *annuaire = calloc(n, sizeof(Contact));`, puis le test `NULL` ;\n3. garde la lecture et la recherche ;\n4. `free(annuaire);` à la fin.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -2059,95 +2059,95 @@
     }
    ],
    "vals": {
-    "E0": "5\nMaya 0660865483\nSami 0669215261\nInes 0690776270\nBob 0616708919\nNora 0633885609\nMaya",
-    "E1": "3\nSami 0699998904\nInes 0680225202\nZoe 0698713573\nHugo",
-    "E2": "2\nYann 0603211628\nSami 0646211650\nSami",
-    "S2_0": "0660865483",
+    "E0": "5\nZoe 0637350895\nTheo 0606081247\nNora 0669272138\nHugo 0638467457\nAlice 0604539125\nHugo",
+    "E1": "2\nInes 0674693625\nYann 0651802785\nCharlie",
+    "E2": "5\nZoe 0650405866\nCharlie 0612526469\nNora 0680500433\nYann 0678557005\nInes 0660686035\nInes",
+    "S2_0": "0638467457",
     "S2_1": "inconnu",
-    "S3_0": "0660865483",
+    "S3_0": "0638467457",
     "S3_1": "inconnu",
-    "S3_2": "0646211650"
+    "S3_2": "0660686035"
    },
    "variantes": [
     {
-     "E0": "5\nMaya 0660865483\nSami 0669215261\nInes 0690776270\nBob 0616708919\nNora 0633885609\nMaya",
-     "E1": "3\nSami 0699998904\nInes 0680225202\nZoe 0698713573\nHugo",
-     "E2": "2\nYann 0603211628\nSami 0646211650\nSami",
-     "S2_0": "0660865483",
+     "E0": "5\nZoe 0637350895\nTheo 0606081247\nNora 0669272138\nHugo 0638467457\nAlice 0604539125\nHugo",
+     "E1": "2\nInes 0674693625\nYann 0651802785\nCharlie",
+     "E2": "5\nZoe 0650405866\nCharlie 0612526469\nNora 0680500433\nYann 0678557005\nInes 0660686035\nInes",
+     "S2_0": "0638467457",
      "S2_1": "inconnu",
-     "S3_0": "0660865483",
+     "S3_0": "0638467457",
      "S3_1": "inconnu",
-     "S3_2": "0646211650"
+     "S3_2": "0660686035"
     },
     {
-     "E0": "5\nAlice 0634997488\nSami 0669233218\nCharlie 0646284987\nLea 0643921785\nNora 0662265437\nCharlie",
-     "E1": "1\nCharlie 0618307857\nYann",
-     "E2": "3\nCharlie 0632213694\nLea 0662928020\nInes 0684454727\nInes",
-     "S2_0": "0646284987",
+     "E0": "3\nZoe 0627049046\nAlice 0673227216\nSami 0666667850\nSami",
+     "E1": "3\nSami 0632998907\nNora 0639215469\nZoe 0617227746\nHugo",
+     "E2": "6\nMaya 0694449800\nSami 0672455697\nLea 0611501868\nZoe 0674495350\nNora 0617768543\nHugo 0622630519\nMaya",
+     "S2_0": "0666667850",
      "S2_1": "inconnu",
-     "S3_0": "0646284987",
+     "S3_0": "0666667850",
      "S3_1": "inconnu",
-     "S3_2": "0684454727"
+     "S3_2": "0694449800"
     },
     {
-     "E0": "3\nLea 0604696305\nHugo 0643522624\nTheo 0665517140\nTheo",
-     "E1": "2\nBob 0664202904\nMaya 0611041989\nInes",
-     "E2": "2\nMaya 0689680858\nInes 0660063709\nMaya",
-     "S2_0": "0665517140",
+     "E0": "3\nHugo 0604123149\nLea 0651856069\nBob 0614603666\nLea",
+     "E1": "3\nTheo 0641008456\nNora 0608531059\nHugo 0689042773\nAlice",
+     "E2": "3\nLea 0628215870\nHugo 0601564161\nZoe 0650524287\nLea",
+     "S2_0": "0651856069",
      "S2_1": "inconnu",
-     "S3_0": "0665517140",
+     "S3_0": "0651856069",
      "S3_1": "inconnu",
-     "S3_2": "0689680858"
+     "S3_2": "0628215870"
     },
     {
-     "E0": "3\nBob 0622950704\nYann 0665919912\nMaya 0644967407\nMaya",
-     "E1": "2\nSami 0609480757\nTheo 0658942788\nMaya",
-     "E2": "5\nYann 0692409239\nNora 0671184549\nZoe 0636753509\nAlice 0688494993\nInes 0601161557\nAlice",
-     "S2_0": "0644967407",
+     "E0": "4\nTheo 0651752504\nLea 0627107541\nInes 0677364632\nYann 0627368166\nInes",
+     "E1": "2\nAlice 0691335997\nSami 0698815792\nCharlie",
+     "E2": "3\nTheo 0608485408\nNora 0601711516\nMaya 0689036329\nMaya",
+     "S2_0": "0677364632",
      "S2_1": "inconnu",
-     "S3_0": "0644967407",
+     "S3_0": "0677364632",
      "S3_1": "inconnu",
-     "S3_2": "0688494993"
+     "S3_2": "0689036329"
     },
     {
-     "E0": "3\nCharlie 0612909490\nNora 0626325566\nInes 0606386566\nCharlie",
-     "E1": "1\nMaya 0611044698\nAlice",
-     "E2": "3\nHugo 0627961313\nYann 0683271822\nCharlie 0661444283\nCharlie",
-     "S2_0": "0612909490",
+     "E0": "3\nHugo 0692696759\nSami 0612382968\nTheo 0669182820\nTheo",
+     "E1": "2\nZoe 0687261256\nCharlie 0679525133\nTheo",
+     "E2": "5\nZoe 0648670216\nSami 0645359927\nBob 0662738036\nMaya 0686849377\nHugo 0688781009\nZoe",
+     "S2_0": "0669182820",
      "S2_1": "inconnu",
-     "S3_0": "0612909490",
+     "S3_0": "0669182820",
      "S3_1": "inconnu",
-     "S3_2": "0661444283"
+     "S3_2": "0648670216"
     },
     {
-     "E0": "4\nZoe 0641986675\nCharlie 0628661227\nInes 0689677609\nTheo 0654438546\nInes",
-     "E1": "2\nNora 0679104829\nTheo 0645367907\nInes",
-     "E2": "4\nZoe 0667109759\nYann 0659142635\nSami 0628423000\nCharlie 0616788901\nZoe",
-     "S2_0": "0689677609",
+     "E0": "5\nAlice 0664427985\nHugo 0606239333\nNora 0641278351\nMaya 0642450678\nLea 0691505171\nLea",
+     "E1": "1\nMaya 0683680270\nCharlie",
+     "E2": "5\nInes 0604932994\nCharlie 0609258369\nNora 0617884789\nMaya 0616080658\nHugo 0689525978\nMaya",
+     "S2_0": "0691505171",
      "S2_1": "inconnu",
-     "S3_0": "0689677609",
+     "S3_0": "0691505171",
      "S3_1": "inconnu",
-     "S3_2": "0667109759"
+     "S3_2": "0616080658"
     },
     {
-     "E0": "3\nHugo 0660668539\nBob 0687102408\nMaya 0687852679\nHugo",
-     "E1": "1\nSami 0642507233\nBob",
-     "E2": "3\nTheo 0620379042\nSami 0664957673\nInes 0626518670\nInes",
-     "S2_0": "0660668539",
+     "E0": "5\nMaya 0606782063\nBob 0611524442\nHugo 0649892239\nInes 0648354691\nSami 0609648000\nSami",
+     "E1": "1\nYann 0641489766\nMaya",
+     "E2": "3\nHugo 0601136431\nYann 0652040472\nCharlie 0647301375\nCharlie",
+     "S2_0": "0609648000",
      "S2_1": "inconnu",
-     "S3_0": "0660668539",
+     "S3_0": "0609648000",
      "S3_1": "inconnu",
-     "S3_2": "0626518670"
+     "S3_2": "0647301375"
     },
     {
-     "E0": "3\nNora 0642712634\nCharlie 0667040879\nMaya 0611083603\nCharlie",
-     "E1": "2\nInes 0614672031\nMaya 0661649456\nCharlie",
-     "E2": "6\nAlice 0678297115\nMaya 0627997445\nBob 0675995218\nInes 0637105438\nLea 0653569549\nZoe 0629959220\nBob",
-     "S2_0": "0667040879",
+     "E0": "3\nInes 0637965496\nMaya 0640331952\nNora 0641535579\nMaya",
+     "E1": "1\nInes 0687844623\nNora",
+     "E2": "6\nMaya 0676487861\nCharlie 0675634972\nSami 0653147193\nBob 0671429273\nYann 0645441965\nZoe 0680775845\nSami",
+     "S2_0": "0640331952",
      "S2_1": "inconnu",
-     "S3_0": "0667040879",
+     "S3_0": "0640331952",
      "S3_1": "inconnu",
-     "S3_2": "0675995218"
+     "S3_2": "0653147193"
     }
    ]
   },
@@ -2157,7 +2157,7 @@
    "notion": "10.7",
    "origine": "generee",
    "titre": "L'anniversaire qui ne compte pas",
-   "enonce": "La fonction `vieillir` doit ajouter un an à la personne. Avec `[[E0]]`, le programme devrait afficher `[[A1]]`, mais il affiche `[[A0]]`. Corrige la fonction (et son appel).\n```c\n#include <stdio.h>\n\ntypedef struct {\n    char nom[30];\n    int age;\n} Personne;\n\nvoid vieillir(Personne p) {\n    p.age++;\n}\n\nint main(void) {\n    Personne moi;\n    scanf(\"%29s %d\", moi.nom, &moi.age);\n    vieillir(moi);\n    printf(\"%d\\n\", moi.age);\n    return 0;\n}\n```",
+   "enonce": "La fonction `vieillir` doit ajouter un an à la personne. Le programme lit un nom et un âge, appelle `vieillir`, puis affiche l'âge. Avec `[[E0]]`, il devrait afficher `[[A1]]`, mais il affiche `[[A0]]`.\n\n```c\n#include <stdio.h>\n\ntypedef struct {\n    char nom[30];\n    int age;\n} Personne;\n\nvoid vieillir(Personne p) {\n    p.age++;\n}\n\nint main(void) {\n    Personne moi;\n    scanf(\"%29s %d\", moi.nom, &moi.age);\n    vieillir(moi);\n    printf(\"%d\\n\", moi.age);\n    return 0;\n}\n```\n\n**À corriger** : la fonction `vieillir` et son appel, pour que la personne de `main` soit vraiment modifiée.",
    "guidage": "**Diagnostic** : 1. `vieillir(Personne p)` reçoit une **copie** → 2. il faut l'adresse : `Personne *p` → 3. `p->age++` → 4. appel `vieillir(&moi)`.",
    "duree": 4,
    "etapes": [
@@ -2178,7 +2178,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Une fois le paramètre devenu un pointeur `Personne *p`, on atteint le champ `age` avec la flèche. Écris l'instruction qui ajoute un an.",
+     "consigne": "Une fois le paramètre devenu un pointeur `Personne *p`, on atteint le champ `age` avec la flèche `->`. Écris l'instruction qui ajoute un an.",
      "question": "Ajouter un an via le pointeur ?",
      "verif": {
       "mode": "regex",
@@ -2194,7 +2194,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Corrige le programme pour que `vieillir` modifie la personne de `main` : le paramètre devient un pointeur (`Personne *p`), l'accès se fait avec `->`, et l'appel passe l'adresse (`&moi`).",
+     "consigne": "**À faire** :\n1. le paramètre de `vieillir` devient un pointeur : `void vieillir(Personne *p)` ;\n2. dans la fonction, `p.age++` devient `p->age++` ;\n3. dans `main`, l'appel passe l'adresse : `vieillir(&moi);`.",
      "question": "Corrige le programme.",
      "verif": {
       "mode": "c",
@@ -2226,77 +2226,77 @@
     }
    ],
    "vals": {
-    "A0": "36",
-    "A1": "37",
-    "E0": "Yann 36",
-    "E1": "Theo 19",
-    "S2_0": "37",
-    "S2_1": "20"
+    "A0": "39",
+    "A1": "40",
+    "E0": "Nora 39",
+    "E1": "Hugo 33",
+    "S2_0": "40",
+    "S2_1": "34"
    },
    "variantes": [
     {
-     "A0": "36",
-     "A1": "37",
-     "E0": "Yann 36",
-     "E1": "Theo 19",
-     "S2_0": "37",
-     "S2_1": "20"
-    },
-    {
-     "A0": "40",
-     "A1": "41",
-     "E0": "Ines 40",
-     "E1": "Bob 40",
-     "S2_0": "41",
-     "S2_1": "41"
-    },
-    {
-     "A0": "20",
-     "A1": "21",
-     "E0": "Yann 20",
-     "E1": "Sami 59",
-     "S2_0": "21",
-     "S2_1": "60"
-    },
-    {
-     "A0": "19",
-     "A1": "20",
-     "E0": "Bob 19",
-     "E1": "Maya 33",
-     "S2_0": "20",
+     "A0": "39",
+     "A1": "40",
+     "E0": "Nora 39",
+     "E1": "Hugo 33",
+     "S2_0": "40",
      "S2_1": "34"
     },
     {
-     "A0": "55",
-     "A1": "56",
-     "E0": "Charlie 55",
-     "E1": "Lea 60",
-     "S2_0": "56",
-     "S2_1": "61"
+     "A0": "56",
+     "A1": "57",
+     "E0": "Hugo 56",
+     "E1": "Zoe 27",
+     "S2_0": "57",
+     "S2_1": "28"
     },
     {
-     "A0": "49",
-     "A1": "50",
-     "E0": "Bob 49",
-     "E1": "Maya 46",
-     "S2_0": "50",
-     "S2_1": "47"
+     "A0": "18",
+     "A1": "19",
+     "E0": "Bob 18",
+     "E1": "Theo 65",
+     "S2_0": "19",
+     "S2_1": "66"
     },
     {
-     "A0": "25",
-     "A1": "26",
-     "E0": "Lea 25",
-     "E1": "Ines 63",
-     "S2_0": "26",
-     "S2_1": "64"
+     "A0": "63",
+     "A1": "64",
+     "E0": "Theo 63",
+     "E1": "Nora 30",
+     "S2_0": "64",
+     "S2_1": "31"
     },
     {
-     "A0": "35",
-     "A1": "36",
-     "E0": "Maya 35",
-     "E1": "Ines 31",
-     "S2_0": "36",
-     "S2_1": "32"
+     "A0": "61",
+     "A1": "62",
+     "E0": "Bob 61",
+     "E1": "Alice 30",
+     "S2_0": "62",
+     "S2_1": "31"
+    },
+    {
+     "A0": "70",
+     "A1": "71",
+     "E0": "Bob 70",
+     "E1": "Lea 35",
+     "S2_0": "71",
+     "S2_1": "36"
+    },
+    {
+     "A0": "33",
+     "A1": "34",
+     "E0": "Charlie 33",
+     "E1": "Zoe 69",
+     "S2_0": "34",
+     "S2_1": "70"
+    },
+    {
+     "A0": "51",
+     "A1": "52",
+     "E0": "Hugo 51",
+     "E1": "Maya 44",
+     "S2_0": "52",
+     "S2_1": "45"
     }
    ]
   },
@@ -2306,12 +2306,12 @@
    "notion": "10.7",
    "origine": "generee",
    "titre": "Vendre un produit",
-   "enonce": "Définis `typedef struct { char nom[30]; double prix; int stock; } Produit;` et `int vendre(Produit *p, int quantite)` : si le stock suffit, il le diminue et renvoie 1 ; sinon il ne change rien et renvoie 0. Écris aussi `void afficher(const Produit *p)` qui affiche `nom stock`.\n\n`main` lit un nom, un prix, un stock, puis une quantité : il affiche `vendu` ou `stock insuffisant`, puis appelle `afficher`.\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S3_0]]\n```",
-   "guidage": "**Plan** : 1. `vendre` modifie le produit → elle reçoit son adresse (`Produit *p`) → 2. si `p->stock < quantite`, renvoyer 0 ; sinon diminuer et renvoyer 1 → 3. `afficher` ne fait que lire → pointeur `const` → 4. `main` : `if (vendre(&prod, q))` puis `afficher(&prod)`.",
+   "enonce": "Le but : deux fonctions sur une même structure, l'une qui la **modifie**, l'autre qui la **lit** seulement.\n\n**Le type** : `typedef struct { char nom[30]; double prix; int stock; } Produit;`\n\n**Les fonctions** :\n- `int vendre(Produit *p, int quantite)` : si le stock suffit, elle retire `quantite` du stock et renvoie 1 ; sinon elle ne change rien et renvoie 0 ;\n- `void afficher(const Produit *p)` : affiche `nom stock`.\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. le nom du produit (un mot) ;\n2. son prix ;\n3. son stock ;\n4. la quantité à vendre.\n\n**Ce qu'il fait** :\n1. appelle `vendre(&prod, q)` et affiche `vendu` si elle renvoie 1, `stock insuffisant` sinon ;\n2. puis appelle `afficher(&prod)`.\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S3_0]]\n```",
+   "guidage": "**Plan** : `vendre` modifie le produit, elle reçoit donc son adresse ; `afficher` ne fait que lire, son paramètre est un pointeur `const` (promesse de ne rien modifier).",
    "duree": 7,
    "etapes": [
     {
-     "consigne": "Dans `vendre`, quand le stock suffit, il faut retirer `quantite` du stock du produit pointé par `p`. Écris cette instruction.",
+     "consigne": "Dans `vendre`, quand le stock suffit, il faut retirer `quantite` du stock du produit pointé par `p`. Écris cette instruction (avec la flèche).",
      "question": "Diminuer le stock ?",
      "verif": {
       "mode": "regex",
@@ -2327,7 +2327,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "`afficher` ne fait que lire le produit : on le promet au compilateur avec `const` devant le type pointé. Écris l'en-tête de `afficher`.",
+     "consigne": "`afficher` ne fait que lire le produit : on le promet au compilateur avec `const` devant le type pointé. Écris l'en-tête complet de `afficher`.",
      "question": "En-tête de `afficher` ?",
      "verif": {
       "mode": "regex",
@@ -2343,7 +2343,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Premier jalon, sans fonction : lis le nom, le prix, le stock et la quantité dans un `Produit prod` et un `int q`. Si `prod.stock >= q`, diminue le stock et affiche `vendu`, sinon `stock insuffisant`. Affiche ensuite `nom stock`.",
+     "consigne": "Premier jalon, **sans** fonction :\n1. déclare le type `Produit`, puis `Produit prod;` et `int q;` dans `main` ;\n2. lis le nom, le prix, le stock et la quantité (`%29s %lf %d %d`) ;\n3. si `prod.stock >= q` : retire `q` du stock et affiche `vendu` ; sinon affiche `stock insuffisant` ;\n4. affiche ensuite `nom stock`.",
      "question": "Vente dans `main`.",
      "verif": {
       "mode": "c",
@@ -2368,7 +2368,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Déplace la vente dans `int vendre(Produit *p, int quantite)` (renvoie 1 ou 0) et l'affichage final dans `void afficher(const Produit *p)`. `main` les appelle tous les deux avec `&prod`.",
+     "consigne": "Passe aux fonctions :\n1. écris `int vendre(Produit *p, int quantite)` (renvoie 1 ou 0) et `void afficher(const Produit *p)` avant `main` ;\n2. dans `main` : `if (vendre(&prod, q)) printf(\"vendu\\n\"); else printf(\"stock insuffisant\\n\");` ;\n3. puis `afficher(&prod);`.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -2409,95 +2409,95 @@
     }
    ],
    "vals": {
-    "E0": "Feutre 5.5 20 13",
-    "E1": "Regle 3.1 1 3",
-    "E2": "Feutre 3.0 8 8",
-    "S2_0": "vendu\nFeutre 7",
-    "S2_1": "stock insuffisant\nRegle 1",
-    "S3_0": "vendu\nFeutre 7",
-    "S3_1": "stock insuffisant\nRegle 1",
-    "S3_2": "vendu\nFeutre 0"
+    "E0": "Gomme 7.0 15 14",
+    "E1": "Gomme 9.9 1 2",
+    "E2": "Gomme 6.4 3 3",
+    "S2_0": "vendu\nGomme 1",
+    "S2_1": "stock insuffisant\nGomme 1",
+    "S3_0": "vendu\nGomme 1",
+    "S3_1": "stock insuffisant\nGomme 1",
+    "S3_2": "vendu\nGomme 0"
    },
    "variantes": [
     {
-     "E0": "Feutre 5.5 20 13",
-     "E1": "Regle 3.1 1 3",
-     "E2": "Feutre 3.0 8 8",
-     "S2_0": "vendu\nFeutre 7",
-     "S2_1": "stock insuffisant\nRegle 1",
-     "S3_0": "vendu\nFeutre 7",
-     "S3_1": "stock insuffisant\nRegle 1",
-     "S3_2": "vendu\nFeutre 0"
-    },
-    {
-     "E0": "Feutre 4.5 7 6",
-     "E1": "Feutre 5.3 2 6",
-     "E2": "Feutre 6.1 4 4",
-     "S2_0": "vendu\nFeutre 1",
-     "S2_1": "stock insuffisant\nFeutre 2",
-     "S3_0": "vendu\nFeutre 1",
-     "S3_1": "stock insuffisant\nFeutre 2",
-     "S3_2": "vendu\nFeutre 0"
-    },
-    {
-     "E0": "Cahier 3.3 14 14",
-     "E1": "Stylo 9.4 1 6",
-     "E2": "Cahier 2.5 4 4",
-     "S2_0": "vendu\nCahier 0",
-     "S2_1": "stock insuffisant\nStylo 1",
-     "S3_0": "vendu\nCahier 0",
-     "S3_1": "stock insuffisant\nStylo 1",
-     "S3_2": "vendu\nCahier 0"
-    },
-    {
-     "E0": "Gomme 3.7 18 2",
-     "E1": "Gomme 1.4 4 6",
-     "E2": "Cahier 2.9 5 5",
-     "S2_0": "vendu\nGomme 16",
-     "S2_1": "stock insuffisant\nGomme 4",
-     "S3_0": "vendu\nGomme 16",
-     "S3_1": "stock insuffisant\nGomme 4",
-     "S3_2": "vendu\nCahier 0"
-    },
-    {
-     "E0": "Gomme 1.3 18 6",
-     "E1": "Gomme 4.8 4 6",
-     "E2": "Regle 1.0 4 4",
-     "S2_0": "vendu\nGomme 12",
-     "S2_1": "stock insuffisant\nGomme 4",
-     "S3_0": "vendu\nGomme 12",
-     "S3_1": "stock insuffisant\nGomme 4",
-     "S3_2": "vendu\nRegle 0"
-    },
-    {
-     "E0": "Regle 3.3 15 2",
-     "E1": "Classeur 9.0 3 6",
-     "E2": "Agenda 7.3 5 5",
-     "S2_0": "vendu\nRegle 13",
-     "S2_1": "stock insuffisant\nClasseur 3",
-     "S3_0": "vendu\nRegle 13",
-     "S3_1": "stock insuffisant\nClasseur 3",
-     "S3_2": "vendu\nAgenda 0"
-    },
-    {
-     "E0": "Feutre 2.7 16 1",
-     "E1": "Cahier 4.7 3 7",
-     "E2": "Gomme 4.1 6 6",
-     "S2_0": "vendu\nFeutre 15",
-     "S2_1": "stock insuffisant\nCahier 3",
-     "S3_0": "vendu\nFeutre 15",
-     "S3_1": "stock insuffisant\nCahier 3",
+     "E0": "Gomme 7.0 15 14",
+     "E1": "Gomme 9.9 1 2",
+     "E2": "Gomme 6.4 3 3",
+     "S2_0": "vendu\nGomme 1",
+     "S2_1": "stock insuffisant\nGomme 1",
+     "S3_0": "vendu\nGomme 1",
+     "S3_1": "stock insuffisant\nGomme 1",
      "S3_2": "vendu\nGomme 0"
     },
     {
-     "E0": "Regle 3.2 18 11",
-     "E1": "Agenda 6.7 3 8",
-     "E2": "Feutre 3.0 9 9",
-     "S2_0": "vendu\nRegle 7",
-     "S2_1": "stock insuffisant\nAgenda 3",
-     "S3_0": "vendu\nRegle 7",
-     "S3_1": "stock insuffisant\nAgenda 3",
+     "E0": "Regle 2.1 14 13",
+     "E1": "Cahier 6.1 1 3",
+     "E2": "Agenda 1.5 6 6",
+     "S2_0": "vendu\nRegle 1",
+     "S2_1": "stock insuffisant\nCahier 1",
+     "S3_0": "vendu\nRegle 1",
+     "S3_1": "stock insuffisant\nCahier 1",
+     "S3_2": "vendu\nAgenda 0"
+    },
+    {
+     "E0": "Stylo 3.1 9 9",
+     "E1": "Feutre 4.2 4 8",
+     "E2": "Feutre 9.5 8 8",
+     "S2_0": "vendu\nStylo 0",
+     "S2_1": "stock insuffisant\nFeutre 4",
+     "S3_0": "vendu\nStylo 0",
+     "S3_1": "stock insuffisant\nFeutre 4",
      "S3_2": "vendu\nFeutre 0"
+    },
+    {
+     "E0": "Agenda 8.5 13 13",
+     "E1": "Cahier 1.5 4 7",
+     "E2": "Cahier 6.4 4 4",
+     "S2_0": "vendu\nAgenda 0",
+     "S2_1": "stock insuffisant\nCahier 4",
+     "S3_0": "vendu\nAgenda 0",
+     "S3_1": "stock insuffisant\nCahier 4",
+     "S3_2": "vendu\nCahier 0"
+    },
+    {
+     "E0": "Agenda 4.1 19 1",
+     "E1": "Regle 9.3 1 5",
+     "E2": "Gomme 6.9 5 5",
+     "S2_0": "vendu\nAgenda 18",
+     "S2_1": "stock insuffisant\nRegle 1",
+     "S3_0": "vendu\nAgenda 18",
+     "S3_1": "stock insuffisant\nRegle 1",
+     "S3_2": "vendu\nGomme 0"
+    },
+    {
+     "E0": "Feutre 5.9 12 7",
+     "E1": "Stylo 4.9 3 7",
+     "E2": "Cahier 1.4 8 8",
+     "S2_0": "vendu\nFeutre 5",
+     "S2_1": "stock insuffisant\nStylo 3",
+     "S3_0": "vendu\nFeutre 5",
+     "S3_1": "stock insuffisant\nStylo 3",
+     "S3_2": "vendu\nCahier 0"
+    },
+    {
+     "E0": "Agenda 3.6 6 3",
+     "E1": "Regle 3.4 3 8",
+     "E2": "Stylo 8.7 9 9",
+     "S2_0": "vendu\nAgenda 3",
+     "S2_1": "stock insuffisant\nRegle 3",
+     "S3_0": "vendu\nAgenda 3",
+     "S3_1": "stock insuffisant\nRegle 3",
+     "S3_2": "vendu\nStylo 0"
+    },
+    {
+     "E0": "Feutre 8.7 13 7",
+     "E1": "Feutre 2.9 2 5",
+     "E2": "Gomme 2.3 8 8",
+     "S2_0": "vendu\nFeutre 6",
+     "S2_1": "stock insuffisant\nFeutre 2",
+     "S3_0": "vendu\nFeutre 6",
+     "S3_1": "stock insuffisant\nFeutre 2",
+     "S3_2": "vendu\nGomme 0"
     }
    ]
   },
@@ -2507,12 +2507,12 @@
    "notion": "10.6",
    "origine": "generee",
    "titre": "Classe initialisée",
-   "enonce": "Recopie la classe ci-dessous, **initialisée à la déclaration** :\n```c\nEtudiant classe[3] = {\n    {\"[[N1]]\", [[A]]},\n    {\"[[N2]]\", [[B]]},\n    {\"[[N3]]\", [[C]]}\n};\n```\npuis écris `void afficher_classe(Etudiant etudiants[], int taille)` qui affiche une ligne par étudiant, numérotée à partir de 1 :\n```text\n1. [[N1]] - Note : [[A]]/20\n```\nEnfin, affiche la moyenne de la classe avec 2 décimales sur une dernière ligne.",
-   "guidage": "**Plan** : 1. chaque `{\"nom\", note}` initialise une structure du tableau → 2. `afficher_classe` boucle sur les étudiants et affiche `i + 1` pour la numérotation → 3. moyenne réelle → 4. `main` appelle la fonction, puis calcule la moyenne.",
+   "enonce": "Le but : initialiser un tableau de structures dès sa déclaration, et l'afficher avec une fonction.\n\n**Le type** : `typedef struct { char nom[30]; int note; } Etudiant;`\n\n**La classe**, à recopier telle quelle dans `main` :\n```c\nEtudiant classe[3] = {\n    {\"[[N1]]\", [[A]]},\n    {\"[[N2]]\", [[B]]},\n    {\"[[N3]]\", [[C]]}\n};\n```\n\n**Ce qu'il fait** :\n1. écris `void afficher_classe(Etudiant etudiants[], int taille)`, qui affiche une ligne par étudiant au format `numéro. nom - Note : note/20`, numérotée à partir de 1 ;\n2. dans `main`, appelle `afficher_classe(classe, 3)` ;\n3. puis affiche la moyenne de la classe avec 2 décimales, sur une dernière ligne.\n\n**Sortie attendue**\n```text\n[[SORTIE]]\n```",
+   "guidage": "**Plan** : chaque `{\"nom\", note}` initialise une case du tableau. La fonction boucle sur les étudiants et affiche `i + 1` comme numéro (on compte à partir de 1 pour l'humain, à partir de 0 pour le C).",
    "duree": 6,
    "etapes": [
     {
-     "consigne": "Dans la boucle d'indice `i` de `afficher_classe`, écris le `printf` qui affiche la ligne de l'étudiant `i`, par exemple `1. [[N1]] - Note : [[A]]/20` pour le premier. Le numéro affiché est `i + 1` (on compte à partir de 1 pour l'humain).",
+     "consigne": "Dans la boucle de `afficher_classe` (indice `i`), écris le `printf` complet qui affiche la ligne de l'étudiant `i`. Le texte exact est `%d. %s - Note : %d/20` suivi de `\\n`, avec dans l'ordre : `i + 1`, `etudiants[i].nom`, `etudiants[i].note`. Pour le premier, on obtient `1. [[N1]] - Note : [[A]]/20`.",
      "question": "Ligne d'affichage ?",
      "verif": {
       "mode": "regex",
@@ -2543,7 +2543,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Premier jalon, sans fonction : déclare `Etudiant classe[3]` initialisé comme dans l'énoncé, et affiche la ligne de chaque étudiant directement dans `main`.",
+     "consigne": "Premier jalon, **sans** fonction :\n1. déclare le type `Etudiant` avant `main` ;\n2. dans `main`, recopie l'initialisation de `classe` ;\n3. affiche la ligne de chaque étudiant avec une boucle, directement dans `main` (format `1. [[N1]] - Note : [[A]]/20`).",
      "question": "Affichage dans `main`.",
      "verif": {
       "mode": "c",
@@ -2564,7 +2564,7 @@
      "guideSeul": true
     },
     {
-     "consigne": "Déplace la boucle d'affichage dans `void afficher_classe(Etudiant etudiants[], int taille)` (dans la fonction, `classe[i]` devient `etudiants[i]`). `main` l'appelle avec `(classe, 3)`, puis affiche la moyenne avec 2 décimales sur une dernière ligne.",
+     "consigne": "Passe à la fonction :\n1. déplace la boucle d'affichage dans `void afficher_classe(Etudiant etudiants[], int taille)` (dans la fonction, `classe[i]` devient `etudiants[i]`, et `3` devient `taille`) ;\n2. dans `main`, appelle `afficher_classe(classe, 3);` ;\n3. ajoute la moyenne des trois notes, avec 2 décimales, sur une dernière ligne.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -2592,113 +2592,122 @@
     }
    ],
    "vals": {
-    "N1": "Sami",
-    "N2": "Bob",
+    "N1": "Bob",
+    "N2": "Maya",
     "N3": "Ines",
-    "A": "8",
-    "B": "20",
+    "A": "11",
+    "B": "8",
     "C": "20",
-    "SOM": "48",
-    "MOY": "16.00",
-    "S2_0": "1. Sami - Note : 8/20\n2. Bob - Note : 20/20\n3. Ines - Note : 20/20",
-    "S3_0": "1. Sami - Note : 8/20\n2. Bob - Note : 20/20\n3. Ines - Note : 20/20\n16.00"
+    "SOM": "39",
+    "MOY": "13.00",
+    "SORTIE": "1. Bob - Note : 11/20\n2. Maya - Note : 8/20\n3. Ines - Note : 20/20\n13.00",
+    "S2_0": "1. Bob - Note : 11/20\n2. Maya - Note : 8/20\n3. Ines - Note : 20/20",
+    "S3_0": "1. Bob - Note : 11/20\n2. Maya - Note : 8/20\n3. Ines - Note : 20/20\n13.00"
    },
    "variantes": [
     {
-     "N1": "Sami",
-     "N2": "Bob",
-     "N3": "Ines",
-     "A": "8",
-     "B": "20",
-     "C": "20",
-     "SOM": "48",
-     "MOY": "16.00",
-     "S2_0": "1. Sami - Note : 8/20\n2. Bob - Note : 20/20\n3. Ines - Note : 20/20",
-     "S3_0": "1. Sami - Note : 8/20\n2. Bob - Note : 20/20\n3. Ines - Note : 20/20\n16.00"
-    },
-    {
      "N1": "Bob",
-     "N2": "Lea",
-     "N3": "Alice",
-     "A": "18",
+     "N2": "Maya",
+     "N3": "Ines",
+     "A": "11",
      "B": "8",
-     "C": "13",
+     "C": "20",
      "SOM": "39",
      "MOY": "13.00",
-     "S2_0": "1. Bob - Note : 18/20\n2. Lea - Note : 8/20\n3. Alice - Note : 13/20",
-     "S3_0": "1. Bob - Note : 18/20\n2. Lea - Note : 8/20\n3. Alice - Note : 13/20\n13.00"
+     "SORTIE": "1. Bob - Note : 11/20\n2. Maya - Note : 8/20\n3. Ines - Note : 20/20\n13.00",
+     "S2_0": "1. Bob - Note : 11/20\n2. Maya - Note : 8/20\n3. Ines - Note : 20/20",
+     "S3_0": "1. Bob - Note : 11/20\n2. Maya - Note : 8/20\n3. Ines - Note : 20/20\n13.00"
     },
     {
-     "N1": "Zoe",
-     "N2": "Alice",
-     "N3": "Theo",
-     "A": "8",
-     "B": "7",
-     "C": "20",
+     "N1": "Alice",
+     "N2": "Theo",
+     "N3": "Zoe",
+     "A": "18",
+     "B": "15",
+     "C": "10",
+     "SOM": "43",
+     "MOY": "14.33",
+     "SORTIE": "1. Alice - Note : 18/20\n2. Theo - Note : 15/20\n3. Zoe - Note : 10/20\n14.33",
+     "S2_0": "1. Alice - Note : 18/20\n2. Theo - Note : 15/20\n3. Zoe - Note : 10/20",
+     "S3_0": "1. Alice - Note : 18/20\n2. Theo - Note : 15/20\n3. Zoe - Note : 10/20\n14.33"
+    },
+    {
+     "N1": "Charlie",
+     "N2": "Nora",
+     "N3": "Bob",
+     "A": "11",
+     "B": "17",
+     "C": "14",
+     "SOM": "42",
+     "MOY": "14.00",
+     "SORTIE": "1. Charlie - Note : 11/20\n2. Nora - Note : 17/20\n3. Bob - Note : 14/20\n14.00",
+     "S2_0": "1. Charlie - Note : 11/20\n2. Nora - Note : 17/20\n3. Bob - Note : 14/20",
+     "S3_0": "1. Charlie - Note : 11/20\n2. Nora - Note : 17/20\n3. Bob - Note : 14/20\n14.00"
+    },
+    {
+     "N1": "Theo",
+     "N2": "Maya",
+     "N3": "Zoe",
+     "A": "11",
+     "B": "13",
+     "C": "11",
      "SOM": "35",
      "MOY": "11.67",
-     "S2_0": "1. Zoe - Note : 8/20\n2. Alice - Note : 7/20\n3. Theo - Note : 20/20",
-     "S3_0": "1. Zoe - Note : 8/20\n2. Alice - Note : 7/20\n3. Theo - Note : 20/20\n11.67"
+     "SORTIE": "1. Theo - Note : 11/20\n2. Maya - Note : 13/20\n3. Zoe - Note : 11/20\n11.67",
+     "S2_0": "1. Theo - Note : 11/20\n2. Maya - Note : 13/20\n3. Zoe - Note : 11/20",
+     "S3_0": "1. Theo - Note : 11/20\n2. Maya - Note : 13/20\n3. Zoe - Note : 11/20\n11.67"
     },
     {
-     "N1": "Hugo",
+     "N1": "Sami",
      "N2": "Yann",
-     "N3": "Bob",
-     "A": "11",
-     "B": "12",
-     "C": "14",
-     "SOM": "37",
-     "MOY": "12.33",
-     "S2_0": "1. Hugo - Note : 11/20\n2. Yann - Note : 12/20\n3. Bob - Note : 14/20",
-     "S3_0": "1. Hugo - Note : 11/20\n2. Yann - Note : 12/20\n3. Bob - Note : 14/20\n12.33"
-    },
-    {
-     "N1": "Maya",
-     "N2": "Bob",
-     "N3": "Sami",
-     "A": "17",
-     "B": "11",
-     "C": "18",
-     "SOM": "46",
-     "MOY": "15.33",
-     "S2_0": "1. Maya - Note : 17/20\n2. Bob - Note : 11/20\n3. Sami - Note : 18/20",
-     "S3_0": "1. Maya - Note : 17/20\n2. Bob - Note : 11/20\n3. Sami - Note : 18/20\n15.33"
-    },
-    {
-     "N1": "Nora",
-     "N2": "Hugo",
-     "N3": "Bob",
-     "A": "11",
-     "B": "9",
-     "C": "8",
-     "SOM": "28",
-     "MOY": "9.33",
-     "S2_0": "1. Nora - Note : 11/20\n2. Hugo - Note : 9/20\n3. Bob - Note : 8/20",
-     "S3_0": "1. Nora - Note : 11/20\n2. Hugo - Note : 9/20\n3. Bob - Note : 8/20\n9.33"
-    },
-    {
-     "N1": "Zoe",
-     "N2": "Hugo",
-     "N3": "Lea",
-     "A": "15",
-     "B": "19",
-     "C": "15",
-     "SOM": "49",
-     "MOY": "16.33",
-     "S2_0": "1. Zoe - Note : 15/20\n2. Hugo - Note : 19/20\n3. Lea - Note : 15/20",
-     "S3_0": "1. Zoe - Note : 15/20\n2. Hugo - Note : 19/20\n3. Lea - Note : 15/20\n16.33"
+     "N3": "Theo",
+     "A": "10",
+     "B": "10",
+     "C": "7",
+     "SOM": "27",
+     "MOY": "9.00",
+     "SORTIE": "1. Sami - Note : 10/20\n2. Yann - Note : 10/20\n3. Theo - Note : 7/20\n9.00",
+     "S2_0": "1. Sami - Note : 10/20\n2. Yann - Note : 10/20\n3. Theo - Note : 7/20",
+     "S3_0": "1. Sami - Note : 10/20\n2. Yann - Note : 10/20\n3. Theo - Note : 7/20\n9.00"
     },
     {
      "N1": "Ines",
      "N2": "Yann",
+     "N3": "Sami",
+     "A": "7",
+     "B": "8",
+     "C": "15",
+     "SOM": "30",
+     "MOY": "10.00",
+     "SORTIE": "1. Ines - Note : 7/20\n2. Yann - Note : 8/20\n3. Sami - Note : 15/20\n10.00",
+     "S2_0": "1. Ines - Note : 7/20\n2. Yann - Note : 8/20\n3. Sami - Note : 15/20",
+     "S3_0": "1. Ines - Note : 7/20\n2. Yann - Note : 8/20\n3. Sami - Note : 15/20\n10.00"
+    },
+    {
+     "N1": "Zoe",
+     "N2": "Maya",
      "N3": "Bob",
-     "A": "11",
-     "B": "12",
-     "C": "8",
-     "SOM": "31",
-     "MOY": "10.33",
-     "S2_0": "1. Ines - Note : 11/20\n2. Yann - Note : 12/20\n3. Bob - Note : 8/20",
-     "S3_0": "1. Ines - Note : 11/20\n2. Yann - Note : 12/20\n3. Bob - Note : 8/20\n10.33"
+     "A": "7",
+     "B": "8",
+     "C": "6",
+     "SOM": "21",
+     "MOY": "7.00",
+     "SORTIE": "1. Zoe - Note : 7/20\n2. Maya - Note : 8/20\n3. Bob - Note : 6/20\n7.00",
+     "S2_0": "1. Zoe - Note : 7/20\n2. Maya - Note : 8/20\n3. Bob - Note : 6/20",
+     "S3_0": "1. Zoe - Note : 7/20\n2. Maya - Note : 8/20\n3. Bob - Note : 6/20\n7.00"
+    },
+    {
+     "N1": "Bob",
+     "N2": "Zoe",
+     "N3": "Alice",
+     "A": "18",
+     "B": "9",
+     "C": "15",
+     "SOM": "42",
+     "MOY": "14.00",
+     "SORTIE": "1. Bob - Note : 18/20\n2. Zoe - Note : 9/20\n3. Alice - Note : 15/20\n14.00",
+     "S2_0": "1. Bob - Note : 18/20\n2. Zoe - Note : 9/20\n3. Alice - Note : 15/20",
+     "S3_0": "1. Bob - Note : 18/20\n2. Zoe - Note : 9/20\n3. Alice - Note : 15/20\n14.00"
     }
    ]
   },
@@ -2708,7 +2717,7 @@
    "notion": "10.1",
    "origine": "cours",
    "titre": "Des types qui parlent",
-   "enonce": "[[CONTEXTE]] Écris un programme qui crée deux alias avec `typedef` : `[[TA]]` pour `double` et `[[TB]]` pour `int`. Il lit [[QUOI_A]] (de type `[[TA]]`) puis [[QUOI_B]] (de type `[[TB]]`), et affiche le total avec 2 décimales.\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S2_0]]\n```",
+   "enonce": "[[CONTEXTE]] Le but : donner des noms parlants aux types avec `typedef`.\n\n**Avant `main`**, crée deux alias : `[[TA]]` pour `double` et `[[TB]]` pour `int`.\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. [[QUOI_A]] (un réel), rangé dans une variable de type `[[TA]]` ;\n2. [[QUOI_B]] (un entier), rangé dans une variable de type `[[TB]]`.\n\n**Ce qu'il affiche** : `Total : ` suivi du produit des deux, avec 2 décimales.\n\n**Exemple**\n```text\nEntrée :\n[[E0]]\nSortie :\n[[S2_0]]\n```",
    "guidage": "**Plan** : 1. écrire les deux `typedef` (en haut du fichier, avant `main`) → 2. déclarer les variables avec ces nouveaux noms → 3. lire, multiplier, afficher.\n\n**À retenir** : `[[TA]]` reste un `double` : on le lit avec `%lf` et on l'affiche avec `%.2f`.",
    "duree": 4,
    "etapes": [
@@ -2747,7 +2756,7 @@
      ]
     },
     {
-     "consigne": "Écris le programme complet : les deux `typedef` avant `main`, une variable `prix` de type `[[TA]]` et une variable `[[VB]]` de type `[[TB]]`. Lis-les avec `scanf(\"%lf %d\", …)`, puis affiche `Total : …` avec 2 décimales.",
+     "consigne": "**À faire** :\n1. avant `main` : `typedef double [[TA]];` et `typedef int [[TB]];` ;\n2. dans `main` : déclare `[[TA]] prix;` et `[[TB]] [[VB]];` ;\n3. lis-les avec `scanf(\"%lf %d\", &prix, &[[VB]]);` ;\n4. affiche `Total : ` puis `prix * [[VB]]` avec 2 décimales.",
      "question": "Écris le programme complet.",
      "verif": {
       "mode": "c",
@@ -2791,41 +2800,29 @@
     }
    ],
    "vals": {
-    "CONTEXTE": "Pour un abonnement, on calcule ce qu'on paie sur plusieurs mois.",
-    "TA": "montant",
-    "TB": "mois",
-    "VB": "nb_mois",
-    "QUOI_A": "le prix mensuel",
-    "QUOI_B": "le nombre de mois",
-    "E0": "24.36 7",
-    "E1": "16.22 1",
-    "S2_0": "Total : 170.52",
-    "S2_1": "Total : 16.22"
+    "CONTEXTE": "Au supermarché, on calcule le prix de plusieurs articles identiques.",
+    "TA": "euros",
+    "TB": "quantite",
+    "VB": "nb",
+    "QUOI_A": "le prix d'un article",
+    "QUOI_B": "le nombre d'articles",
+    "E0": "0.65 12",
+    "E1": "3.83 8",
+    "S2_0": "Total : 7.80",
+    "S2_1": "Total : 30.64"
    },
    "variantes": [
     {
-     "CONTEXTE": "Pour un abonnement, on calcule ce qu'on paie sur plusieurs mois.",
-     "TA": "montant",
-     "TB": "mois",
-     "VB": "nb_mois",
-     "QUOI_A": "le prix mensuel",
-     "QUOI_B": "le nombre de mois",
-     "E0": "24.36 7",
-     "E1": "16.22 1",
-     "S2_0": "Total : 170.52",
-     "S2_1": "Total : 16.22"
-    },
-    {
-     "CONTEXTE": "Pour une location de voiture, on calcule le coût total.",
-     "TA": "tarif",
-     "TB": "jours",
-     "VB": "duree",
-     "QUOI_A": "le tarif journalier",
-     "QUOI_B": "le nombre de jours",
-     "E0": "44.40 3",
-     "E1": "41.19 3",
-     "S2_0": "Total : 133.20",
-     "S2_1": "Total : 123.57"
+     "CONTEXTE": "Au supermarché, on calcule le prix de plusieurs articles identiques.",
+     "TA": "euros",
+     "TB": "quantite",
+     "VB": "nb",
+     "QUOI_A": "le prix d'un article",
+     "QUOI_B": "le nombre d'articles",
+     "E0": "0.65 12",
+     "E1": "3.83 8",
+     "S2_0": "Total : 7.80",
+     "S2_1": "Total : 30.64"
     },
     {
      "CONTEXTE": "Au supermarché, on calcule le prix de plusieurs articles identiques.",
@@ -2834,34 +2831,10 @@
      "VB": "nb",
      "QUOI_A": "le prix d'un article",
      "QUOI_B": "le nombre d'articles",
-     "E0": "9.66 3",
-     "E1": "4.23 3",
-     "S2_0": "Total : 28.98",
-     "S2_1": "Total : 12.69"
-    },
-    {
-     "CONTEXTE": "Pour une location de voiture, on calcule le coût total.",
-     "TA": "tarif",
-     "TB": "jours",
-     "VB": "duree",
-     "QUOI_A": "le tarif journalier",
-     "QUOI_B": "le nombre de jours",
-     "E0": "79.72 1",
-     "E1": "87.13 3",
-     "S2_0": "Total : 79.72",
-     "S2_1": "Total : 261.39"
-    },
-    {
-     "CONTEXTE": "Au supermarché, on calcule le prix de plusieurs articles identiques.",
-     "TA": "euros",
-     "TB": "quantite",
-     "VB": "nb",
-     "QUOI_A": "le prix d'un article",
-     "QUOI_B": "le nombre d'articles",
-     "E0": "6.28 8",
-     "E1": "0.76 5",
-     "S2_0": "Total : 50.24",
-     "S2_1": "Total : 3.80"
+     "E0": "6.44 3",
+     "E1": "2.46 5",
+     "S2_0": "Total : 19.32",
+     "S2_1": "Total : 12.30"
     },
     {
      "CONTEXTE": "Au cinéma, on calcule le prix d'un groupe.",
@@ -2870,10 +2843,46 @@
      "VB": "places",
      "QUOI_A": "le prix d'une place",
      "QUOI_B": "le nombre de places",
-     "E0": "10.03 6",
-     "E1": "7.46 2",
-     "S2_0": "Total : 60.18",
-     "S2_1": "Total : 14.92"
+     "E0": "9.95 1",
+     "E1": "10.41 6",
+     "S2_0": "Total : 9.95",
+     "S2_1": "Total : 62.46"
+    },
+    {
+     "CONTEXTE": "Au supermarché, on calcule le prix de plusieurs articles identiques.",
+     "TA": "euros",
+     "TB": "quantite",
+     "VB": "nb",
+     "QUOI_A": "le prix d'un article",
+     "QUOI_B": "le nombre d'articles",
+     "E0": "8.46 3",
+     "E1": "5.02 12",
+     "S2_0": "Total : 25.38",
+     "S2_1": "Total : 60.24"
+    },
+    {
+     "CONTEXTE": "Au supermarché, on calcule le prix de plusieurs articles identiques.",
+     "TA": "euros",
+     "TB": "quantite",
+     "VB": "nb",
+     "QUOI_A": "le prix d'un article",
+     "QUOI_B": "le nombre d'articles",
+     "E0": "3.23 4",
+     "E1": "2.69 7",
+     "S2_0": "Total : 12.92",
+     "S2_1": "Total : 18.83"
+    },
+    {
+     "CONTEXTE": "Pour un abonnement, on calcule ce qu'on paie sur plusieurs mois.",
+     "TA": "montant",
+     "TB": "mois",
+     "VB": "nb_mois",
+     "QUOI_A": "le prix mensuel",
+     "QUOI_B": "le nombre de mois",
+     "E0": "12.98 9",
+     "E1": "17.66 23",
+     "S2_0": "Total : 116.82",
+     "S2_1": "Total : 406.18"
     }
    ]
   }

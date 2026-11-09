@@ -2205,61 +2205,61 @@
     }
    ],
    "vals": {
-    "NOM": "Hugo",
-    "AGE": "25",
-    "P": "26",
-    "SORTIE": "Fiche \"Hugo\"\nAge : 25 ans\nProgression : 26%",
-    "S2_0": "Fiche \"Hugo\"",
-    "S3_0": "Fiche \"Hugo\"\nAge : 25 ans\nProgression : 26%"
+    "NOM": "Yanis",
+    "AGE": "18",
+    "P": "50",
+    "SORTIE": "Fiche \"Yanis\"\nAge : 18 ans\nProgression : 50%",
+    "S2_0": "Fiche \"Yanis\"",
+    "S3_0": "Fiche \"Yanis\"\nAge : 18 ans\nProgression : 50%"
    },
    "variantes": [
     {
-     "NOM": "Hugo",
-     "AGE": "25",
-     "P": "26",
-     "SORTIE": "Fiche \"Hugo\"\nAge : 25 ans\nProgression : 26%",
-     "S2_0": "Fiche \"Hugo\"",
-     "S3_0": "Fiche \"Hugo\"\nAge : 25 ans\nProgression : 26%"
+     "NOM": "Yanis",
+     "AGE": "18",
+     "P": "50",
+     "SORTIE": "Fiche \"Yanis\"\nAge : 18 ans\nProgression : 50%",
+     "S2_0": "Fiche \"Yanis\"",
+     "S3_0": "Fiche \"Yanis\"\nAge : 18 ans\nProgression : 50%"
     },
     {
      "NOM": "Yanis",
-     "AGE": "17",
-     "P": "79",
-     "SORTIE": "Fiche \"Yanis\"\nAge : 17 ans\nProgression : 79%",
+     "AGE": "23",
+     "P": "10",
+     "SORTIE": "Fiche \"Yanis\"\nAge : 23 ans\nProgression : 10%",
      "S2_0": "Fiche \"Yanis\"",
-     "S3_0": "Fiche \"Yanis\"\nAge : 17 ans\nProgression : 79%"
+     "S3_0": "Fiche \"Yanis\"\nAge : 23 ans\nProgression : 10%"
     },
     {
      "NOM": "Hugo",
-     "AGE": "22",
-     "P": "55",
-     "SORTIE": "Fiche \"Hugo\"\nAge : 22 ans\nProgression : 55%",
+     "AGE": "17",
+     "P": "14",
+     "SORTIE": "Fiche \"Hugo\"\nAge : 17 ans\nProgression : 14%",
      "S2_0": "Fiche \"Hugo\"",
-     "S3_0": "Fiche \"Hugo\"\nAge : 22 ans\nProgression : 55%"
+     "S3_0": "Fiche \"Hugo\"\nAge : 17 ans\nProgression : 14%"
     },
     {
-     "NOM": "Noah",
-     "AGE": "18",
-     "P": "69",
-     "SORTIE": "Fiche \"Noah\"\nAge : 18 ans\nProgression : 69%",
-     "S2_0": "Fiche \"Noah\"",
-     "S3_0": "Fiche \"Noah\"\nAge : 18 ans\nProgression : 69%"
-    },
-    {
-     "NOM": "Hugo",
-     "AGE": "21",
-     "P": "79",
-     "SORTIE": "Fiche \"Hugo\"\nAge : 21 ans\nProgression : 79%",
-     "S2_0": "Fiche \"Hugo\"",
-     "S3_0": "Fiche \"Hugo\"\nAge : 21 ans\nProgression : 79%"
-    },
-    {
-     "NOM": "Jade",
+     "NOM": "Sami",
      "AGE": "25",
-     "P": "79",
-     "SORTIE": "Fiche \"Jade\"\nAge : 25 ans\nProgression : 79%",
-     "S2_0": "Fiche \"Jade\"",
-     "S3_0": "Fiche \"Jade\"\nAge : 25 ans\nProgression : 79%"
+     "P": "81",
+     "SORTIE": "Fiche \"Sami\"\nAge : 25 ans\nProgression : 81%",
+     "S2_0": "Fiche \"Sami\"",
+     "S3_0": "Fiche \"Sami\"\nAge : 25 ans\nProgression : 81%"
+    },
+    {
+     "NOM": "Ines",
+     "AGE": "17",
+     "P": "35",
+     "SORTIE": "Fiche \"Ines\"\nAge : 17 ans\nProgression : 35%",
+     "S2_0": "Fiche \"Ines\"",
+     "S3_0": "Fiche \"Ines\"\nAge : 17 ans\nProgression : 35%"
+    },
+    {
+     "NOM": "Lina",
+     "AGE": "18",
+     "P": "17",
+     "SORTIE": "Fiche \"Lina\"\nAge : 18 ans\nProgression : 17%",
+     "S2_0": "Fiche \"Lina\"",
+     "S3_0": "Fiche \"Lina\"\nAge : 18 ans\nProgression : 17%"
     }
    ]
   }

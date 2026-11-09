@@ -195,7 +195,7 @@ int main(void) {
     return 0;
 }`;
 const c8 = exo("c8-113", "8.1", "Combien de place en mémoire ?", 4,
-  "Écris un programme qui déclare un `char`, un `int`, un `double` et un tableau `int t[[[N]]];`, puis affiche sur une ligne la taille de chacun **en octets**, dans cet ordre, avec `sizeof` :\n```text\n[[SORTIE]]\n```",
+  "Le but : voir combien d'octets occupent les variables, avec `sizeof`.\n\n**Ce que le programme fait** (il ne lit rien au clavier) :\n1. déclare un `char c`, un `int n`, un `double d` et un tableau `int t[[[N]]];` ;\n2. affiche sur une ligne, séparées par une espace et dans cet ordre, les tailles en octets de `c`, `n`, `d` et `t`, obtenues avec `sizeof`.\n\n**Sortie attendue**\n```text\n[[SORTIE]]\n```",
   "**Plan** : 1. une variable occupe plusieurs octets à la suite → 2. un tableau occupe la place de toutes ses cases → 3. `sizeof` donne ces tailles.\n\n**À retenir** : `sizeof` renvoie un nombre d'octets ; on le convertit en `int` pour l'afficher avec `%d`.",
   [st({consigne: "Un `int` de 4 octets commence à l'adresse `[[AD]]` : il occupe cet octet et les 3 suivants, à la suite. Quelle est l'adresse de son **dernier** octet ? (écris-la en hexadécimal, comme `0x…`)",
       question: "Adresse du dernier octet ?", verif: {mode: "exact", attendu: ["[[AF]]"]}, duree: 0.6,
@@ -203,10 +203,10 @@ const c8 = exo("c8-113", "8.1", "Combien de place en mémoire ?", 4,
    st({consigne: "Un `int` occupe 4 octets. Combien d'octets occupe le tableau `int t[[[N]]];` en tout ?",
       question: "Taille de `t` en octets ?", verif: {mode: "numerique", attendu: "[[TT]]"}, duree: 0.5,
       corrige: "[[N]] cases × 4 octets = **[[TT]]** octets.", indices: ["Toutes les cases sont rangées à la suite.", "[[N]] × 4."]}),
-   st({consigne: "Déclare un `char c`, un `int n` et un `double d`, et affiche leurs tailles sur une ligne, séparées par un espace. Écris `(int)sizeof(c)` pour pouvoir l'afficher avec `%d`.",
+   st({consigne: "Premier jalon :\n1. déclare un `char c`, un `int n` et un `double d` ;\n2. affiche leurs trois tailles sur une ligne, séparées par une espace : `printf(\"%d %d %d\\n\", (int)sizeof(c), (int)sizeof(n), (int)sizeof(d));`.\n\nLe `(int)` convertit le résultat de `sizeof` pour pouvoir l'afficher avec `%d`.",
       question: "Affiche les trois tailles.", verif: cC(c81a, {nombres: true, exige: [{motif: "sizeof", msg: "Utilise sizeof pour obtenir les tailles."}]}), duree: 1.2, corrige: sol(c81a),
       indices: ["Trois `(int)sizeof(…)` dans un seul `printf`.", "`printf(\"%d %d %d\\n\", (int)sizeof(c), (int)sizeof(n), (int)sizeof(d));`"]}),
-   st({consigne: "Ajoute le tableau `int t[[[N]]];` et affiche aussi sa taille en dernier. Laisse `sizeof` faire le calcul : n'écris pas [[TT]] en dur.",
+   st({consigne: "Complète :\n1. déclare aussi le tableau `int t[[[N]]];` ;\n2. ajoute sa taille en dernier dans le `printf` (un 4e `%d` et `(int)sizeof(t)`).\n\nLaisse `sizeof` faire le calcul : n'écris pas [[TT]] en dur.",
       question: "Écris le programme complet.", verif: cC(c81, {nombres: true, exige: [{motif: "sizeof\\s*\\(\\s*t\\s*\\)", msg: "Affiche la taille du tableau avec sizeof(t)."}]}), duree: 1.7, depart: c81a, corrige: sol(c81),
       indices: ["`sizeof(t)` donne la taille du tableau entier.", "Ajoute `, (int)sizeof(t)` et un 4e `%d`."]}, true)]);
 
@@ -230,7 +230,7 @@ int main(void) {
     return 0;
 }`;
 const c9a = exo("c9-109", "9.1", "Le tableau qui ne peut pas grandir", 4,
-  "Avec un tableau **statique** `int t[TP];` (`#define TP [[TP]]`), la taille est fixée une fois pour toutes. Écris un programme qui lit `n` : si `n` dépasse `TP`, il affiche `trop grand` et s'arrête ; sinon il lit les `n` entiers dans `t` et affiche leur somme.\n\n" + ex("[[E0]]", "[[S2_0]]") + "\n\n" + ex("[[E1]]", "[[S2_1]]"),
+  "Le but : voir la limite d'un tableau **statique**, dont la taille est fixée une fois pour toutes.\n\nLe tableau est `int t[TP];`, avec `#define TP [[TP]]`.\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. le nombre de valeurs `n` ;\n2. les `n` valeurs (seulement si `n` ne dépasse pas `TP`).\n\n**Ce qu'il fait** :\n1. si `n` est plus grand que `TP`, il affiche `trop grand` et s'arrête **sans lire la suite** ;\n2. sinon, il range les `n` valeurs dans `t` et affiche leur somme.\n\n" + ex("[[E0]]", "[[S2_0]]") + "\n\n" + ex("[[E1]]", "[[S2_1]]"),
   "**Plan** : 1. quand la taille d'un tableau statique est-elle fixée ? → 2. qui libère sa mémoire ? → 3. protéger le tableau avant de le remplir.\n\n**À retenir** : c'est cette limite que l'allocation dynamique (`malloc`, notion suivante) fait sauter.",
   [st({consigne: "Pour `int t[TP];`, la taille est-elle décidée **à la compilation** (avant de lancer le programme) ou **à l'exécution** (selon ce que tape l'utilisateur) ? Réponds « compilation » ou « exécution ».",
       question: "Taille fixée quand ?", verif: {mode: "exact", attendu: ["compilation", "a la compilation", "à la compilation"]}, duree: 0.5,
@@ -238,7 +238,7 @@ const c9a = exo("c9-109", "9.1", "Le tableau qui ne peut pas grandir", 4,
    st({consigne: "À la fin du bloc où `t` est déclaré, que devient sa mémoire : est-elle libérée **automatiquement**, ou faut-il appeler **free** ? (réponds « automatiquement » ou « free »)",
       question: "Libération de `t` ?", verif: {mode: "exact", attendu: ["automatiquement", "automatique"]}, duree: 0.5,
       corrige: "La mémoire statique est libérée **automatiquement** à la fin du bloc. `free` sert seulement pour la mémoire qu'on a demandée soi-même.", indices: ["On n'a rien demandé à `malloc`.", "Automatiquement."]}),
-   st({consigne: "Écris le programme : `#define TP [[TP]]`, un tableau `int t[TP];`, lis `n`. **Avant** de remplir le tableau, si `n > TP`, affiche `trop grand` et arrête-toi (`return 0;`). Sinon, lis les `n` entiers et affiche leur somme.",
+   st({consigne: "**À faire** :\n1. en haut du fichier : `#define TP [[TP]]` ;\n2. dans `main` : `int t[TP], n, s = 0;` puis lis `n` ;\n3. **juste après**, si `n > TP` : affiche `trop grand` et quitte avec `return 0;` ;\n4. sinon, lis les `n` valeurs dans `t` en les ajoutant à `s` ;\n5. affiche `s`.",
       question: "Écris le programme complet.", verif: cC(c91, {tests: tests("[[E0]]", "[[E1]]", "[[E2]]"), exige: [{motif: "#\\s*define\\s+TP\\b", brut: true, msg: "Définis la taille avec #define TP [[TP]]."}], interdit: [{motif: "malloc|calloc", msg: "Ici, on reste avec un tableau statique (pas de malloc)."}]}), duree: 3, corrige: sol(c91),
       indices: ["Juste après le `scanf` de `n` : `if (n > TP) { printf(\"trop grand\\n\"); return 0; }`.", "Ensuite une boucle qui lit `t[i]` et ajoute chaque valeur à `s` (qui part de 0)."]}, true)]);
 
@@ -286,7 +286,7 @@ int main(void) {
     return 0;
 }`;
 const c9b = exo("c9-110", "9.2", "Un tableau à la bonne taille", 5,
-  "Écris un programme qui lit `n`, réserve avec `malloc` un tableau d'exactement `n` entiers, y range les `n` entiers tapés ensuite, puis les affiche **à l'envers** (du dernier au premier), avant de libérer la mémoire.\n\n" + ex("[[E0]]", "[[S3_0]]"),
+  "Le but : réserver avec `malloc` un tableau d'**exactement** la bonne taille.\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. le nombre de valeurs `n` ;\n2. les `n` valeurs.\n\n**Ce qu'il fait** :\n1. réserve avec `malloc` un bloc de `n` entiers (et vérifie qu'il n'est pas `NULL`) ;\n2. y range les `n` valeurs ;\n3. les affiche **à l'envers** (de la dernière à la première), sur une ligne ;\n4. libère le bloc avec `free`.\n\n" + ex("[[E0]]", "[[S3_0]]"),
   "**Plan** : 1. calculer la taille à demander, en octets → 2. vérifier que `malloc` n'a pas renvoyé `NULL` → 3. utiliser `t` comme un tableau → 4. `free(t)` à la fin.\n\n**Piège** : `malloc(n)` réserve `n` **octets**, pas `n` entiers.",
   [st({consigne: "Un `int` fait 4 octets. Combien d'octets réserve `malloc([[N]] * sizeof(int))` ?",
       question: "Nombre d'octets réservés ?", verif: {mode: "numerique", attendu: "[[NO]]"}, duree: 0.5,
@@ -294,10 +294,10 @@ const c9b = exo("c9-110", "9.2", "Un tableau à la bonne taille", 5,
    st({consigne: "Écris l'appel à `malloc` qui réserve la place pour `n` entiers (juste l'expression, sans le `int *t =` devant).",
       question: "Appel à `malloc` pour `n` entiers ?", verif: rgx("(\\(\\s*int\\s*\\*\\s*\\)\\s*)?malloc\\s*\\(\\s*(n\\s*\\*\\s*sizeof\\s*\\(\\s*int\\s*\\)|sizeof\\s*\\(\\s*int\\s*\\)\\s*\\*\\s*n)\\s*\\)\\s*;?", "malloc(n * sizeof(int))"), duree: 0.6,
       corrige: "`malloc(n * sizeof(int))` : le nombre d'éléments multiplié par la taille d'un élément.", indices: ["La taille se donne en octets : nombre d'éléments × taille d'un élément.", "`malloc(n * sizeof(int))`"]}),
-   st({consigne: "Premier jalon : lis `n`, réserve `n` entiers avec `malloc` (vérifie que le pointeur n'est pas `NULL`), remplis la case `i` avec `i * [[K]]`, affiche le tableau sur une ligne, puis libère-le avec `free`.",
+   st({consigne: "Premier jalon (on ne lit pas encore les valeurs) :\n1. lis `n` ;\n2. réserve `int *t = malloc(n * sizeof(int));` et, si `t == NULL`, quitte avec `return 1;` ;\n3. range `i * [[K]]` dans chaque case `t[i]` ;\n4. affiche le tableau sur une ligne ;\n5. libère avec `free(t);`.",
       question: "Réserve, remplis et affiche.", verif: cC(c92a, {tests: tests("[[N]]", "3"), exige: [{motif: "malloc|calloc", msg: "Réserve le tableau avec malloc."}, {motif: "free\\s*\\(", msg: "Libère la mémoire avec free."}]}), duree: 1.6, corrige: sol(c92a),
       indices: ["`int *t = malloc(n * sizeof(int));` puis `if (t == NULL) { … return 1; }`.", "Ensuite `t[i] = i * [[K]];` dans une boucle, comme avec un tableau ordinaire."]}),
-   st({consigne: "Version finale : au lieu de calculer les valeurs, **lis-les** au clavier dans `t`, puis affiche-les en partant de la dernière case (`n - 1`) jusqu'à la première (0). N'oublie pas `free(t)` à la fin.",
+   st({consigne: "Version finale :\n1. au lieu de calculer `i * [[K]]`, **lis** les `n` valeurs au clavier dans `t` ;\n2. affiche-les à l'envers : boucle de `i = n - 1` jusqu'à `i = 0` ;\n3. garde le `free(t);` à la fin.",
       question: "Écris le programme complet.", verif: cC(c92, {nombres: true, tests: tests("[[E0]]", "[[E1]]", "1\n[[UN]]"), exige: [{motif: "malloc|calloc", msg: "Réserve le tableau avec malloc."}, {motif: "free\\s*\\(", msg: "Libère la mémoire avec free."}]}), duree: 2.3, depart: c92a, corrige: sol(c92),
       indices: ["Remplace le remplissage par `scanf(\"%d\", &t[i]);`.", "Boucle d'affichage à l'envers : `for (int i = n - 1; i >= 0; i--)`."]}, true)]);
 
@@ -331,7 +331,7 @@ int main(void) {
     return 0;
 }`;
 const c9c = exo("c9-111", "9.3", "La liste qui grandit", 6,
-  "Écris un programme qui lit des entiers jusqu'à ce qu'on tape `0`, et les range dans un tableau dynamique. Au départ, le tableau a une capacité de **[[C]]** entiers ; chaque fois qu'il est plein, sa capacité **double** grâce à `realloc`. À la fin, le programme affiche le nombre de valeurs et la capacité finale, puis les valeurs.\n\n" + ex("[[E0]]", "[[S2_0]]"),
+  "Le but : un tableau qui **s'agrandit tout seul** quand il est plein, grâce à `realloc`.\n\n**Au clavier**, le programme reçoit des entiers, les uns après les autres ; le `0` signifie « fini » (il n'est pas rangé).\n\n**Ce qu'il fait** :\n1. réserve avec `malloc` un bloc de **[[C]]** entiers (la capacité `cap` vaut [[C]], le nombre de valeurs rangées `n` vaut 0) ;\n2. pour chaque entier lu (tant que ce n'est pas `0`) : si le bloc est plein (`n == cap`), il **double** la capacité avec `realloc` ; puis il range l'entier dans la case `n` et fait `n++` ;\n3. à la fin, il affiche `n valeurs, capacite cap` sur une ligne, puis les valeurs sur la ligne suivante ;\n4. il libère le bloc.\n\n" + ex("[[E0]]", "[[S2_0]]"),
   "**Plan** : 1. `malloc` de [[C]] entiers, `n = 0` → 2. pour chaque valeur lue (tant qu'elle n'est pas 0) : si `n == cap`, doubler avec `realloc` → 3. ranger la valeur → 4. afficher, puis `free`.\n\n**Piège** : `t = realloc(t, …)` perd l'ancien bloc si `realloc` échoue ; passe par un pointeur temporaire.",
   [st({consigne: "Capacité de départ : [[C]]. On range [[V]] valeurs, et on double la capacité chaque fois que le tableau est plein au moment d'en ajouter une. Quelle est la capacité à la fin ?",
       question: "Capacité finale ?", verif: {mode: "numerique", attendu: "[[CF]]"}, duree: 0.7,
@@ -339,7 +339,7 @@ const c9c = exo("c9-111", "9.3", "La liste qui grandit", 6,
    st({consigne: "Quand le tableau est plein, on demande un bloc deux fois plus grand **sans écraser `t` tout de suite**. Écris la ligne qui déclare `int *tmp` et lui donne le résultat de `realloc` pour une capacité de `2 * cap` entiers.",
       question: "Ligne avec `realloc` ?", verif: rgx("int\\s*\\*\\s*tmp\\s*=\\s*(\\(\\s*int\\s*\\*\\s*\\)\\s*)?realloc\\s*\\(\\s*t\\s*,\\s*(2\\s*\\*\\s*cap\\s*\\*\\s*sizeof\\s*\\(\\s*int\\s*\\)|cap\\s*\\*\\s*2\\s*\\*\\s*sizeof\\s*\\(\\s*int\\s*\\)|2\\s*\\*\\s*sizeof\\s*\\(\\s*int\\s*\\)\\s*\\*\\s*cap|sizeof\\s*\\(\\s*int\\s*\\)\\s*\\*\\s*2\\s*\\*\\s*cap)\\s*\\)\\s*;", "int *tmp = realloc(t, 2 * cap * sizeof(int));"), duree: 0.8,
       corrige: "`int *tmp = realloc(t, 2 * cap * sizeof(int));` : si ça échoue, `tmp` vaut `NULL` mais `t` pointe toujours vers les données.", indices: ["`realloc(ancien_pointeur, nouvelle_taille_en_octets)`.", "`int *tmp = realloc(t, 2 * cap * sizeof(int));`"]}),
-   st({consigne: "Écris le programme : `cap = [[C]]`, `n = 0`, un `malloc` de `cap` entiers. Lis les valeurs jusqu'au `0`. Avant de ranger une valeur, si `n == cap` : `realloc` vers `tmp`, vérifie `tmp != NULL`, puis `t = tmp;` et `cap = 2 * cap;`. À la fin, affiche `n valeurs, capacite cap` puis les valeurs sur une ligne, et libère `t`.",
+   st({consigne: "**À faire** :\n1. `int cap = [[C]], n = 0, x;` et `int *t = malloc(cap * sizeof(int));` (avec le test `NULL`) ;\n2. lis un premier `x`, puis `while (x != 0) { … }`, avec un nouveau `scanf` de `x` à la fin de chaque tour ;\n3. dans la boucle, d'abord : si `n == cap`, `int *tmp = realloc(t, 2 * cap * sizeof(int));`, test `NULL` (`free(t); return 1;`), puis `t = tmp; cap = 2 * cap;` ;\n4. ensuite : `t[n] = x; n++;` ;\n5. après la boucle : affiche `n valeurs, capacite cap`, puis les `n` valeurs sur une ligne, puis `free(t);`.",
       question: "Écris le programme complet.", verif: cC(c93, {tests: tests("[[E0]]", "[[E1]]", "0"), nombres: true, exige: [{motif: "realloc", msg: "Agrandis le tableau avec realloc."}, {motif: "free\\s*\\(", msg: "Libère la mémoire avec free."}]}), duree: 4.5, corrige: sol(c93),
       indices: ["Structure : `scanf` d'une valeur, puis `while (x != 0) { … scanf(\"%d\", &x); }`. Dans la boucle, d'abord le test `if (n == cap)`, puis `t[n] = x; n++;`.", "Dans le `if` : `int *tmp = realloc(t, 2 * cap * sizeof(int)); if (tmp == NULL) { free(t); return 1; } t = tmp; cap = 2 * cap;`"]}, true)]);
 
@@ -358,7 +358,7 @@ int main(void) {
     return 0;
 }`;
 const c10 = exo("c10-110", "10.1", "Des types qui parlent", 4,
-  "[[CONTEXTE]] Écris un programme qui crée deux alias avec `typedef` : `[[TA]]` pour `double` et `[[TB]]` pour `int`. Il lit [[QUOI_A]] (de type `[[TA]]`) puis [[QUOI_B]] (de type `[[TB]]`), et affiche le total avec 2 décimales.\n\n" + ex("[[E0]]", "[[S2_0]]"),
+  "[[CONTEXTE]] Le but : donner des noms parlants aux types avec `typedef`.\n\n**Avant `main`**, crée deux alias : `[[TA]]` pour `double` et `[[TB]]` pour `int`.\n\n**Au clavier**, le programme reçoit dans l'ordre :\n1. [[QUOI_A]] (un réel), rangé dans une variable de type `[[TA]]` ;\n2. [[QUOI_B]] (un entier), rangé dans une variable de type `[[TB]]`.\n\n**Ce qu'il affiche** : `Total : ` suivi du produit des deux, avec 2 décimales.\n\n" + ex("[[E0]]", "[[S2_0]]"),
   "**Plan** : 1. écrire les deux `typedef` (en haut du fichier, avant `main`) → 2. déclarer les variables avec ces nouveaux noms → 3. lire, multiplier, afficher.\n\n**À retenir** : `[[TA]]` reste un `double` : on le lit avec `%lf` et on l'affiche avec `%.2f`.",
   [st({consigne: "Écris la ligne qui fait de `[[TA]]` un autre nom pour `double`.",
       question: "Alias `[[TA]]` ?", verif: rgx("typedef\\s+double\\s+[[TA]]\\s*;", "typedef double [[TA]];", ""), duree: 0.5,
@@ -366,9 +366,12 @@ const c10 = exo("c10-110", "10.1", "Des types qui parlent", 4,
    st({consigne: "Après `typedef double [[TA]];`, `[[TA]]` est-il un **nouveau type**, différent de `double` ? (oui / non)",
       question: "Nouveau type ?", verif: {mode: "exact", attendu: ["non"]}, duree: 0.4,
       corrige: "**Non** : c'est exactement `double`, sous un autre nom. Il se lit avec `%lf` et s'affiche avec `%f`.", indices: ["On parle d'un *alias*.", "Non."]}),
-   st({consigne: "Écris le programme complet : les deux `typedef` avant `main`, une variable `prix` de type `[[TA]]` et une variable `[[VB]]` de type `[[TB]]`. Lis-les avec `scanf(\"%lf %d\", …)`, puis affiche `Total : …` avec 2 décimales.",
+   st({consigne: "**À faire** :\n1. avant `main` : `typedef double [[TA]];` et `typedef int [[TB]];` ;\n2. dans `main` : déclare `[[TA]] prix;` et `[[TB]] [[VB]];` ;\n3. lis-les avec `scanf(\"%lf %d\", &prix, &[[VB]]);` ;\n4. affiche `Total : ` puis `prix * [[VB]]` avec 2 décimales.",
       question: "Écris le programme complet.", verif: cC(c101, {tests: tests("[[E0]]", "[[E1]]"), nombres: true, exige: [{motif: "typedef\\s+double\\s+[[TA]]", msg: "Crée l'alias : typedef double [[TA]];"}, {motif: "typedef\\s+int\\s+[[TB]]", msg: "Crée l'alias : typedef int [[TB]];"}, {motif: "\\b[[TA]]\\s+\\w+", msg: "Déclare au moins une variable avec le type [[TA]]."}, {motif: "\\b[[TB]]\\s+\\w+\\s*[;,=]", msg: "Déclare au moins une variable avec le type [[TB]]."}]}), duree: 3.1, corrige: sol(c101),
       indices: ["En haut : `typedef double [[TA]];` et `typedef int [[TB]];`. Dans `main` : `[[TA]] prix; [[TB]] [[VB]];`.", "`scanf(\"%lf %d\", &prix, &[[VB]]);` puis `printf(\"Total : %.2f\\n\", prix * [[VB]]);`"]}, true)]);
+
+/* réapplique énoncé, guidage et consignes d'un exo déjà publié (reformulation du 09/11/2026) */
+const refaire = x => Object.assign({enonce: x.enonce, guidage: x.guidage}, ...x.etapes.map((e, k) => ({[`etapes.${k}.consigne`]: e.consigne})));
 
 /* ---------- variantes ---------- */
 const BUGS = [
@@ -395,18 +398,18 @@ export default [
   {banque: "programmation-c/c-7-fonctions.json", ajouter: [c7], items: {"c7-114": {tirer: R => {
     const [F, V, UNITE] = R.un([["augmenter", "score", "points"], ["bonus", "note", "points"], ["vieillir", "age", "ans"], ["recharger", "batterie", "%"], ["gagner", "pieces", "pièces"]]);
     const K = R.entre(2, 15), A = R.entre(1, 60), B = R.entre(-20, 100); return {F, V, UNITE, K, A, B, R: A + K}; }}}},
-  {banque: "programmation-c/c-8-pointeurs.json", ajouter: [c8], items: {"c8-113": {tirer: R => {
+  {banque: "programmation-c/c-8-pointeurs.json", ajouter: [c8], items: {"c8-113": {set: refaire(c8), tirer: R => {
     const N = R.entre(3, 25), base = R.un([0x1000, 0x2A00, 0x7F10, 0x3B08, 0x1FF0, 0x4C2C]) + 4*R.entre(0, 3);
     return {N, TT: 4*N, AD: "0x" + base.toString(16).toUpperCase(), AF: "0x" + (base + 3).toString(16).toUpperCase(), SORTIE: `1 4 8 ${4*N}`}; }}}},
   {banque: "programmation-c/c-9-allocation.json", ajouter: [c9a, c9b, c9c], items: {
-    "c9-109": {tirer: R => { const TP = R.un([5, 8, 10, 20]), n0 = R.entre(2, Math.min(TP, 6));
+    "c9-109": {set: refaire(c9a), tirer: R => { const TP = R.un([5, 8, 10, 20]), n0 = R.entre(2, Math.min(TP, 6));
       return {TP, E0: [n0, ent(R, n0, 1, 30).join(" ")].join("\n"), E1: String(TP + R.entre(1, 20)), E2: [TP, ent(R, TP, 0, 9).join(" ")].join("\n")}; }},
-    "c9-110": {tirer: R => { const N = R.entre(3, 12), n0 = R.entre(4, 7), n1 = R.entre(2, 5);
+    "c9-110": {set: refaire(c9b), tirer: R => { const N = R.entre(3, 12), n0 = R.entre(4, 7), n1 = R.entre(2, 5);
       return {N, NO: 4*N, K: R.un([2, 3, 5, 10]), UN: R.entre(1, 99), E0: [n0, ent(R, n0, 1, 50).join(" ")].join("\n"), E1: [n1, ent(R, n1, -9, 9).join(" ")].join("\n")}; }},
-    "c9-111": {tirer: R => { const C = R.un([2, 3, 4]), V = R.entre(C + 1, 6*C), suite = [C]; while(suite.at(-1) < V) suite.push(2*suite.at(-1));
+    "c9-111": {set: refaire(c9c), tirer: R => { const C = R.un([2, 3, 4]), V = R.entre(C + 1, 6*C), suite = [C]; while(suite.at(-1) < V) suite.push(2*suite.at(-1));
       const k0 = R.entre(2*C + 1, 4*C), k1 = R.entre(1, C);
       return {C, V, CF: suite.at(-1), SUITE: suite.join(" → "), E0: ent(R, k0, 1, 99).join(" ") + " 0", E1: ent(R, k1, 1, 99).join(" ") + " 0"}; }}}},
-  {banque: "programmation-c/c-10-structures.json", ajouter: [c10], items: {"c10-110": {tirer: R => {
+  {banque: "programmation-c/c-10-structures.json", ajouter: [c10], items: {"c10-110": {set: refaire(c10), tirer: R => {
     const [CONTEXTE, TA, TB, VB, QUOI_A, QUOI_B, pa, qb] = R.un([
       ["Au supermarché, on calcule le prix de plusieurs articles identiques.", "euros", "quantite", "nb", "le prix d'un article", "le nombre d'articles", [0.5, 9.99], [1, 12]],
       ["Au cinéma, on calcule le prix d'un groupe.", "euros", "nb_places", "places", "le prix d'une place", "le nombre de places", [5, 14.5], [1, 9]],
