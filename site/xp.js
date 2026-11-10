@@ -254,8 +254,9 @@ function calculer(evenements, ctx = {}){
     cur.fin = d.t; cur.xp += d.xp + d.bonus; if(d.ty !== "controle"){ cur.n++; if(d.ok) cur.ok++; } cur.effort += d.effort;   // contrôles du cours hors précision
     cur.parModule[d.m] = (cur.parModule[d.m] || 0) + d.xp + d.bonus;
   }
-  let total = 0, attente = null; const xpJour = {};
-  for(const d of parOrdre){ total += d.xp + d.bonus; mod(d.m).xp += d.xp + d.bonus; xpJour[d.jour] = (xpJour[d.jour] || 0) + d.xp + d.bonus; }
+  let total = 0, attente = null; const xpJour = {}, xpJourMod = {};
+  for(const d of parOrdre){ total += d.xp + d.bonus; mod(d.m).xp += d.xp + d.bonus; xpJour[d.jour] = (xpJour[d.jour] || 0) + d.xp + d.bonus;
+    if(d.m){ const jm = xpJourMod[d.jour] || (xpJourMod[d.jour] = {}); jm[d.m] = (jm[d.m] || 0) + d.xp + d.bonus; } }
   sessions.forEach((se, k) => {
     const v = V(se.jour);
     const prec = se.n >= v.precisionMin ? palier(v.precision, se.ok/se.n*100) : 0;
@@ -284,7 +285,9 @@ function calculer(evenements, ctx = {}){
     session:attente, sessions:sessions.length, modules, details, controles:Object.keys(ctls),
     carnet:Object.entries(items).filter(([,it]) => it.erreur).map(([q,it]) => ({q, m:it.m})),
     effortTotal:Object.values(effortJour).reduce((a,b)=>a+b,0), aujourdhui,
-    jours:Object.fromEntries(Object.keys(effortJour).map(j => [j, {xp:Math.round(xpJour[j] || 0), eff:Math.round(effortJour[j]*10)/10}]))
+    /* m = XP du jour par module (classement par module sur une période) ; la somme reste bornée par l'XP vérifiée du jour */
+    jours:Object.fromEntries(Object.keys(effortJour).map(j => { const x = {xp:Math.round(xpJour[j] || 0), eff:Math.round(effortJour[j]*10)/10};
+      const m = Object.entries(xpJourMod[j] || {}).filter(([,v]) => v >= 0.5).map(([id, v]) => [id, Math.round(v)]); if(m.length) x.m = Object.fromEntries(m); return [j, x]; }))
   };
 }
 
@@ -293,12 +296,13 @@ function calculer(evenements, ctx = {}){
    résumé par jour ; un jour au-delà de l'humainement possible (minutes
    d'effort max, XP max par minute d'effort) compte 0, en silence.
    ===================================================================== */
-function xpClassement(doc, cfgDoc, depuis, jusqua, toutTemps){
+/* module (facultatif) : XP gagnée dans ce module seulement (champ m de chaque jour, borné par l'XP vérifiée du jour) */
+function xpClassement(doc, cfgDoc, depuis, jusqua, toutTemps, module){
   const v = valeursPour(cfgDoc, "9999-12-31"), auj = jourDe(Date.now(), v.serieHeure);
   /* plafond relevé du multiplicateur de progression le plus haut (sinon un joueur parfait en fin de module serait écrêté) */
   const regs = Object.values((cfgDoc && cfgDoc.modules) || {}).filter(r => r && typeof r === "object");
   const fp = regs.length ? Math.max(...regs.map(r => bornerProg(r.progMax != null && r.progMax !== "" ? r.progMax : v.progressionMax))) : bornerProg(v.progressionMax);
-  let total = 0; const suspects = [];
+  let total = 0, avecM = false; const suspects = [];
   const jours = (doc && typeof doc.jours === "object" && doc.jours) || {};
   for(const [j, x] of Object.entries(jours)){
     if(!/^\d{4}-\d\d-\d\d$/.test(j) || j > auj || !x || typeof x !== "object"){ suspects.push(j); continue; }
@@ -307,8 +311,11 @@ function xpClassement(doc, cfgDoc, depuis, jusqua, toutTemps){
     const s1 = v.plafondSeuil1, s2 = v.plafondSeuil2;
     const max = fp*(v.classementTaux1*Math.min(eff, s1) + v.classementTaux2*Math.max(0, Math.min(eff, s2) - s1) + v.classementTaux3*Math.max(0, eff - s2));
     if(xp > max + 1 || effBrut > v.classementEffortMax){ suspects.push(j); continue; }   // jour anormal : compte 0, sans prévenir
-    total += xp;
+    if(module){ const m = x.m && typeof x.m === "object" ? x.m : null; if(m) avecM = true; total += Math.min(xp, Math.max(0, +(m && m[module]) || 0)); }
+    else total += xp;
   }
+  /* résumé publié avant l'arrivée du champ m : XP cumulée du module, bornée par l'XP vérifiée (toutes périodes confondues) */
+  if(module && !avecM && toutTemps){ const mm = doc && doc.modules && doc.modules[module]; total = Math.min(Math.max(0, +(mm && mm.xp) || 0), xpClassement(doc, cfgDoc, null, null, true).total); }
   total = Math.round(total);
   return {total, niveau:niveauDe(total, v.niveauCoef).n, rang:rangDe(niveauDe(total, v.niveauCoef).n), suspects};
 }
