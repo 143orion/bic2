@@ -56,7 +56,7 @@ Format propre au module (les notions sont des notes atomiques partagées entre c
 8. `dd-8-complexite` — Comprendre la complexité
 9. `dd-9-esprit-critique` — Construire son esprit critique
 
-Total : 64 notes, 16 questions du jour J, 41 QCM, 15 séries « Coche les vérités » (56 items comptés dans `liste.json`).
+Total : 64 notes, 17 questions du jour J, 44 QCM, 16 séries « Coche les vérités » (60 items comptés dans `liste.json`).
 
 ## Sources du contenu
 Slides des 9 cours, notes de cours de la classe (questions annoncées, contenu dit à l'oral), compléments sourcés (vie-publique.fr, ministère de la Transition écologique, Direction générale du Trésor, OQLF, bilan 2025 des limites planétaires de l'Institut de Potsdam, décision 2024 de l'IUGS sur l'Anthropocène).

@@ -138,6 +138,34 @@
    ]
   },
   {
+   "id": "dd-q-principes",
+   "force": 1,
+   "q": "Quels sont les 4 grands principes du développement durable ?",
+   "rep": "<p><b>Vue d'ensemble.</b> {S} Le développement durable ({{dd-q-definition}}) repose sur <b>4 principes</b> : <b>solidarité</b>, <b>précaution</b>, <b>participation</b> et <b>responsabilité</b>. Ils guident la manière de concilier les 3 piliers (social, économique, environnemental).</p>\n  <ul><li><b>Solidarité.</b> {S} Entre les peuples et entre les générations : solidarité <b>intragénérationnelle</b> (entre les humains d'aujourd'hui, par exemple la répartition des richesses) et <b>intergénérationnelle</b> (ne pas compromettre les besoins des générations futures). Voir {{dd-q-equite-efficacite}}.</li>\n  <li><b>Précaution.</b> {S} Évaluer les conséquences <b>avant</b> d'agir, et pouvoir <b>renoncer</b> à une action dont les conséquences sont aléatoires ou imprévisibles. {C} La Déclaration de Rio (1992, principe 15) précise que l'absence de certitude scientifique absolue ne doit pas servir de prétexte pour retarder des mesures contre un risque de dommage grave ou irréversible ; en France, il figure dans la <b>Charte de l'environnement</b> (2005).</li>\n  <li><b>Participation.</b> {S} Associer la <b>population aux prises de décision</b>, avec une information, voire une formation, robuste ({{dd-q-participation}}).</li>\n  <li><b>Responsabilité.</b> {S} À l'échelle <b>individuelle et collective</b> : chacun (citoyen, entreprise, collectivité, État) répond de ses actes et de leurs impacts ({{dd-q-niveaux}}). {C} Il est souvent rapproché du principe <b>pollueur-payeur</b> : celui qui cause un dommage en supporte le coût ({{dd-q-externalite}}).</li></ul>\n  <p>{O} Astuce : donne pour chaque principe sa définition <b>et</b> un exemple concret, plus tu détailles mieux c'est.</p>",
+   "pts": [
+    "<b>4 principes</b>",
+    "<b>solidarité</b>",
+    "<b>précaution</b>",
+    "<b>participation</b>",
+    "<b>responsabilité</b>",
+    "<b>intragénérationnelle</b>",
+    "<b>intergénérationnelle</b>",
+    "<b>renoncer</b>",
+    "<b>population aux prises de décision</b>",
+    "<b>individuelle et collective</b>"
+   ],
+   "src": [
+    "Déclaration de Rio sur l'environnement et le développement (1992), principe 15",
+    "Charte de l'environnement (2005), art. 5"
+   ],
+   "notes": [
+    "principes",
+    "participation",
+    "equite",
+    "niveaux"
+   ]
+  },
+  {
    "id": "dd-q-odd",
    "force": 2,
    "q": "Qu'est-ce qu'un ODD ?",
@@ -490,6 +518,76 @@
    "duree": 0.33
   },
   {
+   "id": "dd-1-qcm-09",
+   "type": "qcm",
+   "notion": "principes",
+   "enonce": "Lequel de ces principes ne fait PAS partie des 4 grands principes du DD ?",
+   "choix": [
+    "Croissance",
+    "Solidarité",
+    "Précaution",
+    "Responsabilité"
+   ],
+   "leurres": [
+    "Participation"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "explication": "Les 4 principes : solidarité, précaution, participation, responsabilité. La croissance n'en fait pas partie.",
+   "duree": 0.33
+  },
+  {
+   "id": "dd-1-qcm-10",
+   "type": "qcm",
+   "notion": "principes",
+   "enonce": "La solidarité « intra et intergénérationnelle » signifie une solidarité…",
+   "choix": [
+    "entre les humains d'aujourd'hui et envers les générations futures",
+    "entre les pays du Nord uniquement",
+    "entre les entreprises d'un même secteur",
+    "entre l'État et les collectivités"
+   ],
+   "leurres": [
+    "entre les générations passées et présentes uniquement",
+    "entre les membres d'une même famille"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "explication": "Intra = au sein de la génération actuelle (entre les peuples) ; inter = entre générations, en pensant aux générations futures.",
+   "duree": 0.33
+  },
+  {
+   "id": "dd-1-qcm-11",
+   "type": "qcm",
+   "notion": "principes",
+   "enonce": "À quelle échelle s'exerce le principe de responsabilité ?",
+   "choix": [
+    "Individuelle et collective",
+    "Uniquement individuelle",
+    "Uniquement celle des États",
+    "Uniquement celle des entreprises"
+   ],
+   "leurres": [
+    "Uniquement internationale"
+   ],
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     0
+    ]
+   },
+   "explication": "Chacun (citoyen, entreprise, collectivité, État) est responsable de ses actes et de leurs impacts.",
+   "duree": 0.33
+  },
+  {
    "id": "dd-1-vf-01",
    "type": "qcm-multi",
    "notion": "principes",
@@ -601,6 +699,48 @@
     }
    ],
    "explication": "Universels, adoptés par l'ONU en 2015 pour 2030.",
+   "duree": 0.75
+  },
+  {
+   "id": "dd-1-vf-04",
+   "type": "qcm-multi",
+   "notion": "principes",
+   "enonce": "Les 4 grands principes du DD",
+   "affirmations": [
+    {
+     "t": "Les 4 principes sont solidarité, précaution, participation et responsabilité.",
+     "vrai": true
+    },
+    {
+     "t": "La solidarité intragénérationnelle concerne les humains vivant aujourd'hui.",
+     "vrai": true
+    },
+    {
+     "t": "Le principe de précaution consiste à vérifier les conséquences avant d'agir.",
+     "vrai": true
+    },
+    {
+     "t": "Le principe de participation réserve les décisions aux experts.",
+     "vrai": false
+    },
+    {
+     "t": "La rentabilité fait partie des 4 grands principes du DD.",
+     "vrai": false
+    },
+    {
+     "t": "Le principe de responsabilité ne concerne que les entreprises.",
+     "vrai": false
+    },
+    {
+     "t": "La solidarité intergénérationnelle pense aux besoins des générations futures.",
+     "vrai": true
+    },
+    {
+     "t": "Le principe de précaution exige une certitude scientifique absolue avant d'agir contre un risque grave.",
+     "vrai": false
+    }
+   ],
+   "explication": "Participation = associer la population ; responsabilité = individuelle ET collective ; la précaution n'attend pas la certitude scientifique face à un risque grave.",
    "duree": 0.75
   }
  ]
