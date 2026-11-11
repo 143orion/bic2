@@ -285,8 +285,8 @@ const AIDE = {
   indicesMax:"Nombre maximum d'indices utilisables par saisie/étape (2 = −60 % au pire avec 0,3).",
   niveauCoef:"XP totale pour atteindre le niveau n = coef × n². Avec 50 : niveau 10 = 5 000 XP, niveau 100 = 500 000 XP. Le monter ralentit toute la progression de niveaux (rangs et plaques inclus) ; le baisser l'accélère. Rétroactif : les niveaux sont recalculés depuis le journal.",
   classementDebut:"Début de la saison en cours : les jours AVANT cette date sont ignorés par le classement de saison et par les vérifications. Ne touche ni niveau, ni XP totale, ni séries, ni maîtrises. Utilisé par « Clore la saison ».",
-  classementEffortMax:"Anti-triche du classement : effort maximal crédible par jour (min). Un jour publié au-dessus compte 0, automatiquement et sans prévenir le joueur ; tu vois juste un ⚠ dans l'onglet Joueurs. Mets-le assez haut pour ne jamais écrêter un vrai joueur très motivé.",
-  classementTaux1:"Anti-triche : XP maximale par minute d'effort plausible tant qu'on est au plein tarif du plafond journalier. Calibré sur le mode mock (×2) d'un joueur parfait. Un jour qui dépasse (taux) compte 0 au classement.",
+  classementEffortMax:"Anti-triche du classement : effort maximal crédible par jour (min). Au-delà, l'effort n'augmente plus l'XP autorisée par les plafonds ci-dessous (le jour n'est pas annulé pour autant).",
+  classementTaux1:"Anti-triche : XP maximale par minute d'effort plausible tant qu'on est au plein tarif du plafond journalier. Calibré sur un joueur parfait en mock (×2) qui cumule rattrapage et bonus de session au maximum (≈ 233). Un jour qui dépasse (taux) compte 0 au classement.",
   classementTaux2:"Même plafond d'XP par minute d'effort, pour la tranche au demi-tarif du plafond journalier.",
   classementTaux3:"Même plafond d'XP par minute d'effort, pour la tranche au-delà du 2e seuil."
 };

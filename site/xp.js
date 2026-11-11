@@ -30,7 +30,7 @@ const DEFAUT = {
   plafondSeuil1:240, plafondSeuil2:360, plafondMult2:0.5, plafondMult3:0.25, plafondEvalBonus:60,
   indiceCout:0.3, indicesMax:2,
   niveauCoef:50,
-  classementEffortMax:600, classementTaux1:220, classementTaux2:111, classementTaux3:56, classementDebut:"2026-10-31"
+  classementEffortMax:600, classementTaux1:235, classementTaux2:118, classementTaux3:59, classementDebut:"2026-10-31"
 };
 const RANGS = ["newgen","bit","octet","registre","sudoer","daemon","compilateur","l33t","opérateur","kernel","root"];
 const GLYPHS = "!<>-_\\/[]{}=+*^?#01$%&";
@@ -187,12 +187,14 @@ function calculer(evenements, ctx = {}){
       const it = items[e.q] || (items[e.q] = {jours:new Set(), maitrise:false, bonusDonne:false, cred:"", erreur:false, m:e.m});
       const prod = e.ty === "saisie";
       const vm = valeursModule(cfgDoc, modVals, e.m, v);
-      effort = (prod ? v.effortSaisie : e.ty === "qcm-multi" ? vm.effortQcmMulti : e.ty === "trous" ? v.effortQcmMulti : v.effortQcm) * (it.maitrise ? .5 : 1);
+      /* saisie : l'effort suit la durée de la banque (jamais moins que effortSaisie), sinon une saisie longue dépasserait le plafond du classement */
+      const dSaisie = prod ? (durees[e.q] != null ? +durees[e.q] : (e.d || v.dureeSaisie)) : 0;
+      effort = (prod ? Math.max(v.effortSaisie, dSaisie) : e.ty === "qcm-multi" ? vm.effortQcmMulti : e.ty === "trous" ? v.effortQcmMulti : v.effortQcm) * (it.maitrise ? .5 : 1);
       if(ok){
         if(e.ty === "qcm-multi"){ xp = vm.qcmMulti; f.push("QCM multi"); }
         else if(e.ty === "trous"){ xp = v.trous; f.push("code à trous"); }
         else if(prod){
-          const d = durees[e.q] != null ? +durees[e.q] : (e.d || v.dureeSaisie);
+          const d = dSaisie;
           const conc = Math.min(1 + d/v.concentrationDiv, v.concentrationMax);
           xp = v.xpParMinute * d * v.formatProduction * conc; f.push("tapée ×"+fmt(v.formatProduction));
         } else { xp = vm.qcm; f.push("QCM"); }
@@ -250,9 +252,10 @@ function calculer(evenements, ctx = {}){
   for(const d of parOrdre){
     const v = V(d.jour), gap = cur ? d.t - cur.fin : Infinity;
     const continue_ = cur && (gap <= v.sessionInactivite*6e4 || (d.ty === "exo" && gap <= (v.sessionInactivite + 2*d.effort)*6e4));
-    if(!continue_){ cur = {debut:d.t, fin:d.t, jour:d.jour, xp:0, n:0, ok:0, effort:0, parModule:{}}; sessions.push(cur); }
+    if(!continue_){ cur = {debut:d.t, fin:d.t, jour:d.jour, xp:0, n:0, ok:0, effort:0, parModule:{}, parJour:{}}; sessions.push(cur); }
     cur.fin = d.t; cur.xp += d.xp + d.bonus; if(d.ty !== "controle"){ cur.n++; if(d.ok) cur.ok++; } cur.effort += d.effort;   // contrôles du cours hors précision
     cur.parModule[d.m] = (cur.parModule[d.m] || 0) + d.xp + d.bonus;
+    cur.parJour[d.jour] = (cur.parJour[d.jour] || 0) + d.xp + d.bonus;
   }
   let total = 0, attente = null; const xpJour = {}, xpJourMod = {};
   for(const d of parOrdre){ total += d.xp + d.bonus; mod(d.m).xp += d.xp + d.bonus; xpJour[d.jour] = (xpJour[d.jour] || 0) + d.xp + d.bonus;
@@ -269,7 +272,9 @@ function calculer(evenements, ctx = {}){
     const prochain = (v.endurance||[]).find(([m]) => m > se.effort);
     se.enduranceProchain = prochain ? {minutes:prochain[0], pct:prochain[1]} : null;
     if(se.ouverte){ attente = se; return; }
-    total += se.bonus; xpJour[se.jour] = (xpJour[se.jour] || 0) + se.bonus;
+    total += se.bonus;
+    /* session à cheval sur le changement de jour (4 h) : bonus réparti au prorata de l'XP de chaque jour (sinon le 1er jour paraît « impossible ») */
+    if(se.xp > 0) for(const [j, x] of Object.entries(se.parJour)) xpJour[j] = (xpJour[j] || 0) + se.bonus * x / se.xp;
     for(const [m, x] of Object.entries(se.parModule)) if(se.xp > 0) mod(m).xp += se.bonus * x / se.xp;
   });
 
@@ -307,10 +312,10 @@ function xpClassement(doc, cfgDoc, depuis, jusqua, toutTemps, module){
   for(const [j, x] of Object.entries(jours)){
     if(!/^\d{4}-\d\d-\d\d$/.test(j) || j > auj || !x || typeof x !== "object"){ suspects.push(j); continue; }
     if((!toutTemps && v.classementDebut && j < v.classementDebut) || (depuis && j < depuis) || (jusqua && j > jusqua)) continue;
-    const effBrut = Math.max(0, +x.eff || 0), eff = Math.min(effBrut, v.classementEffortMax), xp = Math.max(0, +x.xp || 0);
+    const eff = Math.min(Math.max(0, +x.eff || 0), v.classementEffortMax), xp = Math.max(0, +x.xp || 0);
     const s1 = v.plafondSeuil1, s2 = v.plafondSeuil2;
     const max = fp*(v.classementTaux1*Math.min(eff, s1) + v.classementTaux2*Math.max(0, Math.min(eff, s2) - s1) + v.classementTaux3*Math.max(0, eff - s2));
-    if(xp > max + 1 || effBrut > v.classementEffortMax){ suspects.push(j); continue; }   // jour anormal : compte 0, sans prévenir
+    if(xp > max + 1){ suspects.push(j); continue; }   // XP impossible pour l'effort (borné à classementEffortMax) : compte 0, sans prévenir
     if(module){ const m = x.m && typeof x.m === "object" ? x.m : null; if(m) avecM = true; total += Math.min(xp, Math.max(0, +(m && m[module]) || 0)); }
     else total += xp;
   }
