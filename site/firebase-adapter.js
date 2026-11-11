@@ -148,7 +148,13 @@ function outilsAcces(fs, adminUid){
       b.set(fs.doc("identites/" + u.uid), {prenom, nom, email:u.email || "", promo});
       b.set(fs.doc("demandes/" + u.uid), {pseudo, cree:maintenant(), statut:"attente"});
       try{ await b.commit(); }
-      catch(err){ if(err.code === "permission-denied") throw Object.assign(new Error("Ce pseudo est déjà pris"), {code:"pseudo_pris"}); throw err; }
+      catch(err){
+        if(err.code !== "permission-denied") throw err;
+        /* refus : le pseudo a-t-il été pris entre-temps, ou est-ce un autre refus (règles) ? */
+        const apres = await resa.get().catch(() => null);
+        if(apres && apres.exists && apres.data().uid !== u.uid) throw Object.assign(new Error("Ce pseudo est déjà pris"), {code:"pseudo_pris"});
+        throw Object.assign(new Error("L'envoi n'est pas passé, préviens Adam"), {code:"refus"});
+      }
     },
     async recommencer(u){
       const b = fs.batch();
