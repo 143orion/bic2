@@ -21,7 +21,7 @@ const MOCK = await readFile(join(RACINE, "tools/mock.js"), "utf8");
 await mkdir(join(RACINE, "tests/captures"), {recursive:true});
 
 const ECRANS = {ordi:{viewport:{width:1366, height:860}}, tel:{viewport:{width:390, height:844}, isMobile:true, hasTouch:true, deviceScaleFactor:2}};
-const browser = await chromium.launch();
+const browser = await chromium.launch(process.env.CHROME ? {executablePath:process.env.CHROME} : {});
 const erreurs = [];
 async function page(appareil){
   const ctx = await browser.newContext(ECRANS[appareil]);
@@ -356,8 +356,27 @@ const SCENARIOS = {
       await capture(pg, `dd-question-${app}`);
     }
     await capture(pg, `dd-cours-${app}`);
+    /* téléphone : appli à onglets — lien = aperçu en feuille, notes lues dans le journal (sans XP), « Reprendre » */
+    if(app === "tel"){
+      if(!(await pg.$(".dd-tbar [data-o=cartes]"))) erreurs.push(`[${app}] DD : pas de barre d'onglets sur téléphone`);
+      await pg.click('.dd-tbar [data-o="cours"]'); await attendre(200);
+      await pg.click('.dd-tbar [data-o="cours"]'); await attendre(200);   /* 2e toucher : retour au sommaire du cours */
+      const xp0 = await pg.evaluate(() => moteur.etat().total);
+      await pg.click(".dd-repr"); await attendre(300);
+      await pg.click('#dd-pg .dd-wl >> nth=0'); await attendre(450);
+      if(!(await pg.$(".dd-sheet.on .dd-pt"))) erreurs.push(`[${app}] DD : un lien n'ouvre pas l'aperçu en feuille`);
+      await capture(pg, `dd-apercu-${app}`);
+      await pg.click('.dd-sheet [data-a="ouv"]'); await attendre(400);
+      const lus = await pg.evaluate(() => moteur.evenements().filter(e => e.ty === "carte" && /^dd-lu-/.test(e.q)).length);
+      if(lus < 2) erreurs.push(`[${app}] DD : les notes ouvertes ne sont pas comptées comme lues (${lus})`);
+      if((await pg.evaluate(() => moteur.etat().total)) !== xp0) erreurs.push(`[${app}] DD : lire une note a rapporté de l'XP`);
+      await pg.click('.dd-tbar [data-o="cours"]'); await attendre(300);
+      if(!/Reprendre/.test(await pg.textContent(".dd-repr"))) erreurs.push(`[${app}] DD : « Reprendre » absent après lecture`);
+      await capture(pg, `dd-accueil-${app}`);
+    }
     /* QCM : la bonne réponse rapporte l'XP du module (10, réglée dans liste.json) */
-    await pg.click('#dd-tete .dd-tab[data-v="exo"]'); await pg.click('[data-a="go"]'); await attendre(2300);
+    if(app === "tel") await pg.click('.dd-tbar [data-o="exo"]'); else await pg.click('#dd-tete .dd-tab[data-v="exo"]');
+    await pg.click('[data-a="go"]'); await attendre(2300);
     const nOpt = (await pg.$$("#dd-chx .dd-opt")).length;
     if(nOpt !== 4) erreurs.push(`[${app}] DD : un QCM devrait proposer 4 réponses (${nOpt})`);
     const avant = await pg.evaluate(() => moteur.etat().total);
@@ -367,7 +386,7 @@ const SCENARIOS = {
     if(juste && gainQ < 10) erreurs.push(`[${app}] DD : QCM juste mais +${gainQ} XP (10 attendus)`);
     if(!juste && gainQ !== 0) erreurs.push(`[${app}] DD : QCM faux mais +${gainQ} XP`);
     /* Coche les vérités : on coche exactement la moitié des vraies → XP au prorata, item compté faux */
-    await pg.click('[data-a="quit"]'); await pg.click('#dd-tete .dd-seg [data-s="vf"]'); await pg.click('[data-a="go"]'); await attendre(200);
+    await pg.click('[data-a="quit"]'); await pg.click(app === "tel" ? '.dd-mmode[data-s="vf"]' : '#dd-tete .dd-seg [data-s="vf"]'); await pg.click('[data-a="go"]'); await attendre(200);
     const n = (await pg.$$(".dd-vfa")).length;
     if(n !== 6) erreurs.push(`[${app}] DD : « Coche les vérités » devrait tirer 6 affirmations (${n})`);
     const a0 = await pg.evaluate(() => moteur.etat().total);
@@ -378,7 +397,7 @@ const SCENARIOS = {
     if(/0 XP/.test(await pg.textContent(".dd-fbk"))) erreurs.push(`[${app}] DD : mention « 0 XP » affichée`);
     await capture(pg, `dd-verites-${app}`);
     /* flashcards : statut rangé dans le journal, sans XP */
-    await pg.click('[data-a="quit"]'); await pg.click('#dd-tete .dd-seg [data-s="cartes"]'); await pg.click(".dd-recto"); await attendre(700);
+    await pg.click('[data-a="quit"]'); await pg.click(app === "tel" ? '.dd-tbar [data-o="cartes"]' : '#dd-tete .dd-seg [data-s="cartes"]'); await pg.click(".dd-recto"); await attendre(700);
     const a1 = await pg.evaluate(() => moteur.etat().total);
     await pg.click('[data-a="next"]'); await attendre(200);
     const carte = await pg.evaluate(() => moteur.evenements().filter(e => e.ty === "carte"));

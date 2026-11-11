@@ -183,6 +183,113 @@ body.dd-intro .dd-mk.f2{animation:dd-pulse .7s ease-in-out 2}
 .dd-signal textarea{width:100%;min-height:110px;box-sizing:border-box;padding:10px;border-radius:8px;border:1px solid var(--dd-bord);background:rgba(0,0,0,.35);color:#fff;font:14px var(--dd-mono)}
 @media (prefers-reduced-motion:reduce){body.dd-intro .dd-mk.f2,.dd-attente{animation:none}.dd-carte{transition:none}}
 @media (max-width:1100px){.dd-cours{grid-template-columns:240px minmax(0,1fr)}.dd-droite{grid-column:1 / -1;position:static;max-height:none}}
+.dd-sheet,.dd-tbar{--dd-bord:rgba(207,207,207,.15);--dd-gris:#8a8a8a;--dd-ok:#7ee787;--dd-rv:#ff8f00;--dd-rouge:#ff4d4d;--dd-lien:color-mix(in srgb,var(--m-ac) 55%,#fff);--dd-lien2:color-mix(in srgb,var(--m-ac) 35%,#fff);
+  --dd-serif:'Newsreader',Georgia,serif;--dd-mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+  --dd-grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+/* ---------- TÉLÉPHONE (≤ 760 px) : appli à onglets (variante A validée le 11/11/2026) ----------
+   barre d'onglets en bas · sélecteur de cours + feuilles en bas · « Reprendre » + compteurs · parcours collé en bas */
+.dd-tbar,.dd-mbar,.dd-mfil,.dd-maccueil{display:none}
+@media (max-width:760px){
+  #dd{--dd-tb:62px;padding:10px 10px calc(var(--dd-tb) + 90px)}
+  body.dd-sess-on #dd{padding-bottom:110px}
+  #dd-tete{display:none}
+  .dd-main{margin-top:10px}
+  .dd-page{padding:16px 16px 20px;border-radius:12px}
+  .dd-pt{font-size:25px}.dd-nb,.dd-rep,.dd-ess{font-size:17px}
+  .dd-wl{padding:2px 0}
+  .dd-pn{display:none}
+  .dd-tbar{display:grid;grid-template-columns:repeat(4,1fr);position:fixed;left:0;right:0;bottom:0;z-index:25;padding:4px 4px calc(6px + env(safe-area-inset-bottom));
+    background:rgba(16,16,16,.96);border-top:1px solid var(--dd-bord);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+  body.dd-sess-on .dd-tbar{display:none}
+  .dd-tbar button{position:relative;display:flex;flex-direction:column;align-items:center;gap:3px;min-height:52px;padding:6px 0 2px;border:none;background:none;font-size:10.5px;color:var(--dd-gris)}
+  .dd-tbar .dd-ic{width:22px;height:22px;stroke-width:1.8}
+  .dd-tbar button.on{color:#fff}.dd-tbar button.on .dd-ic{color:var(--m-ac)}
+  .dd-tbar button.on::before{content:"";position:absolute;top:-5px;width:28px;height:3px;border-radius:3px;background:var(--m-ac)}
+  .dd-tbar em{position:absolute;top:3px;left:calc(50% + 6px);font:600 9px/15px var(--dd-mono);font-style:normal;min-width:16px;padding:0 4px;border-radius:9px;background:var(--dd-rv);color:#141414}
+  .dd-mbar{display:flex;gap:8px;position:sticky;top:var(--dd-hb,70px);z-index:6;padding:8px;margin:0 -2px 10px;border-radius:12px;background:color-mix(in srgb,var(--m-bg) 94%,#000);border:1px solid var(--dd-bord);box-shadow:0 8px 20px rgba(0,0,0,.35)}
+  .dd-msel{flex:1;min-width:0;display:flex;align-items:center;gap:10px;min-height:44px;padding:0 12px;border-radius:10px;border:1px solid var(--dd-bord);background:rgba(255,255,255,.03);text-align:left;font-size:12.5px}
+  .dd-msel>span:nth-child(2){flex:1;min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+  .dd-mnum{flex:none;min-width:24px;height:24px;border-radius:7px;display:grid;place-items:center;font:600 11px var(--dd-mono);color:#141414}
+  .dd-mib{flex:none;width:44px;height:44px;border-radius:10px;border:1px solid var(--dd-bord);background:transparent;display:grid;place-items:center}
+  .dd-mib .dd-ic,.dd-msel .dd-ic{width:20px;height:20px}
+  .dd-mfil{display:flex;align-items:center;gap:8px;position:fixed;left:0;right:0;bottom:calc(var(--dd-tb) + env(safe-area-inset-bottom));z-index:24;padding:8px 10px;
+    background:color-mix(in srgb,var(--m-bg) 96%,#000);border-top:1px solid var(--dd-bord)}
+  .dd-mfil .dd-btn{min-height:44px;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+  .dd-mfil .mid{flex:1;min-width:0;text-align:center;font-size:11px;color:var(--dd-gris)}
+  .dd-mfil .mid i{display:block;height:3px;border-radius:3px;background:#2a2a2a;margin-top:5px;overflow:hidden}.dd-mfil .mid i b{display:block;height:100%;background:var(--m-ac)}
+  .dd-maccueil{display:block;margin-bottom:16px}
+  .dd-repr{display:flex;align-items:center;gap:14px;width:100%;text-align:left;padding:16px;border-radius:16px;border:1px solid color-mix(in srgb,var(--m-ac) 60%,transparent);
+    background:linear-gradient(135deg,color-mix(in srgb,var(--m-ac) 30%,transparent),transparent 70%),var(--m-bg);box-shadow:0 0 24px color-mix(in srgb,var(--m-ac) 15%,transparent)}
+  .dd-repr small{display:block;color:#b8c4b8;font-size:11px}.dd-repr b{display:block;font:600 19px/1.25 var(--dd-serif);margin-top:2px}
+  .dd-repr>span:nth-child(2){flex:1;min-width:0}
+  .dd-anneau{--p:0;flex:none;width:32px;height:32px;border-radius:50%;background:conic-gradient(var(--m-ac) calc(var(--p)*1%),#2a2a2a 0);display:grid;place-items:center}
+  .dd-anneau::after{content:"";width:24px;height:24px;border-radius:50%;background:var(--m-bg)}
+  .dd-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+  #dd .dd-stats>*{font:10.5px/1.4 var(--dd-mono);padding:10px 12px;border-radius:12px;border:1px solid var(--dd-bord);background:rgba(255,255,255,.03);font-size:10.5px;color:var(--dd-gris);text-align:left}
+  #dd .dd-stats b{display:block;font-size:20px;line-height:1.3}
+  .dd-parc li{margin:10px 0}
+  .dd-chipq,.dd-chipn{min-height:36px;display:inline-flex;align-items:center}
+  /* feuilles en bas */
+  .dd-sfond{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.55);backdrop-filter:blur(2px);opacity:0;transition:opacity .2s}
+  .dd-sfond.on{opacity:1}
+  .dd-sheet{position:fixed;left:0;right:0;bottom:0;z-index:61;max-height:82vh;display:flex;flex-direction:column;border-radius:18px 18px 0 0;border:1px solid var(--dd-bord);border-bottom:none;
+    background:color-mix(in srgb,var(--m-bg) 97%,#000);box-shadow:0 -20px 50px rgba(0,0,0,.5);transform:translateY(105%);transition:transform .28s cubic-bezier(.2,.8,.2,1);color:var(--m-fg);font:14px/1.6 var(--dd-mono)}
+  .dd-sheet.on{transform:none}
+  .dd-sheet .poi{flex:none;width:40px;height:5px;border-radius:9px;background:#444;margin:8px auto 2px}
+  .dd-sheet .sh{flex:none;display:flex;align-items:center;gap:8px;padding:4px 12px 8px;border-bottom:1px solid var(--dd-bord)}
+  .dd-sheet .sh .dd-btn{min-height:40px}
+  .dd-sheet .sb{overflow-y:auto;overscroll-behavior:contain;padding:12px 16px calc(18px + env(safe-area-inset-bottom))}
+  .dd-sheet .sb .dd-pt{font-size:22px}
+  .dd-sheet .sf{flex:none;display:flex;gap:8px;padding:10px 14px calc(12px + env(safe-area-inset-bottom));border-top:1px solid var(--dd-bord)}
+  .dd-sheet .sf .dd-btn{flex:1;min-height:46px}
+  .dd-rg{display:flex;align-items:center;gap:12px;width:100%;min-height:52px;padding:8px 4px;border:none;border-bottom:1px solid var(--dd-bord);background:none;text-align:left;font-size:13px}
+  .dd-rg>span:nth-child(2){flex:1;min-width:0}.dd-rg small{display:block;color:var(--dd-gris);font-size:11px}
+  .dd-rg.sub{padding-left:40px;min-height:44px;font-size:12.5px;color:#c3c8c1}.dd-rg.on{color:#fff;background:color-mix(in srgb,var(--m-ac) 14%,transparent)}
+  /* onglet Questions */
+  .dd-mq{padding:14px}
+  .dd-mq .dd-ti{min-height:48px;align-items:center;padding:8px;font-size:13px;border-bottom:1px solid var(--dd-bord);border-radius:0}
+  .dd-filt{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:0 0 6px}
+  .dd-filt button{flex:none;min-height:36px;padding:0 14px;border-radius:999px;border:1px solid var(--dd-bord);background:none;font-size:12px}
+  .dd-filt button.on{background:color-mix(in srgb,var(--m-ac) 30%,transparent);border-color:var(--m-ac);color:#fff}
+  .dd-retq{display:inline-flex;align-items:center;gap:4px;min-height:40px;margin:0 0 8px;padding:0 12px 0 8px;border-radius:10px;border:1px solid var(--dd-bord);background:none;font-size:12px}
+  /* S'exercer */
+  .dd-menu{padding:16px}
+  .dd-mmodes{display:grid;gap:10px;margin-bottom:14px}
+  .dd-mmode{display:flex;gap:14px;align-items:center;width:100%;text-align:left;padding:14px;border-radius:14px;border:1px solid var(--dd-bord);background:rgba(255,255,255,.03)}
+  .dd-mmode.on{border-color:var(--m-ac);background:color-mix(in srgb,var(--m-ac) 14%,transparent)}
+  .dd-mmode .ic{flex:none;width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:color-mix(in srgb,var(--m-ac) 25%,transparent);color:var(--dd-lien)}
+  .dd-mmode .ic .dd-ic{width:22px;height:22px}.dd-mmode b{display:block}.dd-mmode small{color:var(--dd-gris);font-size:11px}
+  .dd-menu .dd-regle{display:none}
+  .dd-chs{grid-template-columns:1fr}.dd-chk{min-height:52px;align-items:center}
+  .dd-menu>.dd-acts:last-child{position:sticky;bottom:calc(var(--dd-tb) + 8px);z-index:3;padding:10px;margin:14px -6px 0;border-radius:12px;background:color-mix(in srgb,var(--m-bg) 96%,#000);border:1px solid var(--dd-bord)}
+  .dd-menu>.dd-acts:last-child .dd-btn{width:100%;min-height:48px}.dd-menu>.dd-acts:last-child small{display:none}
+  .dd-menu .dd-acts .dd-btn.sec{min-height:40px}
+  .dd-thin{position:sticky;top:var(--dd-hb,70px);z-index:6;padding:8px 10px;gap:10px}
+  .dd-exo{padding:18px 16px}.dd-exo h2{font-size:20px}
+  .dd-opt{min-height:56px;padding:13px 14px;font-size:16.5px!important;margin:10px 0}
+  .dd-vfa{min-height:52px;padding:12px;font-size:16px}.dd-vfa input{width:20px;height:20px;flex:none;margin-top:2px}
+  .dd-exo #dd-fb .dd-acts{position:sticky;bottom:10px;z-index:3;flex-direction:column;align-items:stretch!important;padding:10px;border-radius:12px;background:color-mix(in srgb,var(--m-bg) 96%,#000);border:1px solid var(--dd-bord)}
+  .dd-exo #dd-fb .dd-acts>span{display:flex;gap:8px}.dd-exo #dd-fb .dd-acts .dd-btn{flex:1;min-height:46px}
+  .dd-exo #dd-fb .dd-acts .dd-ref{text-align:center;padding:4px 0}
+  .dd-fin{padding:22px 16px}.dd-fin .dd-acts .dd-btn{min-height:46px}
+  /* flashcards */
+  .dd-fc{display:flex;flex-direction:column;gap:10px}
+  .dd-deck{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:10px}
+  .dd-deck>b,.dd-deck .dd-leg,.dd-deck .g{display:none}
+  .dd-deck .dd-mpos{flex:1 0 100%;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--dd-gris)}
+  .dd-deck .dd-acts{margin:0;flex:1;flex-wrap:nowrap}.dd-deck .dd-acts .dd-btn{min-height:40px;font-size:11.5px;white-space:nowrap;padding:0 10px;width:auto!important;flex:1}
+  .dd-deck .dd-seg{margin:0!important}.dd-deck .dd-seg button{min-height:34px}
+  .dd-carte{min-height:380px}.dd-face{padding:20px 16px}.dd-recto h2{font-size:23px}.dd-recto .meta{left:16px}
+  .dd-recto{background:repeating-linear-gradient(transparent 0 31px,rgba(216,221,214,.06) 31px 32px),var(--m-bg)}
+  .dd-cit{padding:1px 0}
+  #dd [data-a=pied]{position:fixed;left:0;right:0;bottom:calc(var(--dd-tb) + env(safe-area-inset-bottom));z-index:24;padding:0 8px 8px}
+  .dd-vfoot{margin:0}
+  .dd-vfoot{background:color-mix(in srgb,var(--m-bg) 96%,#000);gap:8px 12px}.dd-vfoot .dd-btn{min-height:44px}
+  .dd-ta{min-height:200px}
+  .dd-tiroir{max-height:92vh}.dd-fond{padding:2vh 2vw}
+  body.page-module .bulles{bottom:calc(var(--dd-tb) + 12px)}
+  body.dd-sess-on.page-module .bulles{bottom:14px}
+}
 @media (max-width:760px){.dd-cours,.dd-fc{grid-template-columns:1fr}.dd-page{order:-1}.dd-nav{position:static;max-height:none}.dd-odd{columns:1}.dd-page{padding:18px}.dd-pt{font-size:24px}.dd-prog{display:none}}
 </style>
 </head>
@@ -205,7 +312,10 @@ const IC = {leaf:'<path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.
   card:'<rect x="3" y="5" width="14" height="16" rx="2"/><path d="M7 3h12a2 2 0 0 1 2 2v12"/>', pen:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/>',
   shuffle:'<path d="M2 18h1.4c1.3 0 2.5-.6 3.3-1.7l6.1-8.6c.7-1.1 2-1.7 3.3-1.7H22"/><path d="m18 2 4 4-4 4"/><path d="M2 6h1.9c1.5 0 2.9.9 3.6 2.2"/><path d="M22 18h-5.9c-1.3 0-2.6-.7-3.3-1.8l-.5-.8"/><path d="m18 14 4 4-4 4"/>',
   cal:'<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>', play:'<path d="m6 3 14 9-14 9z"/>', x:'<path d="M18 6 6 18M6 6l12 12"/>',
-  flag:'<path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><path d="M4 22v-7"/>', su:'<path d="M20 6 9 17l-5-5"/>', rv:'<path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/>'};
+  flag:'<path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><path d="M4 22v-7"/>', su:'<path d="M20 6 9 17l-5-5"/>', livre:'<path d="M2 4h6a4 4 0 0 1 4 4v12a3 3 0 0 0-3-3H2z"/><path d="M22 4h-6a4 4 0 0 0-4 4v12a3 3 0 0 1 3-3h7z"/>',
+  aide:'<circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/>', cible:'<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>',
+  bas:'<path d="m6 9 6 6 6-6"/>', g:'<path d="m15 18-6-6 6-6"/>', d:'<path d="m9 18 6-6-6-6"/>',
+  graphe:'<circle cx="6" cy="6" r="3"/><circle cx="18" cy="8" r="3"/><circle cx="10" cy="18" r="3"/><path d="M8.5 7.5 15 8M7.5 9l2 6M16.5 10.5 12 16"/>', rv:'<path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/>'};
 const ic = (n, c = "dd-ic") => `<svg class="${c}" viewBox="0 0 24 24" aria-hidden="true">${IC[n]}</svg>`;
 const CHEV = {2:'<path d="m6 17 6-6 6 6"/><path d="m6 11 6-6 6 6"/>', 1:'<path d="m6 15 6-6 6 6"/>'};
 const mk = f => `<svg class="dd-mk f${f}" viewBox="0 0 24 24" role="img" aria-label="${f === 2 ? "Annoncée" : "Insistée"}"><title>${f === 2 ? "Annoncée" : "Insistée"}</title>${CHEV[f]}</svg>`;
@@ -216,7 +326,9 @@ const legende = () => `<div class="dd-leg"><span>${mk(2)}Annoncée</span><span>$
 /* ---------------- état ---------------- */
 const S = {cours:[], notes:{}, proprio:{}, fil:{}, questions:[], items:{}, dates:[], couleur:{},
   page:{t:"moc", id:null}, ctx:null, tree:new Set(), droite:"q", peek:null, peekHist:[],
-  vue:"cours", sous:"qcm", ex:null, exCh:new Set(), cur:null, modeC:"carte"};
+  vue:"cours", sous:"qcm", ex:null, exCh:new Set(), cur:null, modeC:"carte",
+  mqs:false, mfil:"tous"};   /* téléphone : onglet Questions ouvert, filtre de la liste */
+const MOB = matchMedia("(max-width:760px)"), mob = () => MOB.matches;
 const COUL = ["#4f9d69","#4aa3c7","#d6a23a","#c76a9b","#e0785a","#9b7fd6","#6fb3a8","#a7b85a","#c9a0dc"];
 const QN = id => S.questions.findIndex(q => q.id === id) + 1;
 const coursDe = id => S.cours.find(c => c.id === id);
@@ -405,6 +517,16 @@ function statuts(){
   for(const e of M.evenements()) if(e && e.ty === "carte" && e.m === MOD && (!d[e.q] || d[e.q].t < e.t)) d[e.q] = e;
   const r = {}; for(const [q, e] of Object.entries(d)) r[q] = e.ok ? "su" : "rv"; return r;
 }
+/* notes lues (téléphone : « Reprendre » + compteur) : événement « carte » d'id dd-lu-<note>, sans XP, rangé dans le journal
+   → même progression sur tous les appareils, rien en localStorage */
+const LU = "dd-lu-";
+function lectures(){
+  const d = {};
+  for(const e of M.evenements()) if(e && e.ty === "carte" && e.m === MOD && String(e.q).startsWith(LU)){ const n = e.q.slice(LU.length); if(S.notes[n] && (!d[n] || d[n] < e.t)) d[n] = e.t; }
+  return d;
+}
+let derLu = null;
+function noterLecture(id){ if(!S.notes[id] || derLu === id) return; derLu = id; M.noter(LU + id, true, MOD); }
 function dernierResultat(){   /* QCM / vérités : dernier résultat par item (pour « Mes erreurs » et l'ordre des séries) */
   const d = {};
   for(const e of M.evenements()) if(e && S.items[e.q] && (!d[e.q] || d[e.q].t < e.t)) d[e.q] = e;
@@ -477,12 +599,13 @@ function graphe(p){
   <circle cx="${cx}" cy="${cy}" r="14" fill="${S.couleur[centre.c] || "#777"}" stroke="#fff" stroke-width="2"/><text x="${cx}" y="${cy + 32}" text-anchor="middle" class="gc">${esc(lab(centre.t))}</text></svg>
   <div class="dd-gleg"><span>— cite</span><span>- - mentionnée par</span></div>`;
 }
-function aller(p){ S.page = p; S.peek = null; S.peekHist = []; if(S.droite === "lien") S.droite = "q"; if(p.t === "moc") S.tree.add(p.id); if(p.t === "note" && S.ctx) S.tree.add(S.ctx); rendre(); scrollTo({top:0}); }
-function ouvrirQ(id){ S.vue = "cours"; S.ex = null; aller({t:"q", id}); }
+function aller(p){ if(p.t === "note") noterLecture(p.id); S.page = p; S.peek = null; S.peekHist = []; if(S.droite === "lien") S.droite = "q"; if(p.t === "moc") S.tree.add(p.id); if(p.t === "note" && S.ctx) S.tree.add(S.ctx); rendre(); scrollTo({top:0}); }
+function ouvrirQ(id){ S.vue = "cours"; S.ex = null; if(mob()){ fermerFeuille(); S.mqs = true; } aller({t:"q", id}); }
 /* lien [[…]] : clic = aperçu dans la colonne de droite, double-clic = ouvrir dans la page principale.
    Le clic simple attend 250 ms (sinon le premier clic redessinerait la page et le double-clic serait perdu). */
 let clicLien = null;
 function surLien(id, ctx){
+  if(mob()){ if(ctx) S.ctx = ctx; return apercuM(id); }   /* téléphone : un toucher = aperçu en feuille */
   if(clicLien){ clearTimeout(clicLien.t); const meme = clicLien.id === id; clicLien = null; if(meme){ if(ctx) S.ctx = ctx; return aller({t:"note", id}); } }
   clicLien = {id, t:setTimeout(() => { clicLien = null; if(ctx) S.ctx = ctx; lienVers(id); }, 250)};
 }
@@ -526,7 +649,8 @@ function rendreCours(){
 
 /* aperçu des liens au survol */
 const tip = $("#dd-tip");
-document.addEventListener("mouseover", e => { const a = e.target.closest(".dd-wl,.dd-chipn,.dd-sl"); if(!a || a.closest(".dd-zoom")){ return; } const n = S.notes[a.dataset.n]; if(!n) return;
+const survol = matchMedia("(hover:hover)");
+document.addEventListener("mouseover", e => { if(!survol.matches) return; const a = e.target.closest(".dd-wl,.dd-chipn,.dd-sl"); if(!a || a.closest(".dd-zoom")){ return; } const n = S.notes[a.dataset.n]; if(!n) return;
   tip.innerHTML = `<b>${esc(n.titre)}</b><p>${esc(plain(n.corps).slice(0, 200))}…</p>${a.closest(".dd-tiroir") ? "" : "<small>clic : aperçu · double-clic : ouvrir</small>"}`; const r = a.getBoundingClientRect();
   tip.style.display = "block"; tip.style.left = Math.max(8, Math.min(r.left, innerWidth - 340)) + "px"; tip.style.top = (r.bottom + 8) + "px"; });
 document.addEventListener("mouseout", e => { if(e.target.closest(".dd-wl,.dd-chipn,.dd-sl")) tip.style.display = "none"; });
@@ -574,11 +698,14 @@ function menuExo(){
   const regle = S.sous === "qcm"
     ? `<b>QCM</b> · une seule bonne réponse ; leurres et ordre tirés au hasard à chaque fois, réponses affichées 2 s après la question. <b>+${val("xpQcm")} XP</b> par bonne réponse (la 1re fois du jour).`
     : `<b>Coche les vérités</b> · 6 affirmations tirées au hasard, coche celles qui sont vraies. <b>Jusqu'à +${val("xpQcmMulti")} XP</b>, au prorata : (vraies cochées − fausses cochées) / nombre de vraies. Cocher au hasard ne rapporte rien.`;
-  $("#dd-main").innerHTML = `<div class="dd-menu dd-win"><p class="dd-regle">${regle}</p><b>Quels cours ?</b>
+  const modes = mob() ? `<div class="dd-mmodes">${[["qcm","cible","QCM",`4 réponses · +${val("xpQcm")} XP · séries de 10`],["vf","su","Coche les vérités",`6 affirmations · jusqu'à +${val("xpQcmMulti")} XP`]].map(([k, i, t, x]) =>
+    `<button class="dd-mmode ${S.sous === k ? "on" : ""}" data-s="${k}"><span class="ic">${ic(i)}</span><span><b>${t}</b><small>${x}</small></span></button>`).join("")}</div>` : "";
+  $("#dd-main").innerHTML = `<div class="dd-menu dd-win">${modes}<p class="dd-regle">${regle}</p><b>Quels cours ?</b>
    <div class="dd-acts" style="margin:6px 0 0"><button class="dd-btn sec" data-a="tout">Tout cocher</button><button class="dd-btn sec" data-a="rien">Tout décocher</button><button class="dd-btn sec" data-a="err" ${erreurs.length ? "" : "disabled"}>Mes erreurs (${erreurs.length})</button></div>
    <div class="dd-chs">${S.cours.filter(c => tous.some(it => it._c === c.id)).map(c => { const n = tous.filter(it => it._c === c.id).length;
      return `<button class="dd-chk ${S.exCh.has(c.id) ? "on" : ""}" data-c="${c.id}" aria-pressed="${S.exCh.has(c.id)}"><span class="dd-box">${S.exCh.has(c.id) ? "✓" : ""}</span><span>Cours ${c.ordre} · ${esc(c.titre)}<small>${n} ${S.sous === "qcm" ? "QCM" : "série" + (n > 1 ? "s" : "")}</small></span></button>`; }).join("")}</div>
    <div class="dd-acts"><button class="dd-btn" data-a="go" ${pile.length ? "" : "disabled"}>${ic("play")} Lancer · ${Math.min(10, pile.length)} question${Math.min(10, pile.length) > 1 ? "s" : ""}</button><small style="color:var(--dd-gris);align-self:center">Séries de 10 au plus : erreurs d'abord, puis jamais vues.</small></div></div>`;
+  $$(".dd-mmode").forEach(b => b.onclick = () => { S.sous = b.dataset.s; rendre(); });
   $$(".dd-chk").forEach(b => b.onclick = () => { const c = b.dataset.c; S.exCh.has(c) ? S.exCh.delete(c) : S.exCh.add(c); rendre(); });
   const a = k => $(`.dd-menu [data-a=${k}]`);
   a("tout").onclick = () => { S.cours.forEach(c => S.exCh.add(c.id)); rendre(); };
@@ -664,6 +791,7 @@ function rendreCartes(){
   const st = statuts(); if(!S.cur) S.cur = S.questions[0].id;
   const q = S.questions.find(x => x.id === S.cur), c = coursDe(q.cours), n = (q.pts || []).length;
   $("#dd-main").innerHTML = `<div class="dd-fc"><nav class="dd-deck dd-win" aria-label="Cartes"><b style="font-size:12px">${S.questions.length} cartes</b>${legende()}
+   <span class="dd-mpos" hidden>Carte ${QN(q.id)} / ${S.questions.length}<span>${S.questions.filter(x => st[x.id] === "su").length} sues · ${S.questions.filter(x => st[x.id] === "rv").length} à revoir</span></span>
    <div class="g">${S.questions.map(x => `<button class="${x.id === S.cur ? "on" : ""} ${st[x.id] ? "dd-" + st[x.id] : ""}" data-q="${x.id}" aria-label="Q${QN(x.id)}">${mk(x.force)}Q${QN(x.id)}</button>`).join("")}</div>
    <div class="dd-acts"><button class="dd-btn sec" data-a="mel" style="width:100%">${ic("shuffle")} Mélanger</button><button class="dd-btn sec" data-a="rev" style="width:100%" ${S.questions.some(x => st[x.id] === "rv" && x.id !== S.cur) ? "" : "disabled"}>${stt("rv")} Mes « à revoir »</button></div>
    <div class="dd-seg" style="margin-top:12px"><button class="${S.modeC === "carte" ? "on" : ""}" data-m="carte">${ic("card")} Carte</button><button class="${S.modeC === "jj" ? "on" : ""}" data-m="jj">${ic("pen")} Rédiger</button></div></nav>
@@ -691,11 +819,131 @@ function rendreCartes(){
   }
 }
 
+
+/* =====================================================================
+   TÉLÉPHONE (≤ 760 px) : appli à onglets — Cours · Questions · S'exercer · Cartes
+   ===================================================================== */
+function ongletM(){ return S.vue === "exo" ? (S.sous === "cartes" ? "cartes" : "exo") : (S.mqs ? "q" : "cours"); }
+function tabbar(){
+  let t = $(".dd-tbar");
+  if(!t){ t = document.createElement("nav"); t.className = "dd-tbar"; t.setAttribute("aria-label", "Onglets du module"); document.body.appendChild(t); }
+  const st = statuts(), rv = S.questions.filter(q => st[q.id] === "rv").length, o = ongletM();
+  t.innerHTML = [["cours","livre","Cours"],["q","aide","Questions"],["exo","cible","S'exercer"],["cartes","card","Cartes"]].map(([k, i, n]) =>
+    `<button class="${o === k ? "on" : ""}" data-o="${k}" aria-current="${o === k}">${ic(i)}${n}${k === "cartes" && rv ? `<em>${rv}</em>` : ""}</button>`).join("");
+  t.querySelectorAll("button").forEach(b => b.onclick = () => {
+    const k = b.dataset.o; fermerFeuille();
+    if(k === o && k !== "cours" && k !== "q") return;
+    if(k === "cours"){ if(o === "cours" && S.page.t !== "moc") S.page = {t:"moc", id:coursM().id}; S.vue = "cours"; S.mqs = false; if(S.page.t === "q") S.page = {t:"moc", id:coursM().id}; }
+    else if(k === "q"){ if(o === "q") S.page = {t:"moc", id:coursM().id}; S.vue = "cours"; S.mqs = true; if(S.page.t !== "q") S.page = {t:"moc", id:coursM().id}; }
+    else { S.vue = "exo"; S.ex = null; S.sous = k === "cartes" ? "cartes" : (S.sous === "cartes" ? "qcm" : S.sous); }
+    rendre(); scrollTo({top:0});
+  });
+  const h = $("#hud"); if(h) document.documentElement.style.setProperty("--dd-hb", Math.round(h.getBoundingClientRect().bottom + 6) + "px");
+}
+function coursM(){ const id = S.page.t === "moc" ? S.page.id : S.page.t === "note" ? (S.ctx && (S.fil[S.ctx] || []).includes(S.page.id) ? S.ctx : S.proprio[S.page.id]) : S.ctx; return coursDe(id) || S.cours[0]; }
+function accueilM(){
+  const lu = lectures(), st = statuts(), parc = new Set(Object.values(S.fil).flat()), total = parc.size;
+  const nLu = Object.keys(lu).filter(n => parc.has(n)).length;
+  const der = Object.entries(lu).sort((a, b) => b[1] - a[1])[0];
+  let n, c;
+  if(der){ n = der[0]; c = S.proprio[n]; const f = S.fil[c] || [], i = f.indexOf(n); if(i >= 0 && lu[f[i + 1]] === undefined && f[i + 1]) n = f[i + 1]; }
+  else { c = S.cours[0].id; n = S.fil[c][0]; }
+  const f = S.fil[c] || [], i = f.indexOf(n), fait = f.filter(x => lu[x]).length;
+  return `<div class="dd-maccueil"><button class="dd-repr" data-go="${n}" data-c="${c}"><span class="dd-anneau" style="--p:${Math.round(fait / Math.max(1, f.length) * 100)}"></span>
+    <span><small>${der ? "Reprendre" : "Commencer"} · Cours ${coursDe(c).ordre} · note ${i + 1}/${f.length}</small><b>${esc(S.notes[n].titre)}</b></span>${ic("d")}</button>
+    <div class="dd-stats"><div><b>${nLu}/${total}</b>notes lues</div><button data-o="cartes"><b style="color:var(--dd-ok)">${S.questions.filter(q => st[q.id] === "su").length}</b>questions sues</button><button data-o="rv"><b style="color:var(--dd-rv)">${S.questions.filter(q => st[q.id] === "rv").length}</b>à revoir</button></div></div>`;
+}
+function rendreCoursM(){
+  const c = coursM(), f = S.fil[c.id] || [], i = S.page.t === "note" ? f.indexOf(S.page.id) : -1;
+  const titre = S.page.t === "dates" ? "Toutes les dates" : c.titre;
+  $("#dd-main").innerHTML = `<div class="dd-mbar"><button class="dd-msel" data-a="som" aria-label="Choisir un cours"><span class="dd-mnum" style="background:${S.page.t === "dates" ? "#8a8a8a" : S.couleur[c.id]}">${S.page.t === "dates" ? "⌚" : c.ordre}</span><span>${esc(titre)}</span>${ic("bas")}</button>
+    <button class="dd-mib" data-a="vois" aria-label="Notes voisines">${ic("graphe")}</button></div>
+    ${S.page.t === "moc" ? accueilM() : ""}<article class="dd-page dd-win" id="dd-pg">${pageHTML(S.page)}</article>
+    ${i >= 0 ? `<div class="dd-mfil">${i > 0 ? `<button class="dd-btn sec" data-go="${f[i - 1]}" data-c="${c.id}" aria-label="Note précédente">${ic("g")}</button>` : `<button class="dd-btn sec" data-moc="${c.id}" aria-label="Retour au cours">${ic("g")}</button>`}
+      <div class="mid">Note ${i + 1} / ${f.length}<i><b style="width:${(i + 1) / f.length * 100}%"></b></i></div>
+      ${i < f.length - 1 ? `<button class="dd-btn" data-go="${f[i + 1]}" data-c="${c.id}">Suivante ${ic("d")}</button>` : `<button class="dd-btn" data-moc="${c.id}">Fin ${ic("su")}</button>`}</div>` : ""}`;
+  const m = $("#dd-main"); brancherPage(m);
+  m.querySelector("[data-a=som]").onclick = sommaireM;
+  m.querySelector("[data-a=vois]").onclick = () => feuille(`<b>Voisinage</b>`, `<p class="dd-vide" style="margin:0 0 6px;font-size:12px">Notes liées à la page ouverte · touche pour l'ouvrir</p>${graphe(S.page)}`, sb => sb.querySelectorAll(".dd-gn").forEach(g => g.onclick = () => { fermerFeuille(); aller({t:"note", id:g.dataset.n}); }));
+  m.querySelectorAll(".dd-stats [data-o]").forEach(b => b.onclick = () => { S.vue = "exo"; S.sous = "cartes"; if(b.dataset.o === "rv"){ const st = statuts(), r = S.questions.find(q => st[q.id] === "rv"); if(r) S.cur = r.id; } rendre(); scrollTo({top:0}); });
+}
+function sommaireM(){
+  const c = coursM(), lu = lectures();
+  const corps = S.cours.map(x => { const ouvert = x.id === c.id && S.page.t !== "dates", f = S.fil[x.id] || [], n = f.filter(k => lu[k]).length;
+    return `<button class="dd-rg ${ouvert ? "on" : ""}" data-c="${x.id}"><span class="dd-mnum" style="background:${S.couleur[x.id]}">${x.ordre}</span><span>${esc(x.titre)}<small>${f.length} notes${n ? ` · ${n} lue${n > 1 ? "s" : ""}` : ""}</small></span>${ic(ouvert ? "bas" : "d")}</button>`
+      + (ouvert ? f.map((k, j) => `<button class="dd-rg sub ${S.page.t === "note" && S.page.id === k ? "on" : ""}" data-n="${k}" data-c="${x.id}"><span>${j + 1}. ${esc(S.notes[k].titre)}</span>${lu[k] ? `<span style="color:var(--dd-ok)">${ic("su")}</span>` : ""}</button>`).join("") : ""); }).join("")
+    + `<button class="dd-rg" data-d="1"><span class="dd-mnum" style="background:#8a8a8a">⌚</span><span>Toutes les dates<small>repères à apprendre</small></span></button>`;
+  feuille(`<b>Cours</b>`, corps, sb => sb.querySelectorAll(".dd-rg").forEach(b => b.onclick = () => {
+    fermerFeuille();
+    if(b.dataset.d) return aller({t:"dates"});
+    S.ctx = b.dataset.c; S.mqs = false;
+    aller(b.dataset.n ? {t:"note", id:b.dataset.n} : {t:"moc", id:b.dataset.c});
+  }));
+}
+/* aperçu d'un lien [[…]] : feuille en bas ; un lien dans l'aperçu s'empile (‹ retour) */
+let apHist = [];
+function apercuM(id, empiler){
+  if(!empiler) apHist = [];
+  const aff = () => feuille(`${apHist.length ? `<button class="dd-btn sec" data-a="ret" style="padding:0 12px">${ic("g")} ${esc(S.notes[apHist[apHist.length - 1]].titre.slice(0, 18))}</button>` : `<b style="color:var(--dd-lien)">Aperçu</b>`}`,
+    pageHTML({t:"note", id}, true), sb => {
+      sb.querySelectorAll(".dd-wl,.dd-chipn,.dd-sl").forEach(a => a.onclick = e => { e.preventDefault(); if(a.dataset.n === id) return; apHist.push(id); apercuM(a.dataset.n, true); });
+      sb.querySelectorAll("[data-zoom]").forEach(b => b.onclick = () => zoomSchema(b.dataset.zoom));
+      sb.querySelectorAll(".dd-chipq,.dd-ref[data-q]").forEach(a => a.onclick = e => { e.preventDefault(); ouvrirQ(a.dataset.q); });
+      sb.querySelectorAll("[data-moc]").forEach(a => a.onclick = e => { e.preventDefault(); fermerFeuille(); S.ctx = a.dataset.moc; S.mqs = false; aller({t:"moc", id:a.dataset.moc}); });
+    }, `<button class="dd-btn sec" data-a="x">Fermer</button><button class="dd-btn" data-a="ouv">Ouvrir la note</button>`, sh => {
+      const r = sh.querySelector("[data-a=ret]"); if(r) r.onclick = () => apercuM(apHist.pop(), true);
+      sh.querySelector("[data-a=ouv]").onclick = () => { fermerFeuille(); S.vue = "cours"; S.mqs = false; aller({t:"note", id}); };
+    });
+  aff();
+}
+function feuille(tete, corps, brancher, pied, brancherCadre){
+  let f = $(".dd-sheet"), fd = $(".dd-sfond");
+  if(!f){
+    fd = document.createElement("div"); fd.className = "dd-sfond"; fd.onclick = fermerFeuille;
+    f = document.createElement("aside"); f.className = "dd-sheet"; f.setAttribute("role", "dialog"); f.setAttribute("aria-modal", "true");
+    document.body.append(fd, f); document.addEventListener("keydown", escF);
+    requestAnimationFrame(() => requestAnimationFrame(() => { fd.classList.add("on"); f.classList.add("on"); }));
+    let y0 = null; f.addEventListener("touchstart", e => { y0 = f.querySelector(".sb").scrollTop <= 0 ? e.touches[0].clientY : null; }, {passive:true});
+    f.addEventListener("touchend", e => { if(y0 != null && e.changedTouches[0].clientY - y0 > 90) fermerFeuille(); y0 = null; }, {passive:true});
+  }
+  f.innerHTML = `<div class="poi"></div><div class="sh">${tete}<span style="flex:1"></span><button class="dd-mib" data-a="x" aria-label="Fermer" style="width:40px;height:40px">${ic("x")}</button></div><div class="sb">${corps}</div>${pied ? `<div class="sf">${pied}</div>` : ""}`;
+  f.querySelectorAll("[data-a=x]").forEach(b => b.onclick = fermerFeuille);
+  if(brancher) brancher(f.querySelector(".sb"));
+  if(brancherCadre) brancherCadre(f);
+  f.querySelector(".sb").scrollTop = 0;
+}
+function escF(e){ if(e.key === "Escape" && !$(".dd-fond")) fermerFeuille(); }
+function fermerFeuille(){
+  const f = $(".dd-sheet"), fd = $(".dd-sfond"); if(!f) return;
+  document.removeEventListener("keydown", escF); f.classList.remove("on"); fd.classList.remove("on");
+  setTimeout(() => { f.remove(); fd.remove(); }, 260);
+}
+function rendreQuestionsM(){
+  if(S.page.t === "q"){
+    $("#dd-main").innerHTML = `<button class="dd-retq" data-a="liste">${ic("g")} Questions</button><article class="dd-page dd-win" id="dd-pg">${pageHTML(S.page)}</article>`;
+    brancherPage($("#dd-main")); $("[data-a=liste]").onclick = () => { S.page = {t:"moc", id:coursM().id}; rendre(); scrollTo({top:0}); };
+    return;
+  }
+  const st = statuts(), F = {tous:() => true, f2:q => q.force === 2, rv:q => st[q.id] === "rv", non:q => !st[q.id]};
+  const fl = S.questions.filter(F[S.mfil]);
+  const liste = S.cours.filter(c => fl.some(q => q.cours === c.id)).map(c => `<div class="dd-grp">Cours ${c.ordre} · ${esc(c.titre)}</div>` + fl.filter(q => q.cours === c.id)
+    .map(q => `<button class="dd-ti ${st[q.id] ? "dd-" + st[q.id] : ""}" data-q="${q.id}">${mk(q.force)}<span><b style="color:var(--dd-gris)">Q${QN(q.id)}</b> ${esc(q.q)}</span>${stt(st[q.id])}</button>`).join("")).join("");
+  $("#dd-main").innerHTML = `<div class="dd-mq dd-win"><h2 class="dd-pt" style="margin-top:0">Questions du jour J</h2>${legende()}
+    <div class="dd-filt">${[["tous","Toutes"],["f2","Annoncées"],["rv","À revoir"],["non","Pas encore vues"]].map(([k, t]) => `<button class="${S.mfil === k ? "on" : ""}" data-f="${k}">${t}</button>`).join("")}</div>
+    ${liste || `<p class="dd-vide">Aucune question ici.</p>`}</div>`;
+  $$(".dd-filt button").forEach(b => b.onclick = () => { S.mfil = b.dataset.f; rendre(); });
+  $$(".dd-mq .dd-ti").forEach(b => b.onclick = () => { S.page = {t:"q", id:b.dataset.q}; rendre(); scrollTo({top:0}); });
+}
+MOB.addEventListener("change", () => rendre());
+
 /* =====================================================================
    RENDU + DÉMARRAGE
    ===================================================================== */
 function rendre(){
   tete();
+  document.body.classList.toggle("dd-sess-on", mob() && S.vue === "exo" && !!S.ex);
+  if(mob()){ tabbar(); if(S.vue === "cours") return S.mqs ? rendreQuestionsM() : rendreCoursM(); }
+  else { const t = $(".dd-tbar"); if(t) t.remove(); fermerFeuille(); }
   if(S.vue === "cours") return rendreCours();
   if(S.sous === "cartes") return rendreCartes();
   if(!S.ex) return menuExo();
