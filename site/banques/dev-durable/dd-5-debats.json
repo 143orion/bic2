@@ -8,10 +8,10 @@
   "notes de cours de la classe"
  ],
  "essentiel": [
-  "Le DD, un <b>oxymore</b> ? Critiqué comme compromis contradictoire, trop large (→ greenwashing) ou trop contraignant.",
-  "Des Sommets de la Terre (1972-2012) aux 8 OMD puis aux 17 ODD.",
-  "<b>Croissance verte</b> (OCDE) ou <b>décroissance</b> (née avec le rapport Meadows, 1972) ?",
-  "Engagement éthique ou <b>greenwashing</b> ? Effondrement, dystopies, la technologie va-t-elle sauver le monde ?"
+  "Le DD, un <b>[[oxymore|oxymore]]</b> ? Critiqué comme compromis contradictoire, trop large (→ [[greenwashing|greenwashing]]) ou trop contraignant.",
+  "Des Sommets de la Terre (1972-2012) aux 8 [[omd|OMD]] puis aux 17 [[odd|ODD]].",
+  "<b>[[croissance-verte|Croissance verte]]</b> (OCDE) ou <b>[[decroissance|décroissance]]</b> (née avec le rapport Meadows, 1972) ?",
+  "Engagement éthique ou <b>greenwashing</b> ? [[effondrement|Effondrement]], dystopies, la technologie va-t-elle sauver le monde ?"
  ],
  "fil": [
   "oxymore",
@@ -38,13 +38,13 @@
    "id": "decroissance",
    "titre": "Décroissance",
    "o": "slides",
-   "corps": "Le terme apparaît avec le **rapport Meadows** (*The Limits to Growth*, 1972). Il ne veut pas dire « décroître » au sens littéral : il refuse de faire de la **croissance économique le premier indicateur** de développement et de bien-être, au nom de la finitude des ressources. Le rapport montrait que la croissance creuse l'écart entre riches et pauvres et mène à un effondrement. Voir aussi [[modele-dominant]] et [[donut]]."
+   "corps": "Le terme apparaît avec le **rapport Meadows** (*The Limits to Growth*, 1972). Il ne veut pas dire « décroître » au sens littéral : il refuse de faire de la **croissance économique le premier indicateur** de développement et de bien-être, au nom de la finitude des ressources. Le rapport montrait que la croissance creuse l'écart entre riches et pauvres et mène à un [[effondrement|effondrement]]. Voir aussi [[modele-dominant]] et [[donut]]."
   },
   {
    "id": "greenwashing",
    "titre": "Greenwashing",
    "o": "slides + complément",
-   "corps": "Engagement éthique ou **écoblanchiment** ? Le greenwashing consiste à se donner une image écologique trompeuse, par une communication qui exagère ou invente des bénéfices environnementaux. Le flou du terme « développement durable » le facilite (voir [[oxymore]]). Pour juger une démarche : sources, preuves, labels sérieux (voir [[norme-certif-label]]) et [[esprit-critique]]."
+   "corps": "Engagement éthique ou **écoblanchiment** ? Le greenwashing consiste à se donner une image écologique trompeuse, par une communication qui exagère ou invente des bénéfices environnementaux. Le flou du terme « [[dd|développement durable]] » le facilite (voir [[oxymore]]). Pour juger une démarche : sources, preuves, labels sérieux (voir [[norme-certif-label]]) et [[esprit-critique]]."
   },
   {
    "id": "effondrement",
@@ -56,7 +56,7 @@
    "id": "techno-solution",
    "titre": "La technologie va-t-elle sauver le monde ?",
    "o": "slides + complément",
-   "corps": "Question ouverte du cours. La technologie peut réduire des impacts, mais elle a ses limites : l'[[effet-rebond]] (plus efficace → plus utilisé), les [[conflit-enjeux|conflits d'enjeux]] (renouvelables contre biodiversité) et le coût énergétique du numérique (data centers, voir [[medias-dd]]). C'est le pari de la [[croissance-verte]]."
+   "corps": "Question ouverte du cours. La technologie peut réduire des impacts, mais elle a ses limites : l'[[effet-rebond]] (plus efficace → plus utilisé), les [[conflit-enjeux|conflits d'enjeux]] (renouvelables contre [[biodiversite|biodiversité]]) et le coût énergétique du numérique (data centers, voir [[medias-dd]]). C'est le pari de la [[croissance-verte]]."
   }
  ],
  "questions": [],

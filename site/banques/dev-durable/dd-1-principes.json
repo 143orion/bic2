@@ -9,10 +9,10 @@
  ],
  "essentiel": [
   "Définition de <b>Brundtland</b> : répondre aux besoins du présent <b>sans compromettre</b> ceux des générations futures.",
-  "<b>4 principes</b> : solidarité (intra et intergénérationnelle), précaution, participation, responsabilité.",
-  "<b>3 piliers</b>, conciliés de manière intégrée et équilibrée : équité sociale, efficacité économique, préservation environnementale.",
-  "<b>4 niveaux</b> d'enjeux et d'actions : international, national, local, individuel. Référentiel : les <b>17 ODD</b>.",
-  "La <b>culture</b> : enjeu tardif mais central (identité, patrimoine, cohésion)."
+  "<b>[[principes|4 principes]]</b> : solidarité (intra et intergénérationnelle), précaution, participation, responsabilité.",
+  "<b>[[piliers|3 piliers]]</b>, conciliés de manière intégrée et équilibrée : [[equite|équité sociale]], [[efficacite|efficacité économique]], [[preservation|préservation environnementale]].",
+  "<b>[[niveaux|4 niveaux]]</b> d'enjeux et d'actions : international, national, local, individuel. Référentiel : les <b>17 [[odd|ODD]]</b>.",
+  "La <b>[[culture|culture]]</b> : enjeu tardif mais central (identité, patrimoine, cohésion)."
  ],
  "fil": [
   "dd",
@@ -34,7 +34,8 @@
    "id": "dd",
    "titre": "Développement durable",
    "o": "slides",
-   "corps": "Mode de développement qui « répond aux besoins des générations présentes sans compromettre la capacité des générations futures de répondre aux leurs » (définition de Brundtland). Il concilie de manière intégrée et équilibrée les [[piliers|3 piliers]], repose sur [[principes|4 principes]], se joue à [[niveaux|4 niveaux]] et a pour référentiel les [[odd|ODD]]."
+   "corps": "Mode de développement qui « répond aux besoins des générations présentes sans compromettre la capacité des générations futures de répondre aux leurs » (définition de Brundtland). Il concilie de manière intégrée et équilibrée les [[piliers|3 piliers]], repose sur [[principes|4 principes]], se joue à [[niveaux|4 niveaux]] et a pour référentiel les [[odd|ODD]].",
+   "schema": "piliers"
   },
   {
    "id": "principes",
@@ -52,7 +53,8 @@
    "id": "piliers",
    "titre": "Les 3 piliers du DD",
    "o": "slides",
-   "corps": "Le [[dd|DD]] n'est pas qu'environnemental. Il concilie trois dimensions : [[equite|l'équité sociale]], [[efficacite|l'efficacité économique]] et la préservation environnementale (réduire les risques sur les écosystèmes, suivre des indicateurs, voir [[limites]])."
+   "corps": "Le [[dd|DD]] n'est pas qu'environnemental. Il concilie trois dimensions : [[equite|l'équité sociale]], [[efficacite|l'efficacité économique]] et la [[preservation|préservation environnementale]] (réduire les risques sur les écosystèmes, suivre des indicateurs, voir [[limites]]).",
+   "schema": "piliers"
   },
   {
    "id": "equite",
@@ -64,31 +66,34 @@
    "id": "efficacite",
    "titre": "Efficacité économique",
    "o": "slides",
-   "corps": "Viabilité économique : gestion saine, ressources naturelles utilisées de façon raisonnée. Exige de limiter les [[externalite|externalités négatives]] (climat, biodiversité). Solidarité intergénérationnelle ; la répartition des richesses renvoie à la solidarité intragénérationnelle."
+   "corps": "Viabilité économique : gestion saine, ressources naturelles utilisées de façon raisonnée. Exige de limiter les [[externalite|externalités négatives]] (climat, [[biodiversite|biodiversité]]). Solidarité intergénérationnelle ; la répartition des richesses renvoie à la solidarité intragénérationnelle."
   },
   {
    "id": "externalite",
    "titre": "Externalité négative",
    "o": "complément",
-   "corps": "Effet nuisible et involontaire d'une activité sur des tiers ou l'environnement, **sans compensation** : le coût est payé par la collectivité, pas par l'auteur. Ex. une usine qui pollue une rivière. Le cours demande de les limiter au nom de l'[[efficacite|efficacité économique]], surtout sur le climat et la [[biodiversite]]. Correction : taxe, principe pollueur-payeur."
+   "corps": "Effet nuisible et involontaire d'une activité sur des tiers ou l'environnement, **sans compensation** : le coût est payé par la collectivité, pas par l'auteur. Ex. une usine qui pollue une rivière. Le cours demande de les limiter au nom de l'[[efficacite|efficacité économique]], surtout sur le climat et la [[biodiversite]]. Correction : taxe, [[principes|principe pollueur-payeur]]."
   },
   {
    "id": "niveaux",
    "titre": "Les 4 niveaux du DD",
    "o": "slides",
-   "corps": "International ([[odd|ONU, ODD]], [[cop|COP]]) · national ([[loi-nre|lois]]) · local ([[agenda21|collectivités]]) · individuel (responsabilité). Les échelles sont interdépendantes ; la [[subsidiarite]] dit à quel niveau décider."
+   "corps": "International ([[odd|ONU, ODD]], [[cop|COP]]) · national ([[loi-nre|lois]]) · local ([[agenda21|collectivités]]) · individuel (responsabilité). Les échelles sont interdépendantes ; la [[subsidiarite]] dit à quel niveau décider.",
+   "schema": "niveaux"
   },
   {
    "id": "subsidiarite",
    "titre": "Subsidiarité",
    "o": "complément",
-   "corps": "Principe selon lequel une décision se prend au **niveau le plus proche** des citoyens concernés, tant que cet échelon peut agir efficacement ; sinon on remonte d'un cran. Explique le rôle des collectivités dans l'[[agenda21|Agenda 21 local]] (voir [[niveaux]])."
+   "corps": "Principe selon lequel une décision se prend au **niveau le plus proche** des citoyens concernés, tant que cet échelon peut agir efficacement ; sinon on remonte d'un cran. Explique le rôle des collectivités dans l'[[agenda21|Agenda 21 local]] (voir [[niveaux]]).",
+   "schema": "niveaux"
   },
   {
    "id": "odd",
    "titre": "ODD et Agenda 2030",
    "o": "slides + complément",
-   "corps": "17 objectifs de développement durable, 169 cibles, adoptés en 2015 par les 193 États de l'ONU dans l'Agenda 2030. Référentiel des enjeux du [[dd|DD]], universels, interdépendants. Ils prennent la suite des [[omd|OMD]]. L'ODD 17 (partenariats) est le pilier de l'ensemble : voir [[gouvernance]]. Les entreprises ([[rse|RSE]]) et les collectivités y contribuent."
+   "corps": "17 objectifs de développement durable, 169 cibles, adoptés en 2015 par les 193 États de l'ONU dans l'Agenda 2030. Référentiel des enjeux du [[dd|DD]], universels, interdépendants. Ils prennent la suite des [[omd|OMD]]. L'ODD 17 (partenariats) est le pilier de l'ensemble : voir [[gouvernance]]. Les entreprises ([[rse|RSE]]) et les collectivités y contribuent.",
+   "schema": "odd"
   },
   {
    "id": "omd",
@@ -114,7 +119,7 @@
    "id": "dd-q-definition",
    "force": 2,
    "q": "Qu'est-ce que le développement durable ?",
-   "rep": "<p><b>Définition (à citer mot pour mot).</b> {S} « Le développement durable est un mode de développement qui répond aux besoins des générations présentes sans compromettre la capacité des générations futures de répondre aux leurs. » (Brundtland)</p>\n  <p>{C} Cette définition vient du rapport Brundtland ; le Sommet de la Terre de Rio (1992) en fait la pierre angulaire des négociations.</p>\n  <p><b>Développement.</b> {S} Le DD n'est pas qu'environnemental : il <b>concilie de manière intégrée et équilibrée</b> trois piliers, l'équité sociale, l'efficacité économique et la préservation environnementale ({{dd-q-equite-efficacite}}). Il repose sur <b>4 principes</b> : solidarité, précaution, participation, responsabilité. Il se joue à <b>4 niveaux</b> ({{dd-q-niveaux}}) et a pour référentiel les <b>ODD</b> ({{dd-q-odd}}).</p>\n  <p>{O} Conseil du prof : réutilise cette définition dans les autres réponses.</p>",
+   "rep": "<p><b>Définition (à citer mot pour mot).</b> {S} « Le [[dd|développement durable]] est un mode de développement qui répond aux besoins des générations présentes sans compromettre la capacité des générations futures de répondre aux leurs. » (Brundtland)</p>\n  <p>{C} Cette définition vient du rapport Brundtland ; le [[rio1992|Sommet de la Terre de Rio (1992)]] en fait la pierre angulaire des négociations.</p>\n  <p><b>Développement.</b> {S} Le DD n'est pas qu'environnemental : il <b>concilie de manière intégrée et équilibrée</b> [[piliers|trois piliers]], l'[[equite|équité sociale]], l'[[efficacite|efficacité économique]] et la [[preservation|préservation environnementale]] ({{dd-q-equite-efficacite}}). Il repose sur [[principes|<b>4 principes</b>]] : solidarité, précaution, [[participation|participation, responsabilité]]. Il se joue à [[niveaux|<b>4 niveaux</b>]] ({{dd-q-niveaux}}) et a pour référentiel les [[odd|<b>ODD</b>]] ({{dd-q-odd}}).</p>\n  <p>{O} Conseil du prof : réutilise cette définition dans les autres réponses.</p>",
    "pts": [
     "répond aux besoins des générations présentes",
     "sans compromettre la capacité des générations futures de répondre aux leurs",
@@ -135,13 +140,14 @@
     "dd",
     "piliers",
     "principes"
-   ]
+   ],
+   "schema": "piliers"
   },
   {
    "id": "dd-q-principes",
    "force": 1,
    "q": "Quels sont les 4 grands principes du développement durable ?",
-   "rep": "<p><b>Vue d'ensemble.</b> {S} Le développement durable ({{dd-q-definition}}) repose sur <b>4 principes</b> : <b>solidarité</b>, <b>précaution</b>, <b>participation</b> et <b>responsabilité</b>. Ils guident la manière de concilier les 3 piliers (social, économique, environnemental).</p>\n  <ul><li><b>Solidarité.</b> {S} Entre les peuples et entre les générations : solidarité <b>intragénérationnelle</b> (entre les humains d'aujourd'hui, par exemple la répartition des richesses) et <b>intergénérationnelle</b> (ne pas compromettre les besoins des générations futures). Voir {{dd-q-equite-efficacite}}.</li>\n  <li><b>Précaution.</b> {S} Évaluer les conséquences <b>avant</b> d'agir, et pouvoir <b>renoncer</b> à une action dont les conséquences sont aléatoires ou imprévisibles. {C} La Déclaration de Rio (1992, principe 15) précise que l'absence de certitude scientifique absolue ne doit pas servir de prétexte pour retarder des mesures contre un risque de dommage grave ou irréversible ; en France, il figure dans la <b>Charte de l'environnement</b> (2005).</li>\n  <li><b>Participation.</b> {S} Associer la <b>population aux prises de décision</b>, avec une information, voire une formation, robuste ({{dd-q-participation}}).</li>\n  <li><b>Responsabilité.</b> {S} À l'échelle <b>individuelle et collective</b> : chacun (citoyen, entreprise, collectivité, État) répond de ses actes et de leurs impacts ({{dd-q-niveaux}}). {C} Il est souvent rapproché du principe <b>pollueur-payeur</b> : celui qui cause un dommage en supporte le coût ({{dd-q-externalite}}).</li></ul>\n  <p>{O} Astuce : donne pour chaque principe sa définition <b>et</b> un exemple concret, plus tu détailles mieux c'est.</p>",
+   "rep": "<p><b>Vue d'ensemble.</b> {S} Le [[dd|développement durable]] ({{dd-q-definition}}) repose sur <b>[[principes|4 principes]]</b> : <b>solidarité</b>, <b>précaution</b>, [[participation|<b>participation</b>]] et <b>responsabilité</b>. Ils guident la manière de concilier les [[piliers|3 piliers]] (social, économique, environnemental).</p>\n  <ul><li><b>Solidarité.</b> {S} Entre les peuples et entre les générations : solidarité <b>intragénérationnelle</b> (entre les humains d'aujourd'hui, par exemple la [[equite|répartition des richesses]]) et <b>intergénérationnelle</b> (ne pas compromettre les besoins des générations futures). Voir {{dd-q-equite-efficacite}}.</li>\n  <li><b>Précaution.</b> {S} Évaluer les conséquences <b>avant</b> d'agir, et pouvoir <b>renoncer</b> à une action dont les conséquences sont aléatoires ou imprévisibles. {C} La [[rio1992|Déclaration de Rio]] (1992, principe 15) précise que l'absence de certitude scientifique absolue ne doit pas servir de prétexte pour retarder des mesures contre un risque de dommage grave ou irréversible ; en France, il figure dans la <b>Charte de l'environnement</b> (2005).</li>\n  <li><b>Participation.</b> {S} Associer la <b>population aux prises de décision</b>, avec une information, voire une formation, robuste ({{dd-q-participation}}).</li>\n  <li><b>Responsabilité.</b> {S} À l'échelle <b>individuelle et collective</b> : chacun (citoyen, entreprise, collectivité, État) répond de ses actes et de leurs impacts ({{dd-q-niveaux}}). {C} Il est souvent rapproché du principe [[externalite|<b>pollueur-payeur</b>]] : celui qui cause un dommage en supporte le coût ({{dd-q-externalite}}).</li></ul>\n  <p>{O} Astuce : donne pour chaque principe sa définition <b>et</b> un exemple concret, plus tu détailles mieux c'est.</p>",
    "pts": [
     "<b>4 principes</b>",
     "<b>solidarité</b>",
@@ -169,7 +175,7 @@
    "id": "dd-q-odd",
    "force": 2,
    "q": "Qu'est-ce qu'un ODD ?",
-   "rep": "<p><b>Définition.</b> Un ODD est un <b>Objectif de développement durable</b>. {C} Il y en a <b>17</b>, déclinés en <b>169 cibles</b>. Ils ont été adoptés en <b>septembre 2015</b> par les <b>193 États membres de l'ONU</b> dans l'<b>Agenda 2030</b>, à atteindre d'ici 2030.</p>\n  <p><b>À quoi ils servent.</b> {S} Ils sont le <b>référentiel des enjeux du DD</b> : 17 priorités pour un développement socialement équitable, sûr pour l'environnement, économiquement prospère et inclusif. Ils concernent <b>toutes les organisations et tous les pays</b>.</p>\n  <p><b>Avant eux.</b> {S} Ils prennent la suite des <b>8 Objectifs du Millénaire (OMD)</b>, centrés sur les pays en développement pour 2000-2015. {C} Contrairement aux OMD, les ODD sont <b>universels</b> et intègrent davantage l'environnement.</p>\n  <p><b>Points à ajouter.</b> {O} L'Agenda 2030 est signé par tous les pays et décliné par chacun (ex. l'Agenda 2030 de la France). {S} L'<b>ODD 17</b> (partenariats) est le pilier de l'Agenda 2030 et celui qui a le plus de cibles. {C} Les ODD sont <b>interdépendants</b>.</p>",
+   "rep": "<p><b>Définition.</b> Un ODD est un [[odd|<b>Objectif de développement durable</b>]]. {C} Il y en a <b>17</b>, déclinés en <b>169 cibles</b>. Ils ont été adoptés en <b>septembre 2015</b> par les <b>193 États membres de l'ONU</b> dans l'<b>Agenda 2030</b>, à atteindre d'ici 2030.</p>\n  <p><b>À quoi ils servent.</b> {S} Ils sont le <b>référentiel des enjeux du DD</b> : 17 priorités pour un développement socialement équitable, sûr pour l'environnement, économiquement prospère et inclusif. Ils concernent <b>toutes les organisations et tous les pays</b>.</p>\n  <p><b>Avant eux.</b> {S} Ils prennent la suite des [[omd|<b>8 Objectifs du Millénaire (OMD)</b>]], centrés sur les pays en développement pour 2000-2015. {C} Contrairement aux OMD, les ODD sont <b>universels</b> et intègrent davantage l'environnement.</p>\n  <p><b>Points à ajouter.</b> {O} L'Agenda 2030 est signé par tous les pays et décliné par chacun (ex. l'Agenda 2030 de la France). {S} L'[[partenariats|<b>ODD 17</b>]] (partenariats) est le pilier de l'Agenda 2030 et celui qui a le plus de cibles. {C} Les ODD sont <b>interdépendants</b>.</p>",
    "pts": [
     "<b>Objectif de développement durable</b>",
     "<b>17</b>",
@@ -197,13 +203,14 @@
    "notes": [
     "odd",
     "omd"
-   ]
+   ],
+   "schema": "odd"
   },
   {
    "id": "dd-q-17-odd",
    "force": 2,
    "q": "Cite les 17 ODD.",
-   "rep": "<ol class=\"odd\"><li>Pas de pauvreté</li><li>Faim « zéro »</li><li>Bonne santé et bien-être</li><li>Éducation de qualité</li><li>Égalité entre les sexes</li><li>Eau propre et assainissement</li><li>Énergie propre et d'un coût abordable</li><li>Travail décent et croissance économique</li><li>Industrie, innovation et infrastructure</li><li>Inégalités réduites</li><li>Villes et communautés durables</li><li>Consommation et production responsables</li><li>Lutte contre les changements climatiques</li><li>Vie aquatique</li><li>Vie terrestre</li><li>Paix, justice et institutions efficaces</li><li>Partenariats pour la réalisation des objectifs</li></ol>\n  <p>{C} L'Agenda 2030 les regroupe en <b>5P</b> : planète, population, prospérité, paix, partenariats. {S} ODD qui concernent surtout les entreprises : 4, 5, 7, 8, 11, 12, 13, 16, 17.</p>\n  <p class=\"astuce\"><b>Astuce :</b> 1 à 6 = besoins de base (pauvreté, faim, santé, éducation, égalité, eau) · 7 à 12 = économie et villes · 13 à 15 = planète (climat, mer, terre) · 16-17 = institutions et coopération.</p>",
+   "rep": "<ol class=\"odd\"><li>Pas de pauvreté</li><li>Faim « zéro »</li><li>Bonne santé et bien-être</li><li>Éducation de qualité</li><li>Égalité entre les sexes</li><li>Eau propre et assainissement</li><li>Énergie propre et d'un coût abordable</li><li>Travail décent et croissance économique</li><li>Industrie, innovation et infrastructure</li><li>[[equite|Inégalités réduites]]</li><li>Villes et communautés durables</li><li>[[eco-circulaire|Consommation et production responsables]]</li><li>Lutte contre les changements climatiques</li><li>Vie aquatique</li><li>[[biodiversite|Vie terrestre]]</li><li>Paix, justice et institutions efficaces</li><li>[[partenariats|Partenariats pour la réalisation des objectifs]]</li></ol>\n  <p>{C} L'Agenda 2030 les regroupe en [[odd|<b>5P</b>]] : planète, population, prospérité, paix, partenariats. {S} ODD qui concernent surtout les entreprises : 4, 5, 7, 8, 11, 12, 13, 16, 17.</p>\n  <p class=\"astuce\"><b>Astuce :</b> 1 à 6 = besoins de base (pauvreté, faim, santé, éducation, égalité, eau) · 7 à 12 = économie et villes · 13 à 15 = planète (climat, mer, terre) · 16-17 = institutions et coopération.</p>",
    "pts": [
     "Pas de pauvreté",
     "Faim « zéro »",
@@ -231,13 +238,14 @@
    ],
    "notes": [
     "odd"
-   ]
+   ],
+   "schema": "odd"
   },
   {
    "id": "dd-q-externalite",
    "force": 2,
    "q": "Qu'est-ce qu'une externalité négative ?",
-   "rep": "<p><b>Définition.</b> {C} Une externalité négative est un <b>effet nuisible et involontaire</b> d'une activité sur des <b>tiers</b> (personnes, populations, environnement), <b>sans compensation</b> : son coût est supporté par la collectivité, pas par celui qui le cause. Exemple type : une usine rejette des déchets ou des fumées et inflige une nuisance aux habitants sans les dédommager.</p>\n  <p><b>Dans le cours.</b> {S} L'efficacité économique exige de <b>limiter les externalités négatives</b> des activités humaines sur l'environnement, surtout sur le <b>climat</b> et la <b>biodiversité</b>. Elles sont aujourd'hui liées à une croissance fondée sur l'<b>extraction de ressources naturelles</b>.</p>\n  <p><b>Exemples.</b> {O} Les pylônes télécoms solaires : énergie propre en apparence, mais des infrastructures et des impacts cachés en sous-sol. {C} Embouteillages (chacun gêne les autres), algues vertes liées à l'agriculture intensive.</p>\n  <p><b>Comment les corriger.</b> {C} On les « internalise » : taxe (taxe carbone, principe pollueur-payeur), réglementation, quotas. À l'inverse, une <b>externalité positive</b> profite aux autres (ex. la formation).</p>\n  <p class=\"piege\"><b>Piège :</b> ce n'est pas « un coût imprévu d'un projet ». C'est un coût subi par d'<b>autres</b> que celui qui le cause.</p>",
+   "rep": "<p><b>Définition.</b> {C} Une [[externalite|externalité]] négative est un <b>effet nuisible et involontaire</b> d'une activité sur des <b>tiers</b> (personnes, populations, environnement), <b>sans compensation</b> : son coût est supporté par la collectivité, pas par celui qui le cause. Exemple type : une usine rejette des déchets ou des fumées et inflige une nuisance aux habitants sans les dédommager.</p>\n  <p><b>Dans le cours.</b> {S} [[efficacite|L'efficacité économique]] exige de <b>limiter les externalités négatives</b> des activités humaines sur l'environnement, surtout sur le <b>climat</b> et la [[biodiversite|<b>biodiversité</b>]]. Elles sont aujourd'hui liées à une croissance fondée sur l'<b>extraction de ressources naturelles</b>.</p>\n  <p><b>Exemples.</b> {O} Les pylônes télécoms solaires : énergie propre en apparence, mais des infrastructures et des impacts cachés en sous-sol. {C} Embouteillages (chacun gêne les autres), algues vertes liées à l'agriculture intensive.</p>\n  <p><b>Comment les corriger.</b> {C} On les « internalise » : taxe (taxe carbone, [[principes|principe pollueur-payeur]]), réglementation, quotas. À l'inverse, une <b>externalité positive</b> profite aux autres (ex. la formation).</p>\n  <p class=\"piege\"><b>Piège :</b> ce n'est pas « un coût imprévu d'un projet ». C'est un coût subi par d'<b>autres</b> que celui qui le cause.</p>",
    "pts": [
     "<b>effet nuisible et involontaire</b>",
     "<b>tiers</b>",
@@ -263,7 +271,7 @@
    "id": "dd-q-niveaux",
    "force": 2,
    "q": "À quels niveaux se joue le développement durable ?",
-   "rep": "<p>{S} Les enjeux et les actions du DD se déclinent à <b>4 niveaux</b>. Pour chaque pilier (social, économique, environnemental), on se demande : à chacune des échelles, quelles déclinaisons ?</p>\n  <table><tr><th>Niveau</th><th>Exemples d'acteurs et d'actions</th></tr>\n  <tr><td><b>International</b></td><td>ONU, Agenda 2030 et ODD, Sommets de la Terre, COP ({{dd-q-sommets-cop}})</td></tr>\n  <tr><td><b>National</b></td><td>État : lois NRE, vigilance, PACTE ({{dd-q-lois}}), déclinaison française de l'Agenda 2030</td></tr>\n  <tr><td><b>Local</b></td><td>Collectivités : Agenda 21 local, PLU, marchés publics avec clauses sociales et environnementales</td></tr>\n  <tr><td><b>Individuel</b></td><td>Citoyen, consommateur : principe de responsabilité individuelle, participation</td></tr></table>\n  <p><b>La subsidiarité.</b> {C} Principe selon lequel les décisions sont prises au <b>niveau le plus proche</b> des citoyens concernés, tant que cet échelon peut agir efficacement ; sinon on remonte à l'échelon supérieur.</p>\n  <p>{C} Les actions aux différentes échelles sont <b>interdépendantes</b> : les grands enjeux mondiaux demandent la mobilisation de tous, du citoyen aux organisations internationales. {S} La gouvernance du DD s'organise aussi à ces échelles (internationale, nationale, locale).</p>",
+   "rep": "<p>{S} Les enjeux et les actions du DD se déclinent à <b>[[niveaux|4 niveaux]]</b>. Pour chaque pilier (social, économique, environnemental), on se demande : à chacune des échelles, quelles déclinaisons ?</p>\n  <table><tr><th>Niveau</th><th>Exemples d'acteurs et d'actions</th></tr>\n  <tr><td><b>International</b></td><td>ONU, [[odd|Agenda 2030 et ODD]], [[rio1992|Sommets de la Terre]], [[cop|COP]] ({{dd-q-sommets-cop}})</td></tr>\n  <tr><td><b>National</b></td><td>État : [[loi-nre|lois NRE]], [[vigilance|vigilance]], [[pacte|PACTE]] ({{dd-q-lois}}), déclinaison française de l'Agenda 2030</td></tr>\n  <tr><td><b>Local</b></td><td>Collectivités : [[agenda21|Agenda 21 local]], PLU, marchés publics avec clauses sociales et environnementales</td></tr>\n  <tr><td><b>Individuel</b></td><td>Citoyen, consommateur : [[principes|principe de responsabilité individuelle]], [[participation-citoyenne|participation]]</td></tr></table>\n  <p><b>La [[subsidiarite|subsidiarité]].</b> {C} Principe selon lequel les décisions sont prises au <b>niveau le plus proche</b> des citoyens concernés, tant que cet échelon peut agir efficacement ; sinon on remonte à l'échelon supérieur.</p>\n  <p>{C} Les actions aux différentes échelles sont <b>interdépendantes</b> : les grands enjeux mondiaux demandent la mobilisation de tous, du citoyen aux organisations internationales. {S} [[gouvernance|La gouvernance du DD]] s'organise aussi à ces échelles (internationale, nationale, locale).</p>",
    "pts": [
     "<b>International</b>",
     "<b>National</b>",
@@ -281,13 +289,14 @@
    "notes": [
     "niveaux",
     "subsidiarite"
-   ]
+   ],
+   "schema": "niveaux"
   },
   {
    "id": "dd-q-equite-efficacite",
    "force": 2,
    "q": "Explique l'équité sociale et l'efficacité économique.",
-   "rep": "<p>Ce sont deux des <b>3 piliers</b> du DD, avec la préservation environnementale.</p>\n  <p><b>Équité sociale.</b> {S}</p>\n  <ul><li>Liée au principe de <b>solidarité</b> ; vise la <b>lutte contre les inégalités</b> dans le monde.</li>\n  <li>Satisfaire de manière égalitaire les <b>besoins essentiels</b> : logement, alimentation de qualité, santé, éducation, dans le respect des cultures. C'est le <b>fondement de la paix</b>.</li>\n  <li>Réaffirmée par l'<b>Agenda 2030</b> : « ne laisser personne de côté ».</li>\n  <li>Depuis le <b>COVID</b>, les inégalités se sont creusées ; les crises et les catastrophes climatiques frappent d'abord les plus vulnérables → <b>justice sociale et environnementale</b> (climatique).</li></ul>\n  <p><b>Efficacité économique.</b> {S}</p>\n  <ul><li>Aussi appelée <b>viabilité économique</b> : une gestion saine et durable, qui utilise les ressources naturelles de manière <b>raisonnée</b>, sans nuire à l'environnement ni aux humains.</li>\n  <li>Elle exige de limiter les <b>externalités négatives</b> ({{dd-q-externalite}}) sur le climat et la biodiversité, liées à une croissance fondée sur l'extraction.</li>\n  <li>Elle se pense avec la solidarité <b>intergénérationnelle</b> ; la <b>répartition des richesses</b> renvoie à la solidarité <b>intragénérationnelle</b>.</li></ul>\n  <p>{O} Une économie qui tourne bien ne garantit pas un environnement durable ; le PIB est mis en avant alors qu'il ne mesure pas le bien-être des gens.</p>",
+   "rep": "<p>Ce sont deux des [[piliers|<b>3 piliers</b>]] du DD, avec la [[preservation|préservation environnementale]].</p>\n  <p><b>[[equite|Équité sociale]].</b> {S}</p>\n  <ul><li>Liée au principe de [[principes|<b>solidarité</b>]] ; vise la <b>lutte contre les inégalités</b> dans le monde.</li>\n  <li>Satisfaire de manière égalitaire les <b>besoins essentiels</b> : logement, alimentation de qualité, santé, éducation, dans le respect des cultures. C'est le <b>fondement de la paix</b>.</li>\n  <li>Réaffirmée par l'[[odd|<b>Agenda 2030</b>]] : « ne laisser personne de côté ».</li>\n  <li>Depuis le <b>COVID</b>, les inégalités se sont creusées ; les crises et les catastrophes climatiques frappent d'abord les plus vulnérables → <b>justice sociale et environnementale</b> (climatique).</li></ul>\n  <p><b>[[efficacite|Efficacité économique]].</b> {S}</p>\n  <ul><li>Aussi appelée <b>viabilité économique</b> : une gestion saine et durable, qui utilise les ressources naturelles de manière <b>raisonnée</b>, sans nuire à l'environnement ni aux humains.</li>\n  <li>Elle exige de limiter les [[externalite|<b>externalités négatives</b>]] ({{dd-q-externalite}}) sur le climat et la [[biodiversite|biodiversité]], liées à une croissance fondée sur l'extraction.</li>\n  <li>Elle se pense avec la solidarité <b>intergénérationnelle</b> ; la <b>répartition des richesses</b> renvoie à la solidarité <b>intragénérationnelle</b>.</li></ul>\n  <p>{O} Une économie qui tourne bien ne garantit pas un environnement durable ; le PIB est mis en avant alors qu'il ne mesure pas le bien-être des gens.</p>",
    "pts": [
     "<b>lutte contre les inégalités</b>",
     "<b>besoins essentiels</b>",
@@ -304,13 +313,14 @@
    "notes": [
     "equite",
     "efficacite"
-   ]
+   ],
+   "schema": "piliers"
   },
   {
    "id": "dd-q-participation",
    "force": 1,
    "q": "Explique le principe de participation.",
-   "rep": "<p><b>Définition.</b> {S} Le principe de participation consiste à <b>associer la population aux prises de décision</b>, surtout quand elles ont des impacts sociaux et/ou environnementaux. Il exige des processus d'<b>information</b>, voire de <b>formation</b>, robustes, pour que le plus grand nombre sache comment et pourquoi participer.</p>\n  <p><b>Où on le retrouve.</b></p>\n  <ul><li>{S} C'est l'un des <b>4 principes</b> du DD (avec solidarité, précaution, responsabilité).</li>\n  <li>{S} L'<b>Agenda 21 local</b> naît d'un « mécanisme de consultation de la population » ; la participation fait partie de ses <b>5 principes de méthode</b>.</li>\n  <li>{S} Gouvernance : on passe de l'<b>information à la participation</b> des citoyens ; impliquer permet de <b>limiter les conflits</b> et rend la démarche plus acceptable.</li></ul>\n  <p>{C} On distingue souvent plusieurs degrés : informer, consulter, concerter, co-construire.</p>",
+   "rep": "<p><b>Définition.</b> {S} Le [[participation|principe de participation]] consiste à <b>associer la population aux prises de décision</b>, surtout quand elles ont des impacts sociaux et/ou environnementaux. Il exige des processus d'<b>information</b>, voire de <b>formation</b>, robustes, pour que le plus grand nombre sache comment et pourquoi participer.</p>\n  <p><b>Où on le retrouve.</b></p>\n  <ul><li>{S} C'est l'un des [[principes|<b>4 principes</b>]] du DD (avec solidarité, précaution, responsabilité).</li>\n  <li>{S} L'[[agenda21|<b>Agenda 21 local</b>]] naît d'un « mécanisme de consultation de la population » ; la participation fait partie de ses <b>5 principes de méthode</b>.</li>\n  <li>{S} [[gouvernance|Gouvernance]] : on passe de l'[[participation-citoyenne|<b>information à la participation</b>]] des citoyens ; impliquer permet de <b>limiter les conflits</b> et rend la démarche plus acceptable.</li></ul>\n  <p>{C} On distingue souvent plusieurs degrés : informer, consulter, concerter, co-construire.</p>",
    "pts": [
     "<b>associer la population aux prises de décision</b>",
     "<b>information</b>",

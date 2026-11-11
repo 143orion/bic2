@@ -8,11 +8,11 @@
   "notes de cours de la classe"
  ],
  "essentiel": [
-  "<b>Gouvernance</b> : du grec <i>kubernân</i> (piloter un navire) ; revient dans les années 1990 au sens d'une gestion qui associe la société civile.",
-  "Les <b>partenariats</b> sont un principe fondamental depuis Rio ; <b>ODD 17</b> = pilier de l'Agenda 2030 (le plus de cibles).",
-  "<b>Partie prenante</b> (<i>stakeholder</i>) : tout acteur dont les intérêts sont affectés par une décision.",
-  "Dialoguer avec ses parties prenantes : enjeu stratégique et réglementaire (vigilance 2017, PACTE 2019).",
-  "<b>Participation citoyenne</b> : de l'information à la participation, impliquer pour limiter les conflits."
+  "<b>[[gouvernance|Gouvernance]]</b> : du grec <i>kubernân</i> (piloter un navire) ; revient dans les années 1990 au sens d'une gestion qui associe la société civile.",
+  "Les <b>partenariats</b> sont un principe fondamental depuis [[rio1992|Rio]] ; <b>[[odd|ODD]] 17</b> = pilier de l'Agenda 2030 (le plus de cibles).",
+  "<b>[[partie-prenante|Partie prenante]]</b> (<i>stakeholder</i>) : tout acteur dont les intérêts sont affectés par une décision.",
+  "Dialoguer avec ses parties prenantes : enjeu stratégique et réglementaire (vigilance 2017, [[pacte|PACTE]] 2019).",
+  "<b>[[participation-citoyenne|Participation citoyenne]]</b> : de l'information à la participation, impliquer pour limiter les conflits."
  ],
  "fil": [
   "gouvernance",
@@ -34,7 +34,7 @@
    "id": "partenariats",
    "titre": "Les partenariats, impératif de gouvernance",
    "o": "slides",
-   "corps": "Depuis la **Déclaration de Rio**, le partenariat est un principe fondamental : « un partenariat mondial sur une base nouvelle et équitable ». Coalitions autour d'ambitions communes (9 nouvelles à la COP21, voir [[cop]]). L'**ODD 17** fait des partenariats le moyen indispensable des 16 autres ; c'est l'ODD qui a le plus de cibles (voir [[odd]])."
+   "corps": "Depuis la **[[rio1992|Déclaration de Rio]]**, le partenariat est un principe fondamental : « un partenariat mondial sur une base nouvelle et équitable ». Coalitions autour d'ambitions communes (9 nouvelles à la COP21, voir [[cop]]). L'**ODD 17** fait des partenariats le moyen indispensable des 16 autres ; c'est l'ODD qui a le plus de cibles (voir [[odd]])."
   },
   {
    "id": "gouvernance-partagee",
@@ -60,7 +60,7 @@
    "id": "dd-q-gouvernance",
    "force": 1,
    "q": "Qu'est-ce que la gouvernance ?",
-   "rep": "<p><b>Définition simple.</b> {O} La gouvernance, c'est la <b>manière dont un projet est piloté</b> : qui a quel rôle, quels objectifs, comment on décide.</p>\n  <p><b>Origine.</b> {S} Du grec <i>kubernân</i>, « piloter un navire ou un char » (Platon l'applique aux hommes), puis du latin <i>gubernare</i>. Au 13e siècle, synonyme de « gouvernement ». Le mot revient au début des <b>années 1990</b> avec un sens nouveau : une manière de gouverner qui se détache de l'institution « gouvernement » et repose sur la <b>participation de la société civile</b>, c'est-à-dire de tous les acteurs autres que l'État.</p>\n  <p><b>Gouvernance du DD.</b> {S} Elle s'organise à plusieurs échelles (internationale, nationale, locale) et repose sur les <b>partenariats multi-acteurs</b> (principe fondamental depuis Rio ; ODD 17). Une <b>gouvernance partagée</b> permet : mutualisation des moyens, prise en compte des expertises de terrain, portage plus solide, acceptabilité et accompagnement au changement.</p>",
+   "rep": "<p><b>Définition simple.</b> {O} La [[gouvernance|gouvernance]], c'est la <b>manière dont un projet est piloté</b> : qui a quel rôle, quels objectifs, comment on décide.</p>\n  <p><b>Origine.</b> {S} Du grec <i>kubernân</i>, « piloter un navire ou un char » (Platon l'applique aux hommes), puis du latin <i>gubernare</i>. Au 13e siècle, synonyme de « gouvernement ». Le mot revient au début des <b>années 1990</b> avec un sens nouveau : une manière de gouverner qui se détache de l'institution « gouvernement » et repose sur la [[participation-citoyenne|<b>participation de la société civile</b>]], c'est-à-dire de tous les acteurs autres que l'État.</p>\n  <p><b>Gouvernance du DD.</b> {S} Elle s'organise à [[niveaux|plusieurs échelles]] (internationale, nationale, locale) et repose sur les [[partenariats|<b>partenariats multi-acteurs</b>]] (principe fondamental depuis [[rio1992|Rio]] ; [[odd|ODD 17]]). Une [[gouvernance-partagee|<b>gouvernance partagée</b>]] permet : mutualisation des moyens, prise en compte des expertises de terrain, portage plus solide, acceptabilité et accompagnement au changement.</p>",
    "pts": [
     "<b>manière dont un projet est piloté</b>",
     "<i>kubernân</i>",

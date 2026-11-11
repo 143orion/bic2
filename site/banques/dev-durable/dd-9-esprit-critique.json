@@ -11,7 +11,7 @@
   "Esprit <b>critique</b> ≠ esprit <b>de critique</b> (dénigrement systématique).",
   "Le <b>doute</b> méthodique (Claude Bernard 1865, Bachelard 1934) ; doute ≠ dogme.",
   "Indispensable face à la désinformation, aux biais et à la polarisation (cas ChatGPT).",
-  "Outils : fact-checking, débunkage, <b>méthode des 5 pourquoi</b> (aller aux causes racines)."
+  "Outils : fact-checking, débunkage, <b>méthode des [[cinq-pourquoi|5 pourquoi]]</b> (aller aux causes racines)."
  ],
  "fil": [
   "esprit-critique",
@@ -36,7 +36,7 @@
    "id": "pourquoi-critique",
    "titre": "Pourquoi l'esprit critique aujourd'hui",
    "o": "slides",
-   "corps": "Désinformation, fatigue mentale, difficulté à garder son esprit critique, **renforcement des biais**, **polarisation** de la société (voir [[bulle-filtre]]) ; le cas ChatGPT, qui produit des textes plausibles sans garantie d'exactitude. « Ce qui est affirmé sans preuve peut être rejeté sans preuve » (C. Hitchens). Outils : fact-checking, debunking, [[cinq-pourquoi]]."
+   "corps": "Désinformation, fatigue mentale, difficulté à garder son [[esprit-critique|esprit critique]], **renforcement des biais**, **polarisation** de la société (voir [[bulle-filtre]]) ; le cas ChatGPT, qui produit des textes plausibles sans garantie d'exactitude. « Ce qui est affirmé sans preuve peut être rejeté sans preuve » (C. Hitchens). Outils : fact-checking, debunking, [[cinq-pourquoi]]."
   },
   {
    "id": "cinq-pourquoi",

@@ -92,6 +92,7 @@ body.dd-intro .dd-mk.f2{animation:dd-pulse .7s ease-in-out 2}
 .dd-prov{display:inline-block;font:italic 10px/1.6 var(--dd-mono);padding:0 7px;border-radius:999px;background:rgba(255,255,255,.07);color:var(--dd-gris);margin-top:4px}
 .dd-wl{color:var(--dd-lien);text-decoration:none;text-shadow:0 0 6px color-mix(in srgb,var(--m-ac) 45%,transparent);cursor:pointer}
 .dd-wl::before{content:"[[";opacity:.35;font:.8em var(--dd-mono)}.dd-wl::after{content:"]]";opacity:.35;font:.8em var(--dd-mono)}
+.dd-wl b,.dd-wl strong{color:inherit}
 .dd-wl:hover{color:var(--dd-lien2);text-shadow:0 0 10px color-mix(in srgb,var(--m-ac) 80%,transparent)}
 .dd-ref{border:none;background:none;color:var(--violet-clair,#b893e0);text-decoration:underline;padding:0;font:inherit}
 .dd-pn{display:flex;justify-content:space-between;gap:10px;margin:18px 0 6px;flex-wrap:wrap}
@@ -119,6 +120,15 @@ body.dd-intro .dd-mk.f2{animation:dd-pulse .7s ease-in-out 2}
 .dd-graph{width:100%}.dd-graph text{fill:#c3c8c1;font:10.5px var(--dd-mono)}.dd-graph .gc{fill:#fff;font-weight:700;font-size:12px}.dd-gn{cursor:pointer}.dd-gn:hover circle{stroke:#fff;stroke-width:2}
 .dd-gleg{display:flex;gap:12px;font-size:10.5px;color:var(--dd-gris);justify-content:center}
 .dd-dates .dd-fe{display:grid;grid-template-columns:90px 1fr;gap:12px;padding:6px 0;border-bottom:1px solid var(--dd-bord)}.dd-dates .dd-an{color:#fff;font-weight:800;text-align:right}
+/* schémas */
+.dd-sch{margin:18px 0 6px;padding:12px 14px 10px;border-radius:10px;border:1px solid var(--dd-bord);background:rgba(0,0,0,.22)}
+.dd-sch svg{display:block;width:100%;height:auto;max-height:70vh}
+.dd-sch figcaption{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:baseline;margin-top:8px;font-size:12px}.dd-sch figcaption b{color:#fff}
+.dd-sch figcaption span{color:var(--dd-gris);font-size:11px;flex:1}
+.dd-sch .dd-sl{cursor:pointer;outline:none}.dd-sch .dd-sl:not(.dd-tuile) text{fill:var(--dd-lien);text-decoration:underline dotted;text-underline-offset:3px}
+.dd-sch .dd-sl:not(.dd-tuile):hover text,.dd-sch .dd-sl:focus-visible text{fill:#fff}.dd-sch .dd-tuile:hover rect,.dd-sch .dd-tuile:focus-visible rect{stroke:#fff;stroke-width:3}.dd-sch .dd-tuile text{text-decoration:underline dotted;text-underline-offset:3px}
+.dd-zoom .dd-sch{border:none;background:none;padding:0}.dd-zoom .dd-sch svg{max-height:78vh}.dd-zoom [data-zoom]{display:none}
+.dd-tip small{display:block;margin-top:6px;color:var(--dd-gris);font-size:10.5px}
 /* aperçu au survol */
 .dd-tip{position:fixed;z-index:80;display:none;max-width:320px;padding:10px 12px;border-radius:8px;background:#202420;border:1px solid rgba(207,207,207,.15);box-shadow:0 10px 30px rgba(0,0,0,.5);font:12px/1.5 'JetBrains Mono',monospace;color:#d8ddd6;pointer-events:none}
 .dd-tip b{color:#fff}.dd-tip p{margin:4px 0 0;color:#c3c8c1;font:14px/1.45 'Newsreader',Georgia,serif}
@@ -225,7 +235,8 @@ function md(b){
 }
 const plain = b => String(b).replace(lienRe, (m, id, tx) => tx || (S.notes[id] ? S.notes[id].titre : id)).replace(/\*\*|\*/g, "").replace(/^- /gm, "");
 const SRC = {S:'<span class="dd-src s">slides</span>', O:'<span class="dd-src o">dit en cours</span>', C:'<span class="dd-src c">complément</span>'};
-const html = h => String(h).replace(/\{([SOC])\}/g, (m, k) => SRC[k]).replace(/\{\{(dd-q-[a-z0-9-]+)\}\}/g, (m, id) => `<button class="dd-ref" data-q="${id}">cf. Q${QN(id)}</button>`)
+const sansLiens = h => String(h).replace(lienRe, (m, id, tx) => tx || (S.notes[id] ? esc(S.notes[id].titre) : id));
+const html = h => String(h).replace(lienRe, (m, id, tx) => S.notes[id] ? `<a class="dd-wl" data-n="${id}" tabindex="0">${tx || esc(S.notes[id].titre)}</a>` : (tx || id)).replace(/\{([SOC])\}/g, (m, k) => SRC[k]).replace(/\{\{(dd-q-[a-z0-9-]+)\}\}/g, (m, id) => `<button class="dd-ref" data-q="${id}">cf. Q${QN(id)}</button>`)
   .replace(/class="odd"/g, 'class="dd-odd"').replace(/class="piege"/g, 'class="dd-piege"').replace(/class="astuce"/g, 'class="dd-astuce"');
 const entrants = id => Object.keys(S.notes).filter(k => k !== id && [...S.notes[k].corps.matchAll(lienRe)].some(m => m[1] === id));
 const sortants = id => [...new Set([...S.notes[id].corps.matchAll(lienRe)].map(m => m[1]).filter(x => S.notes[x] && x !== id))];
@@ -233,6 +244,160 @@ const qDeNote = id => S.questions.filter(q => (q.notes || []).includes(id));
 const chipN = id => `<a class="dd-chipn dd-wl-chip" data-n="${id}" tabindex="0" style="--c:${S.couleur[S.proprio[id]] || "#888"}">${esc(S.notes[id].titre)}</a>`;
 const chipQ = q => `<a class="dd-chipq" data-q="${q.id}" tabindex="0">${mk(q.force)}Q${QN(q.id)} ${esc(q.q)}</a>`;
 const srcHTML = q => q.src && q.src.length ? `<div class="dd-bl"><b>Sources</b>${q.src.map(s => `<a href="${esc(s[1])}" target="_blank" rel="noopener" style="display:block;font-size:12px">${esc(s[0])}</a>`).join("")}</div>` : "";
+
+/* ---------------- schémas (SVG redessinés d'après les schémas de référence ; champ `schema` d'une note ou d'une question) ----------------
+   Libellés cliquables (.dd-sl, data-n) = liens [[…]] : clic → aperçu, double-clic → ouvrir. */
+let SID = 0;
+const pol = (cx, cy, r, d) => [+(cx + r*Math.sin(d*Math.PI/180)).toFixed(1), +(cy - r*Math.cos(d*Math.PI/180)).toFixed(1)];
+const okN = n => n && S.notes[n];
+const lg = (n, inner, cl = "") => okN(n) ? `<g class="dd-sl ${cl}" data-n="${n}" tabindex="0">${inner}</g>` : inner;
+const tl = (x, y, lignes, a = "", lh = 14) => `<text x="${x}" y="${y}" ${a}>${[].concat(lignes).map((l, i) => `<tspan x="${x}" dy="${i ? lh : 0}">${esc(l)}</tspan>`).join("")}</text>`;
+function coupe(t, n){ const r = []; let l = ""; for(const w of t.split(" ")){ if(l && (l + " " + w).length > n){ r.push(l); l = w; } else l = l ? l + " " + w : w; } return l ? [...r, l] : r; }
+function secteur(cx, cy, r0, r1, a0, a1){
+  const [x0, y0] = pol(cx, cy, r1, a0), [x1, y1] = pol(cx, cy, r1, a1), g = a1 - a0 > 180 ? 1 : 0;
+  if(!r0) return `M${cx} ${cy}L${x0} ${y0}A${r1} ${r1} 0 ${g} 1 ${x1} ${y1}Z`;
+  const [x2, y2] = pol(cx, cy, r0, a1), [x3, y3] = pol(cx, cy, r0, a0);
+  return `M${x0} ${y0}A${r1} ${r1} 0 ${g} 1 ${x1} ${y1}L${x2} ${y2}A${r0} ${r0} 0 ${g} 0 ${x3} ${y3}Z`;
+}
+/* texte courbé le long d'un cercle (centré sur l'angle c, demi-ouverture h), retourné en bas pour rester lisible */
+function arcTexte(cx, cy, R, c, h, lignes, fs, a = "", n, cl = ""){
+  const bas = c > 95 && c < 265, d = fs*.62; let out = "";
+  lignes.forEach((t, i) => {
+    const k = lignes.length === 1 ? 0 : (i === 0 ? d : -d), r = bas ? R - k + fs*.35 : R + k - fs*.35, id = "dd-a" + (++SID);
+    const [x0, y0] = pol(cx, cy, r, bas ? c + h : c - h), [x1, y1] = pol(cx, cy, r, bas ? c - h : c + h);
+    out += `<path id="${id}" d="M${x0} ${y0}A${r} ${r} 0 0 ${bas ? 0 : 1} ${x1} ${y1}" fill="none"/><text font-size="${fs}" ${a}><textPath href="#${id}" startOffset="50%" text-anchor="middle">${esc(t)}</textPath></text>`;
+  });
+  return lg(n, out, cl);
+}
+/* frise chronologique : événements au-dessus et au-dessous de l'axe, étagés pour ne pas se chevaucher */
+function frise(o){
+  const W = 720, X0 = 40, X1 = 690, ax = 170, x = a => X0 + (a - o.debut)/(o.fin - o.debut)*(X1 - X0);
+  let s = `<line x1="${X0 - 10}" y1="${ax}" x2="${X1 + 14}" y2="${ax}" stroke="#8a8a8a" stroke-width="2"/><path d="M${X1 + 14} ${ax - 5}l8 5-8 5z" fill="#8a8a8a"/>`;
+  for(let a = Math.ceil(o.debut/10)*10; a <= o.fin; a += 10) s += `<line x1="${x(a)}" y1="${ax - 4}" x2="${x(a)}" y2="${ax + 4}" stroke="#8a8a8a"/>${tl(x(a), ax + (a % 20 ? 16 : 16), a, 'font-size="9" text-anchor="middle" fill="#8a8a8a"')}`;
+  const km = {};
+  const pose = (evs, sens, coul) => {
+    const fins = [];
+    for(const [an, lab, n] of [...evs].sort((p, q) => p[0] - q[0])){
+      const px = x(an), lw = Math.max(String(an).length, lab.length)*6.2 + 10;
+      let k = 0; while(fins[k] !== undefined && fins[k] > px - lw/2) k++;
+      fins[k] = px + lw/2; km[sens] = Math.max(km[sens] || 0, k);
+      const y = ax + sens*(36 + k*30);
+      s += `<line x1="${px}" y1="${ax}" x2="${px}" y2="${y + (sens < 0 ? 6 : -12)}" stroke="${coul}" stroke-opacity=".5"/><circle cx="${px}" cy="${ax}" r="4" fill="${coul}"/>`
+        + lg(n, tl(px, y - (sens < 0 ? 12 : 0), [String(an), lab], `font-size="10.5" text-anchor="middle"`, 13));
+    }
+  };
+  pose(o.haut, -1, o.cHaut); pose(o.bas, 1, o.cBas);
+  s += tl(X0 - 10, ax - 64 - km[-1]*30, o.tHaut, `font-size="10" fill="${o.cHaut}" font-weight="700"`) + tl(X0 - 10, ax + 76 + km[1]*30, o.tBas, `font-size="10" fill="${o.cBas}" font-weight="700"`);
+  return s;
+}
+const ODD = [["#E5243B","Pas de pauvreté"],["#DDA63A","Faim « zéro »"],["#4C9F38","Bonne santé et bien-être"],["#C5192D","Éducation de qualité"],["#FF3A21","Égalité entre les sexes","education-filles"],["#26BDE2","Eau propre et assainissement"],["#FCC30B","Énergie propre et d'un coût abordable"],["#A21942","Travail décent et croissance économique"],["#FD6925","Industrie, innovation et infrastructure"],["#DD1367","Inégalités réduites","equite"],["#FD9D24","Villes et communautés durables","agenda21"],["#BF8B2E","Consommation et production responsables","eco-circulaire"],["#3F7E44","Lutte contre les changements climatiques","cop"],["#0A97D9","Vie aquatique"],["#56C02B","Vie terrestre","biodiversite"],["#00689D","Paix, justice et institutions efficaces","gouvernance"],["#19486A","Partenariats pour la réalisation des objectifs","partenariats"]];
+const SCH = {
+  piliers:{titre:"Les 3 piliers du développement durable", src:"Schéma usuel des 3 piliers (diagramme de Venn)", vb:"0 0 520 445", svg(){
+    const C = [[260,165,"#c76a9b"],[190,285,"#4f9d69"],[330,285,"#d6a23a"]];
+    return C.map(([x, y, c]) => `<circle cx="${x}" cy="${y}" r="120" fill="${c}" fill-opacity=".22" stroke="${c}" stroke-width="2"/>`).join("")
+      + lg("equite", tl(260, 22, ["SOCIAL", "équité sociale"], 'text-anchor="middle" font-size="13" font-weight="700"', 15))
+      + lg("preservation", tl(150, 424, ["ENVIRONNEMENT", "préservation"], 'text-anchor="middle" font-size="13" font-weight="700"', 15))
+      + lg("efficacite", tl(370, 424, ["ÉCONOMIE", "efficacité"], 'text-anchor="middle" font-size="13" font-weight="700"', 15))
+      + tl(193, 212, "Vivable", 'text-anchor="middle" font-size="13" font-style="italic"') + tl(327, 212, "Équitable", 'text-anchor="middle" font-size="13" font-style="italic"')
+      + tl(260, 335, "Viable", 'text-anchor="middle" font-size="13" font-style="italic"')
+      + lg("dd", tl(260, 250, "DURABLE", 'text-anchor="middle" font-size="15" font-weight="800" fill="#fff"'));
+  }},
+  odd:{titre:"Les 17 objectifs de développement durable (Agenda 2030)", src:"Couleurs et intitulés officiels des ODD (ONU, 2015)", vb:"0 0 636 318", svg(){
+    let s = "";
+    ODD.forEach(([c, t, n], i) => { const x = (i % 6)*106, y = Math.floor(i/6)*106;
+      s += lg(n, `<rect x="${x}" y="${y}" width="100" height="100" rx="4" fill="${c}"/>${tl(x + 8, y + 32, i + 1, 'font-size="28" font-weight="800" fill="#fff"')}${tl(x + 7, y + 52, coupe(t, 15), 'font-size="9" fill="#fff" font-weight="600"', 11.5)}`, "dd-tuile"); });
+    return s + `<rect x="530" y="212" width="100" height="100" rx="4" fill="#1c1c1c" stroke="#555"/>${tl(580, 246, ["17 ODD", "169 cibles", "2015 → 2030"], 'font-size="11" text-anchor="middle" fill="#fff" font-weight="700"', 16)}`;
+  }},
+  limites:{titre:"Les 9 limites planétaires : état en 2025", src:"Schéma qualitatif d'après Richardson et al. (2023) et le Planetary Health Check 2025 (Institut de Potsdam)", vb:"-70 0 780 606", svg(){
+    const cx = 320, cy = 285, V = "#7ee787", O = "#ff8f00", R = "#ff4d4d";
+    const L = [[["Changement","climatique"],165,O],[["Nouvelles entités","(chimie, plastiques)"],225,R],[["Ozone","stratosphérique"],70,V],[["Aérosols","atmosphériques"],95,V],[["Acidification","des océans"],125,O],[["Cycles de l'azote","et du phosphore"],225,R],[["Eau douce"],150,O],[["Usage des sols"],150,O],[["Biosphère","(biodiversité)"],225,R,"biodiversite"]];
+    let s = `<circle cx="${cx}" cy="${cy}" r="225" fill="${R}" fill-opacity=".07"/><circle cx="${cx}" cy="${cy}" r="170" fill="${O}" fill-opacity=".09"/><circle cx="${cx}" cy="${cy}" r="110" fill="${V}" fill-opacity=".14"/>`;
+    L.forEach(([lab, r, c, n], i) => { const a = i*40;
+      s += `<path d="${secteur(cx, cy, 0, r, a - 17, a + 17)}" fill="${c}" fill-opacity=".85"/>`;
+      const [x, y] = pol(cx, cy, 240, a), an = Math.sin(a*Math.PI/180), ta = an > .25 ? "start" : an < -.25 ? "end" : "middle";
+      s += lg(n, tl(x, y + (Math.cos(a*Math.PI/180) > .5 ? -8 : Math.cos(a*Math.PI/180) < -.5 ? 10 : 0), lab, `text-anchor="${ta}" font-size="12"`, 14)); });
+    s += `<circle cx="${cx}" cy="${cy}" r="110" fill="none" stroke="${V}" stroke-width="2" stroke-dasharray="6 4"/>` + tl(cx, cy + 4, "espace sûr", 'text-anchor="middle" font-size="11" fill="#fff" font-weight="700"');
+    [[V,"sous la limite"],[O,"dépassée, risque croissant"],[R,"dépassée, risque élevé"]].forEach(([c, t], i) => s += `<rect x="${-20 + i*230}" y="584" width="14" height="14" rx="3" fill="${c}"/>` + tl(i*230, 595, t, 'font-size="11"'));
+    return s + lg("limites", tl(cx, 570, "7 limites sur 9 dépassées (2025)", 'text-anchor="middle" font-size="12" font-weight="700"'));
+  }},
+  donut:{titre:"Le Donut de Kate Raworth", src:"D'après Kate Raworth et Christian Guthier, CC BY-SA 4.0 (Doughnut Economics Action Lab)", vb:"0 0 640 680", svg(){
+    const cx = 320, cy = 320, R = "#ff4d4d";
+    const soc = [["Eau"],["Alimentation"],["Santé"],["Éducation"],["Revenu","et travail"],["Paix","et justice"],["Voix","politique"],["Équité","sociale","equite"],["Égalité","des sexes"],["Logement"],["Réseaux"],["Énergie"]];
+    const eco = [["Changement","climatique"],["Acidification","des océans"],["Pollution","chimique"],["Charge d'azote","et de phosphore"],["Prélèvements","d'eau douce"],["Conversion","des sols"],["Perte de","biodiversité","biodiversite"],["Pollution","de l'air"],["Appauvrissement","de la couche d'ozone"]];
+    let s = "";
+    eco.forEach((e, i) => { s += `<path d="${secteur(cx, cy, 236, 306, i*40 - 19, i*40 + 19)}" fill="${R}" fill-opacity=".1" stroke="${R}" stroke-opacity=".3"/>`; });
+    soc.forEach((e, i) => { s += `<path d="${secteur(cx, cy, 88, 160, i*30 - 14, i*30 + 14)}" fill="${R}" fill-opacity=".1" stroke="${R}" stroke-opacity=".3"/>`; });
+    s += `<circle cx="${cx}" cy="${cy}" r="198" fill="none" style="stroke:var(--m-ac,#4f9d69)" stroke-width="72" stroke-opacity=".85"/>`;
+    eco.forEach((e, i) => { const n = e.length > 2 ? e[2] : null; s += arcTexte(cx, cy, 271, i*40, 30, e.slice(0, 2), 11, "", n); });
+    soc.forEach((e, i) => { const n = e.length > 2 ? e[2] : null; s += arcTexte(cx, cy, 125, i*30, 28, e.slice(0, 2), 9.5, "", n); });
+    s += arcTexte(cx, cy, 221, 0, 60, ["PLAFOND ÉCOLOGIQUE"], 10, 'fill="#fff" letter-spacing="1"', "limites", "dd-tuile")
+      + arcTexte(cx, cy, 198, 0, 80, ["ESPACE SÛR ET JUSTE POUR L'HUMANITÉ"], 12, 'fill="#fff" font-weight="800"')
+      + arcTexte(cx, cy, 175, 0, 50, ["PLANCHER SOCIAL"], 10, 'fill="#fff" letter-spacing="1"', "odd", "dd-tuile")
+      + arcTexte(cx, cy, 198, 180, 85, ["ÉCONOMIE RÉGÉNÉRATIVE ET DISTRIBUTIVE"], 11, 'fill="#fff" font-weight="700"')
+      + tl(cx, cy - 4, ["manques", "(sous le plancher)"], 'text-anchor="middle" font-size="10" fill="#ff8a8a"', 13);
+    return s + `<rect x="150" y="642" width="14" height="14" rx="3" fill="${R}" fill-opacity=".35"/>` + tl(172, 653, "dépassement (au-delà du plafond) · manques (sous le plancher)", 'font-size="11"');
+  }},
+  niveaux:{titre:"Les 4 niveaux du DD et la subsidiarité", src:"Schéma de synthèse du cours", vb:"0 0 640 420", svg(){
+    const cx = 210, cy = 210, N = [[200,"INTERNATIONAL","ONU, ODD, COP","odd"],[150,"NATIONAL","État, lois NRE, PACTE","loi-nre"],[100,"LOCAL","Agenda 21 local","agenda21"],[50,"INDIVIDUEL","citoyen","principes"]];
+    let s = N.map(([r], i) => `<circle cx="${cx}" cy="${cy}" r="${r}" style="fill:var(--m-ac)" fill-opacity="${.08 + i*.07}" stroke="#4f9d69" stroke-opacity=".6"/>`).join("");
+    N.forEach(([r, t, e, n], i) => { const y = i < 3 ? cy - r + 20 : cy - 4; s += lg(n, tl(cx, y, [t, e], 'text-anchor="middle" font-size="11.5" font-weight="700"', 14)); });
+    s += `<path d="M450 340V92" stroke="#b893e0" stroke-width="2"/><path d="M444 100l6-12 6 12z" fill="#b893e0"/><circle cx="450" cy="340" r="5" fill="#b893e0"/>`
+      + lg("subsidiarite", tl(468, 330, ["SUBSIDIARITÉ", "on décide au niveau", "le plus proche…"], 'font-size="11.5"', 15))
+      + tl(468, 112, ["… et on remonte", "si cet échelon ne", "peut pas agir", "efficacement"], 'font-size="11.5"', 15);
+    return s;
+  }},
+  iso26000:{titre:"ISO 26000 : les 7 questions centrales de la RSE", src:"D'après la norme ISO 26000 (2010), lignes directrices non certifiables", vb:"0 0 620 470", svg(){
+    const cx = 310, cy = 225, Q = [["Droits de l'homme"],["Relations et conditions de travail"],["Environnement","preservation"],["Loyauté des pratiques"],["Questions relatives aux consommateurs"],["Communautés et développement local","engagements-collectivites"]];
+    let s = `<circle cx="${cx}" cy="${cy}" r="196" fill="none" stroke="#8a8a8a" stroke-dasharray="3 5"/>`;
+    Q.forEach((q, i) => { const [x, y] = pol(cx, cy, 158, i*60); s += `<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="#4f9d69" stroke-opacity=".5"/>`; });
+    Q.forEach(([t, n], i) => { const [x, y] = pol(cx, cy, 158, i*60), l = coupe(t, 14);
+      s += `<circle cx="${x}" cy="${y}" r="60" fill="#1c241e" stroke="#4f9d69"/>` + lg(n, tl(x, y - (l.length - 1)*7 + 4, l, 'text-anchor="middle" font-size="11"', 14)); });
+    s += `<circle cx="${cx}" cy="${cy}" r="66" style="fill:var(--m-ac)" fill-opacity=".9"/>` + lg("gouvernance", tl(cx, cy - 10, ["Gouvernance", "de", "l'organisation"], 'text-anchor="middle" font-size="12" font-weight="800" fill="#fff"', 15), "dd-tuile");
+    return s + lg("partie-prenante", tl(cx, 462, "approche globale · interdépendance · attentes des parties prenantes", 'text-anchor="middle" font-size="11" fill="#8a8a8a"'));
+  }},
+  "frise-rse":{titre:"Frise : la responsabilité des entreprises", src:"Dates des slides du cours (jalons RSE)", vb:"0 0 720 340", svg(){
+    return frise({debut:1972, fin:2022, tHaut:"FRANCE : LES LOIS", tBas:"INTERNATIONAL ET EUROPE", cHaut:"#4f9d69", cBas:"#b893e0",
+      haut:[[2001,"NRE","loi-nre"],[2007,"Grenelle (début)"],[2010,"Grenelle II"],[2015,"Transition énerg."],[2016,"Sapin 2"],[2017,"Vigilance","vigilance"],[2019,"PACTE","pacte"]],
+      bas:[[1976,"OCDE"],[1977,"OIT"],[1997,"GRI"],[2000,"Pacte mondial"],[2001,"Livre vert UE"],[2010,"ISO 26000","rse"],[2011,"Stratégie UE"]]});
+  }},
+  "frise-sommets":{titre:"Frise : Sommets de la Terre et COP", src:"Dates des slides du cours et de l'ONU", vb:"0 0 720 340", svg(){
+    return frise({debut:1970, fin:2020, tHaut:"SOMMETS DE LA TERRE (TOUS LES 10 ANS)", tBas:"COP CLIMAT ET AGENDA 2030", cHaut:"#4f9d69", cBas:"#b893e0",
+      haut:[[1972,"Stockholm"],[1982,"Nairobi"],[1992,"Rio","rio1992"],[2002,"Johannesburg"],[2012,"Rio+20"]],
+      bas:[[1995,"COP1 Berlin","cop"],[1997,"COP3 Kyoto"],[2015,"COP21 Paris"],[2015,"ODD","odd"]]});
+  }},
+  "eco-circulaire":{titre:"Du modèle linéaire à l'économie circulaire", src:"D'après la définition du Parlement européen", vb:"0 0 620 330", svg(){
+    const R = "#ff4d4d", V = "#4f9d69";
+    let s = tl(20, 24, "MODÈLE LINÉAIRE", `font-size="10" font-weight="700" fill="${R}"`);
+    ["Extraire","Produire","Consommer","Jeter"].forEach((t, i) => { const x = 40 + i*150; s += `<rect x="${x}" y="36" width="110" height="30" rx="15" fill="${R}" fill-opacity=".14" stroke="${R}" stroke-opacity=".6"/>` + tl(x + 55, 56, t, 'text-anchor="middle" font-size="12"') + (i < 3 ? `<path d="M${x + 116} 51h26" stroke="#8a8a8a" stroke-width="2"/><path d="M${x + 142} 46l8 5-8 5z" fill="#8a8a8a"/>` : ""); });
+    s += tl(20, 106, "ÉCONOMIE CIRCULAIRE", `font-size="10" font-weight="700" fill="${V}"`);
+    const cx = 310, cy = 210, r = 82, V5 = ["Partager","Réutiliser","Réparer","Rénover","Recycler"];
+    s += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${V}" stroke-width="3" stroke-dasharray="10 6"/>`;
+    V5.forEach((t, i) => { const [x, y] = pol(cx, cy, r, i*72), [ax, ay] = pol(cx, cy, r, i*72 + 36);
+      s += `<circle cx="${ax}" cy="${ay}" r="5" fill="${V}"/><rect x="${x - 48}" y="${y - 14}" width="96" height="28" rx="14" fill="#1c241e" stroke="${V}"/>` + tl(x, y + 4, t, 'text-anchor="middle" font-size="12"'); });
+    return s + tl(cx, cy + 12, ["garder la valeur", "le plus longtemps"], 'text-anchor="middle" font-size="11" fill="#c3c8c1"', 14);
+  }},
+  systeme:{titre:"Un système : éléments, interactions, frontière", src:"Schéma de synthèse du cours", vb:"0 0 640 326", svg(){
+    const V = "#4f9d69", P = [[250,120],[340,95],[400,175],[310,225],[230,205]], E = [[0,1],[1,2],[2,3],[3,4],[4,0],[0,3],[1,3]];
+    let s = `<rect x="170" y="50" width="300" height="230" rx="26" fill="${V}" fill-opacity=".06" stroke="${V}" stroke-dasharray="7 5" stroke-width="2"/>`
+      + E.map(([a, b]) => `<line x1="${P[a][0]}" y1="${P[a][1]}" x2="${P[b][0]}" y2="${P[b][1]}" stroke="#c3c8c1" stroke-opacity=".55"/>`).join("")
+      + P.map(([x, y]) => `<circle cx="${x}" cy="${y}" r="15" fill="#1c241e" stroke="${V}" stroke-width="2"/>`).join("");
+    s += `<path d="M40 165h120" stroke="#b893e0" stroke-width="2"/><path d="M158 159l10 6-10 6z" fill="#b893e0"/>` + tl(20, 134, ["ENTRÉES", "énergie, matière, info"], 'font-size="10.5"', 13)
+      + `<path d="M480 165h120" stroke="#ff8f00" stroke-width="2"/><path d="M598 159l10 6-10 6z" fill="#ff8f00"/>` + tl(486, 134, ["SORTIES", "produits, déchets"], 'font-size="10.5"', 13)
+      + `<path d="M560 180C560 330 80 330 80 180" fill="none" stroke="#8a8a8a" stroke-dasharray="4 4"/><path d="M74 188l6-10 6 10z" fill="#8a8a8a"/>` + tl(320, 316, "rétroaction : les sorties agissent sur les entrées", 'text-anchor="middle" font-size="10.5" fill="#8a8a8a"')
+      + tl(320, 40, "FRONTIÈRE (limites du système)", 'text-anchor="middle" font-size="10.5" fill="#7ee787"')
+      + tl(355, 140, "interaction", 'font-size="10" fill="#c3c8c1" font-style="italic"') + tl(232, 248, "élément", 'font-size="10" fill="#c3c8c1" font-style="italic"');
+    return s + lg("approche-systemique", tl(320, 256, "approche systémique : regarder l'ensemble", 'text-anchor="middle" font-size="10.5"'));
+  }}
+};
+const schemaHTML = ids => [].concat(ids || []).filter(k => SCH[k]).map(k => `<figure class="dd-sch" data-sch="${k}"><svg viewBox="${SCH[k].vb}" role="img" aria-label="${esc(SCH[k].titre)}" fill="#d8ddd6" style="font-family:var(--dd-mono)">${SCH[k].svg()}</svg>
+  <figcaption><b>${esc(SCH[k].titre)}</b><span>${esc(SCH[k].src)}</span><button class="dd-ref" data-zoom="${k}">agrandir</button></figcaption></figure>`).join("");
+function zoomSchema(k){
+  const f = document.createElement("div"); f.className = "dd-fond";
+  f.innerHTML = `<div class="dd-tiroir dd-win dd-zoom" role="dialog" aria-modal="true" style="width:min(1100px,100%);padding:14px 20px"><div class="dd-pkh" style="position:static;background:none;border:none;padding:0 0 6px"><span style="flex:1"></span><button class="dd-btn sec" data-a="x" style="padding:3px 10px">${ic("x")} Fermer</button></div>${schemaHTML(k)}</div>`;
+  document.body.appendChild(f);
+  const fermer = () => { f.remove(); document.removeEventListener("keydown", esc2, true); }, esc2 = e => { if(e.key === "Escape"){ e.stopImmediatePropagation(); fermer(); } };
+  f.onclick = e => { if(e.target === f) fermer(); }; f.querySelector("[data-a=x]").onclick = fermer; document.addEventListener("keydown", esc2, true);
+}
 
 /* ---------------- statut des flashcards (journal, sans XP) ---------------- */
 function statuts(){
@@ -289,12 +454,12 @@ function pageHTML(p, compact){
     const q = S.questions.find(x => x.id === p.id), c = coursDe(q.cours);
     return `${(q.notes || []).length ? `<div class="dd-mob"><b>Notions mobilisées</b><div class="dd-chips">${q.notes.map(chipN).join("")}</div></div>` : ""}
     <small style="color:var(--dd-gris)">Q${QN(q.id)} · Cours ${c.ordre} · ${esc(c.titre)}</small> ${pastille(q.force)}<h2 class="dd-pt">${esc(q.q)}</h2>
-    <div class="dd-rep">${html(q.rep)}</div>${srcHTML(q)}`;
+    <div class="dd-rep">${html(q.rep)}</div>${schemaHTML(q.schema)}${srcHTML(q)}`;
   }
   const n = S.notes[p.id], c = S.ctx && (S.fil[S.ctx] || []).includes(p.id) ? S.ctx : S.proprio[p.id], f = S.fil[c] || [], i = f.indexOf(p.id);
   const inn = entrants(p.id), qs = qDeNote(p.id);
   return `<div class="dd-crumb">${c ? `<a href="#" data-moc="${c}">Cours ${coursDe(c).ordre} · ${esc(coursDe(c).titre)}</a>${i >= 0 ? ` › ${i+1}/${f.length}` : ""}` : ""}</div>
-  <h2 class="dd-pt">${esc(n.titre)}</h2><div class="dd-nb">${md(n.corps)}</div><span class="dd-prov">${esc(n.o || "")}</span>
+  <h2 class="dd-pt">${esc(n.titre)}</h2><div class="dd-nb">${md(n.corps)}</div>${schemaHTML(n.schema)}<span class="dd-prov">${esc(n.o || "")}</span>
   ${!compact && i >= 0 ? `<div class="dd-pn">${i > 0 ? `<button class="dd-btn sec" data-go="${f[i-1]}" data-c="${c}">‹ ${esc(S.notes[f[i-1]].titre)}</button>` : "<span></span>"}${i < f.length - 1 ? `<button class="dd-btn" data-go="${f[i+1]}" data-c="${c}">${esc(S.notes[f[i+1]].titre)} ›</button>` : `<button class="dd-btn sec" data-moc="${c}">Fin du parcours · retour au cours</button>`}</div>` : ""}
   <div class="dd-bl"><b>Mentionné dans</b> <small>${inn.length} note${inn.length > 1 ? "s" : ""}</small><div class="dd-chips">${inn.map(chipN).join("") || "<small>aucune</small>"}</div></div>
   ${qs.length ? `<div class="dd-bl"><b>Utile pour</b><div class="dd-chips">${qs.map(chipQ).join("")}</div></div>` : ""}`;
@@ -314,11 +479,19 @@ function graphe(p){
 }
 function aller(p){ S.page = p; S.peek = null; S.peekHist = []; if(S.droite === "lien") S.droite = "q"; if(p.t === "moc") S.tree.add(p.id); if(p.t === "note" && S.ctx) S.tree.add(S.ctx); rendre(); scrollTo({top:0}); }
 function ouvrirQ(id){ S.vue = "cours"; S.ex = null; aller({t:"q", id}); }
+/* lien [[…]] : clic = aperçu dans la colonne de droite, double-clic = ouvrir dans la page principale.
+   Le clic simple attend 250 ms (sinon le premier clic redessinerait la page et le double-clic serait perdu). */
+let clicLien = null;
+function surLien(id, ctx){
+  if(clicLien){ clearTimeout(clicLien.t); const meme = clicLien.id === id; clicLien = null; if(meme){ if(ctx) S.ctx = ctx; return aller({t:"note", id}); } }
+  clicLien = {id, t:setTimeout(() => { clicLien = null; if(ctx) S.ctx = ctx; lienVers(id); }, 250)};
+}
 function brancherPage(root){
-  root.querySelectorAll(".dd-wl,.dd-chipn").forEach(a => { a.onclick = e => { e.preventDefault(); if(a.dataset.c) S.ctx = a.dataset.c; lienVers(a.dataset.n); }; a.onkeydown = e => { if(e.key === "Enter") a.click(); }; });
+  root.querySelectorAll(".dd-wl,.dd-chipn,.dd-sl").forEach(a => { a.onclick = e => { e.preventDefault(); surLien(a.dataset.n, a.dataset.c); }; a.onkeydown = e => { if(e.key === "Enter") a.dispatchEvent(new MouseEvent("click")); }; });
+  root.querySelectorAll("[data-zoom]").forEach(b => b.onclick = () => zoomSchema(b.dataset.zoom));
   root.querySelectorAll("[data-go]").forEach(b => b.onclick = () => { S.ctx = b.dataset.c; aller({t:"note", id:b.dataset.go}); });
   root.querySelectorAll("[data-moc]").forEach(b => b.onclick = e => { e.preventDefault(); S.ctx = b.dataset.moc; aller({t:"moc", id:b.dataset.moc}); });
-  root.querySelectorAll(".dd-chipq,.dd-ref").forEach(a => a.onclick = e => { e.preventDefault(); ouvrirQ(a.dataset.q); });
+  root.querySelectorAll(".dd-chipq,.dd-ref[data-q]").forEach(a => a.onclick = e => { e.preventDefault(); ouvrirQ(a.dataset.q); });
 }
 function lienVers(id){
   if(S.page.t === "note" && S.page.id === id) return;
@@ -353,10 +526,10 @@ function rendreCours(){
 
 /* aperçu des liens au survol */
 const tip = $("#dd-tip");
-document.addEventListener("mouseover", e => { const a = e.target.closest(".dd-wl,.dd-chipn"); if(!a){ return; } const n = S.notes[a.dataset.n]; if(!n) return;
-  tip.innerHTML = `<b>${esc(n.titre)}</b><p>${esc(plain(n.corps).slice(0, 200))}…</p>`; const r = a.getBoundingClientRect();
+document.addEventListener("mouseover", e => { const a = e.target.closest(".dd-wl,.dd-chipn,.dd-sl"); if(!a || a.closest(".dd-zoom")){ return; } const n = S.notes[a.dataset.n]; if(!n) return;
+  tip.innerHTML = `<b>${esc(n.titre)}</b><p>${esc(plain(n.corps).slice(0, 200))}…</p>${a.closest(".dd-tiroir") ? "" : "<small>clic : aperçu · double-clic : ouvrir</small>"}`; const r = a.getBoundingClientRect();
   tip.style.display = "block"; tip.style.left = Math.max(8, Math.min(r.left, innerWidth - 340)) + "px"; tip.style.top = (r.bottom + 8) + "px"; });
-document.addEventListener("mouseout", e => { if(e.target.closest(".dd-wl,.dd-chipn")) tip.style.display = "none"; });
+document.addEventListener("mouseout", e => { if(e.target.closest(".dd-wl,.dd-chipn,.dd-sl")) tip.style.display = "none"; });
 document.addEventListener("click", () => tip.style.display = "none", true);
 
 /* tiroir centré : lire une notion sans quitter l'exercice */
@@ -369,7 +542,8 @@ function tiroir(p, push){
     f.onclick = e => { if(e.target === f) fermerTiroir(); }; document.addEventListener("keydown", escT); }
   const a = f.firstElementChild;
   a.innerHTML = `<div class="dd-pkh">${tirHist.length ? `<button class="dd-ref" data-a="ret">‹ retour</button>` : ""}<span style="flex:1;color:var(--dd-gris)">Tu reprends l'exercice en fermant</span><button class="dd-btn sec" data-a="x" style="padding:3px 10px">${ic("x")} Fermer</button></div><div style="padding:16px 22px">${pageHTML(p, true)}</div>`;
-  a.querySelectorAll(".dd-wl,.dd-chipn").forEach(x => x.onclick = e => { e.preventDefault(); tiroir({t:"note", id:x.dataset.n}, true); });
+  a.querySelectorAll(".dd-wl,.dd-chipn,.dd-sl").forEach(x => x.onclick = e => { e.preventDefault(); tiroir({t:"note", id:x.dataset.n}, true); });
+  a.querySelectorAll("[data-zoom]").forEach(b => b.onclick = () => zoomSchema(b.dataset.zoom));
   a.querySelectorAll(".dd-chipq,.dd-ref[data-q],[data-moc]").forEach(x => x.onclick = e => e.preventDefault());
   a.querySelector("[data-a=x]").onclick = fermerTiroir;
   const r = a.querySelector("[data-a=ret]"); if(r) r.onclick = () => { const prev = tirHist.pop(); tiroir.keep = true; tiroir(prev, false); };
@@ -472,7 +646,7 @@ function finEx(){
 
 /* ---------- flashcards : on touche dans la réponse ce qu'on avait oublié ; sue à partir de 80 % ---------- */
 function repPts(q){
-  let h = q.rep; const A = q.pts || [];
+  let h = sansLiens(q.rep); const A = q.pts || [];   /* flashcards : liens retirés, les extraits pts restent identiques */
   A.forEach((x, k) => { const i = h.indexOf(x); if(i >= 0) h = h.slice(0, i) + "\u0001" + k + "\u0002" + h.slice(i + x.length); });
   A.forEach((x, k) => { h = h.replace("\u0001" + k + "\u0002", `<span class="dd-cit" data-k="${k}" role="button" tabindex="0" title="Touche si tu l'avais oublié">${x}</span>`); });
   return html(h);

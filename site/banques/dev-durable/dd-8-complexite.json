@@ -8,10 +8,10 @@
   "notes de cours de la classe"
  ],
  "essentiel": [
-  "<b>Système</b>, <b>systémie</b>, <b>approche systémique</b> ; complexité = <i>cum plexus</i>, « tissé ensemble ».",
-  "Monde interconnecté, <b>Grande Accélération</b>, <b>effet papillon</b> (Lorenz, 1972).",
-  "Lutter contre le climat est complexe : <b>effet rebond</b>, <b>conflit d'enjeux</b> (barrage hydroélectrique et biodiversité).",
-  "Médias : « if it bleeds, it leads », défiance, <b>bulles de filtre</b> ; croiser les sources."
+  "<b>[[systeme|Système]]</b>, <b>[[systemie|systémie]]</b>, <b>[[approche-systemique|approche systémique]]</b> ; [[complexite|complexité]] = <i>cum plexus</i>, « tissé ensemble ».",
+  "Monde interconnecté, <b>[[grande-acceleration|Grande Accélération]]</b>, <b>[[effet-papillon|effet papillon]]</b> (Lorenz, 1972).",
+  "Lutter contre le climat est complexe : <b>[[effet-rebond|effet rebond]]</b>, <b>[[conflit-enjeux|conflit d'enjeux]]</b> (barrage hydroélectrique et [[biodiversite|biodiversité]]).",
+  "Médias : « if it bleeds, it leads », défiance, <b>[[bulle-filtre|bulles de filtre]]</b> ; croiser les sources."
  ],
  "fil": [
   "systeme",
@@ -30,13 +30,15 @@
    "id": "approche-systemique",
    "titre": "Approche systémique",
    "o": "slides",
-   "corps": "Façon d'aborder un problème en considérant **l'ensemble des interactions** entre les éléments d'un [[systeme|système]], pour comprendre les relations complexes et les impacts possibles des décisions. Exemple du cours : la durabilité d'une ville (infrastructures, transports, habitants, économie locale). C'est le **fondement du DD** : les [[limites|limites planétaires]] sont connectées, et l'on évalue son impact au regard des 17 [[odd|ODD]]."
+   "corps": "Façon d'aborder un problème en considérant **l'ensemble des interactions** entre les éléments d'un [[systeme|système]], pour comprendre les relations complexes et les impacts possibles des décisions. Exemple du cours : la durabilité d'une ville (infrastructures, transports, habitants, économie locale). C'est le **fondement du DD** : les [[limites|limites planétaires]] sont connectées, et l'on évalue son impact au regard des 17 [[odd|ODD]].",
+   "schema": "systeme"
   },
   {
    "id": "systeme",
    "titre": "Système",
    "o": "slides",
-   "corps": "Ensemble d'**éléments interconnectés** (personnes, organismes, idées, processus) qui interagissent selon des règles, dans des **limites** définies ; il peut être ouvert ou fermé. Le modéliser, c'est décrire ses éléments, leurs **interactions** et sa **frontière**. Exemple : une forêt, le cycle de l'eau. Voir [[systemie]] et [[approche-systemique]]."
+   "corps": "Ensemble d'**éléments interconnectés** (personnes, organismes, idées, processus) qui interagissent selon des règles, dans des **limites** définies ; il peut être ouvert ou fermé. Le modéliser, c'est décrire ses éléments, leurs **interactions** et sa **frontière**. Exemple : une forêt, le cycle de l'eau. Voir [[systemie]] et [[approche-systemique]].",
+   "schema": "systeme"
   },
   {
    "id": "systemie",

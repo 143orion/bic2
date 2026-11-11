@@ -340,8 +340,20 @@ const SCENARIOS = {
     await pg.click('#dd-pg [data-go="dd"]'); await attendre(200);
     if(!(await pg.$('#dd-pg .dd-wl[data-n="piliers"]'))) erreurs.push(`[${app}] DD : les liens entre notes ne s'affichent pas`);
     if(app === "ordi"){
-      await pg.click('#dd-pg .dd-wl[data-n="piliers"]'); await attendre(200);
+      await pg.click('#dd-pg .dd-wl[data-n="piliers"]'); await attendre(450);   /* le clic simple attend 250 ms (double-clic possible) */
       if(!/3 piliers/.test(await pg.textContent("#dd-pk"))) erreurs.push(`[${app}] DD : le lien ne s'ouvre pas dans la colonne de droite`);
+      /* double-clic : la note s'ouvre dans la page principale, avec son schéma */
+      await pg.dblclick('#dd-pg .dd-wl[data-n="piliers"]'); await attendre(300);
+      if((await pg.textContent("#dd-pg .dd-pt")) !== "Les 3 piliers du DD") erreurs.push(`[${app}] DD : le double-clic n'ouvre pas la note dans la page principale`);
+      if(!(await pg.$('#dd-pg .dd-sch[data-sch="piliers"] .dd-sl[data-n="equite"]'))) erreurs.push(`[${app}] DD : le schéma des 3 piliers (et ses liens) ne s'affiche pas`);
+    }
+    /* questions du jour J : liens [[…]] dans la réponse, schéma */
+    await pg.evaluate(() => document.querySelector('.dd-ti[data-q="dd-q-donut"]')?.click() || document.querySelector('.dd-chipq[data-q="dd-q-donut"]')?.click());
+    await attendre(200);
+    if(app === "ordi"){
+      if(!(await pg.$('#dd-pg .dd-rep .dd-wl[data-n="limites"]'))) erreurs.push(`[${app}] DD : pas de lien vers les notes dans la réponse d'une question`);
+      if(!(await pg.$('#dd-pg .dd-sch[data-sch="donut"] textPath'))) erreurs.push(`[${app}] DD : le schéma du Donut ne s'affiche pas`);
+      await capture(pg, `dd-question-${app}`);
     }
     await capture(pg, `dd-cours-${app}`);
     /* QCM : la bonne réponse rapporte l'XP du module (10, réglée dans liste.json) */

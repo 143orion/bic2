@@ -9,11 +9,11 @@
  ],
  "essentiel": [
   "<b>9 limites</b> définies en <b>2009</b> (<i>Nature</i>, « A safe operating space for humanity ») : seuils des processus biophysiques à ne pas dépasser.",
-  "Elles sont <b>connectées</b> : en dépasser une agit sur les autres (climat → biosphère).",
+  "Elles sont <b>connectées</b> : en dépasser une agit sur les autres (climat → [[biodiversite|biosphère]]).",
   "État : 6/9 dépassées dans les slides (2022), <b>7/9 depuis 2025</b> (acidification des océans).",
-  "Le <b>Donut</b> de Kate Raworth : plancher social + plafond environnemental.",
-  "L'<b>Anthropocène</b> : proposition de nouvelle époque où l'humain perturbe les dynamiques planétaires ; non admise.",
-  "Adopter une <b>approche systémique</b>."
+  "Le <b>[[donut|Donut]]</b> de Kate Raworth : plancher social + plafond environnemental.",
+  "L'<b>[[anthropocene|Anthropocène]]</b> : proposition de nouvelle époque où l'humain perturbe les dynamiques planétaires ; non admise.",
+  "Adopter une <b>[[approche-systemique|approche systémique]]</b>."
  ],
  "fil": [
   "limites",
@@ -28,7 +28,8 @@
    "id": "limites",
    "titre": "Les 9 limites planétaires",
    "o": "slides + complément",
-   "corps": "9 seuils biophysiques à ne pas dépasser (article de *Nature*, 2009). 6/9 dépassées dans les slides (2022), 7/9 en 2025 (acidification des océans). Elles sont connectées : la plus centrale est la [[biodiversite]]. Elles forment le plafond du [[donut]]. Le rôle de l'humain dans leur dépassement nourrit l'idée d'[[anthropocene]]."
+   "corps": "9 seuils biophysiques à ne pas dépasser (article de *Nature*, 2009). 6/9 dépassées dans les slides (2022), 7/9 en 2025 (acidification des océans). Elles sont connectées : la plus centrale est la [[biodiversite]]. Elles forment le plafond du [[donut]]. Le rôle de l'humain dans leur dépassement nourrit l'idée d'[[anthropocene]].",
+   "schema": "limites"
   },
   {
    "id": "biodiversite",
@@ -40,7 +41,8 @@
    "id": "donut",
    "titre": "Le Donut (Kate Raworth)",
    "o": "slides + complément",
-   "corps": "Combine les [[limites|9 limites planétaires]] (plafond environnemental) et un plancher social de 12 besoins tirés des [[odd|ODD]]. Entre les deux : l'espace sûr et juste. Plus un indicateur approche du centre, plus le social est en difficulté. Rend visible l'[[equite|équité sociale]] à côté de l'écologie."
+   "corps": "Combine les [[limites|9 limites planétaires]] (plafond environnemental) et un plancher social de 12 besoins tirés des [[odd|ODD]]. Entre les deux : l'espace sûr et juste. Plus un indicateur approche du centre, plus le social est en difficulté. Rend visible l'[[equite|équité sociale]] à côté de l'écologie.",
+   "schema": "donut"
   },
   {
    "id": "anthropocene",
@@ -52,7 +54,7 @@
    "id": "grande-acceleration",
    "titre": "Grande Accélération",
    "o": "slides",
-   "corps": "Hausse brutale, depuis le milieu du 20e siècle, de la production, de la consommation et de leurs impacts. Repère proposé pour le début de l'[[anthropocene]]. Illustre le monde interconnecté du cours sur la complexité."
+   "corps": "Hausse brutale, depuis le milieu du 20e siècle, de la production, de la consommation et de leurs impacts. Repère proposé pour le début de l'[[anthropocene]]. Illustre le monde interconnecté du cours sur la [[complexite|complexité]]."
   }
  ],
  "questions": [
@@ -60,7 +62,7 @@
    "id": "dd-q-limites",
    "force": 2,
    "q": "Quelles sont les 9 limites planétaires ?",
-   "rep": "<p><b>Définition.</b> {S} Les limites planétaires sont <b>9 seuils</b> de processus biophysiques qu'il ne faut pas dépasser, au risque d'impacter de manière <b>irréversible</b> la stabilité de la biosphère. Elles ont été identifiées en <b>2009</b> par une trentaine de chercheurs dans la revue <i>Nature</i> (« A safe operating space for humanity »). Chacune a un <b>indicateur</b> et une <b>valeur seuil</b>, mis à jour régulièrement.</p>\n  <p><b>Les 9 limites</b></p>\n  <table><tr><th>Limite</th><th>Slides (2022)</th><th>2025</th></tr>\n  <tr><td>Changement climatique</td><td>dépassée</td><td>dépassée</td></tr>\n  <tr><td>Intégrité de la biosphère (biodiversité)</td><td>dépassée</td><td>dépassée</td></tr>\n  <tr><td>Cycles biochimiques de l'azote et du phosphore</td><td>dépassée</td><td>dépassée</td></tr>\n  <tr><td>Changement d'usage des sols</td><td>dépassée</td><td>dépassée</td></tr>\n  <tr><td>Nouvelles entités (pollution chimique, plastiques)</td><td>dépassée</td><td>dépassée</td></tr>\n  <tr><td>Eau douce</td><td>dépassée</td><td>dépassée</td></tr>\n  <tr><td>Acidification des océans</td><td>non franchie</td><td><b>dépassée</b></td></tr>\n  <tr><td>Ozone stratosphérique</td><td>non franchie</td><td>non franchie</td></tr>\n  <tr><td>Aérosols atmosphériques</td><td>non quantifiée</td><td>non franchie</td></tr></table>\n  <p><b>Mise à jour.</b> {C} Le bilan 2025 de l'Institut de Potsdam (PIK) conclut que l'<b>acidification des océans</b> est la <b>7e limite franchie</b> : l'océan absorbe le CO₂, s'acidifie, et les organismes à coquille ou squelette calcaire (coraux, mollusques, plancton) ont du mal à les construire.</p>\n  <p><b>Idées à placer.</b> {S} Les limites sont <b>connectées</b> : dépasser l'une agit sur les autres (le climat dégrade la biosphère). {O} Raisonner « en parts de camembert » oublie ces dépendances ; le nombre 9 est en partie un choix des chercheurs. La <b>biodiversité</b> est la plus centrale ({{dd-q-biodiversite}}). Le Donut ajoute le volet social ({{dd-q-donut}}).</p>",
+   "rep": "<p><b>Définition.</b> {S} Les [[limites|limites planétaires]] sont <b>9 seuils</b> de processus biophysiques qu'il ne faut pas dépasser, au risque d'impacter de manière <b>irréversible</b> la stabilité de la biosphère. Elles ont été identifiées en <b>2009</b> par une trentaine de chercheurs dans la revue <i>Nature</i> (« A safe operating space for humanity »). Chacune a un <b>indicateur</b> et une <b>valeur seuil</b>, mis à jour régulièrement.</p>\n  <p><b>Les 9 limites</b></p>\n  <table><tr><th>Limite</th><th>Slides (2022)</th><th>2025</th></tr>\n  <tr><td>Changement climatique</td><td>dépassée</td><td>dépassée</td></tr>\n  <tr><td>[[biodiversite|Intégrité de la biosphère (biodiversité)]]</td><td>dépassée</td><td>dépassée</td></tr>\n  <tr><td>Cycles biochimiques de l'azote et du phosphore</td><td>dépassée</td><td>dépassée</td></tr>\n  <tr><td>Changement d'usage des sols</td><td>dépassée</td><td>dépassée</td></tr>\n  <tr><td>Nouvelles entités (pollution chimique, plastiques)</td><td>dépassée</td><td>dépassée</td></tr>\n  <tr><td>Eau douce</td><td>dépassée</td><td>dépassée</td></tr>\n  <tr><td>Acidification des océans</td><td>non franchie</td><td><b>dépassée</b></td></tr>\n  <tr><td>Ozone stratosphérique</td><td>non franchie</td><td>non franchie</td></tr>\n  <tr><td>Aérosols atmosphériques</td><td>non quantifiée</td><td>non franchie</td></tr></table>\n  <p><b>Mise à jour.</b> {C} Le bilan 2025 de l'Institut de Potsdam (PIK) conclut que l'<b>acidification des océans</b> est la <b>7e limite franchie</b> : l'océan absorbe le CO₂, s'acidifie, et les organismes à coquille ou squelette calcaire (coraux, mollusques, plancton) ont du mal à les construire.</p>\n  <p><b>Idées à placer.</b> {S} Les limites sont <b>connectées</b> : dépasser l'une agit sur les autres (le climat dégrade la biosphère). {O} Raisonner « en parts de camembert » oublie ces dépendances ; le nombre 9 est en partie un choix des chercheurs. La <b>biodiversité</b> est la plus centrale ({{dd-q-biodiversite}}). [[donut|Le Donut]] ajoute le volet social ({{dd-q-donut}}).</p>",
    "pts": [
     "<b>9 seuils</b>",
     "<b>irréversible</b>",
@@ -88,13 +90,14 @@
    "notes": [
     "limites",
     "biodiversite"
-   ]
+   ],
+   "schema": "limites"
   },
   {
    "id": "dd-q-donut",
    "force": 2,
    "q": "Explique le modèle du Donut.",
-   "rep": "<p><b>Qui et quoi.</b> {S} Créé par l'économiste <b>Kate Raworth</b>, le Donut combine les <b>9 limites planétaires</b> avec des <b>frontières sociales</b>. Il représente les conditions pour assurer à tous une vie de qualité, et sert à évaluer si une économie est performante au prisme d'indicateurs sociaux <b>et</b> environnementaux.</p>\n  <p><b>Les deux cercles.</b></p>\n  <ul><li><b>Plancher social</b> (cercle intérieur) : les besoins essentiels. {C} 12 dimensions tirées des ODD : eau, alimentation, santé, éducation, revenu et travail, paix et justice, voix politique, équité sociale, égalité des sexes, logement, réseaux, énergie. {S} Plus un indicateur s'approche du centre, plus la frontière sociale est en difficulté.</li>\n  <li><b>Plafond environnemental</b> (cercle extérieur) : défini par les <b>limites planétaires</b> ({{dd-q-limites}}). Au-delà, on dégrade la planète.</li>\n  <li>Entre les deux : l'<b>espace sûr et juste pour l'humanité</b>, où l'économie doit se tenir.</li></ul>\n  <p><b>Pourquoi ce modèle.</b> {O} Les limites planétaires sont utiles, mais les gens se préoccupent aussi de leur quotidien : le Donut répond à ça. Il faut d'abord assurer le plancher social sans dépasser le plafond ; certains pays sont sous le plancher (pays pauvres) pendant que d'autres crèvent le plafond. Il montre aussi <b>qui</b> cause les dégâts et qui a les moyens de les causer.</p>\n  <p>{C} Une même économie peut franchir les deux limites à la fois : épuiser les ressources tout en n'assurant pas les besoins minimaux de sa population. Le modèle remet en cause le <b>PIB</b> comme objectif principal ; Amsterdam s'en sert pour son plan de relance.</p>",
+   "rep": "<p><b>Qui et quoi.</b> {S} Créé par l'économiste <b>Kate Raworth</b>, le [[donut|Donut]] combine les [[limites|<b>9 limites planétaires</b>]] avec des <b>frontières sociales</b>. Il représente les conditions pour assurer à tous une vie de qualité, et sert à évaluer si une économie est performante au prisme d'indicateurs sociaux <b>et</b> environnementaux.</p>\n  <p><b>Les deux cercles.</b></p>\n  <ul><li><b>Plancher social</b> (cercle intérieur) : les besoins essentiels. {C} 12 dimensions [[odd|tirées des ODD]] : eau, alimentation, santé, éducation, revenu et travail, paix et justice, voix politique, [[equite|équité sociale]], égalité des sexes, logement, réseaux, énergie. {S} Plus un indicateur s'approche du centre, plus la frontière sociale est en difficulté.</li>\n  <li><b>Plafond environnemental</b> (cercle extérieur) : défini par les <b>limites planétaires</b> ({{dd-q-limites}}). Au-delà, on dégrade la planète.</li>\n  <li>Entre les deux : l'<b>espace sûr et juste pour l'humanité</b>, où l'économie doit se tenir.</li></ul>\n  <p><b>Pourquoi ce modèle.</b> {O} Les limites planétaires sont utiles, mais les gens se préoccupent aussi de leur quotidien : le Donut répond à ça. Il faut d'abord assurer le plancher social sans dépasser le plafond ; certains pays sont sous le plancher (pays pauvres) pendant que d'autres crèvent le plafond. Il montre aussi <b>qui</b> cause les dégâts et qui a les moyens de les causer.</p>\n  <p>{C} Une même économie peut franchir les deux limites à la fois : épuiser les ressources tout en n'assurant pas les besoins minimaux de sa population. Le modèle remet en cause le <b>PIB</b> comme objectif principal ; Amsterdam s'en sert pour son plan de relance.</p>",
    "pts": [
     "<b>Kate Raworth</b>",
     "<b>frontières sociales</b>",
@@ -121,13 +124,14 @@
     "donut",
     "limites",
     "equite"
-   ]
+   ],
+   "schema": "donut"
   },
   {
    "id": "dd-q-anthropocene",
    "force": 2,
    "q": "Qu'est-ce que l'Anthropocène ?",
-   "rep": "<p><b>Définition.</b> {S} L'Anthropocène est une <b>proposition</b> de nom pour une nouvelle période de l'histoire de la Terre, marquée par la reconnaissance du <b>rôle majeur des humains</b> dans la perturbation des dynamiques planétaires. On passerait de l'<b>Holocène</b> à l'Anthropocène. Dès 1778, Buffon écrivait que « la face entière de la Terre porte aujourd'hui l'empreinte de la puissance de l'homme ».</p>\n  <p><b>Pourquoi ce n'est pas admis.</b></p>\n  <ul><li>{S} Le <b>point de départ</b> ne fait pas consensus.</li>\n  <li>{O} Les ères géologiques se définissent par des traces dans les couches (fossiles, disparitions d'espèces) ; cette période est trop récente pour remplir tous les critères. Date souvent retenue : <b>vers 1950</b>, quand l'humain devient un facteur d'évolution de la planète.</li>\n  <li>{C} La proposition retenait le début des années 1950 (début de la <b>Grande Accélération</b>), avec comme marqueur le plutonium des essais nucléaires dans les sédiments du lac Crawford (Canada). Elle a été <b>rejetée en mars 2024</b> (12 voix contre 4) ; l'Union internationale des sciences géologiques a confirmé le rejet. Le terme reste très utilisé de façon informelle. Les opposants disent que l'humain transformait la planète bien avant (agriculture, révolution industrielle).</li>\n  <li>{S} Il est aussi jugé <b>injuste</b> : il accuse toute l'humanité, alors que seule une partie, dans le temps et l'espace, est à l'origine de la Grande Accélération.</li></ul>",
+   "rep": "<p><b>Définition.</b> {S} L'[[anthropocene|Anthropocène]] est une <b>proposition</b> de nom pour une nouvelle période de l'histoire de la Terre, marquée par la reconnaissance du <b>rôle majeur des humains</b> dans la perturbation des dynamiques planétaires. On passerait de l'<b>Holocène</b> à l'Anthropocène. Dès 1778, Buffon écrivait que « la face entière de la Terre porte aujourd'hui l'empreinte de la puissance de l'homme ».</p>\n  <p><b>Pourquoi ce n'est pas admis.</b></p>\n  <ul><li>{S} Le <b>point de départ</b> ne fait pas consensus.</li>\n  <li>{O} Les ères géologiques se définissent par des traces dans les couches (fossiles, disparitions d'espèces) ; cette période est trop récente pour remplir tous les critères. Date souvent retenue : <b>vers 1950</b>, quand l'humain devient un facteur d'évolution de la planète.</li>\n  <li>{C} La proposition retenait le début des années 1950 (début de la [[grande-acceleration|<b>Grande Accélération</b>]]), avec comme marqueur le plutonium des essais nucléaires dans les sédiments du lac Crawford (Canada). Elle a été <b>rejetée en mars 2024</b> (12 voix contre 4) ; l'Union internationale des sciences géologiques a confirmé le rejet. Le terme reste très utilisé de façon informelle. Les opposants disent que l'humain transformait la planète bien avant (agriculture, révolution industrielle).</li>\n  <li>{S} Il est aussi jugé <b>injuste</b> : il accuse toute l'humanité, alors que seule une partie, dans le temps et l'espace, est à l'origine de la Grande Accélération.</li></ul>",
    "pts": [
     "<b>proposition</b>",
     "<b>rôle majeur des humains</b>",
@@ -155,7 +159,7 @@
    "id": "dd-q-biodiversite",
    "force": 1,
    "q": "Pourquoi la biodiversité est-elle la limite la plus importante ?",
-   "rep": "<p>{O} Le prof a insisté : l'<b>érosion de la biodiversité</b> (intégrité de la biosphère) est la limite la plus grave et le <b>point central</b>.</p>\n  <ul><li><b>Elle nous fait vivre</b> : alimentation, eau, médicaments (la pénicilline vient d'un champignon), et tout ce qui nous permet d'exister.</li>\n  <li><b>Elle est reliée à presque toutes les autres limites</b> : {S} le changement climatique dégrade la biosphère ; {O} l'acidification tue les organismes à coquille, base de la chaîne alimentaire. S'occuper de la biodiversité revient donc à s'occuper de presque toutes les limites.</li>\n  <li>{S} Elle fait partie des limites <b>dépassées</b>.</li></ul>",
+   "rep": "<p>{O} Le prof a insisté : l'[[biodiversite|<b>érosion de la biodiversité</b>]] (intégrité de la biosphère) est la limite la plus grave et le <b>point central</b>.</p>\n  <ul><li><b>Elle nous fait vivre</b> : alimentation, eau, médicaments (la pénicilline vient d'un champignon), et tout ce qui nous permet d'exister.</li>\n  <li><b>Elle est reliée à presque toutes les [[limites|autres limites]]</b> : {S} le changement climatique dégrade la biosphère ; {O} l'acidification tue les organismes à coquille, base de la chaîne alimentaire. S'occuper de la biodiversité revient donc à s'occuper de presque toutes les limites.</li>\n  <li>{S} Elle fait partie des limites <b>dépassées</b>.</li></ul>",
    "pts": [
     "<b>érosion de la biodiversité</b>",
     "<b>point central</b>",
@@ -169,7 +173,8 @@
    "notes": [
     "biodiversite",
     "limites"
-   ]
+   ],
+   "schema": "limites"
   }
  ],
  "dates": [

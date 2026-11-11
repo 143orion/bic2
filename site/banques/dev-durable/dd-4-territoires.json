@@ -8,9 +8,9 @@
   "notes de cours de la classe"
  ],
  "essentiel": [
-  "Rio 1992, <b>chapitre 28 de l'Agenda 21</b> : les collectivités font leur propre Agenda 21 (Agenda 21 local), avec consultation de la population.",
+  "[[rio1992|Rio]] 1992, <b>chapitre 28 de l'[[agenda21|Agenda 21]]</b> : les collectivités font leur propre Agenda 21 (Agenda 21 local), avec consultation de la population.",
   "Cadre français <b>2006</b> : 5 finalités et 5 principes de méthode.",
-  "Compétences des <b>régions</b>, <b>départements</b>, <b>communes</b> : chacune répond à des ODD.",
+  "Compétences des <b>régions</b>, <b>départements</b>, <b>communes</b> : chacune répond à des [[odd|ODD]].",
   "Les collectivités sont <b>donneuses d'ordre</b> (clauses sociales et environnementales des marchés publics), au contact des habitants, et animent la dynamique de territoire."
  ],
  "fil": [
@@ -26,7 +26,8 @@
    "id": "rio1992",
    "titre": "Sommet de la Terre de Rio (1992)",
    "o": "slides + complément",
-   "corps": "Tournant : adopte l'[[agenda21|Agenda 21]] et trois conventions (climat, [[biodiversite]], désertification), d'où naissent les [[cop|COP]]. La Déclaration de Rio fait du partenariat un principe fondamental : voir [[gouvernance]]."
+   "corps": "Tournant : adopte l'[[agenda21|Agenda 21]] et trois conventions (climat, [[biodiversite]], désertification), d'où naissent les [[cop|COP]]. La Déclaration de Rio fait du [[partenariats|partenariat]] un principe fondamental : voir [[gouvernance]].",
+   "schema": "frise-sommets"
   },
   {
    "id": "agenda21",
@@ -38,7 +39,8 @@
    "id": "cop",
    "titre": "COP (Conférence des parties)",
    "o": "complément",
-   "corps": "Organe de décision d'une convention internationale : les États signataires font le bilan et fixent des objectifs. COP climat annuelle depuis 1995 ; COP21 = Accord de Paris (2015). Héritage de [[rio1992|Rio]]."
+   "corps": "Organe de décision d'une convention internationale : les États signataires font le bilan et fixent des objectifs. COP climat annuelle depuis 1995 ; COP21 = Accord de Paris (2015). Héritage de [[rio1992|Rio]].",
+   "schema": "frise-sommets"
   },
   {
    "id": "competences-collectivites",
@@ -58,7 +60,7 @@
    "id": "dd-q-sommets-cop",
    "force": 1,
    "q": "Qu'est-ce qu'un Sommet de la Terre ? Et une COP ?",
-   "rep": "<p><b>Sommet de la Terre.</b> {O} Les pays se réunissent pour parler d'environnement et signer des conventions. {C} Ce sont des conférences <b>décennales</b> de l'ONU : Stockholm <b>1972</b> (la première), Nairobi 1982, <b>Rio 1992</b>, Johannesburg 2002, Rio+20 2012 (qui lance le processus des ODD). {S} Les slides les montrent de 1972 à 2012.</p>\n  <p><b>Rio 1992, le tournant.</b> {O} Le sommet de Rio marque le début des grandes décisions. {C} Il adopte trois conventions : <b>climat</b> (CCNUCC), <b>biodiversité</b>, <b>désertification</b>. {S} Il produit l'<b>Agenda 21</b>, dont le chapitre 28 lance les Agendas 21 locaux, et la Déclaration de Rio fait du <b>partenariat</b> un principe fondamental.</p>\n  <p><b>COP.</b> {O} Conférence des parties : les acteurs qui viennent signer un accord. {C} C'est l'<b>organe de décision</b> d'une convention internationale : les États « parties » (signataires) se réunissent pour faire le bilan et fixer de nouveaux objectifs. La COP climat se réunit chaque année depuis <b>1995</b> (Berlin) ; COP3 = protocole de Kyoto (1997) ; <b>COP21</b> = Accord de Paris (2015). Il existe aussi des COP biodiversité et désertification. {S} À la COP21, 9 nouvelles coalitions se sont créées.</p>",
+   "rep": "<p><b>Sommet de la Terre.</b> {O} Les pays se réunissent pour parler d'environnement et signer des conventions. {C} Ce sont des conférences <b>décennales</b> de l'ONU : Stockholm <b>1972</b> (la première), Nairobi 1982, [[rio1992|<b>Rio 1992</b>]], Johannesburg 2002, Rio+20 2012 (qui lance le [[odd|processus des ODD]]). {S} Les slides les montrent de 1972 à 2012.</p>\n  <p><b>Rio 1992, le tournant.</b> {O} Le sommet de Rio marque le début des grandes décisions. {C} Il adopte trois conventions : <b>climat</b> (CCNUCC), [[biodiversite|<b>biodiversité</b>]], <b>désertification</b>. {S} Il produit l'[[agenda21|<b>Agenda 21</b>]], dont le chapitre 28 lance les Agendas 21 locaux, et la Déclaration de Rio fait du [[partenariats|<b>partenariat</b>]] un principe fondamental.</p>\n  <p><b>COP.</b> {O} [[cop|Conférence des parties]] : les acteurs qui viennent signer un accord. {C} C'est l'<b>organe de décision</b> d'une convention internationale : les États « parties » (signataires) se réunissent pour faire le bilan et fixer de nouveaux objectifs. La COP climat se réunit chaque année depuis <b>1995</b> (Berlin) ; COP3 = protocole de Kyoto (1997) ; <b>COP21</b> = Accord de Paris (2015). Il existe aussi des COP biodiversité et désertification. {S} À la COP21, 9 nouvelles coalitions se sont créées.</p>",
    "pts": [
     "<b>décennales</b>",
     "<b>1972</b>",
@@ -85,7 +87,8 @@
     "rio1992",
     "cop",
     "agenda21"
-   ]
+   ],
+   "schema": "frise-sommets"
   }
  ],
  "dates": [

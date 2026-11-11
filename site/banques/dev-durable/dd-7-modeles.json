@@ -9,11 +9,11 @@
  ],
  "essentiel": [
   "Remise en cause du modèle dominant (rapport Meadows 1972).",
-  "<b>Économie circulaire</b> : partager, réutiliser, réparer, rénover, recycler.",
-  "<b>Économie de la fonctionnalité</b> : vendre l'usage, pas la propriété.",
-  "<b>Économie collaborative</b> : partage entre particuliers, via des plateformes.",
-  "<b>ESS</b> : associations, coopératives, mutuelles, fondations ; résolution de l'ONU du 18 avril 2023.",
-  "<b>Monnaies locales complémentaires</b> : base légale avec la loi ESS du 31 juillet 2014 (art. 16)."
+  "<b>[[eco-circulaire|Économie circulaire]]</b> : partager, réutiliser, réparer, rénover, recycler.",
+  "<b>[[eco-fonctionnalite|Économie de la fonctionnalité]]</b> : vendre l'usage, pas la propriété.",
+  "<b>[[eco-collaborative|Économie collaborative]]</b> : partage entre particuliers, via des plateformes.",
+  "<b>[[ess|ESS]]</b> : associations, coopératives, mutuelles, fondations ; résolution de l'ONU du 18 avril 2023.",
+  "<b>[[monnaies-locales|Monnaies locales]] complémentaires</b> : base légale avec la loi ESS du 31 juillet 2014 (art. 16)."
  ],
  "fil": [
   "modele-dominant",
@@ -34,7 +34,8 @@
    "id": "eco-circulaire",
    "titre": "Économie circulaire",
    "o": "slides",
-   "corps": "Modèle de production et de consommation qui consiste à **partager, réutiliser, réparer, rénover et recycler** les produits et matériaux le plus longtemps possible, pour qu'ils gardent leur valeur. On allonge le cycle de vie pour réduire matières premières et déchets (contre le modèle linéaire « extraire, produire, jeter »)."
+   "corps": "Modèle de production et de consommation qui consiste à **partager, réutiliser, réparer, rénover et recycler** les produits et matériaux le plus longtemps possible, pour qu'ils gardent leur valeur. On allonge le cycle de vie pour réduire matières premières et déchets (contre le modèle linéaire « extraire, produire, jeter »).",
+   "schema": "eco-circulaire"
   },
   {
    "id": "eco-fonctionnalite",
