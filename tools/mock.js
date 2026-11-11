@@ -98,7 +98,7 @@ function autorise(op, chemin, uid, apres, avant){
   }
   if(col === "identites"){
     if(op === "read" || op === "delete") return moi || admin;
-    if(op === "update" && admin && !moi){ const a = avant || {}, n = apres[chemin] || {}; return Object.keys(Object.assign({}, a, n)).every(k => k === "promo" || JSON.stringify(a[k]) === JSON.stringify(n[k])) && ["BIC1","BIC2","BIC3"].includes(n.promo); }
+    if(op === "update" && admin && !moi){ const a = avant || {}, n = apres[chemin] || {}; const txt = v => typeof v === "string" && v.length > 0 && v.length <= 40; return Object.keys(Object.assign({}, a, n)).every(k => ["promo","prenom","nom"].includes(k) || JSON.stringify(a[k]) === JSON.stringify(n[k])) && (!("promo" in n) || ["BIC1","BIC2","BIC3"].includes(n.promo)) && txt(n.prenom) && txt(n.nom); }
     return moi;
   }
   if(col === "membres") return op === "read" ? (moi || admin) : admin;

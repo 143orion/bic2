@@ -166,7 +166,14 @@ function outilsAcces(fs, adminUid){
       return fs.collection("demandes").onSnapshot(s => cb(s.docs.map(d => Object.assign({uid:d.id}, d.data()))), err || (e => console.warn(e)));
     },
     async identite(uid){ const s = await fs.doc("identites/" + uid).get(); return s.exists ? s.data() : null; },
-    /* réglage manuel de la promo d'un joueur (Adam seul : les règles n'autorisent que ce champ) */
+    /* correction du prénom / nom d'un joueur (Adam seul : règles) */
+    async definirIdentite(uid, prenom, nom){
+      prenom = String(prenom || "").trim(); nom = String(nom || "").trim();
+      if(!prenom || !nom || prenom.length > 40 || nom.length > 40) throw new Error("Prénom et nom obligatoires (40 caractères max)");
+      await fs.doc("identites/" + uid).update({prenom, nom});
+      return {prenom, nom};
+    },
+    /* réglage manuel de la promo d'un joueur (Adam seul : les règles n'autorisent que promo, prénom, nom) */
     async definirPromo(uid, promo){
       if(!PROMOS.includes(promo)) throw new Error("Promo inconnue");
       await fs.doc("identites/" + uid).update({promo});

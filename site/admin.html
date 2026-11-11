@@ -129,7 +129,7 @@
     <!-- JOUEURS -->
     <section class="vue" data-vue="joueurs" hidden>
       <div class="fenetre" data-titre="joueurs.db — qui joue">
-        <p class="vide-txt">Chaque joueur validé (onglet Demandes) apparaît au classement sous son pseudo. « Compte » = prénom et nom donnés à la demande, visibles par toi seul. « Promo » (BIC1, BIC2, BIC3) : choisie à la demande ; pour les comptes inscrits avant, règle-la ici (enregistrée dès que tu changes le menu). Le journal de chacun reste privé : tu ne vois que le résumé par jour qu'ils publient. « XP vérifiée » = XP du classement : un jour qui dépasse ce qui est humainement possible compte 0, automatiquement et sans prévenir le joueur. ⚠ = jours annulés, pour info seulement : rien à valider.</p>
+        <p class="vide-txt">Chaque joueur validé (onglet Demandes) apparaît au classement sous son pseudo. « Compte » = prénom et nom donnés à la demande, visibles par toi seul (✎ pour les corriger, ici ou dans Demandes). « Promo » (BIC1, BIC2, BIC3) : choisie à la demande ; pour les comptes inscrits avant, règle-la ici (enregistrée dès que tu changes le menu). Le journal de chacun reste privé : tu ne vois que le résumé par jour qu'ils publient. « XP vérifiée » = XP du classement : un jour qui dépasse ce qui est humainement possible compte 0, automatiquement et sans prévenir le joueur. ⚠ = jours annulés, pour info seulement : rien à valider.</p>
         <table class="tableau"><thead><tr><th>Pseudo</th><th>Compte</th><th>Promo</th><th>Niveau</th><th>XP vérifiée</th><th>Série</th><th></th></tr></thead><tbody id="t-joueurs"></tbody></table>
         <p class="vide-txt" id="joueurs-vide">Personne n'a encore été validé.</p>
       </div>
@@ -183,6 +183,10 @@
   </div>
 </main>
 <div class="modale" id="confirm" hidden><div class="fenetre" data-titre="⚠ Confirmation"><p id="confirm-txt"></p><div class="actions"><button class="btn plein" id="confirm-oui" type="button">Oui</button><button class="btn" id="confirm-non" type="button">Annuler</button></div></div></div>
+<div class="modale" id="ident" hidden><form class="fenetre" data-titre="identite.exe" id="ident-form" novalidate><p id="ident-txt"></p>
+  <label class="champ">Prénom<input id="ident-prenom" maxlength="40" autocomplete="off" required></label>
+  <label class="champ">Nom<input id="ident-nom" maxlength="40" autocomplete="off" required></label>
+  <div class="actions"><button class="btn plein" type="submit">Enregistrer</button><button class="btn" id="ident-non" type="button">Annuler</button><span class="erreur-txt" id="ident-err" role="alert"></span></div></form></div>
 <div class="toast" id="toast" role="status"></div>
 
 <script src="firebase-config.js"></script>
@@ -608,6 +612,11 @@ function selectPromo(uid){
   const p = IDS[uid].promo || "";
   return `<select class="entree" data-promo="${esc(uid)}" aria-label="Promo">${p ? "" : `<option value="" selected disabled>—</option>`}${PROMOS.map(x => `<option${x === p ? " selected" : ""}>${x}</option>`).join("")}</select>`;
 }
+/* bouton ✎ : corriger le prénom / nom (ex. initiales seulement) */
+function crayon(uid){
+  if(!A || !IDS[uid] || !IDS[uid].prenom) return "";
+  return ` <button class="btn" type="button" data-ident="${esc(uid)}" title="Corriger le prénom et le nom" aria-label="Corriger le prénom et le nom" style="padding:2px 7px">✎</button>`;
+}
 let demandes = [];
 async function identites(uids){
   await Promise.all(uids.filter(u => !(u in IDS)).map(async u => { try{ IDS[u] = (await A.identite(u)) || {}; }catch(e){ IDS[u] = {}; } }));
@@ -635,7 +644,7 @@ async function rendreListes(){
   $("t-joueurs").innerHTML = js.map(([uid, j]) => { const c = L.classement[uid], k = c ? M.xpClassement(c, E.config) : null;
     const serie = c && isFinite(+c.serie) ? Math.max(0, Math.floor(+c.serie)) : "—";
     const alerte = k && k.suspects.length ? ` <span class="pastille" style="color:var(--braise-3)" title="Jours annulés (rythme impossible) : ${esc(k.suspects.slice(0,10).join(", "))}">⚠ ${k.suspects.length} j</span>` : "";
-    return `<tr><td><b>${esc(String(j.pseudo || "").slice(0,24))}</b></td><td>${esc(profils[uid] || "—")}</td><td>${selectPromo(uid)}</td><td>${k ? k.niveau : "—"}</td><td>${k ? nf(k.total) : "—"}${alerte}</td><td>${serie}</td><td>${uid === E.uid ? "" : `<button class="btn danger" data-retirer="${esc(uid)}">Retirer l'accès</button>`}</td></tr>`; }).join("");
+    return `<tr><td><b>${esc(String(j.pseudo || "").slice(0,24))}</b></td><td>${esc(profils[uid] || "—")}${crayon(uid)}</td><td>${selectPromo(uid)}</td><td>${k ? k.niveau : "—"}</td><td>${k ? nf(k.total) : "—"}${alerte}</td><td>${serie}</td><td>${uid === E.uid ? "" : `<button class="btn danger" data-retirer="${esc(uid)}">Retirer l'accès</button>`}</td></tr>`; }).join("");
 
   const cs = Object.entries(L.contestations).flatMap(([uid, d]) => (d.items || []).map(it => ({uid, it})));
   $("contest-vide").hidden = !!cs.length; badge("contestations", cs.length);
@@ -806,7 +815,7 @@ async function rendreDemandes(){
   badge("demandes", att.length);
   $("demandes-vide").hidden = !!att.length;
   const ligne = (d, actions) => { const i = IDS[d.uid] || {};
-    return `<tr><td><b>${esc(String(d.pseudo || "").slice(0,16))}</b></td><td>${esc(i.prenom || "—")}</td><td>${esc(i.nom || "—")}</td><td>${esc(i.promo || "—")}</td><td class="mail">${esc(i.email || "—")}</td><td>${quand(actions ? d.cree : d.traite)}</td>${actions ? `<td><button class="btn plein" data-d="ok" data-uid="${esc(d.uid)}">Valider</button> <button class="btn danger" data-d="non" data-uid="${esc(d.uid)}">Refuser</button></td>` : ""}</tr>`; };
+    return `<tr><td><b>${esc(String(d.pseudo || "").slice(0,16))}</b></td><td>${esc(i.prenom || "—")}</td><td>${esc(i.nom || "—")}${crayon(d.uid)}</td><td>${esc(i.promo || "—")}</td><td class="mail">${esc(i.email || "—")}</td><td>${quand(actions ? d.cree : d.traite)}</td>${actions ? `<td><button class="btn plein" data-d="ok" data-uid="${esc(d.uid)}">Valider</button> <button class="btn danger" data-d="non" data-uid="${esc(d.uid)}">Refuser</button></td>` : ""}</tr>`; };
   $("t-demandes").innerHTML = att.map(d => ligne(d, true)).join("");
   $("f-refusees").hidden = !ref.length;
   $("t-refusees").innerHTML = ref.slice(0, 20).map(d => ligne(d, false)).join("");
@@ -826,6 +835,25 @@ if(A){
       await A.retirer(uid);
       delete L.joueurs[uid]; delete L.classement[uid]; rendreListes();
       toast("Accès retiré");
+    });
+  });
+  /* prénom / nom corrigés à la main (Demandes et Joueurs) */
+  let identUid = null;
+  document.addEventListener("click", e => {
+    const b = e.target.closest("[data-ident]"); if(!b) return;
+    identUid = b.dataset.ident; const i = IDS[identUid] || {};
+    const d = demandes.find(x => x.uid === identUid), ps = (d && d.pseudo) || pseudo(identUid);
+    $("ident-txt").textContent = `Prénom et nom de ${ps}${i.email ? " (" + i.email + ")" : ""}. Visibles par toi seul.`;
+    $("ident-prenom").value = i.prenom || ""; $("ident-nom").value = i.nom || ""; $("ident-err").textContent = "";
+    $("ident").hidden = false; $("ident-prenom").focus(); $("ident-prenom").select();
+  });
+  $("ident-non").onclick = () => { $("ident").hidden = true; };
+  $("ident-form").addEventListener("submit", e => {
+    e.preventDefault(); const uid = identUid; if(!uid) return;
+    occupe(e.submitter || $("ident-form").querySelector("[type=submit]"), $("ident-err"), async () => {
+      const r = await A.definirIdentite(uid, $("ident-prenom").value, $("ident-nom").value);
+      IDS[uid] = Object.assign({}, IDS[uid], r); profils[uid] = [r.prenom, r.nom].join(" ");
+      $("ident").hidden = true; toast("Identité corrigée"); rendreDemandes(); rendreListes();
     });
   });
   /* promo d'un joueur déjà inscrit : réglée à la main (seul champ d'identites/ que l'admin peut écrire) */

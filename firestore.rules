@@ -121,7 +121,8 @@ service cloud.firestore {
 
     // Identité réelle (prénom, nom, e-mail du compte, promo BIC1/2/3) : le joueur lui-même
     // et l'admin, PERSONNE d'autre. Séparée de joueurs/ pour que la classe ne voie que le pseudo.
-    // L'admin ne peut changer que la promo (réglage manuel des comptes déjà inscrits).
+    // L'admin ne peut changer que la promo, le prénom et le nom (corrections depuis le panel ;
+    // l'e-mail reste celui du compte Google).
     function promoOk() { return !('promo' in nouveau()) || nouveau().promo in ['BIC1', 'BIC2', 'BIC3']; }
     match /identites/{uid} {
       allow read: if moi(uid) || admin();
@@ -131,7 +132,8 @@ service cloud.firestore {
                     && nouveau().email == request.auth.token.get('email', '')
                     && promoOk();
       allow update: if admin()
-                    && nouveau().diff(resource.data).affectedKeys().hasOnly(['promo'])
+                    && nouveau().diff(resource.data).affectedKeys().hasOnly(['promo', 'prenom', 'nom'])
+                    && texte(nouveau().prenom, 40) && texte(nouveau().nom, 40)
                     && promoOk();
       allow delete: if moi(uid) || admin();
     }

@@ -200,6 +200,13 @@ const SCENARIOS = {
     await pg.waitForSelector('#t-demandes tr'); await attendre(800);
     if(await pg.$eval('[data-vue="demandes"]', e => e.hidden)) erreurs.push(`[${app}] l'onglet Demandes ne s'ouvre pas tout seul`);
     await capture(pg, `admin-1-demandes-${app}`);
+    /* correction du prénom / nom depuis la demande (ex. initiales seulement) */
+    await pg.click('#t-demandes [data-ident="neo"]'); await pg.waitForSelector("#ident:not([hidden])");
+    await pg.fill("#ident-prenom", "Néo"); await pg.fill("#ident-nom", "Anderson-Smith"); await capture(pg, `admin-1b-identite-${app}`);
+    await pg.click('#ident-form [type=submit]'); await attendre(500);
+    const id = await pg.evaluate(() => window.__mock.base()["identites/neo"]);
+    if(!id || id.nom !== "Anderson-Smith" || id.prenom !== "Néo" || id.promo !== "BIC2") erreurs.push(`[${app}] correction d'identité ratée ${JSON.stringify(id)}`);
+    if(!(await pg.$eval('#t-demandes', e => e.textContent)).includes("Anderson-Smith")) erreurs.push(`[${app}] nom corrigé absent du tableau`);
     await pg.click('#t-demandes [data-d="ok"][data-uid="neo"]'); await attendre(600);
     await pg.click('#t-demandes [data-d="non"][data-uid="omar"]'); await pg.waitForSelector("#confirm:not([hidden])");
     await capture(pg, `admin-2-confirmer-refus-${app}`);
