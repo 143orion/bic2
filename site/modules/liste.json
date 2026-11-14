@@ -75,5 +75,30 @@
    "xpQcmMulti": 20,
    "effortQcmMulti": 0.75
   }
+ },
+ {
+  "id": "capteurs-analogiques",
+  "nom": "Capteurs analogiques",
+  "icone": "∿",
+  "theme": {
+   "bg": "#1d1f24",
+   "fg": "#e8e6e1",
+   "ac": "#FF7A1A",
+   "onAc": "#1a0e04",
+   "font": "'IBM Plex Mono',ui-monospace,monospace",
+   "googleFont": "IBM Plex Mono:wght@400;500;600;700"
+  },
+  "chapitres": [
+   "ca-0-rappels",
+   "ca-1-signaux",
+   "ca-2-capteurs",
+   "ca-3-can",
+   "ca-4-aop",
+   "ca-5-montages",
+   "ca-6-filtres",
+   "ca-7-arduino"
+  ],
+  "items": 117,
+  "ext": true
  }
 ]

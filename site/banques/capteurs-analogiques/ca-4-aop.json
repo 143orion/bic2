@@ -1,0 +1,514 @@
+{
+ "id": "ca-4-aop",
+ "module": "capteurs-analogiques",
+ "titre": "L'amplificateur opérationnel",
+ "ordre": 4,
+ "sources": [
+  "Cours 2 · Introduction, I.1 à I.3.1",
+  "TD AOP · ex. 1"
+ ],
+ "tldr": [
+  "**Passifs** (R, C, L) absorbent de l'énergie · **actifs** (diodes, transistors, AOP) peuvent modifier le signal.",
+  "AOP : entrées **+** (non inverseuse, $V^+$) et **−** (inverseuse, $V^-$), une sortie $V_s$, alimentation $\\pm V_{cc}$ · $\\varepsilon = V^+ - V^-$ (tension différentielle).",
+  "**Idéal** : $A \\to \\infty$, $Z_{in} \\to \\infty$ donc $i^+ = i^- = 0$, $Z_{out} = 0$, pas d'offset.",
+  "**Linéaire** : $V_s = A\\,\\varepsilon$, possible seulement avec une **contre-réaction sur l'entrée −** → alors $\\varepsilon = 0$, $V^+ = V^-$.",
+  "**Saturé** (commutation) : sans contre-réaction (ou réaction sur +), $V_s = +V_{cc}$ si $\\varepsilon > 0$, $-V_{cc}$ si $\\varepsilon < 0$ → **comparateur**."
+ ],
+ "notions": [
+  {
+   "id": "4.1",
+   "titre": "Composants passifs, composants actifs",
+   "corps": "Les résistances, condensateurs et bobines sont des composants **passifs** : ils absorbent de l'énergie. Par opposition, les circuits **actifs** (diodes, transistors, amplificateurs opérationnels) peuvent **modifier** le signal.\n\nL'**amplificateur opérationnel** (AOP, ou AO, ou « ampli op ») réalise de nombreuses fonctions :\n- il effectue les **opérations mathématiques** usuelles (somme, dérivée…, {{5.6}}) ;\n- il **amplifie** les signaux ({{ch5}}) ;\n- il les **filtre** ({{ch6}}) ;\n- il génère aussi des signaux numériques (comparateur, {{4.5}}).\n\nIl sert notamment à **conditionner** le signal d'un capteur avant le CAN : amplifier une tension trop faible, retirer un offset, filtrer un bruit.",
+   "rec": "Composants passifs et leurs impédances : {{0.2}}.",
+   "alt": "Un AOP est un composant « à tout faire » : selon ce qu'on branche autour, il amplifie, additionne, compare ou filtre.",
+   "pre": [
+    "0.2"
+   ],
+   "ecrans": [
+    {
+     "titre": "Passifs",
+     "texte": "R, C, L : ils consomment de l'énergie."
+    },
+    {
+     "titre": "Actifs",
+     "texte": "Diodes, transistors, AOP : ils peuvent transformer le signal."
+    }
+   ],
+   "check": {
+    "enonce": "Lequel est un composant actif ?",
+    "choix": [
+     "l'amplificateur opérationnel",
+     "la résistance",
+     "le condensateur",
+     "la bobine"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "L'AOP peut modifier le signal (il a besoin d'une alimentation)."
+   }
+  },
+  {
+   "id": "4.2",
+   "titre": "Symbole et grandeurs de l'AOP",
+   "corps": "L'AOP a :\n- deux **entrées** : **+** (non inverseuse, potentiel $V^+$) et **−** (inverseuse, potentiel $V^-$) ;\n- une **sortie** $V_s$ ;\n- une **alimentation** symétrique $+V_{cc}$ et $-V_{cc}$ (souvent ±15 V), pas toujours dessinée.\n\nLa **tension différentielle d'entrée** est\n$$\\varepsilon = V_d = V^+ - V^-$$\net en fonctionnement linéaire, l'AOP l'amplifie avec un gain $A$ (très grand) : $$V_s = A\\,\\varepsilon = A\\,(V^+ - V^-)$$\n\nModèle interne : entre les deux entrées, une impédance d'entrée $Z_{in}$ ; en sortie, une source $A\\varepsilon$ en série avec une impédance de sortie $Z_{out}$.",
+   "rec": "Potentiel mesuré par rapport à la masse : {{0.2}}.",
+   "alt": "L'AOP regarde la **différence** entre ses deux entrées et la multiplie par un nombre énorme.",
+   "pre": [
+    "4.1"
+   ],
+   "ecrans": [
+    {
+     "titre": "Les entrées",
+     "texte": "+ et − : on mesure $V^+$ et $V^-$ par rapport à la masse.",
+     "schema": {
+      "modele": "comparateur",
+      "vals": {},
+      "surligne": [
+       "AO"
+      ]
+     }
+    },
+    {
+     "titre": "ε",
+     "texte": "$\\varepsilon = V^+ - V^-$."
+    },
+    {
+     "titre": "La sortie",
+     "texte": "$V_s = A\\,\\varepsilon$ tant qu'on reste entre $-V_{cc}$ et $+V_{cc}$."
+    }
+   ],
+   "check": {
+    "enonce": "$\\varepsilon$ vaut…",
+    "choix": [
+     "$V^+ - V^-$",
+     "$V^- - V^+$",
+     "$V_s - V^+$",
+     "$A\\,V_s$"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "Tension différentielle : entrée + moins entrée −."
+   }
+  },
+  {
+   "id": "4.3",
+   "titre": "AOP réel et AOP idéal",
+   "corps": "| | AOP réel | AOP idéal |\n|---|---|---|\n| amplification $A$ | élevée aux basses fréquences ($10^5$ et plus) | **infinie** |\n| impédance d'entrée $Z_{in}$ | très élevée (de l'ordre du MΩ) | **infinie** |\n| impédance de sortie $Z_{out}$ | très faible (Ω à kΩ) | **nulle** |\n| tension d'offset | quelques mV | **nulle** |\n| courants d'entrée | très faibles, pas nuls | **nuls** : $i^+ = i^- = 0$ |\n\nDans tout le module (et dans les TD), **l'AOP est supposé idéal**.\n\n> **À retenir** : $Z_{in}$ infinie ⇒ **aucun courant n'entre dans les entrées** : $i^+ = i^- = 0$. C'est la règle n° 1 des calculs.",
+   "rec": "Impédance : {{0.2}}.",
+   "alt": "L'AOP idéal « écoute » ses entrées sans rien leur prendre (pas de courant) et fournit en sortie tout le courant qu'on lui demande (pas de chute dans $Z_{out}$).",
+   "pre": [
+    "4.2"
+   ],
+   "ecrans": [
+    {
+     "titre": "Entrées",
+     "texte": "$Z_{in} = \\infty$ : $i^+ = i^- = 0$."
+    },
+    {
+     "titre": "Sortie",
+     "texte": "$Z_{out} = 0$ : $V_s$ ne dépend pas de ce qu'on branche."
+    },
+    {
+     "titre": "Gain",
+     "texte": "$A = \\infty$."
+    }
+   ],
+   "check": {
+    "enonce": "Pour un AOP idéal, le courant qui entre dans l'entrée − vaut…",
+    "choix": [
+     "0",
+     "$V_s / A$",
+     "infini",
+     "$V^- / Z_{out}$"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$Z_{in}$ infinie : $i^- = 0$."
+   }
+  },
+  {
+   "id": "4.4",
+   "titre": "Les deux régimes : saturé ou linéaire",
+   "corps": "La caractéristique $V_s(\\varepsilon)$ a deux zones :\n- une **zone linéaire**, très étroite autour de $\\varepsilon = 0$, où $V_s = A\\,\\varepsilon$ (pente $A$ très grande) ;\n- deux **paliers de saturation** : $V_s = +V_{cc}$ ou $-V_{cc}$ (la sortie ne peut pas dépasser l'alimentation).\n\nComme $A$ est énorme, il suffit de quelques µV pour saturer. Pour rester en **régime linéaire**, il faut une **contre-réaction** : une liaison de la sortie vers l'entrée **−** (fil, résistance…). Elle corrige l'écart en permanence et maintient\n$$\\varepsilon = 0 \\quad\\Longleftrightarrow\\quad V^+ = V^-$$\nC'est la règle n° 2 des calculs.\n\n> **Piège** : une liaison de la sortie vers l'entrée **+** (réaction positive) n'est pas une contre-réaction : elle pousse vers la saturation.",
+   "schema": {
+    "modele": "saturation"
+   },
+   "rec": "$V_s = A\\varepsilon$ : {{4.2}}.",
+   "alt": "La contre-réaction, c'est comme un thermostat : la sortie « regarde » ce qu'elle produit via l'entrée − et se corrige jusqu'à ce que les deux entrées soient égales.",
+   "pre": [
+    "4.3"
+   ],
+   "ecrans": [
+    {
+     "titre": "La caractéristique",
+     "texte": "Zone linéaire minuscule, puis saturation à $\\pm V_{cc}$.",
+     "schema": {
+      "modele": "saturation"
+     }
+    },
+    {
+     "titre": "Sans contre-réaction",
+     "texte": "Le moindre $\\varepsilon$ fait saturer."
+    },
+    {
+     "titre": "Avec contre-réaction sur −",
+     "texte": "$V^+ = V^-$ : régime linéaire."
+    }
+   ],
+   "check": {
+    "enonce": "Pour qu'un AOP fonctionne en régime linéaire, il faut…",
+    "choix": [
+     "une contre-réaction vers l'entrée −",
+     "une liaison sortie → entrée +",
+     "aucune liaison entre sortie et entrées",
+     "une alimentation de 5 V"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "Seule la contre-réaction sur − maintient $\\varepsilon = 0$."
+   }
+  },
+  {
+   "id": "4.5",
+   "titre": "Le comparateur (AOP en commutation)",
+   "corps": "Sans contre-réaction, l'AOP fonctionne en **commutation** : sa sortie bascule d'une saturation à l'autre.\n$$V_s = \\begin{cases} +V_{cc} & \\text{si } V^+ > V^- \\\\ -V_{cc} & \\text{si } V^+ < V^- \\end{cases}$$\n\nC'est un **comparateur** : il dit lequel de $V^+$ et $V^-$ est le plus grand. Avec $V_e$ sur l'entrée + et une tension de référence $V_{ref}$ sur l'entrée −, la sortie vaut $+V_{cc}$ quand $V_e > V_{ref}$. Une sinusoïde en entrée devient un **signal carré** en sortie : c'est ainsi qu'un AOP « génère des signaux numériques ».\n\nEssaie le comparateur dans le labo AOP ({{5.3}}).",
+   "rec": "Saturation : {{4.4}}.",
+   "alt": "Le comparateur est un juge à deux réponses : « + gagne » ($+V_{cc}$) ou « − gagne » ($-V_{cc}$).",
+   "pre": [
+    "4.4"
+   ],
+   "ecrans": [
+    {
+     "titre": "Le montage",
+     "texte": "$V_e$ sur +, la référence sur −, aucune liaison de la sortie vers une entrée.",
+     "schema": {
+      "modele": "comparateur",
+      "vals": {}
+     }
+    },
+    {
+     "titre": "La règle",
+     "texte": "$V_e > V_{ref}$ → $+V_{cc}$ ; sinon $-V_{cc}$."
+    }
+   ],
+   "check": {
+    "enonce": "Comparateur alimenté en ±15 V : $V^+ = 2\\ \\text{V}$, $V^- = 3\\ \\text{V}$. $V_s$ = ?",
+    "choix": [
+     "−15 V",
+     "+15 V",
+     "−1 V",
+     "0 V"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$V^+ < V^-$ : $\\varepsilon < 0$, saturation basse."
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "ca4-001",
+   "type": "qcm",
+   "notion": "4.1",
+   "origine": "cours",
+   "enonce": "Pourquoi dit-on qu'une résistance est un composant passif ?",
+   "choix": [
+    "elle absorbe de l'énergie sans pouvoir amplifier le signal",
+    "elle ne laisse pas passer le courant",
+    "elle n'a pas d'unité",
+    "elle est numérique"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Passif = consomme de l'énergie, ne peut pas amplifier."
+  },
+  {
+   "id": "ca4-002",
+   "type": "qcm-multi",
+   "notion": "4.1",
+   "origine": "cours",
+   "enonce": "Que sait faire un AOP (avec les bons composants autour) ?",
+   "choix": [
+    "amplifier un signal",
+    "additionner des tensions",
+    "filtrer un signal",
+    "mesurer une température seul"
+   ],
+   "verif": {
+    "attendu": [
+     0,
+     1,
+     2
+    ]
+   },
+   "duree": 0.5,
+   "explication": "Il ne mesure rien seul : ce n'est pas un capteur."
+  },
+  {
+   "id": "ca4-003",
+   "type": "trous",
+   "notion": "4.2",
+   "origine": "cours",
+   "enonce": "$\\varepsilon = [_] - [_]$",
+   "fragments": [
+    "$V^+$",
+    "$V^-$",
+    "$V_s$"
+   ],
+   "verif": {
+    "mode": "trous",
+    "attendu": [
+     "$V^+$",
+     "$V^-$"
+    ]
+   },
+   "duree": 0.5,
+   "explication": "Entrée + moins entrée −."
+  },
+  {
+   "id": "ca4-004",
+   "type": "qcm",
+   "notion": "4.2",
+   "origine": "cours",
+   "enonce": "L'entrée − de l'AOP s'appelle aussi…",
+   "choix": [
+    "l'entrée inverseuse",
+    "l'entrée non inverseuse",
+    "la masse",
+    "la sortie"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "− = inverseuse, + = non inverseuse."
+  },
+  {
+   "id": "ca4-005",
+   "type": "qcm-multi",
+   "notion": "4.3",
+   "origine": "cours",
+   "enonce": "Pour un AOP idéal…",
+   "choix": [
+    "$i^+ = i^- = 0$",
+    "$Z_{out} = 0$",
+    "$A$ est infinie",
+    "$Z_{in} = 0$"
+   ],
+   "verif": {
+    "attendu": [
+     0,
+     1,
+     2
+    ]
+   },
+   "duree": 0.5,
+   "explication": "$Z_{in}$ est infinie (pas nulle) : c'est pour ça qu'aucun courant n'entre."
+  },
+  {
+   "id": "ca4-006",
+   "type": "trous",
+   "notion": "4.3",
+   "origine": "cours",
+   "enonce": "AOP idéal : impédance d'entrée [_], impédance de sortie [_].",
+   "fragments": [
+    "infinie",
+    "nulle",
+    "de 1 kΩ"
+   ],
+   "verif": {
+    "mode": "trous",
+    "attendu": [
+     "infinie",
+     "nulle"
+    ]
+   },
+   "duree": 0.5,
+   "explication": "Il n'absorbe rien en entrée et fournit tout en sortie."
+  },
+  {
+   "id": "ca4-007",
+   "type": "qcm",
+   "notion": "4.4",
+   "origine": "cours",
+   "enonce": "Un AOP avec contre-réaction sur l'entrée − fonctionne…",
+   "choix": [
+    "en régime linéaire, avec $V^+ = V^-$",
+    "en saturation",
+    "en comparateur",
+    "avec $V_s = 0$"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "La contre-réaction maintient $\\varepsilon = 0$."
+  },
+  {
+   "id": "ca4-008",
+   "type": "saisie",
+   "notion": "4.4",
+   "origine": "cours",
+   "enonce": "AOP de gain $A = 10^5$, alimenté en ±15 V, sans contre-réaction : $\\varepsilon = 1\\ \\text{mV}$. Que vaut $V_s$ ? (en V)",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 15,
+    "unite": "V"
+   },
+   "duree": 0.67,
+   "explication": "$A\\varepsilon = 10^5 \\times 10^{-3} = 100\\ \\text{V}$, impossible : la sortie sature à $+15\\ \\text{V}$."
+  },
+  {
+   "id": "ca4-009",
+   "type": "qcm",
+   "notion": "4.4",
+   "origine": "cours",
+   "enonce": "La sortie d'un AOP alimenté en ±15 V peut-elle valoir 20 V ?",
+   "choix": [
+    "non, elle sature à ±15 V",
+    "oui si le gain est assez grand",
+    "oui en régime linéaire",
+    "oui en comparateur"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "La sortie reste toujours entre $-V_{cc}$ et $+V_{cc}$."
+  },
+  {
+   "id": "ca4-010",
+   "type": "saisie",
+   "notion": "4.5",
+   "origine": "cours",
+   "enonce": "Comparateur ±12 V : $V_e = 3\\ \\text{V}$ sur l'entrée +, $V_{ref} = 1\\ \\text{V}$ sur l'entrée −. $V_s$ ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 12,
+    "unite": "V"
+   },
+   "duree": 0.67,
+   "explication": "$V^+ > V^-$ : $V_s = +V_{cc} = 12\\ \\text{V}$."
+  },
+  {
+   "id": "ca4-011",
+   "type": "qcm",
+   "notion": "4.5",
+   "origine": "cours",
+   "enonce": "Une sinusoïde à l'entrée d'un comparateur (référence 0 V) donne en sortie…",
+   "choix": [
+    "un signal carré entre −Vcc et +Vcc",
+    "la même sinusoïde amplifiée",
+    "une tension continue nulle",
+    "un triangle"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "La sortie bascule à chaque passage par 0 : signal carré."
+  },
+  {
+   "id": "ca4-101",
+   "type": "exo",
+   "titre": "TD AOP ex. 1 · Lesquels sont en mode linéaire ?",
+   "notion": "4.4",
+   "origine": "td",
+   "enonce": "Le but : pour chacun des quatre montages ci-dessous (AOP idéaux), dire s'il fonctionne en régime linéaire. (1) la sortie est reliée directement à l'entrée − ; (2) la sortie est reliée à l'entrée + ; (3) aucune liaison entre la sortie et les entrées ; (4) une résistance relie la sortie à l'entrée −, le signal arrive par une autre résistance sur −. Réponds **oui** ou **non**.",
+   "guidage": "**Règle** : linéaire ⇔ contre-réaction (liaison sortie → entrée **−**). Pour chaque montage, suis le fil qui part de la sortie.",
+   "duree": 4,
+   "etapes": [
+    {
+     "consigne": "Montage (1) : la sortie revient sur l'entrée −.",
+     "question": "(1) linéaire ? (oui / non)",
+     "verif": {
+      "mode": "exact",
+      "attendu": [
+       "oui"
+      ]
+     },
+     "indices": [
+      "Liaison sortie → entrée − : c'est une contre-réaction.",
+      "C'est le montage suiveur."
+     ],
+     "corrige": "**Oui** : contre-réaction directe sur −, c'est un suiveur."
+    },
+    {
+     "consigne": "Montage (2) : la sortie revient sur l'entrée +.",
+     "question": "(2) linéaire ? (oui / non)",
+     "verif": {
+      "mode": "exact",
+      "attendu": [
+       "non"
+      ]
+     },
+     "indices": [
+      "Une réaction sur + n'est pas une contre-réaction.",
+      "Elle pousse vers la saturation."
+     ],
+     "corrige": "**Non** : réaction positive, l'AOP sature (bascule)."
+    },
+    {
+     "consigne": "Montage (3) : aucune liaison de la sortie vers les entrées.",
+     "question": "(3) linéaire ? (oui / non)",
+     "verif": {
+      "mode": "exact",
+      "attendu": [
+       "non"
+      ]
+     },
+     "indices": [
+      "Sans contre-réaction, le moindre ε sature la sortie.",
+      "C'est un comparateur."
+     ],
+     "corrige": "**Non** : boucle ouverte, c'est un comparateur."
+    },
+    {
+     "consigne": "Montage (4) : une résistance ramène la sortie sur l'entrée −.",
+     "question": "(4) linéaire ? (oui / non)",
+     "verif": {
+      "mode": "exact",
+      "attendu": [
+       "oui"
+      ]
+     },
+     "indices": [
+      "La résistance de la sortie vers − est une contre-réaction.",
+      "C'est l'amplificateur inverseur."
+     ],
+     "corrige": "**Oui** : contre-réaction par résistance sur −, c'est un inverseur."
+    }
+   ],
+   "schema": {
+    "modele": "td-ex1"
+   }
+  }
+ ]
+}

@@ -192,6 +192,8 @@ function appliquerTheme(t = {}){
    Éléments : ["w",[[x,y]…]] fil · ["n",x,y] nœud · ["t",x,y,"txt",{a,cls}] texte
               ["R",x1,y1,x2,y2,{id,label,val,lp}] résistance · ["S",x1,y1,x2,y2,{id,kind:"E"|"I",label,val,lp}] source (flèche de 1 vers 2)
               ["a",x1,y1,x2,y2,"label",lx,ly] flèche de tension/courant
+              ["AO",x,y,{id,haut:"-"|"+"}] ampli op (entrées en (x,y∓20), sortie en (x+80,y)) · ["C",x1,y1,x2,y2,{id,label,val,lp}] condensateur
+              ["g",x,y] masse · ["B",x,y,w,h,"texte",{id}] bloc · ["c",[[x,y]…],{cls:"tr"|"tr2"|"gr"|"ax"|"pt"}] courbe (graphes)
    ===================================================================== */
 const EXT = {schemas:{}, generateurs:{}, labos:{}};
 const SV = {
@@ -247,6 +249,15 @@ const SV = {
       if(t === "n") return `<circle class="node" cx="${a[0]}" cy="${a[1]}" r="3.2"/>`;
       if(t === "t") return `<text x="${a[0]}" y="${a[1]}" text-anchor="${(a[3] && a[3].a) || "middle"}" class="${(a[3] && a[3].cls) || ""}">${SV.ml(a[2])}</text>`;
       if(t === "a") return SV.arrow(...a);
+      if(t === "g") return `<g class="gnd"><line class="w" x1="${a[0]}" y1="${a[1]}" x2="${a[0]}" y2="${a[1]+6}"/><line class="w" x1="${a[0]-11}" y1="${a[1]+6}" x2="${a[0]+11}" y2="${a[1]+6}"/><line class="w" x1="${a[0]-6}" y1="${a[1]+11}" x2="${a[0]+6}" y2="${a[1]+11}"/></g>`;
+      if(t === "c") return `<polyline class="${esc((a[1] && a[1].cls) || "tr")}" points="${a[0].map(p => p.join(",")).join(" ")}"/>`;
+      if(t === "B"){ const ob = a[5] || {}, s = `<g class="comp" data-id="${esc(ob.id || "")}"><rect class="body" x="${a[0]}" y="${a[1]}" width="${a[2]}" height="${a[3]}" rx="4"/><text x="${a[0]+a[2]/2}" y="${a[1]+a[3]/2+4}" text-anchor="middle">${esc(a[4])}</text></g>`; return inL(st.surligne, ob.id) ? s.replace('class="comp', 'class="comp hl') : s; }
+      if(t === "AO"){ const [x, y, oa = {}] = a, h = oa.haut === "+" ? ["+","−"] : ["−","+"];
+        const s = `<g class="comp ao" data-id="${esc(oa.id || "")}"><path class="body" d="M${x},${y-40} L${x},${y+40} L${x+80},${y} Z"/><text class="sg" x="${x+12}" y="${y-15}" text-anchor="middle">${h[0]}</text><text class="sg" x="${x+12}" y="${y+26}" text-anchor="middle">${h[1]}</text></g>`;
+        return inL(st.surligne, oa.id) ? s.replace('class="comp', 'class="comp hl') : s; }
+      if(t === "C"){ const o2 = a[4] || {}, g = SV.geo(a[0], a[1], a[2], a[3], 5), T = `transform="translate(${g.cx} ${g.cy}) rotate(${g.ang})"`;
+        let s = `<g class="comp" data-id="${esc(o2.id || "")}">${g.leads}<g ${T}><line class="w" x1="-5" y1="-13" x2="-5" y2="13"/><line class="w" x1="5" y1="-13" x2="5" y2="13"/></g>${SV.labels(g, o2, g.h ? "top" : "right")}</g>`;
+        if(inL(st.surligne, o2.id)) s = s.replace('class="comp', 'class="comp hl'); if(inL(st.eteint, o2.id)) s = s.replace('class="comp', 'class="comp dim'); return s; }
       if(inL(st.court, o.id)){ const g = SV.geo(a[0], a[1], a[2], a[3], 0); return SV.line([[a[0],a[1]],[a[2],a[3]]]) + `<text class="val" x="${g.h ? g.cx : g.cx - 10}" y="${g.h ? g.cy - 8 : g.cy}" text-anchor="${g.h ? "middle" : "end"}">${esc((o.label || "").replace(/_/g, ""))} = 0</text>`; }
       let s = t === "R" ? SV.R(...a) : t === "S" ? SV.S(...a) : "";
       if(inL(st.surligne, o.id)) s = s.replace('class="comp', 'class="comp hl');

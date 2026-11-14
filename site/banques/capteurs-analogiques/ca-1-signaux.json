@@ -1,0 +1,786 @@
+{
+ "id": "ca-1-signaux",
+ "module": "capteurs-analogiques",
+ "titre": "Les signaux",
+ "ordre": 1,
+ "sources": [
+  "Cours 1 · §1 (+ annotations)",
+  "Devoir maison · exercice d'entraînement"
+ ],
+ "tldr": [
+  "**Analogique** : continu en valeur (toutes les valeurs) · **numérique** : quelques valeurs codées en bits.",
+  "**Continu** dans le temps : défini à chaque instant · **discret** : seulement à chaque période d'échantillonnage $T_e$.",
+  "**Période** $T$ (s) : durée du motif · **fréquence** $F = \\dfrac{1}{T}$ (Hz).",
+  "**Valeur moyenne** = composante continue (offset). Moyenne nulle → signal **alternatif**.",
+  "**Rapport cyclique** $\\alpha = \\dfrac{t_h}{T}$ · moyenne d'un rectangulaire 0 / $U$ : $\\alpha U$ · $\\alpha = 0{,}5$ → **carré** · PWM = on fait varier $\\alpha$.",
+  "**Octet** = 8 bits · **MSB** (poids fort) à gauche, **LSB** (poids faible) à droite.",
+  "**Décimal → binaire** : décomposer en puissances de 2 ($12 = 2^3 + 2^2 \\to 1100$) ou divisions successives par 2 (restes lus de bas en haut)."
+ ],
+ "notions": [
+  {
+   "id": "1.1",
+   "titre": "Analogique, numérique, continu, discret",
+   "corps": "Un capteur doit traiter des **signaux** : des grandeurs qui varient au cours du temps. Deux questions les classent.\n\n**1. Quelles valeurs le signal peut-il prendre ?**\n- **analogique** : toutes les valeurs d'un intervalle (une tension de 2,317 V est possible) ;\n- **numérique** : seulement quelques valeurs, codées en **bits** (0 ou 1).\n\n**2. Quand est-il défini ?**\n- **continu** dans le temps : à chaque instant ;\n- **discret** : seulement à des instants réguliers, espacés de la **période d'échantillonnage** $T_e$.\n\n| | continu dans le temps | discret (échantillonné) |\n|---|---|---|\n| **analogique** | ① une courbe lisse | ③ des « bâtons » de hauteur quelconque |\n| **numérique** | ② des paliers (niveaux 0 / 1…) | ④ des bâtons qui ne prennent que quelques hauteurs |\n\nLe monde physique est analogique et continu (case ①) ; un calculateur ne manipule que la case ④. Passer de l'un à l'autre est le travail du **CAN** ({{ch3}}).",
+   "rec": "Un **signal** = une grandeur (souvent une tension) qui varie dans le temps.",
+   "alt": "Pense à un thermomètre à mercure (analogique, continu) et à une station météo qui affiche la température toutes les minutes, à 0,1 °C près (numérique, discret).",
+   "pre": [],
+   "ecrans": [
+    {
+     "titre": "Analogique et continu",
+     "texte": "Le signal prend toutes les valeurs, à tout instant : c'est ce que fournit la nature.",
+     "schema": {
+      "modele": "signal",
+      "vals": {
+       "forme": "sin",
+       "U": "2",
+       "O": "0",
+       "T": "4",
+       "A": "0.5"
+      }
+     }
+    },
+    {
+     "titre": "Échantillonner",
+     "texte": "On ne garde qu'une valeur toutes les $T_e$ secondes : le signal devient **discret**."
+    },
+    {
+     "titre": "Quantifier",
+     "texte": "On arrondit chaque valeur à un nombre fini de niveaux : le signal devient **numérique**. Les deux ensemble donnent ce qu'un calculateur sait traiter."
+    }
+   ],
+   "check": {
+    "enonce": "Un signal défini seulement toutes les $T_e$ secondes est…",
+    "choix": [
+     "discret",
+     "continu",
+     "analogique",
+     "alternatif"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "« Discret » parle du temps : on n'a de valeur qu'aux instants d'échantillonnage."
+   }
+  },
+  {
+   "id": "1.2",
+   "titre": "Période et fréquence",
+   "corps": "Un signal **périodique** répète le même motif à chaque durée $T$, la **période** (en secondes). Exemples du cours : battements de cœur ($V_0$), sinusoïde ($V_1$), triangles ($V_2$, $V_3$), rectangles ($V_4$).\n\nLa **fréquence** $F$ est le nombre de motifs par seconde, en hertz (Hz) :\n$$F = \\frac{1}{T}$$\n\n> **Exemple** : $T = 4\\ \\text{ms} = 4 \\times 10^{-3}\\ \\text{s}$ donne $F = \\frac{1}{4 \\times 10^{-3}} = 250\\ \\text{Hz}$.\n\n> **Piège** : convertir $T$ en **secondes** avant de calculer $F$ (ms → $\\times 10^{-3}$).",
+   "rec": "Préfixes : m = $10^{-3}$, µ = $10^{-6}$, k = $10^{3}$.",
+   "alt": "Si le motif dure 1 ms, il en tient 1000 dans une seconde : $F = 1000\\ \\text{Hz} = 1\\ \\text{kHz}$.",
+   "pre": [
+    "1.1"
+   ],
+   "ecrans": [
+    {
+     "titre": "Repérer le motif",
+     "texte": "Sur le graphe, le motif se répète toutes les 4 ms : $T = 4\\ \\text{ms}$.",
+     "schema": {
+      "modele": "signal",
+      "vals": {
+       "forme": "tri",
+       "U": "2",
+       "O": "0",
+       "T": "4",
+       "A": "0.5"
+      }
+     }
+    },
+    {
+     "titre": "Inverser",
+     "texte": "$$F = \\frac{1}{T} = \\frac{1}{4\\times 10^{-3}} = 250\\ \\text{Hz}$$"
+    }
+   ],
+   "check": {
+    "enonce": "$T = 2\\ \\text{ms}$. $F$ = ?",
+    "choix": [
+     "500 Hz",
+     "2 Hz",
+     "50 Hz",
+     "2 kHz"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$F = 1/(2\\times 10^{-3}) = 500\\ \\text{Hz}$."
+   }
+  },
+  {
+   "id": "1.3",
+   "titre": "Valeur moyenne, offset, signal alternatif",
+   "corps": "La **valeur moyenne** $\\langle v \\rangle$ d'un signal périodique est la hauteur moyenne de la courbe sur une période. On l'appelle aussi **composante continue** ou **offset** : c'est le décalage du signal vers le haut (ou le bas) par rapport à l'axe du temps.\n\n- Un signal de valeur moyenne **nulle** est **alternatif** : il passe autant de temps (et de surface) au-dessus qu'en dessous de 0. C'est le cas du triangle $V_2$ du cours (entre $-U$ et $+U$).\n- Le triangle $V_3$ (entre 0 et $2U$) a la **même forme** mais il est décalé de $U$ : sa moyenne vaut $U$, il n'est pas alternatif. Comme l'annotation du cours : $V_3 = V_2 + U$.\n\n> **À retenir** : sinus et triangle symétriques → moyenne = offset. Dents de scie de 0 à $U$ → moyenne $\\frac{U}{2}$.\n\nJoue avec l'offset dans le labo : la ligne pointillée suit la valeur moyenne.",
+   "labo": "oscillo",
+   "rec": "Une moyenne, c'est la hauteur d'un rectangle qui aurait la même surface que la courbe sur une période.",
+   "alt": "Ajouter un offset, c'est soulever toute la courbe d'un bloc : la forme ne change pas, la moyenne monte d'autant.",
+   "pre": [
+    "1.2"
+   ],
+   "ecrans": [
+    {
+     "titre": "Signal alternatif",
+     "texte": "Triangle entre $-2$ et $+2$ V : autant au-dessus qu'en dessous, moyenne nulle.",
+     "schema": {
+      "modele": "signal",
+      "vals": {
+       "forme": "tri",
+       "U": "2",
+       "O": "0",
+       "T": "4",
+       "A": "0.5",
+       "moy": "1"
+      }
+     }
+    },
+    {
+     "titre": "Avec un offset",
+     "texte": "On soulève tout de 2 V : moyenne = 2 V, le signal n'est plus alternatif.",
+     "schema": {
+      "modele": "signal",
+      "vals": {
+       "forme": "tri",
+       "U": "2",
+       "O": "2",
+       "T": "4",
+       "A": "0.5",
+       "moy": "1"
+      }
+     }
+    }
+   ],
+   "check": {
+    "enonce": "Un signal qui varie entre 0 et 10 V en triangle symétrique a pour valeur moyenne…",
+    "choix": [
+     "5 V",
+     "0 V",
+     "10 V",
+     "2,5 V"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "Il est symétrique autour de 5 V : $\\langle v \\rangle = 5\\ \\text{V}$, il n'est pas alternatif."
+   }
+  },
+  {
+   "id": "1.4",
+   "titre": "Rapport cyclique et PWM",
+   "corps": "Pour un signal **rectangulaire** (0 ou $U$), le **rapport cyclique** $\\alpha$ est la fraction de la période passée à l'état haut :\n$$\\alpha = \\frac{t_h}{T}$$\noù $t_h$ est la durée de l'état haut. $\\alpha$ est entre 0 et 1 (ou en %).\n\n- $\\alpha = 0{,}5$ : autant de haut que de bas, le signal est **carré**.\n- La valeur moyenne vaut $\\langle v \\rangle = \\alpha\\,U$ : plus $\\alpha$ est grand, plus la moyenne monte.\n\nLa **PWM** (*Pulse Width Modulation*, modulation de largeur d'impulsion) consiste à faire varier $\\alpha$ à fréquence fixe. Ça permet de régler une puissance « moyenne » avec un signal numérique tout ou rien : vitesse d'un moteur, luminosité d'une LED. Les broches marquées `~` de l'Arduino ({{7.1}}) savent le faire.",
+   "rec": "Période $T$ et fréquence : {{1.2}}. Valeur moyenne : {{1.3}}.",
+   "alt": "Allume une lampe 1 seconde sur 4 : elle est allumée 25 % du temps, $\\alpha = 0{,}25$. Si on fait ça très vite, l'œil voit une lampe à 25 % de sa puissance.",
+   "pre": [
+    "1.3"
+   ],
+   "ecrans": [
+    {
+     "titre": "Le signal",
+     "texte": "Rectangulaire de 0 à 5 V, haut pendant $t_h$.",
+     "schema": {
+      "modele": "signal",
+      "vals": {
+       "forme": "carre",
+       "U": "5",
+       "O": "0",
+       "T": "4",
+       "A": "0.25",
+       "moy": "1"
+      }
+     }
+    },
+    {
+     "titre": "Le rapport cyclique",
+     "texte": "$\\alpha = \\frac{t_h}{T} = \\frac{1}{4} = 0{,}25$."
+    },
+    {
+     "titre": "La moyenne",
+     "texte": "$\\langle v\\rangle = \\alpha U = 0{,}25 \\times 5 = 1{,}25\\ \\text{V}$ (pointillés)."
+    }
+   ],
+   "check": {
+    "enonce": "Un signal 0 / 5 V a $\\alpha = 0{,}5$. Il est…",
+    "choix": [
+     "carré, de moyenne 2,5 V",
+     "carré, de moyenne 5 V",
+     "triangulaire",
+     "alternatif"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$\\alpha = 0{,}5$ : autant de haut que de bas, donc carré ; moyenne $0{,}5 \\times 5 = 2{,}5\\ \\text{V}$."
+   }
+  },
+  {
+   "id": "1.5",
+   "titre": "Bits, octets, MSB et LSB",
+   "corps": "Un signal numérique est une suite de **bits** (*binary digit*) : 0 ou 1.\n\n- Un **octet** (*byte*) = **8 bits**.\n- Le bit de **poids fort**, **MSB** (*Most Significant Bit*), est le premier, **à gauche** : il vaut le plus.\n- Le bit de **poids faible**, **LSB** (*Least Significant Bit*), est le dernier, **à droite**.\n\nDans `1001 1100` : le MSB est le 1 de gauche (il vaut $2^7 = 128$), le LSB est le 0 de droite (il vaut $2^0 = 1$).\n\nAvec $N$ bits, on écrit $2^N$ nombres différents, de 0 à $2^N - 1$ (un octet : 0 à 255).",
+   "rec": "Comme en décimal : dans 352, le 3 (à gauche) pèse le plus (centaines), le 2 (à droite) le moins (unités).",
+   "alt": "Chaque position vaut le double de celle à sa droite : 1, 2, 4, 8, 16, 32, 64, 128.",
+   "pre": [
+    "1.1"
+   ],
+   "ecrans": [
+    {
+     "titre": "Un octet",
+     "texte": "8 cases : de gauche à droite elles valent $2^7, 2^6, \\dots, 2^0$."
+    },
+    {
+     "titre": "MSB, LSB",
+     "texte": "Gauche = MSB (poids fort), droite = LSB (poids faible)."
+    }
+   ],
+   "check": {
+    "enonce": "Dans 10110010, le LSB vaut…",
+    "choix": [
+     "0",
+     "1",
+     "10",
+     "on ne peut pas savoir"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "Le LSB est le bit de droite : 0."
+   }
+  },
+  {
+   "id": "1.6",
+   "titre": "Passer du décimal au binaire (et retour)",
+   "corps": "**Méthode A — puissances de 2** (la plus rapide de tête) : on retire la plus grande puissance de 2 possible, puis on recommence ; chaque puissance utilisée donne un 1 à sa position, les autres un 0.\n$$12 = 8 + 4 = 2^3 + 2^2 \\quad\\Rightarrow\\quad (12)_{10} = (1100)_2$$\n\n**Méthode B — divisions successives** : on divise par 2 jusqu'à un quotient nul et on note les restes. Le binaire se lit **de bas en haut** : le dernier reste trouvé est le MSB.\n\n| division | quotient | reste |\n|---|---|---|\n| 12 ÷ 2 | 6 | 0 |\n| 6 ÷ 2 | 3 | 0 |\n| 3 ÷ 2 | 1 | 1 |\n| 1 ÷ 2 | 0 | 1 |\n\nOn lit 1100.\n\n**Retour au décimal** : on additionne les puissances de 2 des bits à 1 : $(101101)_2 = 32 + 8 + 4 + 1 = 45$.",
+   "rec": "Puissances de 2 à connaître : 1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024.",
+   "alt": "Pense à des pièces de 1, 2, 4, 8… centimes : pour faire 12, tu prends la pièce de 8 et celle de 4. Une pièce prise = 1, une pièce laissée = 0.",
+   "pre": [
+    "1.5"
+   ],
+   "ecrans": [
+    {
+     "titre": "La plus grande puissance",
+     "texte": "Dans 12, la plus grande puissance de 2 est $8 = 2^3$ : un 1 en position 3. Reste 4."
+    },
+    {
+     "titre": "On recommence",
+     "texte": "$4 = 2^2$ : un 1 en position 2. Reste 0 : positions 1 et 0 à 0."
+    },
+    {
+     "titre": "On écrit",
+     "texte": "Positions 3, 2, 1, 0 : **1 1 0 0**."
+    }
+   ],
+   "check": {
+    "enonce": "$(13)_{10}$ en binaire ?",
+    "choix": [
+     "1101",
+     "1011",
+     "1110",
+     "1100"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$13 = 8 + 4 + 1 = 2^3 + 2^2 + 2^0$ → 1101."
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "ca1-001",
+   "type": "qcm",
+   "notion": "1.1",
+   "origine": "cours",
+   "enonce": "Un signal qui ne prend que quelques valeurs, codées en bits, est…",
+   "choix": [
+    "numérique",
+    "analogique",
+    "continu",
+    "alternatif"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Peu de valeurs possibles, codées : numérique."
+  },
+  {
+   "id": "ca1-002",
+   "type": "qcm-multi",
+   "notion": "1.1",
+   "origine": "cours",
+   "enonce": "Coche les affirmations vraies.",
+   "choix": [
+    "Une grandeur physique (température, pression) est analogique.",
+    "Un signal discret n'est défini qu'à certains instants.",
+    "Un signal numérique peut prendre toutes les valeurs.",
+    "Un calculateur traite des signaux numériques."
+   ],
+   "verif": {
+    "attendu": [
+     0,
+     1,
+     3
+    ]
+   },
+   "duree": 0.5,
+   "explication": "Le numérique ne prend que quelques valeurs ; le reste est vrai."
+  },
+  {
+   "id": "ca1-003",
+   "type": "saisie",
+   "notion": "1.2",
+   "origine": "cours",
+   "enonce": "Un signal a une période $T = [[T]]\\ \\text{ms}$. Sa fréquence $F$ ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": "[[FN]]",
+    "unite": "Hz"
+   },
+   "duree": 0.67,
+   "explication": "$F = \\dfrac{1}{T} = \\dfrac{1}{[[TT]] \\times 10^{-3}} = [[FT]]\\ \\text{Hz}$.",
+   "generateur": "periode",
+   "vals": {
+    "T": "25",
+    "F": "40",
+    "FN": "40",
+    "FT": "40",
+    "TT": "25"
+   }
+  },
+  {
+   "id": "ca1-004",
+   "type": "saisie",
+   "notion": "1.2",
+   "origine": "cours",
+   "enonce": "Un signal a une fréquence $F = [[F]]\\ \\text{Hz}$. Sa période $T$ ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": "[[TN]]",
+    "unite": "s"
+   },
+   "duree": 0.67,
+   "explication": "$T = \\dfrac{1}{F} = \\dfrac{1}{[[F]]}\\ \\text{s} = [[TT]]\\ \\text{ms}$.",
+   "generateur": "frequence",
+   "vals": {
+    "F": "50",
+    "T": "20",
+    "TN": "0.02",
+    "TT": "20"
+   }
+  },
+  {
+   "id": "ca1-005",
+   "type": "qcm",
+   "notion": "1.3",
+   "origine": "cours",
+   "enonce": "Le signal du schéma est-il alternatif ?",
+   "choix": [
+    "non : sa valeur moyenne vaut 2 V",
+    "oui : il est périodique",
+    "oui : il est triangulaire",
+    "non : il est numérique"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Il oscille entre 0 et 4 V : sa moyenne vaut 2 V, pas 0. Il n'est pas alternatif.",
+   "schema": {
+    "modele": "signal",
+    "vals": {
+     "forme": "tri",
+     "U": "2",
+     "O": "2",
+     "T": "4",
+     "A": "0.5"
+    }
+   }
+  },
+  {
+   "id": "ca1-006",
+   "type": "saisie",
+   "notion": "1.3",
+   "origine": "cours",
+   "enonce": "Un signal sinusoïdal oscille entre 1 V et 7 V. Sa valeur moyenne ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 4,
+    "unite": "V"
+   },
+   "duree": 0.67,
+   "explication": "Sinus symétrique : la moyenne est au milieu, $\\frac{1 + 7}{2} = 4\\ \\text{V}$ (c'est l'offset)."
+  },
+  {
+   "id": "ca1-007",
+   "type": "saisie",
+   "notion": "1.4",
+   "origine": "cours",
+   "enonce": "Signal rectangulaire 0 / [[U]] V, rapport cyclique $\\alpha = [[A]]$. Valeur moyenne ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": "[[MN]]",
+    "unite": "V"
+   },
+   "duree": 0.67,
+   "explication": "$\\langle v \\rangle = \\alpha U = [[AT]] \\times [[UT]] = [[MT]]\\ \\text{V}$.",
+   "generateur": "pwm-moy",
+   "vals": {
+    "U": "5",
+    "UT": "5",
+    "A": "0,4",
+    "AT": "0{,}4",
+    "M": "2",
+    "MN": "2",
+    "MT": "2",
+    "APC": "40"
+   }
+  },
+  {
+   "id": "ca1-008",
+   "type": "saisie",
+   "notion": "1.4",
+   "origine": "cours",
+   "enonce": "Un signal rectangulaire reste à l'état haut 3 ms sur une période de 12 ms. Rapport cyclique $\\alpha$ (nombre entre 0 et 1) ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 0.25,
+    "tol": 0.005
+   },
+   "duree": 0.67,
+   "explication": "$\\alpha = \\dfrac{t_h}{T} = \\dfrac{3}{12} = 0{,}25$ (25 %)."
+  },
+  {
+   "id": "ca1-009",
+   "type": "trous",
+   "notion": "1.4",
+   "origine": "cours",
+   "enonce": "$\\alpha = \\dfrac{[_]}{[_]}$ ; pour $\\alpha = 0{,}5$ le signal est [_].",
+   "fragments": [
+    "$t_h$",
+    "$T$",
+    "carré",
+    "triangulaire",
+    "$F$"
+   ],
+   "verif": {
+    "mode": "trous",
+    "attendu": [
+     "$t_h$",
+     "$T$",
+     "carré"
+    ]
+   },
+   "duree": 0.5,
+   "explication": "$\\alpha = t_h/T$ ; à 0,5, autant de haut que de bas : carré."
+  },
+  {
+   "id": "ca1-010",
+   "type": "qcm",
+   "notion": "1.4",
+   "origine": "cours",
+   "enonce": "Que signifie PWM ?",
+   "choix": [
+    "Pulse Width Modulation : modulation de largeur d'impulsion",
+    "Power Wave Meter : mesure de puissance",
+    "Période Variable Modulée",
+    "Pulse Wave Memory"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "On fait varier la largeur de l'impulsion (donc $\\alpha$) à fréquence fixe."
+  },
+  {
+   "id": "ca1-011",
+   "type": "saisie",
+   "notion": "1.5",
+   "origine": "cours",
+   "enonce": "Combien de bits dans un octet ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 8,
+    "tol": 0
+   },
+   "duree": 0.67,
+   "explication": "Un octet (byte) = 8 bits."
+  },
+  {
+   "id": "ca1-012",
+   "type": "saisie",
+   "notion": "1.5",
+   "origine": "cours",
+   "enonce": "Dans l'octet \\`[[B8]]\\`, quelle est la valeur du **MSB** ? (0 ou 1)",
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     "[[MSB]]"
+    ]
+   },
+   "duree": 0.67,
+   "explication": "Le MSB est le bit de gauche : **[[MSB]]**.",
+   "generateur": "bin-octet",
+   "vals": {
+    "B8": "11110011",
+    "MSB": "1",
+    "LSB": "1",
+    "N": "243"
+   }
+  },
+  {
+   "id": "ca1-013",
+   "type": "trous",
+   "notion": "1.5",
+   "origine": "cours",
+   "enonce": "Le [_] est le bit de gauche (poids fort), le [_] celui de droite (poids faible).",
+   "fragments": [
+    "MSB",
+    "LSB",
+    "octet",
+    "bit"
+   ],
+   "verif": {
+    "mode": "trous",
+    "attendu": [
+     "MSB",
+     "LSB"
+    ]
+   },
+   "duree": 0.5,
+   "explication": "Most / Least Significant Bit."
+  },
+  {
+   "id": "ca1-014",
+   "type": "saisie",
+   "notion": "1.5",
+   "origine": "cours",
+   "enonce": "Avec 8 bits, quel est le plus grand nombre que l'on peut écrire (en décimal) ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 255,
+    "tol": 0
+   },
+   "duree": 0.67,
+   "explication": "$2^8 - 1 = 255$ (de 0 à 255, soit 256 valeurs)."
+  },
+  {
+   "id": "ca1-015",
+   "type": "saisie",
+   "notion": "1.6",
+   "origine": "cours",
+   "enonce": "Écris $([[N]])_{10}$ en binaire (sans espace). *De tête : au plus 4 bits à 1.*",
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     "[[B]]"
+    ]
+   },
+   "duree": 0.67,
+   "explication": "$[[N]] = [[PUIS]] = [[SOMME]]$, donc $([[N]])_{10} = ([[B]])_2$.",
+   "generateur": "bin-tete",
+   "vals": {
+    "N": "7",
+    "B": "111",
+    "PUIS": "2^{2} + 2^{1} + 2^{0}",
+    "SOMME": "4 + 2 + 1"
+   }
+  },
+  {
+   "id": "ca1-016",
+   "type": "saisie",
+   "notion": "1.6",
+   "origine": "cours",
+   "enonce": "Écris $([[N]])_{10}$ en binaire (sans espace).",
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     "[[B]]"
+    ]
+   },
+   "duree": 1.5,
+   "explication": "$[[N]] = [[PUIS]]$, donc $([[N]])_{10} = ([[B]])_2$. Par divisions successives :\n\n[[DIV]]",
+   "generateur": "bin-dm",
+   "vals": {
+    "N": "384",
+    "DIV": "| division | quotient | reste |\n|---|---|---|\n| 384 ÷ 2 | 192 | **0** |\n| 192 ÷ 2 | 96 | **0** |\n| 96 ÷ 2 | 48 | **0** |\n| 48 ÷ 2 | 24 | **0** |\n| 24 ÷ 2 | 12 | **0** |\n| 12 ÷ 2 | 6 | **0** |\n| 6 ÷ 2 | 3 | **0** |\n| 3 ÷ 2 | 1 | **1** |\n| 1 ÷ 2 | 0 | **1** |",
+    "B": "110000000",
+    "PUIS": "2^{8} + 2^{7}",
+    "SOMME": "256 + 128"
+   }
+  },
+  {
+   "id": "ca1-017",
+   "type": "saisie",
+   "notion": "1.6",
+   "origine": "cours",
+   "enonce": "Que vaut $([[B]])_2$ en décimal ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": "[[N]]",
+    "tol": 0
+   },
+   "duree": 0.67,
+   "explication": "$([[B]])_2 = [[PUIS]] = [[SOMME]] = [[N]]$.",
+   "generateur": "bin-dec",
+   "vals": {
+    "N": "6",
+    "B": "110",
+    "PUIS": "2^{2} + 2^{1}",
+    "SOMME": "4 + 2"
+   }
+  },
+  {
+   "id": "ca1-101",
+   "type": "exo",
+   "titre": "Signal PWM",
+   "notion": "1.4",
+   "origine": "cours",
+   "enonce": "Le but : caractériser un signal PWM. Un signal rectangulaire vaut $U = [[U]]\\ \\text{V}$ pendant $t_h = [[TH]]\\ \\text{ms}$, puis 0 V, avec une période $T = [[T]]\\ \\text{ms}$.",
+   "guidage": "**Plan** : 1. rapport cyclique $\\alpha = t_h/T$ · 2. fréquence $F = 1/T$ (en secondes !) · 3. valeur moyenne $\\alpha U$.",
+   "duree": 4,
+   "etapes": [
+    {
+     "consigne": "Le rapport cyclique est la part de la période passée à l'état haut.",
+     "question": "$\\alpha = ?$ (entre 0 et 1)",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 0.8,
+      "tol": 0.005
+     },
+     "indices": [
+      "$\\alpha = \\dfrac{t_h}{T}$",
+      "$\\alpha = \\dfrac{[[TH]]}{[[T]]}$"
+     ],
+     "corrige": "$\\alpha = \\dfrac{t_h}{T} = \\dfrac{4}{5} = \\mathbf{0{,}8}$ (soit 80 %)"
+    },
+    {
+     "consigne": "La fréquence est l'inverse de la période. Convertis d'abord $T$ en secondes.",
+     "question": "$F = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 200,
+      "unite": "Hz"
+     },
+     "indices": [
+      "$[[T]]\\ \\text{ms} = [[T]] \\times 10^{-3}\\ \\text{s}$",
+      "$F = \\dfrac{1}{[[T]] \\times 10^{-3}}$"
+     ],
+     "corrige": "$F = \\dfrac{1}{T} = \\dfrac{1}{5 \\times 10^{-3}\\ \\text{s}} = \\mathbf{200\\ \\text{Hz}}$"
+    },
+    {
+     "consigne": "Sur une période, le signal vaut $U$ pendant une fraction $\\alpha$ du temps et 0 le reste.",
+     "question": "$\\langle v \\rangle = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 9.600000000000001,
+      "unite": "V"
+     },
+     "indices": [
+      "La moyenne d'un rectangulaire 0 / $U$ est $\\alpha U$.",
+      "$\\langle v \\rangle = \\alpha \\times [[U]]$"
+     ],
+     "corrige": "Le signal vaut $U$ pendant $t_h$ et 0 le reste du temps : $\\langle v \\rangle = \\alpha U = 0{,}8 \\times 12 = \\mathbf{9{,}6\\ \\text{V}}$"
+    }
+   ],
+   "generateur": "pwm",
+   "vals": {
+    "T": "5",
+    "TH": "4",
+    "U": "12"
+   }
+  },
+  {
+   "id": "ca1-102",
+   "type": "exo",
+   "titre": "DM · Écrire des nombres en binaire",
+   "notion": "1.6",
+   "origine": "td",
+   "enonce": "Le but : convertir quatre nombres décimaux en binaire, comme dans le devoir maison : $[[N0]]$, $[[N1]]$, $[[N2]]$ et $[[N3]]$. Rappel : $12 = 2^3 + 2^2 \\to 1100$.",
+   "guidage": "**Méthode A** : liste les puissances de 2 (1, 2, 4… 1024), retire la plus grande possible, recommence. **Méthode B** : divisions successives par 2, restes lus de bas en haut. Vérifie à la fin en additionnant.",
+   "duree": 8,
+   "etapes": [
+    {
+     "consigne": "Commence par le plus petit.",
+     "question": "$([[N0]])_{10} = (?)_2$",
+     "verif": {
+      "mode": "exact",
+      "attendu": [
+       "100001"
+      ]
+     },
+     "indices": [
+      "Quelle est la plus grande puissance de 2 inférieure ou égale à [[N0]] ?",
+      "Retire-la et recommence avec le reste."
+     ],
+     "corrige": "$33 = 2^{5} + 2^{0}$, donc $(33)_{10} = (\\mathbf{100001})_2$ (6 bits)"
+    },
+    {
+     "consigne": "Même méthode : la plus grande puissance de 2 ici est 64 ou 128.",
+     "question": "$([[N1]])_{10} = (?)_2$",
+     "verif": {
+      "mode": "exact",
+      "attendu": [
+       "10011110"
+      ]
+     },
+     "indices": [
+      "Liste : 128, 64, 32, 16, 8, 4, 2, 1.",
+      "Un 1 pour chaque puissance utilisée, un 0 sinon."
+     ],
+     "corrige": "$158 = 2^{7} + 2^{4} + 2^{3} + 2^{2} + 2^{1}$, donc $(158)_{10} = (\\mathbf{10011110})_2$ (8 bits)"
+    },
+    {
+     "consigne": "Plus grand : commence à 256 ou 512.",
+     "question": "$([[N2]])_{10} = (?)_2$",
+     "verif": {
+      "mode": "exact",
+      "attendu": [
+       "111010011"
+      ]
+     },
+     "indices": [
+      "512 et 256 sont les premières puissances à tester.",
+      "Les divisions successives sont plus sûres pour un grand nombre."
+     ],
+     "corrige": "$467 = 2^{8} + 2^{7} + 2^{6} + 2^{4} + 2^{1} + 2^{0}$, donc $(467)_{10} = (\\mathbf{111010011})_2$ (9 bits)"
+    },
+    {
+     "consigne": "Le dernier dépasse 1024 : il aura 11 bits.",
+     "question": "$([[N3]])_{10} = (?)_2$",
+     "verif": {
+      "mode": "exact",
+      "attendu": [
+       "11111100111"
+      ]
+     },
+     "indices": [
+      "Commence par $1024 = 2^{10}$.",
+      "Vérifie en additionnant les puissances utilisées."
+     ],
+     "corrige": "$2023 = 2^{10} + 2^{9} + 2^{8} + 2^{7} + 2^{6} + 2^{5} + 2^{2} + 2^{1} + 2^{0}$, donc $(2023)_{10} = (\\mathbf{11111100111})_2$ (11 bits)"
+    }
+   ],
+   "generateur": "bin-exo",
+   "vals": {
+    "N0": "33",
+    "N1": "158",
+    "N2": "467",
+    "N3": "2023"
+   }
+  }
+ ]
+}

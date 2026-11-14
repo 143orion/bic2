@@ -1,0 +1,693 @@
+{
+ "id": "ca-3-can",
+ "module": "capteurs-analogiques",
+ "titre": "Convertisseurs CAN et CNA",
+ "ordre": 3,
+ "sources": [
+  "Cours 1 · §3 (+ annotations : CAN de l'Arduino)",
+  "TD1 · ex. 2, 6",
+  "Corrigé du devoir maison · ex. 6"
+ ],
+ "tldr": [
+  "**CAN** (ADC) : tension analogique → nombre · **CNA** (DAC) : nombre → tension (pour piloter un actionneur).",
+  "**Quantum** (pas de quantification) : $q = \\dfrac{V_{max} - V_{min}}{2^N}$ = la tension qui vaut « 1 » en binaire.",
+  "Plus $N$ (nombre de bits) est grand, plus $q$ est petit : meilleure **résolution**.",
+  "**Pleine échelle** : $[V_{min} ; V_{max}]$, la plage d'entrée (0 – 5 V pour l'Arduino).",
+  "**Tension → code** : $\\dfrac{U_e - V_{min}}{q}$, puis partie entière (ou arrondi) ; le code va de $0$ à $2^N - 1$.",
+  "**Code → tension** : $U = V_{min} + \\text{code} \\times q$ (ne pas oublier le décalage $V_{min}$).",
+  "**Arduino UNO** : CAN 10 bits intégré, 0 – 5 V, entrées A0 à A5 : $q = \\dfrac{5}{1024} \\approx 4{,}9\\ \\text{mV}$."
+ ],
+ "notions": [
+  {
+   "id": "3.1",
+   "titre": "La chaîne d'acquisition : CAN et CNA",
+   "corps": "Un capteur analogique ({{2.2}}) donne une tension ; un calculateur (microcontrôleur) ne comprend que des nombres. Entre les deux, le **convertisseur analogique-numérique** (CAN, *ADC* en anglais : *Analog to Digital Converter*) transforme une tension analogique en un nombre numérique.\n\nDans l'autre sens, le **convertisseur numérique-analogique** (CNA, *DAC*) transforme un nombre en tension : il permet, à partir des signaux d'un microcontrôleur, d'activer des **actionneurs** (moteur, haut-parleur…).\n\n> **Exemple** : un capteur de température sort 0 à 5 V, le CAN 10 bits de l'Arduino le transforme en un nombre de 0 à 1023, que le programme traite.",
+   "rec": "Analogique / numérique : {{1.1}}.",
+   "alt": "Le CAN est un traducteur : il écoute une tension et la répète sous forme de nombre.",
+   "pre": [
+    "2.2"
+   ],
+   "ecrans": [
+    {
+     "titre": "Acquisition",
+     "texte": "Grandeur → capteur → **CAN** → calculateur.",
+     "schema": {
+      "modele": "chaine",
+      "surligne": [
+       "can"
+      ]
+     }
+    },
+    {
+     "titre": "Restitution",
+     "texte": "Calculateur → **CNA** → actionneur.",
+     "schema": {
+      "modele": "chaine-cna",
+      "surligne": [
+       "cna"
+      ]
+     }
+    }
+   ],
+   "check": {
+    "enonce": "Quel composant transforme une tension en nombre ?",
+    "choix": [
+     "le CAN",
+     "le CNA",
+     "le capteur",
+     "l'actionneur"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "CAN = analogique → numérique."
+   }
+  },
+  {
+   "id": "3.2",
+   "titre": "Quantum et résolution",
+   "corps": "Le **pas de quantification** $q$ (ou **quantum**) est la tension qui correspond à « 1 » en binaire, c'est-à-dire la hauteur d'une marche de l'escalier de conversion :\n$$q = \\frac{V_{max} - V_{min}}{2^N}$$\noù $N$ est le **nombre de bits** du convertisseur et $V_{min}$, $V_{max}$ les extrêmes de la tension d'entrée.\n\n$N$ caractérise la **résolution** : plus $N$ est grand, plus $q$ est petit et plus la valeur numérique est une image fidèle du signal analogique.\n\n> **Exemple** (Arduino, 10 bits, 0 – 5 V) : $q = \\dfrac{5 - 0}{2^{10}} = \\dfrac{5}{1024} \\approx 4{,}9\\ \\text{mV}$. Le « 1 » binaire vaut 4,9 mV.\n\nChange $N$ dans le labo et regarde les marches rétrécir.",
+   "labo": "can",
+   "rec": "Puissances de 2 : $2^8 = 256$, $2^{10} = 1024$, $2^{12} = 4096$ ({{1.6}}).",
+   "alt": "L'escalier monte de $V_{min}$ à $V_{max}$ en $2^N$ marches : chaque marche fait $q$ de haut.",
+   "pre": [
+    "3.1",
+    "1.6"
+   ],
+   "ecrans": [
+    {
+     "titre": "L'escalier",
+     "texte": "Un CAN 3 bits découpe la plage en $2^3 = 8$ marches.",
+     "schema": {
+      "modele": "escalier",
+      "vals": {
+       "N": "3",
+       "Vmax": "8"
+      }
+     }
+    },
+    {
+     "titre": "Le quantum",
+     "texte": "De 0 à 8 V en 8 marches : $q = \\frac{8}{8} = 1\\ \\text{V}$."
+    },
+    {
+     "titre": "Plus de bits",
+     "texte": "En 10 bits : 1024 marches, $q = \\frac{8}{1024} \\approx 7{,}8\\ \\text{mV}$ : beaucoup plus fin."
+    }
+   ],
+   "check": {
+    "enonce": "CAN 8 bits, 0 – 5 V. Combien de valeurs différentes ?",
+    "choix": [
+     "256",
+     "255",
+     "8",
+     "1024"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$2^8 = 256$ codes, de 0 à 255."
+   }
+  },
+  {
+   "id": "3.3",
+   "titre": "Tension pleine échelle",
+   "corps": "La **pleine échelle** est la plage de variation possible en entrée. Elle correspond généralement à la **tension de référence** du convertisseur et s'indique par ses deux extrêmes $V_{min}$ et $V_{max}$ : par exemple **0 et 5 V** pour la carte Arduino.\n\nQuand on ne donne qu'une valeur (« pleine échelle $U_{ref} = 10\\ \\text{V}$ »), c'est que $V_{min} = 0$.\n\nUne tension hors de la pleine échelle ne peut pas être convertie correctement : en dessous de $V_{min}$ on lit 0, au-dessus de $V_{max}$ on lit le code maximal $2^N - 1$.",
+   "rec": "Quantum : {{3.2}}.",
+   "alt": "La pleine échelle est la hauteur totale de l'escalier ; le quantum est la hauteur d'une marche.",
+   "pre": [
+    "3.2"
+   ],
+   "ecrans": [
+    {
+     "titre": "Les bornes",
+     "texte": "$V_{min}$ = bas de l'escalier, $V_{max}$ = haut."
+    },
+    {
+     "titre": "Hors limites",
+     "texte": "Au-dessus de $V_{max}$, le code reste bloqué à $2^N - 1$."
+    }
+   ],
+   "check": {
+    "enonce": "Pleine échelle $U_{ref} = 10\\ \\text{V}$, sans autre précision : $V_{min}$ vaut…",
+    "choix": [
+     "0 V",
+     "−10 V",
+     "5 V",
+     "on ne peut pas savoir"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "Une seule valeur donnée : la plage part de 0."
+   }
+  },
+  {
+   "id": "3.4",
+   "titre": "D'une tension à un code",
+   "corps": "On compte combien de quanta tiennent dans $U_e - V_{min}$ :\n$$\\text{code} = \\frac{U_e - V_{min}}{q}$$\nLe code est un **entier** : on prend la **partie entière** (un CAN ne monte d'une marche qu'une fois la marche atteinte). Certains énoncés arrondissent : les deux réponses sont acceptées dans les exos.\n\n> **Exemple** (TD1 ex. 2) : CAN 8 bits, $U_{ref} = 10\\ \\text{V}$, $U_e = 2{,}3\\ \\text{V}$.\n> $q = \\frac{10}{256} \\approx 39{,}06\\ \\text{mV}$, puis $\\frac{2{,}3}{0{,}03906} \\approx 58{,}9$ → code **58** (59 en arrondissant), soit `00111010` en binaire.\n\nLe code va de $0$ à $2^N - 1$.",
+   "schema": {
+    "modele": "escalier",
+    "vals": {
+     "N": "3",
+     "Vmax": "8"
+    }
+   },
+   "rec": "Quantum : {{3.2}} ; binaire : {{1.6}}.",
+   "alt": "Combien de marches de hauteur $q$ faut-il monter pour atteindre $U_e$ ? Une marche entamée ne compte pas.",
+   "pre": [
+    "3.3"
+   ],
+   "ecrans": [
+    {
+     "titre": "Le quantum",
+     "texte": "$q = \\frac{10}{2^8} = 0{,}039\\ \\text{V}$."
+    },
+    {
+     "titre": "Le nombre de marches",
+     "texte": "$\\frac{2{,}3}{0{,}039} = 58{,}9$."
+    },
+    {
+     "titre": "Le code",
+     "texte": "Partie entière : **58**. En binaire sur 8 bits : `00111010`."
+    }
+   ],
+   "check": {
+    "enonce": "$q = 1\\ \\text{V}$, $V_{min} = 0$, $U_e = 3{,}4\\ \\text{V}$. Code (partie entière) ?",
+    "choix": [
+     "3",
+     "4",
+     "34",
+     "0"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$3{,}4/1 = 3{,}4$ → 3."
+   }
+  },
+  {
+   "id": "3.5",
+   "titre": "D'un code à une tension (et le décalage Vmin)",
+   "corps": "Dans l'autre sens (comme un CNA), un code correspond à la tension :\n$$U = V_{min} + \\text{code} \\times q$$\n\n> **Piège** : quand $V_{min} \\neq 0$, il faut **ajouter** $V_{min}$. Le code compte les marches **au-dessus** de $V_{min}$.\n\n> **Exemple** (TD1 ex. 6) : CAN 10 bits, $V_{min} = 1\\ \\text{V}$, $V_{max} = 4\\ \\text{V}$, code 900.\n> $q = \\frac{4 - 1}{2^{10}} = 2{,}93\\ \\text{mV}$ ; $900 \\times 2{,}93\\ \\text{mV} = 2{,}637\\ \\text{V}$ ; on ajoute $V_{min}$ : $U = 3{,}637\\ \\text{V}$.",
+   "rec": "Code d'une tension : {{3.4}}.",
+   "alt": "L'escalier ne part pas du sol mais d'une marche de hauteur $V_{min}$ : on ajoute cette hauteur.",
+   "pre": [
+    "3.4"
+   ],
+   "ecrans": [
+    {
+     "titre": "Le quantum",
+     "texte": "$q = \\frac{4 - 1}{1024} \\approx 2{,}93\\ \\text{mV}$."
+    },
+    {
+     "titre": "Les marches",
+     "texte": "$900 \\times q \\approx 2{,}637\\ \\text{V}$ au-dessus de $V_{min}$."
+    },
+    {
+     "titre": "Le décalage",
+     "texte": "$U = 1 + 2{,}637 = 3{,}637\\ \\text{V}$."
+    }
+   ],
+   "check": {
+    "enonce": "$V_{min} = 2\\ \\text{V}$, $q = 0{,}01\\ \\text{V}$, code 100. $U$ = ?",
+    "choix": [
+     "3 V",
+     "1 V",
+     "2 V",
+     "102 V"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$2 + 100 \\times 0{,}01 = 3\\ \\text{V}$."
+   }
+  },
+  {
+   "id": "3.6",
+   "titre": "Le CAN de la carte Arduino",
+   "corps": "La carte **Arduino UNO** a un **CAN intégré** :\n- **10 bits** : codes de 0 à 1023 ;\n- pleine échelle **0 – 5 V** ;\n- 6 entrées analogiques **A0 à A5** (*Analog In*, en bas à droite de la carte).\n\n$$q = \\frac{5 - 0}{2^{10}} = \\frac{5}{1024} \\approx 4{,}88\\ \\text{mV}$$\n\nUn capteur branché sur A0 donne donc un code ; pour retrouver la tension, on multiplie par $q$ : $U = \\text{code} \\times \\frac{5}{1024}$. On s'en servira en programmation au {{ch7}}.",
+   "rec": "Quantum : {{3.2}} ; code → tension : {{3.5}}.",
+   "alt": "L'Arduino découpe 5 V en 1024 marches d'environ 5 mV.",
+   "pre": [
+    "3.5"
+   ],
+   "ecrans": [
+    {
+     "titre": "Les entrées",
+     "texte": "A0 à A5 : *input* = entrée."
+    },
+    {
+     "titre": "Le quantum",
+     "texte": "$q = 5/1024 \\approx 4{,}9\\ \\text{mV}$."
+    }
+   ],
+   "check": {
+    "enonce": "Combien de bits a le CAN de l'Arduino UNO ?",
+    "choix": [
+     "10",
+     "8",
+     "12",
+     "16"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "10 bits : 0 à 1023."
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "ca3-001",
+   "type": "qcm",
+   "notion": "3.1",
+   "origine": "cours",
+   "enonce": "Le CNA sert à…",
+   "choix": [
+    "transformer un nombre en tension pour piloter un actionneur",
+    "mesurer une température",
+    "transformer une tension en nombre",
+    "amplifier un signal"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Numérique → analogique : commande d'actionneurs."
+  },
+  {
+   "id": "ca3-002",
+   "type": "trous",
+   "notion": "3.1",
+   "origine": "cours",
+   "enonce": "Grandeur → capteur → [_] → calculateur → [_] → actionneur.",
+   "fragments": [
+    "CAN",
+    "CNA",
+    "AOP"
+   ],
+   "verif": {
+    "mode": "trous",
+    "attendu": [
+     "CAN",
+     "CNA"
+    ]
+   },
+   "duree": 0.5,
+   "explication": "Acquisition par le CAN, restitution par le CNA."
+  },
+  {
+   "id": "ca3-003",
+   "type": "qcm",
+   "notion": "3.1",
+   "origine": "cours",
+   "enonce": "Que veut dire ADC ?",
+   "choix": [
+    "Analog to Digital Converter",
+    "Automatic Data Controller",
+    "Analog Direct Current",
+    "Amplified Digital Circuit"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "ADC = CAN en anglais."
+  },
+  {
+   "id": "ca3-004",
+   "type": "saisie",
+   "notion": "3.2",
+   "origine": "cours",
+   "enonce": "CAN $[[N]]$ bits, $V_{min} = 0$, $V_{max} = [[VM]]\\ \\text{V}$. Quantum $q$ ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": "[[Q]]",
+    "unite": "V"
+   },
+   "duree": 0.67,
+   "explication": "$q = \\dfrac{[[VM]]}{2^{[[N]]}} = \\dfrac{[[VM]]}{[[NC]]} = [[QT]]$.",
+   "generateur": "can-q",
+   "vals": {
+    "N": "4",
+    "VM": "8",
+    "Q": "0.5",
+    "QT": "500\\ \\text{m}\\text{V}",
+    "NC": "16"
+   }
+  },
+  {
+   "id": "ca3-005",
+   "type": "saisie",
+   "notion": "3.2",
+   "origine": "cours",
+   "enonce": "Combien de codes différents donne un CAN 12 bits ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 4096,
+    "tol": 0
+   },
+   "duree": 0.67,
+   "explication": "$2^{12} = 4096$ (de 0 à 4095)."
+  },
+  {
+   "id": "ca3-006",
+   "type": "qcm",
+   "notion": "3.2",
+   "origine": "cours",
+   "enonce": "Si on passe d'un CAN 8 bits à un CAN 10 bits (même pleine échelle), le quantum est…",
+   "choix": [
+    "divisé par 4",
+    "multiplié par 4",
+    "divisé par 2",
+    "inchangé"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "$2^{10}/2^8 = 4$ fois plus de marches : $q$ est divisé par 4."
+  },
+  {
+   "id": "ca3-007",
+   "type": "trous",
+   "notion": "3.2",
+   "origine": "cours",
+   "enonce": "$q = \\dfrac{[_] - [_]}{[_]}$",
+   "fragments": [
+    "$V_{max}$",
+    "$V_{min}$",
+    "$2^N$",
+    "$N$",
+    "$2N$"
+   ],
+   "verif": {
+    "mode": "trous",
+    "attendu": [
+     "$V_{max}$",
+     "$V_{min}$",
+     "$2^N$"
+    ]
+   },
+   "duree": 0.5,
+   "explication": "Pleine échelle divisée par le nombre de marches."
+  },
+  {
+   "id": "ca3-008",
+   "type": "qcm",
+   "notion": "3.3",
+   "origine": "cours",
+   "enonce": "Avec un CAN 0 – 5 V, une entrée de 6 V donne…",
+   "choix": [
+    "le code maximal (saturation)",
+    "le code 0",
+    "un code négatif",
+    "un code proportionnel à 6 V"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Hors pleine échelle : le code reste bloqué au maximum."
+  },
+  {
+   "id": "ca3-009",
+   "type": "saisie",
+   "notion": "3.4",
+   "origine": "cours",
+   "enonce": "CAN $[[N]]$ bits, pleine échelle $[[VM]]\\ \\text{V}$ ($V_{min} = 0$). Quel code obtient-on pour $U_e = [[U]]\\ \\text{V}$ ? (en décimal)",
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     "[[CF]]",
+     "[[CR]]"
+    ]
+   },
+   "duree": 1,
+   "explication": "$q = [[Q]]$ ; $\\dfrac{[[UT]]}{q} = [[RT]]$ → code **[[CF]]** (partie entière ; [[CR]] en arrondissant, accepté aussi).",
+   "generateur": "can-code",
+   "vals": {
+    "N": "10",
+    "VM": "10",
+    "U": "6,94",
+    "UT": "6{,}94",
+    "Q": "9{,}77\\ \\text{m}\\text{V}",
+    "QT": "9{,}766",
+    "R": "710,66",
+    "RT": "710{,}66",
+    "CF": "710",
+    "CR": "711",
+    "NC": "1024"
+   }
+  },
+  {
+   "id": "ca3-010",
+   "type": "saisie",
+   "notion": "3.4",
+   "origine": "td",
+   "enonce": "TD1 ex. 2 · CAN 8 bits, pleine échelle $U_{ref} = 10\\ \\text{V}$. Code obtenu pour $U_e = 2{,}3\\ \\text{V}$ ? (en décimal)",
+   "verif": {
+    "mode": "exact",
+    "attendu": [
+     "58",
+     "59"
+    ]
+   },
+   "duree": 1,
+   "explication": "$q = 10/256 = 39{,}06\\ \\text{mV}$ ; $2{,}3/0{,}03906 = 58{,}9$ → **58** (partie entière) ou 59 (arrondi)."
+  },
+  {
+   "id": "ca3-011",
+   "type": "saisie",
+   "notion": "3.5",
+   "origine": "td",
+   "enonce": "TD1 ex. 6 · CAN 10 bits, $V_{max} = 4\\ \\text{V}$, $V_{min} = 1\\ \\text{V}$. Tension d'entrée qui donne le code 900 ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 3.637,
+    "unite": "V",
+    "tol": 0.005
+   },
+   "duree": 1,
+   "explication": "$q = 3/1024 = 2{,}93\\ \\text{mV}$ ; $900 q = 2{,}637\\ \\text{V}$ ; $U = 1 + 2{,}637 = 3{,}637\\ \\text{V}$."
+  },
+  {
+   "id": "ca3-012",
+   "type": "qcm",
+   "notion": "3.5",
+   "origine": "cours",
+   "enonce": "Code → tension quand $V_{min} \\neq 0$ : on…",
+   "choix": [
+    "ajoute $V_{min}$ à $\\text{code} \\times q$",
+    "retranche $V_{min}$",
+    "ignore $V_{min}$",
+    "multiplie par $V_{min}$"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "$U = V_{min} + \\text{code} \\times q$."
+  },
+  {
+   "id": "ca3-013",
+   "type": "saisie",
+   "notion": "3.6",
+   "origine": "cours",
+   "enonce": "Quantum du CAN de l'Arduino UNO (10 bits, 0 – 5 V) ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 0.00488,
+    "unite": "V",
+    "tol": 0.00005
+   },
+   "duree": 0.67,
+   "explication": "$q = 5/1024 \\approx 4{,}88\\ \\text{mV}$."
+  },
+  {
+   "id": "ca3-014",
+   "type": "qcm-multi",
+   "notion": "3.6",
+   "origine": "cours",
+   "enonce": "Sur la carte Arduino UNO…",
+   "choix": [
+    "les entrées analogiques sont A0 à A5",
+    "le CAN donne un code de 0 à 1023",
+    "le CAN donne un code de 0 à 255",
+    "la pleine échelle est 0 – 5 V"
+   ],
+   "verif": {
+    "attendu": [
+     0,
+     1,
+     3
+    ]
+   },
+   "duree": 0.5,
+   "explication": "CAN 10 bits (0 à 1023), 0 – 5 V, entrées A0 à A5."
+  },
+  {
+   "id": "ca3-101",
+   "type": "exo",
+   "titre": "Convertir une tension en code binaire",
+   "notion": "3.4",
+   "origine": "td",
+   "enonce": "Le but : trouver le code de sortie d'un CAN $[[N]]$ bits, de pleine échelle $0$ – $[[VM]]\\ \\text{V}$, pour une tension d'entrée $U_e = [[U]]\\ \\text{V}$, en décimal puis en binaire.",
+   "guidage": "**Plan** : 1. quantum $q = \\frac{V_{max} - V_{min}}{2^N}$ · 2. nombre de quanta dans $U_e$ · 3. partie entière (ou arrondi) · 4. écriture binaire sur $N$ bits (avec les 0 de tête).",
+   "duree": 6,
+   "etapes": [
+    {
+     "consigne": "Calcule le quantum : la pleine échelle divisée par le nombre de codes $2^N$.",
+     "question": "$q = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 0.01953125,
+      "unite": "V"
+     },
+     "indices": [
+      "$2^{[[N]]} = [[NC]]$",
+      "$q = \\dfrac{[[VM]]}{[[NC]]}$"
+     ],
+     "corrige": "$q = \\dfrac{V_{max} - V_{min}}{2^N} = \\dfrac{5}{2^{8}} = \\dfrac{5}{256} = \\mathbf{19{,}5\\ \\text{m}\\text{V}}$"
+    },
+    {
+     "consigne": "Combien de quanta tiennent dans $U_e$ ? Garde deux décimales.",
+     "question": "$U_e / q = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 112.64000000000001,
+      "tol": 0.05
+     },
+     "indices": [
+      "$\\dfrac{U_e - V_{min}}{q}$ avec $V_{min} = 0$.",
+      "$\\dfrac{[[U]]}{q}$"
+     ],
+     "corrige": "$\\dfrac{U_e - V_{min}}{q} = \\dfrac{2{,}2}{0{,}01953} = \\mathbf{112{,}64}$"
+    },
+    {
+     "consigne": "Le code est un entier : prends la partie entière (l'arrondi est accepté).",
+     "question": "Code en décimal ?",
+     "verif": {
+      "mode": "exact",
+      "attendu": [
+       "112",
+       "113"
+      ]
+     },
+     "indices": [
+      "Un CAN ne monte d'une marche qu'une fois la marche atteinte.",
+      "Partie entière du résultat précédent."
+     ],
+     "corrige": "Le code est un entier : partie entière **112** (ou **113** en arrondissant : les deux sont acceptés)."
+    },
+    {
+     "consigne": "Écris ce code en binaire sur $[[N]]$ bits (complète à gauche avec des 0).",
+     "question": "Code en binaire ?",
+     "verif": {
+      "mode": "exact",
+      "attendu": [
+       "01110000",
+       "01110001"
+      ]
+     },
+     "indices": [
+      "Décompose en puissances de 2.",
+      "Le MSB vaut $2^{[[N]] - 1}$ ; ajoute des 0 à gauche pour avoir [[N]] chiffres."
+     ],
+     "corrige": "$112 = 2^{6} + 2^{5} + 2^{4}$ → sur 8 bits : `01110000`"
+    }
+   ],
+   "generateur": "can-exo",
+   "vals": {
+    "N": "8",
+    "VM": "5",
+    "U": "2,2",
+    "NC": "256",
+    "CF": "112"
+   }
+  },
+  {
+   "id": "ca3-102",
+   "type": "exo",
+   "titre": "TD1 ex. 6 · Retrouver la tension d'entrée",
+   "notion": "3.5",
+   "origine": "td",
+   "enonce": "Le but : un CAN 10 bits a une pleine échelle de $V_{min} = [[VMIN]]\\ \\text{V}$ à $V_{max} = [[VMAX]]\\ \\text{V}$. Quelle tension d'entrée donne le code décimal $[[C]]$ ?",
+   "guidage": "**Plan** : 1. quantum · 2. hauteur des $[[C]]$ marches · 3. **ajouter** $V_{min}$ (le piège de l'exercice).",
+   "duree": 5,
+   "etapes": [
+    {
+     "consigne": "Calcule le quantum.",
+     "question": "$q = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 0.0048828125,
+      "unite": "V"
+     },
+     "indices": [
+      "$q = \\dfrac{V_{max} - V_{min}}{2^{10}}$",
+      "$q = \\dfrac{[[VMAX]] - [[VMIN]]}{1024}$"
+     ],
+     "corrige": "$q = \\dfrac{5 - 0}{2^{10}} = \\dfrac{5}{1024} = \\mathbf{4{,}88\\ \\text{m}\\text{V}}$"
+    },
+    {
+     "consigne": "Le code compte les marches au-dessus de $V_{min}$. Quelle hauteur font $[[C]]$ marches ?",
+     "question": "$[[C]] \\times q = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 4.287109375,
+      "unite": "V"
+     },
+     "indices": [
+      "Multiplie le code par le quantum.",
+      "$[[C]] \\times q$"
+     ],
+     "corrige": "$878 \\times q = 878 \\times 4{,}883\\ \\text{mV} = \\mathbf{4{,}29\\ \\text{V}}$ : c'est l'écart au-dessus de $V_{min}$"
+    },
+    {
+     "consigne": "Ajoute le décalage $V_{min}$.",
+     "question": "$U_e = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 4.287109375,
+      "unite": "V"
+     },
+     "indices": [
+      "$U_e = V_{min} + \\text{code} \\times q$",
+      "$U_e = [[VMIN]] + [[C]] \\times q$"
+     ],
+     "corrige": "$U_e = V_{min} + 878\\,q = 0 + 4{,}287 = \\mathbf{4{,}29\\ \\text{V}}$"
+    }
+   ],
+   "generateur": "can-tension",
+   "vals": {
+    "VMIN": "0",
+    "VMAX": "5",
+    "C": "878"
+   }
+  }
+ ]
+}

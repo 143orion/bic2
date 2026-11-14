@@ -1,0 +1,369 @@
+{
+ "id": "ca-7-arduino",
+ "module": "capteurs-analogiques",
+ "titre": "Prise en main d'Arduino",
+ "ordre": 7,
+ "sources": [
+  "TP0 · Prise en main de la plateforme Arduino",
+  "Cours 1 · annotations (CAN de la carte)"
+ ],
+ "tldr": [
+  "**Arduino UNO** : carte de développement à microcontrôleur **ATmega328** ; on la programme avec l'IDE Arduino (arduino.cc) ou on la simule dans **Tinkercad Circuits**.",
+  "Un programme (« croquis ») = `setup()` (exécutée **une fois** au démarrage) + `loop()` (répétée **en boucle**).",
+  "Moniteur série : `Serial.begin(9600);` dans `setup`, puis `Serial.print(...)` (sans retour à la ligne) ou `Serial.println(...)` (avec). Menu **Tools → Serial Monitor**.",
+  "`analogRead(A0)` : lit une entrée analogique (A0 à A5) avec le CAN 10 bits → code de 0 à 1023 ; tension : `n * 5.0 / 1024`.",
+  "Broches numériques 0 à 13 ; celles marquées `~` font de la PWM."
+ ],
+ "notions": [
+  {
+   "id": "7.1",
+   "titre": "La carte Arduino UNO et son environnement",
+   "corps": "L'**Arduino UNO** est une **carte de développement** construite autour du microcontrôleur **ATmega328**. On y trouve :\n- un port **USB** (programmation et alimentation) et une prise d'**alimentation** (7 – 12 V) ;\n- les broches **numériques** 0 à 13 (*DIGITAL*) ; celles marquées `~` savent faire de la **PWM** ({{1.4}}) ;\n- les entrées **analogiques A0 à A5** (*ANALOG IN*), reliées au CAN 10 bits ({{3.6}}).\n\nPour la programmer : télécharger l'**IDE Arduino** sur arduino.cc (version de son OS), écrire le programme, le **téléverser** sur la carte. Pour simuler la carte et des composants (capteurs, résistances, oscilloscope…) sans matériel : **Tinkercad Circuits**.",
+   "rec": "PWM : {{1.4}} ; CAN de la carte : {{3.6}}.",
+   "alt": "La carte, c'est un petit ordinateur sans écran : on lui envoie un programme par USB, il l'exécute tout seul.",
+   "pre": [
+    "3.6"
+   ],
+   "ecrans": [
+    {
+     "titre": "Le microcontrôleur",
+     "texte": "ATmega328 : il exécute le programme."
+    },
+    {
+     "titre": "Les broches",
+     "texte": "Numériques 0-13 (~ = PWM), analogiques A0-A5."
+    },
+    {
+     "titre": "Programmer",
+     "texte": "IDE Arduino ou Tinkercad, puis téléverser."
+    }
+   ],
+   "check": {
+    "enonce": "Sur quel microcontrôleur est basée l'Arduino UNO ?",
+    "choix": [
+     "ATmega328",
+     "ESP32",
+     "STM32",
+     "Raspberry Pi"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "ATmega328."
+   }
+  },
+  {
+   "id": "7.2",
+   "titre": "Structure d'un programme : setup et loop",
+   "corps": "Un programme Arduino (un **croquis**) a toujours deux fonctions :\n```c\nvoid setup() {\n  // exécuté UNE fois, au démarrage\n}\n\nvoid loop() {\n  // exécuté en boucle, indéfiniment\n}\n```\n- `setup()` : les réglages (ouvrir la liaison série, régler une broche…) ;\n- `loop()` : le travail répété (lire un capteur, afficher, attendre avec `delay(ms)`).\n\n> **Piège** : un message à afficher **une seule fois** va dans `setup`, sinon il se répète sans fin.",
+   "rec": "La syntaxe est celle du C : accolades, point-virgule à la fin de chaque instruction.",
+   "alt": "setup = s'installer avant le match ; loop = jouer le match, encore et encore.",
+   "pre": [
+    "7.1"
+   ],
+   "ecrans": [
+    {
+     "titre": "setup",
+     "texte": "Une fois au démarrage."
+    },
+    {
+     "titre": "loop",
+     "texte": "En boucle, ensuite."
+    }
+   ],
+   "check": {
+    "enonce": "Le code de `loop()` est exécuté…",
+    "choix": [
+     "en boucle, sans fin",
+     "une seule fois",
+     "seulement quand on appuie sur reset",
+     "jamais"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "C'est le rôle de loop."
+   }
+  },
+  {
+   "id": "7.3",
+   "titre": "Afficher sur le moniteur série",
+   "corps": "Le **moniteur série** affiche le texte envoyé par la carte à l'ordinateur (menu **Tools → Serial Monitor**).\n- `Serial.begin(9600);` ouvre la liaison à 9600 bauds — sans cette ligne, rien ne s'affiche ;\n- `Serial.print(x);` affiche `x` **sans** passer à la ligne ;\n- `Serial.println(x);` affiche puis **passe à la ligne**.\n\n> **Exemple** (TP0) :\n```c\nvoid setup() {\n  Serial.begin(9600);\n  Serial.println(\"Bonjour le monde\");\n  Serial.println(\"je suis Adam de l'ESILV\");\n}\n\nvoid loop() {\n}\n```",
+   "rec": "Structure setup / loop : {{7.2}}.",
+   "alt": "print = écrire sur la même ligne ; println = écrire puis appuyer sur Entrée.",
+   "pre": [
+    "7.2"
+   ],
+   "ecrans": [
+    {
+     "titre": "Ouvrir",
+     "texte": "`Serial.begin(9600);` dans setup."
+    },
+    {
+     "titre": "Écrire",
+     "texte": "`println` passe à la ligne, `print` non."
+    }
+   ],
+   "check": {
+    "enonce": "Pour afficher deux messages sur deux lignes, on utilise…",
+    "choix": [
+     "Serial.println",
+     "Serial.print",
+     "Serial.begin",
+     "Serial.read"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "println ajoute le retour à la ligne."
+   }
+  },
+  {
+   "id": "7.4",
+   "titre": "Lire une entrée analogique",
+   "corps": "`analogRead(A0)` lit la tension sur la broche A0 avec le CAN 10 bits de la carte et renvoie un **code entier de 0 à 1023** ({{3.6}}). Pour retrouver la tension, on multiplie par le quantum $q = \\frac{5}{1024}$ :\n```c\nvoid loop() {\n  int n = analogRead(A0);          // code de 0 à 1023\n  float v = n * 5.0 / 1024;        // tension en volts\n  Serial.println(v);\n  delay(1000);                     // attendre 1 s\n}\n```\n> **Piège** : écrire `5.0` et non `5` : sinon le calcul se fait entre entiers et la partie décimale est perdue.\n\n`digitalRead` ne lit qu'un état 0 ou 1 (capteur TOR, {{2.2}}).",
+   "rec": "Code → tension : {{3.5}}.",
+   "alt": "analogRead te donne le numéro de la marche ; multiplie par la hauteur d'une marche pour avoir des volts.",
+   "pre": [
+    "7.3",
+    "3.5"
+   ],
+   "ecrans": [
+    {
+     "titre": "Lire",
+     "texte": "`analogRead(A0)` → 0 à 1023."
+    },
+    {
+     "titre": "Convertir",
+     "texte": "$v = n \\times \\frac{5{,}0}{1024}$."
+    }
+   ],
+   "check": {
+    "enonce": "`analogRead` renvoie une valeur entre…",
+    "choix": [
+     "0 et 1023",
+     "0 et 5",
+     "0 et 255",
+     "−1 et 1"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "CAN 10 bits : 0 à 1023."
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "ca7-001",
+   "type": "qcm",
+   "notion": "7.1",
+   "origine": "cours",
+   "enonce": "Quelles broches de l'Arduino UNO sont des entrées analogiques ?",
+   "choix": [
+    "A0 à A5",
+    "0 à 13",
+    "celles marquées ~",
+    "TX et RX"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "ANALOG IN : A0 à A5."
+  },
+  {
+   "id": "ca7-002",
+   "type": "qcm",
+   "notion": "7.1",
+   "origine": "cours",
+   "enonce": "Que signifie le symbole ~ à côté d'une broche numérique ?",
+   "choix": [
+    "elle peut produire un signal PWM",
+    "elle est analogique",
+    "elle est en panne",
+    "elle est reliée à la masse"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "~ = sortie PWM."
+  },
+  {
+   "id": "ca7-003",
+   "type": "trous",
+   "notion": "7.2",
+   "origine": "cours",
+   "enonce": "void [_]() { ... }   // une fois au démarrage\nvoid [_]() { ... }   // en boucle",
+   "fragments": [
+    "setup",
+    "loop",
+    "main",
+    "start"
+   ],
+   "verif": {
+    "mode": "trous",
+    "attendu": [
+     "setup",
+     "loop"
+    ]
+   },
+   "duree": 0.5,
+   "explication": "setup puis loop."
+  },
+  {
+   "id": "ca7-004",
+   "type": "trous",
+   "notion": "7.3",
+   "origine": "td",
+   "enonce": "void [_]() {\n  Serial.[_](9600);\n  Serial.[_](\"Bonjour le monde\");\n  Serial.println(\"je suis Adam de l'ESILV\");\n}",
+   "fragments": [
+    "setup",
+    "loop",
+    "begin",
+    "print",
+    "println",
+    "read"
+   ],
+   "verif": {
+    "mode": "trous",
+    "attendu": [
+     "setup",
+     "begin",
+     "println"
+    ]
+   },
+   "duree": 0.5,
+   "explication": "Afficher une fois → setup ; ouvrir la liaison → begin ; passer à la ligne → println."
+  },
+  {
+   "id": "ca7-005",
+   "type": "qcm",
+   "notion": "7.3",
+   "origine": "cours",
+   "enonce": "Sans `Serial.begin(9600);`, le moniteur série…",
+   "choix": [
+    "n'affiche rien",
+    "affiche tout normalement",
+    "affiche en double",
+    "plante la carte"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "La liaison n'est pas ouverte."
+  },
+  {
+   "id": "ca7-006",
+   "type": "saisie",
+   "notion": "7.3",
+   "origine": "cours",
+   "enonce": "Quelle instruction affiche un texte **puis passe à la ligne** ? (juste le nom, ex. `Serial.xxx`)",
+   "verif": {
+    "mode": "regex",
+    "motif": [
+     "serial\\.println(\\(.*\\))?"
+    ],
+    "exemple": "Serial.println"
+   },
+   "duree": 0.67,
+   "explication": "`Serial.println` (print + line)."
+  },
+  {
+   "id": "ca7-007",
+   "type": "trous",
+   "notion": "7.4",
+   "origine": "cours",
+   "enonce": "int n = [_](A0);\nfloat v = n * [_] / 1024;",
+   "fragments": [
+    "analogRead",
+    "digitalRead",
+    "5.0",
+    "5",
+    "1024"
+   ],
+   "verif": {
+    "mode": "trous",
+    "attendu": [
+     "analogRead",
+     "5.0"
+    ]
+   },
+   "duree": 0.5,
+   "explication": "analogRead lit le CAN ; 5.0 force un calcul décimal."
+  },
+  {
+   "id": "ca7-008",
+   "type": "saisie",
+   "notion": "7.4",
+   "origine": "cours",
+   "enonce": "Quelle fonction lit une broche **analogique** ? (son nom seul)",
+   "verif": {
+    "mode": "regex",
+    "motif": [
+     "analogread(\\(.*\\))?"
+    ],
+    "exemple": "analogRead"
+   },
+   "duree": 0.67,
+   "explication": "`analogRead` (et non `digitalRead`, qui ne lit que 0 ou 1)."
+  },
+  {
+   "id": "ca7-009",
+   "type": "saisie",
+   "notion": "7.4",
+   "origine": "cours",
+   "enonce": "`analogRead(A0)` renvoie $[[C]]$. Tension sur A0 (CAN 10 bits, 0 – 5 V) ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": "[[V]]",
+    "unite": "V",
+    "tol": 0.005
+   },
+   "duree": 0.67,
+   "explication": "$v = [[C]] \\times \\dfrac{5}{1024} = [[VT]]\\ \\text{V}$.",
+   "generateur": "ard-volts",
+   "vals": {
+    "C": "159",
+    "V": "0.776",
+    "VT": "0{,}776"
+   }
+  },
+  {
+   "id": "ca7-010",
+   "type": "qcm",
+   "notion": "7.4",
+   "origine": "cours",
+   "enonce": "Pourquoi écrire `n * 5.0 / 1024` plutôt que `n * 5 / 1024` ?",
+   "choix": [
+    "pour faire le calcul en décimal (sinon division entière)",
+    "pour aller plus vite",
+    "parce que 5 est interdit",
+    "pour lire la broche 5"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Entre entiers, `/` tronque : on perd les décimales."
+  }
+ ]
+}

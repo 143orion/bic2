@@ -747,6 +747,14 @@ svg.circ g.hl .body{stroke:var(--violet-clair);fill:color-mix(in srgb,var(--m-ac
 svg.circ g.hl .w{stroke:var(--violet-clair)}
 svg.circ g.hl{filter:drop-shadow(0 0 4px color-mix(in srgb,var(--m-ac) 80%,transparent))}
 svg.circ g.dim{opacity:.2}
+/* AOP, courbes et graphes (module Capteurs analogiques) */
+svg.circ g.ao .body{stroke:var(--m-ac)}
+svg.circ text.sg{font:15px var(--police);fill:var(--blanc)}
+svg.circ .tr{stroke:var(--m-ac);stroke-width:2.2;fill:none;stroke-linejoin:round}
+svg.circ .tr2{stroke:var(--violet-clair);stroke-width:2;fill:none;stroke-linejoin:round}
+svg.circ .gr{stroke:var(--gris);stroke-opacity:.14;stroke-width:1;fill:none}
+svg.circ .ax{stroke:var(--gris);stroke-width:1.4;fill:none}
+svg.circ .pt{stroke:var(--gris-2);stroke-width:1.2;stroke-dasharray:4 4;fill:none}
 /* follow-along */
 .notions{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
 .notions button{all:unset;cursor:pointer;padding:6px 14px;border-radius:var(--r-pilule);border:1px solid var(--verre-bord);font-size:13px;color:var(--gris)}
@@ -765,6 +773,13 @@ svg.circ g.dim{opacity:.2}
 .labo .sl{margin:8px 0}.labo .sl label{display:flex;justify-content:space-between;font-size:13px}.labo .sl input{width:100%;accent-color:var(--m-ac)}
 .labo .defi{margin-top:10px;padding:10px 12px;border-radius:8px;border:1px dashed var(--verre-bord);font-size:13.5px}
 .labo .defi.gagne{border-style:solid;border-color:var(--ok)}
+.labo .sl select{width:100%;margin-top:4px;background:var(--m-bg);color:var(--m-fg);border:1px solid var(--verre-bord);border-radius:6px;padding:6px 8px;font:inherit;font-size:16px}
+.labo .lab-coche{display:flex;gap:8px;align-items:center;font-size:13px;margin:6px 0;cursor:pointer}
+.labo .lab-coche input{accent-color:var(--m-ac)}
+.labo .lab-sch2{margin-bottom:8px}
+.labo .bits{display:flex;gap:3px;flex-wrap:wrap;margin:8px 0 2px}
+.labo .bits span{min-width:24px;text-align:center;border:1px solid var(--verre-bord);border-radius:4px;padding:2px 0;font-weight:700}
+.labo .bits span.un{background:var(--m-ac);color:var(--m-on-ac,#fff);border-color:var(--m-ac)}
 /* TL;DR */
 .tldr{font-size:14.5px;line-height:1.6}
 .tldr-liste{margin:0;padding-left:1.2em}.tldr-liste li{margin:7px 0}

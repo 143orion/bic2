@@ -1,0 +1,904 @@
+{
+ "id": "ca-2-capteurs",
+ "module": "capteurs-analogiques",
+ "titre": "Les capteurs",
+ "ordre": 2,
+ "sources": [
+  "Cours 1 · §2 et §4 (+ annotations)",
+  "TD1 · ex. 1, 3, 4, 5",
+  "Corrigé du devoir maison · ex. 5"
+ ],
+ "tldr": [
+  "**Capteur** : soumis à une grandeur physique, le **mesurande**, il fournit une grandeur **électrique** (tension, courant, charge, impédance) qui en dépend.",
+  "3 familles : **TOR** (tout ou rien : 0 / 1) · **analogique** (signal continu proportionnel) · **numérique** (codeur : sortie en bits).",
+  "Caractéristique linéaire : $y = S\\,x + y_0$ · **offset** $y_0$ = sortie quand le mesurande vaut 0 · **sensibilité** $S = \\dfrac{\\Delta y}{\\Delta x}$ (pente, **avec ses unités**).",
+  "Propriétés statiques : **justesse** (proche des étalons) · **sensibilité** · **linéarité** ($S$ constante) · **fidélité** (mesures reproductibles) · **plage de mesure**.",
+  "Propriétés dynamiques : **temps de réponse** (inertie) · **bande passante** (fréquences où $S$ ne chute pas de plus de 3 dB).",
+  "Pt100 : $R = R_0(1 + aT)$, $S = aR_0 = 0{,}385\\ \\Omega/°\\text{C}$, linéaire · thermistance : $R = a\\,e^{b/T}$, non linéaire.",
+  "TMP36 : **10 mV/°C**, **750 mV à 25 °C**, $V = 0{,}5 + 0{,}01\\,T$ donc $T = \\dfrac{V - 0{,}5}{0{,}01}$."
+ ],
+ "notions": [
+  {
+   "id": "2.1",
+   "titre": "Qu'est-ce qu'un capteur ?",
+   "corps": "> **À retenir** : le capteur est le dispositif qui, soumis à l'action d'une grandeur physique appelée **mesurande** (température, déplacement, pression…), présente une caractéristique de nature **électrique** (charge, tension, courant ou impédance) fonction de la grandeur à mesurer.\n\nOn le voit comme un bloc « acquérir » :\n- **entrée** : la grandeur physique à prélever (présence, position, niveau, vitesse, force, pression, couple, débit, température, luminosité, humidité, vibrations…) ;\n- **sortie** : un signal électrique (courant, tension, fréquence, niveau logique, valeur moyenne, nombre binaire…).\n\nC'est en sachant détecter et exploiter une grandeur physique qu'on a pu **automatiser** des systèmes, pour le confort ou la sécurité. Exemples : capteur de proximité à ultrasons, de niveau de liquide, d'humidité, cellule photoélectrique, détecteur de gaz, de choc, thermistance, LDR (lumière), PIR (présence)…\n\n> **Piège** (TD1 ex. 1) : les signaux **en entrée** d'un capteur sont des grandeurs physiques, donc **analogiques**, pas numériques.",
+   "rec": "Signal analogique ou numérique : {{1.1}}.",
+   "alt": "Ton oreille est un capteur : le mesurande est la pression de l'air (le son), la sortie est un signal électrique dans le nerf auditif.",
+   "pre": [
+    "1.1"
+   ],
+   "ecrans": [
+    {
+     "titre": "L'entrée",
+     "texte": "Une grandeur physique : le **mesurande**.",
+     "schema": {
+      "modele": "chaine",
+      "surligne": [
+       "cap"
+      ]
+     }
+    },
+    {
+     "titre": "La sortie",
+     "texte": "Une grandeur **électrique** : tension, courant, charge ou impédance."
+    }
+   ],
+   "check": {
+    "enonce": "Pour un thermomètre électronique, le mesurande est…",
+    "choix": [
+     "la température",
+     "la tension de sortie",
+     "le courant d'alimentation",
+     "la résistance"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "Le mesurande est la grandeur physique que l'on veut mesurer."
+   }
+  },
+  {
+   "id": "2.2",
+   "titre": "Les trois familles de capteurs",
+   "corps": "- **Capteurs logiques ou TOR** (tout ou rien) : le compte rendu ne prend que **deux valeurs** (oui / non, 0 / 1, présence / absence). Ex. : détection d'une caisse sur un tapis (24 V si présente, 0 V sinon), capteur de proximité devant une roue dentée, bouton poussoir.\n- **Capteurs analogiques** : la sortie est un signal **continu et proportionnel** au phénomène. Ex. : sortie de 0 à 20 mA pour une température de 0 à 250 °C. On lit le mesurande sur l'axe horizontal de la caractéristique.\n- **Capteurs numériques ou codeurs** : la sortie est directement un **nombre binaire**. Ex. : codeur de position angulaire qui sort 000, 001, 010… selon l'angle.\n\nUn capteur analogique a besoin d'un **CAN** ({{ch3}}) pour être lu par un calculateur.",
+   "rec": "Analogique / numérique : {{1.1}} ; bits : {{1.5}}.",
+   "alt": "Interrupteur = TOR ; variateur = analogique ; afficheur à chiffres = numérique.",
+   "pre": [
+    "2.1"
+   ],
+   "ecrans": [
+    {
+     "titre": "TOR",
+     "texte": "Deux états seulement : présence ou absence."
+    },
+    {
+     "titre": "Analogique",
+     "texte": "Une infinité de valeurs, proportionnelles au phénomène."
+    },
+    {
+     "titre": "Numérique",
+     "texte": "Un nombre binaire en sortie (codeur)."
+    }
+   ],
+   "check": {
+    "enonce": "Un capteur qui sort 0 V si la porte est fermée et 5 V si elle est ouverte est…",
+    "choix": [
+     "TOR",
+     "analogique",
+     "numérique (codeur)",
+     "linéaire"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "Deux valeurs seulement : tout ou rien."
+   }
+  },
+  {
+   "id": "2.3",
+   "titre": "Lire une caractéristique : offset, sensibilité, fonction de transfert",
+   "corps": "La **caractéristique** d'un capteur est le graphe sortie (axe vertical) en fonction du mesurande (axe horizontal). Quand c'est une **droite**, on en tire trois choses :\n\n**1. L'offset** $y_0$ : la sortie quand le mesurande vaut 0 (là où la droite coupe l'axe vertical).\n\n**2. La sensibilité** $S$ : la **pente** de la droite, **avec ses unités** :\n$$S = \\frac{\\Delta y}{\\Delta x} = \\frac{y_B - y_A}{x_B - x_A}$$\nPrends deux points **éloignés** pour être précis.\n**3. La fonction de transfert** : l'équation de la droite $y = a x + b$, avec $a = S$ et $b = y_0$.\n\n> **Exemple** : capteur de pression avec $V_0 = 0{,}5\\ \\text{V}$ et $V = 1{,}5\\ \\text{V}$ à $5\\ \\text{bar}$ : $S = \\frac{1{,}5 - 0{,}5}{5 - 0} = 0{,}2\\ \\text{V/bar}$, et $V = 0{,}2\\,P + 0{,}5$.\n\n> **Piège** : la sensibilité a une unité (V/bar, mV/°C, Ω/°C…). Un nombre sans unité est faux.",
+   "schema": {
+    "modele": "caract",
+    "vals": {
+     "a": "0.2",
+     "b": "0.5"
+    }
+   },
+   "rec": "Une droite : $y = ax + b$, $a$ = pente, $b$ = ordonnée à l'origine.",
+   "alt": "La sensibilité répond à : « de combien la sortie bouge-t-elle quand le mesurande augmente de 1 ? ».",
+   "pre": [
+    "2.2"
+   ],
+   "ecrans": [
+    {
+     "titre": "L'offset",
+     "texte": "À $P = 0$, la droite coupe l'axe des tensions : c'est $V_0$.",
+     "schema": {
+      "modele": "caract",
+      "vals": {
+       "a": "0.2",
+       "b": "0.5"
+      }
+     }
+    },
+    {
+     "titre": "La pente",
+     "texte": "Entre $P = 0$ et $P = 5$, la tension monte de $0{,}5$ à $1{,}5$ V : $S = \\frac{1}{5} = 0{,}2\\ \\text{V/bar}$."
+    },
+    {
+     "titre": "L'équation",
+     "texte": "$$V = 0{,}2\\,P + 0{,}5$$"
+    }
+   ],
+   "check": {
+    "enonce": "Une caractéristique passe par $(0\\ \\text{bar} ; 1\\ \\text{V})$ et $(4\\ \\text{bar} ; 3\\ \\text{V})$. $S$ = ?",
+    "choix": [
+     "0,5 V/bar",
+     "0,75 V/bar",
+     "2 V/bar",
+     "0,5"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$S = \\frac{3 - 1}{4 - 0} = 0{,}5\\ \\text{V/bar}$, avec l'unité."
+   }
+  },
+  {
+   "id": "2.4",
+   "titre": "Propriétés statiques",
+   "corps": "1. **Justesse** : le capteur est juste si ses valeurs ne s'écartent pas quand on les compare à des valeurs **étalon** (ou à d'autres capteurs normalisés).\n2. **Sensibilité** $S$ : le coefficient qui lie la grandeur d'entrée à la grandeur électrique de sortie, $S = \\dfrac{d(\\text{sortie})}{d(\\text{entrée})}$ : la pente de la caractéristique. Ex. : capteur de pression $V(P) = aP + V_0 \\Rightarrow S = \\frac{dV}{dP} = a$ (par exemple 1 mV/hPa).\n3. **Linéarité** : le capteur est linéaire si sa sensibilité est **constante** (caractéristique = droite).\n4. **Fidélité** : ses valeurs ne changent pas au cours du temps : en mesurant deux fois la même grandeur à deux moments différents, on obtient deux fois la même valeur (**reproductibilité**).\n5. **Plage de mesure** : la gamme des valeurs d'entrée qu'il peut traiter sans dégrader son fonctionnement.\n\n> **Piège** : juste ≠ fidèle. Un capteur peut donner toujours la même valeur (fidèle) mais décalée de la vraie (pas juste).",
+   "rec": "Sensibilité = pente : {{2.3}}.",
+   "alt": "Une balance qui affiche toujours 1 kg de trop est fidèle (même erreur à chaque fois) mais pas juste.",
+   "pre": [
+    "2.3"
+   ],
+   "ecrans": [
+    {
+     "titre": "Juste",
+     "texte": "Proche de la valeur vraie (étalon)."
+    },
+    {
+     "titre": "Fidèle",
+     "texte": "Toujours la même valeur pour la même grandeur."
+    },
+    {
+     "titre": "Linéaire",
+     "texte": "Sensibilité constante : une droite."
+    }
+   ],
+   "check": {
+    "enonce": "Un capteur donne toujours la même valeur pour une même mesure, mais décalée de 2 °C. Il est…",
+    "choix": [
+     "fidèle mais pas juste",
+     "juste mais pas fidèle",
+     "juste et fidèle",
+     "ni l'un ni l'autre"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "Reproductible (fidèle) mais faux (pas juste)."
+   }
+  },
+  {
+   "id": "2.5",
+   "titre": "Propriétés dynamiques",
+   "corps": "1. **Temps de réponse** : à cause de l'inertie propre à tout système, la réponse du capteur **n'est pas instantanée**. C'est le temps qu'il met à suivre un changement du mesurande.\n2. **Bande passante** : la sensibilité peut varier avec la fréquence du mesurande. La bande passante est l'**intervalle de fréquences** $[f_1 ; f_2]$ dans lequel la sensibilité ne varie pas au-delà d'une limite, en général fixée à **−3 dB** (on retrouve cette limite pour les filtres, {{6.1}}).",
+   "rec": "Fréquence : {{1.2}}.",
+   "alt": "Un thermomètre plongé dans l'eau chaude met quelques secondes à afficher la bonne valeur : c'est son temps de réponse.",
+   "pre": [
+    "2.4"
+   ],
+   "ecrans": [
+    {
+     "titre": "Temps de réponse",
+     "texte": "Le capteur suit le mesurande avec un retard."
+    },
+    {
+     "titre": "Bande passante",
+     "texte": "Entre $f_1$ et $f_2$, la sensibilité ne chute pas de plus de 3 dB.",
+     "schema": {
+      "modele": "gain",
+      "vals": {
+       "type": "pb"
+      }
+     }
+    }
+   ],
+   "check": {
+    "enonce": "La bande passante d'un capteur est…",
+    "choix": [
+     "l'intervalle de fréquences où sa sensibilité ne chute pas de plus de 3 dB",
+     "sa plage de mesure",
+     "son temps de réponse",
+     "la différence entre deux mesures"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "Définie par la limite de −3 dB."
+   }
+  },
+  {
+   "id": "2.6",
+   "titre": "Exemples : sonde Pt100 et thermistance",
+   "corps": "Deux capteurs de température résistifs (la sortie est une **résistance**).\n\n**Sonde Pt100** (fil de platine) : $$R(T) = R_0(1 + aT) = R_0 a T + R_0$$ avec $R_0 = 100\\ \\Omega$ à 0 °C et $a = 0{,}00385\\ /°\\text{C}$.\n$$S = \\frac{dR}{dT} = aR_0 = 0{,}385\\ \\Omega/°\\text{C}$$\n$S$ est une **constante** : le capteur est **linéaire**.\n\n**Thermistance** (semi-conducteur) : $$R(T) = a\\,e^{b/T} \\quad\\Rightarrow\\quad S = \\frac{dR}{dT} = -\\frac{ab}{T^2}\\,e^{b/T}$$\n$S$ **dépend de $T$** : le capteur est **non linéaire**.",
+   "rec": "Linéarité = sensibilité constante : {{2.4}}. Dériver $R_0(1 + aT)$ par rapport à $T$ donne $aR_0$.",
+   "alt": "Pt100 : chaque degré ajoute 0,385 Ω, toujours. Thermistance : la variation par degré change selon la température.",
+   "pre": [
+    "2.4"
+   ],
+   "ecrans": [
+    {
+     "titre": "Pt100",
+     "texte": "$R = R_0 a T + R_0$ : une droite de pente $aR_0 = 0{,}385\\ \\Omega/°\\text{C}$."
+    },
+    {
+     "titre": "Thermistance",
+     "texte": "$R = a\\,e^{b/T}$ : une exponentielle, sa pente varie avec $T$."
+    }
+   ],
+   "check": {
+    "enonce": "La sonde Pt100 est linéaire parce que…",
+    "choix": [
+     "sa sensibilité ne dépend pas de la température",
+     "elle est en platine",
+     "sa résistance est de 100 Ω",
+     "elle est numérique"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$S = aR_0$ est une constante."
+   }
+  },
+  {
+   "id": "2.7",
+   "titre": "Lire une datasheet : le TMP36",
+   "corps": "Le **TMP36** (Analog Devices) est un capteur de température à sortie en **tension analogique**. Ce qu'on lit dans sa datasheet :\n- **mesurande** : la température ; **sortie** : une tension proportionnelle ;\n- **sensibilité** (facteur d'échelle) : **10 mV/°C** ;\n- **750 mV à 25 °C** ;\n- **plage de mesure** : de −40 °C à +125 °C ; **précision** : ±2 °C (±1 °C typique à 25 °C) ;\n- **alimentation** : de 2,7 V à 5,5 V.\n\nD'où sa fonction de transfert (la droite passe par 0,75 V à 25 °C avec une pente de 0,01 V/°C, donc par 0,5 V à 0 °C) :\n$$V = 0{,}5 + 0{,}01\\,T \\qquad\\Longleftrightarrow\\qquad T = \\frac{V - 0{,}5}{0{,}01} = 100\\,(V - 0{,}5)$$\nLe décalage de 0,5 V (offset) permet de mesurer des températures **négatives** avec une tension toujours positive.",
+   "rec": "Fonction de transfert d'une droite : {{2.3}}.",
+   "alt": "Chaque degré ajoute 10 mV. À 0 °C on part de 500 mV ; à 25 °C, $500 + 250 = 750\\ \\text{mV}$.",
+   "pre": [
+    "2.3"
+   ],
+   "ecrans": [
+    {
+     "titre": "Le point connu",
+     "texte": "750 mV à 25 °C."
+    },
+    {
+     "titre": "La pente",
+     "texte": "10 mV/°C, donc 0 °C ↔ $750 - 250 = 500\\ \\text{mV}$."
+    },
+    {
+     "titre": "La formule",
+     "texte": "$$T = \\frac{V - 0{,}5}{0{,}01}$$"
+    }
+   ],
+   "check": {
+    "enonce": "Le TMP36 donne 0,8 V. La température vaut…",
+    "choix": [
+     "30 °C",
+     "80 °C",
+     "8 °C",
+     "25 °C"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$T = (0{,}8 - 0{,}5)/0{,}01 = 30\\ °\\text{C}$."
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "ca2-001",
+   "type": "qcm",
+   "notion": "2.1",
+   "origine": "td",
+   "enonce": "TD1 ex. 1 · Les signaux en entrée d'un capteur sont toujours numériques.",
+   "choix": [
+    "Faux",
+    "Vrai"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "En entrée, il y a une grandeur physique (température, pression…) : elle est analogique."
+  },
+  {
+   "id": "ca2-002",
+   "type": "qcm",
+   "notion": "2.1",
+   "origine": "cours",
+   "enonce": "Un capteur de pression donne une tension. Quel est le mesurande ?",
+   "choix": [
+    "la pression",
+    "la tension",
+    "le courant",
+    "le capteur"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Le mesurande est la grandeur physique mesurée."
+  },
+  {
+   "id": "ca2-003",
+   "type": "qcm-multi",
+   "notion": "2.1",
+   "origine": "cours",
+   "enonce": "Quelles grandeurs électriques un capteur peut-il fournir en sortie ?",
+   "choix": [
+    "une tension",
+    "un courant",
+    "une impédance (résistance)",
+    "une température"
+   ],
+   "verif": {
+    "attendu": [
+     0,
+     1,
+     2
+    ]
+   },
+   "duree": 0.5,
+   "explication": "La température est une grandeur physique (un mesurande), pas une grandeur électrique de sortie."
+  },
+  {
+   "id": "ca2-004",
+   "type": "qcm",
+   "notion": "2.2",
+   "origine": "cours",
+   "enonce": "Un codeur de position angulaire qui sort 000, 001, 010… est un capteur…",
+   "choix": [
+    "numérique",
+    "TOR",
+    "analogique",
+    "résistif"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Il sort directement un nombre binaire."
+  },
+  {
+   "id": "ca2-005",
+   "type": "qcm",
+   "notion": "2.2",
+   "origine": "cours",
+   "enonce": "Un capteur de présence de caisse qui sort 24 V ou 0 V est…",
+   "choix": [
+    "TOR",
+    "analogique",
+    "numérique (codeur)",
+    "linéaire"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Deux états : tout ou rien."
+  },
+  {
+   "id": "ca2-006",
+   "type": "trous",
+   "notion": "2.2",
+   "origine": "cours",
+   "enonce": "Un capteur [_] ne sort que 0 ou 1 ; un capteur [_] sort un signal continu proportionnel ; un capteur [_] sort un nombre binaire.",
+   "fragments": [
+    "TOR",
+    "analogique",
+    "numérique",
+    "linéaire"
+   ],
+   "verif": {
+    "mode": "trous",
+    "attendu": [
+     "TOR",
+     "analogique",
+     "numérique"
+    ]
+   },
+   "duree": 0.5,
+   "explication": "Les trois familles du cours."
+  },
+  {
+   "id": "ca2-007",
+   "type": "qcm-multi",
+   "notion": "2.2",
+   "origine": "td",
+   "enonce": "TD1 ex. 4 · Trois capteurs : (1) résistance qui diminue quand l'humidité augmente (échelle log, en courbe), (2) résistance qui baisse quand le niveau de liquide monte (presque une droite), (3) tension qui monte en droite avec la pression. Quelles affirmations sont correctes ?",
+   "choix": [
+    "Les trois capteurs nécessitent un CAN pour que leur signal soit utilisé par un calculateur.",
+    "Ce sont des capteurs TOR.",
+    "Les mesurandes sont : résistance et humidité (1), résistance et niveau (2), pression et tension (3).",
+    "La sortie du capteur (3) est une tension."
+   ],
+   "verif": {
+    "attendu": [
+     0,
+     3
+    ]
+   },
+   "duree": 1,
+   "explication": "Ils sont analogiques (pas TOR) : il faut un CAN. La résistance et la tension sont des **sorties**, pas des mesurandes : les mesurandes sont l'humidité, le niveau et la pression."
+  },
+  {
+   "id": "ca2-008",
+   "type": "saisie",
+   "notion": "2.3",
+   "origine": "cours",
+   "enonce": "Une caractéristique passe par $(1\\ \\text{bar} ; 0{,}7\\ \\text{V})$ et $(5\\ \\text{bar} ; 1{,}5\\ \\text{V})$. Sensibilité en V/bar ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 0.2,
+    "tol": 0.005
+   },
+   "duree": 0.67,
+   "explication": "$S = \\dfrac{1{,}5 - 0{,}7}{5 - 1} = \\dfrac{0{,}8}{4} = 0{,}2\\ \\text{V/bar}$."
+  },
+  {
+   "id": "ca2-009",
+   "type": "saisie",
+   "notion": "2.3",
+   "origine": "cours",
+   "enonce": "Fonction de transfert $V = 0{,}3\\,P + 0{,}6$ (V, bar). Tension pour $P = 2\\ \\text{bar}$ ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 1.2,
+    "unite": "V"
+   },
+   "duree": 0.67,
+   "explication": "$V = 0{,}3 \\times 2 + 0{,}6 = 1{,}2\\ \\text{V}$."
+  },
+  {
+   "id": "ca2-010",
+   "type": "qcm",
+   "notion": "2.3",
+   "origine": "cours",
+   "enonce": "L'offset d'un capteur est…",
+   "choix": [
+    "la sortie quand le mesurande vaut 0",
+    "la pente de la caractéristique",
+    "la plage de mesure",
+    "le temps de réponse"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "C'est l'ordonnée à l'origine de la caractéristique."
+  },
+  {
+   "id": "ca2-011",
+   "type": "qcm",
+   "notion": "2.4",
+   "origine": "cours",
+   "enonce": "Un capteur est linéaire si…",
+   "choix": [
+    "sa sensibilité est constante",
+    "il est fidèle",
+    "sa sortie est une tension",
+    "son offset est nul"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Sensibilité constante = caractéristique en droite."
+  },
+  {
+   "id": "ca2-012",
+   "type": "qcm",
+   "notion": "2.4",
+   "origine": "cours",
+   "enonce": "La gamme des valeurs d'entrée qu'un capteur peut traiter sans dégrader son fonctionnement est…",
+   "choix": [
+    "sa plage de mesure",
+    "sa bande passante",
+    "sa fidélité",
+    "sa sensibilité"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Définition de la plage de mesure."
+  },
+  {
+   "id": "ca2-013",
+   "type": "trous",
+   "notion": "2.4",
+   "origine": "cours",
+   "enonce": "Mêmes valeurs à deux moments différents : capteur [_]. Valeurs proches des étalons : capteur [_].",
+   "fragments": [
+    "fidèle",
+    "juste",
+    "linéaire",
+    "sensible"
+   ],
+   "verif": {
+    "mode": "trous",
+    "attendu": [
+     "fidèle",
+     "juste"
+    ]
+   },
+   "duree": 0.5,
+   "explication": "Fidélité = reproductibilité ; justesse = proche du vrai."
+  },
+  {
+   "id": "ca2-014",
+   "type": "qcm",
+   "notion": "2.5",
+   "origine": "cours",
+   "enonce": "La bande passante est en général définie par une chute de sensibilité de…",
+   "choix": [
+    "3 dB",
+    "10 dB",
+    "50 %",
+    "1 V"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "−3 dB (le gain est divisé par $\\sqrt{2}$)."
+  },
+  {
+   "id": "ca2-015",
+   "type": "qcm",
+   "notion": "2.5",
+   "origine": "cours",
+   "enonce": "La réponse d'un capteur n'est pas instantanée à cause de…",
+   "choix": [
+    "l'inertie du système (temps de réponse)",
+    "sa plage de mesure",
+    "son offset",
+    "sa justesse"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Tout système a une inertie : c'est le temps de réponse."
+  },
+  {
+   "id": "ca2-016",
+   "type": "saisie",
+   "notion": "2.6",
+   "origine": "cours",
+   "enonce": "Pt100 : $R_0 = 100\\ \\Omega$, $a = 0{,}00385\\ /°\\text{C}$. Sensibilité $S = aR_0$ en Ω/°C ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 0.385,
+    "tol": 0.002
+   },
+   "duree": 0.67,
+   "explication": "$S = 0{,}00385 \\times 100 = 0{,}385\\ \\Omega/°\\text{C}$."
+  },
+  {
+   "id": "ca2-017",
+   "type": "qcm",
+   "notion": "2.6",
+   "origine": "cours",
+   "enonce": "Une thermistance suit $R = a\\,e^{b/T}$. Elle est…",
+   "choix": [
+    "non linéaire : sa sensibilité dépend de $T$",
+    "linéaire",
+    "TOR",
+    "numérique"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "$S = -\\frac{ab}{T^2}e^{b/T}$ varie avec $T$."
+  },
+  {
+   "id": "ca2-018",
+   "type": "saisie",
+   "notion": "2.7",
+   "origine": "td",
+   "enonce": "TD1 ex. 3 · Quelle tension le TMP36 donne-t-il à 25 °C ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 0.75,
+    "unite": "V"
+   },
+   "duree": 0.67,
+   "explication": "750 mV (datasheet)."
+  },
+  {
+   "id": "ca2-019",
+   "type": "saisie",
+   "notion": "2.7",
+   "origine": "cours",
+   "enonce": "Le TMP36 sort 0,95 V. Température (en °C) ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 45,
+    "tol": 0.5
+   },
+   "duree": 0.67,
+   "explication": "$T = \\dfrac{0{,}95 - 0{,}5}{0{,}01} = 45\\ °\\text{C}$."
+  },
+  {
+   "id": "ca2-020",
+   "type": "qcm",
+   "notion": "2.7",
+   "origine": "cours",
+   "enonce": "Sensibilité du TMP36 ?",
+   "choix": [
+    "10 mV/°C",
+    "1 mV/°C",
+    "750 mV/°C",
+    "0,5 V/°C"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Facteur d'échelle de la datasheet : 10 mV/°C."
+  },
+  {
+   "id": "ca2-101",
+   "type": "exo",
+   "titre": "TD1 ex. 5 · Caractéristique d'un capteur de pression",
+   "notion": "2.3",
+   "origine": "td",
+   "enonce": "Le but : lire la caractéristique ci-dessous (tension en fonction de la pression) et en déduire la fonction de transfert du capteur. Les croix marquent les mesures à 1, 2, 3, 4 et 5 bar ; la grille est graduée tous les 0,1 V et tous les 0,5 bar.",
+   "guidage": "**Plan** : 1. mesurande et sortie (axes) · 2. offset (lecture à $P = 0$) · 3. sensibilité = pente entre deux points éloignés, avec unités · 4. fonction de transfert $V = S\\,P + V_0$ · 5. l'inverser pour retrouver une pression.",
+   "duree": 8,
+   "etapes": [
+    {
+     "consigne": "Regarde l'axe horizontal : c'est la grandeur que le capteur mesure. Réponds en un mot.",
+     "question": "Mesurande ?",
+     "verif": {
+      "mode": "exact",
+      "attendu": [
+       "pression",
+       "la pression"
+      ]
+     },
+     "indices": [
+      "Le mesurande est sur l'axe horizontal.",
+      "C'est la pression (la sortie, sur l'axe vertical, est une tension)."
+     ],
+     "corrige": "L'axe horizontal porte la grandeur mesurée : le **mesurande** est la pression ; la sortie est une **tension** analogique."
+    },
+    {
+     "consigne": "L'offset est la tension quand la pression est nulle : là où la droite coupe l'axe vertical.",
+     "question": "$V_0 = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 0.4,
+      "unite": "V",
+      "tol": 0.02
+     },
+     "indices": [
+      "Lis l'ordonnée du point de la droite à $P = 0$.",
+      "Chaque petit carreau vertical vaut 0,1 V."
+     ],
+     "corrige": "On lit la tension pour $P = 0$ : $V_0 = \\mathbf{400\\ \\text{m}\\text{V}}$"
+    },
+    {
+     "consigne": "La sensibilité est la pente, en V/bar. Prends $P = 0$ et $P = 5$.",
+     "question": "$S = ?$ (en V/bar)",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 0.12,
+      "tol": 0.006
+     },
+     "indices": [
+      "$S = \\dfrac{V(5) - V(0)}{5 - 0}$",
+      "Lis V(5) sur la droite (5e croix)."
+     ],
+     "corrige": "Deux points éloignés : $S = \\dfrac{V(5) - V(0)}{5 - 0} = \\dfrac{1 - 0{,}4}{5} = \\mathbf{0{,}12\\ \\text{V/bar}}$"
+    },
+    {
+     "consigne": "Écris la fonction de transfert $V = S\\,P + V_0$ et applique-la.",
+     "question": "$V$ à $P = [[P]]$ bar ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 0.5800000000000001,
+      "unite": "V",
+      "tol": 0.03
+     },
+     "indices": [
+      "$V = S \\times [[P]] + V_0$",
+      "Remplace $S$ et $V_0$ par tes réponses précédentes."
+     ],
+     "corrige": "$V(P) = 0{,}12\\,P + 0{,}4$, donc $V(1{,}5) = 0{,}12 \\times 1{,}5 + 0{,}4 = \\mathbf{580\\ \\text{m}\\text{V}}$"
+    },
+    {
+     "consigne": "Fais l'inverse : quelle pression donne une sortie de $[[VC]]\\ \\text{V}$ ?",
+     "question": "$P = ?$ (en bar)",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 2,
+      "tol": 0.06
+     },
+     "indices": [
+      "$P = \\dfrac{V - V_0}{S}$",
+      "$P = \\dfrac{[[VC]] - V_0}{S}$"
+     ],
+     "corrige": "On inverse : $P = \\dfrac{V - V_0}{S} = \\dfrac{0{,}64 - 0{,}4}{0{,}12} = \\mathbf{2\\ \\text{bar}}$"
+    }
+   ],
+   "generateur": "caract",
+   "schema": {
+    "modele": "caract",
+    "vals": {
+     "a": "[[a]]",
+     "b": "[[b]]"
+    }
+   },
+   "vals": {
+    "a": "0.12",
+    "b": "0.4",
+    "P": "1,5",
+    "VC": "0,64"
+   }
+  },
+  {
+   "id": "ca2-102",
+   "type": "exo",
+   "titre": "TD1 ex. 3 · Le capteur TMP36",
+   "notion": "2.7",
+   "origine": "td",
+   "enonce": "Le but : exploiter la datasheet du TMP36 (capteur de température à sortie en tension). Extrait : *« scale factor 10 mV/°C ; 750 mV output at 25 °C ; −40 °C to +125 °C ; ±2 °C accuracy ; 2.7 V to 5.5 V »*.",
+   "guidage": "**Plan** : 1. sensibilité (facteur d'échelle) · 2. point connu à 25 °C · 3. fonction de transfert $V = 0{,}5 + 0{,}01\\,T$ · 4. l'inverser.",
+   "duree": 6,
+   "etapes": [
+    {
+     "consigne": "La sensibilité est donnée par le facteur d'échelle. Donne-la en V/°C.",
+     "question": "$S = ?$ (V/°C)",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 0.01,
+      "tol": 0.0005
+     },
+     "indices": [
+      "« scale factor » = facteur d'échelle = sensibilité.",
+      "10 mV = 0,01 V."
+     ],
+     "corrige": "La datasheet donne un facteur d'échelle de **10 mV/°C** : c'est la sensibilité ($S = 0{,}01\\ \\text{V/°C}$)."
+    },
+    {
+     "consigne": "Quelle tension le capteur donne-t-il à 25 °C ?",
+     "question": "$V(25\\ °\\text{C}) = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 0.75,
+      "unite": "V"
+     },
+     "indices": [
+      "C'est écrit dans l'extrait.",
+      "750 mV."
+     ],
+     "corrige": "Le tableau de la datasheet donne $\\mathbf{750\\ \\text{mV}}$ à 25 °C."
+    },
+    {
+     "consigne": "La droite passe par 750 mV à 25 °C avec 10 mV/°C, donc par 0,5 V à 0 °C : $V = 0{,}5 + 0{,}01\\,T$. Calcule la tension à $T = [[T]]\\ °\\text{C}$.",
+     "question": "$V([[T]]\\ °\\text{C}) = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 0.4,
+      "unite": "V"
+     },
+     "indices": [
+      "$V = 0{,}5 + 0{,}01 \\times T$",
+      "$V = 0{,}5 + 0{,}01 \\times ([[T]])$"
+     ],
+     "corrige": "$V = 0{,}5 + 0{,}01\\,T = 0{,}5 + 0{,}01 \\times (-10) = \\mathbf{400\\ \\text{m}\\text{V}}$"
+    },
+    {
+     "consigne": "Inverse la formule pour retrouver la température quand le capteur sort $[[V2]]\\ \\text{V}$.",
+     "question": "$T = ?$ (°C)",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 19.999999999999996,
+      "tol": 0.6
+     },
+     "indices": [
+      "$T = \\dfrac{V - 0{,}5}{0{,}01}$",
+      "$T = \\dfrac{[[V2]] - 0{,}5}{0{,}01}$"
+     ],
+     "corrige": "$T = \\dfrac{V - 0{,}5}{0{,}01} = \\dfrac{0{,}7 - 0{,}5}{0{,}01} = \\mathbf{20\\ °\\text{C}}$"
+    }
+   ],
+   "generateur": "tmp36",
+   "vals": {
+    "T": "-10",
+    "V2": "0,7"
+   }
+  },
+  {
+   "id": "ca2-103",
+   "type": "exo",
+   "titre": "Cours · Sonde Pt100",
+   "notion": "2.6",
+   "origine": "cours",
+   "enonce": "Le but : calculer la sensibilité et une valeur de la sonde Pt100, de loi $R(T) = R_0(1 + aT)$ avec $R_0 = 100\\ \\Omega$ et $a = 0{,}00385\\ /°\\text{C}$.",
+   "guidage": "**Plan** : 1. dériver $R(T)$ pour la sensibilité · 2. appliquer la loi à $T = [[T]]\\ °\\text{C}$.",
+   "duree": 4,
+   "etapes": [
+    {
+     "consigne": "La sensibilité est la dérivée $\\frac{dR}{dT}$. Développe d'abord : $R = R_0 a T + R_0$.",
+     "question": "$S = ?$ (Ω/°C)",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 0.385,
+      "tol": 0.002
+     },
+     "indices": [
+      "La dérivée de $R_0 a T + R_0$ par rapport à $T$ est $R_0 a$.",
+      "$S = 100 \\times 0{,}00385$"
+     ],
+     "corrige": "$S = \\dfrac{dR}{dT} = a R_0 = 0{,}00385 \\times 100 = \\mathbf{0{,}385\\ \\Omega/°\\text{C}}$ : constante, le capteur est linéaire."
+    },
+    {
+     "consigne": "Applique la loi à $T = [[T]]\\ °\\text{C}$.",
+     "question": "$R([[T]]) = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 130.8,
+      "unite": "Ω"
+     },
+     "indices": [
+      "$R = R_0(1 + aT)$",
+      "$R = 100 \\times (1 + 0{,}00385 \\times [[T]])$"
+     ],
+     "corrige": "$R(80) = R_0(1 + aT) = 100 \\times (1 + 0{,}00385 \\times 80) = \\mathbf{130{,}8\\ \\Omega}$"
+    }
+   ],
+   "generateur": "pt100",
+   "vals": {
+    "T": "80"
+   }
+  }
+ ]
+}

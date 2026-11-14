@@ -1,0 +1,442 @@
+{
+ "id": "ca-0-rappels",
+ "module": "capteurs-analogiques",
+ "titre": "Rappels d'électricité",
+ "ordre": 0,
+ "sources": [
+  "Cours 2 (AOP) · Rappels"
+ ],
+ "tldr": [
+  "**Série** : $R_{eq} = R_1 + R_2$ · **parallèle** : $R_{eq} = \\dfrac{R_1 R_2}{R_1 + R_2}$ (plus petite que chacune).",
+  "**Condensateurs** : c'est l'inverse ! Parallèle : $C_{eq} = C_1 + C_2$ · série : $\\dfrac{1}{C_{eq}} = \\dfrac{1}{C_1} + \\dfrac{1}{C_2}$.",
+  "**Impédances** : $Z_R = R$, $Z_L = jL\\omega$, $Z_C = \\dfrac{1}{jC\\omega}$ · loi d'Ohm : $V_A - V_B = Z\\,I$.",
+  "**Loi des nœuds** : ce qui entre = ce qui sort ($I = I_1 + I_2$).",
+  "**Millman** : $V_m = \\dfrac{\\sum E_k/Z_k}{\\sum 1/Z_k}$ (une branche sans source compte $0/Z_k$ en haut, $1/Z_k$ en bas)."
+ ],
+ "notions": [
+  {
+   "id": "0.1",
+   "titre": "Associer des résistances et des condensateurs",
+   "corps": "Les **composants passifs** : résistance $R$ (en ohms, Ω), bobine $L$ (en henrys, H), condensateur $C$ (en farads, F).\n\n### Résistances\n- **En série** (l'une après l'autre, même courant) : $$R_{eq} = R_1 + R_2 + \\dots + R_n$$ Exemple : $2\\ \\text{k}\\Omega$ et $6\\ \\text{k}\\Omega$ en série font $8\\ \\text{k}\\Omega$.\n- **En parallèle** (mêmes deux nœuds, même tension) : $$\\frac{1}{R_{eq}} = \\frac{1}{R_1} + \\frac{1}{R_2} \\quad\\Rightarrow\\quad R_{eq} = \\frac{R_1 R_2}{R_1 + R_2}$$\n\n### Condensateurs : les règles s'inversent\n- **En parallèle** : $C_{eq} = C_1 + C_2$\n- **En série** : $\\dfrac{1}{C_{eq}} = \\dfrac{1}{C_1} + \\dfrac{1}{C_2}$\n\n> **Piège** : ne pas appliquer aux condensateurs la règle des résistances. Pour $C$, c'est le **parallèle** qui s'additionne.\n\nPour aller plus loin, le module **Complément électronique** reprend tout cela en détail (ch. 3).",
+   "rec": "Série = un seul chemin, le courant traverse tout. Parallèle = plusieurs chemins entre deux mêmes points.",
+   "alt": "Un condensateur, c'est deux plaques face à face. Deux condensateurs en parallèle, c'est comme une seule grande plaque : la capacité augmente, donc on additionne. En série, c'est l'inverse.",
+   "pre": [],
+   "ecrans": [
+    {
+     "titre": "Résistances en série",
+     "texte": "Même courant dans les deux : les tensions s'ajoutent, donc les résistances aussi. $$R_{eq} = R_1 + R_2$$"
+    },
+    {
+     "titre": "Résistances en parallèle",
+     "texte": "Même tension : les courants s'ajoutent, donc les **inverses** des résistances s'ajoutent. $$R_{eq} = \\frac{R_1 R_2}{R_1 + R_2}$$"
+    },
+    {
+     "titre": "Condensateurs",
+     "texte": "Règles inversées : $C_{eq} = C_1 + C_2$ en **parallèle**, $\\frac{1}{C_{eq}} = \\frac{1}{C_1} + \\frac{1}{C_2}$ en **série**."
+    }
+   ],
+   "check": {
+    "enonce": "Deux condensateurs de $10\\ \\text{nF}$ en **parallèle** : $C_{eq}$ = ?",
+    "choix": [
+     "$20\\ \\text{nF}$",
+     "$5\\ \\text{nF}$",
+     "$10\\ \\text{nF}$",
+     "$100\\ \\text{nF}$"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "En parallèle, les capacités s'additionnent : $10 + 10 = 20\\ \\text{nF}$."
+   }
+  },
+  {
+   "id": "0.2",
+   "titre": "Potentiel, loi d'Ohm et impédances",
+   "corps": "Le **potentiel** $V_A$ est la tension mesurée au point $A$ par rapport à une référence, la **masse** (0 V, GND, terre).\n\nLa **loi d'Ohm** relie la tension aux bornes d'un dipôle au courant qui le traverse :\n$$V_A - V_B = U = Z\\,I$$\navec $I$ orienté de $A$ vers $B$. Si on oriente le courant dans l'autre sens, un signe − apparaît.\n\nL'**impédance** $Z$ généralise la résistance aux signaux sinusoïdaux (pulsation $\\omega = 2\\pi f$) :\n$$Z_R = R \\qquad Z_L = jL\\omega \\qquad Z_C = \\frac{1}{jC\\omega}$$\n\n> **À retenir** : le condensateur a une impédance **énorme à basse fréquence** (circuit ouvert) et **très faible à haute fréquence** (fil). C'est ce qui fera marcher les filtres du {{ch6}}.",
+   "rec": "$U = RI$ : la tension aux bornes d'une résistance est proportionnelle au courant.",
+   "alt": "Pour $C$ : quand $\\omega \\to 0$, $Z_C = \\frac{1}{jC\\omega} \\to \\infty$ (interrupteur ouvert) ; quand $\\omega \\to \\infty$, $Z_C \\to 0$ (fil).",
+   "pre": [],
+   "ecrans": [
+    {
+     "titre": "Le potentiel",
+     "texte": "On mesure toujours **par rapport à la masse** (0 V). $V_A$ = « hauteur électrique » du point $A$."
+    },
+    {
+     "titre": "Loi d'Ohm",
+     "texte": "Le courant va de $A$ vers $B$ : $$V_A - V_B = R\\,I$$"
+    },
+    {
+     "titre": "Impédances",
+     "texte": "$Z_R = R$, $Z_L = jL\\omega$, $Z_C = \\frac{1}{jC\\omega}$ : le condensateur bloque le continu et laisse passer les hautes fréquences."
+    }
+   ],
+   "check": {
+    "enonce": "À très basse fréquence, un condensateur se comporte comme…",
+    "choix": [
+     "un circuit ouvert",
+     "un fil",
+     "une résistance nulle",
+     "une source de tension"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$Z_C = \\frac{1}{jC\\omega}$ devient très grand quand $\\omega \\to 0$ : plus aucun courant ne passe."
+   }
+  },
+  {
+   "id": "0.3",
+   "titre": "Loi des nœuds",
+   "corps": "Un **nœud** est un point où se rejoignent au moins trois fils. La **loi des nœuds** (Kirchhoff) dit que le courant ne s'accumule pas :\n$$\\sum I_{\\text{entrants}} = \\sum I_{\\text{sortants}}$$\nExemple : un courant $I$ arrive et se partage en $I_1$ et $I_2$ : $I = I_1 + I_2$, soit $I - I_1 - I_2 = 0$.\n\nOn s'en servira pour l'AOP : aucun courant n'entre dans ses entrées ({{4.3}}), donc tout le courant qui arrive au nœud de l'entrée − repart par la résistance de contre-réaction.\n\nPour aller plus loin, le module **Complément électronique** reprend tout cela en détail (ch. 2).",
+   "rec": "Pense à de l'eau dans des tuyaux : ce qui arrive à un embranchement repart forcément.",
+   "alt": "Compte $+$ ce qui entre, $-$ ce qui sort : la somme vaut toujours zéro.",
+   "pre": [],
+   "ecrans": [
+    {
+     "titre": "Un nœud",
+     "texte": "Au moins trois fils se rejoignent. Les courants qui arrivent repartent."
+    },
+    {
+     "titre": "La loi",
+     "texte": "$$I = I_1 + I_2 \\iff I - I_1 - I_2 = 0$$"
+    }
+   ],
+   "check": {
+    "enonce": "3 mA arrivent à un nœud ; une branche emporte 1 mA. Combien emporte l'autre ?",
+    "choix": [
+     "2 mA",
+     "4 mA",
+     "1 mA",
+     "3 mA"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$3 = 1 + I_2$ donc $I_2 = 2\\ \\text{mA}$."
+   }
+  },
+  {
+   "id": "0.4",
+   "titre": "Théorème de Millman",
+   "corps": "Millman donne directement le potentiel $V_m$ d'un nœud relié à plusieurs branches. Chaque branche $k$ contient une impédance $Z_k$ et éventuellement une source $E_k$ :\n$$V_m = \\frac{\\dfrac{E_1}{Z_1} + \\dfrac{E_2}{Z_2} + \\dots + \\dfrac{E_n}{Z_n}}{\\dfrac{1}{Z_1} + \\dfrac{1}{Z_2} + \\dots + \\dfrac{1}{Z_n}}$$\n- une branche **sans source** (reliée à la masse) compte $0$ au numérateur mais bien $\\frac{1}{Z_k}$ au dénominateur ;\n- une source orientée **vers le bas** compte avec un signe −.\n\n> **Exemple** (cours) : $V_1 = 10\\ \\text{V}$ via $5\\ \\Omega$, une branche de $8\\ \\Omega$ sans source, $V_3 = -12\\ \\text{V}$ via $3\\ \\Omega$ :\n> $$V_{ab} = \\frac{\\frac{10}{5} + \\frac{0}{8} + \\frac{-12}{3}}{\\frac{1}{5} + \\frac{1}{8} + \\frac{1}{3}} = -3\\ \\text{V}$$\n\nC'est **l'outil** pour calculer le gain des montages à AOP ({{5.3}}) : on l'applique au nœud de l'entrée −.",
+   "schema": {
+    "modele": "millman3b",
+    "vals": {
+     "R1": "5 Ω",
+     "R2": "8 Ω",
+     "R3": "3 Ω",
+     "V1": "10 V",
+     "V3": "12 V"
+    }
+   },
+   "rec": "Millman, c'est la loi des nœuds {{0.3}} combinée à la loi d'Ohm {{0.2}} : on écrit que la somme des courants $\\frac{E_k - V_m}{Z_k}$ arrivant au nœud est nulle.",
+   "alt": "$V_m$ est une **moyenne pondérée** des tensions $E_k$, chacune pesant $\\frac{1}{Z_k}$ : plus une branche est « facile » (petite $Z$), plus elle tire $V_m$ vers sa tension.",
+   "pre": [
+    "0.2",
+    "0.3"
+   ],
+   "ecrans": [
+    {
+     "titre": "Le principe",
+     "texte": "On cherche le potentiel d'un nœud relié à plusieurs branches.",
+     "schema": {
+      "modele": "millman3b",
+      "vals": {
+       "R1": "5 Ω",
+       "R2": "8 Ω",
+       "R3": "3 Ω",
+       "V1": "10 V",
+       "V3": "12 V"
+      }
+     }
+    },
+    {
+     "titre": "Le numérateur",
+     "texte": "Pour chaque branche, $\\frac{E_k}{Z_k}$ : $\\frac{10}{5} + \\frac{0}{8} + \\frac{-12}{3} = 2 + 0 - 4 = -2$. $V_3$ est orientée vers le bas, d'où le signe −.",
+     "schema": {
+      "surligne": [
+       "V1",
+       "V3"
+      ]
+     }
+    },
+    {
+     "titre": "Le dénominateur",
+     "texte": "Pour **toutes** les branches, $\\frac{1}{Z_k}$ : $\\frac15 + \\frac18 + \\frac13 = \\frac{80}{120} = \\frac{2}{3}$.",
+     "schema": {
+      "surligne": [
+       "R1",
+       "R2",
+       "R3"
+      ]
+     }
+    },
+    {
+     "titre": "Résultat",
+     "texte": "$$V_{ab} = \\frac{-2}{2/3} = -3\\ \\text{V}$$"
+    }
+   ],
+   "check": {
+    "enonce": "Dans Millman, une branche **sans source** reliée à la masse…",
+    "choix": [
+     "compte $0$ en haut et $\\frac{1}{Z}$ en bas",
+     "est ignorée",
+     "compte $\\frac{1}{Z}$ en haut et en bas",
+     "compte $Z$ en bas"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "Sa source vaut 0, mais elle laisse passer du courant : elle compte au dénominateur."
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "ca0-001",
+   "type": "saisie",
+   "notion": "0.1",
+   "origine": "cours",
+   "enonce": "$R_1 = 2\\ \\text{k}\\Omega$ et $R_2 = 6\\ \\text{k}\\Omega$ en **série**. $R_{eq}$ ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 8000,
+    "unite": "Ω"
+   },
+   "duree": 0.67,
+   "explication": "En série, on additionne : $2 + 6 = 8\\ \\text{k}\\Omega$."
+  },
+  {
+   "id": "ca0-002",
+   "type": "saisie",
+   "notion": "0.1",
+   "origine": "cours",
+   "enonce": "$R_1 = 3\\ \\text{k}\\Omega$ et $R_2 = 6\\ \\text{k}\\Omega$ en **parallèle**. $R_{eq}$ ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 2000,
+    "unite": "Ω"
+   },
+   "duree": 0.67,
+   "explication": "$\\dfrac{3 \\times 6}{3 + 6} = \\dfrac{18}{9} = 2\\ \\text{k}\\Omega$."
+  },
+  {
+   "id": "ca0-003",
+   "type": "qcm",
+   "notion": "0.1",
+   "origine": "cours",
+   "enonce": "$C_1 = 10\\ \\text{nF}$ et $C_2 = 10\\ \\text{nF}$ en **série**. $C_{eq}$ ?",
+   "choix": [
+    "$5\\ \\text{nF}$",
+    "$20\\ \\text{nF}$",
+    "$10\\ \\text{nF}$",
+    "$100\\ \\text{nF}$"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "En série, les inverses s'additionnent : $\\frac{1}{C_{eq}} = \\frac{1}{10} + \\frac{1}{10}$, donc $C_{eq} = 5\\ \\text{nF}$."
+  },
+  {
+   "id": "ca0-004",
+   "type": "trous",
+   "notion": "0.1",
+   "origine": "cours",
+   "enonce": "Résistances : on additionne en [_]. Condensateurs : on additionne en [_].",
+   "fragments": [
+    "série",
+    "parallèle"
+   ],
+   "verif": {
+    "mode": "trous",
+    "attendu": [
+     "série",
+     "parallèle"
+    ]
+   },
+   "duree": 0.5,
+   "explication": "Les deux règles sont inversées l'une par rapport à l'autre."
+  },
+  {
+   "id": "ca0-005",
+   "type": "qcm",
+   "notion": "0.2",
+   "origine": "cours",
+   "enonce": "Quelle est l'impédance d'un condensateur ?",
+   "choix": [
+    "$\\dfrac{1}{jC\\omega}$",
+    "$jC\\omega$",
+    "$jL\\omega$",
+    "$C$"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "$Z_C = \\frac{1}{jC\\omega}$ : elle diminue quand la fréquence augmente."
+  },
+  {
+   "id": "ca0-006",
+   "type": "qcm",
+   "notion": "0.2",
+   "origine": "cours",
+   "enonce": "Le courant $I$ va de $C$ vers $D$ dans une résistance $R$. Quelle relation est juste ?",
+   "choix": [
+    "$V_C - V_D = RI$",
+    "$V_D - V_C = RI$",
+    "$V_C + V_D = RI$",
+    "$V_C - V_D = -RI$"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Le potentiel baisse dans le sens du courant : $V_C - V_D = RI$ (donc $V_D - V_C = -RI$)."
+  },
+  {
+   "id": "ca0-007",
+   "type": "saisie",
+   "notion": "0.3",
+   "origine": "cours",
+   "enonce": "Au nœud $A$, $I = 5\\ \\text{mA}$ arrive ; $I_1 = 2\\ \\text{mA}$ part dans une branche. Que vaut $I_2$, le courant de l'autre branche ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 0.003,
+    "unite": "A"
+   },
+   "duree": 0.67,
+   "explication": "$I = I_1 + I_2$ donc $I_2 = 5 - 2 = 3\\ \\text{mA}$."
+  },
+  {
+   "id": "ca0-008",
+   "type": "saisie",
+   "notion": "0.4",
+   "origine": "cours",
+   "enonce": "Millman : branche 1 avec $E_1 = 6\\ \\text{V}$ et $R_1 = 1\\ \\text{k}\\Omega$ ; branche 2 avec $R_2 = 2\\ \\text{k}\\Omega$ reliée à la masse (pas de source). Potentiel du nœud $V_m$ (en V) ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 4,
+    "unite": "V"
+   },
+   "duree": 0.67,
+   "explication": "$V_m = \\dfrac{6/1 + 0/2}{1/1 + 1/2} = \\dfrac{6}{1{,}5} = 4\\ \\text{V}$ (c'est un diviseur de tension)."
+  },
+  {
+   "id": "ca0-009",
+   "type": "trous",
+   "notion": "0.4",
+   "origine": "cours",
+   "enonce": "Millman : au numérateur on somme les [_], au dénominateur les [_].",
+   "fragments": [
+    "$E_k/Z_k$",
+    "$1/Z_k$",
+    "$Z_k$",
+    "$E_k$"
+   ],
+   "verif": {
+    "mode": "trous",
+    "attendu": [
+     "$E_k/Z_k$",
+     "$1/Z_k$"
+    ]
+   },
+   "duree": 0.5,
+   "explication": "$V_m = \\dfrac{\\sum E_k/Z_k}{\\sum 1/Z_k}$."
+  },
+  {
+   "id": "ca0-101",
+   "type": "exo",
+   "titre": "Cours · Millman sur trois branches",
+   "notion": "0.4",
+   "origine": "cours",
+   "enonce": "Le but : trouver le potentiel $V_{ab}$ du nœud $a$ par rapport à $b$ (la masse) avec Millman. Branche 1 : $V_1 = 10\\ \\text{V}$ (+ en haut) et $R_1 = 5\\ \\Omega$. Branche 2 : $R_2 = 8\\ \\Omega$ seule. Branche 3 : $R_3 = 3\\ \\Omega$ et $V_3 = 12\\ \\text{V}$ avec le **+ en bas**.",
+   "guidage": "**Plan** : 1. somme des $\\frac{E_k}{R_k}$ (signe de chaque source) · 2. somme des $\\frac{1}{R_k}$ · 3. le quotient.",
+   "duree": 5,
+   "etapes": [
+    {
+     "consigne": "Calcule le numérateur : chaque branche apporte $\\frac{E_k}{R_k}$. La source $V_3$ a son + en bas : elle compte $-12\\ \\text{V}$.",
+     "question": "$\\sum E_k/R_k = ?$ (en A)",
+     "verif": {
+      "mode": "numerique",
+      "attendu": -2,
+      "unite": "A",
+      "tol": 0.01
+     },
+     "indices": [
+      "Branche 2 : pas de source, elle apporte 0.",
+      "$\\frac{10}{5} + 0 + \\frac{-12}{3} = 2 - 4$."
+     ],
+     "corrige": "$\\frac{10}{5} + \\frac{0}{8} + \\frac{-12}{3} = 2 + 0 - 4 = \\mathbf{-2\\ \\text{A}}$",
+     "schema": {
+      "surligne": [
+       "V1",
+       "V3"
+      ]
+     }
+    },
+    {
+     "consigne": "Calcule le dénominateur : **toutes** les branches comptent.",
+     "question": "$\\sum 1/R_k = ?$ (en S)",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 0.6583,
+      "unite": "S",
+      "tol": 0.005
+     },
+     "indices": [
+      "Les trois branches relient $a$ à $b$ : $\\frac15 + \\frac18 + \\frac13$.",
+      "Au même dénominateur 120 : $\\frac{24}{120} + \\frac{15}{120} + \\frac{40}{120}$."
+     ],
+     "corrige": "$\\frac15 + \\frac18 + \\frac13 = \\frac{24 + 15 + 40}{120} = \\frac{79}{120} \\approx \\mathbf{0{,}658\\ \\text{S}}$",
+     "schema": {
+      "surligne": [
+       "R1",
+       "R2",
+       "R3"
+      ]
+     }
+    },
+    {
+     "consigne": "Divise.",
+     "question": "$V_{ab} = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": -3.04,
+      "unite": "V",
+      "tol": 0.05
+     },
+     "indices": [
+      "$V_{ab} = \\dfrac{\\text{numérateur}}{\\text{dénominateur}}$.",
+      "$\\dfrac{-2}{0{,}658}$"
+     ],
+     "corrige": "$V_{ab} = \\dfrac{-2}{79/120} = -\\dfrac{240}{79} \\approx \\mathbf{-3{,}04\\ \\text{V}}$ (le cours arrondit à −3 V)"
+    }
+   ],
+   "schema": {
+    "modele": "millman3b",
+    "vals": {
+     "R1": "5 Ω",
+     "R2": "8 Ω",
+     "R3": "3 Ω",
+     "V1": "10 V",
+     "V3": "12 V"
+    }
+   }
+  }
+ ]
+}

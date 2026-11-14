@@ -1,0 +1,964 @@
+{
+ "id": "ca-5-montages",
+ "module": "capteurs-analogiques",
+ "titre": "Montages linéaires à AOP",
+ "ordre": 5,
+ "sources": [
+  "Cours 2 · I.3.2 (montages usuels, calculateur)",
+  "TD AOP · ex. 2, 3"
+ ],
+ "tldr": [
+  "**Méthode** (AOP idéal, contre-réaction sur −) : $i^+ = i^- = 0$ et $V^+ = V^-$, puis **Millman** au nœud de l'entrée −.",
+  "**Suiveur** : $V_s = V_e$ ($A_v = 1$) · grande impédance d'entrée, il isole la source de la charge.",
+  "**Inverseur** ($R_1$ à l'entrée, $R_2$ en contre-réaction) : $A_v = -\\dfrac{R_2}{R_1}$ · déphasage $\\pi$ (180°).",
+  "**Non-inverseur** ($R_1$ vers la masse, $R_2$ en contre-réaction) : $A_v = 1 + \\dfrac{R_2}{R_1} \\geq 1$ · en phase.",
+  "**Cascade** : $A_v = A_1 \\times A_2 \\times \\dots$ (produit des gains des étages).",
+  "**Sommateur** : $V_s = -R\\left(\\dfrac{V_1}{R_1} + \\dfrac{V_2}{R_2}\\right)$ · **dérivateur** : $V_s = -RC\\,\\dfrac{dV_e}{dt}$.",
+  "Sortie toujours bornée à $\\pm V_{cc}$ : au-delà, **saturation** (écrêtage)."
+ ],
+ "notions": [
+  {
+   "id": "5.1",
+   "titre": "La méthode de calcul",
+   "corps": "Pour un AOP idéal **avec contre-réaction sur l'entrée −** :\n1. **pas de courant** dans les entrées : $i^+ = i^- = 0$ ({{4.3}}) ;\n2. **régime linéaire** : $V^+ = V^-$ ({{4.4}}) ;\n3. on calcule $V^+$ (souvent direct) puis on écrit **Millman au nœud de l'entrée −** ({{0.4}}) — l'entrée − elle-même ne compte pas comme une branche puisque $i^- = 0$ ;\n4. on égalise et on isole $V_s$ ; le **gain en tension** est $A_v = \\dfrac{V_s}{V_e}$.",
+   "rec": "Millman : {{0.4}} ; règles de l'AOP idéal : {{4.3}}, {{4.4}}.",
+   "alt": "Les deux règles d'or, $i = 0$ dans les entrées et $V^+ = V^-$, suffisent pour presque tous les montages.",
+   "pre": [
+    "0.4",
+    "4.4"
+   ],
+   "ecrans": [
+    {
+     "titre": "Règle 1",
+     "texte": "$i^+ = i^- = 0$."
+    },
+    {
+     "titre": "Règle 2",
+     "texte": "$V^+ = V^-$."
+    },
+    {
+     "titre": "Outil",
+     "texte": "Millman sur l'entrée −, puis on isole $V_s$."
+    }
+   ],
+   "check": {
+    "enonce": "Pour calculer le gain d'un montage linéaire à AOP idéal, on utilise…",
+    "choix": [
+     "$V^+ = V^-$, $i^\\pm = 0$ et Millman",
+     "seulement la loi d'Ohm",
+     "$V_s = \\pm V_{cc}$",
+     "le théorème de Thévenin uniquement"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "Ce sont les deux règles de l'AOP idéal + Millman."
+   }
+  },
+  {
+   "id": "5.2",
+   "titre": "Le montage suiveur",
+   "corps": "La sortie est reliée **directement** à l'entrée −, le signal arrive sur l'entrée + :\n$$V^+ = V_e \\qquad V^- = V_s \\qquad V^+ = V^- \\Rightarrow V_s = V_e$$\nGain $A_v = 1$. À quoi bon ? Son impédance d'entrée est (idéalement) **infinie** : il ne prélève aucun courant sur la source (un capteur fragile, par exemple) tout en fournissant du courant à la charge. Il **isole** les deux.",
+   "schema": {
+    "modele": "suiveur"
+   },
+   "rec": "Contre-réaction : {{4.4}}.",
+   "alt": "C'est un « photocopieur » de tension : même tension, mais c'est lui qui fournit le courant.",
+   "pre": [
+    "5.1"
+   ],
+   "ecrans": [
+    {
+     "titre": "Le montage",
+     "texte": "Fil de la sortie vers −, $V_e$ sur +.",
+     "schema": {
+      "modele": "suiveur"
+     }
+    },
+    {
+     "titre": "Le calcul",
+     "texte": "$V^+ = V_e$, $V^- = V_s$, et $V^+ = V^-$ : $V_s = V_e$."
+    }
+   ],
+   "check": {
+    "enonce": "Le gain d'un suiveur vaut…",
+    "choix": [
+     "1",
+     "0",
+     "−1",
+     "l'infini"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$V_s = V_e$."
+   }
+  },
+  {
+   "id": "5.3",
+   "titre": "L'amplificateur inverseur",
+   "corps": "$V_e$ arrive sur l'entrée − à travers $R_1$ ; $R_2$ relie la sortie à l'entrée − ; l'entrée + est à la masse.\n\n**Calcul** : $V^+ = 0$, donc $V^- = 0$. Millman au nœud −, deux branches ($V_e$ via $R_1$, $V_s$ via $R_2$) :\n$$V^- = \\frac{\\dfrac{V_e}{R_1} + \\dfrac{V_s}{R_2}}{\\dfrac{1}{R_1} + \\dfrac{1}{R_2}} = 0 \\;\\Rightarrow\\; \\frac{V_e}{R_1} = -\\frac{V_s}{R_2} \\;\\Rightarrow\\; \\boxed{A_v = \\frac{V_s}{V_e} = -\\frac{R_2}{R_1}}$$\n\n> **Exemple** (TD AOP ex. 2) : $R_1 = 2\\ \\text{k}\\Omega$, $R_2 = 6\\ \\text{k}\\Omega$ : $A_v = -3$.\n\nLe signe − **inverse** le signal : une sinusoïde ressort en **opposition de phase** ({{5.8}}). Le module de gain peut être inférieur à 1 (atténuation) si $R_2 < R_1$.\n\nTeste-le dans le labo : change $R_1$, $R_2$ et l'amplitude, jusqu'à la saturation.",
+   "labo": "aop",
+   "rec": "Millman : {{0.4}} ; méthode : {{5.1}}.",
+   "alt": "Le courant qui arrive par $R_1$ ne peut pas entrer dans l'AOP : il continue dans $R_2$. Comme $V^- = 0$, $\\frac{V_e}{R_1} = -\\frac{V_s}{R_2}$.",
+   "pre": [
+    "5.1"
+   ],
+   "ecrans": [
+    {
+     "titre": "Le montage",
+     "texte": "$R_1$ à l'entrée, $R_2$ de la sortie vers −, + à la masse.",
+     "schema": {
+      "modele": "inverseur",
+      "vals": {
+       "R1": "",
+       "R2": ""
+      }
+     }
+    },
+    {
+     "titre": "1 · Entrée +",
+     "texte": "$V^+ = 0$ (masse), donc $V^- = 0$.",
+     "schema": {
+      "modele": "inverseur",
+      "vals": {
+       "R1": "",
+       "R2": ""
+      },
+      "surligne": [
+       "AO"
+      ]
+     }
+    },
+    {
+     "titre": "2 · Millman sur −",
+     "texte": "$$V^- = \\frac{V_e/R_1 + V_s/R_2}{1/R_1 + 1/R_2} = 0$$",
+     "schema": {
+      "modele": "inverseur",
+      "vals": {
+       "R1": "",
+       "R2": ""
+      },
+      "surligne": [
+       "R1",
+       "R2"
+      ]
+     }
+    },
+    {
+     "titre": "3 · On isole",
+     "texte": "Numérateur nul : $\\frac{V_e}{R_1} = -\\frac{V_s}{R_2}$, donc $$A_v = -\\frac{R_2}{R_1}$$"
+    }
+   ],
+   "check": {
+    "enonce": "Inverseur avec $R_1 = 1\\ \\text{k}\\Omega$ et $R_2 = 10\\ \\text{k}\\Omega$ : $A_v$ = ?",
+    "choix": [
+     "−10",
+     "10",
+     "11",
+     "−0,1"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$-R_2/R_1 = -10$."
+   }
+  },
+  {
+   "id": "5.4",
+   "titre": "L'amplificateur non inverseur",
+   "corps": "$V_e$ arrive directement sur l'entrée + ; l'entrée − est reliée à un pont diviseur : $R_1$ vers la masse, $R_2$ vers la sortie.\n\n**Calcul** : $V^+ = V_e$. Pont diviseur (ou Millman) sur l'entrée − :\n$$V^- = V_s\\,\\frac{R_1}{R_1 + R_2}$$\n$V^+ = V^-$ donne\n$$\\boxed{A_v = \\frac{V_s}{V_e} = 1 + \\frac{R_2}{R_1}}$$\nLe gain est **positif** (pas d'inversion) et **toujours ≥ 1**.\n\n> **Piège** : le poly du cours nomme les résistances dans l'autre sens ($R_1$ en contre-réaction, $R_2$ vers la masse : $A_v = 1 + \\frac{R_1}{R_2}$). Retiens la règle : **1 + (résistance de contre-réaction) / (résistance vers la masse)**.\n\n> **Remarque** (TD AOP ex. 3b) : une résistance $R_3$ entre l'entrée + et la masse ne change rien quand $V_e$ attaque directement l'entrée + : $i^+ = 0$, donc aucune chute de tension.",
+   "rec": "Pont diviseur de tension ({{0.4}} avec une seule source) ; méthode : {{5.1}}.",
+   "alt": "La sortie doit être assez grande pour que sa « fraction » renvoyée sur − égale $V_e$ : si on renvoie un quart de $V_s$, il faut $V_s = 4 V_e$.",
+   "pre": [
+    "5.1"
+   ],
+   "ecrans": [
+    {
+     "titre": "Le montage",
+     "texte": "$V_e$ sur +, pont $R_1$ / $R_2$ sur −.",
+     "schema": {
+      "modele": "non-inverseur",
+      "vals": {
+       "R1": "",
+       "R2": ""
+      }
+     }
+    },
+    {
+     "titre": "1 · Le pont",
+     "texte": "$V^- = V_s\\,\\frac{R_1}{R_1 + R_2}$.",
+     "schema": {
+      "modele": "non-inverseur",
+      "vals": {
+       "R1": "",
+       "R2": ""
+      },
+      "surligne": [
+       "R1",
+       "R2"
+      ]
+     }
+    },
+    {
+     "titre": "2 · On égalise",
+     "texte": "$V_e = V_s\\,\\frac{R_1}{R_1+R_2}$ donc $A_v = \\frac{R_1 + R_2}{R_1} = 1 + \\frac{R_2}{R_1}$."
+    }
+   ],
+   "check": {
+    "enonce": "Non-inverseur, $R_1 = 1\\ \\text{k}\\Omega$ (vers la masse), $R_2 = 4\\ \\text{k}\\Omega$ (contre-réaction) : $A_v$ = ?",
+    "choix": [
+     "5",
+     "4",
+     "−4",
+     "0,25"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$1 + 4/1 = 5$."
+   }
+  },
+  {
+   "id": "5.5",
+   "titre": "Montages en cascade",
+   "corps": "On peut enchaîner plusieurs étages : la sortie de l'un attaque l'entrée du suivant. Comme la sortie d'un AOP idéal a une impédance nulle, chaque étage n'est pas perturbé par le suivant :\n$$A_v = \\frac{V_o}{V_i} = A_1 \\times A_2 \\times A_3 \\times \\dots$$\n\n> **Exemple** (TD AOP ex. 3a) : suiveur ($A_1 = 1$) puis inverseur ($A_2 = -\\frac{R_2}{R_1}$) : $A_v = -\\frac{R_2}{R_1}$. Avec $R_1 = 1\\ \\text{k}\\Omega$ et $R_2 = 20\\ \\text{k}\\Omega$ : $A_v = -20$.\n\nLes signes se multiplient aussi : deux inverseurs à la suite redonnent un signal en phase.",
+   "rec": "Gains des montages : {{5.2}}, {{5.3}}, {{5.4}}.",
+   "alt": "Un zoom ×2 puis un zoom ×3 font un zoom ×6.",
+   "pre": [
+    "5.3",
+    "5.4"
+   ],
+   "ecrans": [
+    {
+     "titre": "Le montage",
+     "texte": "Suiveur puis inverseur.",
+     "schema": {
+      "modele": "td-ex3a",
+      "vals": {
+       "R1": "1 kΩ",
+       "R2": "20 kΩ"
+      }
+     }
+    },
+    {
+     "titre": "Le produit",
+     "texte": "$A_v = 1 \\times (-20) = -20$."
+    }
+   ],
+   "check": {
+    "enonce": "Deux inverseurs de gain −3 en cascade donnent…",
+    "choix": [
+     "+9",
+     "−9",
+     "−6",
+     "+6"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$(-3) \\times (-3) = 9$."
+   }
+  },
+  {
+   "id": "5.6",
+   "titre": "Le calculateur : sommateur et dérivateur",
+   "corps": "### Sommateur (inverseur)\nPlusieurs tensions $V_1, \\dots, V_n$ arrivent sur l'entrée − à travers $R_1, \\dots, R_n$ ; $R$ en contre-réaction. Millman avec $V^- = 0$ :\n$$V_s = -R\\left(\\frac{V_1}{R_1} + \\frac{V_2}{R_2} + \\dots + \\frac{V_n}{R_n}\\right)$$\nSi toutes les résistances sont égales : $V_s = -(V_1 + V_2 + \\dots + V_n)$ : l'AOP **additionne**.\n\n### Dérivateur\nOn remplace la résistance d'entrée de l'inverseur par un condensateur $C$ (et $R$ en contre-réaction). Le courant dans $C$ vaut $i = C\\frac{dV_e}{dt}$ ; il traverse $R$ ; avec $V^- = 0$ :\n$$V_s = -RC\\,\\frac{dV_e}{dt}$$\nUn triangle en entrée donne un signal carré en sortie (la dérivée d'une pente constante est constante).",
+   "rec": "Inverseur : {{5.3}} ; impédance du condensateur : {{0.2}}.",
+   "alt": "Le sommateur, c'est un inverseur à plusieurs entrées : chaque courant $\\frac{V_k}{R_k}$ arrive au nœud − et tous repartent ensemble dans $R$.",
+   "pre": [
+    "5.3"
+   ],
+   "ecrans": [
+    {
+     "titre": "Sommateur",
+     "texte": "Plusieurs entrées vers le même nœud −.",
+     "schema": {
+      "modele": "sommateur",
+      "vals": {
+       "R1": "",
+       "R2": "",
+       "R": ""
+      }
+     }
+    },
+    {
+     "titre": "Le résultat",
+     "texte": "$V_s = -R\\left(\\frac{V_1}{R_1} + \\frac{V_2}{R_2}\\right)$."
+    },
+    {
+     "titre": "Dérivateur",
+     "texte": "$C$ à l'entrée : $V_s = -RC\\frac{dV_e}{dt}$.",
+     "schema": {
+      "modele": "derivateur",
+      "vals": {
+       "C": "",
+       "R": ""
+      }
+     }
+    }
+   ],
+   "check": {
+    "enonce": "Sommateur avec $R = R_1 = R_2$, $V_1 = 1\\ \\text{V}$, $V_2 = 2\\ \\text{V}$ : $V_s$ = ?",
+    "choix": [
+     "−3 V",
+     "3 V",
+     "−1 V",
+     "1,5 V"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$V_s = -(1 + 2) = -3\\ \\text{V}$."
+   }
+  },
+  {
+   "id": "5.7",
+   "titre": "Saturation d'un montage",
+   "corps": "Un montage linéaire reste linéaire **tant que la sortie ne dépasse pas** $\\pm V_{cc}$. Si $|A_v \\times V_e| > V_{cc}$, la sortie est **écrêtée** à $\\pm V_{cc}$ : l'AOP sature, le signal est déformé.\n\n> **Exemple** : inverseur de gain −10 alimenté en ±15 V : $V_e = 1\\ \\text{V}$ donne $-10\\ \\text{V}$ (linéaire) ; $V_e = 2\\ \\text{V}$ donnerait $-20\\ \\text{V}$, impossible : la sortie reste à $-15\\ \\text{V}$.",
+   "rec": "Saturation : {{4.4}}.",
+   "alt": "Le gain promet une tension, l'alimentation fixe le plafond.",
+   "pre": [
+    "5.3"
+   ],
+   "ecrans": [
+    {
+     "titre": "Le plafond",
+     "texte": "$|V_s| \\leq V_{cc}$."
+    },
+    {
+     "titre": "Le test",
+     "texte": "Calcule $A_v V_e$ : s'il dépasse $V_{cc}$, c'est saturé."
+    }
+   ],
+   "check": {
+    "enonce": "Gain $+5$, alimentation ±12 V, $V_e = 3\\ \\text{V}$. $V_s$ ?",
+    "choix": [
+     "12 V (saturé)",
+     "15 V",
+     "3 V",
+     "−12 V"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$5 \\times 3 = 15\\ \\text{V} > 12$ : saturation à $+12\\ \\text{V}$."
+   }
+  },
+  {
+   "id": "5.8",
+   "titre": "Signal sinusoïdal : amplitude et déphasage",
+   "corps": "Avec $V_e = E\\cos(\\omega t)$ et un gain $A_v$ :\n$$V_s = A_v\\,E\\cos(\\omega t)$$\n- l'**amplitude** de sortie est $|A_v|\\,E$ ;\n- si $A_v < 0$, on écrit $-\\cos(\\omega t) = \\cos(\\omega t + \\pi)$ : la sortie est **déphasée de $\\pi$** (180°), en **opposition de phase** ;\n- si $A_v > 0$, le déphasage est nul.\n\n> **Exemple** (TD AOP ex. 2) : $A_v = -3$, $V_e = 2\\cos(300\\pi t)$ : $V_s = -6\\cos(300\\pi t) = 6\\cos(300\\pi t + \\pi)$. Même fréquence ($\\omega = 300\\pi$, soit $f = 150\\ \\text{Hz}$), amplitude 6 V, déphasage 180°.",
+   "rec": "Inverseur : {{5.3}}.",
+   "alt": "Un signe − retourne la courbe : quand l'entrée est en haut, la sortie est en bas.",
+   "pre": [
+    "5.3"
+   ],
+   "ecrans": [
+    {
+     "titre": "Amplitude",
+     "texte": "$|A_v|\\,E = 3 \\times 2 = 6\\ \\text{V}$."
+    },
+    {
+     "titre": "Phase",
+     "texte": "$-\\cos x = \\cos(x + \\pi)$ : déphasage de 180°."
+    }
+   ],
+   "check": {
+    "enonce": "$V_e = 1\\cos(\\omega t)$, $A_v = -4$. Déphasage entre $V_s$ et $V_e$ ?",
+    "choix": [
+     "180°",
+     "0°",
+     "90°",
+     "−4°"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "Gain négatif : opposition de phase."
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "ca5-001",
+   "type": "trous",
+   "notion": "5.1",
+   "origine": "cours",
+   "enonce": "AOP idéal en linéaire : $i^+ = i^- = [_]$ et $V^+ [_] V^-$.",
+   "fragments": [
+    "0",
+    "=",
+    ">",
+    "∞"
+   ],
+   "verif": {
+    "mode": "trous",
+    "attendu": [
+     "0",
+     "="
+    ]
+   },
+   "duree": 0.5,
+   "explication": "Les deux règles d'or."
+  },
+  {
+   "id": "ca5-002",
+   "type": "qcm",
+   "notion": "5.2",
+   "origine": "cours",
+   "enonce": "À quoi sert un montage suiveur ?",
+   "choix": [
+    "isoler une source d'une charge (impédance d'entrée infinie)",
+    "multiplier la tension par 2",
+    "inverser le signal",
+    "filtrer les hautes fréquences"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Gain 1, mais il ne prélève aucun courant sur la source."
+  },
+  {
+   "id": "ca5-003",
+   "type": "saisie",
+   "notion": "5.2",
+   "origine": "cours",
+   "enonce": "Suiveur : $V_e = 3{,}3\\ \\text{V}$. $V_s$ ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 3.3,
+    "unite": "V"
+   },
+   "duree": 0.67,
+   "explication": "$V_s = V_e = 3{,}3\\ \\text{V}$."
+  },
+  {
+   "id": "ca5-004",
+   "type": "saisie",
+   "notion": "5.3",
+   "origine": "cours",
+   "enonce": "Inverseur : $R_1 = [[R1]]\\ \\text{k}\\Omega$, $R_2 = [[R2]]\\ \\text{k}\\Omega$. Gain $A_v$ ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": "[[G]]",
+    "tol": 0.05
+   },
+   "duree": 0.67,
+   "explication": "$A_v = -\\dfrac{R_2}{R_1} = -\\dfrac{[[R2]]}{[[R1]]} = [[G]]$.",
+   "generateur": "gain-inv",
+   "vals": {
+    "R1": "2",
+    "R2": "20",
+    "G": "-10"
+   }
+  },
+  {
+   "id": "ca5-005",
+   "type": "trous",
+   "notion": "5.3",
+   "origine": "cours",
+   "enonce": "Inverseur : $A_v = [_]\\dfrac{[_]}{[_]}$ ($R_1$ à l'entrée, $R_2$ en contre-réaction).",
+   "fragments": [
+    "−",
+    "+",
+    "$R_2$",
+    "$R_1$"
+   ],
+   "verif": {
+    "mode": "trous",
+    "attendu": [
+     "−",
+     "$R_2$",
+     "$R_1$"
+    ]
+   },
+   "duree": 0.5,
+   "explication": "$A_v = -R_2/R_1$."
+  },
+  {
+   "id": "ca5-006",
+   "type": "qcm",
+   "notion": "5.3",
+   "origine": "cours",
+   "enonce": "Dans un inverseur, $V^-$ vaut…",
+   "choix": [
+    "0 V (masse virtuelle)",
+    "$V_e$",
+    "$V_s$",
+    "$V_{cc}$"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "$V^+ = 0$ et $V^+ = V^-$ : l'entrée − est à 0 V sans être reliée à la masse."
+  },
+  {
+   "id": "ca5-007",
+   "type": "saisie",
+   "notion": "5.4",
+   "origine": "cours",
+   "enonce": "Non-inverseur : $R_1 = [[R1]]\\ \\text{k}\\Omega$ (vers la masse), $R_2 = [[R2]]\\ \\text{k}\\Omega$ (contre-réaction). $A_v$ ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": "[[G]]",
+    "tol": 0.05
+   },
+   "duree": 0.67,
+   "explication": "$A_v = 1 + \\dfrac{R_2}{R_1} = 1 + \\dfrac{[[R2]]}{[[R1]]} = [[G]]$.",
+   "generateur": "gain-ninv",
+   "vals": {
+    "R1": "5",
+    "R2": "45",
+    "G": "10"
+   }
+  },
+  {
+   "id": "ca5-008",
+   "type": "qcm",
+   "notion": "5.4",
+   "origine": "cours",
+   "enonce": "Le gain d'un non-inverseur peut-il valoir 0,5 ?",
+   "choix": [
+    "non, il est toujours ≥ 1",
+    "oui si R2 < R1",
+    "oui si R1 = 0",
+    "oui, il est toujours négatif"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "$1 + R_2/R_1 \\geq 1$."
+  },
+  {
+   "id": "ca5-009",
+   "type": "saisie",
+   "notion": "5.5",
+   "origine": "cours",
+   "enonce": "Trois étages en cascade de gains 2, −5 et 3. Gain total ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": -30,
+    "tol": 0.1
+   },
+   "duree": 0.67,
+   "explication": "$2 \\times (-5) \\times 3 = -30$."
+  },
+  {
+   "id": "ca5-010",
+   "type": "saisie",
+   "notion": "5.6",
+   "origine": "cours",
+   "enonce": "Sommateur : $R = [[R]]\\ \\text{k}\\Omega$, $R_1 = [[R1]]\\ \\text{k}\\Omega$, $R_2 = [[R2]]\\ \\text{k}\\Omega$, $V_1 = [[V1]]\\ \\text{V}$, $V_2 = [[V2]]\\ \\text{V}$. $V_s$ ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": "[[VS]]",
+    "unite": "V",
+    "tol": 0.01
+   },
+   "duree": 1,
+   "explication": "$V_s = -R\\left(\\dfrac{V_1}{R_1} + \\dfrac{V_2}{R_2}\\right) = [[VS]]\\ \\text{V}$.",
+   "generateur": "somme",
+   "vals": {
+    "R": "20",
+    "R1": "10",
+    "R2": "5",
+    "V1": "2",
+    "V2": "2",
+    "VS": "-12"
+   }
+  },
+  {
+   "id": "ca5-011",
+   "type": "qcm",
+   "notion": "5.6",
+   "origine": "cours",
+   "enonce": "Dans un dérivateur, la sortie vaut…",
+   "choix": [
+    "$-RC\\,\\dfrac{dV_e}{dt}$",
+    "$-\\dfrac{R_2}{R_1}V_e$",
+    "$V_e$",
+    "$RC\\,V_e$"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Le courant dans $C$ est $C\\,\\frac{dV_e}{dt}$, il traverse $R$ avec $V^- = 0$."
+  },
+  {
+   "id": "ca5-012",
+   "type": "saisie",
+   "notion": "5.7",
+   "origine": "cours",
+   "enonce": "Inverseur de gain $-[[K]]$, alimenté en ±15 V, $V_e = [[VE]]\\ \\text{V}$ (continu). $V_s$ ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": "[[VS]]",
+    "unite": "V",
+    "tol": 0.05
+   },
+   "duree": 0.67,
+   "explication": "$A_v V_e = -[[K]] \\times [[VE]] = [[VST]]\\ \\text{V}$ ; la sortie ne peut pas descendre sous −15 V : $V_s = [[VS]]\\ \\text{V}$.",
+   "generateur": "sat",
+   "vals": {
+    "VE": "0,5",
+    "K": "20",
+    "VS": "-10",
+    "VST": "-10"
+   }
+  },
+  {
+   "id": "ca5-013",
+   "type": "saisie",
+   "notion": "5.8",
+   "origine": "td",
+   "enonce": "$V_e = 2\\cos(300\\pi t)$ dans un inverseur de gain −3. Amplitude de $V_s$ ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 6,
+    "unite": "V"
+   },
+   "duree": 0.67,
+   "explication": "$|A_v| \\times 2 = 6\\ \\text{V}$."
+  },
+  {
+   "id": "ca5-014",
+   "type": "qcm",
+   "notion": "5.8",
+   "origine": "cours",
+   "enonce": "Un non-inverseur déphase le signal de…",
+   "choix": [
+    "0°",
+    "180°",
+    "90°",
+    "45°"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Gain positif : sortie en phase."
+  },
+  {
+   "id": "ca5-101",
+   "type": "exo",
+   "titre": "TD AOP ex. 2 · Gain d'un inverseur par Millman",
+   "notion": "5.3",
+   "origine": "td",
+   "enonce": "Le but : retrouver par Millman le gain d'un amplificateur inverseur, puis l'appliquer. Le montage : $R_1 = [[R1]]$ entre $V_e$ et l'entrée −, $R_2 = [[R2]]$ entre la sortie et l'entrée −, entrée + à la masse, AOP idéal ±15 V. On applique $V_e = [[E]]\\cos([[W]]\\pi t)$.",
+   "guidage": "**Plan** : 1. $V^+ = 0$ donc $V^- = 0$ · 2. Millman au nœud − : $\\frac{V_e/R_1 + V_s/R_2}{1/R_1 + 1/R_2} = 0$ · 3. $A_v = -R_2/R_1$ · 4. amplitude $|A_v| E$ (vérifie qu'on reste sous 15 V) · 5. le signe − donne le déphasage.",
+   "duree": 8,
+   "etapes": [
+    {
+     "consigne": "Écris Millman au nœud de l'entrée −. Comme $V^- = 0$, le numérateur est nul : $\\frac{V_e}{R_1} + \\frac{V_s}{R_2} = 0$. Déduis le gain.",
+     "question": "$A_v = V_s / V_e = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": -5,
+      "tol": 0.01
+     },
+     "indices": [
+      "$\\frac{V_s}{R_2} = -\\frac{V_e}{R_1}$",
+      "$A_v = -\\dfrac{R_2}{R_1} = -\\dfrac{[[R2N]]}{[[R1N]]}$"
+     ],
+     "corrige": "$A_v = -\\dfrac{R_2}{R_1} = -\\dfrac{25}{5} = \\mathbf{-5}$",
+     "schema": {
+      "surligne": [
+       "R1",
+       "R2"
+      ]
+     }
+    },
+    {
+     "consigne": "La sortie vaut $A_v \\times [[E]]\\cos([[W]]\\pi t)$. Quelle est son amplitude ?",
+     "question": "Amplitude de $V_s$ ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 15,
+      "unite": "V"
+     },
+     "indices": [
+      "Amplitude = $|A_v| \\times [[E]]$.",
+      "Vérifie qu'elle reste sous 15 V (sinon saturation)."
+     ],
+     "corrige": "$V_s = -5 \\times 3\\cos(400\\pi t) = 15\\cos(400\\pi t + \\pi)$ : amplitude $\\mathbf{15\\ \\text{V}}$ (sous les 15 V, pas de saturation)"
+    },
+    {
+     "consigne": "Le gain est négatif. De combien de degrés la sortie est-elle déphasée par rapport à l'entrée ?",
+     "question": "Déphasage (en degrés) ?",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 180,
+      "tol": 0.5
+     },
+     "indices": [
+      "$-\\cos x = \\cos(x + \\pi)$.",
+      "$\\pi$ rad = 180°."
+     ],
+     "corrige": "Le signe − inverse le signal : déphasage de $\\pi$, soit **180°** (opposition de phase)."
+    }
+   ],
+   "generateur": "td-ex2",
+   "schema": {
+    "modele": "inverseur",
+    "vals": {
+     "R1": "[[R1]]",
+     "R2": "[[R2]]"
+    }
+   },
+   "vals": {
+    "R1": "5 kΩ",
+    "R2": "25 kΩ",
+    "R1N": "5",
+    "R2N": "25",
+    "E": "3",
+    "W": "400"
+   }
+  },
+  {
+   "id": "ca5-102",
+   "type": "exo",
+   "titre": "TD AOP ex. 3a · Suiveur puis inverseur",
+   "notion": "5.5",
+   "origine": "td",
+   "enonce": "Le but : calculer le gain du montage en deux étages ci-dessous ($R_1 = [[R1]]$, $R_2 = [[R2]]$). Le gain total est le produit des gains de chaque étage.",
+   "guidage": "**Plan** : repère chaque étage (son entrée, sa sortie, sa contre-réaction), donne son gain, puis multiplie.",
+   "duree": 5,
+   "etapes": [
+    {
+     "consigne": "Premier étage : la sortie est reliée directement à l'entrée −, le signal arrive sur +.",
+     "question": "$A_1 = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 1,
+      "tol": 0.01
+     },
+     "indices": [
+      "C'est un suiveur.",
+      "$V_s = V_e$."
+     ],
+     "corrige": "Premier étage : suiveur, $A_1 = \\mathbf{1}$.",
+     "schema": {
+      "surligne": [
+       "A1"
+      ]
+     }
+    },
+    {
+     "consigne": "Deuxième étage : $R_1$ à l'entrée de −, $R_2$ en contre-réaction, + à la masse.",
+     "question": "$A_2 = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": -5,
+      "tol": 0.01
+     },
+     "indices": [
+      "C'est un inverseur.",
+      "$A_2 = -R_2/R_1$."
+     ],
+     "corrige": "Second étage : inverseur, $A_2 = -\\dfrac{R_2}{R_1} = -\\dfrac{25}{5} = \\mathbf{-5}$",
+     "schema": {
+      "surligne": [
+       "A2",
+       "R1",
+       "R2"
+      ]
+     }
+    },
+    {
+     "consigne": "Multiplie les gains.",
+     "question": "$A_v = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": -5,
+      "tol": 0.01
+     },
+     "indices": [
+      "$A_v = A_1 \\times A_2$.",
+      "$1 \\times A_2$."
+     ],
+     "corrige": "$A_v = A_1 \\times A_2 = \\mathbf{-5}$"
+    }
+   ],
+   "generateur": "td-ex3a",
+   "schema": {
+    "modele": "td-ex3a",
+    "vals": {
+     "R1": "[[R1]]",
+     "R2": "[[R2]]"
+    }
+   },
+   "vals": {
+    "R1": "5 kΩ",
+    "R2": "25 kΩ"
+   }
+  },
+  {
+   "id": "ca5-103",
+   "type": "exo",
+   "titre": "TD AOP ex. 3b · Non-inverseur avec résistance d'entrée",
+   "notion": "5.4",
+   "origine": "td",
+   "enonce": "Le but : calculer le gain du montage ci-dessous : $V_i$ attaque directement l'entrée +, reliée aussi à la masse par $R_3 = [[R3]]$ ; $R_1 = [[R1]]$ relie l'entrée − à la masse, $R_2 = [[R2]]$ relie la sortie à l'entrée −.",
+   "guidage": "**Plan** : 1. que vaut $V^+$ ? ($i^+ = 0$) · 2. pont diviseur sur − · 3. $A_v = 1 + R_2/R_1$.",
+   "duree": 5,
+   "etapes": [
+    {
+     "consigne": "$V_i$ est appliquée directement sur l'entrée +. De combien $V^+$ diffère-t-il de $V_i$ ? (en V)",
+     "question": "$V^+ - V_i = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 0,
+      "unite": "V",
+      "tol": 0.01
+     },
+     "indices": [
+      "$V_i$ est branchée directement sur le nœud de l'entrée +.",
+      "$R_3$ est en parallèle sur la source ; et $i^+ = 0$ : elle ne change pas $V^+$."
+     ],
+     "corrige": "$i^+ = 0$ : aucun courant dans $R_3$, donc aucune chute de tension, $V^+ = V_i$. $R_3$ ne joue **aucun rôle** : l'écart vaut $\\mathbf{0}$."
+    },
+    {
+     "consigne": "Applique la formule du non-inverseur (contre-réaction $R_2$, vers la masse $R_1$).",
+     "question": "$A_v = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 6,
+      "tol": 0.01
+     },
+     "indices": [
+      "$V^- = V_o\\,\\frac{R_1}{R_1 + R_2}$ et $V^- = V^+ = V_i$.",
+      "$A_v = 1 + \\dfrac{R_2}{R_1}$"
+     ],
+     "corrige": "Non-inverseur : $A_v = 1 + \\dfrac{R_2}{R_1} = 1 + \\dfrac{25}{5} = \\mathbf{6}$"
+    }
+   ],
+   "generateur": "td-ex3b",
+   "schema": {
+    "modele": "td-ex3b",
+    "vals": {
+     "R1": "[[R1]]",
+     "R2": "[[R2]]",
+     "R3": "[[R3]]"
+    }
+   },
+   "vals": {
+    "R1": "5 kΩ",
+    "R2": "25 kΩ",
+    "R3": "47 kΩ"
+   }
+  },
+  {
+   "id": "ca5-104",
+   "type": "exo",
+   "titre": "TD AOP ex. 3c · Trois étages",
+   "notion": "5.5",
+   "origine": "td",
+   "enonce": "Le but : calculer le gain du montage en trois étages ci-dessous ($R_1 = [[R1]]$, $R_2 = [[R2]]$, $R_3 = [[R3]]$) : un suiveur, un inverseur, puis un non-inverseur.",
+   "guidage": "**Plan** : gain de chaque étage, puis produit (attention aux signes).",
+   "duree": 7,
+   "etapes": [
+    {
+     "consigne": "Étage 1.",
+     "question": "$A_1 = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 1,
+      "tol": 0.01
+     },
+     "indices": [
+      "Sortie reliée directement à −.",
+      "Suiveur : gain 1."
+     ],
+     "corrige": "Étage 1 : suiveur, $A_1 = \\mathbf{1}$."
+    },
+    {
+     "consigne": "Étage 2 : $R_1$ en entrée, $R_2$ en contre-réaction.",
+     "question": "$A_2 = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": -10,
+      "tol": 0.01
+     },
+     "indices": [
+      "Inverseur.",
+      "$-R_2/R_1$"
+     ],
+     "corrige": "Étage 2 : inverseur, $A_2 = -\\dfrac{R_2}{R_1} = \\mathbf{-10}$"
+    },
+    {
+     "consigne": "Étage 3 : signal sur +, $R_1$ vers la masse, $R_2$ en contre-réaction ($R_3$ ne joue pas).",
+     "question": "$A_3 = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 11,
+      "tol": 0.01
+     },
+     "indices": [
+      "Non-inverseur.",
+      "$1 + R_2/R_1$"
+     ],
+     "corrige": "Étage 3 : non-inverseur, $A_3 = 1 + \\dfrac{R_2}{R_1} = \\mathbf{11}$"
+    },
+    {
+     "consigne": "Multiplie les trois gains.",
+     "question": "$A_v = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": -110,
+      "tol": 0.5
+     },
+     "indices": [
+      "$A_v = A_1 A_2 A_3$",
+      "Le signe vient de l'inverseur."
+     ],
+     "corrige": "$A_v = A_1 A_2 A_3 = 1 \\times (-10) \\times 11 = \\mathbf{-110}$"
+    }
+   ],
+   "generateur": "td-ex3c",
+   "schema": {
+    "modele": "td-ex3c",
+    "vals": {
+     "R1": "[[R1]]",
+     "R2": "[[R2]]",
+     "R3": "[[R3]]"
+    }
+   },
+   "vals": {
+    "R1": "5 kΩ",
+    "R2": "50 kΩ",
+    "R3": "47 kΩ"
+   }
+  }
+ ]
+}

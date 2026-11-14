@@ -1,0 +1,424 @@
+{
+ "id": "ca-6-filtres",
+ "module": "capteurs-analogiques",
+ "titre": "Filtres actifs d'ordre 1",
+ "ordre": 6,
+ "sources": [
+  "Cours 2 · II (filtres actifs)"
+ ],
+ "tldr": [
+  "**Gain en dB** : $G = 20\\log_{10}|H|$ · ×10 → +20 dB · ×1 → 0 dB · ÷$\\sqrt 2$ → −3 dB.",
+  "**Fréquence de coupure** $f_c$ : le gain a perdu **3 dB** par rapport au maximum ($|H| = |H|_{max}/\\sqrt 2$).",
+  "**Passe-bas** (inverseur, $R'$ ∥ $C$ en contre-réaction) : $\\underline H = -\\dfrac{R'/R}{1 + jR'C\\omega}$, gain BF $\\dfrac{R'}{R}$.",
+  "**Passe-haut** (inverseur, $R'$ + $C$ en série à l'entrée) : $\\underline H = -\\dfrac{R}{R'}\\cdot\\dfrac{jR'C\\omega}{1 + jR'C\\omega}$, gain HF $\\dfrac{R}{R'}$.",
+  "Dans les deux : $f_c = \\dfrac{1}{2\\pi R'C}$."
+ ],
+ "notions": [
+  {
+   "id": "6.1",
+   "titre": "Filtre, gain en décibels, fréquence de coupure",
+   "corps": "Un **filtre** laisse passer certaines fréquences et en atténue d'autres. On le décrit par sa **fonction de transfert** $\\underline H(j\\omega) = \\frac{\\underline V_s}{\\underline V_e}$ et son **gain en décibels** :\n$$G = 20\\log_{10}|\\underline H|$$\n- $|H| = 1$ → 0 dB ; $|H| = 10$ → +20 dB ; $|H| = 0{,}1$ → −20 dB ;\n- $|H|$ divisé par $\\sqrt 2$ (≈ 0,707) → **−3 dB**.\n\nLa **fréquence de coupure** $f_c$ est la fréquence où le gain a perdu **3 dB** par rapport à son maximum. Elle sépare la **bande passante** (fréquences transmises) de la bande atténuée — c'est la même limite que pour la bande passante d'un capteur ({{2.5}}).\n\nUn filtre **actif** utilise un AOP : il peut en plus **amplifier** dans sa bande passante. Teste-les dans le labo.",
+   "labo": "filtre",
+   "rec": "Impédance du condensateur : {{0.2}} ; inverseur : {{5.3}}.",
+   "alt": "Les dB transforment les multiplications en additions : chaque ×10 ajoute 20 dB.",
+   "pre": [
+    "2.5",
+    "5.3"
+   ],
+   "ecrans": [
+    {
+     "titre": "Le gain en dB",
+     "texte": "$G = 20\\log_{10}|H|$."
+    },
+    {
+     "titre": "La coupure",
+     "texte": "À $f_c$, $G = G_{max} - 3\\ \\text{dB}$.",
+     "schema": {
+      "modele": "gain",
+      "vals": {
+       "type": "pb"
+      }
+     }
+    }
+   ],
+   "check": {
+    "enonce": "Un gain $|H| = 10$ vaut, en dB…",
+    "choix": [
+     "20 dB",
+     "10 dB",
+     "1 dB",
+     "100 dB"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$20\\log_{10}(10) = 20\\ \\text{dB}$."
+   }
+  },
+  {
+   "id": "6.2",
+   "titre": "Passe-bas actif d'ordre 1",
+   "corps": "C'est un inverseur dont la contre-réaction est $R'$ **en parallèle** avec $C$. Avec $Z' = R' \\parallel \\frac{1}{jC\\omega} = \\frac{R'}{1 + jR'C\\omega}$, la formule de l'inverseur ({{5.3}}) donne :\n$$\\underline H = -\\frac{Z'}{R} = -\\frac{R'/R}{1 + jR'C\\omega}$$\n- **basses fréquences** ($\\omega \\to 0$) : $C$ est un circuit ouvert, il reste un inverseur de gain $-\\frac{R'}{R}$ ;\n- **hautes fréquences** : $C$ court-circuite $R'$, le gain tend vers 0.\n\nFréquence de coupure : $$f_c = \\frac{1}{2\\pi R'C}$$\nIl laisse passer les fréquences **inférieures** à $f_c$.",
+   "rec": "Impédances : {{0.2}} ; inverseur : {{5.3}}.",
+   "alt": "Le condensateur est un « robinet » qui s'ouvre avec la fréquence : en haute fréquence, il court-circuite la contre-réaction et le gain s'effondre.",
+   "pre": [
+    "6.1"
+   ],
+   "ecrans": [
+    {
+     "titre": "Le montage",
+     "texte": "$R$ à l'entrée, $R' \\parallel C$ en contre-réaction.",
+     "schema": {
+      "modele": "passe-bas",
+      "vals": {
+       "R": "",
+       "Rp": "",
+       "C": ""
+      }
+     }
+    },
+    {
+     "titre": "Basses fréquences",
+     "texte": "$C$ ouvert : gain $-R'/R$."
+    },
+    {
+     "titre": "Hautes fréquences",
+     "texte": "$C$ = fil : gain → 0."
+    },
+    {
+     "titre": "La coupure",
+     "texte": "$f_c = \\frac{1}{2\\pi R'C}$.",
+     "schema": {
+      "modele": "gain",
+      "vals": {
+       "type": "pb"
+      }
+     }
+    }
+   ],
+   "check": {
+    "enonce": "Un passe-bas laisse passer…",
+    "choix": [
+     "les fréquences inférieures à fc",
+     "les fréquences supérieures à fc",
+     "toutes les fréquences",
+     "seulement fc"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "Passe-bas : il garde les basses fréquences."
+   }
+  },
+  {
+   "id": "6.3",
+   "titre": "Passe-haut actif d'ordre 1",
+   "corps": "C'est un inverseur dont l'entrée passe par $R'$ **en série** avec $C$ ; $R$ en contre-réaction. Avec $Z = R' + \\frac{1}{jC\\omega}$ :\n$$\\underline H = -\\frac{R}{Z} = -\\frac{R}{R'}\\cdot\\frac{jR'C\\omega}{1 + jR'C\\omega}$$\n- **basses fréquences** : $C$ bloque, le gain tend vers 0 ;\n- **hautes fréquences** : $C$ est un fil, il reste un inverseur de gain $-\\frac{R}{R'}$.\n\nMême fréquence de coupure : $f_c = \\dfrac{1}{2\\pi R'C}$. Il laisse passer les fréquences **supérieures** à $f_c$ (et bloque la composante continue, l'offset).",
+   "rec": "Passe-bas : {{6.2}}.",
+   "alt": "Ici le condensateur est à l'entrée : il bloque le continu et les basses fréquences, laisse passer le reste.",
+   "pre": [
+    "6.2"
+   ],
+   "ecrans": [
+    {
+     "titre": "Le montage",
+     "texte": "$R'$ et $C$ en série à l'entrée, $R$ en contre-réaction.",
+     "schema": {
+      "modele": "passe-haut",
+      "vals": {
+       "R": "",
+       "Rp": "",
+       "C": ""
+      }
+     }
+    },
+    {
+     "titre": "Le gain",
+     "texte": "0 en BF, $R/R'$ en HF, coupure à $f_c$.",
+     "schema": {
+      "modele": "gain",
+      "vals": {
+       "type": "ph"
+      }
+     }
+    }
+   ],
+   "check": {
+    "enonce": "Un passe-haut bloque…",
+    "choix": [
+     "la composante continue et les basses fréquences",
+     "les hautes fréquences",
+     "rien",
+     "seulement fc"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "Le condensateur d'entrée bloque le continu."
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "ca6-001",
+   "type": "saisie",
+   "notion": "6.1",
+   "origine": "cours",
+   "enonce": "Gain $|H| = [[G]]$. Gain en dB ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": "[[DB]]",
+    "tol": 0.15
+   },
+   "duree": 0.67,
+   "explication": "$G = 20\\log_{10}([[G]]) = [[DB]]\\ \\text{dB}$.",
+   "generateur": "db",
+   "vals": {
+    "G": "2",
+    "DB": "6"
+   }
+  },
+  {
+   "id": "ca6-002",
+   "type": "qcm",
+   "notion": "6.1",
+   "origine": "cours",
+   "enonce": "À la fréquence de coupure, le gain a perdu…",
+   "choix": [
+    "3 dB",
+    "20 dB",
+    "50 %",
+    "1 dB"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "$|H|_{max}/\\sqrt 2$, soit −3 dB."
+  },
+  {
+   "id": "ca6-003",
+   "type": "trous",
+   "notion": "6.1",
+   "origine": "cours",
+   "enonce": "$G = [_]\\,\\log_{10}|H|$ ; à $f_c$ le gain vaut $G_{max} - [_]$ dB.",
+   "fragments": [
+    "20",
+    "10",
+    "3",
+    "6"
+   ],
+   "verif": {
+    "mode": "trous",
+    "attendu": [
+     "20",
+     "3"
+    ]
+   },
+   "duree": 0.5,
+   "explication": "$G = 20\\log|H|$, coupure à −3 dB."
+  },
+  {
+   "id": "ca6-004",
+   "type": "saisie",
+   "notion": "6.2",
+   "origine": "cours",
+   "enonce": "Passe-bas actif : $R' = [[R]]\\ \\text{k}\\Omega$, $C = [[C]]\\ \\text{nF}$. $f_c$ (en Hz) ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": "[[FC]]",
+    "unite": "Hz"
+   },
+   "duree": 1,
+   "explication": "$f_c = \\dfrac{1}{2\\pi R'C} = [[FCT]]$.",
+   "generateur": "fc",
+   "vals": {
+    "R": "2,2",
+    "C": "220",
+    "FC": "329",
+    "FCT": "329\\ \\text{Hz}"
+   }
+  },
+  {
+   "id": "ca6-005",
+   "type": "saisie",
+   "notion": "6.2",
+   "origine": "cours",
+   "enonce": "Passe-bas actif, $R = 2\\ \\text{k}\\Omega$, $R' = 10\\ \\text{k}\\Omega$. Gain (en valeur absolue) en basses fréquences ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": 5,
+    "tol": 0.05
+   },
+   "duree": 0.67,
+   "explication": "$C$ ouvert : $|H| = R'/R = 5$."
+  },
+  {
+   "id": "ca6-006",
+   "type": "qcm",
+   "notion": "6.2",
+   "origine": "cours",
+   "enonce": "Dans le passe-bas actif, le condensateur est placé…",
+   "choix": [
+    "en parallèle avec $R'$, dans la contre-réaction",
+    "en série à l'entrée",
+    "entre l'entrée + et la masse",
+    "en sortie"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "$R' \\parallel C$ en contre-réaction."
+  },
+  {
+   "id": "ca6-007",
+   "type": "qcm",
+   "notion": "6.3",
+   "origine": "cours",
+   "enonce": "Pour un passe-haut actif d'ordre 1, en très hautes fréquences, le gain tend vers…",
+   "choix": [
+    "$R/R'$",
+    "0",
+    "l'infini",
+    "$R'/R$"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "$C$ devient un fil : inverseur $-R/R'$."
+  },
+  {
+   "id": "ca6-008",
+   "type": "qcm-multi",
+   "notion": "6.3",
+   "origine": "cours",
+   "enonce": "Coche les affirmations vraies.",
+   "choix": [
+    "Le passe-haut bloque la composante continue.",
+    "Les deux filtres ont fc = 1/(2πR'C).",
+    "Le passe-bas laisse passer les hautes fréquences.",
+    "Ces filtres actifs peuvent amplifier."
+   ],
+   "verif": {
+    "attendu": [
+     0,
+     1,
+     3
+    ]
+   },
+   "duree": 0.5,
+   "explication": "Le passe-bas atténue les hautes fréquences."
+  },
+  {
+   "id": "ca6-101",
+   "type": "exo",
+   "titre": "Passe-bas actif d'ordre 1",
+   "notion": "6.2",
+   "origine": "cours",
+   "enonce": "Le but : caractériser le filtre passe-bas ci-dessous : $R = [[R]]$ à l'entrée, $R' = [[Rp]]$ en parallèle avec $C = [[C]]$ dans la contre-réaction, AOP idéal.",
+   "guidage": "**Plan** : 1. basses fréquences : $C$ ouvert → inverseur $R'/R$ · 2. en dB · 3. $f_c = \\frac{1}{2\\pi R'C}$ · 4. à $f_c$, −3 dB.",
+   "duree": 6,
+   "etapes": [
+    {
+     "consigne": "En basses fréquences, le condensateur est un circuit ouvert. Quel est le gain (valeur absolue) ?",
+     "question": "$|H|_0 = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 2,
+      "tol": 0.01
+     },
+     "indices": [
+      "Sans $C$, c'est un inverseur.",
+      "$|H|_0 = R'/R = [[RPN]]/[[RN]]$"
+     ],
+     "corrige": "En basse fréquence, $C$ est un circuit ouvert : il reste un inverseur de gain $\\dfrac{R'}{R} = \\dfrac{4}{2} = \\mathbf{2}$ (en valeur absolue)",
+     "schema": {
+      "surligne": [
+       "R",
+       "R'"
+      ]
+     }
+    },
+    {
+     "consigne": "Convertis ce gain en décibels.",
+     "question": "$G_0 = ?$ (dB)",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 6.020599913279624,
+      "tol": 0.15
+     },
+     "indices": [
+      "$G = 20\\log_{10}|H|$",
+      "$G_0 = 20\\log_{10}(|H|_0)$"
+     ],
+     "corrige": "$G_0 = 20\\log_{10}(2) = \\mathbf{6\\ \\text{dB}}$"
+    },
+    {
+     "consigne": "Calcule la fréquence de coupure.",
+     "question": "$f_c = ?$",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 846.5688462334857,
+      "unite": "Hz"
+     },
+     "indices": [
+      "$f_c = \\dfrac{1}{2\\pi R'C}$, avec $R'$ en Ω et $C$ en F.",
+      "$f_c = \\dfrac{1}{2\\pi \\times [[RPN]]\\times 10^3 \\times [[CN]]\\times 10^{-9}}$"
+     ],
+     "corrige": "$f_c = \\dfrac{1}{2\\pi R'C} = \\dfrac{1}{2\\pi \\times 4\\times 10^{3} \\times 47\\times 10^{-9}} = \\mathbf{847\\ \\text{Hz}}$",
+     "schema": {
+      "surligne": [
+       "R'",
+       "C"
+      ]
+     }
+    },
+    {
+     "consigne": "Quel est le gain en dB à la fréquence de coupure ?",
+     "question": "$G(f_c) = ?$ (dB)",
+     "verif": {
+      "mode": "numerique",
+      "attendu": 3.020599913279624,
+      "tol": 0.15
+     },
+     "indices": [
+      "Par définition de la fréquence de coupure…",
+      "$G(f_c) = G_0 - 3$"
+     ],
+     "corrige": "À $f_c$, le gain a perdu 3 dB : $6 - 3 = \\mathbf{3\\ \\text{dB}}$"
+    }
+   ],
+   "generateur": "passe-bas",
+   "schema": {
+    "modele": "passe-bas",
+    "vals": {
+     "R": "[[R]]",
+     "Rp": "[[Rp]]",
+     "C": "[[C]]"
+    }
+   },
+   "vals": {
+    "R": "2 kΩ",
+    "Rp": "4 kΩ",
+    "C": "47 nF",
+    "RN": "2",
+    "RPN": "4",
+    "CN": "47"
+   }
+  }
+ ]
+}
