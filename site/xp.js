@@ -721,8 +721,15 @@ function bulle(d){
 /* traînée d'étoiles derrière le curseur (D.A. commune) */
 const reduit = matchMedia("(prefers-reduced-motion: reduce)").matches;
 let lastT = 0;
+/* préférence de l'appareil (localStorage "bic2.trainee" = "off") : visuel seulement, rien dans Firestore */
+let trainee = true; try{ trainee = localStorage.getItem("bic2.trainee") !== "off"; }catch(e){}
+function traineeActive(on){
+  if(on === undefined) return trainee;
+  trainee = !!on; try{ trainee ? localStorage.removeItem("bic2.trainee") : localStorage.setItem("bic2.trainee", "off"); }catch(e){}
+  return trainee;
+}
 addEventListener("pointermove", e => {
-  if(reduit || e.pointerType !== "mouse" || document.body.classList.contains("sans-trainee")) return;
+  if(!trainee || reduit || e.pointerType !== "mouse" || document.body.classList.contains("sans-trainee")) return;
   const now = performance.now(); if(now - lastT < 45) return; lastT = now;
   const t = document.createElement("span"); t.className = "trainee"; t.textContent = "✦"; t.setAttribute("aria-hidden","true");
   t.style.left = e.clientX + "px"; t.style.top = e.clientY + "px";
@@ -789,7 +796,7 @@ setInterval(() => {
 window.moteur = {
   init, charger, debutExo, finExo, reponse, noter, contester, signaler, definirPseudo, definirPlaque, idControle,
   plaque, placeholders, plaquesDebloquees, plaqueEquipee, moduleComplet, palierDe,
-  monterHeader, bulle, son, titreHTML, GLYPHS,
+  monterHeader, bulle, son, titreHTML, GLYPHS, traineeActive,
   on(fn){ E.ecouteurs.add(fn); if(E.res) fn(E.res, E); return () => E.ecouteurs.delete(fn); },
   etat: () => E.res, interne: E, evenements: tousLesEvenements, contexte,
   calculer, xpClassement, valeursPour, valeursModule, progMaxModule, niveauDe, rangDe, DEFAUT, RANGS, outils:{jourDe, plusJours, ecartJours, fmt, nf, esc, ymd}
