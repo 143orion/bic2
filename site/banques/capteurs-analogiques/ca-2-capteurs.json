@@ -313,7 +313,7 @@
    "notion": "2.1",
    "quiz": "Quiz 1 · partie B",
    "origine": "td",
-   "enonce": "TD1 ex. 1 · Les signaux en entrée d'un capteur sont toujours numériques.",
+   "enonce": "TD1 ex. 1 · Les signaux en entrée d'un capteur sont toujours numériques. Vrai ou faux ?",
    "choix": [
     "Faux",
     "Vrai"

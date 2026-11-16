@@ -570,7 +570,7 @@
    "notion": "1.5",
    "quiz": "Quiz 1 · partie B",
    "origine": "cours",
-   "enonce": "Avec 8 bits, quel est le plus grand nombre que l'on peut écrire (en décimal) ?",
+   "enonce": "Avec 8 bits, quel est le plus grand nombre que l'on peut écrire ? (réponds en base 10)",
    "verif": {
     "mode": "numerique",
     "attendu": 255,
@@ -585,12 +585,11 @@
    "notion": "1.6",
    "quiz": "Quiz 1 · partie B",
    "origine": "cours",
-   "enonce": "Écris $([[N]])_{10}$ en binaire (sans espace). *De tête : au plus 4 bits à 1.*",
+   "enonce": "Écris $([[N]])_{10}$ en binaire (sans espace ; les zéros devant sont acceptés). *De tête : au plus 4 bits à 1.*",
    "verif": {
-    "mode": "exact",
-    "attendu": [
-     "[[B]]"
-    ]
+    "mode": "regex",
+    "motif": "0*[[B]]",
+    "exemple": "[[B]]"
    },
    "duree": 0.67,
    "explication": "$[[N]] = [[PUIS]] = [[SOMME]]$, donc $([[N]])_{10} = ([[B]])_2$.",
@@ -607,12 +606,11 @@
    "type": "saisie",
    "notion": "1.6",
    "origine": "cours",
-   "enonce": "Écris $([[N]])_{10}$ en binaire (sans espace).",
+   "enonce": "Écris $([[N]])_{10}$ en binaire (sans espace ; les zéros devant sont acceptés).",
    "verif": {
-    "mode": "exact",
-    "attendu": [
-     "[[B]]"
-    ]
+    "mode": "regex",
+    "motif": "0*[[B]]",
+    "exemple": "[[B]]"
    },
    "duree": 1.5,
    "explication": "$[[N]] = [[PUIS]]$, donc $([[N]])_{10} = ([[B]])_2$. Par divisions successives :\n\n[[DIV]]",
@@ -631,7 +629,7 @@
    "notion": "1.6",
    "quiz": "Quiz 1 · partie B",
    "origine": "cours",
-   "enonce": "Que vaut $([[B]])_2$ en décimal ?",
+   "enonce": "Que vaut $([[B]])_2$ en base 10 ?",
    "verif": {
     "mode": "numerique",
     "attendu": "[[N]]",

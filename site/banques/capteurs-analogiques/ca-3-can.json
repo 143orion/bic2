@@ -668,11 +668,12 @@
    "notion": "3.5",
    "quiz": "Quiz 1 · partie B",
    "origine": "annale",
-   "enonce": "Quiz 1 · Un CAN $[[N]]$ bits de pleine échelle [[ECH]] donne en sortie le nombre binaire `[[BC]]`. Quelle était sa tension d'entrée ?",
+   "enonce": "Quiz 1 · Un CAN $[[N]]$ bits de pleine échelle [[ECH]] donne en sortie le nombre binaire `[[BC]]`. Quelle était sa tension d'entrée ? (la tension associée à ce code, en V, au centième près)",
    "verif": {
     "mode": "numerique",
     "attendu": "[[UN]]",
-    "unite": "V"
+    "unite": "V",
+    "tol": 0.01
    },
    "duree": 1,
    "indices": [
