@@ -335,6 +335,7 @@
    "id": "ca3-004",
    "type": "saisie",
    "notion": "3.2",
+   "quiz": "Quiz 1 · partie B",
    "origine": "cours",
    "enonce": "CAN $[[N]]$ bits, $V_{min} = 0$, $V_{max} = [[VM]]\\ \\text{V}$. Quantum $q$ ?",
    "verif": {
@@ -357,6 +358,7 @@
    "id": "ca3-005",
    "type": "saisie",
    "notion": "3.2",
+   "quiz": "Quiz 1 · partie B",
    "origine": "cours",
    "enonce": "Combien de codes différents donne un CAN 12 bits ?",
    "verif": {
@@ -435,6 +437,7 @@
    "id": "ca3-009",
    "type": "saisie",
    "notion": "3.4",
+   "quiz": "Quiz 1 · partie B",
    "origine": "cours",
    "enonce": "CAN $[[N]]$ bits, pleine échelle $[[VM]]\\ \\text{V}$ ($V_{min} = 0$). Quel code obtient-on pour $U_e = [[U]]\\ \\text{V}$ ? (en décimal)",
    "verif": {
@@ -465,6 +468,7 @@
    "id": "ca3-010",
    "type": "saisie",
    "notion": "3.4",
+   "quiz": "Quiz 1 · partie B",
    "origine": "td",
    "enonce": "TD1 ex. 2 · CAN 8 bits, pleine échelle $U_{ref} = 10\\ \\text{V}$. Code obtenu pour $U_e = 2{,}3\\ \\text{V}$ ? (en décimal)",
    "verif": {
@@ -481,6 +485,7 @@
    "id": "ca3-011",
    "type": "saisie",
    "notion": "3.5",
+   "quiz": "Quiz 1 · partie B",
    "origine": "td",
    "enonce": "TD1 ex. 6 · CAN 10 bits, $V_{max} = 4\\ \\text{V}$, $V_{min} = 1\\ \\text{V}$. Tension d'entrée qui donne le code 900 ?",
    "verif": {
@@ -553,6 +558,7 @@
    "id": "ca3-015",
    "type": "qcm",
    "notion": "3.2",
+   "quiz": "Quiz 1 · partie B",
    "origine": "annale",
    "enonce": "Quiz 1 · Un CAN $[[N]]$ bits auquel on applique une tension qui varie entre 0 et $[[VM]]\\ \\text{V}$ a pour quantum :",
    "choix": [
@@ -584,6 +590,7 @@
    "id": "ca3-016",
    "type": "qcm",
    "notion": "3.5",
+   "quiz": "Quiz 1 · partie B",
    "origine": "annale",
    "enonce": "Quiz 1 · Un CAN $[[N]]$ bits de pleine échelle [[ECH]] donne en sortie le nombre binaire `[[BC]]`. Quelle était sa tension d'entrée ?",
    "choix": [
@@ -622,6 +629,7 @@
    "id": "ca3-017",
    "type": "qcm",
    "notion": "3.4",
+   "quiz": "Quiz 1 · partie B",
    "origine": "cours",
    "enonce": "Un CAN $[[N]]$ bits, pleine échelle 0 – $[[VM]]\\ \\text{V}$, reçoit $U_e = [[U]]\\ \\text{V}$. Quel code binaire donne-t-il ?",
    "choix": [
@@ -656,6 +664,7 @@
    "id": "ca3-018",
    "type": "saisie",
    "notion": "3.5",
+   "quiz": "Quiz 1 · partie B",
    "origine": "annale",
    "enonce": "Quiz 1 · Un CAN $[[N]]$ bits de pleine échelle [[ECH]] donne en sortie le nombre binaire `[[BC]]`. Quelle était sa tension d'entrée ?",
    "verif": {

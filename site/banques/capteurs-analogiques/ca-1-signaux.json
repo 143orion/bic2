@@ -509,6 +509,7 @@
    "id": "ca1-011",
    "type": "saisie",
    "notion": "1.5",
+   "quiz": "Quiz 1 · partie B",
    "origine": "cours",
    "enonce": "Combien de bits dans un octet ?",
    "verif": {
@@ -567,6 +568,7 @@
    "id": "ca1-014",
    "type": "saisie",
    "notion": "1.5",
+   "quiz": "Quiz 1 · partie B",
    "origine": "cours",
    "enonce": "Avec 8 bits, quel est le plus grand nombre que l'on peut écrire (en décimal) ?",
    "verif": {
@@ -581,6 +583,7 @@
    "id": "ca1-015",
    "type": "saisie",
    "notion": "1.6",
+   "quiz": "Quiz 1 · partie B",
    "origine": "cours",
    "enonce": "Écris $([[N]])_{10}$ en binaire (sans espace). *De tête : au plus 4 bits à 1.*",
    "verif": {
@@ -626,6 +629,7 @@
    "id": "ca1-017",
    "type": "saisie",
    "notion": "1.6",
+   "quiz": "Quiz 1 · partie B",
    "origine": "cours",
    "enonce": "Que vaut $([[B]])_2$ en décimal ?",
    "verif": {
@@ -647,6 +651,7 @@
    "id": "ca1-018",
    "type": "qcm",
    "notion": "1.5",
+   "quiz": "Quiz 1 · partie B",
    "origine": "annale",
    "enonce": "Quiz 1 · Quelle est la différence entre un **bit** et un **byte** (octet) ?",
    "choix": [
@@ -667,6 +672,7 @@
    "id": "ca1-019",
    "type": "qcm",
    "notion": "1.5",
+   "quiz": "Quiz 1 · partie B",
    "origine": "cours",
    "enonce": "[[Q]]",
    "choix": [
@@ -696,6 +702,7 @@
    "id": "ca1-020",
    "type": "qcm",
    "notion": "1.6",
+   "quiz": "Quiz 1 · partie B",
    "origine": "annale",
    "enonce": "Quiz 1 · En binaire, $([[N]])_{10}$ s'écrit :",
    "choix": [
@@ -726,6 +733,7 @@
    "id": "ca1-021",
    "type": "qcm",
    "notion": "1.6",
+   "quiz": "Quiz 1 · partie B",
    "origine": "cours",
    "enonce": "Que vaut l'octet `[[B]]` en décimal ?",
    "choix": [

@@ -311,6 +311,7 @@
    "id": "ca2-001",
    "type": "qcm",
    "notion": "2.1",
+   "quiz": "Quiz 1 · partie B",
    "origine": "td",
    "enonce": "TD1 ex. 1 · Les signaux en entrée d'un capteur sont toujours numériques.",
    "choix": [
@@ -329,6 +330,7 @@
    "id": "ca2-002",
    "type": "qcm",
    "notion": "2.1",
+   "quiz": "Quiz 1 · partie B",
    "origine": "cours",
    "enonce": "Un capteur de pression donne une tension. Quel est le mesurande ?",
    "choix": [
@@ -349,6 +351,7 @@
    "id": "ca2-003",
    "type": "qcm-multi",
    "notion": "2.1",
+   "quiz": "Quiz 1 · partie B",
    "origine": "cours",
    "enonce": "Quelles grandeurs électriques un capteur peut-il fournir en sortie ?",
    "choix": [
@@ -455,6 +458,7 @@
    "id": "ca2-008",
    "type": "saisie",
    "notion": "2.3",
+   "quiz": "Quiz 1 · partie B",
    "origine": "cours",
    "enonce": "Une caractéristique passe par $(1\\ \\text{bar} ; 0{,}7\\ \\text{V})$ et $(5\\ \\text{bar} ; 1{,}5\\ \\text{V})$. Sensibilité en V/bar ?",
    "verif": {
@@ -469,6 +473,7 @@
    "id": "ca2-009",
    "type": "saisie",
    "notion": "2.3",
+   "quiz": "Quiz 1 · partie B",
    "origine": "cours",
    "enonce": "Fonction de transfert $V = 0{,}3\\,P + 0{,}6$ (V, bar). Tension pour $P = 2\\ \\text{bar}$ ?",
    "verif": {
@@ -687,6 +692,7 @@
    "id": "ca2-021",
    "type": "qcm-multi",
    "notion": "2.1",
+   "quiz": "Quiz 1 · partie B",
    "origine": "annale",
    "enonce": "Quiz 1 · Coche les exemples de signaux d'**entrée** d'un capteur.",
    "choix": [
@@ -720,6 +726,7 @@
    "id": "ca2-022",
    "type": "qcm-multi",
    "notion": "2.1",
+   "quiz": "Quiz 1 · partie B",
    "origine": "annale",
    "enonce": "Quiz 1 · Coche les exemples de signaux de **sortie** d'un capteur.",
    "choix": [
@@ -753,6 +760,7 @@
    "id": "ca2-023",
    "type": "qcm",
    "notion": "2.3",
+   "quiz": "Quiz 1 · partie B",
    "origine": "annale",
    "enonce": "Quiz 1 · Voici la caractéristique d'un capteur donnée par le constructeur. Quel est le **mesurande** ?",
    "choix": [
@@ -797,6 +805,7 @@
    "id": "ca2-024",
    "type": "qcm",
    "notion": "2.3",
+   "quiz": "Quiz 1 · partie B",
    "origine": "annale",
    "enonce": "Quiz 1 · Voici la caractéristique d'un capteur donnée par le constructeur. Quelle est sa **sensibilité** ?",
    "choix": [
@@ -845,6 +854,7 @@
    "id": "ca2-025",
    "type": "qcm",
    "notion": "2.3",
+   "quiz": "Quiz 1 · partie B",
    "origine": "cours",
    "enonce": "Voici la caractéristique d'un capteur. Que donne-t-il en sortie pour $[[SYM]] = [[XQT]]$ [[UM]] ?",
    "choix": [
@@ -896,6 +906,7 @@
    "id": "ca2-026",
    "type": "saisie",
    "notion": "2.1",
+   "quiz": "Quiz 1 · partie B",
    "origine": "annale",
    "enonce": "Quiz 1 · Donne **un** exemple de signal d'**entrée** d'un capteur (un ou deux mots).",
    "verif": {
@@ -910,6 +921,7 @@
    "id": "ca2-027",
    "type": "saisie",
    "notion": "2.1",
+   "quiz": "Quiz 1 · partie B",
    "origine": "annale",
    "enonce": "Quiz 1 · Donne **un** exemple de signal de **sortie** d'un capteur (un ou deux mots).",
    "verif": {
@@ -924,6 +936,7 @@
    "id": "ca2-028",
    "type": "saisie",
    "notion": "2.3",
+   "quiz": "Quiz 1 · partie B",
    "origine": "annale",
    "enonce": "Quiz 1 · Voici la caractéristique d'un capteur donnée par le constructeur. Calcule sa **sensibilité** (en [[US]], nombre seul).",
    "verif": {

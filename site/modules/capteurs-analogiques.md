@@ -42,4 +42,4 @@ Cours ESILV « Capteurs analogiques » : cours 1 (signaux, capteurs, CAN/CNA, pa
 - **Arduino** : chapitre léger (QCM, saisies, code à trous), sans exécution de code.
 - Durées théoriques à vérifier dans le panel après les premiers passages.
 
-**Quiz 1 partie B** (sujet d'entraînement) : QCM et saisies à valeurs tirées (`ca1-018`…`021`, `ca2-021`…`028`, `ca3-015`…`018`), générateurs `cap-*`, `oct-bits`, `bin-qcm*`, `can-*-qcm` et graphe `caract-lin` dans `capteurs-analogiques.js`. Leurres des QCM = erreurs typiques (unité inversée, offset oublié, bit faux, $2^{N-1}$…).
+**Quiz 1 partie B** (sujet d'entraînement) : QCM et saisies à valeurs tirées (`ca1-018`…`021`, `ca2-021`…`028`, `ca3-015`…`018`), générateurs `cap-*`, `oct-bits`, `bin-qcm*`, `can-*-qcm` et graphe `caract-lin` dans `capteurs-analogiques.js`. Bouton **quiz.exe** en haut des Exos : les items marqués `"quiz": "Quiz 1 · partie B"` (30 questions des ch. 1 à 3, nouvelles et anciennes du même genre), filtrables par chapitre. Leurres des QCM = erreurs typiques (unité inversée, offset oublié, bit faux, $2^{N-1}$…).

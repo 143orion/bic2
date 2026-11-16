@@ -635,7 +635,7 @@ async function verifDOM(v, rep, champ){
 function teteItem(it, opts = {}, extra = ""){
   return `<div class="q-tete">
     <span class="q-type">${LIB[it.type] || it.type}</span>
-    ${it._n ? `<span class="q-notion" title="${esc(titreNotion(it._n))}">${esc(it._n)}</span>` : ""}
+    ${it._n ? `<span class="q-notion" title="${esc(titreNotion(it._n))}">${esc(opts.notionLongue ? titreNotion(it._n) : it._n)}</span>` : ""}
     ${it.origine && it.origine !== "generee" ? `<span class="q-orig">${esc(ORIG[it.origine] || it.origine)}</span>` : ""}
     ${extra}
     <span class="q-pos">${opts.pos || ""}</span>
@@ -1523,10 +1523,23 @@ function exoEtape1(){
   const f = S2.fl, st = etats(), ee = erreursExos(), ne = nbErreurs();
   return `<div class="ex-flux"><p class="fl-k">Étape 1 sur 2</p><h2 class="fl-h2">Qu'est-ce que tu veux réviser ?</h2><p class="vide-txt">Coche une ou plusieurs notions.</p>
     <div class="actions"><button type="button" class="btn" data-m="pall">Tout cocher</button><button type="button" class="btn" data-m="pnone">Tout décocher</button>${ne ? `<button type="button" class="btn" data-m="perr">Mes erreurs (${ne})</button>` : ""}</div>
+    ${panneauQuiz()}
     <div class="ex-liste">${(bp => chapsVis().map(c => bandePartie(c, bp) + (() => { const tout = c.notions.length && c.notions.every(n => f.pick.has(n.id));
       return `<div class="ex-ch fenetre" data-titre="ch${esc(String(c.ordre ?? 0))}.txt"><button type="button" class="ex-chb" data-m="pch" data-id="${esc(c.id)}"><i class="case${tout ? " on" : ""}"></i><b>Chapitre ${esc(String(c.ordre ?? 0))} · ${esc(c.titre || c.id)}</b></button>
       ${c.notions.map(n => { const s = statNotion(n, st, ee); return `<button type="button" class="ex-n${f.pick.has(n.id) ? " on" : ""}" data-m="pk" data-id="${esc(n.id)}"><i class="case"></i><span><b>${esc(n.id)}</b> ${mdInline(n.titre)}</span><small>${s.faits}/${s.tot} faits${s.err ? ` · <u>${s.err} ✗</u>` : ""}</small></button>`; }).join("")}</div>`; })()).join(""))({der:null})}</div>
     <div class="ex-pied"><span class="vide-txt">${f.pick.size} notion${f.pick.size > 1 ? "s" : ""} cochée${f.pick.size > 1 ? "s" : ""}</span><button type="button" class="btn plein" data-m="exsuiv" ${f.pick.size ? "" : "disabled"}>Suivant ›</button></div></div>`;
+}
+/* ---------- Quiz : séries de questions type d'une éval (champ « quiz » des items), filtrées par chapitre ---------- */
+const quizNoms = () => [...new Set(chapsVis().flatMap(c => (c.items || []).map(it => it.quiz).filter(Boolean)))];
+const quizChaps = nom => chapsVis().filter(c => (c.items || []).some(it => it.quiz === nom && estCourt(it)));
+const quizChoix = nom => { const q = S2.fl.quiz || (S2.fl.quiz = {}); return q[nom] || (q[nom] = new Set()); };   /* vide = tous les chapitres */
+const quizItems = nom => { const ch = quizChoix(nom); return quizChaps(nom).filter(c => !ch.size || ch.has(c.id)).flatMap(c => c.items.filter(it => it.quiz === nom && estCourt(it))); };
+function panneauQuiz(){
+  const noms = quizNoms(); if(!noms.length) return "";
+  return noms.map((nom, k) => { const ch = quizChoix(nom), cs = quizChaps(nom), n = quizItems(nom).length;
+    return `<section class="fenetre ex-quiz" data-titre="quiz.exe"><div class="eq-t"><b>${esc(nom)}</b><span class="vide-txt">Questions type de l'éval (QCM et réponses courtes), valeurs tirées à chaque fois. La notion de chaque question est affichée.</span></div>
+      <span class="puces"><button type="button" class="${!ch.size ? "on" : ""}" data-m="qch" data-q="${k}" data-id="">Tous les chapitres</button>${cs.map(c => `<button type="button" class="${ch.has(c.id) ? "on" : ""}" data-m="qch" data-q="${k}" data-id="${esc(c.id)}">Ch. ${esc(String(c.ordre ?? 0))} · ${esc(c.titre || c.id)}</button>`).join("")}</span>
+      <div class="actions"><button type="button" class="btn plein" data-m="qgo" data-q="${k}" ${n ? "" : "disabled"}>Lancer · ${n} question${n > 1 ? "s" : ""} ›</button></div></section>`; }).join("");
 }
 function selection(){
   const f = S2.fl, ids = f.pick, st = etats(), ee = erreursExos();
@@ -1574,20 +1587,23 @@ function libSel(){
 }
 const MODES = {express:"Express", classique:"Classique", mock:"Mock"};
 
-async function sessionExpress(){
+async function sessionExpress(quiz = null){
   S2.sess = nouvelleSess("express"); const sess = S2.sess;
-  ouvrirSession(`Express · ${esc(libSel())}`, async zone => {
+  const pool = quiz ? quizItems(quiz) : itemsNotions(S2.fl.pick, estCourt);
+  if(quiz) S2.fl.pick = new Set(pool.map(it => it.notion));   /* « autre mode sur les mêmes notions » depuis l'écran de fin */
+  const lib = quiz ? `${esc(quiz)} · ${(ch => ch.size ? quizChaps(quiz).filter(c => ch.has(c.id)).map(c => `Ch. ${c.ordre ?? 0}`).join(" · ") : "tous les chapitres")(quizChoix(quiz))}` : `Express · ${esc(libSel())}`;
+  ouvrirSession(lib, async zone => {
     const moi = S.vue, st = etats();
     const prio = it => { const s = st[it.id]; return !s ? 1 : s.erreur ? 0 : s.auj ? 4 : s.maitrise ? 3 : 2; };
-    const serie = melanger(itemsNotions(S2.fl.pick, estCourt)).map(it => [prio(it), it]).sort((a, b) => a[0] - b[0]).slice(0, 10).map(x => x[1]);
+    const serie = melanger(pool).map(it => [prio(it), it]).sort((a, b) => a[0] - b[0]).slice(0, 10).map(x => x[1]);
     const barre = document.createElement("div"); barre.className = "progression"; barre.innerHTML = `<i></i><span></span>`; zone.before(barre);
     for(let k = 0; k < serie.length; k++){
       barre.querySelector("i").style.width = (k/serie.length*100) + "%"; barre.querySelector("span").textContent = `${k+1}/${serie.length}`;
-      const r = await jouerQuestion(instance(serie[k]), zone, {pos:`${k+1}/${serie.length}`, dernier:k === serie.length-1, log:sess.log});
+      const r = await jouerQuestion(instance(serie[k]), zone, {pos:`${k+1}/${serie.length}`, dernier:k === serie.length-1, log:sess.log, notionLongue:!!quiz});
       if(S.vue !== moi || !zone.isConnected) return;
       if(r.d && r.d.ok) sess.xp += r.d.xp + r.d.bonus; majXpSess();
     }
-    sess.t1 = Date.now(); barre.remove(); ecranFin(zone, sess);
+    sess.t1 = Date.now(); barre.remove(); ecranFin(zone, sess, quiz ? {suivant:() => sessionExpress(quiz)} : {});
   });
 }
 async function sessionClassique(offset = 0){
@@ -1716,6 +1732,8 @@ const ACT = {
   pnone: () => { S2.fl.pick.clear(); rendreExos($("m-corps")); },
   perr: () => { const st = etats(), ee = erreursExos(); S2.fl.pick = new Set(S.notions.filter(n => statNotion(n, st, ee).err).map(n => n.id)); rendreExos($("m-corps")); },
   exsuiv: () => { if(!S2.fl.pick.size) return; S2.fl.etape = 2; rendreExos($("m-corps")); scrollTo(0, 0); },
+  qch: b => { const nom = quizNoms()[+b.dataset.q], ch = quizChoix(nom), id = b.dataset.id; if(!id) ch.clear(); else { ch.has(id) ? ch.delete(id) : ch.add(id); if(ch.size === quizChaps(nom).length) ch.clear(); } rendreExos($("m-corps")); },
+  qgo: b => { const nom = quizNoms()[+b.dataset.q]; if(nom && quizItems(nom).length) sessionExpress(nom); },
   exprec: () => { S2.fl.etape = 1; rendreExos($("m-corps")); },
   mode: b => { S2.fl.mode = b.dataset.v; rendreExos($("m-corps")); },
   gtog: () => { S2.fl.guide = !S2.fl.guide; S2.fl.mode = "classique"; rendreExos($("m-corps")); },
