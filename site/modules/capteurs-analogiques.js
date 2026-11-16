@@ -291,7 +291,8 @@ const generateurs = {
       `$R(${T}) = R_0(1 + aT) = 100 \\times (1 + 0{,}00385 \\times ${T}) = \\mathbf{${nt(R,2)}\\ \\Omega}$`]}; },
   /* CAN */
   "can-q"(){ const N = rnd([3,4,8,10,12]), Vm = rnd([1,2,4,5,8,10]), Vmin = 0, q = (Vm - Vmin)/2**N;
-    return {vals:{N:String(N), VM:nb(Vm,1), Q:String(q), QT:t(q,"V"), NC:String(2**N)}}; },
+    /* tolérance : une unité sur le 2e chiffre significatif (0,00024 ou 0,019 acceptés) */
+    return {vals:{N:String(N), VM:nb(Vm,1), Q:String(q), QT:t(q,"V"), NC:String(2**N), TOL:"1e" + (Math.floor(Math.log10(q)) - 1)}}; },
   "can-code"(){ const N = rnd([8,10]), Vm = rnd([5,10]), q = Vm/2**N; let U, r; do { U = ent(5, Vm*100 - 5)/100; r = U/q; } while(Math.abs(r - Math.round(r)) < 0.05);
     const cf = Math.floor(r), cr = Math.round(r);
     return {vals:{N:String(N), VM:String(Vm), U:nb(U,2), UT:nt(U,2), Q:t(q,"V"), QT:nt(q*1000,3), R:nb(r,2), RT:nt(r,2), CF:String(cf), CR:String(cr), NC:String(2**N)}}; },

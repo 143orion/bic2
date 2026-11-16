@@ -1486,7 +1486,7 @@ body.en-session .lecteur{background:radial-gradient(ellipse at top,color-mix(in 
 .rv-h{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.rv-n{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;font-size:12px;font-weight:700;border:1px solid var(--verre-bord)}
 .rv.ok .rv-n{border-color:var(--ok);color:var(--ok)}.rv.ko .rv-n{border-color:var(--erreur);color:var(--erreur)}
 .rv-s{margin-left:auto;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}.rv.ok .rv-s{color:var(--ok)}.rv.ko .rv-s{color:var(--erreur)}
-.rv-q p{margin:0 0 .5em}.rv-ctx{color:var(--gris-2);font-size:.92em;padding-left:10px;border-left:2px solid var(--verre-bord)}
+.rv-q p{margin:0 0 .5em}.rv-q .schema{max-width:460px}.rv-ctx{color:var(--gris-2);font-size:.92em;padding-left:10px;border-left:2px solid var(--verre-bord)}
 .rv-a{display:flex;gap:10px 28px;flex-wrap:wrap}.rv-a div{display:grid}.rv-a span{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gris-2)}
 .rv-a b.g{color:var(--ok)}.rv-a b.b{color:var(--erreur)}.rv-pied{display:flex}.rv-pied .signaler{margin-left:auto;font-size:11px;color:var(--gris-2)}
 .trou-fin{border-bottom:2px solid var(--m-ac);padding:0 6px;font-weight:700}

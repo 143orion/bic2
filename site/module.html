@@ -1661,7 +1661,9 @@ function donneeTxt(l){ return l.donnee ? esc(l.donnee) : "—"; }
 function enonceLog(l){
   const it = l.it, e = l.etape != null && it.etapes ? it.etapes[l.etape] : null;
   if(it.type === "trous"){ const v = String(l.donnee || "").split(" · "); return mdTrous(it.enonce, i => ({cls:"trou-fin", tex:texTrou(v[i] || "…"), html:`<span class="trou-fin">${esc(v[i] || "…")}</span>`})); }
-  return e ? `<p class="rv-ctx">${riche(it.titre ? it.titre + " — " : "")}${md(it.enonce).replace(/^<p>|<\/p>$/g, "")}</p>${md(e.question || e.consigne || "")}` : md(it.enonce);
+  /* schéma de l'item (ou de l'étape) : l'énoncé peut y renvoyer (« le signal du schéma ») */
+  const es = e && e.schema, sch = es && (es.modele || es.el) ? SV.rendre(es) : it.schema ? SV.rendre(it.schema, es || {}) : "";
+  return (e ? `<p class="rv-ctx">${riche(it.titre ? it.titre + " — " : "")}${md(it.enonce).replace(/^<p>|<\/p>$/g, "")}</p>${md(e.question || e.consigne || "")}` : md(it.enonce)) + sch;
 }
 function attenduLog(l){
   const it = l.it, e = l.etape != null && it.etapes ? it.etapes[l.etape] : null, v = (e ? e.verif : it.verif) || {};

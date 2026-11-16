@@ -341,15 +341,17 @@
    "verif": {
     "mode": "numerique",
     "attendu": "[[Q]]",
-    "unite": "V"
+    "unite": "V",
+    "tol": "[[TOL]]"
    },
    "duree": 0.67,
-   "explication": "$q = \\dfrac{[[VM]]}{2^{[[N]]}} = \\dfrac{[[VM]]}{[[NC]]} = [[QT]]$.",
+   "explication": "$q = \\dfrac{[[VM]]}{2^{[[N]]}} = \\dfrac{[[VM]]}{[[NC]]} = [[QT]]$. Une valeur arrondie à 2 chiffres significatifs est acceptée.",
    "generateur": "can-q",
    "vals": {
     "N": "4",
     "VM": "8",
     "Q": "0.5",
+    "TOL": "0.01",
     "QT": "500\\ \\text{m}\\text{V}",
     "NC": "16"
    }
