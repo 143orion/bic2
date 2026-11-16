@@ -441,7 +441,7 @@
    "notion": "3.4",
    "quiz": "Quiz 1 · partie B",
    "origine": "cours",
-   "enonce": "CAN $[[N]]$ bits, pleine échelle $[[VM]]\\ \\text{V}$ ($V_{min} = 0$). Quel code obtient-on pour $U_e = [[U]]\\ \\text{V}$ ? (en décimal)",
+   "enonce": "CAN $[[N]]$ bits, pleine échelle $[[VM]]\\ \\text{V}$ ($V_{min} = 0$). Quel code obtient-on pour $U_e = [[U]]\\ \\text{V}$ ? (un nombre **entier**, écrit en base 10)",
    "verif": {
     "mode": "exact",
     "attendu": [
@@ -450,7 +450,7 @@
     ]
    },
    "duree": 1,
-   "explication": "$q = [[Q]]$ ; $\\dfrac{[[UT]]}{q} = [[RT]]$ → code **[[CF]]** (partie entière ; [[CR]] en arrondissant, accepté aussi).",
+   "explication": "$q = [[Q]]$ ; $\\dfrac{[[UT]]}{q} = [[RT]]$ → code **[[CF]]** (partie entière ; [[CR]] en arrondissant, accepté aussi). Un code est toujours un **entier** : $[[RT]]$ n'est qu'une étape du calcul.",
    "generateur": "can-code",
    "vals": {
     "N": "10",
@@ -472,7 +472,7 @@
    "notion": "3.4",
    "quiz": "Quiz 1 · partie B",
    "origine": "td",
-   "enonce": "TD1 ex. 2 · CAN 8 bits, pleine échelle $U_{ref} = 10\\ \\text{V}$. Code obtenu pour $U_e = 2{,}3\\ \\text{V}$ ? (en décimal)",
+   "enonce": "TD1 ex. 2 · CAN 8 bits, pleine échelle $U_{ref} = 10\\ \\text{V}$. Code obtenu pour $U_e = 2{,}3\\ \\text{V}$ ? (un nombre **entier**, écrit en base 10)",
    "verif": {
     "mode": "exact",
     "attendu": [
@@ -481,7 +481,7 @@
     ]
    },
    "duree": 1,
-   "explication": "$q = 10/256 = 39{,}06\\ \\text{mV}$ ; $2{,}3/0{,}03906 = 58{,}9$ → **58** (partie entière) ou 59 (arrondi)."
+   "explication": "$q = 10/256 = 39{,}06\\ \\text{mV}$ ; $2{,}3/0{,}03906 = 58{,}9$ → **58** (partie entière) ou 59 (arrondi). Un code est toujours un **entier** : 58,9 n'est qu'une étape du calcul."
   },
   {
    "id": "ca3-011",
