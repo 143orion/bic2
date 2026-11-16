@@ -344,7 +344,13 @@ function variante(it, g){
 /* tirage d'une variante : générateur JS de l'extension, sinon un jeu de valeurs pris au hasard dans « variantes » de la banque
    (même id, mêmes règles d'XP ; tiré à chaque ouverture, dans tous les modes) */
 const aVariantes = it => !!(it && ((it.generateur && EXT.generateurs[it.generateur]) || (Array.isArray(it.variantes) && it.variantes.length > 1)));
-const tirage = it => it.generateur && EXT.generateurs[it.generateur] ? EXT.generateurs[it.generateur]()
+/* interrupteur « Faisable de tête » (quiz.exe, si l'extension le gère) : retenu par module sur cet appareil, activé par défaut */
+let teteMem = null;
+const tete = v => { const cle = "bic2.tete." + idMod;
+  if(v != null){ teteMem = !!v; try{ localStorage.setItem(cle, v ? "1" : "0"); }catch(e){} }
+  if(teteMem == null){ try{ teteMem = localStorage.getItem(cle) !== "0"; }catch(e){ teteMem = true; } }
+  return teteMem; };
+const tirage = it => it.generateur && EXT.generateurs[it.generateur] ? EXT.generateurs[it.generateur]({tete:tete()})
   : Array.isArray(it.variantes) && it.variantes.length ? {vals:it.variantes[Math.floor(Math.random()*it.variantes.length)]} : null;
 const instance = it => it.generateur || it.variantes ? variante(it, tirage(it)) : it;
 
@@ -786,6 +792,7 @@ function corrigeDe(x, v){
 }
 function lienSignaler(id){ return `<button type="button" class="lien signaler" data-signaler="${esc(id)}">⚑ Signaler une erreur</button>`; }
 L.addEventListener("click", e => { const b = e.target.closest("[data-signaler]"); if(b) ouvrirSignal(b.dataset.signaler); });
+L.addEventListener("change", e => { if(e.target.matches("[data-tete]")) L.querySelectorAll("[data-tete]").forEach(x => { x.checked = tete(e.target.checked); }); });
 
 /* ---------- signalement ---------- */
 /* Relevé de ce que le joueur a vu et tapé, par item, pour joindre l'énoncé et SA réponse au signalement.
@@ -1538,6 +1545,7 @@ function panneauQuiz(){
   const noms = quizNoms(); if(!noms.length) return "";
   return noms.map((nom, k) => { const ch = quizChoix(nom), cs = quizChaps(nom), n = quizItems(nom).length;
     return `<section class="fenetre ex-quiz" data-titre="quiz.exe"><div class="eq-t"><b>${esc(nom)}</b><span class="vide-txt">Questions type de l'éval (QCM et réponses courtes), valeurs tirées à chaque fois. La notion de chaque question est affichée.</span></div>
+      ${EXT.tete ? `<label class="p-option"><input type="checkbox" role="switch" data-tete ${tete() ? "checked" : ""}><span class="p-switch" aria-hidden="true"></span>Faisable de tête : valeurs rondes, calculs du niveau de l'éval (sinon, calculatrice)</label>` : ""}
       <span class="puces"><button type="button" class="${!ch.size ? "on" : ""}" data-m="qch" data-q="${k}" data-id="">Tous les chapitres</button>${cs.map(c => `<button type="button" class="${ch.has(c.id) ? "on" : ""}" data-m="qch" data-q="${k}" data-id="${esc(c.id)}">Ch. ${esc(String(c.ordre ?? 0))} · ${esc(c.titre || c.id)}</button>`).join("")}</span>
       <div class="actions"><button type="button" class="btn plein" data-m="qgo" data-q="${k}" ${n ? "" : "disabled"}>Lancer · ${n} question${n > 1 ? "s" : ""} ›</button></div></section>`; }).join("");
 }
@@ -1848,7 +1856,7 @@ if(!mod){
 }
 if(mod.ext){   /* extension du module : modèles de schémas, générateurs de variantes, labos */
   await new Promise(res => { const sc = document.createElement("script"); sc.src = `modules/${mod.id}.js`; sc.onload = sc.onerror = res; document.head.appendChild(sc); });
-  const x = window.EXT_MODULE || {}; ["schemas","generateurs","labos"].forEach(k => Object.assign(EXT[k], x[k] || {}));
+  const x = window.EXT_MODULE || {}; ["schemas","generateurs","labos"].forEach(k => Object.assign(EXT[k], x[k] || {})); EXT.tete = !!x.tete;
 }
 const chs = await Promise.all((mod.chapitres || []).map(ch => fetch(`banques/${mod.id}/${ch}.json`, {cache:"no-cache"}).then(r => r.ok ? r.json() : null).catch(() => null)));
 S.chapitres = chs.filter(Boolean).sort((a, b) => (a.ordre ?? 0) - (b.ordre ?? 0));

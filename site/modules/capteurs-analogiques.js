@@ -198,14 +198,16 @@ const SORTIES_E = ["une tension", "un courant", "une fréquence", "un niveau log
 /* tirage d'une caractéristique : (0 ; y0) → (x1 ; y1) */
 /* pente « ronde » (2 chiffres significatifs au plus) : calculable de tête */
 const rond = x => Math.abs(+x.toPrecision(2) - x) < 1e-9*Math.abs(x);
-function caracTirage(){
+function caracTirage(tete = true){
   let m, s, x1, y1, y0, S;
-  do { m = rnd(MESURANDES); s = rnd(SORTIES); x1 = rnd(m.xs); y1 = rnd(s.ys); y0 = Math.random() < 0.5 ? 0 : +(y1*rnd([0.1,0.2,0.25])).toPrecision(2); S = (y1 - y0)/x1; } while(!rond(S));
+  do { m = rnd(MESURANDES); s = rnd(SORTIES); x1 = rnd(m.xs); y1 = rnd(s.ys); y0 = Math.random() < 0.5 ? 0 : +(y1*rnd([0.1,0.2,0.25])).toPrecision(2); S = (y1 - y0)/x1; } while(tete && !rond(S));
   return {m, s, x1, y1, y0, S, us:`${s.u}/${m.u}`, ui:`${m.u}/${s.u}`,
     sch:{X1:String(x1), Y1:nb(y1,2), Y0:y0 ? nb(y0,2) : "", LX:`${m.sym} (${m.u})`, LY:`${s.sym} (${s.u})`}};
 }
-/* CAN : quantum « rond » → V_max = q × 2^N (ex. 10 bits, 4,096 V → q = 4 mV) : tout se fait de tête */
-const QN = {3:[0.25,0.5,1], 4:[0.125,0.25,0.5], 5:[0.1,0.25], 8:[0.005,0.01,0.02,0.04], 10:[0.001,0.002,0.004,0.005,0.01], 12:[0.0005,0.001,0.002]};
+/* CAN, interrupteur « faisable de tête » (o.tete, par défaut activé) :
+   - activé : quantum « rond » → V_max = q × 2^N (ex. 10 bits, 4,096 V → q = 4 mV), ou niveau Quiz 1 (5 V sur 3 ou 4 bits : 0,625 V, 0,3125 V)
+   - désactivé (o.tete === false) : V_max quelconque, calculs à la calculatrice */
+const QN = {3:[0.25,0.5,0.625,1], 4:[0.125,0.25,0.3125,0.5], 5:[0.1,0.25], 8:[0.005,0.01,0.02,0.04], 10:[0.001,0.002,0.004,0.005,0.01], 12:[0.0005,0.001,0.002]};
 const canRond = (Ns, qs) => { const N = rnd(Ns), q = rnd(qs ? QN[N].filter(x => qs.includes(x)) : QN[N]); return {N, q, Vm:+(q*2**N).toFixed(4)}; };
 const generateurs = {
   /* Quiz 1 · Q1 / Q2 : exemples de signaux d'entrée / de sortie */
@@ -214,18 +216,18 @@ const generateurs = {
   "cap-sorties"(){ const b = melange(SORTIES_E).slice(0, 3), l = melange(ENTREES_P).slice(0, 3);
     return {vals:{C0:b[0], C1:b[1], C2:b[2], C3:l[0], C4:l[1], C5:l[2]}}; },
   /* Quiz 1 · Q3a : mesurande lu sur la caractéristique */
-  "cap-mesurande"(){ const c = caracTirage(), autre = rnd(MESURANDES.filter(x => x !== c.m));
+  "cap-mesurande"(o = {}){ const c = caracTirage(o.tete !== false), autre = rnd(MESURANDES.filter(x => x !== c.m));
     return {vals:qcmVals(c.m.nom, [`${c.s.nom} ${c.s.sym}`, "la sensibilité du capteur", autre.nom], Object.assign({SORT:`${c.s.nom} ${c.s.sym}`, SYM:c.m.sym}, c.sch))}; },
   /* Quiz 1 · Q3b : sensibilité = pente, avec unités */
-  "cap-sensib"(){ let c, bon, ls;
-    do { c = caracTirage(); bon = `${s3(c.S)} ${c.us}`;
+  "cap-sensib"(o = {}){ let c, bon, ls;
+    do { c = caracTirage(o.tete !== false); bon = `${s3(c.S)} ${c.us}`;
       ls = leurres(bon, [`${s3(c.S)} ${c.ui}`, `${s3(1/c.S)} ${c.ui}`, c.y0 ? `${s3(c.y1/c.x1)} ${c.us}` : `${s3(1/c.S)} ${c.us}`, `${s3(c.S*10)} ${c.us}`]);
     } while(ls.length < 3);
     const DY = nb(c.y1 - c.y0, 2), calc = c.y0 ? `\\dfrac{${nt(c.y1,2)} - ${nt(c.y0,2)}}{${c.x1} - 0}` : `\\dfrac{${nt(c.y1,2)} - 0}{${c.x1} - 0}`;
     return {vals:qcmVals(bon, ls, Object.assign({CALC:calc, SN:String(+c.S.toPrecision(4)), ST:s3(c.S).replace(",", "{,}"), US:c.us, DY, PIEGE:c.y0 ? ` Attention à l'offset : la droite part de ${nb(c.y0,2)} ${c.s.u}, pas de 0.` : ""}, c.sch))}; },
   /* sortie pour un mesurande donné (fonction de transfert lue sur le graphe) */
-  "cap-valeur"(){ let c, xq, bon, ls, y;
-    do { c = caracTirage(); xq = c.x1*rnd([0.2,0.4,0.5,0.6,0.8]); y = c.y0 + c.S*xq; bon = `${s3(y)} ${c.s.u}`;
+  "cap-valeur"(o = {}){ let c, xq, bon, ls, y;
+    do { c = caracTirage(o.tete !== false); xq = c.x1*rnd([0.2,0.4,0.5,0.6,0.8]); y = c.y0 + c.S*xq; bon = `${s3(y)} ${c.s.u}`;
       ls = leurres(bon, [c.y0 ? `${s3(c.S*xq)} ${c.s.u}` : null, `${s3(xq/c.S)} ${c.s.u}`, `${s3(c.y1 - c.S*xq)} ${c.s.u}`, `${s3(c.y0 + c.S*xq*2)} ${c.s.u}`, `${s3(y*10)} ${c.s.u}`]);
     } while(ls.length < 3);
     return {vals:qcmVals(bon, ls, Object.assign({XQ:s3(xq), XQT:s3(xq).replace(",", "{,}"), ST:s3(c.S).replace(",", "{,}"), Y0T:nt(c.y0,2), YT:s3(y).replace(",", "{,}"), UM:c.m.u, US:c.s.u, SYM:c.m.sym, SS:c.s.sym}, c.sch))}; },
@@ -241,22 +243,26 @@ const generateurs = {
     const ks = melange([0,1,2,3,4,5,6,7]), c = [rv, parseInt(flip(b, ks[0]), 2), parseInt(flip(b, ks[1]), 2), n + 1, n - 1].map(String);
     const p = pw2(n); return {vals:qcmVals(String(n), leurres(String(n), c), {B:nib(b), PUIS:p.map(k => `2^{${k}}`).join(" + "), SOMME:p.map(k => 2**k).join(" + ")})}; },
   /* Quiz 1 · Q7 : quantum */
-  "can-q-qcm"(){ let N, Vm, q, bon, ls;
-    do { ({N, q, Vm} = canRond([3,4,5,8,10])); bon = f(q, "V");
+  "can-q-qcm"(o = {}){ let N, Vm, q, bon, ls;
+    do { if(o.tete === false){ N = rnd([3,4,5,8,10]); Vm = rnd([2,4,5,8,10]); q = Vm/2**N; } else ({N, q, Vm} = canRond([3,4,5,8,10])); bon = f(q, "V");
       ls = leurres(bon, [f(Vm/2**(N-1), "V"), f(2**N/Vm, "V"), f(2**(N+1)/Vm, "V"), f(Vm/N, "V"), f(Vm/2**(N+1), "V")]);
     } while(ls.length < 3);
     return {vals:qcmVals(bon, ls, {N:String(N), VM:nt(Vm,3), NC:String(2**N), QT:t(q, "V")})}; },
   /* Quiz 1 · Q5 : code binaire → tension d'entrée */
-  "can-tension-qcm"(){ let N, Vmin, Vm, c, q, bon, ls;
-    do { ({N, q} = canRond([3,4], [0.25,0.5,1])); Vmin = Math.random() < 0.7 ? 0 : rnd([0.5,1]); Vm = Vmin + q*2**N; c = ent(1, 2**N - 2);
+  "can-tension-qcm"(o = {}){ let N, Vmin, Vm, c, q, bon, ls;
+    do { Vmin = Math.random() < 0.7 ? 0 : rnd([0.5,1]);
+      if(o.tete === false){ N = rnd([3,4]); Vm = rnd([4,5,8,10]); q = (Vm - Vmin)/2**N; } else { ({N, q} = canRond([3,4], [0.25,0.5,0.625,1])); Vm = Vmin + q*2**N; }
+      c = ent(1, 2**N - 2);
       const b = c.toString(2).padStart(N, "0"), rv = parseInt(b.split("").reverse().join(""), 2); bon = f(Vmin + c*q, "V");
       ls = leurres(bon, [f(Vmin + (c+1)*q, "V"), f(c*q, "V"), f(Vmin + c*(Vm - Vmin)/(2**N - 1), "V"), f(Vmin + rv*q, "V"), f(Vmin + (c-1)*q, "V")]);
     } while(ls.length < 3);
     const b = c.toString(2).padStart(N, "0");
     return {vals:qcmVals(bon, ls, {N:String(N), VM:nb(Vm,1), VMIN:nb(Vmin,1), BC:b, C:String(c), NC:String(2**N), QT:t(q, "V"), UT:t(Vmin + c*q, "V"), UN:String(Math.round((Vmin + c*q)*1e4)/1e4), VMINT:nt(Vmin,1), ECH:Vmin ? `${nb(Vmin,1)} V – ${nb(Vm,1)} V` : `0 – ${nb(Vm,1)} V`})}; },
   /* tension d'entrée → code binaire (partie entière nettement sous ,5 : troncature et arrondi donnent le même code) */
-  "can-code-qcm"(){ let N, Vm, q, c, U, r, b, ls;
-    do { ({N, q, Vm} = canRond([3,4,4,8], [0.25,0.5,1,0.01,0.02])); c = ent(1, 2**N - 2); U = +((c + rnd([0.2,0.4]))*q).toFixed(4); r = +(U/q).toFixed(6);
+  "can-code-qcm"(o = {}){ let N, Vm, q, c, U, r, b, ls;
+    do { if(o.tete === false){ N = rnd([3,4,4,8]); Vm = rnd([4,5,8,10]); q = Vm/2**N; c = ent(1, 2**N - 2); U = Math.round((c + 0.1 + Math.random()*0.3)*q*100)/100; }
+      else { ({N, q, Vm} = canRond([3,4,4,8], [0.25,0.5,0.625,1,0.01,0.02])); c = ent(1, 2**N - 2); U = +((c + rnd([0.2,0.4]))*q).toFixed(4); }
+      r = +(U/q).toFixed(6);
       b = Math.floor(r).toString(2).padStart(N, "0");
     } while(Math.floor(r) !== c || r - c > 0.45);
     const rv = b.split("").reverse().join(""), cb = k => k >= 0 && k < 2**N ? k.toString(2).padStart(N, "0") : null;
@@ -268,7 +274,7 @@ const generateurs = {
   "bin-octet"(){ const n = ent(1, 255), b = n.toString(2).padStart(8, "0"); return {vals:{B8:b, MSB:b[0], LSB:b[7], N:String(n)}}; },
   "periode"(){ const T = rnd([0.5,1,2,2.5,4,5,10,20,25,50]); return {vals:{T:nb(T), F:nb(1000/T, 2), FN:String(Math.round(1e5/T)/100), FT:nt(1000/T, 2), TT:nt(T)}}; },
   "frequence"(){ const F = rnd([50,100,200,250,400,500,1000,2000,5000]); return {vals:{F:String(F), T:nb(1000/F, 3), TN:String(1/F), TT:nt(1000/F, 3)}}; },
-  "pwm-moy"(){ const U = rnd([5,10,12]), a = rnd([0.1,0.2,0.25,0.4,0.5,0.6,0.75,0.8]), O = 0; return {vals:{U:nb(U,1), UT:nt(U,1), A:nb(a,2), AT:nt(a,2), M:nb(a*U,3), MN:String(Math.round(a*U*1000)/1000), MT:nt(a*U,3), APC:String(Math.round(a*100))}}; },
+  "pwm-moy"(o = {}){ const U = rnd(o.tete === false ? [3.3,5,10,12] : [5,10,12]), a = rnd([0.1,0.2,0.25,0.4,0.5,0.6,0.75,0.8]), O = 0; return {vals:{U:nb(U,1), UT:nt(U,1), A:nb(a,2), AT:nt(a,2), M:nb(a*U,3), MN:String(Math.round(a*U*1000)/1000), MT:nt(a*U,3), APC:String(Math.round(a*100))}}; },
   "pwm": () => { const T = rnd([1,2,4,5,10,20]), a = rnd([0.1,0.2,0.25,0.4,0.5,0.6,0.75,0.8]), U = rnd([5,10,12]), th = a*T;
     return {vals:{T:nb(T), TH:nb(th), U:String(U)}, rep:[a, 1000/T, a*U], corr:[
       `$\\alpha = \\dfrac{t_h}{T} = \\dfrac{${nt(th)}}{${nt(T)}} = \\mathbf{${nt(a,2)}}$ (soit ${Math.round(a*100)} %)`,
@@ -296,10 +302,12 @@ const generateurs = {
       "$S = \\dfrac{dR}{dT} = a R_0 = 0{,}00385 \\times 100 = \\mathbf{0{,}385\\ \\Omega/°\\text{C}}$ : constante, le capteur est linéaire.",
       `$R(${T}) = R_0(1 + aT) = 100 \\times (1 + 0{,}00385 \\times ${T}) = \\mathbf{${nt(R,2)}\\ \\Omega}$`]}; },
   /* CAN */
-  "can-q"(){ const {N, q, Vm} = canRond([3,4,8,10,12]);
+  "can-q"(o = {}){ const {N, q, Vm} = o.tete === false ? (({N, Vm}) => ({N, Vm, q:Vm/2**N}))({N:rnd([3,4,8,10,12]), Vm:rnd([1,2,4,5,8,10])}) : canRond([3,4,8,10,12]);
     /* tolérance : une unité sur le 2e chiffre significatif (0,00024 ou 0,019 acceptés) */
     return {vals:{N:String(N), VM:nt(Vm,3), Q:String(q), QT:t(q,"V"), NC:String(2**N), TOL:"1e" + (Math.floor(Math.log10(q)) - 1)}}; },
-  "can-code"(){ const {N, q, Vm} = canRond([8,10], [0.005,0.01,0.02]), U = +((ent(5, 2**N - 6) + rnd([0.2,0.4,0.6,0.8]))*q).toFixed(4), r = +(U/q).toFixed(6);
+  "can-code"(o = {}){ let N, q, Vm, U, r;
+    if(o.tete === false){ N = rnd([8,10]); Vm = rnd([5,10]); q = Vm/2**N; do { U = ent(5, Vm*100 - 5)/100; r = U/q; } while(Math.abs(r - Math.round(r)) < 0.05); }
+    else { ({N, q, Vm} = canRond([8,10], [0.005,0.01,0.02])); U = +((ent(5, 2**N - 6) + rnd([0.2,0.4,0.6,0.8]))*q).toFixed(4); r = +(U/q).toFixed(6); }
     const cf = Math.floor(r), cr = Math.round(r);
     return {vals:{N:String(N), VM:nt(Vm,3), U:nt(U,3), UT:nt(U,3), Q:t(q,"V"), QT:nt(q*1000,3), R:nb(r,2), RT:nt(r,2), CF:String(cf), CR:String(cr), NC:String(2**N)}}; },
   "can-exo"(){ const N = rnd([8,10]), Vm = rnd([5,10]), q = Vm/2**N; let U, r; do { U = ent(5, Vm*100 - 5)/100; r = U/q; } while(Math.abs(r - Math.round(r)) < 0.05);
@@ -315,7 +323,7 @@ const generateurs = {
       `$${c} \\times q = ${c} \\times ${nt(q*1000,3)}\\ \\text{mV} = \\mathbf{${t(c*q,"V")}}$ : c'est l'écart au-dessus de $V_{min}$`,
       `$U_e = V_{min} + ${c}\\,q = ${nt(Vmin,1)} + ${nt(c*q,3)} = \\mathbf{${t(U,"V")}}$`]}; },
   /* code multiple de 128 : 128 × 5/1024 = 0,625 V, calculable de tête */
-  "ard-volts"(){ const c = 128*ent(1, 7), v = c*5/1024; return {vals:{C:String(c), V:String(Math.round(v*1000)/1000), VT:nt(v,3)}}; },
+  "ard-volts"(o = {}){ const c = o.tete === false ? ent(50, 1000) : 128*ent(1, 7), v = c*5/1024; return {vals:{C:String(c), V:String(Math.round(v*1000)/1000), VT:nt(v,3)}}; },
   /* AOP */
   "gain-inv"(){ const R1 = rnd([1,2,2.2,4.7,5,10]), k = rnd([2,3,4,5,10]), R2 = Math.round(R1*k*10)/10; return {vals:{R1:nb(R1,1), R2:nb(R2,1), G:String(-k)}}; },
   "gain-ninv"(){ const R1 = rnd([1,2,5,10]), k = rnd([1,2,3,4,9]), R2 = R1*k; return {vals:{R1:String(R1), R2:String(R2), G:String(1+k)}}; },
@@ -339,7 +347,7 @@ const generateurs = {
       `$A_v = A_1 A_2 A_3 = 1 \\times (${-k}) \\times ${1 + k} = \\mathbf{${-k*(1 + k)}}$`]}; },
   /* filtres */
   /* RC « rond » (1, 2 ou 5 × 10^k) : f_c ≈ 0,16/RC de tête */
-  "fc"(){ let R, C; do { R = rnd([1,2,5,10,20,50,100]); C = rnd([10,100,1000]); } while(R*C < 100 || R*C > 1e4); const fc = 1/(2*Math.PI*R*1e3*C*1e-9);
+  "fc"(o = {}){ let R, C; if(o.tete === false){ R = rnd([1,2.2,4.7,10,22,47]); C = rnd([10,22,47,100,220]); } else do { R = rnd([1,2,5,10,20,50,100]); C = rnd([10,100,1000]); } while(R*C < 100 || R*C > 1e4); const fc = 1/(2*Math.PI*R*1e3*C*1e-9);
     return {vals:{R:nb(R,1), C:String(C), FC:String(Math.round(fc)), FCT:t(fc,"Hz")}}; },
   "db"(){ const G = rnd([0.1,0.5,0.707,1,2,5,10,100]), d = 20*Math.log10(G); return {vals:{G:nb(G,3), DB:String(Math.round(d*10)/10)}}; },
   "passe-bas": () => { const R = rnd([1,2,5,10]), k = rnd([1,2,5,10]), Rp = R*k, C = rnd([10,22,47,100]), fc = 1/(2*Math.PI*Rp*1e3*C*1e-9);
@@ -484,5 +492,6 @@ const labos = {
   }
 };
 
-window.EXT_MODULE = {schemas, generateurs, labos};
+/* tete : les générateurs acceptent {tete} → interrupteur « Faisable de tête » affiché dans quiz.exe */
+window.EXT_MODULE = {schemas, generateurs, labos, tete:true};
 })();

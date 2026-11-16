@@ -1434,7 +1434,7 @@ body.voile-on .notion:has(.check-carte.actif)>*:not(.check-carte.actif):not(.apr
 /* Exos : menu des notions, modes */
 .ex-flux{max-width:740px;margin:0 auto;display:grid;gap:12px}
 .ex-liste{display:grid;grid-template-columns:minmax(0,1fr);gap:14px}
-.ex-quiz{padding:44px 16px 16px;display:grid;gap:12px;margin:0 0 18px;border-color:var(--m-ac)}.ex-quiz .eq-t{display:grid;gap:4px}.ex-quiz .eq-t b{color:var(--m-ac)}.ex-quiz .actions{justify-content:flex-end}
+.ex-quiz{padding:44px 16px 16px;display:grid;gap:12px;margin:0 0 18px;border-color:var(--m-ac)}.ex-quiz .eq-t{display:grid;gap:4px}.ex-quiz .eq-t b{color:var(--m-ac)}.ex-quiz .actions{justify-content:flex-end}.ex-quiz .p-option{margin:0}.ex-quiz .p-option input:checked+.p-switch{background:var(--m-ac);border-color:var(--m-ac)}
 .ex-ch{padding-top:44px;display:grid;gap:2px}
 .ex-chb,.ex-n{all:unset;box-sizing:border-box;cursor:pointer;display:grid;grid-template-columns:22px 1fr auto;gap:12px;align-items:center;width:100%;padding:11px 12px;border-radius:9px;color:var(--gris)}
 .ex-chb{grid-template-columns:22px 1fr;color:var(--m-ac)}
