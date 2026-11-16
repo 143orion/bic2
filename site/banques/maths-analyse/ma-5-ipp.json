@@ -1,0 +1,1026 @@
+{
+ "id": "ma-5-ipp",
+ "module": "maths-analyse",
+ "titre": "Intégration par parties",
+ "ordre": 5,
+ "sources": [
+  "Poly Intégration § 4.3, 6.2, 7.1",
+  "DST 2 variante B ex. 5",
+  "Rattrapage (mars 2026) ex. 4",
+  "Exos prép CC3 (intégrales par parties)",
+  "Notes du prof (groupes 3.4, 2.4)"
+ ],
+ "tldr": [
+  "$\\int uv' = uv - \\int u'v$ · sur $[a, b]$ : $[uv]_a^b - \\int_a^b u'v$",
+  "$u$ = ce qui se simplifie en dérivant (polynôme, $\\ln$) · $v'$ = ce qui s'intègre ($e^{ax}$, $\\sin$, $\\cos$, $1$)",
+  "$v' = e^{-kx} \\Rightarrow v = -\\frac1k e^{-kx}$ (signe !) · $e^0 = 1$",
+  "$\\int_0^1 xe^{-kx}dx = \\frac{1 - (k+1)e^{-k}}{k^2}$",
+  "Degré $n$ : $n$ IPP · $\\int e^x\\cos x$ : deux IPP puis $2I = e^x(\\cos x + \\sin x)$",
+  "$\\int\\ln x = x\\ln x - x + C$ · $\\int x\\ln x = \\frac{x^2}{2}\\ln x - \\frac{x^2}{4} + C$"
+ ],
+ "notions": [
+  {
+   "id": "5.1",
+   "titre": "La formule",
+   "corps": "L'**intégration par parties** (IPP) sert à intégrer un **produit**. Elle vient de la dérivée d'un produit ({{0.5}}) : $(uv)' = u'v + uv'$. En intégrant et en réorganisant :\n$$\\int u(x)\\,v'(x)\\,dx = u(x)\\,v(x) - \\int u'(x)\\,v(x)\\,dx$$\n\nIl faut $u$ et $v$ dérivables, de dérivées continues.\n\n> **Exemple** : $\\int x e^x\\,dx$ avec $u = x$, $v' = e^x$, donc $u' = 1$, $v = e^x$ :\n> $\\int x e^x\\,dx = x e^x - \\int 1\\cdot e^x\\,dx = x e^x - e^x + C$.\n\n> **Astuce** : écris toujours les 4 morceaux en colonne avant de te lancer : $u$, $u'$, $v'$, $v$.",
+   "rec": "$(uv)' = u'v + uv'$ ({{0.5}}).",
+   "alt": "L'IPP échange une intégrale difficile ($\\int uv'$) contre une plus facile ($\\int u'v$). Elle marche quand dériver $u$ le simplifie (un polynôme qui perd un degré) et que $v'$ s'intègre sans difficulté.",
+   "pre": [
+    "4.2"
+   ],
+   "ecrans": [
+    {
+     "titre": "D'où vient la formule",
+     "texte": "$(uv)' = u'v + uv'$, donc $uv' = (uv)' - u'v$."
+    },
+    {
+     "titre": "La formule",
+     "texte": "$\\int uv' = uv - \\int u'v$."
+    },
+    {
+     "titre": "Les 4 morceaux",
+     "texte": "On écrit $u$, $u'$, $v'$, $v$ avant de calculer."
+    }
+   ],
+   "check": {
+    "enonce": "$\\int u\\,v'\\,dx = $…",
+    "choix": [
+     "$uv - \\int u'v\\,dx$",
+     "$uv + \\int u'v\\,dx$",
+     "$u'v' - \\int uv\\,dx$",
+     "$\\int u\\,dx \\times \\int v'\\,dx$"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "Formule d'intégration par parties."
+   }
+  },
+  {
+   "id": "5.2",
+   "titre": "Choisir $u$ et $v'$",
+   "corps": "Le bon choix rend la nouvelle intégrale **plus simple**. Règle pratique :\n- $u$ : ce qui devient plus simple quand on le **dérive** (un polynôme, $\\ln x$, $\\arctan x$) ;\n- $v'$ : ce qu'on sait **intégrer** facilement ($e^{ax}$, $\\sin$, $\\cos$, ou $1$).\n\n| produit | $u$ | $v'$ |\n|---|---|---|\n| polynôme × $e^{ax}$ | polynôme | $e^{ax}$ |\n| polynôme × $\\sin$ ou $\\cos$ | polynôme | $\\sin$ / $\\cos$ |\n| polynôme × $\\ln x$ | $\\ln x$ | polynôme |\n| $\\ln x$ seul | $\\ln x$ | $1$ |\n\n> **Piège** : choisir $u = e^{x}$ et $v' = x$ fait apparaître $\\frac{x^2}{2}$ : la nouvelle intégrale est **pire** que la première.",
+   "rec": "La formule ({{5.1}}).",
+   "alt": "Demande-toi : « qu'est-ce qui disparaît si je le dérive ? ». Un $x$ devient $1$, un $\\ln x$ devient $\\frac1x$ (qui se simplifie avec le $x$ de $v$). C'est ça, $u$.",
+   "pre": [
+    "5.1"
+   ],
+   "ecrans": [
+    {
+     "titre": "La règle",
+     "texte": "$u$ se simplifie en dérivant, $v'$ s'intègre facilement."
+    },
+    {
+     "titre": "Le cas du ln",
+     "texte": "$\\ln x$ ne s'intègre pas directement : il est toujours $u$."
+    },
+    {
+     "titre": "Le mauvais choix",
+     "texte": "$u = e^x$, $v' = x$ : on tombe sur $\\int \\frac{x^2}{2}e^x$, pire qu'avant."
+    }
+   ],
+   "check": {
+    "enonce": "Pour $\\int x^2\\ln x\\,dx$, on prend…",
+    "choix": [
+     "$u = \\ln x$, $v' = x^2$",
+     "$u = x^2$, $v' = \\ln x$",
+     "$u = x^2\\ln x$, $v' = 1$",
+     "$u = x$, $v' = x\\ln x$"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$\\ln x$ se dérive en $\\frac1x$ mais ne s'intègre pas facilement : c'est $u$."
+   }
+  },
+  {
+   "id": "5.3",
+   "titre": "IPP sur une intégrale définie",
+   "corps": "Sur une intégrale définie, le terme tout intégré est pris entre les bornes :\n$$\\int_a^b u\\,v'\\,dx = \\big[u\\,v\\big]_a^b - \\int_a^b u'\\,v\\,dx$$\n\n> **Exemple** (DST 2, ex. 5) : $I = \\int_0^1 x e^{-4x}\\,dx$, $u = x$, $v' = e^{-4x}$, $u' = 1$, $v = -\\frac14 e^{-4x}$.\n> $\\big[uv\\big]_0^1 = -\\frac14 e^{-4} - 0$ et $-\\int_0^1 u'v = \\frac14\\int_0^1 e^{-4x}dx = \\frac14\\cdot\\frac{1 - e^{-4}}{4} = \\frac{1 - e^{-4}}{16}$.\n> $$I = -\\frac{e^{-4}}{4} + \\frac{1 - e^{-4}}{16} = \\frac{1 - 5e^{-4}}{16}$$\n\n> **Piège** : le signe de $v$ quand $v' = e^{-kx}$ : $v = -\\frac{1}{k}e^{-kx}$. Et en $0$ : $e^0 = 1$, pas $0$.",
+   "rec": "$\\big[F\\big]_a^b = F(b) - F(a)$ ({{4.3}}).",
+   "alt": "C'est la même formule que {{5.1}}, sauf que $uv$ est évalué tout de suite entre $a$ et $b$. Tu peux aussi chercher une primitive complète d'abord, puis évaluer : les deux marchent.",
+   "pre": [
+    "5.2",
+    "4.3"
+   ],
+   "ecrans": [
+    {
+     "titre": "La formule",
+     "texte": "$\\int_a^b uv' = [uv]_a^b - \\int_a^b u'v$."
+    },
+    {
+     "titre": "Le terme tout intégré",
+     "texte": "$[uv]_0^1 = u(1)v(1) - u(0)v(0)$ ; ici $u(0) = 0$."
+    },
+    {
+     "titre": "Le reste",
+     "texte": "$-\\int_0^1 u'v$ : une intégrale simple."
+    },
+    {
+     "titre": "Assembler",
+     "texte": "Même dénominateur, puis on encadre."
+    }
+   ],
+   "check": {
+    "enonce": "$\\int_0^\\pi x\\sin x\\,dx$ vaut…",
+    "choix": [
+     "$\\pi$",
+     "$0$",
+     "$-pi$",
+     "$2$"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$u = x$, $v = -\\cos x$ : $[-x\\cos x]_0^\\pi + \\int_0^\\pi\\cos x\\,dx = \\pi + 0$."
+   }
+  },
+  {
+   "id": "5.4",
+   "titre": "IPP répétée ($x^2e^x$)",
+   "corps": "Quand le polynôme est de degré 2, une IPP le fait passer au degré 1 : il faut **une deuxième IPP**.\n\n> **Exemple** : $\\int x^2 e^x\\,dx$. 1re IPP ($u = x^2$, $v' = e^x$) : $x^2 e^x - \\int 2x e^x\\,dx$.\n> 2e IPP sur $\\int 2xe^x$ ($u = 2x$) : $2xe^x - 2e^x$.\n> $$\\int x^2 e^x\\,dx = x^2e^x - 2xe^x + 2e^x + C = e^x(x^2 - 2x + 2) + C$$\n\n> **Piège** : le signe moins devant la 2e intégrale s'applique à **tout** le résultat de la 2e IPP.",
+   "rec": "$\\int xe^x = xe^x - e^x + C$ ({{5.1}}).",
+   "alt": "Chaque IPP fait baisser le degré du polynôme de 1. Degré 2 : deux IPP. Degré $n$ : $n$ IPP.",
+   "pre": [
+    "5.3"
+   ],
+   "ecrans": [
+    {
+     "titre": "1re IPP",
+     "texte": "$x^2 \\to 2x$ : il reste $\\int 2xe^x$."
+    },
+    {
+     "titre": "2e IPP",
+     "texte": "$2x \\to 2$ : il reste $\\int 2e^x$."
+    },
+    {
+     "titre": "Les signes",
+     "texte": "$x^2e^x - (2xe^x - 2e^x)$ : la parenthèse change les signes."
+    }
+   ],
+   "check": {
+    "enonce": "Combien d'IPP pour $\\int x^3e^x\\,dx$ ?",
+    "choix": [
+     "$3$",
+     "$1$",
+     "$2$",
+     "$4$"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "Chaque IPP baisse le degré de 1 : de 3 à 0."
+   }
+  },
+  {
+   "id": "5.5",
+   "titre": "IPP qui reboucle ($e^x\\cos x$)",
+   "corps": "Parfois, après deux IPP, on **retombe sur l'intégrale de départ**. On ne tourne pas en rond : on obtient une **équation** dont l'inconnue est l'intégrale.\n\n> **Exemple** : $I = \\int e^x\\cos x\\,dx$.\n> 1re IPP ($u = \\cos x$, $v' = e^x$) : $I = e^x\\cos x + \\int e^x\\sin x\\,dx$.\n> 2e IPP ($u = \\sin x$, $v' = e^x$) : $\\int e^x\\sin x\\,dx = e^x\\sin x - I$.\n> Donc $I = e^x\\cos x + e^x\\sin x - I$, d'où $2I = e^x(\\cos x + \\sin x)$ :\n> $$I = \\frac{e^x(\\cos x + \\sin x)}{2} + C$$\n\n> **Astuce** : garde le même type de choix aux deux IPP (ici $v' = e^x$ les deux fois), sinon tu défais ce que tu viens de faire.",
+   "rec": "$(\\cos x)' = -\\sin x$, $(\\sin x)' = \\cos x$ ({{0.5}}).",
+   "alt": "$\\cos$ et $\\sin$ se dérivent l'un en l'autre : au bout de deux dérivations on revient à $-\\cos$. C'est pour ça que l'intégrale de départ réapparaît.",
+   "pre": [
+    "5.4"
+   ],
+   "ecrans": [
+    {
+     "titre": "1re IPP",
+     "texte": "$I = e^x\\cos x + \\int e^x\\sin x$."
+    },
+    {
+     "titre": "2e IPP",
+     "texte": "$\\int e^x\\sin x = e^x\\sin x - I$."
+    },
+    {
+     "titre": "L'équation",
+     "texte": "$I = e^x\\cos x + e^x\\sin x - I$, donc $2I = \\dots$"
+    }
+   ],
+   "check": {
+    "enonce": "On trouve $I = A - I$. Alors $I = $…",
+    "choix": [
+     "$\\frac{A}{2}$",
+     "$A$",
+     "$0$",
+     "$2A$"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$2I = A$."
+   }
+  },
+  {
+   "id": "5.6",
+   "titre": "Logarithmes : $v' = 1$, $x\\ln x$",
+   "corps": "$\\ln x$ ne s'intègre pas « à vue », mais se dérive très bien : on le prend **toujours** comme $u$.\n\n- $\\int \\ln x\\,dx$ : astuce $v' = 1$, $v = x$ : $x\\ln x - \\int x\\cdot\\frac{1}{x}dx = x\\ln x - x + C$.\n- $\\int x\\ln x\\,dx$ : $u = \\ln x$, $v' = x$, $v = \\frac{x^2}{2}$ : $\\frac{x^2}{2}\\ln x - \\int\\frac{x}{2}dx = \\frac{x^2}{2}\\ln x - \\frac{x^2}{4} + C$.\n\n> **Exemple** (prép CC3, $I_C$) : $\\int x\\ln(4x)\\,dx$. $u = \\ln(4x)$, $u' = \\frac{4}{4x} = \\frac1x$ : même calcul, $\\frac{x^2}{2}\\ln(4x) - \\frac{x^2}{4} + C$.",
+   "rec": "$(\\ln x)' = \\frac1x$ et $(\\ln(kx))' = \\frac1x$ ({{0.5}}).",
+   "alt": "Le $\\frac1x$ de $u'$ se simplifie avec le $x$ (ou le $x^2$) de $v$ : il ne reste qu'un polynôme à intégrer.",
+   "pre": [
+    "5.2"
+   ],
+   "ecrans": [
+    {
+     "titre": "ln est toujours u",
+     "texte": "$u = \\ln x$, $u' = \\frac1x$."
+    },
+    {
+     "titre": "Astuce v' = 1",
+     "texte": "$\\int\\ln x = x\\ln x - x + C$."
+    },
+    {
+     "titre": "x ln x",
+     "texte": "$\\frac{x^2}{2}\\ln x - \\frac{x^2}{4} + C$."
+    }
+   ],
+   "check": {
+    "enonce": "$\\int\\ln x\\,dx = $…",
+    "choix": [
+     "$x\\ln x - x + C$",
+     "$\\frac1x + C$",
+     "$\\frac{(\\ln x)^2}{2} + C$",
+     "$x\\ln x + C$"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "IPP avec $v' = 1$."
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "ma5-001",
+   "type": "trous",
+   "notion": "5.1",
+   "origine": "cours",
+   "enonce": "$\\int u\\,v'\\,dx = [_] - \\int [_]\\,dx$",
+   "fragments": [
+    "$uv$",
+    "$u'v$",
+    "$uv'$",
+    "$u'v'$"
+   ],
+   "verif": {
+    "mode": "trous",
+    "attendu": [
+     "$uv$",
+     "$u'v$"
+    ]
+   },
+   "duree": 0.5,
+   "explication": "On garde $uv$, puis on retire l'intégrale de $u'v$."
+  },
+  {
+   "id": "ma5-002",
+   "type": "saisie",
+   "notion": "5.1",
+   "origine": "cours",
+   "enonce": "Donne une primitive de $x\\,e^{x}$ (avec la constante).",
+   "verif": {
+    "mode": "expr",
+    "attendu": "x e^x - e^x",
+    "var": "x",
+    "primitive": true,
+    "constante": true
+   },
+   "duree": 1,
+   "explication": "$u = x$, $v' = e^x$ : $xe^x - \\int e^x = xe^x - e^x + C$.",
+   "indices": [
+    "$u = x$, $v' = e^x$.",
+    "$xe^x - \\int e^x\\,dx$."
+   ]
+  },
+  {
+   "id": "ma5-003",
+   "type": "qcm",
+   "notion": "5.2",
+   "origine": "cours",
+   "enonce": "Pour $\\int x\\cos x\\,dx$, le bon choix est…",
+   "choix": [
+    "$u = x$, $v' = \\cos x$",
+    "$u = \\cos x$, $v' = x$",
+    "$u = x\\cos x$, $v' = 1$",
+    "pas d'IPP possible"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Dériver $x$ donne $1$ : la nouvelle intégrale est $\\int\\sin x$, immédiate."
+  },
+  {
+   "id": "ma5-004",
+   "type": "qcm-multi",
+   "notion": "5.2",
+   "origine": "cours",
+   "enonce": "Dans lesquels prend-on $u = $ le polynôme ?",
+   "choix": [
+    "$\\int x e^{-2x}dx$",
+    "$\\int (x+1)\\sin x\\,dx$",
+    "$\\int x^2 e^{x}dx$",
+    "$\\int x\\ln x\\,dx$"
+   ],
+   "verif": {
+    "attendu": [
+     0,
+     1,
+     2
+    ]
+   },
+   "duree": 0.5,
+   "explication": "Avec $\\ln$, c'est $\\ln$ qui est $u$."
+  },
+  {
+   "id": "ma5-005",
+   "type": "saisie",
+   "notion": "5.2",
+   "origine": "cours",
+   "enonce": "Donne une primitive de $x\\cos x$ (avec la constante).",
+   "verif": {
+    "mode": "expr",
+    "attendu": "x sin(x) + cos(x)",
+    "var": "x",
+    "primitive": true,
+    "constante": true
+   },
+   "duree": 1,
+   "explication": "$u = x$, $v = \\sin x$ : $x\\sin x - \\int\\sin x = x\\sin x + \\cos x + C$.",
+   "indices": [
+    "$u = x$, $v' = \\cos x$, $v = \\sin x$.",
+    "$\\int\\sin x\\,dx = -\\cos x$."
+   ]
+  },
+  {
+   "id": "ma5-006",
+   "type": "saisie",
+   "notion": "5.3",
+   "origine": "cours",
+   "enonce": "Calcule $\\displaystyle\\int_0^1 x\\,e^{x}\\,dx$.",
+   "verif": {
+    "mode": "expr",
+    "attendu": "1"
+   },
+   "duree": 1.5,
+   "explication": "$\\big[xe^x - e^x\\big]_0^1 = (e - e) - (0 - 1) = 1$.",
+   "indices": [
+    "Primitive : $xe^x - e^x$.",
+    "En $0$ : $0 - e^0 = -1$."
+   ]
+  },
+  {
+   "id": "ma5-007",
+   "type": "saisie",
+   "notion": "5.3",
+   "origine": "cours",
+   "enonce": "Calcule $\\displaystyle\\int_0^{\\pi} x\\sin x\\,dx$.",
+   "verif": {
+    "mode": "expr",
+    "attendu": "pi"
+   },
+   "duree": 1.5,
+   "explication": "$u = x$, $v = -\\cos x$ : $\\big[-x\\cos x\\big]_0^\\pi + \\int_0^\\pi\\cos x\\,dx = \\pi + 0 = \\pi$."
+  },
+  {
+   "id": "ma5-008",
+   "type": "saisie",
+   "notion": "5.4",
+   "origine": "cours",
+   "enonce": "Donne une primitive de $x^2e^x$ (avec la constante).",
+   "verif": {
+    "mode": "expr",
+    "attendu": "e^x (x^2 - 2x + 2)",
+    "var": "x",
+    "primitive": true,
+    "constante": true
+   },
+   "duree": 2,
+   "explication": "Deux IPP : $x^2e^x - 2xe^x + 2e^x + C$.",
+   "indices": [
+    "1re IPP : $x^2e^x - \\int 2xe^x$.",
+    "$\\int 2xe^x = 2xe^x - 2e^x$."
+   ]
+  },
+  {
+   "id": "ma5-009",
+   "type": "saisie",
+   "notion": "5.5",
+   "origine": "cours",
+   "enonce": "Donne une primitive de $e^{x}\\cos x$ (avec la constante).",
+   "verif": {
+    "mode": "expr",
+    "attendu": "e^x (cos(x) + sin(x))/2",
+    "var": "x",
+    "primitive": true,
+    "constante": true
+   },
+   "duree": 2.5,
+   "explication": "Deux IPP puis $2I = e^x(\\cos x + \\sin x)$ : $I = \\frac{e^x(\\cos x + \\sin x)}{2} + C$.",
+   "indices": [
+    "Deux IPP avec $v' = e^x$ à chaque fois.",
+    "Tu obtiens $I = e^x\\cos x + e^x\\sin x - I$."
+   ]
+  },
+  {
+   "id": "ma5-010",
+   "type": "saisie",
+   "notion": "5.6",
+   "origine": "cours",
+   "enonce": "Donne une primitive de $\\ln x$ (avec la constante).",
+   "verif": {
+    "mode": "expr",
+    "attendu": "x ln(x) - x",
+    "var": "x",
+    "primitive": true,
+    "constante": true
+   },
+   "duree": 1,
+   "explication": "$u = \\ln x$, $v' = 1$ : $x\\ln x - x + C$."
+  },
+  {
+   "id": "ma5-011",
+   "type": "saisie",
+   "notion": "5.6",
+   "origine": "cours",
+   "enonce": "Calcule $\\displaystyle\\int_1^{e}\\ln x\\,dx$.",
+   "verif": {
+    "mode": "expr",
+    "attendu": "1",
+    "interdit": [
+     {
+      "motif": "ln",
+      "msg": "Simplifie : $\\ln e = 1$, $\\ln 1 = 0$."
+     }
+    ]
+   },
+   "duree": 1.5,
+   "explication": "$\\big[x\\ln x - x\\big]_1^e = (e - e) - (0 - 1) = 1$."
+  },
+  {
+   "id": "ma5-101",
+   "type": "exo",
+   "notion": "5.3",
+   "origine": "cours",
+   "titre": "IPP sur une intégrale définie (DST 2, ex. 5 · rattrapage, ex. 4)",
+   "enonce": "Le but : calculer une intégrale définie par parties, comme à l'ex. 5 du DST 2 ($k = 4$) et à l'ex. 4 du rattrapage ($k = 5$).\n\nCalculer par parties : $$I = \\int_0^1 x\\,e^{-[[K]]x}\\,dx$$\nRappel : $\\int_a^b u\\,v'\\,dx = \\big[u\\,v\\big]_a^b - \\int_a^b u'\\,v\\,dx$.",
+   "guidage": "1. Choisir $u$ et $v'$.\n2. Calculer $u'$ et $v$.\n3. Le terme tout intégré $[uv]_0^1$.\n4. L'intégrale qui reste.\n5. Assembler et simplifier.",
+   "duree": 8,
+   "etapes": [
+    {
+     "consigne": "L'IPP sert à intégrer un **produit**. Prends pour $u$ le facteur qui devient plus simple quand on le dérive. Écris $u$.",
+     "question": "$u$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "x",
+      "var": "x"
+     },
+     "corrige": "$u = x$ (et $v' = e^{-[[K]]x}$) : dériver $x$ donne $1$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Cherche une primitive de $v' = e^{-[[K]]x}$ : $\\int e^{ax}dx = \\frac1a e^{ax}$, ici $a = -[[K]]$. Pas besoin de $+C$ pour $v$.",
+     "question": "$v$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "-e^(-[[K]] x)/[[K]]",
+      "var": "x",
+      "primitive": true
+     },
+     "corrige": "$v = -\\frac{1}{[[K]]}e^{-[[K]]x}$ (on divise par $-[[K]]$ : attention au signe).",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Le terme tout intégré : $[uv]_0^1 = u(1)v(1) - u(0)v(0)$. En $0$, $u(0) = 0$.",
+     "question": "$\\left[uv\\right]_0^1$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "-e^(-[[K]])/[[K]]"
+     },
+     "corrige": "$\\left[-\\frac{x}{[[K]]}e^{-[[K]]x}\\right]_0^1 = -\\frac{e^{-[[K]]}}{[[K]]}$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Le reste : $-\\int_0^1 u'v\\,dx = \\frac{1}{[[K]]}\\int_0^1 e^{-[[K]]x}\\,dx$. Calcule-le.",
+     "question": "$-\\int_0^1 u'v\\,dx$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "(1 - e^(-[[K]]))/[[K2]]"
+     },
+     "corrige": "$\\frac{1}{[[K]]}\\left[-\\frac{1}{[[K]]}e^{-[[K]]x}\\right]_0^1 = \\frac{1 - e^{-[[K]]}}{[[K2]]}$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Additionne les deux morceaux et mets tout sur le même dénominateur.",
+     "question": "$I$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "(1 - [[K1]] e^(-[[K]]))/[[K2]]"
+     },
+     "corrige": "$I = -\\frac{e^{-[[K]]}}{[[K]]} + \\frac{1 - e^{-[[K]]}}{[[K2]]} = \\boxed{\\frac{1 - [[K1]]e^{-[[K]]}}{[[K2]]}}$",
+     "indices": [
+      "$u = x$, $v = -\\frac{1}{[[K]]}e^{-[[K]]x}$.",
+      "$I = -\\frac{e^{-[[K]]}}{[[K]]} + \\frac{1 - e^{-[[K]]}}{[[K2]]}$ : mets tout sur $[[K2]]$."
+     ],
+     "duree": 3
+    }
+   ],
+   "vals": {
+    "K": "2",
+    "K1": "3",
+    "K2": "4"
+   },
+   "variantes": [
+    {
+     "K": "2",
+     "K1": "3",
+     "K2": "4"
+    },
+    {
+     "K": "5",
+     "K1": "6",
+     "K2": "25"
+    },
+    {
+     "K": "4",
+     "K1": "5",
+     "K2": "16"
+    },
+    {
+     "K": "6",
+     "K1": "7",
+     "K2": "36"
+    },
+    {
+     "K": "3",
+     "K1": "4",
+     "K2": "9"
+    }
+   ]
+  },
+  {
+   "id": "ma5-102",
+   "type": "exo",
+   "notion": "5.3",
+   "origine": "td",
+   "titre": "IPP avec un polynôme du 1er degré (prép CC3, $I_A$)",
+   "enonce": "Le but : intégrer par parties un produit (polynôme du 1er degré) × exponentielle, comme $I_A$ dans les exos de prépa du CC3 ($\\int_0^3 (2x + 1)e^{-x}dx$).\n\nCalculer $$I = \\int_0^{[[M]]}([[P]]x + [[Q]])\\,e^{-x}\\,dx$$",
+   "guidage": "1. $u = [[P]]x + [[Q]]$, $v' = e^{-x}$.\n2. $u' = [[P]]$, $v = -e^{-x}$.\n3. $[uv]_0^{[[M]]}$, puis $-\\int u'v$.\n4. Assembler.",
+   "duree": 8,
+   "etapes": [
+    {
+     "consigne": "Avec $u = [[P]]x + [[Q]]$ et $v' = e^{-x}$ : donne $v$.",
+     "question": "$v$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "-e^(-x)",
+      "var": "x",
+      "primitive": true
+     },
+     "corrige": "$v = -e^{-x}$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Calcule $\\left[uv\\right]_0^{[[M]]} = \\left[-([[P]]x + [[Q]])e^{-x}\\right]_0^{[[M]]}$.",
+     "question": "$\\left[uv\\right]_0^{[[M]]}$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "-[[UM]] e^(-[[M]]) + [[Q]]"
+     },
+     "corrige": "$-[[UM]]e^{-[[M]]} - \\left(-[[Q]]\\right) = [[Q]] - [[UM]]e^{-[[M]]}$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Le reste : $-\\int_0^{[[M]]} u'v\\,dx = [[P]]\\int_0^{[[M]]} e^{-x}\\,dx$.",
+     "question": "$-\\int u'v$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[P]] (1 - e^(-[[M]]))"
+     },
+     "corrige": "$[[P]]\\left[-e^{-x}\\right]_0^{[[M]]} = [[P]]\\left(1 - e^{-[[M]]}\\right)$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Additionne et regroupe les termes en $e^{-[[M]]}$.",
+     "question": "$I$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[S]] - [[T]] e^(-[[M]])"
+     },
+     "corrige": "$I = [[Q]] - [[UM]]e^{-[[M]]} + [[P]] - [[P]]e^{-[[M]]} = \\boxed{[[S]] - [[T]]e^{-[[M]]}}$",
+     "indices": [
+      "$[uv]_0^{[[M]]} = [[Q]] - [[UM]]e^{-[[M]]}$.",
+      "Le reste vaut $[[P]] - [[P]]e^{-[[M]]}$."
+     ],
+     "duree": 3
+    }
+   ],
+   "vals": {
+    "P": "2",
+    "Q": "1",
+    "M": "2",
+    "UM": "5",
+    "S": "3",
+    "T": "7"
+   },
+   "variantes": [
+    {
+     "P": "2",
+     "Q": "1",
+     "M": "2",
+     "UM": "5",
+     "S": "3",
+     "T": "7"
+    },
+    {
+     "P": "3",
+     "Q": "3",
+     "M": "3",
+     "UM": "12",
+     "S": "6",
+     "T": "15"
+    },
+    {
+     "P": "1",
+     "Q": "2",
+     "M": "3",
+     "UM": "5",
+     "S": "3",
+     "T": "6"
+    },
+    {
+     "P": "2",
+     "Q": "3",
+     "M": "3",
+     "UM": "9",
+     "S": "5",
+     "T": "11"
+    },
+    {
+     "P": "2",
+     "Q": "3",
+     "M": "2",
+     "UM": "7",
+     "S": "5",
+     "T": "9"
+    },
+    {
+     "P": "2",
+     "Q": "2",
+     "M": "1",
+     "UM": "4",
+     "S": "4",
+     "T": "6"
+    }
+   ]
+  },
+  {
+   "id": "ma5-103",
+   "type": "exo",
+   "notion": "5.6",
+   "origine": "td",
+   "titre": "IPP avec un logarithme (prép CC3, $I_C$)",
+   "enonce": "Le but : intégrer $x\\ln(kx)$ par parties, comme $I_C$ dans les exos de prépa du CC3 ($k = 4$).\n\nCalculer $$\\int x\\ln([[K]]x)\\,dx$$",
+   "guidage": "1. $u = \\ln([[K]]x)$, $v' = x$.\n2. $u' = \\frac1x$, $v = \\frac{x^2}{2}$.\n3. $uv - \\int u'v$.",
+   "duree": 6,
+   "etapes": [
+    {
+     "consigne": "Dérive $u = \\ln([[K]]x)$ (composée).",
+     "question": "$u'$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "1/x",
+      "var": "x"
+     },
+     "corrige": "$u' = \\frac{[[K]]}{[[K]]x} = \\frac1x$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Une primitive de $v' = x$.",
+     "question": "$v$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "x^2/2",
+      "var": "x",
+      "primitive": true
+     },
+     "corrige": "$v = \\frac{x^2}{2}$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Simplifie $u'v = \\frac1x\\cdot\\frac{x^2}{2}$.",
+     "question": "$u'v$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "x/2",
+      "var": "x"
+     },
+     "corrige": "$u'v = \\frac{x}{2}$, facile à intégrer.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Applique $uv - \\int u'v$, sans oublier la constante.",
+     "question": "Primitive ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "x^2/2 ln([[K]] x) - x^2/4",
+      "var": "x",
+      "primitive": true,
+      "constante": true
+     },
+     "corrige": "$\\boxed{\\int x\\ln([[K]]x)\\,dx = \\frac{x^2}{2}\\ln([[K]]x) - \\frac{x^2}{4} + C}$",
+     "indices": [
+      "$u = \\ln([[K]]x)$, $v = \\frac{x^2}{2}$.",
+      "$\\int\\frac{x}{2}dx = \\frac{x^2}{4}$."
+     ],
+     "duree": 2
+    }
+   ],
+   "vals": {
+    "K": "3"
+   },
+   "variantes": [
+    {
+     "K": "3"
+    },
+    {
+     "K": "4"
+    },
+    {
+     "K": "2"
+    },
+    {
+     "K": "5"
+    },
+    {
+     "K": "6"
+    }
+   ]
+  },
+  {
+   "id": "ma5-104",
+   "type": "exo",
+   "notion": "5.2",
+   "origine": "td",
+   "titre": "Primitive de $x e^{-kx}$ (prép CC3, $I_B$)",
+   "enonce": "Le but : trouver une primitive par parties (sans bornes), comme $I_B$ dans les exos de prépa du CC3 ($k = 5$).\n\nCalculer $$\\int x\\,e^{-[[K]]x}\\,dx$$",
+   "guidage": "1. $u = x$, $v' = e^{-[[K]]x}$.\n2. $v = -\\frac{1}{[[K]]}e^{-[[K]]x}$.\n3. $uv - \\int u'v$, avec $+ C$.",
+   "duree": 5,
+   "etapes": [
+    {
+     "consigne": "Primitive de $v' = e^{-[[K]]x}$.",
+     "question": "$v$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "-e^(-[[K]] x)/[[K]]",
+      "var": "x",
+      "primitive": true
+     },
+     "corrige": "$v = -\\frac{1}{[[K]]}e^{-[[K]]x}$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Écris $uv$.",
+     "question": "$uv$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "-x e^(-[[K]] x)/[[K]]",
+      "var": "x"
+     },
+     "corrige": "$uv = -\\frac{x}{[[K]]}e^{-[[K]]x}$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Retire $\\int u'v = \\int -\\frac{1}{[[K]]}e^{-[[K]]x}dx$ et ajoute la constante.",
+     "question": "Primitive ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "-x e^(-[[K]] x)/[[K]] - e^(-[[K]] x)/[[K2]]",
+      "var": "x",
+      "primitive": true,
+      "constante": true
+     },
+     "corrige": "$\\boxed{-\\frac{x}{[[K]]}e^{-[[K]]x} - \\frac{1}{[[K2]]}e^{-[[K]]x} + C}$",
+     "indices": [
+      "$uv = -\\frac{x}{[[K]]}e^{-[[K]]x}$.",
+      "$-\\int u'v = \\frac{1}{[[K]]}\\int e^{-[[K]]x} = -\\frac{1}{[[K2]]}e^{-[[K]]x}$."
+     ],
+     "duree": 2
+    }
+   ],
+   "vals": {
+    "K": "6",
+    "K2": "36"
+   },
+   "variantes": [
+    {
+     "K": "6",
+     "K2": "36"
+    },
+    {
+     "K": "4",
+     "K2": "16"
+    },
+    {
+     "K": "3",
+     "K2": "9"
+    },
+    {
+     "K": "2",
+     "K2": "4"
+    },
+    {
+     "K": "5",
+     "K2": "25"
+    }
+   ]
+  },
+  {
+   "id": "ma5-105",
+   "type": "exo",
+   "notion": "5.4",
+   "origine": "cours",
+   "titre": "Deux IPP de suite : $\\int x^2e^x\\,dx$ (poly, ex. 3)",
+   "enonce": "Le but : enchaîner deux intégrations par parties quand le polynôme est de degré 2.\n\nCalculer $$\\int x^2 e^{x}\\,dx$$",
+   "guidage": "1. 1re IPP : $u = x^2$, $v' = e^x$.\n2. 2e IPP sur $\\int 2xe^x$ : $u = 2x$, $v' = e^x$.\n3. Attention au signe moins devant la 2e intégrale.",
+   "duree": 7,
+   "etapes": [
+    {
+     "consigne": "1re IPP ($u = x^2$, $v = e^x$) : écris ce qu'il reste à intégrer (la fonction dans $\\int u'v$).",
+     "question": "$u'v$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "2x e^x",
+      "var": "x"
+     },
+     "corrige": "$\\int x^2e^x = x^2e^x - \\int 2xe^x\\,dx$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "2e IPP : primitive de $2xe^x$ (sans constante).",
+     "question": "$\\int 2xe^x\\,dx$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "2x e^x - 2 e^x",
+      "var": "x",
+      "primitive": true
+     },
+     "corrige": "$2xe^x - \\int 2e^x = 2xe^x - 2e^x$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Assemble : $x^2e^x - (2xe^x - 2e^x)$, plus la constante.",
+     "question": "Primitive ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "e^x (x^2 - 2x + 2)",
+      "var": "x",
+      "primitive": true,
+      "constante": true
+     },
+     "corrige": "$\\boxed{\\int x^2e^x\\,dx = e^x(x^2 - 2x + 2) + C}$",
+     "indices": [
+      "$x^2e^x - \\int 2xe^x$.",
+      "$\\int 2xe^x = 2xe^x - 2e^x$."
+     ],
+     "duree": 2
+    }
+   ]
+  },
+  {
+   "id": "ma5-106",
+   "type": "exo",
+   "notion": "5.5",
+   "origine": "cours",
+   "titre": "IPP qui reboucle : $\\int e^x\\cos x\\,dx$ (poly, ex. 2)",
+   "enonce": "Le but : faire deux IPP qui ramènent l'intégrale de départ, puis résoudre l'équation obtenue.\n\nCalculer $$I = \\int e^{x}\\cos x\\,dx$$",
+   "guidage": "1. 1re IPP : $u = \\cos x$, $v' = e^x$.\n2. 2e IPP : $u = \\sin x$, $v' = e^x$.\n3. On retombe sur $I$ : résoudre $I = \\dots - I$.",
+   "duree": 8,
+   "etapes": [
+    {
+     "consigne": "1re IPP ($u = \\cos x$, $v = e^x$, $u' = -\\sin x$) : $I = e^x\\cos x - \\int (-\\sin x)e^x\\,dx$. Quelle fonction reste-t-il à intégrer (avec son signe, sous un $+\\int$) ?",
+     "question": "Fonction sous $+\\int$ ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "e^x sin(x)",
+      "var": "x"
+     },
+     "corrige": "$I = e^x\\cos x + \\int e^x\\sin x\\,dx$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "2e IPP sur $\\int e^x\\sin x$ ($u = \\sin x$, $v = e^x$) : on obtient $e^x\\sin x - \\int e^x\\cos x$, c'est-à-dire $e^x\\sin x - I$. Écris l'équation en $I$ et isole $2I$.",
+     "question": "$2I$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "e^x (cos(x) + sin(x))",
+      "var": "x"
+     },
+     "corrige": "$I = e^x\\cos x + e^x\\sin x - I$, donc $2I = e^x(\\cos x + \\sin x)$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Divise par 2 et ajoute la constante.",
+     "question": "$I$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "e^x (cos(x) + sin(x))/2",
+      "var": "x",
+      "primitive": true,
+      "constante": true
+     },
+     "corrige": "$\\boxed{I = \\frac{e^x(\\cos x + \\sin x)}{2} + C}$",
+     "indices": [
+      "$I = e^x\\cos x + \\int e^x\\sin x$.",
+      "$\\int e^x\\sin x = e^x\\sin x - I$."
+     ],
+     "duree": 2
+    }
+   ]
+  },
+  {
+   "id": "ma5-201",
+   "type": "exo",
+   "notion": "5.3",
+   "origine": "annale",
+   "titre": "Annale · DST 2 (2025-26, variante B), ex. 5",
+   "enonce": "Calculer par parties : $$I_3 = \\int_0^1 x\\,e^{-4x}\\,dx$$",
+   "guidage": "$u = x$, $v' = e^{-4x}$.",
+   "duree": 8,
+   "etapes": [
+    {
+     "consigne": "$u = x$, $v = -\\frac14 e^{-4x}$ : calcule $[uv]_0^1$.",
+     "question": "$[uv]_0^1$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "-e^(-4)/4"
+     },
+     "corrige": "$-\\frac{e^{-4}}{4}$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Ajoute $-\\int_0^1 u'v = \\frac14\\int_0^1 e^{-4x}dx$ et simplifie.",
+     "question": "$I_3$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "(1 - 5 e^(-4))/16"
+     },
+     "corrige": "$I_3 = -\\frac{e^{-4}}{4} + \\frac{1 - e^{-4}}{16} = \\boxed{\\frac{1 - 5e^{-4}}{16}}$",
+     "indices": [
+      "$[uv]_0^1 = -\\frac{e^{-4}}{4}$.",
+      "Le reste vaut $\\frac{1 - e^{-4}}{16}$."
+     ],
+     "duree": 6
+    }
+   ]
+  },
+  {
+   "id": "ma5-202",
+   "type": "exo",
+   "notion": "5.3",
+   "origine": "annale",
+   "titre": "Annale · Rattrapage (mars 2026), ex. 4",
+   "enonce": "Calculer par intégration par parties : $$I = \\int_0^1 x\\,e^{-5x}\\,dx$$",
+   "guidage": "$u = x$, $v' = e^{-5x}$.",
+   "duree": 8,
+   "etapes": [
+    {
+     "consigne": "$u = x$, $v = -\\frac15 e^{-5x}$ : calcule $[uv]_0^1$.",
+     "question": "$[uv]_0^1$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "-e^(-5)/5"
+     },
+     "corrige": "$-\\frac{e^{-5}}{5}$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Ajoute $-\\int_0^1 u'v = \\frac15\\int_0^1 e^{-5x}dx$ et simplifie.",
+     "question": "$I$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "(1 - 6 e^(-5))/25"
+     },
+     "corrige": "$I = -\\frac{e^{-5}}{5} + \\frac{1 - e^{-5}}{25} = \\boxed{\\frac{1 - 6e^{-5}}{25}}$",
+     "indices": [
+      "$[uv]_0^1 = -\\frac{e^{-5}}{5}$.",
+      "Le reste vaut $\\frac{1 - e^{-5}}{25}$."
+     ],
+     "duree": 6
+    }
+   ]
+  }
+ ]
+}

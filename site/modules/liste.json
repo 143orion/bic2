@@ -100,5 +100,53 @@
   ],
   "items": 117,
   "ext": true
+ },
+ {
+  "id": "maths-analyse",
+  "nom": "Maths analyse",
+  "icone": "∫",
+  "theme": {
+   "bg": "#1b2420",
+   "fg": "#e6e2d3",
+   "ac": "#F2D16B",
+   "onAc": "#1d1a0c",
+   "font": "'Victor Mono',ui-monospace,monospace",
+   "googleFont": "Victor Mono:ital,wght@0,400;0,600;1,400"
+  },
+  "chapitres": [
+   "ma-0-rappels",
+   "ma-1-algebrique",
+   "ma-2-trigo-expo",
+   "ma-3-racines",
+   "ma-4-primitives",
+   "ma-5-ipp",
+   "ma-6-changement-variable"
+  ],
+  "parties": [
+   {
+    "id": "complexes",
+    "nom": "Nombres complexes",
+    "icone": "ℂ",
+    "couleur": "#8fc7e8",
+    "chapitres": [
+     "ma-1-algebrique",
+     "ma-2-trigo-expo",
+     "ma-3-racines"
+    ]
+   },
+   {
+    "id": "integrales",
+    "nom": "Intégrales",
+    "icone": "∫",
+    "couleur": "#f0a35e",
+    "chapitres": [
+     "ma-4-primitives",
+     "ma-5-ipp",
+     "ma-6-changement-variable"
+    ]
+   }
+  ],
+  "items": 152,
+  "ext": true
  }
 ]

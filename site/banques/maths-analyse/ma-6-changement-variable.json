@@ -1,0 +1,1177 @@
+{
+ "id": "ma-6-changement-variable",
+ "module": "maths-analyse",
+ "titre": "Changement de variable",
+ "ordre": 6,
+ "sources": [
+  "Poly Intégration § 4.2, 7",
+  "DST 2 variante B ex. 4",
+  "Rattrapage (mars 2026) ex. 5",
+  "Exos prép CC3 (changement de variable)",
+  "Notes du prof (groupes 3.5, 2.4, 2.5)"
+ ],
+ "tldr": [
+  "$\\int f(u(x))\\,u'(x)\\,dx = \\int f(u)\\,du$ · $du = u'(x)\\,dx$",
+  "5 étapes : choisir $u$, $du$, réécrire, intégrer, **revenir à $x$**",
+  "Intégrale définie : changer les bornes ($u(a)$, $u(b)$) et ne pas revenir à $x$",
+  "$t = \\cos x$ : $\\sin x\\,dx = -dt$ · $u = \\arctan x$ : $\\frac{dx}{1+x^2} = du$ · $t = \\sqrt y$ : $\\frac{dy}{\\sqrt y} = 2\\,dt$",
+  "$\\sin^3 x = \\sin x(1 - \\cos^2 x)$, puis $t = \\cos x$ · puissances paires : linéariser"
+ ],
+ "notions": [
+  {
+   "id": "6.1",
+   "titre": "Repérer $u$ et $u'$",
+   "corps": "Le **changement de variable** est la dérivée d'une composée ({{0.5}}) lue à l'envers :\n$$\\int f\\big(u(x)\\big)\\,u'(x)\\,dx = \\int f(u)\\,du$$\n\nOn le repère quand l'intégrande contient une fonction **composée** $f(u(x))$ **multipliée par la dérivée** $u'(x)$ de ce qu'il y a dedans (à une constante près).\n\n| intégrande | $u$ | car on voit |\n|---|---|---|\n| $x\\cos(x^2)$ | $x^2$ | $x$ ≈ $(x^2)'$ |\n| $\\frac{x}{1+x^2}$ | $1 + x^2$ | $x$ ≈ $(1+x^2)'$ |\n| $\\frac{1}{x\\ln x}$ | $\\ln x$ | $\\frac1x = (\\ln x)'$ |\n| $\\frac{\\sin x}{\\cos x + 2}$ | $\\cos x$ | $\\sin x$ ≈ $(\\cos x)'$ |\n| $\\frac{\\arctan x}{1+x^2}$ | $\\arctan x$ | $\\frac{1}{1+x^2} = (\\arctan x)'$ |\n\n> **À retenir** : $du = u'(x)\\,dx$ (« $du$ sur $dx$ égale $u'$ »).",
+   "rec": "Dérivée d'une composée : $(f(u))' = f'(u)\\,u'$ ({{0.5}}).",
+   "alt": "Cherche « une fonction et un morceau de sa dérivée ». Si tu vois $\\cos(x^2)$ et un $x$ qui traîne, c'est que $x^2$ est la variable cachée : $x\\,dx$ est (à $\\frac12$ près) sa différentielle.",
+   "pre": [
+    "4.2",
+    "0.5"
+   ],
+   "ecrans": [
+    {
+     "titre": "La formule",
+     "texte": "$\\int f(u(x))u'(x)dx = \\int f(u)du$."
+    },
+    {
+     "titre": "Le signe qui trahit",
+     "texte": "Une composée $f(u(x))$ et la dérivée $u'(x)$ à côté."
+    },
+    {
+     "titre": "du",
+     "texte": "$du = u'(x)\\,dx$ : on remplace tout le bloc."
+    }
+   ],
+   "check": {
+    "enonce": "Pour $\\int x\\,e^{x^2}\\,dx$, on pose…",
+    "choix": [
+     "$u = x^2$",
+     "$u = x$",
+     "$u = e^x$",
+     "$u = e^{x^2}$ puis IPP"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$x$ est (à un facteur 2 près) la dérivée de $x^2$, qui est dans l'exponentielle."
+   }
+  },
+  {
+   "id": "6.2",
+   "titre": "Méthode pas à pas",
+   "corps": "Pour une primitive :\n1. **choisir** $u = u(x)$ ;\n2. **calculer** $du = u'(x)\\,dx$, et isoler ce qui apparaît dans l'intégrale (ex. $x\\,dx = \\frac12 du$) ;\n3. **réécrire** toute l'intégrale en fonction de $u$ (plus aucun $x$) ;\n4. **intégrer** en $u$ ;\n5. **revenir** à $x$ en remplaçant $u$ par $u(x)$.\n\n> **Exemple** : $\\int x\\cos(x^2)\\,dx$. $u = x^2$, $du = 2x\\,dx$, donc $x\\,dx = \\frac12 du$ :\n> $\\int\\cos(u)\\cdot\\frac12 du = \\frac12\\sin u + C = \\frac12\\sin(x^2) + C$.\n\n> **Exemple** (DST 2, ex. 4) : $\\int\\frac{\\sin x}{\\cos x + 2}dx$, $t = \\cos x$, $dt = -\\sin x\\,dx$ :\n> $\\int\\frac{-dt}{t + 2} = -\\ln|t + 2| + C = -\\ln(\\cos x + 2) + C$.\n\n> **Piège** : oublier l'étape 5. Une primitive en $u$ n'est pas une réponse.",
+   "rec": "Repérer $u$ ({{6.1}}).",
+   "alt": "Tu « renommes » un morceau de l'intégrale pour qu'elle devienne une primitive usuelle. Puis tu remets l'ancien nom à la fin.",
+   "pre": [
+    "6.1"
+   ],
+   "ecrans": [
+    {
+     "titre": "Choisir et dériver",
+     "texte": "$u = x^2$, $du = 2x\\,dx$."
+    },
+    {
+     "titre": "Tout réécrire",
+     "texte": "$x\\,dx = \\frac12 du$ : plus aucun $x$."
+    },
+    {
+     "titre": "Intégrer, revenir",
+     "texte": "$\\frac12\\sin u + C$, puis $u = x^2$."
+    }
+   ],
+   "check": {
+    "enonce": "Avec $t = \\cos x$, $\\sin x\\,dx$ devient…",
+    "choix": [
+     "$-dt$",
+     "$dt$",
+     "$\\cos x\\,dt$",
+     "$\\frac{dt}{\\sin x}$"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$dt = -\\sin x\\,dx$."
+   }
+  },
+  {
+   "id": "6.3",
+   "titre": "Changer les bornes",
+   "corps": "Pour une intégrale **définie**, deux stratégies :\n- **directe** : on change aussi les **bornes** ($x = a \\to u = u(a)$, $x = b \\to u = u(b)$) et on ne revient jamais à $x$ ;\n- **en deux temps** : on calcule une primitive en $x$ ({{6.2}}), puis on évalue entre $a$ et $b$.\n\n> **Exemple** : $\\int_0^1 x^2\\cos(x^3)\\,dx$, $u = x^3$, $du = 3x^2dx$. $x = 0 \\to u = 0$, $x = 1 \\to u = 1$ :\n> $\\frac13\\int_0^1\\cos u\\,du = \\frac13\\sin 1$.\n\n> **Exemple** (prép CC3, $J_B$) : $\\int_0^{\\pi/3}\\frac{\\sin x}{\\cos x + 2}dx$, $t = \\cos x$ : $x = 0 \\to t = 1$, $x = \\frac{\\pi}{3} \\to t = \\frac12$.\n> $\\int_1^{1/2}\\frac{-dt}{t + 2} = \\int_{1/2}^{1}\\frac{dt}{t + 2} = \\ln 3 - \\ln\\frac52 = \\ln\\frac65$.\n\n> **Piège** : changer de variable **sans** changer les bornes, ou revenir à $x$ **après** avoir changé les bornes (on compte deux fois).",
+   "rec": "Bornes inversées : $\\int_b^a = -\\int_a^b$ ({{4.4}}).",
+   "alt": "Les bornes sont des valeurs de la variable. Si la variable s'appelle maintenant $t$, les bornes doivent être des valeurs de $t$.",
+   "pre": [
+    "6.2",
+    "4.4"
+   ],
+   "ecrans": [
+    {
+     "titre": "Nouvelles bornes",
+     "texte": "$x = a \\to u(a)$, $x = b \\to u(b)$."
+    },
+    {
+     "titre": "Ne pas revenir",
+     "texte": "Avec les nouvelles bornes, on termine en $u$."
+    },
+    {
+     "titre": "Bornes inversées",
+     "texte": "$t = \\cos x$ décroît : $1 \\to \\frac12$. Le signe moins de $dt$ les remet dans l'ordre."
+    }
+   ],
+   "check": {
+    "enonce": "$t = \\cos x$, $x$ va de $0$ à $\\frac{\\pi}{2}$. $t$ va de…",
+    "choix": [
+     "$1$ à $0$",
+     "$0$ à $1$",
+     "$0$ à $\\frac{\\pi}{2}$",
+     "$-1$ à $1$"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$\\cos 0 = 1$ et $\\cos\\frac{\\pi}{2} = 0$."
+   }
+  },
+  {
+   "id": "6.4",
+   "titre": "Changements suggérés",
+   "corps": "Aux CC, le changement de variable est souvent **donné**. Les classiques :\n\n- $t = \\cos x$ pour $\\frac{\\sin x}{\\cos x + a}$ (DST 2 ex. 4, prép CC3 $J_B$) : $\\int\\frac{\\sin x}{\\cos x + a}dx = -\\ln(\\cos x + a) + C$ pour $a > 1$.\n- $u = \\arctan x$ pour $\\frac{\\arctan x}{1 + x^2}$ (prép CC3 $J_C$) : $du = \\frac{dx}{1+x^2}$, donc $\\int\\frac{\\arctan x}{1+x^2}dx = \\frac{(\\arctan x)^2}{2} + C$ ; sur $[0, 1]$ : $\\frac{1}{2}\\left(\\frac{\\pi}{4}\\right)^2 = \\frac{\\pi^2}{32}$.\n- $t = \\sqrt{y}$ pour $\\frac{1}{\\sqrt y(\\sqrt y + a)}$ (rattrapage ex. 5) : $dt = \\frac{dy}{2\\sqrt y}$, donc $\\frac{dy}{\\sqrt y} = 2\\,dt$ et $\\int\\frac{2\\,dt}{t + a} = 2\\ln(\\sqrt y + a) + C$.\n- $u = e^x$ pour $\\frac{e^x}{1 + e^{2x}}$ : $\\int\\frac{du}{1 + u^2} = \\arctan(e^x) + C$.\n\n> **Astuce** : quand la consigne donne $t$, commence par écrire $dt$ en fonction de $dx$ (ou $dy$) : c'est lui qui dit quel morceau de l'intégrale « disparaît ».",
+   "rec": "$(\\arctan x)' = \\frac{1}{1+x^2}$, $(\\sqrt y)' = \\frac{1}{2\\sqrt y}$ ({{0.5}}).",
+   "alt": "Ce sont toujours les mêmes cinq étapes ({{6.2}}). La consigne fait juste l'étape 1 à ta place.",
+   "pre": [
+    "6.3"
+   ],
+   "ecrans": [
+    {
+     "titre": "t = cos x",
+     "texte": "$\\sin x\\,dx = -dt$."
+    },
+    {
+     "titre": "u = arctan x",
+     "texte": "$\\frac{dx}{1+x^2} = du$ : il reste $\\int u\\,du$."
+    },
+    {
+     "titre": "t = √y",
+     "texte": "$\\frac{dy}{\\sqrt y} = 2\\,dt$."
+    }
+   ],
+   "check": {
+    "enonce": "Avec $u = \\arctan x$, $\\int\\frac{\\arctan x}{1+x^2}dx$ devient…",
+    "choix": [
+     "$\\int u\\,du$",
+     "$\\int\\frac{u}{1+u^2}du$",
+     "$\\int\\arctan u\\,du$",
+     "$\\int u^2\\,du$"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$du = \\frac{dx}{1+x^2}$ et $\\arctan x = u$."
+   }
+  },
+  {
+   "id": "6.5",
+   "titre": "Puissances de $\\sin$ et $\\cos$",
+   "corps": "Pour une puissance **impaire** de $\\sin$ (ou de $\\cos$), on garde **un** facteur pour faire $du$ et on transforme le reste avec $\\sin^2 = 1 - \\cos^2$ :\n$$\\sin^3 x = \\sin x\\,(1 - \\cos^2 x)$$\npuis $t = \\cos x$, $dt = -\\sin x\\,dx$.\n\n> **Exemple** (prép CC3, $J_A$) : $\\int_0^{\\pi/4}\\sin^3 x\\,dx$. Avec $t = \\cos x$ ($1 \\to \\frac{\\sqrt2}{2}$) :\n> $\\int_{\\sqrt2/2}^{1}(1 - t^2)\\,dt = \\left[t - \\frac{t^3}{3}\\right]_{\\sqrt2/2}^{1} = \\frac23 - \\left(\\frac{\\sqrt2}{2} - \\frac{\\sqrt2}{12}\\right) = \\frac23 - \\frac{5\\sqrt2}{12}$.\n\nPour une puissance **paire** ($\\sin^2$, $\\cos^2$), on linéarise plutôt ({{4.7}}).\n\n> **Exemple** (notes du prof) : $\\int\\sin x\\cos x\\,dx$ avec $u = \\sin x$ : $\\int u\\,du = \\frac{\\sin^2 x}{2} + C$.",
+   "rec": "$\\cos^2 + \\sin^2 = 1$ ({{0.3}}).",
+   "alt": "Il faut un $\\sin x\\,dx$ « libre » pour fabriquer $dt$. Avec $\\sin^3$, on en garde un, et les deux autres deviennent $1 - \\cos^2$, qui s'écrit en $t$.",
+   "pre": [
+    "6.3",
+    "0.3"
+   ],
+   "ecrans": [
+    {
+     "titre": "Séparer un facteur",
+     "texte": "$\\sin^3 x = \\sin x \\cdot \\sin^2 x$."
+    },
+    {
+     "titre": "Tout en cos",
+     "texte": "$\\sin^2 x = 1 - \\cos^2 x$."
+    },
+    {
+     "titre": "Changer de variable",
+     "texte": "$t = \\cos x$ : $\\int(1 - t^2)(-dt)$."
+    }
+   ],
+   "check": {
+    "enonce": "Pour $\\int\\sin^3 x\\,dx$, on pose…",
+    "choix": [
+     "$t = \\cos x$ après $\\sin^3 = \\sin(1 - \\cos^2)$",
+     "$t = \\sin x$ directement",
+     "une IPP avec $u = \\sin^2 x$",
+     "la linéarisation de $\\sin^2$ seulement"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "On garde $\\sin x\\,dx = -dt$ et le reste s'écrit en $\\cos x$."
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "ma6-001",
+   "type": "saisie",
+   "notion": "6.1",
+   "origine": "cours",
+   "enonce": "Quel changement de variable $u = \\dots$ pour $\\displaystyle\\int [[F]]\\,dx$ ? (écris $u$ en fonction de $x$)",
+   "verif": {
+    "mode": "expr",
+    "attendu": "[[U]]",
+    "var": "x",
+    "domaine": [
+     1.2,
+     2.6
+    ],
+    "parmi": true
+   },
+   "duree": 0.67,
+   "explication": "[[COR]]",
+   "vals": {
+    "F": "\\frac{1}{x\\ln x}",
+    "U": "ln(x)",
+    "COR": "$(\\ln x)' = \\frac1x$ : $u = \\ln x$, et l'intégrale devient $\\int\\frac{du}{u}$."
+   },
+   "variantes": [
+    {
+     "F": "\\frac{1}{x\\ln x}",
+     "U": "ln(x)",
+     "COR": "$(\\ln x)' = \\frac1x$ : $u = \\ln x$, et l'intégrale devient $\\int\\frac{du}{u}$."
+    },
+    {
+     "F": "\\frac{\\sin x}{\\cos x + 3}",
+     "U": "cos(x) ; cos(x) + 3",
+     "COR": "$(\\cos x)' = -\\sin x$ : $u = \\cos x$ (ou $u = \\cos x + 3$)."
+    },
+    {
+     "F": "x\\cos(x^2)",
+     "U": "x^2",
+     "COR": "$\\cos(x^2)$ contient $x^2$, et $x$ est (à $\\frac12$ près) sa dérivée : $u = x^2$."
+    },
+    {
+     "F": "\\frac{\\arctan x}{1 + x^2}",
+     "U": "arctan(x)",
+     "COR": "$(\\arctan x)' = \\frac{1}{1 + x^2}$ : $u = \\arctan x$."
+    },
+    {
+     "F": "\\frac{x}{1 + x^2}",
+     "U": "1 + x^2 ; x^2",
+     "COR": "$(1 + x^2)' = 2x$ et il y a un $x$ en haut : $u = 1 + x^2$."
+    },
+    {
+     "F": "\\frac{e^x}{1 + e^{2x}}",
+     "U": "e^x",
+     "COR": "$e^{2x} = (e^x)^2$ et $(e^x)' = e^x$ : $u = e^x$."
+    },
+    {
+     "F": "x^2e^{x^3}",
+     "U": "x^3",
+     "COR": "$(x^3)' = 3x^2$ : $u = x^3$."
+    }
+   ]
+  },
+  {
+   "id": "ma6-002",
+   "type": "trous",
+   "notion": "6.1",
+   "origine": "cours",
+   "enonce": "$\\int f\\big(u(x)\\big)\\,[_]\\,dx = \\int f(u)\\,[_]$",
+   "fragments": [
+    "$u'(x)$",
+    "$du$",
+    "$u(x)$",
+    "$dx$"
+   ],
+   "verif": {
+    "mode": "trous",
+    "attendu": [
+     "$u'(x)$",
+     "$du$"
+    ]
+   },
+   "duree": 0.5,
+   "explication": "$du = u'(x)\\,dx$."
+  },
+  {
+   "id": "ma6-003",
+   "type": "saisie",
+   "notion": "6.2",
+   "origine": "cours",
+   "enonce": "Donne une primitive de $x\\cos(x^2)$ (avec la constante).",
+   "verif": {
+    "mode": "expr",
+    "attendu": "sin(x^2)/2",
+    "var": "x",
+    "primitive": true,
+    "constante": true
+   },
+   "duree": 1.5,
+   "explication": "$u = x^2$, $x\\,dx = \\frac12du$ : $\\frac12\\sin(x^2) + C$.",
+   "indices": [
+    "$u = x^2$.",
+    "$x\\,dx = \\frac12 du$."
+   ]
+  },
+  {
+   "id": "ma6-004",
+   "type": "saisie",
+   "notion": "6.2",
+   "origine": "cours",
+   "enonce": "Donne une primitive de $\\dfrac{x}{1 + x^2}$ (avec la constante).",
+   "verif": {
+    "mode": "expr",
+    "attendu": "ln(1 + x^2)/2",
+    "var": "x",
+    "primitive": true,
+    "constante": true
+   },
+   "duree": 1.5,
+   "explication": "$u = 1 + x^2$, $du = 2x\\,dx$ : $\\frac12\\ln(1 + x^2) + C$."
+  },
+  {
+   "id": "ma6-005",
+   "type": "saisie",
+   "notion": "6.2",
+   "origine": "cours",
+   "enonce": "Donne une primitive de $x\\,e^{[[A]]x^2}$ (avec la constante).",
+   "verif": {
+    "mode": "expr",
+    "attendu": "e^([[A]] x^2)/[[A2]]",
+    "var": "x",
+    "primitive": true,
+    "constante": true
+   },
+   "duree": 1.5,
+   "explication": "$u = [[A]]x^2$, $du = [[A2]]x\\,dx$ : $\\frac{1}{[[A2]]}e^{[[A]]x^2} + C$.",
+   "indices": [
+    "$u = [[A]]x^2$.",
+    "$du = [[A2]]x\\,dx$."
+   ],
+   "vals": {
+    "A": "-2",
+    "A2": "-4"
+   },
+   "variantes": [
+    {
+     "A": "-2",
+     "A2": "-4"
+    },
+    {
+     "A": "3",
+     "A2": "6"
+    },
+    {
+     "A": "2",
+     "A2": "4"
+    },
+    {
+     "A": "4",
+     "A2": "8"
+    },
+    {
+     "A": "-3",
+     "A2": "-6"
+    }
+   ]
+  },
+  {
+   "id": "ma6-006",
+   "type": "saisie",
+   "notion": "6.2",
+   "origine": "cours",
+   "enonce": "Donne une primitive de $\\dfrac{1}{x\\ln x}$ (avec la constante, pour $x > 1$).",
+   "verif": {
+    "mode": "expr",
+    "attendu": "ln(ln(x))",
+    "var": "x",
+    "primitive": true,
+    "constante": true,
+    "domaine": [
+     1.5,
+     4
+    ]
+   },
+   "duree": 1.5,
+   "explication": "$u = \\ln x$, $du = \\frac{dx}{x}$ : $\\int\\frac{du}{u} = \\ln|\\ln x| + C$."
+  },
+  {
+   "id": "ma6-007",
+   "type": "qcm",
+   "notion": "6.3",
+   "origine": "cours",
+   "enonce": "Pour $\\int_0^2 x\\,e^{x^2}dx$ avec $u = x^2$, les nouvelles bornes sont…",
+   "choix": [
+    "$0$ et $4$",
+    "$0$ et $2$",
+    "$1$ et $e^4$",
+    "$0$ et $\\sqrt2$"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "$u(0) = 0$ et $u(2) = 4$."
+  },
+  {
+   "id": "ma6-008",
+   "type": "saisie",
+   "notion": "6.3",
+   "origine": "cours",
+   "enonce": "Calcule $\\displaystyle\\int_0^1 x\\,(x^2 + 1)^{[[K]]}\\,dx$.",
+   "verif": {
+    "mode": "expr",
+    "attendu": "[[I]]"
+   },
+   "duree": 2,
+   "explication": "$u = x^2 + 1$ ($1 \\to 2$), $x\\,dx = \\frac12du$ : $\\frac12\\left[\\frac{u^{[[K1]]}}{[[K1]]}\\right]_1^2 = \\frac{2^{[[K1]]} - 1}{[[D]]} = [[I_T]]$.",
+   "indices": [
+    "$u = x^2 + 1$ : bornes $1$ et $2$.",
+    "$\\frac12\\int_1^2 u^{[[K]]}du$."
+   ],
+   "vals": {
+    "K": "3",
+    "K1": "4",
+    "D": "8",
+    "I": "15/8",
+    "I_T": "\\frac{15}{8}"
+   },
+   "variantes": [
+    {
+     "K": "3",
+     "K1": "4",
+     "D": "8",
+     "I": "15/8",
+     "I_T": "\\frac{15}{8}"
+    },
+    {
+     "K": "4",
+     "K1": "5",
+     "D": "10",
+     "I": "31/10",
+     "I_T": "\\frac{31}{10}"
+    },
+    {
+     "K": "5",
+     "K1": "6",
+     "D": "12",
+     "I": "21/4",
+     "I_T": "\\frac{21}{4}"
+    },
+    {
+     "K": "2",
+     "K1": "3",
+     "D": "6",
+     "I": "7/6",
+     "I_T": "\\frac{7}{6}"
+    }
+   ]
+  },
+  {
+   "id": "ma6-009",
+   "type": "saisie",
+   "notion": "6.3",
+   "origine": "cours",
+   "enonce": "Calcule $\\displaystyle\\int_0^1 x^2\\cos(x^3)\\,dx$.",
+   "verif": {
+    "mode": "expr",
+    "attendu": "sin(1)/3"
+   },
+   "duree": 1.5,
+   "explication": "$u = x^3$, $x^2dx = \\frac13du$, bornes $0$ et $1$ : $\\frac13\\sin 1$."
+  },
+  {
+   "id": "ma6-010",
+   "type": "saisie",
+   "notion": "6.4",
+   "origine": "cours",
+   "enonce": "Donne une primitive de $\\dfrac{\\sin x}{\\cos x + [[A]]}$ (avec la constante). Changement suggéré : $t = \\cos x$.",
+   "verif": {
+    "mode": "expr",
+    "attendu": "-ln(cos(x) + [[A]])",
+    "var": "x",
+    "primitive": true,
+    "constante": true
+   },
+   "duree": 1.5,
+   "explication": "$dt = -\\sin x\\,dx$ : $\\int\\frac{-dt}{t + [[A]]} = -\\ln(\\cos x + [[A]]) + C$ ($\\cos x + [[A]] > 0$).",
+   "indices": [
+    "$dt = -\\sin x\\,dx$.",
+    "$\\int\\frac{dt}{t + a} = \\ln|t + a|$."
+   ],
+   "vals": {
+    "A": "5"
+   },
+   "variantes": [
+    {
+     "A": "5"
+    },
+    {
+     "A": "2"
+    },
+    {
+     "A": "3"
+    },
+    {
+     "A": "4"
+    }
+   ]
+  },
+  {
+   "id": "ma6-011",
+   "type": "saisie",
+   "notion": "6.4",
+   "origine": "cours",
+   "enonce": "Donne une primitive de $\\dfrac{e^x}{1 + e^{2x}}$ (avec la constante).",
+   "verif": {
+    "mode": "expr",
+    "attendu": "arctan(e^x)",
+    "var": "x",
+    "primitive": true,
+    "constante": true
+   },
+   "duree": 1.5,
+   "explication": "$u = e^x$, $du = e^x dx$ : $\\int\\frac{du}{1 + u^2} = \\arctan(e^x) + C$."
+  },
+  {
+   "id": "ma6-012",
+   "type": "qcm",
+   "notion": "6.4",
+   "origine": "cours",
+   "enonce": "Avec $t = \\sqrt y$, $\\dfrac{dy}{\\sqrt y}$ devient…",
+   "choix": [
+    "$2\\,dt$",
+    "$dt$",
+    "$\\frac{dt}{2}$",
+    "$2t\\,dt$"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "$dt = \\frac{dy}{2\\sqrt y}$, donc $\\frac{dy}{\\sqrt y} = 2\\,dt$."
+  },
+  {
+   "id": "ma6-013",
+   "type": "saisie",
+   "notion": "6.5",
+   "origine": "cours",
+   "enonce": "Donne une primitive de $\\sin^3 x$ (avec la constante).",
+   "verif": {
+    "mode": "expr",
+    "attendu": "-cos(x) + cos(x)^3/3",
+    "var": "x",
+    "primitive": true,
+    "constante": true
+   },
+   "duree": 2,
+   "explication": "$\\sin^3 x = \\sin x(1 - \\cos^2 x)$, $t = \\cos x$ : $\\int -(1 - t^2)dt = -t + \\frac{t^3}{3}$ : $-\\cos x + \\frac{\\cos^3 x}{3} + C$.",
+   "indices": [
+    "$\\sin^3 x = \\sin x\\,(1 - \\cos^2 x)$.",
+    "$t = \\cos x$, $\\sin x\\,dx = -dt$."
+   ]
+  },
+  {
+   "id": "ma6-014",
+   "type": "qcm",
+   "notion": "6.5",
+   "origine": "cours",
+   "enonce": "$\\int\\sin x\\cos x\\,dx$ avec $u = \\sin x$ donne…",
+   "choix": [
+    "$\\frac{\\sin^2 x}{2} + C$",
+    "$\\sin x\\cos x + C$",
+    "$-\\frac{\\cos^2 x}{2}$ et c'est faux",
+    "$\\cos^2 x + C$"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "$du = \\cos x\\,dx$ : $\\int u\\,du = \\frac{u^2}{2}$. ($-\\frac{\\cos^2 x}{2} + C$ est aussi juste : même fonction à une constante près.)"
+  },
+  {
+   "id": "ma6-101",
+   "type": "exo",
+   "notion": "6.4",
+   "origine": "td",
+   "titre": "Changement de variable $t = \\cos x$ avec bornes (prép CC3, $J_B$)",
+   "enonce": "Le but : calculer une intégrale définie avec le changement de variable donné, comme $J_B$ dans les exos de prépa du CC3 ($a = 2$, borne $\\frac{\\pi}{3}$).\n\nCalculer $$J = \\int_0^{[[B]]}\\frac{\\sin x}{\\cos x + [[A]]}\\,dx$$ Changement de variable suggéré : $t = \\cos x$.",
+   "guidage": "1. $dt = -\\sin x\\,dx$.\n2. Nouvelles bornes : $t(0)$ et $t([[B]])$.\n3. Intégrer $\\frac{1}{t + [[A]]}$.\n4. Simplifier avec les propriétés de $\\ln$.",
+   "duree": 7,
+   "etapes": [
+    {
+     "consigne": "Avec $t = \\cos x$, exprime $\\sin x\\,dx$ en fonction de $dt$.",
+     "question": "$\\sin x\\,dx$ = ? (écris « -dt » ou « dt »)",
+     "verif": {
+      "mode": "regex",
+      "motif": [
+       "-\\s*dt",
+       "−\\s*dt"
+      ],
+      "exemple": "-dt"
+     },
+     "corrige": "$dt = -\\sin x\\,dx$, donc $\\sin x\\,dx = -dt$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Nouvelles bornes : $t$ en $x = 0$, puis en $x = [[B]]$. Donne la borne du haut (celle qui correspond à $x = [[B]]$).",
+     "question": "$t([[B]])$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[C]]"
+     },
+     "corrige": "$\\cos 0 = 1$ et $\\cos [[B]] = [[C_T]]$ : $t$ va de $1$ à $[[C_T]]$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "$J = \\int_1^{[[C_T]]}\\frac{-dt}{t + [[A]]} = \\int_{[[C_T]]}^{1}\\frac{dt}{t + [[A]]}$. Une primitive de $\\frac{1}{t + [[A]]}$ ?",
+     "question": "Primitive en $t$ ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "ln(t + [[A]])",
+      "var": "t",
+      "primitive": true
+     },
+     "corrige": "$\\ln(t + [[A]])$ (ici $t + [[A]] > 0$).",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Évalue entre $[[C_T]]$ et $1$, et simplifie en un seul $\\ln$.",
+     "question": "$J$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[J]]"
+     },
+     "corrige": "$J = \\ln([[A1]]) - \\ln\\left([[CA_T]]\\right) = \\boxed{[[J_T]]}$",
+     "indices": [
+      "$t$ va de $1$ à $[[C_T]]$ ; le $-$ de $dt$ remet les bornes dans l'ordre.",
+      "$J = \\ln(1 + [[A]]) - \\ln([[C_T]] + [[A]])$."
+     ],
+     "duree": 2
+    }
+   ],
+   "vals": {
+    "A": "5",
+    "A1": "6",
+    "B": "\\frac{\\pi}{2}",
+    "C": "0",
+    "C_T": "0",
+    "CA_T": "5",
+    "J": "ln(6/5)",
+    "J_T": "\\ln \\frac{6}{5}"
+   },
+   "variantes": [
+    {
+     "A": "5",
+     "A1": "6",
+     "B": "\\frac{\\pi}{2}",
+     "C": "0",
+     "C_T": "0",
+     "CA_T": "5",
+     "J": "ln(6/5)",
+     "J_T": "\\ln \\frac{6}{5}"
+    },
+    {
+     "A": "3",
+     "A1": "4",
+     "B": "\\frac{\\pi}{2}",
+     "C": "0",
+     "C_T": "0",
+     "CA_T": "3",
+     "J": "ln(4/3)",
+     "J_T": "\\ln \\frac{4}{3}"
+    },
+    {
+     "A": "5",
+     "A1": "6",
+     "B": "\\frac{\\pi}{3}",
+     "C": "1/2",
+     "C_T": "\\frac{1}{2}",
+     "CA_T": "\\frac{11}{2}",
+     "J": "ln(12/11)",
+     "J_T": "\\ln \\frac{12}{11}"
+    },
+    {
+     "A": "4",
+     "A1": "5",
+     "B": "\\frac{\\pi}{3}",
+     "C": "1/2",
+     "C_T": "\\frac{1}{2}",
+     "CA_T": "\\frac{9}{2}",
+     "J": "ln(10/9)",
+     "J_T": "\\ln \\frac{10}{9}"
+    },
+    {
+     "A": "4",
+     "A1": "5",
+     "B": "\\frac{\\pi}{2}",
+     "C": "0",
+     "C_T": "0",
+     "CA_T": "4",
+     "J": "ln(5/4)",
+     "J_T": "\\ln \\frac{5}{4}"
+    },
+    {
+     "A": "2",
+     "A1": "3",
+     "B": "\\frac{\\pi}{3}",
+     "C": "1/2",
+     "C_T": "\\frac{1}{2}",
+     "CA_T": "\\frac{5}{2}",
+     "J": "ln(6/5)",
+     "J_T": "\\ln \\frac{6}{5}"
+    },
+    {
+     "A": "3",
+     "A1": "4",
+     "B": "\\frac{\\pi}{3}",
+     "C": "1/2",
+     "C_T": "\\frac{1}{2}",
+     "CA_T": "\\frac{7}{2}",
+     "J": "ln(8/7)",
+     "J_T": "\\ln \\frac{8}{7}"
+    },
+    {
+     "A": "2",
+     "A1": "3",
+     "B": "\\frac{\\pi}{2}",
+     "C": "0",
+     "C_T": "0",
+     "CA_T": "2",
+     "J": "ln(3/2)",
+     "J_T": "\\ln \\frac{3}{2}"
+    }
+   ]
+  },
+  {
+   "id": "ma6-102",
+   "type": "exo",
+   "notion": "6.4",
+   "origine": "td",
+   "titre": "Changement de variable $u = \\arctan x$ (prép CC3, $J_C$)",
+   "enonce": "Le but : reconnaître $u' = \\frac{1}{1+x^2}$ et faire le changement $u = \\arctan x$, comme $J_C$ dans les exos de prépa du CC3.\n\nCalculer $$J = \\int_0^{[[B]]}\\frac{\\arctan x}{1 + x^2}\\,dx$$ Changement de variable suggéré : $u = \\arctan x$.",
+   "guidage": "1. $du = \\frac{dx}{1+x^2}$.\n2. Bornes : $\\arctan 0 = 0$, $\\arctan [[B]] = [[UB_T]]$.\n3. $\\int u\\,du = \\frac{u^2}{2}$.",
+   "duree": 6,
+   "etapes": [
+    {
+     "consigne": "Nouvelle borne du haut : $\\arctan [[B]]$.",
+     "question": "$u([[B]])$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[UB]]"
+     },
+     "corrige": "$\\arctan [[B]] = [[UB_T]]$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "L'intégrale devient $\\int_0^{[[UB_T]]} u\\,du$. Une primitive de $u$ ?",
+     "question": "Primitive en $u$ ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "u^2/2",
+      "var": "u",
+      "primitive": true
+     },
+     "corrige": "$\\frac{u^2}{2}$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Évalue entre $0$ et $[[UB_T]]$.",
+     "question": "$J$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[J]]"
+     },
+     "corrige": "$J = \\frac12\\left([[UB_T]]\\right)^2 = \\boxed{[[J_T]]}$",
+     "indices": [
+      "$du = \\frac{dx}{1 + x^2}$.",
+      "$\\left[\\frac{u^2}{2}\\right]_0^{[[UB_T]]}$."
+     ],
+     "duree": 2
+    }
+   ],
+   "vals": {
+    "B": "\\sqrt3",
+    "UB": "pi/3",
+    "UB_T": "\\frac{\\pi}{3}",
+    "J": "pi^2/18",
+    "J_T": "\\frac{\\pi^2}{18}"
+   },
+   "variantes": [
+    {
+     "B": "\\sqrt3",
+     "UB": "pi/3",
+     "UB_T": "\\frac{\\pi}{3}",
+     "J": "pi^2/18",
+     "J_T": "\\frac{\\pi^2}{18}"
+    },
+    {
+     "B": "\\frac{1}{\\sqrt3}",
+     "UB": "pi/6",
+     "UB_T": "\\frac{\\pi}{6}",
+     "J": "pi^2/72",
+     "J_T": "\\frac{\\pi^2}{72}"
+    },
+    {
+     "B": "1",
+     "UB": "pi/4",
+     "UB_T": "\\frac{\\pi}{4}",
+     "J": "pi^2/32",
+     "J_T": "\\frac{\\pi^2}{32}"
+    }
+   ]
+  },
+  {
+   "id": "ma6-103",
+   "type": "exo",
+   "notion": "6.5",
+   "origine": "td",
+   "titre": "Puissance impaire de $\\sin$ (prép CC3, $J_A$)",
+   "enonce": "Le but : intégrer $\\sin^3$ en gardant un facteur pour le changement de variable, comme $J_A$ dans les exos de prépa du CC3 (borne $\\frac{\\pi}{4}$).\n\nCalculer $$J = \\int_0^{[[B]]}\\sin^3 x\\,dx$$ Indication : $\\sin^3 x = \\sin x\\,(1 - \\cos^2 x)$, puis $t = \\cos x$.",
+   "guidage": "1. $t = \\cos x$, $\\sin x\\,dx = -dt$.\n2. Bornes : $1$ et $\\cos [[B]]$.\n3. $\\int(1 - t^2)\\,dt = t - \\frac{t^3}{3}$.",
+   "duree": 8,
+   "etapes": [
+    {
+     "consigne": "Nouvelle borne : $\\cos [[B]]$.",
+     "question": "$t([[B]])$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[C]]"
+     },
+     "corrige": "$\\cos [[B]] = [[C_T]]$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "$J = \\int_{[[C_T]]}^{1}(1 - t^2)\\,dt$. Donne une primitive en $t$.",
+     "question": "Primitive en $t$ ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "t - t^3/3",
+      "var": "t",
+      "primitive": true
+     },
+     "corrige": "$t - \\frac{t^3}{3}$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Évalue entre $[[C_T]]$ et $1$.",
+     "question": "$J$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[J]]",
+      "interdit": [
+       {
+        "motif": "cos|sin",
+        "msg": "Remplace $\\cos$ de la borne par sa valeur."
+       }
+      ]
+     },
+     "corrige": "$J = \\frac23 - \\left([[C_T]] - \\frac{([[C_T]])^3}{3}\\right) = \\boxed{[[J_T]]}$",
+     "indices": [
+      "$t = \\cos x$ va de $1$ à $[[C_T]]$.",
+      "$\\left[t - \\frac{t^3}{3}\\right]_{[[C_T]]}^{1}$."
+     ],
+     "duree": 3
+    }
+   ],
+   "vals": {
+    "B": "\\frac{\\pi}{2}",
+    "C": "0",
+    "C_T": "0",
+    "J": "2/3",
+    "J_T": "\\frac23"
+   },
+   "variantes": [
+    {
+     "B": "\\frac{\\pi}{2}",
+     "C": "0",
+     "C_T": "0",
+     "J": "2/3",
+     "J_T": "\\frac23"
+    },
+    {
+     "B": "\\frac{\\pi}{4}",
+     "C": "sqrt(2)/2",
+     "C_T": "\\frac{\\sqrt2}{2}",
+     "J": "2/3 - 5 sqrt(2)/12",
+     "J_T": "\\frac23 - \\frac{5\\sqrt2}{12}"
+    },
+    {
+     "B": "\\frac{\\pi}{3}",
+     "C": "1/2",
+     "C_T": "\\frac12",
+     "J": "5/24",
+     "J_T": "\\frac{5}{24}"
+    }
+   ]
+  },
+  {
+   "id": "ma6-104",
+   "type": "exo",
+   "notion": "6.4",
+   "origine": "cours",
+   "titre": "Changement de variable $t = \\sqrt y$ (rattrapage, ex. 5)",
+   "enonce": "Le but : faire le changement de variable donné, puis revenir à la variable de départ, comme à l'ex. 5 du rattrapage ($a = 5$).\n\nCalculer par changement de variable ($t = \\sqrt y$) : $$J = \\int\\frac{1}{\\sqrt y}\\,\\frac{1}{\\sqrt y + [[A]]}\\,dy$$",
+   "guidage": "1. $dt = \\frac{dy}{2\\sqrt y}$, donc $\\frac{dy}{\\sqrt y} = 2\\,dt$.\n2. $J = \\int\\frac{2\\,dt}{t + [[A]]}$.\n3. Intégrer, puis revenir à $y$.",
+   "duree": 6,
+   "etapes": [
+    {
+     "consigne": "$t = \\sqrt y$ : exprime $\\frac{dy}{\\sqrt y}$ en fonction de $dt$.",
+     "question": "$\\frac{dy}{\\sqrt y}$ = ? (en $dt$)",
+     "verif": {
+      "mode": "regex",
+      "motif": [
+       "2\\s*\\*?\\s*dt",
+       "dt\\s*\\*?\\s*2"
+      ],
+      "exemple": "2 dt"
+     },
+     "corrige": "$dt = \\frac{dy}{2\\sqrt y}$, donc $\\frac{dy}{\\sqrt y} = 2\\,dt$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "$J = \\int\\frac{2}{t + [[A]]}dt$. Primitive en $t$ ?",
+     "question": "Primitive en $t$ ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "2 ln(t + [[A]])",
+      "var": "t",
+      "primitive": true
+     },
+     "corrige": "$2\\ln(t + [[A]])$ (car $t + [[A]] > 0$).",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Reviens à $y$ et ajoute la constante.",
+     "question": "$J$ = ? (en $y$)",
+     "verif": {
+      "mode": "expr",
+      "attendu": "2 ln(sqrt(y) + [[A]])",
+      "var": "y",
+      "primitive": true,
+      "constante": true
+     },
+     "corrige": "$\\boxed{J = 2\\ln\\left(\\sqrt y + [[A]]\\right) + C}$",
+     "indices": [
+      "$\\frac{dy}{\\sqrt y} = 2\\,dt$.",
+      "$2\\ln(t + [[A]])$, puis $t = \\sqrt y$."
+     ],
+     "duree": 2
+    }
+   ],
+   "vals": {
+    "A": "4"
+   },
+   "variantes": [
+    {
+     "A": "4"
+    },
+    {
+     "A": "6"
+    },
+    {
+     "A": "5"
+    },
+    {
+     "A": "3"
+    },
+    {
+     "A": "7"
+    }
+   ]
+  },
+  {
+   "id": "ma6-105",
+   "type": "exo",
+   "notion": "6.2",
+   "origine": "cours",
+   "titre": "Changement de variable pas à pas : $\\int\\frac{\\sin x}{\\cos x + a}dx$ (DST 2, ex. 4)",
+   "enonce": "Le but : trouver une primitive avec le changement $t = \\cos x$, en suivant les 5 étapes, comme à l'ex. 4 du DST 2 ($a = 2$).\n\nCalculer $$\\int\\frac{\\sin x}{\\cos x + [[A]]}\\,dx$$ Changement de variable suggéré : $t = \\cos x$.",
+   "guidage": "1. $t = \\cos x$, $dt = -\\sin x\\,dx$.\n2. Réécrire en $t$.\n3. Intégrer.\n4. Revenir à $x$.",
+   "duree": 6,
+   "etapes": [
+    {
+     "consigne": "Dérive $t = \\cos x$ : $\\frac{dt}{dx} = ?$",
+     "question": "$\\frac{dt}{dx}$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "-sin(x)",
+      "var": "x"
+     },
+     "corrige": "$dt = -\\sin x\\,dx$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "L'intégrale devient $\\int\\frac{-dt}{t + [[A]]}$. Primitive en $t$ ?",
+     "question": "Primitive en $t$ ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "-ln(t + [[A]])",
+      "var": "t",
+      "primitive": true
+     },
+     "corrige": "$-\\ln(t + [[A]])$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Reviens à $x$, avec la constante.",
+     "question": "Primitive en $x$ ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "-ln(cos(x) + [[A]])",
+      "var": "x",
+      "primitive": true,
+      "constante": true
+     },
+     "corrige": "$\\boxed{\\int\\frac{\\sin x}{\\cos x + [[A]]}dx = -\\ln(\\cos x + [[A]]) + C}$ ($\\cos x + [[A]] > 0$).",
+     "indices": [
+      "$\\sin x\\,dx = -dt$.",
+      "$-\\ln|t + [[A]]|$, puis $t = \\cos x$."
+     ],
+     "duree": 2
+    }
+   ],
+   "vals": {
+    "A": "2"
+   },
+   "variantes": [
+    {
+     "A": "2"
+    },
+    {
+     "A": "4"
+    },
+    {
+     "A": "5"
+    },
+    {
+     "A": "3"
+    }
+   ]
+  },
+  {
+   "id": "ma6-201",
+   "type": "exo",
+   "notion": "6.4",
+   "origine": "annale",
+   "titre": "Annale · DST 2 (2025-26, variante B), ex. 4",
+   "enonce": "Calculer : $$I_2 = \\int\\frac{\\sin(x)}{\\cos(x) + a}\\,dx \\quad\\text{avec}\\quad a = 2$$ Changement de variable suggéré : $t = \\cos(x)$.",
+   "guidage": "$dt = -\\sin x\\,dx$.",
+   "duree": 6,
+   "etapes": [
+    {
+     "consigne": "Avec $dt = -\\sin x\\,dx$, donne une primitive en $t$ de $\\frac{-1}{t + 2}$.",
+     "question": "Primitive en $t$ ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "-ln(t + 2)",
+      "var": "t",
+      "primitive": true
+     },
+     "corrige": "$-\\ln(t + 2)$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Reviens à $x$.",
+     "question": "$I_2$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "-ln(cos(x) + 2)",
+      "var": "x",
+      "primitive": true,
+      "constante": true
+     },
+     "corrige": "$\\boxed{I_2 = -\\ln(\\cos x + 2) + C}$",
+     "indices": [
+      "$\\sin x\\,dx = -dt$.",
+      "$t = \\cos x$."
+     ],
+     "duree": 4
+    }
+   ]
+  },
+  {
+   "id": "ma6-202",
+   "type": "exo",
+   "notion": "6.4",
+   "origine": "annale",
+   "titre": "Annale · Rattrapage (mars 2026), ex. 5",
+   "enonce": "Calculer par changement de variable (changement de variable suggéré : $t = \\sqrt y$) : $$J = \\int\\frac{1}{\\sqrt y}\\,\\frac{1}{\\sqrt y + 5}\\,dy$$",
+   "guidage": "$\\frac{dy}{\\sqrt y} = 2\\,dt$.",
+   "duree": 6,
+   "etapes": [
+    {
+     "consigne": "Écris $J$ en $t$ et donne une primitive en $t$.",
+     "question": "Primitive en $t$ ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "2 ln(t + 5)",
+      "var": "t",
+      "primitive": true
+     },
+     "corrige": "$J = \\int\\frac{2\\,dt}{t + 5} = 2\\ln(t + 5)$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Reviens à $y$.",
+     "question": "$J$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "2 ln(sqrt(y) + 5)",
+      "var": "y",
+      "primitive": true,
+      "constante": true
+     },
+     "corrige": "$\\boxed{J = 2\\ln(\\sqrt y + 5) + C}$",
+     "indices": [
+      "$dt = \\frac{dy}{2\\sqrt y}$.",
+      "$t = \\sqrt y$."
+     ],
+     "duree": 4
+    }
+   ]
+  },
+  {
+   "id": "ma6-301",
+   "type": "examen",
+   "titre": "DST 2 · Analyse (2025-26, variante B)",
+   "duree": 60,
+   "items": [
+    "ma1-204",
+    "ma2-202",
+    "ma4-201",
+    "ma6-201",
+    "ma5-201"
+   ],
+   "enonce": "Durée : 1 heure. Documents et calculatrices interdits. Tous les calculs et les hypothèses doivent être explicites et justifiés ; encadre les résultats."
+  },
+  {
+   "id": "ma6-302",
+   "type": "examen",
+   "titre": "Rattrapage · Analyse (mars 2026)",
+   "duree": 60,
+   "items": [
+    "ma2-203",
+    "ma3-202",
+    "ma3-203",
+    "ma5-202",
+    "ma6-202"
+   ],
+   "enonce": "Durée : 1 heure. Documents et calculatrices interdits. Tous les calculs doivent être justifiés ; encadre les résultats."
+  }
+ ]
+}

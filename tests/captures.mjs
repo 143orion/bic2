@@ -340,6 +340,36 @@ const SCENARIOS = {
     if(!(await pg.$('.ex-cartes'))) erreurs.push(`[${app}] panneau : « S'entraîner » n'ouvre pas les Exos sur la notion`);
     return pg;
   },
+  /* module Maths analyse : parties ℂ / ∫ (filtre du cours), saisie d'expressions (barre de symboles, aperçu, correcteur) */
+  async mathsAnalyse(app){
+    const pg = await page(app); await pg.goto(URL0 + "module.html?mock=mia&reset#maths-analyse");
+    await pg.waitForFunction(() => window.moteur && window.moteur.etat()); await pg.waitForSelector(".m-parties"); await attendre(600);
+    await capture(pg, `analyse-cours-${app}`);
+    await pg.click('.m-parties [data-v="integrales"]'); await attendre(400);
+    if(await pg.$("#n-1\\.1")) erreurs.push(`[${app}] analyse : le filtre ∫ affiche encore les complexes`);
+    if(!(await pg.$("#n-4\\.1")) || !(await pg.$("#n-0\\.1"))) erreurs.push(`[${app}] analyse : le filtre ∫ masque les intégrales ou le chapitre commun`);
+    await capture(pg, `analyse-integrales-${app}`);
+    const ok = await pg.evaluate(() => [EXPR.verifier({mode:"expr", attendu:"7/2+9/2 i", forme:"algebrique"}, "3,5 + 4,5i").ok,
+      !EXPR.verifier({mode:"expr", attendu:"7/2+9/2 i", forme:"algebrique"}, "(-2+16i)/(2+2i)").ok,
+      EXPR.verifier({mode:"expr", attendu:"x e^x - e^x", var:"x", primitive:true, constante:true}, "(x-1)e^x + C").ok,
+      EXPR.verifier({mode:"expr", attendu:"2+i ; -2-i", liste:true}, "±(2+i)").ok]);
+    if(ok.some(x => !x)) erreurs.push(`[${app}] analyse : correcteur d'expressions incorrect (${ok})`);
+    await pg.click('.m-parties [data-v="tout"]'); await pg.click('[data-m=tab][data-v=exos]'); await attendre(300);
+    await pg.click('.ex-n[data-id="2.6"]'); await pg.click("[data-m=exsuiv]"); await pg.click('[data-m=mode][data-v=express]'); await pg.click("[data-m=go]"); await attendre(600);
+    for(let k = 0; k < 4 && !(await pg.$(".ex-symb")); k++){
+      await pg.waitForSelector(".ex-symb, .choix button", {timeout:5000}).catch(() => {});
+      if(await pg.$(".ex-symb")) break;
+      if(await pg.$(".choix button")) await pg.click(".choix button"); else break;
+      await attendre(300); const s = await pg.$("[data-a=suivant]"); if(s){ await s.click(); await attendre(400); }
+    }
+    if(!(await pg.$(".ex-symb"))){ erreurs.push(`[${app}] analyse : pas de barre de symboles sur une saisie d'expression`); return pg; }
+    await pg.fill(".q-corps .entree", "1 +"); await attendre(300);
+    if(!(await pg.$(".ex-apercu .ex-err"))) erreurs.push(`[${app}] analyse : l'aperçu ne signale pas une expression incomplète`);
+    await pg.fill(".q-corps .entree", "-2 + 2√3 i"); await attendre(300);
+    if(!(await pg.$(".ex-apercu .katex"))) erreurs.push(`[${app}] analyse : l'aperçu LaTeX ne s'affiche pas`);
+    await capture(pg, `analyse-saisie-${app}`);
+    return pg;
+  },
   /* module Développement durable (page dédiée) : notes liées, QCM (XP du module), « Coche les vérités » au prorata, flashcards notées sans XP */
   async developpementDurable(app){
     const pg = await page(app); await pg.goto(URL0 + "developpement-durable.html?mock=mia&reset");

@@ -2,10 +2,12 @@
    node tools/variantes/verifier.mjs programmation-c [chapitre…]
    - aucun [[CLE]] non remplacé, pas de [[ ]] dans un titre ;
    - QCM : bonnes réponses présentes dans les choix ; numérique : nombre ; regex : l'exemple passe le motif ;
+   - expr : la réponse attendue (et les « essais ») se lisent et passent leur propre vérification (forme exigée, + C) ;
    - mode c (interpréteur du site) : l'exemple passe tous les tests et respecte exige/interdit ; un « depart » échoue aux tests de son étape. */
 import {readFileSync, readdirSync} from "node:fs";
 import {executer} from "./picoc.mjs";
 import {instances, memeSortieC, codeNu, restes} from "./commun.mjs";
+await import(new URL("../../site/expr.js", import.meta.url));   /* globalThis.EXPR : mode « expr » */
 
 const [mod, ...chaps] = process.argv.slice(2);
 const dir = new URL(`../../site/banques/${mod}/`, import.meta.url);
@@ -35,6 +37,14 @@ function verifSimple(id, it, v){
   if(v.mode === "numerique" && typeof v.attendu !== "number" && !Array.isArray(v.attendu)) err(id, `numérique non chiffré : ${JSON.stringify(v.attendu)}`);
   if(v.mode === "regex" && v.exemple != null){
     const ms = [].concat(v.motif); if(!ms.some(m => new RegExp(`^(?:${m})$`, v.flags ?? "i").test(String(v.exemple).trim()))) err(id, `l'exemple « ${v.exemple} » ne passe pas le motif`);
+  }
+  if(v.mode === "expr"){
+    const essais = (v.parmi ? String(v.attendu).split(";") : [String(v.attendu) + (v.constante ? " + C" : "")]).concat(v.essais || []);
+    for(const e of essais){
+      let r; try{ r = EXPR.verifier(v, e); }catch(x){ r = {ok:false, msg:x.message}; }
+      if(!r.ok) err(id, `expr : « ${e} » refusé${r.msg ? " (" + r.msg + ")" : ""}`);
+    }
+    for(const e of v.refus || []){ let r; try{ r = EXPR.verifier(v, e); }catch(x){ r = {ok:false}; } if(r.ok) err(id, `expr : « ${e} » devrait être refusé`); }
   }
   if((it.type === "qcm" || it.type === "qcm-multi") && v.attendu != null){
     for(const a of [].concat(v.attendu)) if(typeof a === "number" ? !(a >= 0 && a < (it.choix || []).length) : !(it.choix || []).some(c => norm(c) === norm(a))) err(id, `bonne réponse absente des choix : ${a}`);

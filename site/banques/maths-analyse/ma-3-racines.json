@@ -1,0 +1,1915 @@
+{
+ "id": "ma-3-racines",
+ "module": "maths-analyse",
+ "titre": "Racines et équations du 2nd degré",
+ "ordre": 3,
+ "sources": [
+  "Poly Nombres complexes § 8 et 9",
+  "DST 1 (oct. 2024) ex. 4",
+  "Rattrapage (mars 2026) ex. 2, 3",
+  "Exos prép CC3 (2nd degré)",
+  "Notes du prof (groupe 3.3)"
+ ],
+ "tldr": [
+  "Racines carrées : $z = re^{i\\theta} \\Rightarrow w = \\pm\\sqrt r\\,e^{i\\theta/2}$ · deux racines, opposées",
+  "Méthode $x + iy$ : $x^2 - y^2 = a$, $2xy = b$, $x^2 + y^2 = |z|$",
+  "Racines $n$-ièmes : $w_k = r^{1/n}e^{i(\\theta + 2k\\pi)/n}$, $k = 0..n-1$ : polygone régulier",
+  "$az^2 + bz + c = 0$ : $\\Delta = b^2 - 4ac$, $\\delta^2 = \\Delta$, $z = \\frac{-b \\pm \\delta}{2a}$ (toujours 2 solutions)",
+  "$\\Delta = -k < 0$ réel : $\\delta = i\\sqrt k$ · identification : $z = x + iy$, partie réelle et imaginaire nulles"
+ ],
+ "notions": [
+  {
+   "id": "3.1",
+   "titre": "Racines carrées en forme exponentielle",
+   "corps": "Une **racine carrée** de $z$ est un complexe $w$ tel que $w^2 = z$. Tout $z \\neq 0$ en a exactement **deux**, opposées : $w$ et $-w$.\n\nSi $z$ est donné en forme trigonométrique ou exponentielle, on prend la racine du module et la **moitié** de l'argument :\n$$z = r e^{i\\theta} \\quad\\Longrightarrow\\quad w = \\pm\\sqrt{r}\\,e^{i\\theta/2}$$\n\n> **Exemple** (DST 1, ex. 4) : $z = 4\\left(\\cos\\frac{\\pi}{2} + i\\sin\\frac{\\pi}{2}\\right)$. $\\sqrt4 = 2$ et $\\frac{\\pi}{2} \\div 2 = \\frac{\\pi}{4}$ :\n> $w = \\pm 2\\left(\\cos\\frac{\\pi}{4} + i\\sin\\frac{\\pi}{4}\\right)$, soit $w_1 = \\sqrt2 + i\\sqrt2$ et $w_2 = -\\sqrt2 - i\\sqrt2$.\n\nCas d'un réel négatif : les racines carrées de $-k$ ($k > 0$) sont $\\pm i\\sqrt{k}$ (par exemple $\\pm 3i$ pour $-9$).\n\n> **Piège** : oublier la deuxième racine $-w$.",
+   "rec": "$\\left(re^{i\\varphi}\\right)^2 = r^2 e^{2i\\varphi}$ ({{2.5}}).",
+   "alt": "On cherche $w$ tel que $w^2 = z$. D'après De Moivre, mettre au carré **double** l'angle et **élève au carré** le module. Pour revenir en arrière, on prend donc la moitié de l'angle et la racine du module.",
+   "pre": [
+    "2.5"
+   ],
+   "ecrans": [
+    {
+     "titre": "Ce qu'on cherche",
+     "texte": "$w^2 = z$ : deux solutions, $w$ et $-w$."
+    },
+    {
+     "titre": "La formule",
+     "texte": "$z = re^{i\\theta} \\Rightarrow w = \\pm\\sqrt r\\,e^{i\\theta/2}$.",
+     "schema": {
+      "modele": "plan",
+      "vals": {
+       "pts": [
+        [
+         1.414,
+         1.414,
+         "w₁"
+        ],
+        [
+         -1.414,
+         -1.414,
+         "w₂"
+        ],
+        [
+         0,
+         4,
+         "z = 4i"
+        ]
+       ],
+       "r": 2
+      }
+     }
+    },
+    {
+     "titre": "En algébrique",
+     "texte": "$2e^{i\\pi/4} = 2\\left(\\frac{\\sqrt2}{2} + \\frac{\\sqrt2}{2}i\\right) = \\sqrt2 + i\\sqrt2$."
+    }
+   ],
+   "check": {
+    "enonce": "Les racines carrées de $-25$ sont…",
+    "choix": [
+     "$5i$ et $-5i$",
+     "$5$ et $-5$",
+     "$-5$ seulement",
+     "$25i$ et $-25i$"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$(5i)^2 = 25i^2 = -25$, et $(-5i)^2 = -25$ aussi."
+   }
+  },
+  {
+   "id": "3.2",
+   "titre": "Racines carrées : méthode $x + iy$",
+   "corps": "Quand $z = a + bi$ a un argument **non remarquable** (ex. $3 + 4i$), on cherche $w = x + iy$ avec $w^2 = z$. Trois équations :\n$$x^2 - y^2 = a \\qquad 2xy = b \\qquad x^2 + y^2 = |z|$$\n\n- Les deux premières viennent de $(x + iy)^2 = x^2 - y^2 + 2xyi = a + bi$ (identification, {{1.1}}).\n- La troisième vient des modules : $|w|^2 = |z|$.\n\nEn additionnant et en soustrayant la 1re et la 3e, on obtient $x^2$ et $y^2$. Le **signe** de $b = 2xy$ dit si $x$ et $y$ ont le même signe.\n\n> **Exemple** : $z = 3 + 4i$, $|z| = 5$. $x^2 = \\frac{3 + 5}{2} = 4$, $y^2 = \\frac{5 - 3}{2} = 1$, et $xy = 2 > 0$ : $w = \\pm(2 + i)$.",
+   "rec": "Identifier parties réelles et imaginaires ({{1.1}}).",
+   "alt": "C'est la même idée qu'en {{1.6}} : on remplace l'inconnue complexe par deux inconnues réelles $x$ et $y$ et on identifie. La 3e équation (modules) sert de raccourci pour éviter une équation du 4e degré.",
+   "pre": [
+    "3.1",
+    "1.6"
+   ],
+   "ecrans": [
+    {
+     "titre": "Poser w = x + iy",
+     "texte": "$w^2 = x^2 - y^2 + 2xyi$."
+    },
+    {
+     "titre": "Identifier",
+     "texte": "$x^2 - y^2 = a$ et $2xy = b$."
+    },
+    {
+     "titre": "Le raccourci",
+     "texte": "$x^2 + y^2 = |z|$. Avec la 1re équation : $x^2$ et $y^2$ d'un coup."
+    },
+    {
+     "titre": "Les signes",
+     "texte": "$2xy = b$ : si $b > 0$, $x$ et $y$ ont le même signe."
+    }
+   ],
+   "check": {
+    "enonce": "Avec $w = x + iy$ et $w^2 = 5 - 12i$, on a $x^2 + y^2 = $…",
+    "choix": [
+     "$13$",
+     "$5$",
+     "$-12$",
+     "$17$"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$|5 - 12i| = \\sqrt{25 + 144} = 13$."
+   }
+  },
+  {
+   "id": "3.3",
+   "titre": "Racines $n$-ièmes",
+   "corps": "Une **racine $n$-ième** de $z = r e^{i\\theta}$ ($r > 0$) est un $w$ tel que $w^n = z$. Il y en a exactement $n$ :\n$$w_k = r^{1/n}\\,e^{i\\frac{\\theta + 2k\\pi}{n}}, \\qquad k = 0, 1, \\dots, n - 1$$\n\nElles sont sur le cercle de rayon $r^{1/n}$, régulièrement espacées de $\\frac{2\\pi}{n}$ : elles forment un **polygone régulier** à $n$ côtés.\n\n> **Exemple** (poly, ex. 8.5) : racines 4-ièmes de $-16 = 16e^{i\\pi}$. $16^{1/4} = 2$ et les angles $\\frac{\\pi}{4} + k\\frac{\\pi}{2}$ :\n> $\\sqrt2 + i\\sqrt2$, $-\\sqrt2 + i\\sqrt2$, $-\\sqrt2 - i\\sqrt2$, $\\sqrt2 - i\\sqrt2$ (un carré).\n\n> **Piège** : ne donner que $k = 0$. Il faut les $n$ racines.",
+   "schema": {
+    "modele": "plan",
+    "vals": {
+     "pts": [
+      [
+       1.414,
+       1.414,
+       "w₀"
+      ],
+      [
+       -1.414,
+       1.414,
+       "w₁"
+      ],
+      [
+       -1.414,
+       -1.414,
+       "w₂"
+      ],
+      [
+       1.414,
+       -1.414,
+       "w₃"
+      ]
+     ],
+     "r": 2,
+     "poly": true,
+     "m": 2.6
+    }
+   },
+   "rec": "De Moivre : $\\left(\\rho e^{i\\varphi}\\right)^n = \\rho^n e^{in\\varphi}$ ({{2.5}}).",
+   "alt": "Les angles $\\theta$ et $\\theta + 2\\pi$ donnent le même $z$, mais une fois divisés par $n$ ils donnent des angles différents. C'est de là que viennent les $n$ racines : on « déroule » les tours avant de diviser.",
+   "pre": [
+    "3.1"
+   ],
+   "ecrans": [
+    {
+     "titre": "La formule",
+     "texte": "$w_k = r^{1/n} e^{i(\\theta + 2k\\pi)/n}$, $k$ de $0$ à $n - 1$."
+    },
+    {
+     "titre": "Le dessin",
+     "texte": "$n$ points régulièrement espacés sur un cercle : un polygone régulier.",
+     "schema": {
+      "modele": "plan",
+      "vals": {
+       "pts": [
+        [
+         1.414,
+         1.414,
+         "w₀"
+        ],
+        [
+         -1.414,
+         1.414,
+         "w₁"
+        ],
+        [
+         -1.414,
+         -1.414,
+         "w₂"
+        ],
+        [
+         1.414,
+         -1.414,
+         "w₃"
+        ]
+       ],
+       "r": 2,
+       "poly": true,
+       "m": 2.6
+      }
+     }
+    },
+    {
+     "titre": "Exemple",
+     "texte": "Racines 4-ièmes de $-16$ : $2e^{i\\pi/4}$, puis $+\\frac{\\pi}{2}$ à chaque fois."
+    }
+   ],
+   "check": {
+    "enonce": "Combien de racines cubiques a $8i$ ?",
+    "choix": [
+     "$3$",
+     "$1$",
+     "$2$",
+     "$8$"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "Un complexe non nul a exactement $n$ racines $n$-ièmes."
+   }
+  },
+  {
+   "id": "3.4",
+   "titre": "2nd degré avec $\\Delta$ complexe",
+   "corps": "Pour $az^2 + bz + c = 0$ ($a \\neq 0$, coefficients complexes) :\n1. repérer $a$, $b$, $c$ (attention aux signes) ;\n2. calculer $\\Delta = b^2 - 4ac$, qui peut être complexe ;\n3. trouver $\\delta$ tel que $\\delta^2 = \\Delta$ ({{3.1}} ou {{3.2}}). Si $\\Delta = -k$ est un réel négatif, $\\delta = i\\sqrt{k}$ ;\n4. conclure : $$z = \\frac{-b \\pm \\delta}{2a}$$\n\nDans $\\mathbb{C}$, il y a **toujours deux solutions** (éventuellement égales).\n\n> **Exemple** (cours) : $z^2 - (3 + i)z + (2 + 2i) = 0$. $\\Delta = (3 + i)^2 - 4(2 + 2i) = 8 + 6i - 8 - 8i = -2i = 2e^{-i\\pi/2}$, donc $\\delta = \\sqrt2\\,e^{-i\\pi/4} = 1 - i$, et $z = \\frac{(3 + i) \\pm (1 - i)}{2}$ : $z_1 = 2$, $z_2 = 1 + i$.\n\n> **Exemple** (rattrapage) : $iz^2 - 2z + 3i = 0$ : $\\Delta = 4 - 4 \\cdot i \\cdot 3i = 16$, $\\delta = 4$, $z = \\frac{2 \\pm 4}{2i}$ : $z_1 = -3i$, $z_2 = i$.",
+   "rec": "Racine carrée d'un complexe ({{3.1}}, {{3.2}}) et quotient ({{1.4}}).",
+   "alt": "C'est exactement la formule du lycée. La seule différence : au lieu de « $\\sqrt\\Delta$ », on prend une racine carrée complexe $\\delta$, qui existe toujours. Il n'y a donc plus de cas « pas de solution ».",
+   "pre": [
+    "3.2"
+   ],
+   "ecrans": [
+    {
+     "titre": "Repérer a, b, c",
+     "texte": "Dans $z^2 - (3 + i)z + \\dots$, $b = -(3 + i)$ : le signe compte."
+    },
+    {
+     "titre": "Le discriminant",
+     "texte": "$\\Delta = b^2 - 4ac$, souvent complexe."
+    },
+    {
+     "titre": "Une racine de Δ",
+     "texte": "$\\delta^2 = \\Delta$ : forme exponentielle ou méthode $x + iy$."
+    },
+    {
+     "titre": "Conclure",
+     "texte": "$z = \\frac{-b \\pm \\delta}{2a}$ : deux solutions."
+    }
+   ],
+   "check": {
+    "enonce": "$z^2 + 2z + 5 = 0$ : $\\Delta = -16$, donc $\\delta = $…",
+    "choix": [
+     "$4i$",
+     "$4$",
+     "$-16i$",
+     "$\\sqrt{-16}$ n'existe pas"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$(4i)^2 = -16$. Les solutions sont $\\frac{-2 \\pm 4i}{2} = -1 \\pm 2i$."
+   }
+  },
+  {
+   "id": "3.5",
+   "titre": "Résolution par identification",
+   "corps": "Autre méthode pour une équation du 2nd degré (vue en cours) : poser $z = x + iy$, développer, puis identifier parties réelle et imaginaire ({{1.6}}).\n\n> **Exemple** : $z^2 + 2iz + 3 = 0$. Avec $z = x + iy$ :\n> $(x^2 - y^2) + 2xyi + 2ix - 2y + 3 = 0$, d'où le système\n> $x^2 - y^2 - 2y + 3 = 0$ et $2xy + 2x = 0$.\n> La 2e donne $2x(y + 1) = 0$ : $x = 0$ ou $y = -1$.\n> - Si $x = 0$ : $-y^2 - 2y + 3 = 0$, soit $y = 1$ ou $y = -3$ : $z = i$ ou $z = -3i$.\n> - Si $y = -1$ : $x^2 + 4 = 0$, impossible pour $x$ réel.\n>\n> Solutions : $z_1 = i$, $z_2 = -3i$ (comme avec $\\Delta = -16$).\n\nPlus longue que la méthode du discriminant, elle reste utile quand l'énoncé la demande (« méthode au choix » au rattrapage).",
+   "rec": "Équations avec $z$ et $\\bar z$ ({{1.6}}).",
+   "alt": "Même réflexe qu'en {{1.6}} : deux inconnues réelles, deux équations. Ici le système n'est plus linéaire, mais une des équations se factorise souvent ($2x(y + 1) = 0$).",
+   "pre": [
+    "3.4"
+   ],
+   "ecrans": [
+    {
+     "titre": "Poser z = x + iy",
+     "texte": "$z^2 = x^2 - y^2 + 2xyi$."
+    },
+    {
+     "titre": "Identifier",
+     "texte": "Partie réelle $= 0$ et partie imaginaire $= 0$."
+    },
+    {
+     "titre": "Factoriser",
+     "texte": "$2x(y + 1) = 0$ : deux cas."
+    }
+   ],
+   "check": {
+    "enonce": "Avec $z = x + iy$, la partie imaginaire de $z^2$ vaut…",
+    "choix": [
+     "$2xy$",
+     "$x^2 - y^2$",
+     "$2xyi$",
+     "$y^2$"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$z^2 = x^2 - y^2 + 2xy\\,i$ : la partie imaginaire est le réel $2xy$."
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "ma3-001",
+   "type": "saisie",
+   "notion": "3.1",
+   "origine": "cours",
+   "enonce": "Donne les deux racines carrées de $[[Z]]$ (sépare-les par « ; »).",
+   "verif": {
+    "mode": "expr",
+    "attendu": "[[W]] ; -[[W]]",
+    "liste": true,
+    "exemple": "ex. 3i ; -3i"
+   },
+   "duree": 0.67,
+   "explication": "$([[W_T]])^2 = [[Z]]$ : les racines sont $\\pm [[W_T]]$.",
+   "vals": {
+    "Z": "-12",
+    "W": "2 sqrt(3) i",
+    "W_T": "2\\sqrt{3}i"
+   },
+   "variantes": [
+    {
+     "Z": "-12",
+     "W": "2 sqrt(3) i",
+     "W_T": "2\\sqrt{3}i"
+    },
+    {
+     "Z": "-25",
+     "W": "5 i",
+     "W_T": "5i"
+    },
+    {
+     "Z": "-16",
+     "W": "4 i",
+     "W_T": "4i"
+    },
+    {
+     "Z": "-2",
+     "W": "sqrt(2) i",
+     "W_T": "\\sqrt{2}i"
+    },
+    {
+     "Z": "-36",
+     "W": "6 i",
+     "W_T": "6i"
+    },
+    {
+     "Z": "-3",
+     "W": "sqrt(3) i",
+     "W_T": "\\sqrt{3}i"
+    }
+   ]
+  },
+  {
+   "id": "ma3-002",
+   "type": "saisie",
+   "notion": "3.1",
+   "origine": "cours",
+   "enonce": "Donne les deux racines carrées de $z = [[Z]]$ (sous la forme de ton choix, séparées par « ; »).",
+   "verif": {
+    "mode": "expr",
+    "attendu": "[[W]] ; -([[W]])",
+    "liste": true,
+    "exemple": "ex. 2 e^(i pi/6) ; -2 e^(i pi/6)"
+   },
+   "duree": 1,
+   "explication": "$\\sqrt{r}$ et $\\frac{\\theta}{2}$ : $w = \\pm [[W_T]]$.",
+   "indices": [
+    "$w = \\pm\\sqrt r\\,e^{i\\theta/2}$.",
+    "$\\sqrt r = [[SR]]$."
+   ],
+   "vals": {
+    "Z": "3\\,e^{-i\\frac{2\\pi}{3}}",
+    "W": "sqrt(3) e^(-i pi/3)",
+    "W_T": "\\sqrt{3}\\,e^{-i\\frac{\\pi}{3}}",
+    "SR": "\\sqrt{3}"
+   },
+   "variantes": [
+    {
+     "Z": "3\\,e^{-i\\frac{2\\pi}{3}}",
+     "W": "sqrt(3) e^(-i pi/3)",
+     "W_T": "\\sqrt{3}\\,e^{-i\\frac{\\pi}{3}}",
+     "SR": "\\sqrt{3}"
+    },
+    {
+     "Z": "25\\,e^{i\\frac{\\pi}{6}}",
+     "W": "5 e^(i pi/12)",
+     "W_T": "5\\,e^{i\\frac{\\pi}{12}}",
+     "SR": "5"
+    },
+    {
+     "Z": "9\\,e^{-i\\frac{2\\pi}{3}}",
+     "W": "3 e^(-i pi/3)",
+     "W_T": "3\\,e^{-i\\frac{\\pi}{3}}",
+     "SR": "3"
+    },
+    {
+     "Z": "25\\,e^{-i\\frac{\\pi}{6}}",
+     "W": "5 e^(-i pi/12)",
+     "W_T": "5\\,e^{-i\\frac{\\pi}{12}}",
+     "SR": "5"
+    },
+    {
+     "Z": "4\\,e^{i\\pi}",
+     "W": "2 e^(i pi/2)",
+     "W_T": "2\\,e^{i\\frac{\\pi}{2}}",
+     "SR": "2"
+    },
+    {
+     "Z": "3\\,e^{i\\frac{\\pi}{3}}",
+     "W": "sqrt(3) e^(i pi/6)",
+     "W_T": "\\sqrt{3}\\,e^{i\\frac{\\pi}{6}}",
+     "SR": "\\sqrt{3}"
+    },
+    {
+     "Z": "2\\,e^{-i\\frac{\\pi}{6}}",
+     "W": "sqrt(2) e^(-i pi/12)",
+     "W_T": "\\sqrt{2}\\,e^{-i\\frac{\\pi}{12}}",
+     "SR": "\\sqrt{2}"
+    },
+    {
+     "Z": "9\\,e^{i\\frac{\\pi}{2}}",
+     "W": "3 e^(i pi/4)",
+     "W_T": "3\\,e^{i\\frac{\\pi}{4}}",
+     "SR": "3"
+    }
+   ]
+  },
+  {
+   "id": "ma3-003",
+   "type": "trous",
+   "notion": "3.1",
+   "origine": "cours",
+   "enonce": "$z = re^{i\\theta}$ : ses racines carrées sont $\\pm\\,[_]\\,e^{i\\,[_]}$",
+   "fragments": [
+    "$\\sqrt r$",
+    "$\\frac{\\theta}{2}$",
+    "$r^2$",
+    "$2\\theta$"
+   ],
+   "verif": {
+    "mode": "trous",
+    "attendu": [
+     "$\\sqrt r$",
+     "$\\frac{\\theta}{2}$"
+    ]
+   },
+   "duree": 0.5,
+   "explication": "Le carré double l'angle et met le module au carré : on fait l'inverse."
+  },
+  {
+   "id": "ma3-004",
+   "type": "saisie",
+   "notion": "3.2",
+   "origine": "cours",
+   "enonce": "On cherche $w = x + iy$ avec $w^2 = [[Z]]$. Que vaut $x^2 + y^2$ ?",
+   "verif": {
+    "mode": "expr",
+    "attendu": "[[M]]"
+   },
+   "duree": 0.67,
+   "explication": "$x^2 + y^2 = |w|^2 = |z| = \\sqrt{[[A]]^2 + [[B]]^2} = [[M]]$.",
+   "vals": {
+    "Z": "-2i",
+    "A": "0",
+    "B": "-2",
+    "M": "2"
+   },
+   "variantes": [
+    {
+     "Z": "-2i",
+     "A": "0",
+     "B": "-2",
+     "M": "2"
+    },
+    {
+     "Z": "-7 + 24i",
+     "A": "-7",
+     "B": "24",
+     "M": "25"
+    },
+    {
+     "Z": "5 - 12i",
+     "A": "5",
+     "B": "-12",
+     "M": "13"
+    },
+    {
+     "Z": "-8 + 6i",
+     "A": "-8",
+     "B": "6",
+     "M": "10"
+    },
+    {
+     "Z": "12 + 16i",
+     "A": "12",
+     "B": "16",
+     "M": "20"
+    },
+    {
+     "Z": "-7 - 24i",
+     "A": "-7",
+     "B": "-24",
+     "M": "25"
+    }
+   ]
+  },
+  {
+   "id": "ma3-005",
+   "type": "saisie",
+   "notion": "3.2",
+   "origine": "cours",
+   "enonce": "Donne les deux racines carrées de $[[Z]]$ (forme algébrique, séparées par « ; »).",
+   "verif": {
+    "mode": "expr",
+    "attendu": "[[W]] ; -([[W]])",
+    "liste": true,
+    "forme": "algebrique"
+   },
+   "duree": 1.5,
+   "explication": "$x^2 - y^2 = [[A]]$, $x^2 + y^2 = [[M]]$, $2xy = [[B]]$ : $w = \\pm([[W_T]])$.",
+   "indices": [
+    "$x^2 - y^2 = [[A]]$, $2xy = [[B]]$, $x^2 + y^2 = [[M]]$.",
+    "$x^2 = [[X2]]$ et $y^2 = [[Y2]]$ ; le signe de $2xy$ fait le reste."
+   ],
+   "vals": {
+    "Z": "-8 + 6i",
+    "A": "-8",
+    "B": "6",
+    "M": "10",
+    "X2": "1",
+    "Y2": "9",
+    "W": "1 + 3 i",
+    "W_T": "1 + 3i"
+   },
+   "variantes": [
+    {
+     "Z": "-8 + 6i",
+     "A": "-8",
+     "B": "6",
+     "M": "10",
+     "X2": "1",
+     "Y2": "9",
+     "W": "1 + 3 i",
+     "W_T": "1 + 3i"
+    },
+    {
+     "Z": "12 + 16i",
+     "A": "12",
+     "B": "16",
+     "M": "20",
+     "X2": "16",
+     "Y2": "4",
+     "W": "4 + 2 i",
+     "W_T": "4 + 2i"
+    },
+    {
+     "Z": "-3 + 4i",
+     "A": "-3",
+     "B": "4",
+     "M": "5",
+     "X2": "1",
+     "Y2": "4",
+     "W": "1 + 2 i",
+     "W_T": "1 + 2i"
+    },
+    {
+     "Z": "8 - 6i",
+     "A": "8",
+     "B": "-6",
+     "M": "10",
+     "X2": "9",
+     "Y2": "1",
+     "W": "3 - i",
+     "W_T": "3 - i"
+    },
+    {
+     "Z": "-5 + 12i",
+     "A": "-5",
+     "B": "12",
+     "M": "13",
+     "X2": "4",
+     "Y2": "9",
+     "W": "2 + 3 i",
+     "W_T": "2 + 3i"
+    },
+    {
+     "Z": "15 - 8i",
+     "A": "15",
+     "B": "-8",
+     "M": "17",
+     "X2": "16",
+     "Y2": "1",
+     "W": "4 - i",
+     "W_T": "4 - i"
+    }
+   ]
+  },
+  {
+   "id": "ma3-006",
+   "type": "qcm",
+   "notion": "3.3",
+   "origine": "cours",
+   "enonce": "Les racines $n$-ièmes d'un complexe non nul forment…",
+   "choix": [
+    "un polygone régulier à $n$ côtés",
+    "une droite",
+    "$n$ points alignés sur l'axe réel",
+    "un seul point"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Elles sont sur un cercle, espacées de $\\frac{2\\pi}{n}$."
+  },
+  {
+   "id": "ma3-007",
+   "type": "trous",
+   "notion": "3.3",
+   "origine": "cours",
+   "enonce": "$w_k = r^{[_]}\\,e^{i\\frac{\\theta + [_]}{n}}$, $k = 0, \\dots, n - 1$",
+   "fragments": [
+    "$1/n$",
+    "$2k\\pi$",
+    "$n$",
+    "$k\\pi$"
+   ],
+   "verif": {
+    "mode": "trous",
+    "attendu": [
+     "$1/n$",
+     "$2k\\pi$"
+    ]
+   },
+   "duree": 0.5,
+   "explication": "On ajoute $2k\\pi$ avant de diviser par $n$."
+  },
+  {
+   "id": "ma3-008",
+   "type": "saisie",
+   "notion": "3.3",
+   "origine": "cours",
+   "enonce": "Donne les racines cubiques de $[[Z]]$ (forme algébrique, séparées par « ; »).",
+   "verif": {
+    "mode": "expr",
+    "attendu": "[[W]]",
+    "liste": true,
+    "forme": "algebrique"
+   },
+   "duree": 2,
+   "explication": "$[[Z]] = [[ZEX]]$ : $w_k = [[R]]\\,e^{i\\frac{[[TH]] + 2k\\pi}{3}}$, soit $[[W_T]]$.",
+   "indices": [
+    "$r^{1/3} = [[R]]$.",
+    "Les angles sont espacés de $\\frac{2\\pi}{3}$."
+   ],
+   "vals": {
+    "Z": "-8i",
+    "R": "2",
+    "TH": "-\\frac{\\pi}{2}",
+    "ZEX": "8\\,e^{-i\\frac{\\pi}{2}}",
+    "W": "sqrt(3) - i ; 2 i ; -sqrt(3) - i",
+    "W_T": "\\sqrt{3} - i, \\ 2\\,i, \\ -\\sqrt{3} - i"
+   },
+   "variantes": [
+    {
+     "Z": "-8i",
+     "R": "2",
+     "TH": "-\\frac{\\pi}{2}",
+     "ZEX": "8\\,e^{-i\\frac{\\pi}{2}}",
+     "W": "sqrt(3) - i ; 2 i ; -sqrt(3) - i",
+     "W_T": "\\sqrt{3} - i, \\ 2\\,i, \\ -\\sqrt{3} - i"
+    },
+    {
+     "Z": "8",
+     "R": "2",
+     "TH": "0",
+     "ZEX": "8",
+     "W": "2 ; -1 + sqrt(3) i ; -1 - sqrt(3) i",
+     "W_T": "2, \\ -1 + \\sqrt{3}\\,i, \\ -1 - \\sqrt{3}\\,i"
+    },
+    {
+     "Z": "8i",
+     "R": "2",
+     "TH": "\\frac{\\pi}{2}",
+     "ZEX": "8\\,e^{i\\frac{\\pi}{2}}",
+     "W": "sqrt(3) + i ; -sqrt(3) + i ; -2 i",
+     "W_T": "\\sqrt{3} + i, \\ -\\sqrt{3} + i, \\ -2\\,i"
+    },
+    {
+     "Z": "i",
+     "R": "1",
+     "TH": "\\frac{\\pi}{2}",
+     "ZEX": "\\,e^{i\\frac{\\pi}{2}}",
+     "W": "sqrt(3)/2 + 1/2 i ; -sqrt(3)/2 + 1/2 i ; -i",
+     "W_T": "\\frac{\\sqrt{3}}{2} + \\frac{1}{2}\\,i, \\ -\\frac{\\sqrt{3}}{2} + \\frac{1}{2}\\,i, \\ -i"
+    },
+    {
+     "Z": "64i",
+     "R": "4",
+     "TH": "\\frac{\\pi}{2}",
+     "ZEX": "64\\,e^{i\\frac{\\pi}{2}}",
+     "W": "2 sqrt(3) + 2 i ; -2 sqrt(3) + 2 i ; -4 i",
+     "W_T": "2\\sqrt{3} + 2\\,i, \\ -2\\sqrt{3} + 2\\,i, \\ -4\\,i"
+    },
+    {
+     "Z": "-1",
+     "R": "1",
+     "TH": "\\pi",
+     "ZEX": "\\,e^{i\\pi}",
+     "W": "1/2 + sqrt(3)/2 i ; -1 ; 1/2 - sqrt(3)/2 i",
+     "W_T": "\\frac{1}{2} + \\frac{\\sqrt{3}}{2}\\,i, \\ -1, \\ \\frac{1}{2} - \\frac{\\sqrt{3}}{2}\\,i"
+    },
+    {
+     "Z": "-27i",
+     "R": "3",
+     "TH": "-\\frac{\\pi}{2}",
+     "ZEX": "27\\,e^{-i\\frac{\\pi}{2}}",
+     "W": "3 sqrt(3)/2 - 3/2 i ; 3 i ; -3 sqrt(3)/2 - 3/2 i",
+     "W_T": "\\frac{3\\sqrt{3}}{2} - \\frac{3}{2}\\,i, \\ 3\\,i, \\ -\\frac{3\\sqrt{3}}{2} - \\frac{3}{2}\\,i"
+    },
+    {
+     "Z": "-8",
+     "R": "2",
+     "TH": "\\pi",
+     "ZEX": "8\\,e^{i\\pi}",
+     "W": "1 + sqrt(3) i ; -2 ; 1 - sqrt(3) i",
+     "W_T": "1 + \\sqrt{3}\\,i, \\ -2, \\ 1 - \\sqrt{3}\\,i"
+    }
+   ]
+  },
+  {
+   "id": "ma3-009",
+   "type": "saisie",
+   "notion": "3.4",
+   "origine": "cours",
+   "enonce": "Calcule le discriminant de $[[EQ]] = 0$.",
+   "verif": {
+    "mode": "expr",
+    "attendu": "[[D]]",
+    "forme": "algebrique"
+   },
+   "duree": 1.5,
+   "explication": "$\\Delta = b^2 - 4ac = [[D_T]]$.",
+   "indices": [
+    "$a = [[A]]$, $b = [[B]]$, $c = [[C]]$.",
+    "$\\Delta = b^2 - 4ac$, avec $i^2 = -1$."
+   ],
+   "vals": {
+    "EQ": "2z^2 + (-4 + 2i)z + (12 + 8i)",
+    "A": "2",
+    "B": "-4 + 2i",
+    "C": "12 + 8i",
+    "D": "-84 - 80 i",
+    "D_T": "-84 - 80i"
+   },
+   "variantes": [
+    {
+     "EQ": "2z^2 + (-4 + 2i)z + (12 + 8i)",
+     "A": "2",
+     "B": "-4 + 2i",
+     "C": "12 + 8i",
+     "D": "-84 - 80 i",
+     "D_T": "-84 - 80i"
+    },
+    {
+     "EQ": "z^2 + 2iz + (-4 + 4i)",
+     "A": "1",
+     "B": "2i",
+     "C": "-4 + 4i",
+     "D": "12 - 16 i",
+     "D_T": "12 - 16i"
+    },
+    {
+     "EQ": "iz^2 + (3 + 5i)z + (9 + 6i)",
+     "A": "i",
+     "B": "3 + 5i",
+     "C": "9 + 6i",
+     "D": "8 - 6 i",
+     "D_T": "8 - 6i"
+    },
+    {
+     "EQ": "iz^2 + 4z - 8i",
+     "A": "i",
+     "B": "4",
+     "C": "-8i",
+     "D": "-16",
+     "D_T": "-16"
+    },
+    {
+     "EQ": "z^2 + 5z + (15 + 3i)",
+     "A": "1",
+     "B": "5",
+     "C": "15 + 3i",
+     "D": "-35 - 12 i",
+     "D_T": "-35 - 12i"
+    },
+    {
+     "EQ": "(1 + i)z^2 + (6 + 4i)z + (17 + 7i)",
+     "A": "1 + i",
+     "B": "6 + 4i",
+     "C": "17 + 7i",
+     "D": "-20 - 48 i",
+     "D_T": "-20 - 48i"
+    },
+    {
+     "EQ": "iz^2 + (-1 - 3i)z + (6 + 2i)",
+     "A": "i",
+     "B": "-1 - 3i",
+     "C": "6 + 2i",
+     "D": "-18 i",
+     "D_T": "-18i"
+    },
+    {
+     "EQ": "(1 + i)z^2 + (-4 - 6i)z + (12 + 12i)",
+     "A": "1 + i",
+     "B": "-4 - 6i",
+     "C": "12 + 12i",
+     "D": "-20 - 48 i",
+     "D_T": "-20 - 48i"
+    }
+   ]
+  },
+  {
+   "id": "ma3-010",
+   "type": "saisie",
+   "notion": "3.4",
+   "origine": "cours",
+   "enonce": "Résous dans $\\mathbb{C}$ : $z^2 [[BX]] = 0$ (solutions en forme algébrique, séparées par « ; »).",
+   "verif": {
+    "mode": "expr",
+    "attendu": "[[S1]] ; [[S2]]",
+    "liste": true,
+    "forme": "algebrique"
+   },
+   "duree": 1.5,
+   "explication": "$\\Delta = [[D]] < 0$, $\\delta = [[DE]]$ : $z = \\frac{[[MB]] \\pm [[DE]]}{2}$, soit $[[S1T]]$ et $[[S2T]]$.",
+   "indices": [
+    "$\\Delta = [[D]]$.",
+    "$\\delta = [[DE]]$, puis $z = \\frac{-b \\pm \\delta}{2}$."
+   ],
+   "vals": {
+    "BX": " - 6z + 10",
+    "D": "-4",
+    "DE": "2i",
+    "MB": "6",
+    "S1": "3 + i",
+    "S2": "3 - i",
+    "S1T": "3 + i",
+    "S2T": "3 - i"
+   },
+   "variantes": [
+    {
+     "BX": " - 6z + 10",
+     "D": "-4",
+     "DE": "2i",
+     "MB": "6",
+     "S1": "3 + i",
+     "S2": "3 - i",
+     "S1T": "3 + i",
+     "S2T": "3 - i"
+    },
+    {
+     "BX": " + 4",
+     "D": "-16",
+     "DE": "4i",
+     "MB": "0",
+     "S1": "2 i",
+     "S2": "-2 i",
+     "S1T": "2i",
+     "S2T": "-2i"
+    },
+    {
+     "BX": " + 2z + 17",
+     "D": "-64",
+     "DE": "8i",
+     "MB": "-2",
+     "S1": "-1 + 4 i",
+     "S2": "-1 - 4 i",
+     "S1T": "-1 + 4i",
+     "S2T": "-1 - 4i"
+    },
+    {
+     "BX": " - 4z + 8",
+     "D": "-16",
+     "DE": "4i",
+     "MB": "4",
+     "S1": "2 + 2 i",
+     "S2": "2 - 2 i",
+     "S1T": "2 + 2i",
+     "S2T": "2 - 2i"
+    },
+    {
+     "BX": " - 4z + 20",
+     "D": "-64",
+     "DE": "8i",
+     "MB": "4",
+     "S1": "2 + 4 i",
+     "S2": "2 - 4 i",
+     "S1T": "2 + 4i",
+     "S2T": "2 - 4i"
+    },
+    {
+     "BX": " - 4z + 13",
+     "D": "-36",
+     "DE": "6i",
+     "MB": "4",
+     "S1": "2 + 3 i",
+     "S2": "2 - 3 i",
+     "S1T": "2 + 3i",
+     "S2T": "2 - 3i"
+    }
+   ]
+  },
+  {
+   "id": "ma3-011",
+   "type": "qcm",
+   "notion": "3.4",
+   "origine": "cours",
+   "enonce": "Dans $\\mathbb{C}$, une équation du 2nd degré a…",
+   "choix": [
+    "toujours deux solutions (éventuellement égales)",
+    "aucune solution si $\\Delta < 0$",
+    "une seule solution si $\\Delta$ est complexe",
+    "quatre solutions"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "On trouve toujours une racine carrée $\\delta$ de $\\Delta$."
+  },
+  {
+   "id": "ma3-012",
+   "type": "qcm-multi",
+   "notion": "3.4",
+   "origine": "cours",
+   "enonce": "$z^2 - (3 + i)z + (2 + 2i) = 0$. Lesquelles sont justes ?",
+   "choix": [
+    "$b = -(3 + i)$",
+    "$\\Delta = -2i$",
+    "$z = 2$ est solution",
+    "$\\Delta = 8 + 6i$"
+   ],
+   "verif": {
+    "attendu": [
+     0,
+     1,
+     2
+    ]
+   },
+   "duree": 0.5,
+   "explication": "$\\Delta = (3 + i)^2 - 4(2 + 2i) = 8 + 6i - 8 - 8i = -2i$."
+  },
+  {
+   "id": "ma3-013",
+   "type": "saisie",
+   "notion": "3.5",
+   "origine": "cours",
+   "enonce": "On pose $z = x + iy$. Écris la **partie réelle** de $z^2 + [[K]]iz$ en fonction de $x$ et $y$.",
+   "verif": {
+    "mode": "expr",
+    "attendu": "x^2 - y^2 - [[K]] y",
+    "vars": [
+     "x",
+     "y"
+    ]
+   },
+   "duree": 1,
+   "explication": "$x^2 - y^2 + 2xyi + [[K]]ix - [[K]]y$ : partie réelle $x^2 - y^2 - [[K]]y$.",
+   "vals": {
+    "K": "3"
+   },
+   "variantes": [
+    {
+     "K": "3"
+    },
+    {
+     "K": "5"
+    },
+    {
+     "K": "2"
+    },
+    {
+     "K": "6"
+    },
+    {
+     "K": "4"
+    }
+   ]
+  },
+  {
+   "id": "ma3-014",
+   "type": "qcm",
+   "notion": "3.5",
+   "origine": "cours",
+   "enonce": "Avec $z = x + iy$, l'équation $z^2 + 2iz + 3 = 0$ donne $2xy + 2x = 0$. On en déduit…",
+   "choix": [
+    "$x = 0$ ou $y = -1$",
+    "$x = 0$ et $y = -1$",
+    "$x = -1$",
+    "$y = 0$"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "$2x(y + 1) = 0$ : un produit nul, donc un des facteurs est nul."
+  },
+  {
+   "id": "ma3-101",
+   "type": "exo",
+   "notion": "3.1",
+   "origine": "cours",
+   "titre": "Racines carrées (DST 1, ex. 4)",
+   "enonce": "Le but : trouver les deux racines carrées d'un complexe donné sous forme trigonométrique, comme à l'ex. 4 du DST 1.\n\nTrouver les deux racines carrées du nombre complexe $$z = [[ZTR]]$$",
+   "guidage": "1. Racine carrée du module.\n2. Moitié de l'argument.\n3. Première racine $w_1 = \\sqrt r\\,e^{i\\theta/2}$ en forme algébrique.\n4. La deuxième est $w_2 = -w_1$.",
+   "duree": 6,
+   "etapes": [
+    {
+     "consigne": "Le module de $w$ est la racine carrée de celui de $z$.",
+     "question": "$\\sqrt r$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[SR]]"
+     },
+     "corrige": "$\\sqrt{[[RZ]]} = [[SR]]$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "L'argument de $w_1$ est la moitié de celui de $z$.",
+     "question": "$\\frac{\\theta}{2}$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[PHI]]"
+     },
+     "corrige": "$[[TH_T]] \\div 2 = [[PHI_T]]$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Écris $w_1 = [[SR]]\\left(\\cos[[PHI_T]] + i\\sin[[PHI_T]]\\right)$ sous forme algébrique.",
+     "question": "$w_1$ = ? (forme algébrique)",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[W]]",
+      "forme": "algebrique"
+     },
+     "corrige": "$w_1 = [[W_T]]$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Donne les deux racines carrées, séparées par « ; ».",
+     "question": "$w_1$ ; $w_2$ = ? (forme algébrique)",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[W]] ; [[WN]]",
+      "liste": true,
+      "forme": "algebrique"
+     },
+     "corrige": "$\\boxed{w_1 = [[W_T]], \\quad w_2 = [[WN_T]]}$",
+     "indices": [
+      "$w = \\pm[[SR]]\\,e^{i[[PHI_T]]}$.",
+      "$w_1 = [[W_T]]$ et $w_2 = -w_1$."
+     ],
+     "duree": 2
+    }
+   ],
+   "vals": {
+    "ZTR": "9\\left(\\cos \\frac{\\pi}{3} + i\\sin \\frac{\\pi}{3}\\right)",
+    "RZ": "9",
+    "SR": "3",
+    "TH_T": "\\frac{\\pi}{3}",
+    "PHI": "pi/6",
+    "PHI_T": "\\frac{\\pi}{6}",
+    "W": "3 sqrt(3)/2 + 3/2 i",
+    "W_T": "\\frac{3\\sqrt{3}}{2} + \\frac{3}{2}\\,i",
+    "WN": "-3 sqrt(3)/2 - 3/2 i",
+    "WN_T": "-\\frac{3\\sqrt{3}}{2} - \\frac{3}{2}\\,i"
+   },
+   "variantes": [
+    {
+     "ZTR": "9\\left(\\cos \\frac{\\pi}{3} + i\\sin \\frac{\\pi}{3}\\right)",
+     "RZ": "9",
+     "SR": "3",
+     "TH_T": "\\frac{\\pi}{3}",
+     "PHI": "pi/6",
+     "PHI_T": "\\frac{\\pi}{6}",
+     "W": "3 sqrt(3)/2 + 3/2 i",
+     "W_T": "\\frac{3\\sqrt{3}}{2} + \\frac{3}{2}\\,i",
+     "WN": "-3 sqrt(3)/2 - 3/2 i",
+     "WN_T": "-\\frac{3\\sqrt{3}}{2} - \\frac{3}{2}\\,i"
+    },
+    {
+     "ZTR": "\\left(\\cos \\frac{2\\pi}{3} + i\\sin \\frac{2\\pi}{3}\\right)",
+     "RZ": "1",
+     "SR": "1",
+     "TH_T": "\\frac{2\\pi}{3}",
+     "PHI": "pi/3",
+     "PHI_T": "\\frac{\\pi}{3}",
+     "W": "1/2 + sqrt(3)/2 i",
+     "W_T": "\\frac{1}{2} + \\frac{\\sqrt{3}}{2}\\,i",
+     "WN": "-1/2 - sqrt(3)/2 i",
+     "WN_T": "-\\frac{1}{2} - \\frac{\\sqrt{3}}{2}\\,i"
+    },
+    {
+     "ZTR": "\\left(\\cos -\\frac{\\pi}{3} + i\\sin -\\frac{\\pi}{3}\\right)",
+     "RZ": "1",
+     "SR": "1",
+     "TH_T": "-\\frac{\\pi}{3}",
+     "PHI": "-pi/6",
+     "PHI_T": "-\\frac{\\pi}{6}",
+     "W": "sqrt(3)/2 - 1/2 i",
+     "W_T": "\\frac{\\sqrt{3}}{2} - \\frac{1}{2}\\,i",
+     "WN": "-sqrt(3)/2 + 1/2 i",
+     "WN_T": "-\\frac{\\sqrt{3}}{2} + \\frac{1}{2}\\,i"
+    },
+    {
+     "ZTR": "9\\left(\\cos -\\frac{\\pi}{3} + i\\sin -\\frac{\\pi}{3}\\right)",
+     "RZ": "9",
+     "SR": "3",
+     "TH_T": "-\\frac{\\pi}{3}",
+     "PHI": "-pi/6",
+     "PHI_T": "-\\frac{\\pi}{6}",
+     "W": "3 sqrt(3)/2 - 3/2 i",
+     "W_T": "\\frac{3\\sqrt{3}}{2} - \\frac{3}{2}\\,i",
+     "WN": "-3 sqrt(3)/2 + 3/2 i",
+     "WN_T": "-\\frac{3\\sqrt{3}}{2} + \\frac{3}{2}\\,i"
+    },
+    {
+     "ZTR": "4\\left(\\cos -\\frac{\\pi}{3} + i\\sin -\\frac{\\pi}{3}\\right)",
+     "RZ": "4",
+     "SR": "2",
+     "TH_T": "-\\frac{\\pi}{3}",
+     "PHI": "-pi/6",
+     "PHI_T": "-\\frac{\\pi}{6}",
+     "W": "sqrt(3) - i",
+     "W_T": "\\sqrt{3} - i",
+     "WN": "-sqrt(3) + i",
+     "WN_T": "-\\sqrt{3} + i"
+    },
+    {
+     "ZTR": "9\\left(\\cos -\\frac{2\\pi}{3} + i\\sin -\\frac{2\\pi}{3}\\right)",
+     "RZ": "9",
+     "SR": "3",
+     "TH_T": "-\\frac{2\\pi}{3}",
+     "PHI": "-pi/3",
+     "PHI_T": "-\\frac{\\pi}{3}",
+     "W": "3/2 - 3 sqrt(3)/2 i",
+     "W_T": "\\frac{3}{2} - \\frac{3\\sqrt{3}}{2}\\,i",
+     "WN": "-3/2 + 3 sqrt(3)/2 i",
+     "WN_T": "-\\frac{3}{2} + \\frac{3\\sqrt{3}}{2}\\,i"
+    },
+    {
+     "ZTR": "\\left(\\cos \\frac{\\pi}{3} + i\\sin \\frac{\\pi}{3}\\right)",
+     "RZ": "1",
+     "SR": "1",
+     "TH_T": "\\frac{\\pi}{3}",
+     "PHI": "pi/6",
+     "PHI_T": "\\frac{\\pi}{6}",
+     "W": "sqrt(3)/2 + 1/2 i",
+     "W_T": "\\frac{\\sqrt{3}}{2} + \\frac{1}{2}\\,i",
+     "WN": "-sqrt(3)/2 - 1/2 i",
+     "WN_T": "-\\frac{\\sqrt{3}}{2} - \\frac{1}{2}\\,i"
+    },
+    {
+     "ZTR": "4\\left(\\cos \\frac{2\\pi}{3} + i\\sin \\frac{2\\pi}{3}\\right)",
+     "RZ": "4",
+     "SR": "2",
+     "TH_T": "\\frac{2\\pi}{3}",
+     "PHI": "pi/3",
+     "PHI_T": "\\frac{\\pi}{3}",
+     "W": "1 + sqrt(3) i",
+     "W_T": "1 + \\sqrt{3}\\,i",
+     "WN": "-1 - sqrt(3) i",
+     "WN_T": "-1 - \\sqrt{3}\\,i"
+    }
+   ]
+  },
+  {
+   "id": "ma3-102",
+   "type": "exo",
+   "notion": "3.2",
+   "origine": "cours",
+   "titre": "Racines carrées par la méthode $x + iy$ (sujet blanc)",
+   "enonce": "Le but : trouver les racines carrées d'un complexe dont l'argument n'est pas remarquable, avec la méthode $w = x + iy$.\n\nTrouver les racines carrées de $$z = [[Z]]$$",
+   "guidage": "1. $x^2 - y^2 = \\operatorname{Re} z$ et $2xy = \\operatorname{Im} z$.\n2. $x^2 + y^2 = |z|$.\n3. En déduire $x^2$, $y^2$, puis les signes avec $2xy$.",
+   "duree": 7,
+   "etapes": [
+    {
+     "consigne": "$(x + iy)^2 = x^2 - y^2 + 2xyi$. Identifie la partie réelle avec celle de $z$.",
+     "question": "$x^2 - y^2$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[A]]"
+     },
+     "corrige": "$x^2 - y^2 = [[A]]$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Et la partie imaginaire.",
+     "question": "$2xy$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[B]]"
+     },
+     "corrige": "$2xy = [[B]]$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Les modules : $x^2 + y^2 = |z|$.",
+     "question": "$x^2 + y^2$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[M]]"
+     },
+     "corrige": "$|z| = \\sqrt{[[A2]] + [[B2]]} = [[M]]$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Additionne la 1re et la 3e équation, puis divise par 2.",
+     "question": "$x^2$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[X2]]"
+     },
+     "corrige": "$x^2 = \\frac{[[A]] + [[M]]}{2} = [[X2]]$, et $y^2 = [[M]] - [[X2]] = [[Y2]]$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "$2xy = [[B]]$ : [[SIG]]. Donne les deux racines (séparées par « ; »).",
+     "question": "Racines carrées de $z$ ? (forme algébrique)",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[W]] ; -([[W]])",
+      "liste": true,
+      "forme": "algebrique"
+     },
+     "corrige": "$\\boxed{w = \\pm\\left([[W_T]]\\right)}$",
+     "indices": [
+      "$x^2 = [[X2]]$ et $y^2 = [[Y2]]$.",
+      "$xy$ est du signe de $[[B]]$."
+     ],
+     "duree": 2
+    }
+   ],
+   "vals": {
+    "Z": "15 + 8i",
+    "A": "15",
+    "B": "8",
+    "M": "17",
+    "A2": "15^2",
+    "B2": "8^2",
+    "X2": "16",
+    "Y2": "1",
+    "SIG": "$x$ et $y$ ont le même signe",
+    "W": "4 + i",
+    "W_T": "4 + i"
+   },
+   "variantes": [
+    {
+     "Z": "15 + 8i",
+     "A": "15",
+     "B": "8",
+     "M": "17",
+     "A2": "15^2",
+     "B2": "8^2",
+     "X2": "16",
+     "Y2": "1",
+     "SIG": "$x$ et $y$ ont le même signe",
+     "W": "4 + i",
+     "W_T": "4 + i"
+    },
+    {
+     "Z": "-12 - 16i",
+     "A": "-12",
+     "B": "-16",
+     "M": "20",
+     "A2": "(-12)^2",
+     "B2": "(-16)^2",
+     "X2": "4",
+     "Y2": "16",
+     "SIG": "$x$ et $y$ sont de signes contraires",
+     "W": "2 - 4 i",
+     "W_T": "2 - 4i"
+    },
+    {
+     "Z": "3 - 4i",
+     "A": "3",
+     "B": "-4",
+     "M": "5",
+     "A2": "3^2",
+     "B2": "(-4)^2",
+     "X2": "4",
+     "Y2": "1",
+     "SIG": "$x$ et $y$ sont de signes contraires",
+     "W": "2 - i",
+     "W_T": "2 - i"
+    },
+    {
+     "Z": "-3 + 4i",
+     "A": "-3",
+     "B": "4",
+     "M": "5",
+     "A2": "(-3)^2",
+     "B2": "4^2",
+     "X2": "1",
+     "Y2": "4",
+     "SIG": "$x$ et $y$ ont le même signe",
+     "W": "1 + 2 i",
+     "W_T": "1 + 2i"
+    },
+    {
+     "Z": "7 - 24i",
+     "A": "7",
+     "B": "-24",
+     "M": "25",
+     "A2": "7^2",
+     "B2": "(-24)^2",
+     "X2": "16",
+     "Y2": "9",
+     "SIG": "$x$ et $y$ sont de signes contraires",
+     "W": "4 - 3 i",
+     "W_T": "4 - 3i"
+    },
+    {
+     "Z": "-5 - 12i",
+     "A": "-5",
+     "B": "-12",
+     "M": "13",
+     "A2": "(-5)^2",
+     "B2": "(-12)^2",
+     "X2": "4",
+     "Y2": "9",
+     "SIG": "$x$ et $y$ sont de signes contraires",
+     "W": "2 - 3 i",
+     "W_T": "2 - 3i"
+    }
+   ]
+  },
+  {
+   "id": "ma3-103",
+   "type": "exo",
+   "notion": "3.3",
+   "origine": "cours",
+   "titre": "Racines $n$-ièmes (poly, ex. 8.5)",
+   "enonce": "Le but : trouver toutes les racines $n$-ièmes d'un complexe et les situer sur un cercle, comme à l'ex. 8.5 du poly (racines 4-ièmes de $-16$).\n\nTrouver les racines $[[NN]]$-ièmes de $$z = [[Z]]$$",
+   "guidage": "1. Forme exponentielle $z = re^{i\\theta}$.\n2. $r^{1/n}$.\n3. Angles $\\frac{\\theta + 2k\\pi}{n}$, $k = 0, \\dots, n - 1$.\n4. Chaque racine en forme algébrique.",
+   "duree": 8,
+   "etapes": [
+    {
+     "consigne": "Écris $z$ sous forme exponentielle.",
+     "question": "$z$ = ? (forme exponentielle)",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[ZEXE]]",
+      "forme": "expo"
+     },
+     "corrige": "$z = [[ZEX]]$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Le module des racines est $r^{1/n}$.",
+     "question": "$r^{1/n}$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[RE]]"
+     },
+     "corrige": "$[[RZ]]^{1/[[NN]]} = [[R]]$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "La racine $w_0$ a pour argument $\\frac{\\theta}{n}$. Écris-la en forme exponentielle.",
+     "question": "$w_0$ = ? (forme exponentielle)",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[W0E]]",
+      "forme": "expo"
+     },
+     "corrige": "$w_0 = [[W0]]$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Les $[[NN]]$ racines sont espacées de $\\frac{2\\pi}{[[NN]]}$. Donne-les toutes en forme algébrique, séparées par « ; ».",
+     "question": "Toutes les racines ? (forme algébrique)",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[W]]",
+      "liste": true,
+      "forme": "algebrique"
+     },
+     "corrige": "$w_k = [[R]]\\,e^{i\\frac{[[TH]] + 2k\\pi}{[[NN]]}}$ : $\\boxed{[[W_T]]}$",
+     "indices": [
+      "$w_0 = [[W0]]$, puis ajoute $\\frac{2\\pi}{[[NN]]}$ à l'angle à chaque fois.",
+      "Les angles sont : $[[ANGS]]$."
+     ],
+     "duree": 3
+    }
+   ],
+   "vals": {
+    "NN": "6",
+    "Z": "-64",
+    "RZ": "64",
+    "R": "2",
+    "RE": "2",
+    "TH": "\\pi",
+    "ZEXE": "64 e^(i pi)",
+    "ZEX": "64\\,e^{i\\pi}",
+    "W0E": "2 e^(i pi/6)",
+    "W0": "2\\,e^{i\\frac{\\pi}{6}}",
+    "W": "sqrt(3) + i ; 2 i ; -sqrt(3) + i ; -sqrt(3) - i ; -2 i ; sqrt(3) - i",
+    "W_T": "\\sqrt{3} + i, \\ 2\\,i, \\ -\\sqrt{3} + i, \\ -\\sqrt{3} - i, \\ -2\\,i, \\ \\sqrt{3} - i",
+    "ANGS": "\\frac{\\pi}{6},\\ \\frac{\\pi}{2},\\ \\frac{5\\pi}{6},\\ -\\frac{5\\pi}{6},\\ -\\frac{\\pi}{2},\\ -\\frac{\\pi}{6}"
+   },
+   "variantes": [
+    {
+     "NN": "6",
+     "Z": "-64",
+     "RZ": "64",
+     "R": "2",
+     "RE": "2",
+     "TH": "\\pi",
+     "ZEXE": "64 e^(i pi)",
+     "ZEX": "64\\,e^{i\\pi}",
+     "W0E": "2 e^(i pi/6)",
+     "W0": "2\\,e^{i\\frac{\\pi}{6}}",
+     "W": "sqrt(3) + i ; 2 i ; -sqrt(3) + i ; -sqrt(3) - i ; -2 i ; sqrt(3) - i",
+     "W_T": "\\sqrt{3} + i, \\ 2\\,i, \\ -\\sqrt{3} + i, \\ -\\sqrt{3} - i, \\ -2\\,i, \\ \\sqrt{3} - i",
+     "ANGS": "\\frac{\\pi}{6},\\ \\frac{\\pi}{2},\\ \\frac{5\\pi}{6},\\ -\\frac{5\\pi}{6},\\ -\\frac{\\pi}{2},\\ -\\frac{\\pi}{6}"
+    },
+    {
+     "NN": "4",
+     "Z": "-16",
+     "RZ": "16",
+     "R": "2",
+     "RE": "2",
+     "TH": "\\pi",
+     "ZEXE": "16 e^(i pi)",
+     "ZEX": "16\\,e^{i\\pi}",
+     "W0E": "2 e^(i pi/4)",
+     "W0": "2\\,e^{i\\frac{\\pi}{4}}",
+     "W": "sqrt(2) + sqrt(2) i ; -sqrt(2) + sqrt(2) i ; -sqrt(2) - sqrt(2) i ; sqrt(2) - sqrt(2) i",
+     "W_T": "\\sqrt{2} + \\sqrt{2}\\,i, \\ -\\sqrt{2} + \\sqrt{2}\\,i, \\ -\\sqrt{2} - \\sqrt{2}\\,i, \\ \\sqrt{2} - \\sqrt{2}\\,i",
+     "ANGS": "\\frac{\\pi}{4},\\ \\frac{3\\pi}{4},\\ -\\frac{3\\pi}{4},\\ -\\frac{\\pi}{4}"
+    },
+    {
+     "NN": "3",
+     "Z": "8",
+     "RZ": "8",
+     "R": "2",
+     "RE": "2",
+     "TH": "0",
+     "ZEXE": "8 e^(i 0)",
+     "ZEX": "8\\,e^{i0}",
+     "W0E": "2 e^(i 0)",
+     "W0": "2\\,e^{i0}",
+     "W": "2 ; -1 + sqrt(3) i ; -1 - sqrt(3) i",
+     "W_T": "2, \\ -1 + \\sqrt{3}\\,i, \\ -1 - \\sqrt{3}\\,i",
+     "ANGS": "0,\\ \\frac{2\\pi}{3},\\ -\\frac{2\\pi}{3}"
+    },
+    {
+     "NN": "6",
+     "Z": "1",
+     "RZ": "1",
+     "R": "1",
+     "RE": "1",
+     "TH": "0",
+     "ZEXE": "1 e^(i 0)",
+     "ZEX": "1\\,e^{i0}",
+     "W0E": "1 e^(i 0)",
+     "W0": "1\\,e^{i0}",
+     "W": "1 ; 1/2 + sqrt(3)/2 i ; -1/2 + sqrt(3)/2 i ; -1 ; -1/2 - sqrt(3)/2 i ; 1/2 - sqrt(3)/2 i",
+     "W_T": "1, \\ \\frac{1}{2} + \\frac{\\sqrt{3}}{2}\\,i, \\ -\\frac{1}{2} + \\frac{\\sqrt{3}}{2}\\,i, \\ -1, \\ -\\frac{1}{2} - \\frac{\\sqrt{3}}{2}\\,i, \\ \\frac{1}{2} - \\frac{\\sqrt{3}}{2}\\,i",
+     "ANGS": "0,\\ \\frac{\\pi}{3},\\ \\frac{2\\pi}{3},\\ \\pi,\\ -\\frac{2\\pi}{3},\\ -\\frac{\\pi}{3}"
+    },
+    {
+     "NN": "4",
+     "Z": "16",
+     "RZ": "16",
+     "R": "2",
+     "RE": "2",
+     "TH": "0",
+     "ZEXE": "16 e^(i 0)",
+     "ZEX": "16\\,e^{i0}",
+     "W0E": "2 e^(i 0)",
+     "W0": "2\\,e^{i0}",
+     "W": "2 ; 2 i ; -2 ; -2 i",
+     "W_T": "2, \\ 2\\,i, \\ -2, \\ -2\\,i",
+     "ANGS": "0,\\ \\frac{\\pi}{2},\\ \\pi,\\ -\\frac{\\pi}{2}"
+    },
+    {
+     "NN": "3",
+     "Z": "-8i",
+     "RZ": "8",
+     "R": "2",
+     "RE": "2",
+     "TH": "-\\frac{\\pi}{2}",
+     "ZEXE": "8 e^(-i pi/2)",
+     "ZEX": "8\\,e^{-i\\frac{\\pi}{2}}",
+     "W0E": "2 e^(-i pi/6)",
+     "W0": "2\\,e^{-i\\frac{\\pi}{6}}",
+     "W": "sqrt(3) - i ; 2 i ; -sqrt(3) - i",
+     "W_T": "\\sqrt{3} - i, \\ 2\\,i, \\ -\\sqrt{3} - i",
+     "ANGS": "-\\frac{\\pi}{6},\\ \\frac{\\pi}{2},\\ -\\frac{5\\pi}{6}"
+    }
+   ]
+  },
+  {
+   "id": "ma3-104",
+   "type": "exo",
+   "notion": "3.4",
+   "origine": "cours",
+   "titre": "Équation du 2nd degré dans $\\mathbb{C}$ (rattrapage, ex. 3)",
+   "enonce": "Le but : résoudre une équation du 2nd degré à coefficients complexes avec le discriminant, comme à l'ex. 3 du rattrapage et dans les exos de prépa du CC3.\n\nRésoudre dans $\\mathbb{C}$ : $$[[EQ]] = 0$$",
+   "guidage": "1. Repérer $a$, $b$, $c$.\n2. $\\Delta = b^2 - 4ac$.\n3. Trouver $\\delta$ avec $\\delta^2 = \\Delta$.\n4. $z = \\frac{-b \\pm \\delta}{2a}$.",
+   "duree": 10,
+   "etapes": [
+    {
+     "consigne": "Repère $a$, $b$ et $c$, puis calcule $\\Delta = b^2 - 4ac$ (avec $i^2 = -1$).",
+     "question": "$\\Delta$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[D]]",
+      "forme": "algebrique"
+     },
+     "corrige": "$a = [[A]]$, $b = [[B]]$, $c = [[C]]$ : $\\Delta = [[D_T]]$.",
+     "duree": 3,
+     "guideSeul": true
+    },
+    {
+     "consigne": "Trouve une racine carrée $\\delta$ de $\\Delta$ (forme exponentielle ou méthode $x + iy$, {{3.1}}, {{3.2}}). Une seule suffit.",
+     "question": "$\\delta$ = ? (une racine carrée de $\\Delta$)",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[DE]] ; -([[DE]])",
+      "parmi": true
+     },
+     "corrige": "$\\delta = [[DE_T]]$ convient (et $-\\delta$ aussi).",
+     "duree": 3,
+     "guideSeul": true
+    },
+    {
+     "consigne": "Applique $z = \\dfrac{-b \\pm \\delta}{2a}$ et simplifie (forme algébrique). Donne les deux solutions séparées par « ; ».",
+     "question": "$z_1$ ; $z_2$ = ? (forme algébrique)",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[S1]] ; [[S2]]",
+      "liste": true,
+      "forme": "algebrique"
+     },
+     "corrige": "$z = \\dfrac{[[MB]] \\pm ([[DE_T]])}{[[A2T]]}$ : $\\boxed{z_1 = [[S1T]], \\quad z_2 = [[S2T]]}$",
+     "indices": [
+      "$\\Delta = [[D_T]]$ et $\\delta = [[DE_T]]$.",
+      "$z = \\frac{[[MB]] \\pm ([[DE_T]])}{[[A2T]]}$."
+     ],
+     "duree": 4
+    }
+   ],
+   "vals": {
+    "EQ": "-z^2 + (4 + 5i)z + (3 - 11i)",
+    "A": "-1",
+    "B": "4 + 5i",
+    "C": "3 - 11i",
+    "D": "3 - 4 i",
+    "D_T": "3 - 4i",
+    "DE": "2 - i",
+    "DE_T": "2 - i",
+    "MB": "(-4 - 5i)",
+    "A2T": "-2",
+    "S1": "1 + 3 i",
+    "S2": "3 + 2 i",
+    "S1T": "1 + 3i",
+    "S2T": "3 + 2i"
+   },
+   "variantes": [
+    {
+     "EQ": "-z^2 + (4 + 5i)z + (3 - 11i)",
+     "A": "-1",
+     "B": "4 + 5i",
+     "C": "3 - 11i",
+     "D": "3 - 4 i",
+     "D_T": "3 - 4i",
+     "DE": "2 - i",
+     "DE_T": "2 - i",
+     "MB": "(-4 - 5i)",
+     "A2T": "-2",
+     "S1": "1 + 3 i",
+     "S2": "3 + 2 i",
+     "S1T": "1 + 3i",
+     "S2T": "3 + 2i"
+    },
+    {
+     "EQ": "iz^2 + (-3 + 3i)z + (-6 + 2i)",
+     "A": "i",
+     "B": "-3 + 3i",
+     "C": "-6 + 2i",
+     "D": "8 + 6 i",
+     "D_T": "8 + 6i",
+     "DE": "3 + i",
+     "DE_T": "3 + i",
+     "MB": "(3 - 3i)",
+     "A2T": "2i",
+     "S1": "-1 - 3 i",
+     "S2": "-2",
+     "S1T": "-1 - 3i",
+     "S2T": "-2"
+    },
+    {
+     "EQ": "2z^2 - 4z + (18 - 12i)",
+     "A": "2",
+     "B": "-4",
+     "C": "18 - 12i",
+     "D": "-128 + 96 i",
+     "D_T": "-128 + 96i",
+     "DE": "-4 - 12 i",
+     "DE_T": "-4 - 12i",
+     "MB": "4",
+     "A2T": "4",
+     "S1": "-3 i",
+     "S2": "2 + 3 i",
+     "S1T": "-3i",
+     "S2T": "2 + 3i"
+    },
+    {
+     "EQ": "z^2 + (2 - 3i)z + (-2 - 4i)",
+     "A": "1",
+     "B": "2 - 3i",
+     "C": "-2 - 4i",
+     "D": "3 + 4 i",
+     "D_T": "3 + 4i",
+     "DE": "2 + i",
+     "DE_T": "2 + i",
+     "MB": "(-2 + 3i)",
+     "A2T": "2",
+     "S1": "2 i",
+     "S2": "-2 + i",
+     "S1T": "2i",
+     "S2T": "-2 + i"
+    },
+    {
+     "EQ": "-iz^2 - iz + (10 + 2i)",
+     "A": "-i",
+     "B": "-i",
+     "C": "10 + 2i",
+     "D": "-9 + 40 i",
+     "D_T": "-9 + 40i",
+     "DE": "4 + 5 i",
+     "DE_T": "4 + 5i",
+     "MB": "i",
+     "A2T": "-2i",
+     "S1": "-3 + 2 i",
+     "S2": "2 - 2 i",
+     "S1T": "-3 + 2i",
+     "S2T": "2 - 2i"
+    },
+    {
+     "EQ": "-z^2 + (-3 + 2i)z + (-1 + 3i)",
+     "A": "-1",
+     "B": "-3 + 2i",
+     "C": "-1 + 3i",
+     "D": "1",
+     "D_T": "1",
+     "DE": "1",
+     "DE_T": "1",
+     "MB": "(3 - 2i)",
+     "A2T": "-2",
+     "S1": "-2 + i",
+     "S2": "-1 + i",
+     "S1T": "-2 + i",
+     "S2T": "-1 + i"
+    },
+    {
+     "EQ": "-iz^2 + (-1 - 2i)z + (1 + 3i)",
+     "A": "-i",
+     "B": "-1 - 2i",
+     "C": "1 + 3i",
+     "D": "-15 + 8 i",
+     "D_T": "-15 + 8i",
+     "DE": "-1 - 4 i",
+     "DE_T": "-1 - 4i",
+     "MB": "(1 + 2i)",
+     "A2T": "-2i",
+     "S1": "1",
+     "S2": "-3 + i",
+     "S1T": "1",
+     "S2T": "-3 + i"
+    },
+    {
+     "EQ": "z^2 - 4z + (12 - 6i)",
+     "A": "1",
+     "B": "-4",
+     "C": "12 - 6i",
+     "D": "-32 + 24 i",
+     "D_T": "-32 + 24i",
+     "DE": "2 + 6 i",
+     "DE_T": "2 + 6i",
+     "MB": "4",
+     "A2T": "2",
+     "S1": "3 + 3 i",
+     "S2": "1 - 3 i",
+     "S1T": "3 + 3i",
+     "S2T": "1 - 3i"
+    }
+   ]
+  },
+  {
+   "id": "ma3-105",
+   "type": "exo",
+   "notion": "3.5",
+   "origine": "cours",
+   "titre": "Résolution par identification (cours)",
+   "enonce": "Le but : résoudre une équation du 2nd degré en posant $z = x + iy$, sans discriminant, comme dans l'exemple du cours.\n\nRésoudre $z^2 + 2iz + 3 = 0$ en posant $z = x + iy$.",
+   "guidage": "1. Développer avec $z = x + iy$.\n2. Partie réelle $= 0$, partie imaginaire $= 0$.\n3. Factoriser la 2e équation, traiter les deux cas.",
+   "duree": 8,
+   "etapes": [
+    {
+     "consigne": "Développe $z^2 + 2iz + 3$ avec $z = x + iy$. Partie réelle ?",
+     "question": "Partie réelle (en $x$, $y$) ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "x^2 - y^2 - 2y + 3",
+      "vars": [
+       "x",
+       "y"
+      ]
+     },
+     "corrige": "$x^2 - y^2 + 2xyi + 2ix - 2y + 3$ : partie réelle $x^2 - y^2 - 2y + 3$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Partie imaginaire ?",
+     "question": "Partie imaginaire (en $x$, $y$) ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "2x y + 2x",
+      "vars": [
+       "x",
+       "y"
+      ]
+     },
+     "corrige": "Partie imaginaire $2xy + 2x = 2x(y + 1)$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "$2x(y + 1) = 0$ : traite $x = 0$, puis $y = -1$ (impossible ?). Donne les solutions.",
+     "question": "Solutions ? (séparées par « ; »)",
+     "verif": {
+      "mode": "expr",
+      "attendu": "i ; -3i",
+      "liste": true,
+      "forme": "algebrique"
+     },
+     "corrige": "$x = 0$ : $y^2 + 2y - 3 = 0$, $y = 1$ ou $y = -3$. $y = -1$ : $x^2 + 4 = 0$, impossible. $\\boxed{z_1 = i, \\ z_2 = -3i}$",
+     "indices": [
+      "$x = 0$ donne $-y^2 - 2y + 3 = 0$.",
+      "$y = -1$ donne $x^2 + 4 = 0$ : pas de $x$ réel."
+     ],
+     "duree": 3
+    }
+   ]
+  },
+  {
+   "id": "ma3-201",
+   "type": "exo",
+   "notion": "3.1",
+   "origine": "annale",
+   "titre": "Annale · DST 1 (oct. 2024), ex. 4",
+   "enonce": "Trouver les deux racines carrées du nombre complexe $z = 4\\left(\\cos\\frac{\\pi}{2} + i\\sin\\frac{\\pi}{2}\\right)$.",
+   "guidage": "$w = \\pm\\sqrt r\\,e^{i\\theta/2}$, puis forme algébrique.",
+   "duree": 6,
+   "etapes": [
+    {
+     "consigne": "$\\sqrt4 = 2$ et $\\frac{\\pi}{2} \\div 2 = \\frac{\\pi}{4}$ : écris $w_1$ en forme algébrique.",
+     "question": "$w_1$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "sqrt(2) + sqrt(2) i",
+      "forme": "algebrique"
+     },
+     "corrige": "$w_1 = 2\\left(\\frac{\\sqrt2}{2} + \\frac{\\sqrt2}{2}i\\right) = \\sqrt2 + i\\sqrt2$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Donne les deux racines carrées, séparées par « ; ».",
+     "question": "Racines carrées ? (forme algébrique)",
+     "verif": {
+      "mode": "expr",
+      "attendu": "sqrt(2) + sqrt(2) i ; -sqrt(2) - sqrt(2) i",
+      "liste": true,
+      "forme": "algebrique"
+     },
+     "corrige": "$\\boxed{w_1 = \\sqrt2 + i\\sqrt2, \\quad w_2 = -\\sqrt2 - i\\sqrt2}$",
+     "indices": [
+      "$w = \\pm 2e^{i\\pi/4}$.",
+      "$2e^{i\\pi/4} = \\sqrt2 + i\\sqrt2$."
+     ],
+     "duree": 4
+    }
+   ]
+  },
+  {
+   "id": "ma3-202",
+   "type": "exo",
+   "notion": "3.1",
+   "origine": "annale",
+   "titre": "Annale · Rattrapage (mars 2026), ex. 2",
+   "enonce": "Déterminer les racines carrées du nombre complexe $z = 4 - 4i$. Indication : il est conseillé d'utiliser la forme exponentielle de $z$.",
+   "guidage": "1. $z = re^{i\\theta}$. 2. $w = \\pm\\sqrt r\\,e^{i\\theta/2}$.",
+   "duree": 8,
+   "etapes": [
+    {
+     "consigne": "Écris $z$ sous forme exponentielle.",
+     "question": "$z$ = ? (forme exponentielle)",
+     "verif": {
+      "mode": "expr",
+      "attendu": "4 sqrt(2) e^(-i pi/4)",
+      "forme": "expo"
+     },
+     "corrige": "$r = \\sqrt{32} = 4\\sqrt2$, $\\cos\\theta = \\frac{\\sqrt2}{2}$, $\\sin\\theta = -\\frac{\\sqrt2}{2}$ : $z = 4\\sqrt2\\,e^{-i\\pi/4}$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Calcule $\\sqrt r = \\sqrt{4\\sqrt2}$ (tu peux l'écrire comme une puissance de 2).",
+     "question": "$\\sqrt r$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "2^(5/4)"
+     },
+     "corrige": "$\\sqrt{4\\sqrt2} = \\sqrt{2^{5/2}} = 2^{5/4}$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Moitié de l'argument : donne les deux racines carrées (forme au choix), séparées par « ; ».",
+     "question": "Racines carrées ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "2^(5/4) e^(-i pi/8) ; -2^(5/4) e^(-i pi/8)",
+      "liste": true
+     },
+     "corrige": "$\\boxed{w = \\pm\\,2^{5/4}\\,e^{-i\\pi/8}}$",
+     "indices": [
+      "$z = 4\\sqrt2\\,e^{-i\\pi/4}$.",
+      "$\\sqrt r = 2^{5/4}$ et $\\frac{\\theta}{2} = -\\frac{\\pi}{8}$."
+     ],
+     "duree": 4
+    }
+   ]
+  },
+  {
+   "id": "ma3-203",
+   "type": "exo",
+   "notion": "3.4",
+   "origine": "annale",
+   "titre": "Annale · Rattrapage (mars 2026), ex. 3",
+   "enonce": "Résoudre dans $\\mathbb{C}$ l'équation $iz^2 - 2z + 3i = 0$. Méthode au choix.",
+   "guidage": "$\\Delta = b^2 - 4ac$, $\\delta$, puis $z = \\frac{-b \\pm \\delta}{2a}$.",
+   "duree": 8,
+   "etapes": [
+    {
+     "consigne": "$a = i$, $b = -2$, $c = 3i$. Calcule $\\Delta$.",
+     "question": "$\\Delta$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "16"
+     },
+     "corrige": "$\\Delta = 4 - 4 \\cdot i \\cdot 3i = 4 + 12 = 16$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "$\\delta = 4$ : applique $z = \\frac{2 \\pm 4}{2i}$ et simplifie (pas de $i$ en bas). Solutions séparées par « ; ».",
+     "question": "Solutions ? (forme algébrique)",
+     "verif": {
+      "mode": "expr",
+      "attendu": "-3i ; i",
+      "liste": true,
+      "forme": "algebrique"
+     },
+     "corrige": "$z_1 = \\frac{6}{2i} = -3i$ et $z_2 = \\frac{-2}{2i} = i$ : $\\boxed{z_1 = -3i, \\ z_2 = i}$",
+     "indices": [
+      "$\\Delta = 16$, $\\delta = 4$.",
+      "$\\frac{1}{i} = -i$."
+     ],
+     "duree": 6
+    }
+   ]
+  },
+  {
+   "id": "ma3-301",
+   "type": "examen",
+   "titre": "DST 1 · Nombres complexes (oct. 2024)",
+   "duree": 60,
+   "items": [
+    "ma1-201",
+    "ma1-202",
+    "ma2-201",
+    "ma3-201",
+    "ma1-203"
+   ],
+   "enonce": "Durée : 1 heure. Documents et calculatrices interdits. Tous les calculs doivent être justifiés ; encadre les résultats."
+  }
+ ]
+}

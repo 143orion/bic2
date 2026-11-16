@@ -1,0 +1,1925 @@
+{
+ "id": "ma-1-algebrique",
+ "module": "maths-analyse",
+ "titre": "Forme algébrique",
+ "ordre": 1,
+ "sources": [
+  "Poly Nombres complexes § 1 à 3, 6, 7",
+  "DST 1 (oct. 2024) ex. 1, 2",
+  "DST 2 variante B ex. 1",
+  "Exos prép CC3 (équations dans ℂ)",
+  "Notes du prof (groupes 3.1 à 3.3)"
+ ],
+ "tldr": [
+  "$i^2 = -1$ · $z = a + bi$, $\\operatorname{Re} z = a$, $\\operatorname{Im} z = b$ (réel) · égalité : parties réelles **et** imaginaires",
+  "$(a + bi)(c + di) = (ac - bd) + (ad + bc)i$ · $(a + bi)^2 = a^2 - b^2 + 2abi$ · $(1 + i)^2 = 2i$",
+  "$\\bar z = a - bi$ · $|z| = \\sqrt{a^2 + b^2}$ · $z\\bar z = |z|^2$ (réel)",
+  "Quotient : multiplier haut **et** bas par le conjugué du dénominateur ; jamais de $i$ en bas",
+  "$az + b = 0$ : $z = -\\frac{b}{a}$, puis simplifier · avec $\\bar z$ : poser $z = x + iy$, identifier, système",
+  "$|z - w|$ = distance ; $|z - z_0| = R$ : cercle de centre $z_0$, rayon $R$"
+ ],
+ "notions": [
+  {
+   "id": "1.1",
+   "titre": "$i^2 = -1$ et forme $a + bi$",
+   "corps": "L'équation $x^2 + 1 = 0$ n'a pas de solution réelle, car un carré réel est toujours $\\geq 0$. On ajoute donc un nombre $i$ tel que\n$$i^2 = -1$$\n\nUn **nombre complexe** s'écrit $z = a + bi$ avec $a, b \\in \\mathbb{R}$ : c'est sa **forme algébrique**.\n- $a = \\operatorname{Re}(z)$ est la **partie réelle**, $b = \\operatorname{Im}(z)$ la **partie imaginaire** (un réel, sans le $i$).\n- L'ensemble des complexes se note $\\mathbb{C}$.\n\n> **À retenir** : deux complexes sont égaux si et seulement si leurs parties réelles **et** leurs parties imaginaires sont égales : $a + bi = c + di \\iff a = c$ et $b = d$.\n\nOn représente $z = a + bi$ par le point $(a, b)$ du plan : l'axe horizontal porte la partie réelle, l'axe vertical la partie imaginaire.\n\nPuissances de $i$ : $i^2 = -1$, $i^3 = -i$, $i^4 = 1$, puis ça recommence (cycle de 4).",
+   "schema": {
+    "modele": "plan",
+    "vals": {
+     "pts": [
+      [
+       3,
+       2,
+       "z = 3+2i"
+      ]
+     ],
+     "m": 4
+    }
+   },
+   "rec": "Un réel $a$ est aussi un complexe : $a = a + 0i$.",
+   "alt": "Imagine $i$ comme une flèche verticale de longueur $1$. Multiplier par $i$ fait tourner d'un quart de tour : $1 \\to i \\to -1 \\to -i \\to 1$. C'est pour ça que $i^2 = -1$ et que les puissances de $i$ tournent en rond tous les 4.",
+   "pre": [],
+   "ecrans": [
+    {
+     "titre": "Le nombre i",
+     "texte": "$i^2 = -1$ : aucun réel ne fait ça, on l'ajoute."
+    },
+    {
+     "titre": "Forme algébrique",
+     "texte": "$z = a + bi$ : $a$ partie réelle, $b$ partie imaginaire.",
+     "schema": {
+      "modele": "plan",
+      "vals": {
+       "pts": [
+        [
+         3,
+         2,
+         "3+2i"
+        ]
+       ],
+       "m": 4
+      }
+     }
+    },
+    {
+     "titre": "Égalité",
+     "texte": "On identifie séparément les parties réelles et les parties imaginaires. Cette idée resservira en {{1.6}}."
+    },
+    {
+     "titre": "Puissances de i",
+     "texte": "$i^2 = -1$, $i^3 = -i$, $i^4 = 1$ : cycle de 4."
+    }
+   ],
+   "check": {
+    "enonce": "$\\operatorname{Im}(3 - 5i)$ vaut…",
+    "choix": [
+     "$-5$",
+     "$-5i$",
+     "$3$",
+     "$5$"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "La partie imaginaire est le réel devant $i$, avec son signe : $-5$."
+   }
+  },
+  {
+   "id": "1.2",
+   "titre": "Opérations et identités",
+   "corps": "On calcule comme avec des polynômes en $i$, puis on remplace $i^2$ par $-1$.\n\n- **Somme** : $(a + bi) + (c + di) = (a + c) + (b + d)i$.\n- **Produit** : $(a + bi)(c + di) = ac + adi + bci + bd\\,i^2 = (ac - bd) + (ad + bc)i$.\n\nIdentités utiles (à reconnaître) :\n$$(a + bi)^2 = a^2 - b^2 + 2abi \\qquad (1 + i)^2 = 2i \\qquad (1 - i)^2 = -2i \\qquad (a + bi)(a - bi) = a^2 + b^2$$\n\n> **Piège** : $(a + bi)^2 \\neq a^2 + b^2$. Le $i^2$ fait apparaître un **moins** : $a^2 - b^2$.\n\n> **Exemple** : $(2 + 2i)^2 = 4 + 8i + 4i^2 = 8i$ (DST 1, ex. 5).",
+   "rec": "$i^2 = -1$ ({{1.1}}).",
+   "alt": "Pour un produit, fais un tableau à double entrée : $a \\cdot c$, $a \\cdot di$, $bi \\cdot c$, $bi \\cdot di$. Additionne les quatre cases, sachant que la case $bi \\cdot di$ vaut $-bd$.",
+   "pre": [
+    "1.1"
+   ],
+   "ecrans": [
+    {
+     "titre": "Développer",
+     "texte": "$(a + bi)(c + di)$ : on développe les 4 produits."
+    },
+    {
+     "titre": "Remplacer i²",
+     "texte": "$bd\\,i^2 = -bd$ : il passe dans la partie réelle avec un moins."
+    },
+    {
+     "titre": "Regrouper",
+     "texte": "Partie réelle $ac - bd$, partie imaginaire $ad + bc$."
+    }
+   ],
+   "check": {
+    "enonce": "$(1 + i)^2$ vaut…",
+    "choix": [
+     "$2i$",
+     "$2$",
+     "$1 + i^2$",
+     "$0$"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$1 + 2i + i^2 = 1 + 2i - 1 = 2i$."
+   }
+  },
+  {
+   "id": "1.3",
+   "titre": "Conjugué et module",
+   "corps": "Pour $z = a + bi$ :\n- le **conjugué** est $\\bar z = a - bi$ (on change le signe de la partie imaginaire) ;\n- le **module** est $|z| = \\sqrt{a^2 + b^2}$ : la distance de $O$ au point $(a, b)$.\n\n> **À retenir** : $z\\,\\bar z = a^2 + b^2 = |z|^2$, **un réel positif**. C'est la clé de la division ({{1.4}}).\n\nAutres propriétés : $\\operatorname{Re}(z) = \\frac{z + \\bar z}{2}$, $\\operatorname{Im}(z) = \\frac{z - \\bar z}{2i}$, $|zw| = |z|\\,|w|$, $\\left|\\frac{z}{w}\\right| = \\frac{|z|}{|w|}$, $\\overline{z + w} = \\bar z + \\bar w$, $\\overline{zw} = \\bar z\\,\\bar w$.\n\n> **Exemple** : $z = 3 - 4i$ : $\\bar z = 3 + 4i$, $|z| = \\sqrt{9 + 16} = 5$, $z\\bar z = 25$.",
+   "schema": {
+    "modele": "plan",
+    "vals": {
+     "pts": [
+      [
+       3,
+       -4,
+       "z"
+      ],
+      [
+       3,
+       4,
+       "z̄"
+      ]
+     ],
+     "m": 5
+    }
+   },
+   "rec": "$(a + bi)(a - bi) = a^2 + b^2$ ({{1.2}}).",
+   "alt": "Sur le dessin, $\\bar z$ est le symétrique de $z$ par rapport à l'axe réel. Le module, c'est Pythagore : un côté $a$, un côté $b$, l'hypoténuse $\\sqrt{a^2 + b^2}$.",
+   "pre": [
+    "1.2"
+   ],
+   "ecrans": [
+    {
+     "titre": "Conjugué",
+     "texte": "$\\bar z$ : symétrique par rapport à l'axe réel.",
+     "schema": {
+      "modele": "plan",
+      "vals": {
+       "pts": [
+        [
+         3,
+         -4,
+         "z"
+        ],
+        [
+         3,
+         4,
+         "z̄"
+        ]
+       ],
+       "m": 5
+      }
+     }
+    },
+    {
+     "titre": "Module",
+     "texte": "$|z| = \\sqrt{a^2 + b^2}$ : c'est Pythagore."
+    },
+    {
+     "titre": "z z̄ est réel",
+     "texte": "$z\\,\\bar z = a^2 + b^2$ : plus de $i$. C'est ce qu'on utilise pour diviser."
+    }
+   ],
+   "check": {
+    "enonce": "$|{-6 + 8i}|$ vaut…",
+    "choix": [
+     "$10$",
+     "$14$",
+     "$2$",
+     "$\\sqrt{28}$"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$\\sqrt{36 + 64} = \\sqrt{100} = 10$."
+   }
+  },
+  {
+   "id": "1.4",
+   "titre": "Quotient : conjugué du dénominateur",
+   "corps": "On ne laisse **jamais** de $i$ au dénominateur. Méthode : multiplier en haut **et** en bas par le **conjugué du dénominateur**. En bas, on obtient $c^2 + d^2$, un réel.\n$$\\frac{a + bi}{c + di} = \\frac{(a + bi)(c - di)}{(c + di)(c - di)} = \\frac{(a + bi)(c - di)}{c^2 + d^2}$$\n\nOn développe le numérateur ({{1.2}}), puis on divise chaque partie par $c^2 + d^2$.\n\n> **Exemple** (DST 1, ex. 2) : $\\dfrac{2 + 16i}{1 + 3i} = \\dfrac{(2 + 16i)(1 - 3i)}{1 + 9} = \\dfrac{2 - 6i + 16i + 48}{10} = \\dfrac{50 + 10i}{10} = 5 + i$.\n\nCas particulier : $\\frac{1}{z} = \\frac{\\bar z}{|z|^2}$, et $\\frac{1}{i} = -i$.",
+   "rec": "$z\\,\\bar z = |z|^2$ est réel ({{1.3}}).",
+   "alt": "C'est la même astuce qu'avec $\\frac{1}{\\sqrt2}$ en réel : on multiplie par ce qui fait disparaître la racine (ici, le $i$) en bas.",
+   "pre": [
+    "1.3"
+   ],
+   "ecrans": [
+    {
+     "titre": "Le problème",
+     "texte": "Un $i$ au dénominateur : interdit dans le résultat final."
+    },
+    {
+     "titre": "L'astuce",
+     "texte": "Multiplier en haut et en bas par le conjugué du dénominateur."
+    },
+    {
+     "titre": "En bas",
+     "texte": "$(c + di)(c - di) = c^2 + d^2$ : un réel."
+    },
+    {
+     "titre": "En haut",
+     "texte": "On développe, puis on sépare partie réelle et partie imaginaire."
+    }
+   ],
+   "check": {
+    "enonce": "Pour simplifier $\\frac{4 + i}{2 - 3i}$, on multiplie en haut et en bas par…",
+    "choix": [
+     "$2 + 3i$",
+     "$2 - 3i$",
+     "$4 - i$",
+     "$i$"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "Le conjugué du dénominateur $2 - 3i$ est $2 + 3i$."
+   }
+  },
+  {
+   "id": "1.5",
+   "titre": "Équation du 1er degré",
+   "corps": "Pour résoudre $az + b = 0$ (avec $a \\neq 0$), on fait comme dans $\\mathbb{R}$ : on isole $z$.\n$$z = -\\frac{b}{a}$$\npuis on simplifie le quotient ({{1.4}}) pour donner $z$ sous forme algébrique.\n\n> **Exemple** (DST 1, ex. 1) : $(2 + 2i)z + (2 - 16i) = 0$ donne\n> $z = \\dfrac{-2 + 16i}{2 + 2i} = \\dfrac{(-2 + 16i)(2 - 2i)}{8} = \\dfrac{28 + 36i}{8} = \\dfrac72 + \\dfrac92 i$.\n\n> **Astuce** : vérifie en remplaçant $z$ dans l'équation si tu as le temps. Une erreur de signe en passant $b$ de l'autre côté est le piège classique.",
+   "rec": "Simplifier un quotient : conjugué du dénominateur ({{1.4}}).",
+   "alt": "Écris d'abord $z = \\frac{\\text{quelque chose}}{\\text{quelque chose}}$ sans rien calculer. Ensuite seulement, fais la division comme en {{1.4}}. Deux étapes séparées, deux fois moins d'erreurs.",
+   "pre": [
+    "1.4"
+   ],
+   "ecrans": [
+    {
+     "titre": "Isoler z",
+     "texte": "$az + b = 0 \\Rightarrow z = -\\frac{b}{a}$. Attention au signe."
+    },
+    {
+     "titre": "Diviser",
+     "texte": "On multiplie par le conjugué de $a$ en haut et en bas."
+    },
+    {
+     "titre": "Conclure",
+     "texte": "On écrit $z = \\alpha + \\beta i$ et on encadre."
+    }
+   ],
+   "check": {
+    "enonce": "$(1 + i)z - 2 = 0$ donne $z = $…",
+    "choix": [
+     "$1 - i$",
+     "$1 + i$",
+     "$2 + 2i$",
+     "$-1 + i$"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$z = \\frac{2}{1 + i} = \\frac{2(1 - i)}{2} = 1 - i$."
+   }
+  },
+  {
+   "id": "1.6",
+   "titre": "Équations avec $z$ et $\\bar z$",
+   "corps": "Quand $z$ **et** $\\bar z$ apparaissent dans l'équation, on ne peut plus isoler $z$. Méthode :\n\n1. poser $z = x + iy$ avec $x, y$ réels, donc $\\bar z = x - iy$ ;\n2. développer, puis regrouper la partie réelle et la partie imaginaire ;\n3. **identifier** ({{1.1}}) : partie réelle = partie réelle, partie imaginaire = partie imaginaire. On obtient un **système** de 2 équations à 2 inconnues ;\n4. résoudre le système, puis écrire $z = x + iy$.\n\n> **Exemple** : $2z + i\\bar z = 3 + i$. Avec $z = x + iy$ : $2x + 2iy + ix + y = (2x + y) + i(x + 2y)$.\n> Donc $2x + y = 3$ et $x + 2y = 1$, d'où $x = \\frac53$, $y = -\\frac13$ : $z = \\frac53 - \\frac13 i$.\n\nC'est l'exercice 1 du DST 2 et le premier type des exos de prépa du CC3.",
+   "rec": "Égalité de deux complexes ({{1.1}}) et conjugué ({{1.3}}).",
+   "alt": "Le $\\bar z$ empêche de « diviser par le coefficient de $z$ ». On revient donc aux réels : deux inconnues $x$ et $y$, deux équations (une par partie). C'est un système comme au lycée.",
+   "pre": [
+    "1.5"
+   ],
+   "ecrans": [
+    {
+     "titre": "Poser z = x + iy",
+     "texte": "Et donc $\\bar z = x - iy$."
+    },
+    {
+     "titre": "Développer",
+     "texte": "Chaque produit $(\\alpha + \\beta i)(x \\pm iy)$ se développe comme en {{1.2}}."
+    },
+    {
+     "titre": "Identifier",
+     "texte": "Partie réelle à gauche = partie réelle à droite ; pareil pour la partie imaginaire."
+    },
+    {
+     "titre": "Résoudre",
+     "texte": "Système 2 × 2 : substitution ou combinaison. Puis $z = x + iy$."
+    }
+   ],
+   "check": {
+    "enonce": "Dans $z + 2\\bar z$ avec $z = x + iy$, la partie réelle vaut…",
+    "choix": [
+     "$3x$",
+     "$x + 2y$",
+     "$3x - y$",
+     "$-y$"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$x + iy + 2x - 2iy = 3x - iy$ : partie réelle $3x$, partie imaginaire $-y$."
+   }
+  },
+  {
+   "id": "1.7",
+   "titre": "Plan complexe : distances, cercles",
+   "corps": "Le point $M$ d'affixe $z$ est le point $(\\operatorname{Re} z, \\operatorname{Im} z)$.\n\n- La **distance** entre les points d'affixes $z$ et $w$ vaut $|z - w|$.\n- L'ensemble des $z$ tels que $|z - z_0| = R$ est le **cercle** de centre $z_0$ et de rayon $R$.\n- **Inégalité triangulaire** : $|z + w| \\leq |z| + |w|$.\n\n> **Exemple** : $|z - 1| = 2$ est le cercle de centre $1$ (sur l'axe réel) et de rayon $2$.\n> Le triangle $(0, z, w)$ est isocèle en $0$ si et seulement si $|z| = |w|$.\n\nCette notion n'est jamais tombée aux CC, mais elle donne le sens géométrique du module : c'est une distance.",
+   "schema": {
+    "modele": "plan",
+    "vals": {
+     "pts": [
+      [
+       1,
+       0,
+       "1"
+      ],
+      [
+       3,
+       0,
+       ""
+      ]
+     ],
+     "r": 2,
+     "centre": [
+      1,
+      0
+     ],
+     "m": 4
+    }
+   },
+   "rec": "$|z| = \\sqrt{a^2 + b^2}$ est la distance de $O$ à $z$ ({{1.3}}).",
+   "alt": "$|z - w|$, c'est le module de la flèche qui va de $w$ à $z$, donc sa longueur.",
+   "pre": [
+    "1.3"
+   ],
+   "ecrans": [
+    {
+     "titre": "Distance",
+     "texte": "$|z - w|$ = distance entre les points."
+    },
+    {
+     "titre": "Cercle",
+     "texte": "$|z - z_0| = R$ : tous les points à distance $R$ de $z_0$.",
+     "schema": {
+      "modele": "plan",
+      "vals": {
+       "pts": [
+        [
+         1,
+         0,
+         "z₀ = 1"
+        ]
+       ],
+       "r": 2,
+       "centre": [
+        1,
+        0
+       ],
+       "m": 4
+      }
+     }
+    }
+   ],
+   "check": {
+    "enonce": "L'ensemble des $z$ tels que $|z + 2i| = 3$ est…",
+    "choix": [
+     "le cercle de centre $-2i$ et de rayon $3$",
+     "le cercle de centre $2i$ et de rayon $3$",
+     "le cercle de centre $0$ et de rayon $3$",
+     "une droite"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$|z + 2i| = |z - (-2i)|$ : centre $-2i$."
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "ma1-001",
+   "type": "saisie",
+   "notion": "1.1",
+   "origine": "cours",
+   "enonce": "Calcule $i^{[[N]]}$.",
+   "verif": {
+    "mode": "expr",
+    "attendu": "[[V]]",
+    "interdit": [
+     {
+      "motif": "\\^",
+      "msg": "Donne la valeur : $1$, $i$, $-1$ ou $-i$."
+     }
+    ],
+    "exemple": "1, i, -1 ou -i"
+   },
+   "duree": 0.5,
+   "explication": "Les puissances de $i$ forment un cycle de 4. $[[N]] = 4 \\times [[Q]] + [[R]]$, donc $i^{[[N]]} = i^{[[R]]} = [[VT]]$.",
+   "vals": {
+    "N": "16",
+    "Q": "4",
+    "R": "0",
+    "V": "1",
+    "VT": "1"
+   },
+   "variantes": [
+    {
+     "N": "16",
+     "Q": "4",
+     "R": "0",
+     "V": "1",
+     "VT": "1"
+    },
+    {
+     "N": "17",
+     "Q": "4",
+     "R": "1",
+     "V": "i",
+     "VT": "i"
+    },
+    {
+     "N": "25",
+     "Q": "6",
+     "R": "1",
+     "V": "i",
+     "VT": "i"
+    },
+    {
+     "N": "19",
+     "Q": "4",
+     "R": "3",
+     "V": "-i",
+     "VT": "-i"
+    },
+    {
+     "N": "8",
+     "Q": "2",
+     "R": "0",
+     "V": "1",
+     "VT": "1"
+    },
+    {
+     "N": "9",
+     "Q": "2",
+     "R": "1",
+     "V": "i",
+     "VT": "i"
+    }
+   ]
+  },
+  {
+   "id": "ma1-002",
+   "type": "qcm",
+   "notion": "1.1",
+   "origine": "cours",
+   "enonce": "$a + bi = 3 - 2i$ (avec $a, b$ réels) signifie…",
+   "choix": [
+    "$a = 3$ et $b = -2$",
+    "$a = 3$ et $b = 2$",
+    "$a - b = 5$",
+    "$a = 3$ et $b = -2i$"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "On identifie : parties réelles $a = 3$, parties imaginaires $b = -2$ (un réel)."
+  },
+  {
+   "id": "ma1-003",
+   "type": "trous",
+   "notion": "1.1",
+   "origine": "cours",
+   "enonce": "$i^2 = [_]$, $i^3 = [_]$, $i^4 = [_]$",
+   "fragments": [
+    "$-1$",
+    "$-i$",
+    "$1$",
+    "$i$"
+   ],
+   "verif": {
+    "mode": "trous",
+    "attendu": [
+     "$-1$",
+     "$-i$",
+     "$1$"
+    ]
+   },
+   "duree": 0.5,
+   "explication": "$i^3 = i^2 \\cdot i = -i$ et $i^4 = (i^2)^2 = 1$."
+  },
+  {
+   "id": "ma1-004",
+   "type": "saisie",
+   "notion": "1.2",
+   "origine": "cours",
+   "enonce": "Calcule $[[Z1]] \\times [[Z2]]$ sous forme algébrique.",
+   "verif": {
+    "mode": "expr",
+    "attendu": "[[P]]",
+    "forme": "algebrique"
+   },
+   "duree": 0.75,
+   "explication": "On développe : $[[DEV]] = [[PT]]$.",
+   "indices": [
+    "Développe les 4 produits, puis remplace $i^2$ par $-1$.",
+    "Partie réelle $ac - bd$, partie imaginaire $ad + bc$."
+   ],
+   "vals": {
+    "Z1": "(1 - 2i)",
+    "Z2": "(-1 - 2i)",
+    "P": "-5",
+    "PT": "-5",
+    "DEV": "(1 - 2i)(-1 - 2i)"
+   },
+   "variantes": [
+    {
+     "Z1": "(1 - 2i)",
+     "Z2": "(-1 - 2i)",
+     "P": "-5",
+     "PT": "-5",
+     "DEV": "(1 - 2i)(-1 - 2i)"
+    },
+    {
+     "Z1": "(2 + i)",
+     "Z2": "(3 + 3i)",
+     "P": "3 + 9 i",
+     "PT": "3 + 9i",
+     "DEV": "(2 + i)(3 + 3i)"
+    },
+    {
+     "Z1": "(-1 + 2i)",
+     "Z2": "(3 - i)",
+     "P": "-1 + 7 i",
+     "PT": "-1 + 7i",
+     "DEV": "(-1 + 2i)(3 - i)"
+    },
+    {
+     "Z1": "(-3 - 2i)",
+     "Z2": "(-2 - 4i)",
+     "P": "-2 + 16 i",
+     "PT": "-2 + 16i",
+     "DEV": "(-3 - 2i)(-2 - 4i)"
+    },
+    {
+     "Z1": "(3 + i)",
+     "Z2": "(2 + 2i)",
+     "P": "4 + 8 i",
+     "PT": "4 + 8i",
+     "DEV": "(3 + i)(2 + 2i)"
+    },
+    {
+     "Z1": "(4 - 2i)",
+     "Z2": "(1 - i)",
+     "P": "2 - 6 i",
+     "PT": "2 - 6i",
+     "DEV": "(4 - 2i)(1 - i)"
+    }
+   ]
+  },
+  {
+   "id": "ma1-005",
+   "type": "saisie",
+   "notion": "1.2",
+   "origine": "cours",
+   "enonce": "Calcule $([[Z1]])^2$ sous forme algébrique.",
+   "verif": {
+    "mode": "expr",
+    "attendu": "[[P]]",
+    "forme": "algebrique"
+   },
+   "duree": 0.67,
+   "explication": "$(a + bi)^2 = a^2 - b^2 + 2abi$ : $[[PT]]$.",
+   "indices": [
+    "$(a + bi)^2 = a^2 + 2abi + b^2 i^2$.",
+    "Ça fait $a^2 - b^2 + 2abi$."
+   ],
+   "vals": {
+    "Z1": "4 - 3i",
+    "P": "7 - 24 i",
+    "PT": "7 - 24i"
+   },
+   "variantes": [
+    {
+     "Z1": "4 - 3i",
+     "P": "7 - 24 i",
+     "PT": "7 - 24i"
+    },
+    {
+     "Z1": "-1 - 5i",
+     "P": "-24 + 10 i",
+     "PT": "-24 + 10i"
+    },
+    {
+     "Z1": "4 + 5i",
+     "P": "-9 + 40 i",
+     "PT": "-9 + 40i"
+    },
+    {
+     "Z1": "2 + 4i",
+     "P": "-12 + 16 i",
+     "PT": "-12 + 16i"
+    },
+    {
+     "Z1": "2 - 3i",
+     "P": "-5 - 12 i",
+     "PT": "-5 - 12i"
+    },
+    {
+     "Z1": "-2 + 2i",
+     "P": "-8 i",
+     "PT": "-8i"
+    }
+   ]
+  },
+  {
+   "id": "ma1-006",
+   "type": "qcm",
+   "notion": "1.2",
+   "origine": "cours",
+   "enonce": "$(3 + 2i)^2$ vaut…",
+   "choix": [
+    "$5 + 12i$",
+    "$13 + 12i$",
+    "$9 + 4i$",
+    "$5 + 6i$"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "$9 + 12i + 4i^2 = 9 - 4 + 12i = 5 + 12i$. Le piège est d'oublier que $i^2 = -1$."
+  },
+  {
+   "id": "ma1-007",
+   "type": "saisie",
+   "notion": "1.3",
+   "origine": "cours",
+   "enonce": "Calcule le module de $z = [[Z]]$.",
+   "verif": {
+    "mode": "expr",
+    "attendu": "[[M]]",
+    "interdit": [
+     {
+      "motif": "sqrt\\s*\\(\\s*[0-9]+\\s*\\)\\s*$|√\\s*\\(?\\s*\\d+\\s*\\)?\\s*$",
+      "flags": "",
+      "msg": "Simplifie la racine : c'est un entier."
+     }
+    ]
+   },
+   "duree": 0.5,
+   "explication": "$|z| = \\sqrt{[[A2]] + [[B2]]} = \\sqrt{[[S]]} = [[M]]$.",
+   "vals": {
+    "Z": "4 - 3i",
+    "A2": "4^2",
+    "B2": "(-3)^2",
+    "S": "25",
+    "M": "5"
+   },
+   "variantes": [
+    {
+     "Z": "4 - 3i",
+     "A2": "4^2",
+     "B2": "(-3)^2",
+     "S": "25",
+     "M": "5"
+    },
+    {
+     "Z": "-6 + 8i",
+     "A2": "(-6)^2",
+     "B2": "8^2",
+     "S": "100",
+     "M": "10"
+    },
+    {
+     "Z": "8 + 15i",
+     "A2": "8^2",
+     "B2": "15^2",
+     "S": "289",
+     "M": "17"
+    },
+    {
+     "Z": "3 + 4i",
+     "A2": "3^2",
+     "B2": "4^2",
+     "S": "25",
+     "M": "5"
+    },
+    {
+     "Z": "-15 + 8i",
+     "A2": "(-15)^2",
+     "B2": "8^2",
+     "S": "289",
+     "M": "17"
+    },
+    {
+     "Z": "9 - 12i",
+     "A2": "9^2",
+     "B2": "(-12)^2",
+     "S": "225",
+     "M": "15"
+    }
+   ]
+  },
+  {
+   "id": "ma1-008",
+   "type": "qcm",
+   "notion": "1.3",
+   "origine": "cours",
+   "enonce": "Le conjugué de $-2 + 7i$ est…",
+   "choix": [
+    "$-2 - 7i$",
+    "$2 - 7i$",
+    "$2 + 7i$",
+    "$7 - 2i$"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "On change seulement le signe de la partie imaginaire."
+  },
+  {
+   "id": "ma1-009",
+   "type": "qcm-multi",
+   "notion": "1.3",
+   "origine": "cours",
+   "enonce": "Pour tout $z \\in \\mathbb{C}$…",
+   "choix": [
+    "$z\\,\\bar z = |z|^2$",
+    "$z\\,\\bar z$ est un réel",
+    "$|\\bar z| = |z|$",
+    "$z + \\bar z = 0$"
+   ],
+   "verif": {
+    "attendu": [
+     0,
+     1,
+     2
+    ]
+   },
+   "duree": 0.5,
+   "explication": "$z + \\bar z = 2\\operatorname{Re}(z)$, nul seulement si $z$ est imaginaire pur."
+  },
+  {
+   "id": "ma1-010",
+   "type": "saisie",
+   "notion": "1.4",
+   "origine": "cours",
+   "enonce": "Simplifie $\\dfrac{[[N]]}{[[D]]}$ (forme algébrique).",
+   "verif": {
+    "mode": "expr",
+    "attendu": "[[Q]]",
+    "forme": "algebrique"
+   },
+   "duree": 1,
+   "explication": "$\\dfrac{([[N]])([[DB]])}{[[D2]]} = \\dfrac{[[NUM]]}{[[D2]]} = [[QT]]$.",
+   "indices": [
+    "Multiplie en haut et en bas par le conjugué du dénominateur.",
+    "En bas : $c^2 + d^2$."
+   ],
+   "vals": {
+    "N": "-10i",
+    "D": "3 - i",
+    "DB": "3 + i",
+    "D2": "10",
+    "NUM": "10 - 30i",
+    "Q": "1 - 3 i",
+    "QT": "1 - 3i"
+   },
+   "variantes": [
+    {
+     "N": "-10i",
+     "D": "3 - i",
+     "DB": "3 + i",
+     "D2": "10",
+     "NUM": "10 - 30i",
+     "Q": "1 - 3 i",
+     "QT": "1 - 3i"
+    },
+    {
+     "N": "10i",
+     "D": "-2 - i",
+     "DB": "-2 + i",
+     "D2": "5",
+     "NUM": "-10 - 20i",
+     "Q": "-2 - 4 i",
+     "QT": "-2 - 4i"
+    },
+    {
+     "N": "-6",
+     "D": "3 - 3i",
+     "DB": "3 + 3i",
+     "D2": "18",
+     "NUM": "-18 - 18i",
+     "Q": "-1 - i",
+     "QT": "-1 - i"
+    },
+    {
+     "N": "4i",
+     "D": "-2 + 2i",
+     "DB": "-2 - 2i",
+     "D2": "8",
+     "NUM": "8 - 8i",
+     "Q": "1 - i",
+     "QT": "1 - i"
+    },
+    {
+     "N": "4 - 8i",
+     "D": "2 + 2i",
+     "DB": "2 - 2i",
+     "D2": "8",
+     "NUM": "-8 - 24i",
+     "Q": "-1 - 3 i",
+     "QT": "-1 - 3i"
+    },
+    {
+     "N": "-10",
+     "D": "-3 - i",
+     "DB": "-3 + i",
+     "D2": "10",
+     "NUM": "30 - 10i",
+     "Q": "3 - i",
+     "QT": "3 - i"
+    }
+   ]
+  },
+  {
+   "id": "ma1-011",
+   "type": "trous",
+   "notion": "1.4",
+   "origine": "cours",
+   "enonce": "$\\dfrac{a + bi}{c + di} = \\dfrac{(a + bi)\\,[_]}{[_]}$",
+   "fragments": [
+    "$(c - di)$",
+    "$(c + di)$",
+    "$c^2 + d^2$",
+    "$c^2 - d^2$"
+   ],
+   "verif": {
+    "mode": "trous",
+    "attendu": [
+     "$(c - di)$",
+     "$c^2 + d^2$"
+    ]
+   },
+   "duree": 0.5,
+   "explication": "On multiplie par le conjugué $c - di$ ; en bas $(c + di)(c - di) = c^2 + d^2$."
+  },
+  {
+   "id": "ma1-012",
+   "type": "saisie",
+   "notion": "1.4",
+   "origine": "cours",
+   "enonce": "Calcule $\\dfrac{1}{i}$ sous forme algébrique.",
+   "verif": {
+    "mode": "expr",
+    "attendu": "-i",
+    "forme": "algebrique"
+   },
+   "duree": 0.5,
+   "explication": "$\\frac{1}{i} = \\frac{-i}{i\\cdot(-i)} = \\frac{-i}{1} = -i$."
+  },
+  {
+   "id": "ma1-013",
+   "type": "saisie",
+   "notion": "1.5",
+   "origine": "cours",
+   "enonce": "Résous $[[A]]\\,z = [[B]]$. Donne $z$ sous forme algébrique.",
+   "verif": {
+    "mode": "expr",
+    "attendu": "[[Z]]",
+    "forme": "algebrique"
+   },
+   "duree": 1,
+   "explication": "$z = \\dfrac{[[B]]}{[[A]]} = \\dfrac{([[B]])([[AB]])}{[[A2]]} = [[ZT]]$.",
+   "indices": [
+    "$z = \\frac{\\dots}{\\dots}$, puis conjugué du dénominateur.",
+    "Le dénominateur devient $[[A2]]$."
+   ],
+   "vals": {
+    "A": "(-3 + 2i)",
+    "B": "5 - 4i",
+    "AB": "-3 - 2i",
+    "A2": "13",
+    "Z": "-23/13 + 2/13 i",
+    "ZT": "-\\frac{23}{13} + \\frac{2}{13}i"
+   },
+   "variantes": [
+    {
+     "A": "(-3 + 2i)",
+     "B": "5 - 4i",
+     "AB": "-3 - 2i",
+     "A2": "13",
+     "Z": "-23/13 + 2/13 i",
+     "ZT": "-\\frac{23}{13} + \\frac{2}{13}i"
+    },
+    {
+     "A": "(1 + 3i)",
+     "B": "6 - 4i",
+     "AB": "1 - 3i",
+     "A2": "10",
+     "Z": "-3/5 - 11/5 i",
+     "ZT": "-\\frac{3}{5} - \\frac{11}{5}i"
+    },
+    {
+     "A": "(-1 - 3i)",
+     "B": "-3 + 6i",
+     "AB": "-1 + 3i",
+     "A2": "10",
+     "Z": "-3/2 - 3/2 i",
+     "ZT": "-\\frac{3}{2} - \\frac{3}{2}i"
+    },
+    {
+     "A": "(2 + 2i)",
+     "B": "-4 - 6i",
+     "AB": "2 - 2i",
+     "A2": "8",
+     "Z": "-5/2 - 1/2 i",
+     "ZT": "-\\frac{5}{2} - \\frac{1}{2}i"
+    },
+    {
+     "A": "(1 - 2i)",
+     "B": "5 - 4i",
+     "AB": "1 + 2i",
+     "A2": "5",
+     "Z": "13/5 + 6/5 i",
+     "ZT": "\\frac{13}{5} + \\frac{6}{5}i"
+    },
+    {
+     "A": "(3 + i)",
+     "B": "-6 + 2i",
+     "AB": "3 - i",
+     "A2": "10",
+     "Z": "-8/5 + 6/5 i",
+     "ZT": "-\\frac{8}{5} + \\frac{6}{5}i"
+    }
+   ]
+  },
+  {
+   "id": "ma1-014",
+   "type": "qcm",
+   "notion": "1.5",
+   "origine": "cours",
+   "enonce": "$(2 - i)z + 5 = 0$ donne $z = $…",
+   "choix": [
+    "$-2 - i$",
+    "$2 + i$",
+    "$-2 + i$",
+    "$\\frac{-5}{2} - 5i$"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "$z = \\frac{-5}{2 - i} = \\frac{-5(2 + i)}{5} = -2 - i$."
+  },
+  {
+   "id": "ma1-015",
+   "type": "saisie",
+   "notion": "1.6",
+   "origine": "cours",
+   "enonce": "On pose $z = x + iy$. Écris la **partie réelle** de $[[AL]]\\,z + [[BE]]\\,\\bar z$ en fonction de $x$ et $y$.",
+   "verif": {
+    "mode": "expr",
+    "attendu": "[[RE]]",
+    "vars": [
+     "x",
+     "y"
+    ],
+    "exemple": "ex. 2x + 3y"
+   },
+   "duree": 1,
+   "explication": "$[[AL]](x + iy) + [[BE]](x - iy)$ : partie réelle $[[RET]]$, partie imaginaire $[[IMT]]$.",
+   "indices": [
+    "Développe chaque produit séparément.",
+    "$(\\alpha_r + \\alpha_i i)(x + iy)$ a pour partie réelle $\\alpha_r x - \\alpha_i y$."
+   ],
+   "vals": {
+    "AL": "(-1 - i)",
+    "BE": "(2 - 3i)",
+    "RE": "x - 2 y",
+    "RET": "x - 2y",
+    "IMT": "-4x - 3y"
+   },
+   "variantes": [
+    {
+     "AL": "(-1 - i)",
+     "BE": "(2 - 3i)",
+     "RE": "x - 2 y",
+     "RET": "x - 2y",
+     "IMT": "-4x - 3y"
+    },
+    {
+     "AL": "(1 + 3i)",
+     "BE": "(-1 + 3i)",
+     "RE": "0",
+     "RET": "0",
+     "IMT": "6x + 2y"
+    },
+    {
+     "AL": "(-1 + i)",
+     "BE": "(-2 + 2i)",
+     "RE": "-3 x + y",
+     "RET": "-3x + y",
+     "IMT": "3x + y"
+    },
+    {
+     "AL": "(-1 + i)",
+     "BE": "(-1 - 2i)",
+     "RE": "-2 x - 3 y",
+     "RET": "-2x - 3y",
+     "IMT": "-x"
+    },
+    {
+     "AL": "(3 - 2i)",
+     "BE": "(-1 - 2i)",
+     "RE": "2 x",
+     "RET": "2x",
+     "IMT": "-4x + 4y"
+    },
+    {
+     "AL": "(1 - i)",
+     "BE": "(-1 - 3i)",
+     "RE": "-2 y",
+     "RET": "-2y",
+     "IMT": "-4x + 2y"
+    }
+   ]
+  },
+  {
+   "id": "ma1-016",
+   "type": "qcm",
+   "notion": "1.6",
+   "origine": "cours",
+   "enonce": "Pour résoudre $3z - i\\bar z = 2$, la bonne méthode est…",
+   "choix": [
+    "poser $z = x + iy$ et identifier",
+    "isoler $z$ et diviser par $3$",
+    "passer en forme exponentielle",
+    "calculer un discriminant"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Avec $\\bar z$, on ne peut pas isoler $z$ : on passe par $x$ et $y$."
+  },
+  {
+   "id": "ma1-017",
+   "type": "qcm",
+   "notion": "1.7",
+   "origine": "cours",
+   "enonce": "La distance entre les points d'affixes $1 + 2i$ et $4 + 6i$ vaut…",
+   "choix": [
+    "$5$",
+    "$7$",
+    "$\\sqrt{7}$",
+    "$25$"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "$|(4 + 6i) - (1 + 2i)| = |3 + 4i| = 5$."
+  },
+  {
+   "id": "ma1-018",
+   "type": "qcm",
+   "notion": "1.7",
+   "origine": "cours",
+   "enonce": "$\\{z \\in \\mathbb{C} : |z - 1| = 2\\}$ est…",
+   "choix": [
+    "le cercle de centre $1$ et de rayon $2$",
+    "le cercle de centre $-1$ et de rayon $2$",
+    "le disque de centre $1$ et de rayon $2$",
+    "le cercle de centre $0$ et de rayon $3$"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "$|z - 1|$ est la distance de $z$ au point $1$ : on la fixe à $2$."
+  },
+  {
+   "id": "ma1-101",
+   "type": "exo",
+   "notion": "1.5",
+   "origine": "cours",
+   "titre": "Équation du 1er degré (DST 1, ex. 1)",
+   "enonce": "Le but : résoudre une équation du 1er degré dans $\\mathbb{C}$ et donner la solution sous forme algébrique, comme à l'ex. 1 du DST 1.\n\nRésoudre dans $\\mathbb{C}$ : $$[[A]]\\,z + [[B]] = 0$$",
+   "guidage": "1. Isoler $z$ (attention au signe).\n2. Multiplier en haut et en bas par le conjugué du dénominateur.\n3. Calculer le dénominateur, puis développer le numérateur.\n4. Diviser et encadrer $z = \\alpha + \\beta i$.",
+   "duree": 5,
+   "etapes": [
+    {
+     "consigne": "On passe $[[B]]$ de l'autre côté, puis on divise par $[[A]]$. Écris $z$ comme un quotient, **sans le simplifier** (par exemple « (-1+2i)/(3+i) »).",
+     "question": "$z = $ ? (quotient)",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[MB]]/([[AE]])"
+     },
+     "corrige": "$z = \\dfrac{[[MBT]]}{[[A]]}$ : le terme constant change de signe en passant de l'autre côté.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Pour enlever le $i$ du dénominateur, on multiplie en haut et en bas par le **conjugué du dénominateur**. Écris ce conjugué.",
+     "question": "Conjugué de $[[A]]$ ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[ABE]]",
+      "forme": "algebrique"
+     },
+     "corrige": "Conjugué de $[[A]]$ : $[[AB]]$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "En bas, $(c + di)(c - di) = c^2 + d^2$ : un réel. Calcule-le.",
+     "question": "Dénominateur ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[A2]]"
+     },
+     "corrige": "$[[A2T]] = [[A2]]$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "En haut, développe $([[MBT]])([[AB]])$ et remplace $i^2$ par $-1$.",
+     "question": "Numérateur ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[NUME]]",
+      "forme": "algebrique"
+     },
+     "corrige": "$([[MBT]])([[AB]]) = [[NUMT]]$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Divise chaque partie par le dénominateur et simplifie les fractions.",
+     "question": "$z = $ ? (forme algébrique)",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[Z]]",
+      "forme": "algebrique"
+     },
+     "corrige": "$z = \\dfrac{[[NUMT]]}{[[A2]]} = \\boxed{[[ZT]]}$",
+     "indices": [
+      "$z = \\dfrac{([[MBT]])([[AB]])}{[[A2]]}$.",
+      "Le numérateur vaut $[[NUMT]]$ : divise par $[[A2]]$."
+     ],
+     "duree": 2
+    }
+   ],
+   "vals": {
+    "A": "(-1 + 2i)",
+    "AE": "-1 + 2 i",
+    "B": "(8 + 9i)",
+    "MB": "(-8 - 9 i)",
+    "MBT": "-8 - 9i",
+    "ABE": "-1 - 2 i",
+    "AB": "-1 - 2i",
+    "A2": "5",
+    "A2T": "(-1)^2 + 2^2",
+    "NUME": "-10 + 25 i",
+    "NUMT": "-10 + 25i",
+    "Z": "-2 + 5 i",
+    "ZT": "-2 + 5i"
+   },
+   "variantes": [
+    {
+     "A": "(-1 + 2i)",
+     "AE": "-1 + 2 i",
+     "B": "(8 + 9i)",
+     "MB": "(-8 - 9 i)",
+     "MBT": "-8 - 9i",
+     "ABE": "-1 - 2 i",
+     "AB": "-1 - 2i",
+     "A2": "5",
+     "A2T": "(-1)^2 + 2^2",
+     "NUME": "-10 + 25 i",
+     "NUMT": "-10 + 25i",
+     "Z": "-2 + 5 i",
+     "ZT": "-2 + 5i"
+    },
+    {
+     "A": "(2 - 2i)",
+     "AE": "2 - 2 i",
+     "B": "(2 + i)",
+     "MB": "(-2 - i)",
+     "MBT": "-2 - i",
+     "ABE": "2 + 2 i",
+     "AB": "2 + 2i",
+     "A2": "8",
+     "A2T": "2^2 + (-2)^2",
+     "NUME": "-2 - 6 i",
+     "NUMT": "-2 - 6i",
+     "Z": "-1/4 - 3/4 i",
+     "ZT": "-\\frac{1}{4} - \\frac{3}{4}i"
+    },
+    {
+     "A": "(-1 + 2i)",
+     "AE": "-1 + 2 i",
+     "B": "(3 + 9i)",
+     "MB": "(-3 - 9 i)",
+     "MBT": "-3 - 9i",
+     "ABE": "-1 - 2 i",
+     "AB": "-1 - 2i",
+     "A2": "5",
+     "A2T": "(-1)^2 + 2^2",
+     "NUME": "-15 + 15 i",
+     "NUMT": "-15 + 15i",
+     "Z": "-3 + 3 i",
+     "ZT": "-3 + 3i"
+    },
+    {
+     "A": "(-1 + i)",
+     "AE": "-1 + i",
+     "B": "(5 - 2i)",
+     "MB": "(-5 + 2 i)",
+     "MBT": "-5 + 2i",
+     "ABE": "-1 - i",
+     "AB": "-1 - i",
+     "A2": "2",
+     "A2T": "(-1)^2 + 1^2",
+     "NUME": "7 + 3 i",
+     "NUMT": "7 + 3i",
+     "Z": "7/2 + 3/2 i",
+     "ZT": "\\frac{7}{2} + \\frac{3}{2}i"
+    },
+    {
+     "A": "(2 - 2i)",
+     "AE": "2 - 2 i",
+     "B": "(9 + 8i)",
+     "MB": "(-9 - 8 i)",
+     "MBT": "-9 - 8i",
+     "ABE": "2 + 2 i",
+     "AB": "2 + 2i",
+     "A2": "8",
+     "A2T": "2^2 + (-2)^2",
+     "NUME": "-2 - 34 i",
+     "NUMT": "-2 - 34i",
+     "Z": "-1/4 - 17/4 i",
+     "ZT": "-\\frac{1}{4} - \\frac{17}{4}i"
+    },
+    {
+     "A": "(1 + i)",
+     "AE": "1 + i",
+     "B": "(-6 + 8i)",
+     "MB": "(6 - 8 i)",
+     "MBT": "6 - 8i",
+     "ABE": "1 - i",
+     "AB": "1 - i",
+     "A2": "2",
+     "A2T": "1^2 + 1^2",
+     "NUME": "-2 - 14 i",
+     "NUMT": "-2 - 14i",
+     "Z": "-1 - 7 i",
+     "ZT": "-1 - 7i"
+    }
+   ]
+  },
+  {
+   "id": "ma1-102",
+   "type": "exo",
+   "notion": "1.4",
+   "origine": "cours",
+   "titre": "Simplifier un quotient (DST 1, ex. 2)",
+   "enonce": "Le but : écrire un quotient de complexes sous forme algébrique, comme à l'ex. 2 du DST 1.\n\nSimplifier : $$\\frac{[[N]]}{[[D]]}$$",
+   "guidage": "1. Repérer le conjugué du dénominateur.\n2. Calculer le nouveau dénominateur $c^2 + d^2$.\n3. Développer le numérateur.\n4. Diviser et encadrer.",
+   "duree": 4,
+   "etapes": [
+    {
+     "consigne": "On multiplie en haut et en bas par le conjugué du dénominateur. Lequel ?",
+     "question": "Conjugué de $[[D]]$ ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[DBE]]",
+      "forme": "algebrique"
+     },
+     "corrige": "$[[DB]]$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Le dénominateur devient $c^2 + d^2$. Calcule-le.",
+     "question": "Dénominateur ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[D2]]"
+     },
+     "corrige": "$[[D2T]] = [[D2]]$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Développe le numérateur $([[N]])([[DB]])$, avec $i^2 = -1$.",
+     "question": "Numérateur ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[NUME]]",
+      "forme": "algebrique"
+     },
+     "corrige": "$([[N]])([[DB]]) = [[NUMT]]$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Divise chaque partie par le dénominateur.",
+     "question": "Résultat ? (forme algébrique)",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[Q]]",
+      "forme": "algebrique"
+     },
+     "corrige": "$\\dfrac{[[NUMT]]}{[[D2]]} = \\boxed{[[QT]]}$",
+     "indices": [
+      "Multiplie en haut et en bas par $[[DB]]$.",
+      "Tu dois trouver $\\dfrac{[[NUMT]]}{[[D2]]}$."
+     ],
+     "duree": 1.5
+    }
+   ],
+   "vals": {
+    "N": "-14 - 12i",
+    "D": "1 + 3i",
+    "DBE": "1 - 3 i",
+    "DB": "1 - 3i",
+    "D2": "10",
+    "D2T": "1^2 + 3^2",
+    "NUME": "-50 + 30 i",
+    "NUMT": "-50 + 30i",
+    "Q": "-5 + 3 i",
+    "QT": "-5 + 3i"
+   },
+   "variantes": [
+    {
+     "N": "-14 - 12i",
+     "D": "1 + 3i",
+     "DBE": "1 - 3 i",
+     "DB": "1 - 3i",
+     "D2": "10",
+     "D2T": "1^2 + 3^2",
+     "NUME": "-50 + 30 i",
+     "NUMT": "-50 + 30i",
+     "Q": "-5 + 3 i",
+     "QT": "-5 + 3i"
+    },
+    {
+     "N": "25 + 5i",
+     "D": "-2 - 3i",
+     "DBE": "-2 + 3 i",
+     "DB": "-2 + 3i",
+     "D2": "13",
+     "D2T": "(-2)^2 + (-3)^2",
+     "NUME": "-65 + 65 i",
+     "NUMT": "-65 + 65i",
+     "Q": "-5 + 5 i",
+     "QT": "-5 + 5i"
+    },
+    {
+     "N": "-16 + 7i",
+     "D": "2 + i",
+     "DBE": "2 - i",
+     "DB": "2 - i",
+     "D2": "5",
+     "D2T": "2^2 + 1^2",
+     "NUME": "-25 + 30 i",
+     "NUMT": "-25 + 30i",
+     "Q": "-5 + 6 i",
+     "QT": "-5 + 6i"
+    },
+    {
+     "N": "-1 - 3i",
+     "D": "2 + i",
+     "DBE": "2 - i",
+     "DB": "2 - i",
+     "D2": "5",
+     "D2T": "2^2 + 1^2",
+     "NUME": "-5 - 5 i",
+     "NUMT": "-5 - 5i",
+     "Q": "-1 - i",
+     "QT": "-1 - i"
+    },
+    {
+     "N": "24 - 3i",
+     "D": "3 - 2i",
+     "DBE": "3 + 2 i",
+     "DB": "3 + 2i",
+     "D2": "13",
+     "D2T": "3^2 + (-2)^2",
+     "NUME": "78 + 39 i",
+     "NUMT": "78 + 39i",
+     "Q": "6 + 3 i",
+     "QT": "6 + 3i"
+    },
+    {
+     "N": "-4 - 2i",
+     "D": "3 - i",
+     "DBE": "3 + i",
+     "DB": "3 + i",
+     "D2": "10",
+     "D2T": "3^2 + (-1)^2",
+     "NUME": "-10 - 10 i",
+     "NUMT": "-10 - 10i",
+     "Q": "-1 - i",
+     "QT": "-1 - i"
+    }
+   ]
+  },
+  {
+   "id": "ma1-103",
+   "type": "exo",
+   "notion": "1.6",
+   "origine": "cours",
+   "titre": "Équation avec $z$ et $\\bar z$ (DST 2, ex. 1)",
+   "enonce": "Le but : résoudre une équation où $z$ et $\\bar z$ apparaissent tous les deux, comme à l'ex. 1 du DST 2 et dans les exos de prépa du CC3.\n\nRésoudre pour $z \\in \\mathbb{C}$ : $$[[AL]]\\,z + [[BE]]\\,\\bar z = [[GA]]$$",
+   "guidage": "1. Poser $z = x + iy$, donc $\\bar z = x - iy$.\n2. Développer le membre de gauche et séparer partie réelle et partie imaginaire.\n3. Identifier avec $[[GA]]$ : système de 2 équations.\n4. Résoudre le système, puis écrire $z$.",
+   "duree": 8,
+   "etapes": [
+    {
+     "consigne": "Pose $z = x + iy$ et $\\bar z = x - iy$, développe $[[AL]](x + iy) + [[BE]](x - iy)$. Écris la **partie réelle** en fonction de $x$ et $y$.",
+     "question": "Partie réelle (en $x$, $y$) ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[RE]]",
+      "vars": [
+       "x",
+       "y"
+      ]
+     },
+     "corrige": "Partie réelle : $[[RET]]$.",
+     "duree": 1.5,
+     "guideSeul": true
+    },
+    {
+     "consigne": "Même chose pour la **partie imaginaire** (le réel devant $i$, sans le $i$).",
+     "question": "Partie imaginaire (en $x$, $y$) ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[IM]]",
+      "vars": [
+       "x",
+       "y"
+      ]
+     },
+     "corrige": "Partie imaginaire : $[[IMT]]$.",
+     "duree": 1.5,
+     "guideSeul": true
+    },
+    {
+     "consigne": "On identifie avec $[[GA]]$ : $[[RET]] = [[GR]]$ et $[[IMT]] = [[GI]]$. Résous ce système. Que vaut $x$ ?",
+     "question": "$x$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[X]]"
+     },
+     "corrige": "Le système donne $x = [[XT]]$.",
+     "duree": 2,
+     "guideSeul": true
+    },
+    {
+     "consigne": "Et $y$ ?",
+     "question": "$y$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[Y]]"
+     },
+     "corrige": "$y = [[YT]]$.",
+     "duree": 1,
+     "guideSeul": true
+    },
+    {
+     "consigne": "Écris la solution $z = x + iy$ et encadre-la.",
+     "question": "$z$ = ? (forme algébrique)",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[Z]]",
+      "forme": "algebrique"
+     },
+     "corrige": "Système : $[[RET]] = [[GR]]$ et $[[IMT]] = [[GI]]$, d'où $x = [[XT]]$, $y = [[YT]]$ : $\\boxed{z = [[ZT]]}$",
+     "indices": [
+      "Partie réelle $[[RET]]$, partie imaginaire $[[IMT]]$.",
+      "Résous $[[RET]] = [[GR]]$ et $[[IMT]] = [[GI]]$."
+     ],
+     "duree": 2
+    }
+   ],
+   "vals": {
+    "AL": "(1 + 3i)",
+    "BE": "(1 + i)",
+    "GA": "8 + 12i",
+    "RE": "2 x - 2 y",
+    "RET": "2x - 2y",
+    "IM": "4 x",
+    "IMT": "4x",
+    "GR": "8",
+    "GI": "12",
+    "X": "3",
+    "XT": "3",
+    "Y": "-1",
+    "YT": "-1",
+    "Z": "3 - i",
+    "ZT": "3 - i"
+   },
+   "variantes": [
+    {
+     "AL": "(1 + 3i)",
+     "BE": "(1 + i)",
+     "GA": "8 + 12i",
+     "RE": "2 x - 2 y",
+     "RET": "2x - 2y",
+     "IM": "4 x",
+     "IMT": "4x",
+     "GR": "8",
+     "GI": "12",
+     "X": "3",
+     "XT": "3",
+     "Y": "-1",
+     "YT": "-1",
+     "Z": "3 - i",
+     "ZT": "3 - i"
+    },
+    {
+     "AL": "(-1 - i)",
+     "BE": "(-2 - i)",
+     "GA": "9 + 7i",
+     "RE": "-3 x",
+     "RET": "-3x",
+     "IM": "-2 x + y",
+     "IMT": "-2x + y",
+     "GR": "9",
+     "GI": "7",
+     "X": "-3",
+     "XT": "-3",
+     "Y": "1",
+     "YT": "1",
+     "Z": "-3 + i",
+     "ZT": "-3 + i"
+    },
+    {
+     "AL": "(1 - i)",
+     "BE": "(1 - 2i)",
+     "GA": "-6 + 6i",
+     "RE": "2 x - y",
+     "RET": "2x - y",
+     "IM": "-3 x",
+     "IMT": "-3x",
+     "GR": "-6",
+     "GI": "6",
+     "X": "-2",
+     "XT": "-2",
+     "Y": "2",
+     "YT": "2",
+     "Z": "-2 + 2 i",
+     "ZT": "-2 + 2i"
+    },
+    {
+     "AL": "(1 - 2i)",
+     "BE": "(3 - 3i)",
+     "GA": "-6 + 14i",
+     "RE": "4 x - y",
+     "RET": "4x - y",
+     "IM": "-5 x - 2 y",
+     "IMT": "-5x - 2y",
+     "GR": "-6",
+     "GI": "14",
+     "X": "-2",
+     "XT": "-2",
+     "Y": "-2",
+     "YT": "-2",
+     "Z": "-2 - 2 i",
+     "ZT": "-2 - 2i"
+    },
+    {
+     "AL": "(-1 - 2i)",
+     "BE": "(-3 + 3i)",
+     "GA": "11 + 7i",
+     "RE": "-4 x + 5 y",
+     "RET": "-4x + 5y",
+     "IM": "x + 2 y",
+     "IMT": "x + 2y",
+     "GR": "11",
+     "GI": "7",
+     "X": "1",
+     "XT": "1",
+     "Y": "3",
+     "YT": "3",
+     "Z": "1 + 3 i",
+     "ZT": "1 + 3i"
+    },
+    {
+     "AL": "(3 - 2i)",
+     "BE": "(3 + 3i)",
+     "GA": "16 + i",
+     "RE": "6 x + 5 y",
+     "RET": "6x + 5y",
+     "IM": "x",
+     "IMT": "x",
+     "GR": "16",
+     "GI": "1",
+     "X": "1",
+     "XT": "1",
+     "Y": "2",
+     "YT": "2",
+     "Z": "1 + 2 i",
+     "ZT": "1 + 2i"
+    },
+    {
+     "AL": "(-1 - i)",
+     "BE": "(2 + 2i)",
+     "GA": "-4 + 2i",
+     "RE": "x + 3 y",
+     "RET": "x + 3y",
+     "IM": "x - 3 y",
+     "IMT": "x - 3y",
+     "GR": "-4",
+     "GI": "2",
+     "X": "-1",
+     "XT": "-1",
+     "Y": "-1",
+     "YT": "-1",
+     "Z": "-1 - i",
+     "ZT": "-1 - i"
+    },
+    {
+     "AL": "(-3 + 3i)",
+     "BE": "(1 - 3i)",
+     "GA": "-8 - 4i",
+     "RE": "-2 x - 6 y",
+     "RET": "-2x - 6y",
+     "IM": "-4 y",
+     "IMT": "-4y",
+     "GR": "-8",
+     "GI": "-4",
+     "X": "1",
+     "XT": "1",
+     "Y": "1",
+     "YT": "1",
+     "Z": "1 + i",
+     "ZT": "1 + i"
+    }
+   ]
+  },
+  {
+   "id": "ma1-104",
+   "type": "exo",
+   "notion": "1.3",
+   "origine": "cours",
+   "titre": "Forme algébrique et module (poly, ex. 7.1)",
+   "enonce": "Le but : s'entraîner aux trois calculs de base (somme, puissance, quotient) puis donner un module, comme l'exercice 7.1 du poly.\n\nÉcrire sous forme algébrique : (a) $(2 + 3i) + (1 - 5i)$ ; (b) $(1 + i)^3$ ; (c) $\\dfrac{3 - 4i}{2 - i}$. Puis donner le module de (c).",
+   "guidage": "1. (a) : on additionne les parties réelles et les parties imaginaires.\n2. (b) : $(1 + i)^2 = 2i$, puis on multiplie encore par $(1 + i)$.\n3. (c) : conjugué du dénominateur.\n4. Module : $\\sqrt{a^2 + b^2}$.",
+   "duree": 6,
+   "etapes": [
+    {
+     "consigne": "(a) Additionne les parties réelles, puis les parties imaginaires.",
+     "question": "(a) = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "3 - 2i",
+      "forme": "algebrique"
+     },
+     "corrige": "$(2 + 1) + (3 - 5)i = 3 - 2i$.",
+     "indices": [
+      "Partie réelle $2 + 1$.",
+      "Partie imaginaire $3 - 5$."
+     ],
+     "duree": 1
+    },
+    {
+     "consigne": "(b) Utilise $(1 + i)^2 = 2i$, puis multiplie par $(1 + i)$.",
+     "question": "(b) = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "-2 + 2i",
+      "forme": "algebrique"
+     },
+     "corrige": "$(1 + i)^3 = 2i(1 + i) = 2i + 2i^2 = -2 + 2i$.",
+     "indices": [
+      "$(1 + i)^2 = 2i$.",
+      "$2i(1 + i) = 2i - 2$."
+     ],
+     "duree": 1.5
+    },
+    {
+     "consigne": "(c) Multiplie en haut et en bas par $2 + i$.",
+     "question": "(c) = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "2 - i",
+      "forme": "algebrique"
+     },
+     "corrige": "$\\dfrac{(3 - 4i)(2 + i)}{5} = \\dfrac{6 + 3i - 8i + 4}{5} = \\dfrac{10 - 5i}{5} = 2 - i$.",
+     "indices": [
+      "Dénominateur : $4 + 1 = 5$.",
+      "Numérateur : $10 - 5i$."
+     ],
+     "duree": 2
+    },
+    {
+     "consigne": "Module du résultat de (c).",
+     "question": "|(c)| = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "sqrt(5)"
+     },
+     "corrige": "$|2 - i| = \\sqrt{4 + 1} = \\sqrt5$.",
+     "indices": [
+      "$\\sqrt{a^2 + b^2}$.",
+      "$a = 2$, $b = -1$."
+     ],
+     "duree": 1
+    }
+   ]
+  },
+  {
+   "id": "ma1-201",
+   "type": "exo",
+   "notion": "1.5",
+   "origine": "annale",
+   "titre": "Annale · DST 1 (oct. 2024), ex. 1",
+   "enonce": "Résoudre l'équation suivante dans $\\mathbb{C}$ : $$(2 + 2i)z + (2 - 16i) = 0$$",
+   "guidage": "1. Isoler $z$. 2. Conjugué du dénominateur. 3. Développer, diviser.",
+   "duree": 6,
+   "etapes": [
+    {
+     "consigne": "Isole $z$ (attention au signe du terme constant).",
+     "question": "$z$ = ? (quotient)",
+     "verif": {
+      "mode": "expr",
+      "attendu": "(-2+16i)/(2+2i)"
+     },
+     "corrige": "$z = \\dfrac{-2 + 16i}{2 + 2i}$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Multiplie en haut et en bas par $2 - 2i$ et développe le numérateur.",
+     "question": "Numérateur ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "28 + 36i",
+      "forme": "algebrique"
+     },
+     "corrige": "$(-2 + 16i)(2 - 2i) = -4 + 4i + 32i + 32 = 28 + 36i$ ; dénominateur $8$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Divise par le dénominateur $8$.",
+     "question": "$z$ = ? (forme algébrique)",
+     "verif": {
+      "mode": "expr",
+      "attendu": "7/2 + 9/2 i",
+      "forme": "algebrique"
+     },
+     "corrige": "$z = \\dfrac{28 + 36i}{8} = \\boxed{\\dfrac72 + \\dfrac92 i}$",
+     "indices": [
+      "$z = \\frac{-2 + 16i}{2 + 2i}$.",
+      "$\\frac{28 + 36i}{8}$."
+     ],
+     "duree": 3
+    }
+   ]
+  },
+  {
+   "id": "ma1-202",
+   "type": "exo",
+   "notion": "1.4",
+   "origine": "annale",
+   "titre": "Annale · DST 1 (oct. 2024), ex. 2",
+   "enonce": "Simplifier l'expression suivante : $$\\frac{2 + 16i}{1 + 3i}$$",
+   "guidage": "Multiplier en haut et en bas par le conjugué du dénominateur.",
+   "duree": 5,
+   "etapes": [
+    {
+     "consigne": "Multiplie par $1 - 3i$ en haut et en bas. Développe le numérateur.",
+     "question": "Numérateur ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "50 + 10i",
+      "forme": "algebrique"
+     },
+     "corrige": "$(2 + 16i)(1 - 3i) = 2 - 6i + 16i + 48 = 50 + 10i$ ; dénominateur $1 + 9 = 10$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Divise par $10$.",
+     "question": "Résultat ? (forme algébrique)",
+     "verif": {
+      "mode": "expr",
+      "attendu": "5 + i",
+      "forme": "algebrique"
+     },
+     "corrige": "$\\dfrac{50 + 10i}{10} = \\boxed{5 + i}$",
+     "indices": [
+      "Conjugué : $1 - 3i$.",
+      "$\\frac{50 + 10i}{10}$."
+     ],
+     "duree": 3
+    }
+   ]
+  },
+  {
+   "id": "ma1-203",
+   "type": "exo",
+   "notion": "1.2",
+   "origine": "annale",
+   "titre": "Annale · DST 1 (oct. 2024), ex. 5",
+   "enonce": "Calculer le produit des deux nombres complexes suivants : $$z_1 = (2 + 2i)^2 \\quad\\text{et}\\quad z_2 = 3(1 - 2i)$$",
+   "guidage": "1. Calculer $z_1$ (identité remarquable, $i^2 = -1$). 2. Multiplier par $z_2$.",
+   "duree": 5,
+   "etapes": [
+    {
+     "consigne": "Développe $(2 + 2i)^2$.",
+     "question": "$z_1$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "8i",
+      "forme": "algebrique"
+     },
+     "corrige": "$4 + 8i + 4i^2 = 8i$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Multiplie $8i$ par $3(1 - 2i)$.",
+     "question": "$z_1 z_2$ = ? (forme algébrique)",
+     "verif": {
+      "mode": "expr",
+      "attendu": "48 + 24i",
+      "forme": "algebrique"
+     },
+     "corrige": "$8i \\cdot 3(1 - 2i) = 24i - 48i^2 = \\boxed{48 + 24i}$",
+     "indices": [
+      "$z_1 = 8i$.",
+      "$24i(1 - 2i)$."
+     ],
+     "duree": 3
+    }
+   ]
+  },
+  {
+   "id": "ma1-204",
+   "type": "exo",
+   "notion": "1.5",
+   "origine": "annale",
+   "titre": "Annale · DST 2 (2025-26, variante B), ex. 1",
+   "enonce": "Résoudre dans $\\mathbb{C}$ : $$(2i - c)\\,z + (3 - i)\\,z + (1 + i) = 0 \\quad\\text{avec}\\quad c = 7$$",
+   "guidage": "1. Regrouper les termes en $z$. 2. Isoler $z$. 3. Conjugué du dénominateur.",
+   "duree": 6,
+   "etapes": [
+    {
+     "consigne": "Avec $c = 7$, regroupe : $(2i - 7) + (3 - i)$ devant $z$.",
+     "question": "Coefficient de $z$ ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "-4 + i",
+      "forme": "algebrique"
+     },
+     "corrige": "$(2i - 7) + (3 - i) = -4 + i$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "$(-4 + i)z = -1 - i$. Multiplie en haut et en bas par $-4 - i$ : développe le numérateur.",
+     "question": "Numérateur ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "3 + 5i",
+      "forme": "algebrique"
+     },
+     "corrige": "$(-1 - i)(-4 - i) = 4 + i + 4i + i^2 = 3 + 5i$ ; dénominateur $16 + 1 = 17$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Divise par $17$.",
+     "question": "$z$ = ? (forme algébrique)",
+     "verif": {
+      "mode": "expr",
+      "attendu": "3/17 + 5/17 i",
+      "forme": "algebrique"
+     },
+     "corrige": "$z = \\dfrac{-1 - i}{-4 + i} = \\boxed{\\dfrac{3}{17} + \\dfrac{5}{17} i}$",
+     "indices": [
+      "$z = \\frac{-1 - i}{-4 + i}$.",
+      "Numérateur $3 + 5i$, dénominateur $17$."
+     ],
+     "duree": 3
+    }
+   ]
+  }
+ ]
+}

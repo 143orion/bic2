@@ -1599,3 +1599,49 @@ body.en-session .pan-bouton{display:none}
 }
 @media (prefers-reduced-motion:reduce){.panneau{transition:none!important}}
 .ligne-form{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:10px 0}.ligne-form label{display:inline-flex;gap:6px;align-items:center;font-size:13px}.ligne-form input[type=color]{width:34px;height:28px;padding:0;border:0;background:none}
+
+/* ---------- parties d'un module (liste.json : parties) : sélecteur dans la barre du lecteur, bandeaux ---------- */
+.m-parties{display:inline-flex;flex-wrap:wrap;gap:2px;padding:2px;border-radius:99px;border:1px solid var(--verre-bord);background:rgba(0,0,0,.25)}
+.m-parties button{all:unset;cursor:pointer;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;padding:5px 12px;border-radius:99px;font-size:13px;font-weight:700;color:var(--gris-2);min-height:24px}
+.m-parties button span{font-size:15px;line-height:1;color:var(--pc,var(--m-ac))}
+.m-parties button[aria-pressed="true"]{background:var(--pc,var(--m-ac));color:var(--m-bg)}
+.m-parties button[aria-pressed="true"] span{color:inherit}
+.m-parties button:focus-visible{outline:3px solid var(--violet-pale);outline-offset:2px}
+.partie-bandeau{--pc:var(--m-ac);display:flex;align-items:center;gap:12px;margin:22px 0 6px;padding:10px 14px;border-radius:10px;background:linear-gradient(90deg,color-mix(in srgb,var(--pc) 24%,transparent),transparent 80%);border-left:3px solid var(--pc);scroll-margin-top:76px}
+.partie-bandeau:first-child{margin-top:4px}
+.partie-bandeau .pb-ic{font-size:24px;line-height:1;color:var(--pc)}
+.partie-bandeau b{font-size:16px;color:var(--blanc)}
+.partie-bandeau small{margin-left:auto;color:var(--gris-2);font-size:12px}
+.som-partie{--pc:var(--m-ac);margin:16px 8px 2px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--pc);display:flex;gap:6px;align-items:center}
+.som-partie::after{content:"";flex:1;height:1px;background:currentColor;opacity:.4}
+.som-partie .sp-nom{margin-left:2px}
+.ex-liste .partie-bandeau{grid-column:1/-1}
+.fa3-partie{font-style:normal;color:var(--pc,var(--m-ac))}
+@media (max-width:760px){.m-parties{order:3;width:100%;justify-content:center}.m-parties button{padding:8px 12px}}
+@media (max-width:900px){.som-partie{flex:none;margin:0 2px 0 8px;font-size:15px;letter-spacing:0}.som-partie::after{display:none}.som-partie .sp-nom{display:none}}
+
+/* ---------- saisie d'expressions (mode expr) ---------- */
+.ex-symb{display:flex;flex-wrap:wrap;gap:4px;margin:0 0 6px}
+.ex-symb button{all:unset;cursor:pointer;font-family:var(--m-font,inherit);font-size:13px;min-width:22px;text-align:center;padding:4px 8px;border-radius:6px;border:1px solid var(--verre-bord);background:rgba(0,0,0,.25);color:var(--m-fg,var(--gris))}
+.ex-symb button:hover{border-color:var(--m-ac);color:var(--blanc)}
+.ex-symb button:focus-visible{outline:2px solid var(--violet-pale)}
+.ex-apercu{display:flex;align-items:center;gap:10px;min-height:38px;margin-top:6px;padding:4px 10px;border:1px dashed var(--verre-bord);border-radius:6px;overflow-x:auto}
+.ex-apercu small{color:var(--gris-2);flex:none}
+.ex-rendu{color:var(--blanc);font-size:15px}
+.ex-err{color:var(--braise-3,#ff9a3c);font-size:12.5px}
+@media (max-width:760px){.ex-symb button{padding:7px 10px;font-size:14px}}
+/* surfaces et cercles des schémas (module Maths analyse : plan complexe, aires) */
+svg.circ .aire{fill:color-mix(in srgb,var(--m-ac) 30%,transparent);stroke:none}
+svg.circ .aire2{fill:color-mix(in srgb,var(--violet-clair) 30%,transparent);stroke:none}
+svg.circ .cercle{fill:none;stroke:var(--gris);stroke-opacity:.45;stroke-width:1.4}
+svg.circ .pz{fill:var(--m-ac);stroke:var(--m-bg);stroke-width:1.5}
+svg.circ .pz2{fill:var(--violet-clair);stroke:var(--m-bg);stroke-width:1.5}
+svg.circ .pg{fill:color-mix(in srgb,var(--gris) 45%,transparent)}
+svg.circ text.ac{fill:var(--m-ac)}
+svg.circ text.ac2{fill:var(--violet-clair)}
+.labo .lab-chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 10px}
+.labo .lab-chips button{all:unset;cursor:pointer;font-size:12.5px;padding:5px 11px;border-radius:99px;border:1px solid var(--verre-bord);color:var(--m-fg,var(--gris))}
+.labo .lab-chips button[aria-pressed="true"]{background:var(--m-ac);border-color:var(--m-ac);color:var(--m-on-ac,#fff)}
+.labo .lab-chips button:focus-visible{outline:2px solid var(--violet-pale)}
+svg.circ .lab-quad{fill:color-mix(in srgb,var(--m-ac) 12%,transparent)}
+svg.lab-plan{touch-action:none;cursor:grab;max-height:320px}

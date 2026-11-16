@@ -1,0 +1,716 @@
+{
+ "id": "ma-0-rappels",
+ "module": "maths-analyse",
+ "titre": "Rappels : fonctions usuelles",
+ "ordre": 0,
+ "sources": [
+  "Notes du prof (groupe 3.1) : fonctions usuelles, trigonométrie, fonctions hyperboliques",
+  "Poly Intégration § 2.3 (dérivées et primitives usuelles)"
+ ],
+ "tldr": [
+  "$e^{a}e^{b} = e^{a+b}$ · $\\ln(ab) = \\ln a + \\ln b$ · $\\ln(a^n) = n\\ln a$ · $e^{\\ln x} = x$",
+  "Valeurs remarquables : $\\cos$ / $\\sin$ de $\\frac{\\pi}{6}, \\frac{\\pi}{4}, \\frac{\\pi}{3}$ valent $\\frac{\\sqrt3}{2}, \\frac{\\sqrt2}{2}, \\frac12$ (dans un sens ou dans l'autre)",
+  "$\\cos(\\pi - \\theta) = -\\cos\\theta$, $\\sin(\\pi - \\theta) = \\sin\\theta$, $\\cos(-\\theta) = \\cos\\theta$, $\\sin(-\\theta) = -\\sin\\theta$",
+  "$\\cos^2 + \\sin^2 = 1$ · $\\sin 2x = 2\\sin x\\cos x$ · $\\cos^2 x = \\frac{1+\\cos 2x}{2}$ · $\\sin^2 x = \\frac{1-\\cos 2x}{2}$",
+  "$\\operatorname{ch}^2 - \\operatorname{sh}^2 = 1$ · $(\\operatorname{ch})' = \\operatorname{sh}$, $(\\operatorname{sh})' = \\operatorname{ch}$",
+  "Dérivées : $(x^n)' = nx^{n-1}$, $(\\ln x)' = \\frac1x$, $(\\arctan x)' = \\frac{1}{1+x^2}$, $(f(u))' = f'(u)\\,u'$, $(uv)' = u'v + uv'$"
+ ],
+ "notions": [
+  {
+   "id": "0.1",
+   "titre": "Puissances, exponentielle, logarithme",
+   "corps": "Trois familles reviennent partout en analyse.\n\n- **Puissances** $x^n$ : $x^a\\,x^b = x^{a+b}$, $\\dfrac{x^a}{x^b} = x^{a-b}$, $(x^a)^b = x^{ab}$, $x^{-n} = \\dfrac{1}{x^n}$, $\\sqrt{x} = x^{1/2}$.\n- **Exponentielle** $e^x$ (avec $e \\approx 2{,}718$) : c'est la seule fonction égale à sa dérivée et qui vaut $1$ en $0$. Mêmes règles : $e^a\\,e^b = e^{a+b}$, $(e^a)^b = e^{ab}$.\n- **Logarithme** $\\ln x$, défini pour $x > 0$ : c'est la réciproque de l'exponentielle.\n\n$$e^{\\ln x} = x \\ (x > 0) \\qquad \\ln(e^x) = x$$\n\n> **À retenir** : $\\ln(ab) = \\ln a + \\ln b$, $\\ln\\dfrac{a}{b} = \\ln a - \\ln b$, $\\ln(a^n) = n\\ln a$, $\\ln 1 = 0$, $\\ln e = 1$.\n\nChangement de base : $a^x = e^{x\\ln a}$ (exemple : $10^x = e^{x\\ln 10}$).",
+   "rec": "Une puissance entière, c'est une multiplication répétée : $x^3 = x\\cdot x\\cdot x$.",
+   "alt": "Le logarithme répond à la question « à quelle puissance faut-il élever $e$ pour obtenir $x$ ? ». Comme $e^3 = e\\cdot e\\cdot e$, on a $\\ln(e^3) = 3$. Le produit devient une somme parce que les exposants s'additionnent.",
+   "pre": [],
+   "ecrans": [
+    {
+     "titre": "Les règles des puissances",
+     "texte": "$x^a\\,x^b = x^{a+b}$ et $(x^a)^b = x^{ab}$. Les mêmes règles valent pour $e^x$."
+    },
+    {
+     "titre": "Le logarithme",
+     "texte": "$\\ln$ défait $e$ : $e^{\\ln x} = x$ et $\\ln(e^x) = x$."
+    },
+    {
+     "titre": "Produit → somme",
+     "texte": "$\\ln(ab) = \\ln a + \\ln b$ et $\\ln(a^n) = n\\ln a$. C'est ce qui sert à simplifier un résultat d'intégrale."
+    }
+   ],
+   "check": {
+    "enonce": "$\\ln(8)$ vaut…",
+    "choix": [
+     "$3\\ln 2$",
+     "$8\\ln 1$",
+     "$\\ln 2 + \\ln 6$",
+     "$2\\ln 3$"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$8 = 2^3$ donc $\\ln 8 = 3\\ln 2$."
+   }
+  },
+  {
+   "id": "0.2",
+   "titre": "Cercle trigo et valeurs remarquables",
+   "corps": "Sur le **cercle trigonométrique** (centre $O$, rayon $1$), le point d'angle $\\theta$ a pour coordonnées $(\\cos\\theta, \\sin\\theta)$. L'angle se mesure en **radians** : un tour vaut $2\\pi$, un demi-tour $\\pi$.\n\n| $\\theta$ | $0$ | $\\frac{\\pi}{6}$ | $\\frac{\\pi}{4}$ | $\\frac{\\pi}{3}$ | $\\frac{\\pi}{2}$ |\n|---|---|---|---|---|---|\n| $\\cos\\theta$ | $1$ | $\\frac{\\sqrt3}{2}$ | $\\frac{\\sqrt2}{2}$ | $\\frac12$ | $0$ |\n| $\\sin\\theta$ | $0$ | $\\frac12$ | $\\frac{\\sqrt2}{2}$ | $\\frac{\\sqrt3}{2}$ | $1$ |\n\n> **Astuce** : $\\sin$ vaut $\\frac{\\sqrt0}{2}, \\frac{\\sqrt1}{2}, \\frac{\\sqrt2}{2}, \\frac{\\sqrt3}{2}, \\frac{\\sqrt4}{2}$ ; $\\cos$, c'est la même liste à l'envers.\n\nSymétries utiles : $\\cos(-\\theta) = \\cos\\theta$, $\\sin(-\\theta) = -\\sin\\theta$, $\\cos(\\pi - \\theta) = -\\cos\\theta$, $\\sin(\\pi - \\theta) = \\sin\\theta$.",
+   "schema": {
+    "modele": "cercle",
+    "vals": {
+     "k": 2,
+     "lab": "π/6"
+    }
+   },
+   "rec": "Un angle en radians : $\\pi$ rad $= 180°$, donc $\\frac{\\pi}{6} = 30°$, $\\frac{\\pi}{4} = 45°$, $\\frac{\\pi}{3} = 60°$.",
+   "alt": "Le cosinus se lit sur l'axe horizontal, le sinus sur l'axe vertical. Plus l'angle grandit (de $0$ à $\\frac{\\pi}{2}$), plus le point monte : $\\sin$ augmente et $\\cos$ diminue.",
+   "pre": [],
+   "ecrans": [
+    {
+     "titre": "Le cercle",
+     "texte": "Rayon $1$ : le point d'angle $\\theta$ est $(\\cos\\theta, \\sin\\theta)$.",
+     "schema": {
+      "modele": "cercle",
+      "vals": {
+       "k": 4,
+       "lab": "π/3"
+      }
+     }
+    },
+    {
+     "titre": "Les valeurs à connaître",
+     "texte": "$\\frac{\\pi}{6}, \\frac{\\pi}{4}, \\frac{\\pi}{3}$ : $\\cos$ et $\\sin$ valent $\\frac12$, $\\frac{\\sqrt2}{2}$ ou $\\frac{\\sqrt3}{2}$."
+    },
+    {
+     "titre": "Les symétries",
+     "texte": "$\\cos(\\pi - \\theta) = -\\cos\\theta$ : c'est ce qui donnera les angles du 2e quadrant ({{2.1}}).",
+     "schema": {
+      "modele": "cercle",
+      "vals": {
+       "k": 8,
+       "lab": "2π/3"
+      }
+     }
+    }
+   ],
+   "check": {
+    "enonce": "$\\cos\\frac{\\pi}{3}$ vaut…",
+    "choix": [
+     "$\\frac12$",
+     "$\\frac{\\sqrt3}{2}$",
+     "$\\frac{\\sqrt2}{2}$",
+     "$0$"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$\\frac{\\pi}{3} = 60°$ : $\\cos = \\frac12$, $\\sin = \\frac{\\sqrt3}{2}$."
+   }
+  },
+  {
+   "id": "0.3",
+   "titre": "Formules trigo : duplication, cos², sin²",
+   "corps": "La relation fondamentale vient du cercle de rayon $1$ (Pythagore) :\n$$\\cos^2 x + \\sin^2 x = 1$$\n\n**Formules d'addition** : $\\cos(a \\pm b) = \\cos a\\cos b \\mp \\sin a\\sin b$ et $\\sin(a \\pm b) = \\sin a\\cos b \\pm \\cos a\\sin b$.\n\nAvec $a = b = x$, on obtient la **duplication** :\n$$\\sin 2x = 2\\sin x\\cos x \\qquad \\cos 2x = \\cos^2 x - \\sin^2 x = 2\\cos^2 x - 1 = 1 - 2\\sin^2 x$$\n\nD'où les formules de **linéarisation**, très utiles pour intégrer ({{4.7}}) :\n$$\\cos^2 x = \\frac{1 + \\cos 2x}{2} \\qquad \\sin^2 x = \\frac{1 - \\cos 2x}{2} \\qquad \\sin x\\cos x = \\frac{\\sin 2x}{2}$$",
+   "rec": "$\\cos^2 x$ veut dire $(\\cos x)^2$.",
+   "alt": "Pour retrouver $\\cos^2 x = \\frac{1+\\cos 2x}{2}$ sans l'apprendre : pars de $\\cos 2x = 2\\cos^2 x - 1$ et isole $\\cos^2 x$.",
+   "pre": [
+    "0.2"
+   ],
+   "ecrans": [
+    {
+     "titre": "La relation fondamentale",
+     "texte": "$\\cos^2 x + \\sin^2 x = 1$ : c'est Pythagore sur le cercle de rayon $1$."
+    },
+    {
+     "titre": "La duplication",
+     "texte": "$\\sin 2x = 2\\sin x\\cos x$ et $\\cos 2x = 2\\cos^2 x - 1 = 1 - 2\\sin^2 x$."
+    },
+    {
+     "titre": "Linéariser",
+     "texte": "On isole $\\cos^2 x$ ou $\\sin^2 x$ : un carré devient un $\\cos 2x$, qu'on sait intégrer."
+    }
+   ],
+   "check": {
+    "enonce": "$\\sin^2 x$ est égal à…",
+    "choix": [
+     "$\\frac{1 - \\cos 2x}{2}$",
+     "$\\frac{1 + \\cos 2x}{2}$",
+     "$2\\sin x$",
+     "$1 + \\cos^2 x$"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$\\cos 2x = 1 - 2\\sin^2 x$, donc $\\sin^2 x = \\frac{1 - \\cos 2x}{2}$."
+   }
+  },
+  {
+   "id": "0.4",
+   "titre": "Fonctions hyperboliques",
+   "corps": "Le prof les présente avec les fonctions usuelles. Elles se construisent avec l'exponentielle :\n$$\\operatorname{ch} x = \\frac{e^x + e^{-x}}{2} \\qquad \\operatorname{sh} x = \\frac{e^x - e^{-x}}{2} \\qquad \\operatorname{th} x = \\frac{\\operatorname{sh} x}{\\operatorname{ch} x}$$\n\n- $\\operatorname{ch}$ est paire ($\\operatorname{ch}(-x) = \\operatorname{ch} x$), $\\operatorname{sh}$ est impaire.\n- **Relation fondamentale** : $\\operatorname{ch}^2 x - \\operatorname{sh}^2 x = 1$ (un **moins**, à la différence de $\\cos^2 + \\sin^2$).\n- Dérivées : $(\\operatorname{ch} x)' = \\operatorname{sh} x$ et $(\\operatorname{sh} x)' = \\operatorname{ch} x$ (sans signe moins).",
+   "rec": "$e^{-x} = \\frac{1}{e^x}$.",
+   "alt": "Pour vérifier $\\operatorname{ch}^2 - \\operatorname{sh}^2 = 1$ : développe $\\left(\\frac{e^x + e^{-x}}{2}\\right)^2 - \\left(\\frac{e^x - e^{-x}}{2}\\right)^2$. Les carrés s'annulent, il reste $\\frac{2 + 2}{4} = 1$.",
+   "pre": [
+    "0.1"
+   ],
+   "ecrans": [
+    {
+     "titre": "Définitions",
+     "texte": "$\\operatorname{ch} x = \\frac{e^x + e^{-x}}{2}$, $\\operatorname{sh} x = \\frac{e^x - e^{-x}}{2}$."
+    },
+    {
+     "titre": "La relation",
+     "texte": "$\\operatorname{ch}^2 x - \\operatorname{sh}^2 x = 1$ : attention au signe moins."
+    }
+   ],
+   "check": {
+    "enonce": "$\\operatorname{ch}^2 x - \\operatorname{sh}^2 x$ vaut…",
+    "choix": [
+     "$1$",
+     "$0$",
+     "$e^{2x}$",
+     "$\\operatorname{ch} 2x$"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "C'est la relation fondamentale des fonctions hyperboliques."
+   }
+  },
+  {
+   "id": "0.5",
+   "titre": "Dérivées usuelles",
+   "corps": "Intégrer, c'est dériver à l'envers ({{4.1}}) : il faut connaître les dérivées par cœur.\n\n| $f(x)$ | $f'(x)$ |\n|---|---|\n| $x^n$ | $n\\,x^{n-1}$ |\n| $e^x$ | $e^x$ |\n| $\\ln x$ | $\\frac{1}{x}$ |\n| $\\sin x$ | $\\cos x$ |\n| $\\cos x$ | $-\\sin x$ |\n| $\\arctan x$ | $\\frac{1}{1+x^2}$ |\n| $\\sqrt x$ | $\\frac{1}{2\\sqrt x}$ |\n\nRègles : $(u + v)' = u' + v'$ · $(uv)' = u'v + uv'$ · **composée** $\\big(f(u(x))\\big)' = f'(u(x))\\,u'(x)$.\n\n> **Exemple** : $\\left(e^{-4x}\\right)' = -4\\,e^{-4x}$ et $\\left(\\ln(1 + x^2)\\right)' = \\frac{2x}{1 + x^2}$.",
+   "rec": "La dérivée mesure la pente de la courbe en chaque point.",
+   "alt": "Pour une composée, on dérive « l'extérieur » en gardant l'intérieur, puis on multiplie par la dérivée de l'intérieur.",
+   "pre": [
+    "0.1"
+   ],
+   "ecrans": [
+    {
+     "titre": "Le tableau",
+     "texte": "$x^n \\to n x^{n-1}$, $e^x \\to e^x$, $\\ln x \\to \\frac1x$, $\\sin \\to \\cos$, $\\cos \\to -\\sin$."
+    },
+    {
+     "titre": "Produit",
+     "texte": "$(uv)' = u'v + uv'$ : c'est la formule qui donnera l'intégration par parties ({{5.1}})."
+    },
+    {
+     "titre": "Composée",
+     "texte": "$(f(u))' = f'(u)\\,u'$ : c'est elle qui donnera le changement de variable ({{6.1}})."
+    }
+   ],
+   "check": {
+    "enonce": "La dérivée de $e^{3x}$ est…",
+    "choix": [
+     "$3e^{3x}$",
+     "$e^{3x}$",
+     "$\\frac{e^{3x}}{3}$",
+     "$3x\\,e^{3x - 1}$"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "Composée : $(e^{u})' = u'e^{u}$ avec $u = 3x$, $u' = 3$."
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "ma0-001",
+   "type": "saisie",
+   "notion": "0.1",
+   "origine": "cours",
+   "enonce": "Écris $e^{[[A]]}\\times e^{[[B]]}$ sous la forme d'une seule puissance de $e$.",
+   "verif": {
+    "mode": "expr",
+    "attendu": "e^([[S]])",
+    "interdit": [
+     {
+      "motif": "\\*|×|·|e\\^\\(?\\s*\\d+\\s*\\)?\\s*e",
+      "msg": "Écris une seule puissance de $e$."
+     }
+    ],
+    "exemple": "e^(…)"
+   },
+   "duree": 0.5,
+   "explication": "$e^a\\,e^b = e^{a+b}$ : $e^{[[A]] + [[B]]} = e^{[[S]]}$.",
+   "vals": {
+    "A": "5",
+    "B": "3",
+    "S": "8"
+   },
+   "variantes": [
+    {
+     "A": "5",
+     "B": "3",
+     "S": "8"
+    },
+    {
+     "A": "5",
+     "B": "2",
+     "S": "7"
+    },
+    {
+     "A": "6",
+     "B": "4",
+     "S": "10"
+    },
+    {
+     "A": "4",
+     "B": "8",
+     "S": "12"
+    },
+    {
+     "A": "9",
+     "B": "8",
+     "S": "17"
+    },
+    {
+     "A": "7",
+     "B": "3",
+     "S": "10"
+    }
+   ]
+  },
+  {
+   "id": "ma0-002",
+   "type": "saisie",
+   "notion": "0.1",
+   "origine": "cours",
+   "enonce": "Écris $\\ln([[P]])$ en fonction de $\\ln 2$ (une expression du type $k\\ln 2$).",
+   "verif": {
+    "mode": "expr",
+    "attendu": "[[K]] ln(2)",
+    "interdit": [
+     {
+      "motif": "ln\\s*\\(?\\s*(?!2\\b)\\d",
+      "msg": "Exprime-le avec $\\ln 2$ seulement."
+     }
+    ],
+    "exemple": "k ln(2)"
+   },
+   "duree": 0.5,
+   "explication": "$[[P]] = 2^{[[K]]}$ donc $\\ln [[P]] = [[K]]\\ln 2$.",
+   "vals": {
+    "K": "4",
+    "P": "16"
+   },
+   "variantes": [
+    {
+     "K": "4",
+     "P": "16"
+    },
+    {
+     "K": "3",
+     "P": "8"
+    },
+    {
+     "K": "6",
+     "P": "64"
+    },
+    {
+     "K": "5",
+     "P": "32"
+    },
+    {
+     "K": "7",
+     "P": "128"
+    }
+   ]
+  },
+  {
+   "id": "ma0-003",
+   "type": "qcm",
+   "notion": "0.1",
+   "origine": "cours",
+   "enonce": "$e^{\\ln 7}$ vaut…",
+   "choix": [
+    "$7$",
+    "$\\ln 7$",
+    "$e^7$",
+    "$1$"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "$e$ et $\\ln$ se défont : $e^{\\ln x} = x$."
+  },
+  {
+   "id": "ma0-004",
+   "type": "trous",
+   "notion": "0.1",
+   "origine": "cours",
+   "enonce": "$\\ln(ab) = \\ln a\\ [_]\\ \\ln b$ et $\\ln(a^n) = [_]\\,\\ln a$",
+   "fragments": [
+    "$+$",
+    "$\\times$",
+    "$n$",
+    "$a$"
+   ],
+   "verif": {
+    "mode": "trous",
+    "attendu": [
+     "$+$",
+     "$n$"
+    ]
+   },
+   "duree": 0.5,
+   "explication": "Le logarithme transforme les produits en sommes et les puissances en facteurs."
+  },
+  {
+   "id": "ma0-005",
+   "type": "qcm",
+   "notion": "0.2",
+   "origine": "cours",
+   "enonce": "$\\sin\\frac{\\pi}{6}$ vaut…",
+   "choix": [
+    "$\\frac12$",
+    "$\\frac{\\sqrt3}{2}$",
+    "$\\frac{\\sqrt2}{2}$",
+    "$1$"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "$\\frac{\\pi}{6} = 30°$ : $\\sin = \\frac12$."
+  },
+  {
+   "id": "ma0-006",
+   "type": "qcm",
+   "notion": "0.2",
+   "origine": "cours",
+   "enonce": "$\\cos\\frac{2\\pi}{3}$ vaut…",
+   "choix": [
+    "$-\\frac12$",
+    "$\\frac12$",
+    "$-\\frac{\\sqrt3}{2}$",
+    "$\\frac{\\sqrt3}{2}$"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "$\\frac{2\\pi}{3} = \\pi - \\frac{\\pi}{3}$ et $\\cos(\\pi - \\theta) = -\\cos\\theta$ : $-\\frac12$."
+  },
+  {
+   "id": "ma0-007",
+   "type": "saisie",
+   "notion": "0.2",
+   "origine": "cours",
+   "enonce": "Donne la valeur exacte de $\\cos\\left([[T]]\\right)$.",
+   "verif": {
+    "mode": "expr",
+    "attendu": "[[V]]",
+    "interdit": [
+     {
+      "motif": "cos|sin",
+      "msg": "Donne une valeur exacte, sans $\\cos$."
+     }
+    ],
+    "exemple": "ex. sqrt(3)/2"
+   },
+   "duree": 0.67,
+   "explication": "[[COR]]",
+   "vals": {
+    "T": "-\\frac{3\\pi}{4}",
+    "V": "-sqrt(2)/2",
+    "COR": "$\\cos(-\\theta) = \\cos\\theta$ et $\\cos\\frac{3\\pi}{4} = -\\frac{\\sqrt2}{2}$."
+   },
+   "variantes": [
+    {
+     "T": "-\\frac{3\\pi}{4}",
+     "V": "-sqrt(2)/2",
+     "COR": "$\\cos(-\\theta) = \\cos\\theta$ et $\\cos\\frac{3\\pi}{4} = -\\frac{\\sqrt2}{2}$."
+    },
+    {
+     "T": "\\frac{2\\pi}{3}",
+     "V": "-1/2",
+     "COR": "$\\frac{2\\pi}{3} = \\pi - \\frac{\\pi}{3}$ et $\\cos(\\pi - \\theta) = -\\cos\\theta$ : $-\\frac12$."
+    },
+    {
+     "T": "\\frac{5\\pi}{6}",
+     "V": "-sqrt(3)/2",
+     "COR": "$\\frac{5\\pi}{6} = \\pi - \\frac{\\pi}{6}$ : $-\\frac{\\sqrt3}{2}$."
+    },
+    {
+     "T": "\\pi",
+     "V": "-1",
+     "COR": "Le point d'angle $\\pi$ est $(-1, 0)$ : $\\cos\\pi = -1$."
+    },
+    {
+     "T": "-\\frac{\\pi}{6}",
+     "V": "sqrt(3)/2",
+     "COR": "$\\cos(-\\theta) = \\cos\\theta$ : $\\frac{\\sqrt3}{2}$."
+    },
+    {
+     "T": "\\frac{3\\pi}{4}",
+     "V": "-sqrt(2)/2",
+     "COR": "$\\frac{3\\pi}{4} = \\pi - \\frac{\\pi}{4}$ : $-\\frac{\\sqrt2}{2}$."
+    },
+    {
+     "T": "-\\frac{\\pi}{3}",
+     "V": "1/2",
+     "COR": "$\\cos(-\\theta) = \\cos\\theta$ : $\\cos\\frac{\\pi}{3} = \\frac12$."
+    },
+    {
+     "T": "\\frac{\\pi}{2}",
+     "V": "0",
+     "COR": "Le point d'angle $\\frac{\\pi}{2}$ est $(0, 1)$ : $\\cos\\frac{\\pi}{2} = 0$."
+    }
+   ]
+  },
+  {
+   "id": "ma0-008",
+   "type": "qcm-multi",
+   "notion": "0.2",
+   "origine": "cours",
+   "enonce": "Lesquelles sont vraies pour tout $\\theta$ ?",
+   "choix": [
+    "$\\cos(-\\theta) = \\cos\\theta$",
+    "$\\sin(-\\theta) = -\\sin\\theta$",
+    "$\\sin(\\pi - \\theta) = \\sin\\theta$",
+    "$\\cos(\\pi - \\theta) = \\cos\\theta$"
+   ],
+   "verif": {
+    "attendu": [
+     0,
+     1,
+     2
+    ]
+   },
+   "duree": 0.5,
+   "explication": "$\\cos(\\pi - \\theta) = -\\cos\\theta$ : le point symétrique par rapport à l'axe vertical a l'abscisse opposée."
+  },
+  {
+   "id": "ma0-009",
+   "type": "trous",
+   "notion": "0.3",
+   "origine": "cours",
+   "enonce": "$\\cos^2 x = \\dfrac{1\\ [_]\\ \\cos 2x}{2}$ et $\\sin^2 x = \\dfrac{1\\ [_]\\ \\cos 2x}{2}$",
+   "fragments": [
+    "$+$",
+    "$-$"
+   ],
+   "verif": {
+    "mode": "trous",
+    "attendu": [
+     "$+$",
+     "$-$"
+    ]
+   },
+   "duree": 0.5,
+   "explication": "Tiré de $\\cos 2x = 2\\cos^2 x - 1 = 1 - 2\\sin^2 x$."
+  },
+  {
+   "id": "ma0-010",
+   "type": "qcm",
+   "notion": "0.3",
+   "origine": "cours",
+   "enonce": "$2\\sin x\\cos x$ est égal à…",
+   "choix": [
+    "$\\sin 2x$",
+    "$\\cos 2x$",
+    "$\\sin^2 x$",
+    "$2\\sin^2 x$"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Formule de duplication."
+  },
+  {
+   "id": "ma0-011",
+   "type": "saisie",
+   "notion": "0.3",
+   "origine": "cours",
+   "enonce": "Sachant que $\\sin\\theta = \\frac{3}{5}$ et $\\theta \\in \\left[0, \\frac{\\pi}{2}\\right]$, calcule $\\cos\\theta$.",
+   "verif": {
+    "mode": "expr",
+    "attendu": "4/5",
+    "interdit": [
+     {
+      "motif": "cos|sin|sqrt|√",
+      "msg": "Simplifie : le résultat est une fraction."
+     }
+    ]
+   },
+   "duree": 0.67,
+   "explication": "$\\cos^2\\theta = 1 - \\frac{9}{25} = \\frac{16}{25}$ et $\\cos\\theta \\geq 0$ sur $\\left[0, \\frac{\\pi}{2}\\right]$ : $\\cos\\theta = \\frac45$."
+  },
+  {
+   "id": "ma0-012",
+   "type": "qcm",
+   "notion": "0.4",
+   "origine": "cours",
+   "enonce": "$\\operatorname{ch} 0$ vaut…",
+   "choix": [
+    "$1$",
+    "$0$",
+    "$e$",
+    "$\\frac12$"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "$\\operatorname{ch} 0 = \\frac{e^0 + e^0}{2} = 1$."
+  },
+  {
+   "id": "ma0-013",
+   "type": "qcm",
+   "notion": "0.4",
+   "origine": "cours",
+   "enonce": "La dérivée de $\\operatorname{ch} x$ est…",
+   "choix": [
+    "$\\operatorname{sh} x$",
+    "$-\\operatorname{sh} x$",
+    "$\\operatorname{ch} x$",
+    "$\\operatorname{th} x$"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "$\\left(\\frac{e^x + e^{-x}}{2}\\right)' = \\frac{e^x - e^{-x}}{2} = \\operatorname{sh} x$."
+  },
+  {
+   "id": "ma0-014",
+   "type": "saisie",
+   "notion": "0.5",
+   "origine": "cours",
+   "enonce": "Dérive $f(x) = e^{[[A]]x}$. Écris $f'(x)$.",
+   "verif": {
+    "mode": "expr",
+    "attendu": "[[A]] e^([[A]] x)",
+    "var": "x",
+    "exemple": "ex. 3 e^(3x)"
+   },
+   "duree": 0.5,
+   "explication": "Composée : $(e^{u})' = u'e^u$ avec $u = [[A]]x$ : $f'(x) = [[A]]e^{[[A]]x}$.",
+   "vals": {
+    "A": "3"
+   },
+   "variantes": [
+    {
+     "A": "3"
+    },
+    {
+     "A": "-3"
+    },
+    {
+     "A": "5"
+    },
+    {
+     "A": "4"
+    },
+    {
+     "A": "-4"
+    },
+    {
+     "A": "-2"
+    }
+   ]
+  },
+  {
+   "id": "ma0-015",
+   "type": "saisie",
+   "notion": "0.5",
+   "origine": "cours",
+   "enonce": "Dérive $f(x) = \\ln(x^2 + [[A]])$.",
+   "verif": {
+    "mode": "expr",
+    "attendu": "2x/(x^2+[[A]])",
+    "var": "x",
+    "exemple": "ex. 2x/(x^2+1)"
+   },
+   "duree": 0.67,
+   "explication": "$(\\ln u)' = \\frac{u'}{u}$ avec $u = x^2 + [[A]]$ : $f'(x) = \\frac{2x}{x^2 + [[A]]}$.",
+   "vals": {
+    "A": "6"
+   },
+   "variantes": [
+    {
+     "A": "6"
+    },
+    {
+     "A": "1"
+    },
+    {
+     "A": "8"
+    },
+    {
+     "A": "2"
+    },
+    {
+     "A": "5"
+    },
+    {
+     "A": "4"
+    }
+   ]
+  },
+  {
+   "id": "ma0-016",
+   "type": "qcm-multi",
+   "notion": "0.5",
+   "origine": "cours",
+   "enonce": "Lesquelles sont justes ?",
+   "choix": [
+    "$(\\sin x)' = \\cos x$",
+    "$(\\cos x)' = -\\sin x$",
+    "$(\\arctan x)' = \\frac{1}{1+x^2}$",
+    "$(\\ln x)' = \\ln x$"
+   ],
+   "verif": {
+    "attendu": [
+     0,
+     1,
+     2
+    ]
+   },
+   "duree": 0.5,
+   "explication": "$(\\ln x)' = \\frac1x$."
+  },
+  {
+   "id": "ma0-017",
+   "type": "saisie",
+   "notion": "0.5",
+   "origine": "cours",
+   "enonce": "Dérive $f(x) = x\\,e^{x}$ (règle du produit).",
+   "verif": {
+    "mode": "expr",
+    "attendu": "x e^x + e^x",
+    "var": "x",
+    "exemple": "ex. x e^x + e^x"
+   },
+   "duree": 0.67,
+   "explication": "$(uv)' = u'v + uv'$ avec $u = x$, $v = e^x$ : $f'(x) = e^x + x e^x = (x+1)e^x$."
+  }
+ ]
+}

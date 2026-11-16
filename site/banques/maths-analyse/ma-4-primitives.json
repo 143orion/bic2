@@ -1,0 +1,1544 @@
+{
+ "id": "ma-4-primitives",
+ "module": "maths-analyse",
+ "titre": "Primitives et intégrales",
+ "ordre": 4,
+ "sources": [
+  "Poly Intégration § 1 à 3, 6, 7",
+  "DST 2 variante B ex. 3",
+  "Exos prép CC3 (valeur absolue)",
+  "Notes du prof (groupes 3.3 et 3.4, 2.4)"
+ ],
+ "tldr": [
+  "$F' = f$ · $\\int f = F + C$ · vérifier une primitive : la dériver",
+  "$\\int x^n = \\frac{x^{n+1}}{n+1}$ · $\\int\\frac1x = \\ln|x|$ · $\\int e^{ax} = \\frac1a e^{ax}$ · $\\int\\cos(ax) = \\frac1a\\sin(ax)$ · $\\int\\frac{1}{1+x^2} = \\arctan x$",
+  "$\\int_a^b f = F(b) - F(a)$ · Chasles · $\\int_b^a = -\\int_a^b$ · $\\int_a^a = 0$",
+  "$|g|$ : zéro de $g$, couper s'il est dans $]a, b[$, signe sur chaque morceau",
+  "Impaire sur $[-a, a]$ : $0$ · paire : $2\\int_0^a$",
+  "$\\cos^2 x = \\frac{1+\\cos 2x}{2}$, $\\sin^2 x = \\frac{1-\\cos 2x}{2}$, $\\sin x\\cos x = \\frac{\\sin 2x}{2}$"
+ ],
+ "notions": [
+  {
+   "id": "4.1",
+   "titre": "Primitive, intégrale indéfinie, $+C$",
+   "corps": "Soit $f$ continue sur un intervalle $I$. Une **primitive** de $f$ est une fonction $F$ telle que\n$$F'(x) = f(x) \\quad \\text{pour tout } x \\in I$$\n\nIntégrer, c'est donc **dériver à l'envers** ({{0.5}}). Si $F$ est une primitive, toutes les primitives sont les $F + C$ ($C$ constante réelle), et on note :\n$$\\int f(x)\\,dx = F(x) + C, \\quad C \\in \\mathbb{R}$$\n\n> **Exemple** : $\\int 2x\\,dx = x^2 + C$, car $(x^2)' = 2x$.\n\n> **Piège** : oublier la constante $C$. Sur une copie, une primitive sans $+ C$ est incomplète.\n\n> **Astuce** : pour vérifier une primitive, **dérive-la** : tu dois retrouver $f$.",
+   "schema": {
+    "modele": "aire",
+    "vals": {
+     "f": "x^2/4 + 0.5",
+     "a": 0.5,
+     "b": 2.5,
+     "xmin": 0,
+     "xmax": 3,
+     "ymin": 0,
+     "ymax": 3
+    }
+   },
+   "rec": "Les dérivées usuelles ({{0.5}}).",
+   "alt": "Dériver, c'est passer de la position à la vitesse. Primitiver, c'est retrouver la position à partir de la vitesse, à une constante près : on ne sait pas d'où on est parti. C'est ce point de départ inconnu que représente $C$.",
+   "pre": [
+    "0.5"
+   ],
+   "ecrans": [
+    {
+     "titre": "La définition",
+     "texte": "$F' = f$ : $F$ est une primitive de $f$."
+    },
+    {
+     "titre": "Toutes les primitives",
+     "texte": "$F + C$ : on peut ajouter n'importe quelle constante, sa dérivée est nulle."
+    },
+    {
+     "titre": "Vérifier",
+     "texte": "Dérive ta réponse : tu dois retrouver ce qu'il y avait dans l'intégrale."
+    }
+   ],
+   "check": {
+    "enonce": "Une primitive de $3x^2$ est…",
+    "choix": [
+     "$x^3$",
+     "$6x$",
+     "$3x^3$",
+     "$x^3/3$"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$(x^3)' = 3x^2$."
+   }
+  },
+  {
+   "id": "4.2",
+   "titre": "Primitives usuelles",
+   "corps": "À connaître par cœur (toutes à $+ C$ près) :\n\n| $f(x)$ | $\\int f(x)\\,dx$ |\n|---|---|\n| $k$ | $kx$ |\n| $x^n$ ($n \\neq -1$) | $\\frac{x^{n+1}}{n+1}$ |\n| $\\frac{1}{x}$ | $\\ln\\lvert x\\rvert$ |\n| $e^{ax}$ ($a \\neq 0$) | $\\frac{1}{a}e^{ax}$ |\n| $\\sin(ax)$ | $-\\frac{1}{a}\\cos(ax)$ |\n| $\\cos(ax)$ | $\\frac{1}{a}\\sin(ax)$ |\n| $\\frac{1}{1+x^2}$ | $\\arctan x$ |\n| $\\frac{1}{\\sqrt{1-x^2}}$ | $\\arcsin x$ |\n\n**Linéarité** : $\\int (\\alpha f + \\beta g) = \\alpha\\int f + \\beta\\int g$. On intègre terme à terme.\n\n> **Exemple** : $\\int (3x^2 - 4x + 1)\\,dx = x^3 - 2x^2 + x + C$ et $\\int \\frac{4}{1+x^2}\\,dx = 4\\arctan x + C$.\n\n> **Piège** : $\\int e^{-2x}\\,dx = -\\frac12 e^{-2x} + C$ : on **divise** par le coefficient (on ne multiplie pas).",
+   "rec": "$F' = f$ ({{4.1}}).",
+   "alt": "Chaque ligne du tableau est une ligne du tableau des dérivées lue de droite à gauche. Le $\\frac{1}{a}$ devant $e^{ax}$ compense le $a$ qui sortirait en dérivant.",
+   "pre": [
+    "4.1"
+   ],
+   "ecrans": [
+    {
+     "titre": "Les puissances",
+     "texte": "$x^n \\to \\frac{x^{n+1}}{n+1}$, sauf $\\frac1x \\to \\ln|x|$."
+    },
+    {
+     "titre": "Exponentielle et trigo",
+     "texte": "$e^{ax} \\to \\frac1a e^{ax}$, $\\cos(ax) \\to \\frac1a\\sin(ax)$, $\\sin(ax) \\to -\\frac1a\\cos(ax)$."
+    },
+    {
+     "titre": "Linéarité",
+     "texte": "On intègre terme à terme et on sort les constantes."
+    }
+   ],
+   "check": {
+    "enonce": "$\\int e^{-3x}\\,dx = $…",
+    "choix": [
+     "$-\\frac13 e^{-3x} + C$",
+     "$-3e^{-3x} + C$",
+     "$e^{-3x} + C$",
+     "$\\frac13 e^{-3x} + C$"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$\\frac{1}{a}e^{ax}$ avec $a = -3$. Vérification : $\\left(-\\frac13 e^{-3x}\\right)' = e^{-3x}$."
+   }
+  },
+  {
+   "id": "4.3",
+   "titre": "Intégrale définie, théorème fondamental",
+   "corps": "L'**intégrale définie** $\\int_a^b f(x)\\,dx$ est l'**aire algébrique** entre la courbe de $f$, l'axe des abscisses et les droites $x = a$ et $x = b$ (comptée négativement là où $f < 0$).\n\n**Théorème fondamental de l'analyse** : si $F$ est une primitive de $f$ (continue) sur $[a, b]$,\n$$\\int_a^b f(x)\\,dx = \\big[F(x)\\big]_a^b = F(b) - F(a)$$\n\nN'importe quelle primitive convient (la constante $C$ s'annule dans la différence).\n\n> **Exemple** : $\\int_0^\\pi \\sin x\\,dx = \\big[-\\cos x\\big]_0^\\pi = -\\cos\\pi - (-\\cos 0) = 1 + 1 = 2$.\n\nAutre face du théorème : $F(x) = \\int_a^x f(t)\\,dt$ est **la** primitive de $f$ qui s'annule en $a$.",
+   "schema": {
+    "modele": "aire",
+    "vals": {
+     "f": "sin(x)",
+     "a": 0,
+     "b": 3.14159,
+     "xmin": -0.3,
+     "xmax": 3.6,
+     "ymin": -0.2,
+     "ymax": 1.3
+    }
+   },
+   "rec": "Primitives usuelles ({{4.2}}).",
+   "alt": "Découpe l'aire en rectangles très fins de largeur $\\Delta x$ : chacun a une aire $f(x)\\Delta x$. Leur somme tend vers l'intégrale. Le théorème dit qu'on obtient ce total sans découper : il suffit d'une primitive, prise aux deux bornes.",
+   "pre": [
+    "4.2"
+   ],
+   "ecrans": [
+    {
+     "titre": "Une aire",
+     "texte": "$\\int_a^b f$ : aire algébrique sous la courbe entre $a$ et $b$.",
+     "schema": {
+      "modele": "aire",
+      "vals": {
+       "f": "sin(x)",
+       "a": 0,
+       "b": 3.14159,
+       "xmin": -0.3,
+       "xmax": 3.6,
+       "ymin": -0.2,
+       "ymax": 1.3
+      }
+     }
+    },
+    {
+     "titre": "Le théorème",
+     "texte": "$\\int_a^b f = F(b) - F(a)$ : primitive, puis différence aux bornes."
+    },
+    {
+     "titre": "La notation",
+     "texte": "$\\big[F(x)\\big]_a^b$ veut dire $F(b) - F(a)$."
+    }
+   ],
+   "check": {
+    "enonce": "$\\int_0^1 2x\\,dx$ vaut…",
+    "choix": [
+     "$1$",
+     "$2$",
+     "$\\frac12$",
+     "$0$"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$\\big[x^2\\big]_0^1 = 1 - 0$."
+   }
+  },
+  {
+   "id": "4.4",
+   "titre": "Linéarité, Chasles, bornes",
+   "corps": "Pour $f$, $g$ continues :\n- **Linéarité** : $\\int_a^b (\\alpha f + \\beta g) = \\alpha\\int_a^b f + \\beta\\int_a^b g$.\n- **Chasles** : $\\int_a^b f = \\int_a^c f + \\int_c^b f$ (on peut couper en un point $c$).\n- **Bornes égales** : $\\int_a^a f = 0$.\n- **Bornes inversées** : $\\int_b^a f = -\\int_a^b f$.\n- **Positivité** : si $f \\geq 0$ sur $[a, b]$ (avec $a \\leq b$), alors $\\int_a^b f \\geq 0$.\n- **Valeur moyenne** : il existe $c \\in [a, b]$ tel que $\\int_a^b f = f(c)\\,(b - a)$.\n\n> **À retenir** : Chasles est l'outil pour les fonctions définies **par morceaux** et les **valeurs absolues** ({{4.5}}).",
+   "rec": "$\\int_a^b f = F(b) - F(a)$ ({{4.3}}).",
+   "alt": "Toutes ces règles se lisent sur $F(b) - F(a)$. Par exemple, $F(c) - F(a) + F(b) - F(c) = F(b) - F(a)$ : c'est Chasles.",
+   "pre": [
+    "4.3"
+   ],
+   "ecrans": [
+    {
+     "titre": "Chasles",
+     "texte": "On coupe l'intervalle en $c$ : les deux aires s'additionnent."
+    },
+    {
+     "titre": "Les bornes",
+     "texte": "$\\int_a^a = 0$ et inverser les bornes change le signe."
+    }
+   ],
+   "check": {
+    "enonce": "$\\int_0^2 f = 3$ et $\\int_2^5 f = 4$. Alors $\\int_0^5 f = $…",
+    "choix": [
+     "$7$",
+     "$1$",
+     "$12$",
+     "$-1$"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "Chasles : $3 + 4$."
+   }
+  },
+  {
+   "id": "4.5",
+   "titre": "Valeur absolue, fonctions par morceaux",
+   "corps": "Pour intégrer $|g(x)|$, il faut enlever la valeur absolue, donc connaître le **signe** de $g$ :\n1. chercher où $g$ s'annule ;\n2. si ce point $c$ est **dans** $]a, b[$, couper en $c$ avec Chasles ({{4.4}}) ;\n3. sur chaque morceau, remplacer $|g|$ par $g$ (là où $g \\geq 0$) ou par $-g$ (là où $g \\leq 0$) ;\n4. calculer chaque morceau et additionner.\n\n> **Exemple** (DST 2, ex. 3) : $\\int_{-2}^{2}|x + 4|\\,dx$. $x + 4$ s'annule en $-4$, **hors** de $[-2, 2]$ : $x + 4 > 0$ partout, donc $\\int_{-2}^{2}(x + 4)\\,dx = \\left[\\frac{x^2}{2} + 4x\\right]_{-2}^{2} = 10 - (-6) = 16$.\n\n> **Exemple** (prép CC3) : $\\int_{-2}^{2}|x + 2|\\,dx$ : le zéro $-2$ est sur le bord, pas besoin de couper : $8$.\n\nMême méthode pour une fonction définie par morceaux : on coupe là où la formule change.",
+   "labo": "aire",
+   "rec": "Chasles ({{4.4}}) et signe d'une fonction affine.",
+   "alt": "$|g|$ « replie » vers le haut la partie de la courbe qui passe sous l'axe. L'aire totale est donc la somme d'aires toutes positives. Chacune se calcule avec la bonne formule, sans valeur absolue.",
+   "pre": [
+    "4.4"
+   ],
+   "ecrans": [
+    {
+     "titre": "Le zéro",
+     "texte": "$x + a = 0$ en $x = -a$."
+    },
+    {
+     "titre": "Dedans ou dehors ?",
+     "texte": "Si $-a \\in\\ ]a, b[$, on coupe ; sinon, une seule formule suffit.",
+     "schema": {
+      "modele": "aire",
+      "vals": {
+       "f": "|x+1|",
+       "a": -2,
+       "b": 2,
+       "xmin": -3,
+       "xmax": 3,
+       "ymin": 0,
+       "ymax": 4,
+       "coupe": -1
+      }
+     }
+    },
+    {
+     "titre": "Les morceaux",
+     "texte": "À gauche $|x + 1| = -(x + 1)$, à droite $|x + 1| = x + 1$."
+    },
+    {
+     "titre": "Additionner",
+     "texte": "$\\frac12 + \\frac92 = 5$."
+    }
+   ],
+   "check": {
+    "enonce": "Pour $\\int_0^3 |x - 1|\\,dx$, on coupe en…",
+    "choix": [
+     "$x = 1$",
+     "$x = 0$",
+     "$x = 3$",
+     "on ne coupe pas"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$x - 1$ s'annule en $1 \\in\\ ]0, 3[$."
+   }
+  },
+  {
+   "id": "4.6",
+   "titre": "Parité : impaire sur $[-a, a]$",
+   "corps": "Sur un intervalle **symétrique** $[-a, a]$ :\n- si $f$ est **impaire** ($f(-x) = -f(x)$), alors $\\int_{-a}^{a} f(x)\\,dx = 0$ (les deux aires se compensent) ;\n- si $f$ est **paire** ($f(-x) = f(x)$), alors $\\int_{-a}^{a} f(x)\\,dx = 2\\int_0^a f(x)\\,dx$.\n\n> **Exemple** (notes du prof) : $\\int_{-1}^{1}\\frac{e^{x^2}\\sin x}{1 + x^2}\\,dx = 0$, car $\\sin$ est impaire et $e^{x^2}$, $1 + x^2$ sont paires : le quotient est impair.\n\nRègles de signes : impaire × paire = impaire ; impaire × impaire = paire.\n\n> **Astuce** : avant de calculer une intégrale compliquée sur $[-a, a]$, teste la parité. Elle peut valoir $0$ sans aucun calcul.",
+   "schema": {
+    "modele": "aire",
+    "vals": {
+     "f": "x^3 - x",
+     "a": -1.4,
+     "b": 1.4,
+     "xmin": -1.6,
+     "xmax": 1.6,
+     "ymin": -1.4,
+     "ymax": 1.4,
+     "coupe": 0
+    }
+   },
+   "rec": "$\\sin$ est impaire, $\\cos$ et $x^2$ sont paires ({{0.2}}).",
+   "alt": "La courbe d'une fonction impaire est symétrique par rapport à l'origine. Ce qui est au-dessus de l'axe à droite se retrouve en dessous à gauche, avec la même aire : le total est nul.",
+   "pre": [
+    "4.4"
+   ],
+   "ecrans": [
+    {
+     "titre": "Impaire",
+     "texte": "$f(-x) = -f(x)$ : aires opposées, total nul.",
+     "schema": {
+      "modele": "aire",
+      "vals": {
+       "f": "x^3 - x",
+       "a": -1.4,
+       "b": 1.4,
+       "xmin": -1.6,
+       "xmax": 1.6,
+       "ymin": -1.4,
+       "ymax": 1.4,
+       "coupe": 0
+      }
+     }
+    },
+    {
+     "titre": "Paire",
+     "texte": "$f(-x) = f(x)$ : deux fois l'aire de droite."
+    }
+   ],
+   "check": {
+    "enonce": "$\\int_{-2}^{2} x^5\\cos x\\,dx$ vaut…",
+    "choix": [
+     "$0$",
+     "$2\\int_0^2 x^5\\cos x\\,dx$",
+     "$32$",
+     "on ne peut pas savoir sans calcul"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$x^5$ impaire, $\\cos$ paire : le produit est impair."
+   }
+  },
+  {
+   "id": "4.7",
+   "titre": "Linéariser $\\sin^2$, $\\cos^2$, $\\sin\\cos$",
+   "corps": "On ne sait pas intégrer directement un **carré** de $\\sin$ ou de $\\cos$ : on le transforme en somme avec les formules de linéarisation ({{0.3}}).\n$$\\cos^2 x = \\frac{1 + \\cos 2x}{2} \\qquad \\sin^2 x = \\frac{1 - \\cos 2x}{2} \\qquad \\sin x\\cos x = \\frac{\\sin 2x}{2}$$\n\n> **Exemple** : $\\int \\cos^2 x\\,dx = \\frac12\\int(1 + \\cos 2x)\\,dx = \\frac12\\left(x + \\frac{\\sin 2x}{2}\\right) + C = \\frac{x}{2} + \\frac{\\sin 2x}{4} + C$.\n\n> **Exemple** : $\\int \\sin x\\cos x\\,dx = \\frac12\\int\\sin 2x\\,dx = -\\frac14\\cos 2x + C$. (Avec $u = \\sin x$, on trouve aussi $\\frac{\\sin^2 x}{2} + C$ : les deux réponses diffèrent d'une constante, les deux sont justes.)",
+   "rec": "Formules de duplication ({{0.3}}).",
+   "alt": "Un carré de cosinus oscille entre $0$ et $1$ autour de $\\frac12$ : c'est exactement $\\frac12 + \\frac12\\cos 2x$. On intègre la constante et le cosinus séparément.",
+   "pre": [
+    "4.2",
+    "0.3"
+   ],
+   "ecrans": [
+    {
+     "titre": "Le problème",
+     "texte": "$\\int \\cos^2 x$ : pas dans le tableau."
+    },
+    {
+     "titre": "Linéariser",
+     "texte": "$\\cos^2 x = \\frac{1 + \\cos 2x}{2}$."
+    },
+    {
+     "titre": "Intégrer",
+     "texte": "$\\frac{x}{2} + \\frac{\\sin 2x}{4} + C$."
+    }
+   ],
+   "check": {
+    "enonce": "Pour intégrer $\\sin^2 x$, on écrit $\\sin^2 x = $…",
+    "choix": [
+     "$\\frac{1 - \\cos 2x}{2}$",
+     "$\\frac{1 + \\cos 2x}{2}$",
+     "$1 - \\cos^2 x$ puis on s'arrête",
+     "$2\\sin x\\cos x$"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "Linéarisation : $\\sin^2 x = \\frac{1 - \\cos 2x}{2}$."
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "ma4-018",
+   "type": "qcm",
+   "notion": "4.1",
+   "origine": "cours",
+   "enonce": "Laquelle est une primitive de $\\cos x$ ?",
+   "choix": [
+    "$\\sin x + 7$",
+    "$-\\sin x$",
+    "$\\cos x + C$",
+    "$-\\cos x$"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "$(\\sin x + 7)' = \\cos x$ : ajouter une constante donne encore une primitive."
+  },
+  {
+   "id": "ma4-019",
+   "type": "saisie",
+   "notion": "4.1",
+   "origine": "cours",
+   "enonce": "Pour vérifier que $x\\ln x - x$ est une primitive de $\\ln x$, dérive-la. Écris $(x\\ln x - x)'$ simplifié.",
+   "verif": {
+    "mode": "expr",
+    "attendu": "ln(x)",
+    "var": "x",
+    "interdit": [
+     {
+      "motif": "x\\s*\\*?\\s*/\\s*x|1\\s*-\\s*1",
+      "msg": "Simplifie complètement."
+     }
+    ]
+   },
+   "duree": 0.75,
+   "explication": "$(x\\ln x)' = \\ln x + x\\cdot\\frac1x = \\ln x + 1$, puis $-1$ : on retrouve $\\ln x$."
+  },
+  {
+   "id": "ma4-020",
+   "type": "qcm",
+   "notion": "4.1",
+   "origine": "cours",
+   "enonce": "$F$ et $G$ sont deux primitives de $f$ sur un intervalle. Alors…",
+   "choix": [
+    "$F - G$ est constante",
+    "$F = G$",
+    "$F' = G$",
+    "$F + G = f$"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "$(F - G)' = f - f = 0$ : la différence est constante."
+  },
+  {
+   "id": "ma4-001",
+   "type": "saisie",
+   "notion": "4.2",
+   "origine": "cours",
+   "enonce": "Donne une primitive de $f(x) = [[F]]$ (avec la constante).",
+   "verif": {
+    "mode": "expr",
+    "attendu": "[[PR]]",
+    "var": "x",
+    "primitive": true,
+    "constante": true,
+    "exemple": "ex. x^3 - 2x^2 + x + C"
+   },
+   "duree": 0.75,
+   "explication": "Terme à terme : $[[PR_T]] + C$.",
+   "vals": {
+    "F": "6x^2 + 3x - 3",
+    "PR": "(2) x^3 + (3/2) x^2 + (-3) x",
+    "PR_T": "2x^3 + \\frac{3}{2}x^2 - 3x"
+   },
+   "variantes": [
+    {
+     "F": "6x^2 + 3x - 3",
+     "PR": "(2) x^3 + (3/2) x^2 + (-3) x",
+     "PR_T": "2x^3 + \\frac{3}{2}x^2 - 3x"
+    },
+    {
+     "F": "4x^2 - 3x + 7",
+     "PR": "(4/3) x^3 + (-3/2) x^2 + (7) x",
+     "PR_T": "\\frac{4}{3}x^3 - \\frac{3}{2}x^2 + 7x"
+    },
+    {
+     "F": "5x^2 - 4x + 7",
+     "PR": "(5/3) x^3 + (-2) x^2 + (7) x",
+     "PR_T": "\\frac{5}{3}x^3 - 2x^2 + 7x"
+    },
+    {
+     "F": "3x^2 + 3x - 3",
+     "PR": "(1) x^3 + (3/2) x^2 + (-3) x",
+     "PR_T": "x^3 + \\frac{3}{2}x^2 - 3x"
+    },
+    {
+     "F": "3x^2 - 3x + 2",
+     "PR": "(1) x^3 + (-3/2) x^2 + (2) x",
+     "PR_T": "x^3 - \\frac{3}{2}x^2 + 2x"
+    },
+    {
+     "F": "4x^2 + 5x + 5",
+     "PR": "(4/3) x^3 + (5/2) x^2 + (5) x",
+     "PR_T": "\\frac{4}{3}x^3 + \\frac{5}{2}x^2 + 5x"
+    }
+   ]
+  },
+  {
+   "id": "ma4-002",
+   "type": "qcm",
+   "notion": "4.2",
+   "origine": "cours",
+   "enonce": "$\\int \\frac{1}{x}\\,dx = $…",
+   "choix": [
+    "$\\ln|x| + C$",
+    "$-\\frac{1}{x^2} + C$",
+    "$\\frac{x^0}{0} + C$",
+    "$e^x + C$"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "C'est le cas $n = -1$ exclu de la formule des puissances."
+  },
+  {
+   "id": "ma4-003",
+   "type": "saisie",
+   "notion": "4.2",
+   "origine": "cours",
+   "enonce": "Donne une primitive de $e^{[[A]]x}$ (avec la constante).",
+   "verif": {
+    "mode": "expr",
+    "attendu": "e^([[A]] x)/([[A]])",
+    "var": "x",
+    "primitive": true,
+    "constante": true,
+    "exemple": "ex. -1/2 e^(-2x) + C"
+   },
+   "duree": 0.67,
+   "explication": "$\\int e^{ax}dx = \\frac1a e^{ax} + C$ avec $a = [[A]]$ : $\\frac{1}{[[A]]}e^{[[A]]x} + C$.",
+   "vals": {
+    "A": "-4"
+   },
+   "variantes": [
+    {
+     "A": "-4"
+    },
+    {
+     "A": "-5"
+    },
+    {
+     "A": "3"
+    },
+    {
+     "A": "4"
+    },
+    {
+     "A": "5"
+    },
+    {
+     "A": "-2"
+    }
+   ]
+  },
+  {
+   "id": "ma4-004",
+   "type": "saisie",
+   "notion": "4.2",
+   "origine": "cours",
+   "enonce": "Donne une primitive de $\\cos([[A]]x)$ (avec la constante).",
+   "verif": {
+    "mode": "expr",
+    "attendu": "sin([[A]] x)/[[A]]",
+    "var": "x",
+    "primitive": true,
+    "constante": true,
+    "exemple": "ex. sin(3x)/3 + C"
+   },
+   "duree": 0.67,
+   "explication": "$\\int\\cos(ax)dx = \\frac1a\\sin(ax) + C$ : $\\frac{\\sin([[A]]x)}{[[A]]} + C$.",
+   "vals": {
+    "A": "3"
+   },
+   "variantes": [
+    {
+     "A": "3"
+    },
+    {
+     "A": "5"
+    },
+    {
+     "A": "4"
+    },
+    {
+     "A": "2"
+    },
+    {
+     "A": "7"
+    },
+    {
+     "A": "6"
+    }
+   ]
+  },
+  {
+   "id": "ma4-005",
+   "type": "trous",
+   "notion": "4.2",
+   "origine": "cours",
+   "enonce": "$\\int x^n\\,dx = \\dfrac{x^{[_]}}{[_]} + C$ pour $n \\neq -1$",
+   "fragments": [
+    "$n+1$",
+    "$n-1$",
+    "$n$"
+   ],
+   "verif": {
+    "mode": "trous",
+    "attendu": [
+     "$n+1$",
+     "$n+1$"
+    ]
+   },
+   "duree": 0.5,
+   "explication": "On augmente l'exposant de 1 et on divise par le nouvel exposant."
+  },
+  {
+   "id": "ma4-006",
+   "type": "saisie",
+   "notion": "4.2",
+   "origine": "cours",
+   "enonce": "Donne une primitive de $\\dfrac{[[K]]}{1 + x^2}$ (avec la constante).",
+   "verif": {
+    "mode": "expr",
+    "attendu": "[[K]] arctan(x)",
+    "var": "x",
+    "primitive": true,
+    "constante": true,
+    "exemple": "ex. 4 arctan(x) + C"
+   },
+   "duree": 0.5,
+   "explication": "$\\int\\frac{1}{1+x^2}dx = \\arctan x + C$ : $[[K]]\\arctan x + C$.",
+   "vals": {
+    "K": "9"
+   },
+   "variantes": [
+    {
+     "K": "9"
+    },
+    {
+     "K": "5"
+    },
+    {
+     "K": "8"
+    },
+    {
+     "K": "4"
+    },
+    {
+     "K": "6"
+    },
+    {
+     "K": "3"
+    }
+   ]
+  },
+  {
+   "id": "ma4-007",
+   "type": "saisie",
+   "notion": "4.3",
+   "origine": "cours",
+   "enonce": "Calcule $\\displaystyle\\int_{[[A]]}^{[[B]]}\\left([[F]]\\right)dx$.",
+   "verif": {
+    "mode": "expr",
+    "attendu": "[[I]]"
+   },
+   "duree": 1,
+   "explication": "$\\left[[[PR_T]]\\right]_{[[A]]}^{[[B]]} = [[I_T]]$.",
+   "indices": [
+    "Une primitive : $[[PR_T]]$.",
+    "$F([[B]]) - F([[A]])$."
+   ],
+   "vals": {
+    "A": "2",
+    "B": "4",
+    "F": "-3x^2 + 4",
+    "PR_T": "-x^3 + 4x",
+    "I": "-48",
+    "I_T": "-48"
+   },
+   "variantes": [
+    {
+     "A": "2",
+     "B": "4",
+     "F": "-3x^2 + 4",
+     "PR_T": "-x^3 + 4x",
+     "I": "-48",
+     "I_T": "-48"
+    },
+    {
+     "A": "0",
+     "B": "2",
+     "F": "3x^2 - 2",
+     "PR_T": "x^3 - 2x",
+     "I": "4",
+     "I_T": "4"
+    },
+    {
+     "A": "2",
+     "B": "3",
+     "F": "9x^2 + 4",
+     "PR_T": "3x^3 + 4x",
+     "I": "61",
+     "I_T": "61"
+    },
+    {
+     "A": "0",
+     "B": "1",
+     "F": "6x^2 + 2",
+     "PR_T": "2x^3 + 2x",
+     "I": "4",
+     "I_T": "4"
+    },
+    {
+     "A": "0",
+     "B": "1",
+     "F": "9x^2 + 4",
+     "PR_T": "3x^3 + 4x",
+     "I": "7",
+     "I_T": "7"
+    },
+    {
+     "A": "1",
+     "B": "3",
+     "F": "3x^2 + 4",
+     "PR_T": "x^3 + 4x",
+     "I": "34",
+     "I_T": "34"
+    }
+   ]
+  },
+  {
+   "id": "ma4-008",
+   "type": "qcm",
+   "notion": "4.3",
+   "origine": "cours",
+   "enonce": "Si $F$ est une primitive de $f$, $\\int_a^b f(x)\\,dx = $…",
+   "choix": [
+    "$F(b) - F(a)$",
+    "$F(a) - F(b)$",
+    "$f(b) - f(a)$",
+    "$F(b) + F(a)$"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Théorème fondamental de l'analyse."
+  },
+  {
+   "id": "ma4-009",
+   "type": "saisie",
+   "notion": "4.3",
+   "origine": "cours",
+   "enonce": "Calcule $\\displaystyle\\int_1^{e}\\frac{1}{x}\\,dx$.",
+   "verif": {
+    "mode": "expr",
+    "attendu": "1",
+    "interdit": [
+     {
+      "motif": "ln",
+      "msg": "Simplifie : $\\ln e = 1$."
+     }
+    ]
+   },
+   "duree": 0.67,
+   "explication": "$\\big[\\ln x\\big]_1^e = \\ln e - \\ln 1 = 1$."
+  },
+  {
+   "id": "ma4-010",
+   "type": "qcm-multi",
+   "notion": "4.4",
+   "origine": "cours",
+   "enonce": "Lesquelles sont vraies (pour $f$ continue) ?",
+   "choix": [
+    "$\\int_a^a f = 0$",
+    "$\\int_b^a f = -\\int_a^b f$",
+    "$\\int_a^b f = \\int_a^c f + \\int_c^b f$",
+    "$\\int_a^b fg = \\int_a^b f \\times \\int_a^b g$"
+   ],
+   "verif": {
+    "attendu": [
+     0,
+     1,
+     2
+    ]
+   },
+   "duree": 0.5,
+   "explication": "L'intégrale d'un produit n'est pas le produit des intégrales (c'est pour ça qu'il faut l'IPP)."
+  },
+  {
+   "id": "ma4-011",
+   "type": "saisie",
+   "notion": "4.4",
+   "origine": "cours",
+   "enonce": "On sait que $\\int_0^{[[C]]} f = [[P]]$ et $\\int_{[[C]]}^{[[B]]} f = [[Q]]$. Calcule $\\int_{[[B]]}^{0} f$.",
+   "verif": {
+    "mode": "expr",
+    "attendu": "[[R]]"
+   },
+   "duree": 0.75,
+   "explication": "Chasles : $\\int_0^{[[B]]} f = [[P]] + [[Q]] = [[S]]$, puis on inverse les bornes : $[[R]]$.",
+   "vals": {
+    "C": "2",
+    "B": "4",
+    "P": "3",
+    "Q": "6",
+    "S": "9",
+    "R": "-9"
+   },
+   "variantes": [
+    {
+     "C": "2",
+     "B": "4",
+     "P": "3",
+     "Q": "6",
+     "S": "9",
+     "R": "-9"
+    },
+    {
+     "C": "2",
+     "B": "3",
+     "P": "3",
+     "Q": "-1",
+     "S": "2",
+     "R": "-2"
+    },
+    {
+     "C": "1",
+     "B": "3",
+     "P": "5",
+     "Q": "-1",
+     "S": "4",
+     "R": "-4"
+    },
+    {
+     "C": "3",
+     "B": "4",
+     "P": "2",
+     "Q": "1",
+     "S": "3",
+     "R": "-3"
+    },
+    {
+     "C": "2",
+     "B": "5",
+     "P": "-2",
+     "Q": "-1",
+     "S": "-3",
+     "R": "3"
+    },
+    {
+     "C": "3",
+     "B": "7",
+     "P": "-2",
+     "Q": "-1",
+     "S": "-3",
+     "R": "3"
+    }
+   ]
+  },
+  {
+   "id": "ma4-012",
+   "type": "saisie",
+   "notion": "4.5",
+   "origine": "cours",
+   "enonce": "Calcule $\\displaystyle\\int_{-2}^{2}\\left|x [[SA]]\\right|dx$.",
+   "verif": {
+    "mode": "expr",
+    "attendu": "[[I]]"
+   },
+   "duree": 1.5,
+   "explication": "[[COR]]",
+   "indices": [
+    "Où s'annule $x [[SA]]$ ? Ce point est-il dans $]-2, 2[$ ?",
+    "[[IND]]"
+   ],
+   "vals": {
+    "SA": "+ 1",
+    "I": "5",
+    "COR": "On coupe en $-1$ : $\\int_{-2}^{-1} -(x + 1)\\,dx + \\int_{-1}^{2}(x + 1)\\,dx = \\frac{1}{2} + \\frac{9}{2} = 5$.",
+    "IND": "Coupe en $x = -1$ (Chasles)."
+   },
+   "variantes": [
+    {
+     "SA": "+ 1",
+     "I": "5",
+     "COR": "On coupe en $-1$ : $\\int_{-2}^{-1} -(x + 1)\\,dx + \\int_{-1}^{2}(x + 1)\\,dx = \\frac{1}{2} + \\frac{9}{2} = 5$.",
+     "IND": "Coupe en $x = -1$ (Chasles)."
+    },
+    {
+     "SA": "+ 2",
+     "I": "8",
+     "COR": "$x + 2$ s'annule en $-2$, hors de $]-2, 2[$ (ou au bord) : $x + 2 \\geq 0$ sur tout l'intervalle. $\\left[\\frac{x^2}{2} + 2x\\right]_{-2}^{2} = 8$.",
+     "IND": "Pas besoin de couper : enlève simplement la valeur absolue."
+    },
+    {
+     "SA": "- 1",
+     "I": "5",
+     "COR": "On coupe en $1$ : $\\int_{-2}^{1} -(x - 1)\\,dx + \\int_{1}^{2}(x - 1)\\,dx = \\frac{9}{2} + \\frac{1}{2} = 5$.",
+     "IND": "Coupe en $x = 1$ (Chasles)."
+    },
+    {
+     "SA": "+ 4",
+     "I": "16",
+     "COR": "$x + 4$ s'annule en $-4$, hors de $]-2, 2[$ (ou au bord) : $x + 4 \\geq 0$ sur tout l'intervalle. $\\left[\\frac{x^2}{2} + 4x\\right]_{-2}^{2} = 16$.",
+     "IND": "Pas besoin de couper : enlève simplement la valeur absolue."
+    },
+    {
+     "SA": "- 4",
+     "I": "16",
+     "COR": "$x - 4$ s'annule en $4$, hors de $]-2, 2[$ (ou au bord) : $x - 4 \\leq 0$, donc $|x - 4| = -(x - 4)$. Résultat : $16$.",
+     "IND": "Pas besoin de couper : ici $|x + a| = -(x + a)$."
+    },
+    {
+     "SA": "+ 3",
+     "I": "12",
+     "COR": "$x + 3$ s'annule en $-3$, hors de $]-2, 2[$ (ou au bord) : $x + 3 \\geq 0$ sur tout l'intervalle. $\\left[\\frac{x^2}{2} + 3x\\right]_{-2}^{2} = 12$.",
+     "IND": "Pas besoin de couper : enlève simplement la valeur absolue."
+    },
+    {
+     "SA": "- 2",
+     "I": "8",
+     "COR": "$x - 2$ s'annule en $2$, hors de $]-2, 2[$ (ou au bord) : $x - 2 \\leq 0$, donc $|x - 2| = -(x - 2)$. Résultat : $8$.",
+     "IND": "Pas besoin de couper : ici $|x + a| = -(x + a)$."
+    },
+    {
+     "SA": "- 3",
+     "I": "12",
+     "COR": "$x - 3$ s'annule en $3$, hors de $]-2, 2[$ (ou au bord) : $x - 3 \\leq 0$, donc $|x - 3| = -(x - 3)$. Résultat : $12$.",
+     "IND": "Pas besoin de couper : ici $|x + a| = -(x + a)$."
+    }
+   ]
+  },
+  {
+   "id": "ma4-013",
+   "type": "qcm",
+   "notion": "4.5",
+   "origine": "cours",
+   "enonce": "Pour calculer $\\int_0^3 |x - 1|\\,dx$, on écrit…",
+   "choix": [
+    "$\\int_0^1 (1 - x)\\,dx + \\int_1^3 (x - 1)\\,dx$",
+    "$\\int_0^3 (x - 1)\\,dx$",
+    "$\\left|\\int_0^3 (x - 1)\\,dx\\right|$",
+    "$\\int_0^1 (x - 1)\\,dx + \\int_1^3 (1 - x)\\,dx$"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Avant $1$, $x - 1 < 0$ donc $|x - 1| = 1 - x$."
+  },
+  {
+   "id": "ma4-014",
+   "type": "qcm",
+   "notion": "4.6",
+   "origine": "cours",
+   "enonce": "$\\displaystyle\\int_{-1}^{1}\\frac{x\\cos x}{1 + x^4}\\,dx$ vaut…",
+   "choix": [
+    "$0$",
+    "$1$",
+    "$2\\int_0^1\\frac{x\\cos x}{1+x^4}dx$",
+    "on ne peut pas conclure"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "$x$ impaire, $\\cos x$ et $1 + x^4$ paires : la fonction est impaire sur un intervalle symétrique."
+  },
+  {
+   "id": "ma4-015",
+   "type": "saisie",
+   "notion": "4.7",
+   "origine": "cours",
+   "enonce": "Donne une primitive de $\\sin^2 x$ (avec la constante).",
+   "verif": {
+    "mode": "expr",
+    "attendu": "x/2 - sin(2x)/4",
+    "var": "x",
+    "primitive": true,
+    "constante": true
+   },
+   "duree": 1.5,
+   "explication": "$\\sin^2 x = \\frac{1 - \\cos 2x}{2}$ : $\\frac{x}{2} - \\frac{\\sin 2x}{4} + C$.",
+   "indices": [
+    "Linéarise : $\\sin^2 x = \\frac{1 - \\cos 2x}{2}$.",
+    "$\\int\\cos 2x\\,dx = \\frac{\\sin 2x}{2}$."
+   ]
+  },
+  {
+   "id": "ma4-016",
+   "type": "saisie",
+   "notion": "4.7",
+   "origine": "cours",
+   "enonce": "Calcule $\\displaystyle\\int_0^{\\pi}\\cos^2 x\\,dx$.",
+   "verif": {
+    "mode": "expr",
+    "attendu": "pi/2",
+    "interdit": [
+     {
+      "motif": "sin|cos",
+      "msg": "Donne une valeur exacte simplifiée."
+     }
+    ]
+   },
+   "duree": 1.5,
+   "explication": "$\\left[\\frac{x}{2} + \\frac{\\sin 2x}{4}\\right]_0^\\pi = \\frac{\\pi}{2}$.",
+   "indices": [
+    "$\\cos^2 x = \\frac{1 + \\cos 2x}{2}$.",
+    "$\\sin(2\\pi) = \\sin 0 = 0$."
+   ]
+  },
+  {
+   "id": "ma4-017",
+   "type": "saisie",
+   "notion": "4.7",
+   "origine": "cours",
+   "enonce": "Donne une primitive de $\\sin x\\cos x$ (avec la constante).",
+   "verif": {
+    "mode": "expr",
+    "attendu": "-cos(2x)/4",
+    "var": "x",
+    "primitive": true,
+    "constante": true
+   },
+   "duree": 1,
+   "explication": "$\\sin x\\cos x = \\frac{\\sin 2x}{2}$ : $-\\frac{\\cos 2x}{4} + C$ (ou $\\frac{\\sin^2 x}{2} + C$, c'est la même à une constante près)."
+  },
+  {
+   "id": "ma4-101",
+   "type": "exo",
+   "notion": "4.5",
+   "origine": "cours",
+   "titre": "Intégrale d'une valeur absolue (DST 2, ex. 3 · prép CC3)",
+   "enonce": "Le but : intégrer une valeur absolue en coupant l'intervalle au bon endroit, comme à l'ex. 3 du DST 2 et dans les exos de prépa du CC3.\n\nCalculer $$I = \\int_{[[AL]]}^{[[BE]]}\\left|x [[SA]]\\right|\\,dx$$",
+   "guidage": "1. Trouver où $x [[SA]]$ s'annule.\n2. Ce point est dans l'intervalle : couper avec Chasles.\n3. Sur chaque morceau, enlever la valeur absolue avec le bon signe.\n4. Calculer chaque morceau, puis additionner.",
+   "duree": 6,
+   "etapes": [
+    {
+     "consigne": "Résous $x [[SA]] = 0$.",
+     "question": "Zéro de $x + a$ ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[X0]]"
+     },
+     "corrige": "$x = [[X0]]$, qui est bien entre $[[AL]]$ et $[[BE]]$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Sur $[[[AL]], [[X0]]]$, $x [[SA]] \\leq 0$ donc $|x [[SA]]| = -(x [[SA]])$. Calcule $\\int_{[[AL]]}^{[[X0]]} -(x [[SA]])\\,dx$.",
+     "question": "Morceau de gauche ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[I1]]"
+     },
+     "corrige": "$\\left[-\\frac{(x [[SA]])^2}{2}\\right]_{[[AL]]}^{[[X0]]} = [[I1_T]]$.",
+     "duree": 1.5,
+     "guideSeul": true
+    },
+    {
+     "consigne": "Sur $[[[X0]], [[BE]]]$, $|x [[SA]]| = x [[SA]]$. Calcule $\\int_{[[X0]]}^{[[BE]]}(x [[SA]])\\,dx$.",
+     "question": "Morceau de droite ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[I2]]"
+     },
+     "corrige": "$\\left[\\frac{(x [[SA]])^2}{2}\\right]_{[[X0]]}^{[[BE]]} = [[I2_T]]$.",
+     "duree": 1.5,
+     "guideSeul": true
+    },
+    {
+     "consigne": "Chasles : additionne les deux morceaux.",
+     "question": "$I$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[I]]"
+     },
+     "corrige": "$I = [[I1_T]] + [[I2_T]] = \\boxed{[[I_T]]}$",
+     "indices": [
+      "Coupe en $x = [[X0]]$.",
+      "Morceaux : $[[I1_T]]$ et $[[I2_T]]$."
+     ],
+     "duree": 2
+    }
+   ],
+   "vals": {
+    "AL": "-3",
+    "BE": "1",
+    "SA": "+ 2",
+    "X0": "-2",
+    "I1": "1/2",
+    "I1_T": "\\frac{1}{2}",
+    "I2": "9/2",
+    "I2_T": "\\frac{9}{2}",
+    "I": "5",
+    "I_T": "5"
+   },
+   "variantes": [
+    {
+     "AL": "-3",
+     "BE": "1",
+     "SA": "+ 2",
+     "X0": "-2",
+     "I1": "1/2",
+     "I1_T": "\\frac{1}{2}",
+     "I2": "9/2",
+     "I2_T": "\\frac{9}{2}",
+     "I": "5",
+     "I_T": "5"
+    },
+    {
+     "AL": "-1",
+     "BE": "3",
+     "SA": "- 2",
+     "X0": "2",
+     "I1": "9/2",
+     "I1_T": "\\frac{9}{2}",
+     "I2": "1/2",
+     "I2_T": "\\frac{1}{2}",
+     "I": "5",
+     "I_T": "5"
+    },
+    {
+     "AL": "-4",
+     "BE": "2",
+     "SA": "- 1",
+     "X0": "1",
+     "I1": "25/2",
+     "I1_T": "\\frac{25}{2}",
+     "I2": "1/2",
+     "I2_T": "\\frac{1}{2}",
+     "I": "13",
+     "I_T": "13"
+    },
+    {
+     "AL": "-2",
+     "BE": "2",
+     "SA": "+ 1",
+     "X0": "-1",
+     "I1": "1/2",
+     "I1_T": "\\frac{1}{2}",
+     "I2": "9/2",
+     "I2_T": "\\frac{9}{2}",
+     "I": "5",
+     "I_T": "5"
+    },
+    {
+     "AL": "-1",
+     "BE": "2",
+     "SA": "- 1",
+     "X0": "1",
+     "I1": "2",
+     "I1_T": "2",
+     "I2": "1/2",
+     "I2_T": "\\frac{1}{2}",
+     "I": "5/2",
+     "I_T": "\\frac{5}{2}"
+    },
+    {
+     "AL": "-2",
+     "BE": "3",
+     "SA": "- 1",
+     "X0": "1",
+     "I1": "9/2",
+     "I1_T": "\\frac{9}{2}",
+     "I2": "2",
+     "I2_T": "2",
+     "I": "13/2",
+     "I_T": "\\frac{13}{2}"
+    },
+    {
+     "AL": "-3",
+     "BE": "4",
+     "SA": "+ 2",
+     "X0": "-2",
+     "I1": "1/2",
+     "I1_T": "\\frac{1}{2}",
+     "I2": "18",
+     "I2_T": "18",
+     "I": "37/2",
+     "I_T": "\\frac{37}{2}"
+    },
+    {
+     "AL": "-4",
+     "BE": "4",
+     "SA": "+ 1",
+     "X0": "-1",
+     "I1": "9/2",
+     "I1_T": "\\frac{9}{2}",
+     "I2": "25/2",
+     "I2_T": "\\frac{25}{2}",
+     "I": "17",
+     "I_T": "17"
+    }
+   ]
+  },
+  {
+   "id": "ma4-102",
+   "type": "exo",
+   "notion": "4.3",
+   "origine": "cours",
+   "titre": "Intégrale définie : primitive puis bornes",
+   "enonce": "Le but : calculer une intégrale définie avec le théorème fondamental, en soignant l'évaluation aux bornes.\n\nCalculer $$I = \\int_{0}^{[[B]]}\\left([[F]]\\right)dx$$",
+   "guidage": "1. Primitive terme à terme.\n2. $F([[B]])$, puis $F(0)$ (attention, $e^0 = 1$).\n3. $I = F([[B]]) - F(0)$.",
+   "duree": 5,
+   "etapes": [
+    {
+     "consigne": "Donne une primitive $F$ (sans constante).",
+     "question": "$F(x)$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[PR]]",
+      "var": "x",
+      "primitive": true
+     },
+     "corrige": "$F(x) = [[PR_T]]$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Calcule $F(0)$ (attention aux termes en $e^{0} = 1$).",
+     "question": "$F(0)$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[F0]]"
+     },
+     "corrige": "$F(0) = [[F0]]$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "$I = F([[B]]) - F(0)$.",
+     "question": "$I$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[I]]"
+     },
+     "corrige": "$I = \\big[[[PR_T]]\\big]_0^{[[B]]} = \\boxed{[[I_T]]}$",
+     "indices": [
+      "$F(x) = [[PR_T]]$.",
+      "$F(0) = [[F0]]$."
+     ],
+     "duree": 2
+    }
+   ],
+   "vals": {
+    "B": "2",
+    "F": "x + 3e^{x}",
+    "PR": "1/2 x^2 + 3 e^x",
+    "PR_T": "\\frac{1}{2}x^2 + 3e^{x}",
+    "F0": "3",
+    "I": "2 + 3 e^(2) - 3",
+    "I_T": "2 + 3e^{2} - 3"
+   },
+   "variantes": [
+    {
+     "B": "2",
+     "F": "x + 3e^{x}",
+     "PR": "1/2 x^2 + 3 e^x",
+     "PR_T": "\\frac{1}{2}x^2 + 3e^{x}",
+     "F0": "3",
+     "I": "2 + 3 e^(2) - 3",
+     "I_T": "2 + 3e^{2} - 3"
+    },
+    {
+     "B": "2",
+     "F": "x + e^{x}",
+     "PR": "1/2 x^2 + 1 e^x",
+     "PR_T": "\\frac{1}{2}x^2 + e^{x}",
+     "F0": "1",
+     "I": "2 + 1 e^(2) - 1",
+     "I_T": "2 + e^{2} - 1"
+    },
+    {
+     "B": "1",
+     "F": "3x + e^{x}",
+     "PR": "3/2 x^2 + 1 e^x",
+     "PR_T": "\\frac{3}{2}x^2 + e^{x}",
+     "F0": "1",
+     "I": "3/2 + 1 e^(1) - 1",
+     "I_T": "\\frac{3}{2} + e^{1} - 1"
+    },
+    {
+     "B": "2",
+     "F": "4x + e^{x}",
+     "PR": "2 x^2 + 1 e^x",
+     "PR_T": "2x^2 + e^{x}",
+     "F0": "1",
+     "I": "8 + 1 e^(2) - 1",
+     "I_T": "8 + e^{2} - 1"
+    },
+    {
+     "B": "1",
+     "F": "x + e^{x}",
+     "PR": "1/2 x^2 + 1 e^x",
+     "PR_T": "\\frac{1}{2}x^2 + e^{x}",
+     "F0": "1",
+     "I": "1/2 + 1 e^(1) - 1",
+     "I_T": "\\frac{1}{2} + e^{1} - 1"
+    },
+    {
+     "B": "2",
+     "F": "2x + 2e^{x}",
+     "PR": "1 x^2 + 2 e^x",
+     "PR_T": "1x^2 + 2e^{x}",
+     "F0": "2",
+     "I": "4 + 2 e^(2) - 2",
+     "I_T": "4 + 2e^{2} - 2"
+    }
+   ]
+  },
+  {
+   "id": "ma4-103",
+   "type": "exo",
+   "notion": "4.7",
+   "origine": "cours",
+   "titre": "Intégrale d'un carré de sinus ou cosinus",
+   "enonce": "Le but : intégrer $\\sin^2$ ou $\\cos^2$ en linéarisant d'abord.\n\nCalculer $$I = \\int_0^{[[B]]}[[F]]\\,dx$$",
+   "guidage": "1. Linéariser avec $\\cos 2x$.\n2. Primitive.\n3. Bornes.",
+   "duree": 5,
+   "etapes": [
+    {
+     "consigne": "Linéarise : écris $[[F]]$ avec $\\cos 2x$.",
+     "question": "Forme linéarisée ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[LIN]]",
+      "var": "x"
+     },
+     "corrige": "$[[F]] = [[LIN_T]]$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Primitive (sans constante).",
+     "question": "$F(x)$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[PR]]",
+      "var": "x",
+      "primitive": true
+     },
+     "corrige": "$F(x) = [[PR_T]]$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Évalue entre $0$ et $[[B]]$.",
+     "question": "$I$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[I]]",
+      "interdit": [
+       {
+        "motif": "sin|cos",
+        "msg": "Simplifie les $\\sin$ et $\\cos$ des bornes."
+       }
+      ]
+     },
+     "corrige": "$I = \\left[[[PR_T]]\\right]_0^{[[B]]} = \\boxed{[[I_T]]}$",
+     "indices": [
+      "$[[F]] = [[LIN_T]]$.",
+      "$F(x) = [[PR_T]]$."
+     ],
+     "duree": 2
+    }
+   ],
+   "vals": {
+    "F": "\\cos^2 x",
+    "B": "\\pi",
+    "LIN": "(1 + cos(2x))/2",
+    "LIN_T": "\\frac{1 + \\cos 2x}{2}",
+    "PR": "x/2 + sin(2x)/4",
+    "PR_T": "\\frac{x}{2} + \\frac{\\sin 2x}{4}",
+    "I": "pi/2",
+    "I_T": "\\frac{\\pi}{2}"
+   },
+   "variantes": [
+    {
+     "F": "\\cos^2 x",
+     "B": "\\pi",
+     "LIN": "(1 + cos(2x))/2",
+     "LIN_T": "\\frac{1 + \\cos 2x}{2}",
+     "PR": "x/2 + sin(2x)/4",
+     "PR_T": "\\frac{x}{2} + \\frac{\\sin 2x}{4}",
+     "I": "pi/2",
+     "I_T": "\\frac{\\pi}{2}"
+    },
+    {
+     "F": "\\cos^2 x",
+     "B": "\\frac{\\pi}{4}",
+     "LIN": "(1 + cos(2x))/2",
+     "LIN_T": "\\frac{1 + \\cos 2x}{2}",
+     "PR": "x/2 + sin(2x)/4",
+     "PR_T": "\\frac{x}{2} + \\frac{\\sin 2x}{4}",
+     "I": "pi/8 + 1/4",
+     "I_T": "\\frac{\\pi}{8} + \\frac14"
+    },
+    {
+     "F": "\\sin^2 x",
+     "B": "\\frac{\\pi}{2}",
+     "LIN": "(1 - cos(2x))/2",
+     "LIN_T": "\\frac{1 - \\cos 2x}{2}",
+     "PR": "x/2 - sin(2x)/4",
+     "PR_T": "\\frac{x}{2} - \\frac{\\sin 2x}{4}",
+     "I": "pi/4",
+     "I_T": "\\frac{\\pi}{4}"
+    },
+    {
+     "F": "\\sin^2 x",
+     "B": "\\pi",
+     "LIN": "(1 - cos(2x))/2",
+     "LIN_T": "\\frac{1 - \\cos 2x}{2}",
+     "PR": "x/2 - sin(2x)/4",
+     "PR_T": "\\frac{x}{2} - \\frac{\\sin 2x}{4}",
+     "I": "pi/2",
+     "I_T": "\\frac{\\pi}{2}"
+    },
+    {
+     "F": "\\cos^2 x",
+     "B": "\\frac{\\pi}{2}",
+     "LIN": "(1 + cos(2x))/2",
+     "LIN_T": "\\frac{1 + \\cos 2x}{2}",
+     "PR": "x/2 + sin(2x)/4",
+     "PR_T": "\\frac{x}{2} + \\frac{\\sin 2x}{4}",
+     "I": "pi/4",
+     "I_T": "\\frac{\\pi}{4}"
+    },
+    {
+     "F": "\\sin^2 x",
+     "B": "\\frac{\\pi}{4}",
+     "LIN": "(1 - cos(2x))/2",
+     "LIN_T": "\\frac{1 - \\cos 2x}{2}",
+     "PR": "x/2 - sin(2x)/4",
+     "PR_T": "\\frac{x}{2} - \\frac{\\sin 2x}{4}",
+     "I": "pi/8 - 1/4",
+     "I_T": "\\frac{\\pi}{8} - \\frac14"
+    }
+   ]
+  },
+  {
+   "id": "ma4-104",
+   "type": "exo",
+   "notion": "4.6",
+   "origine": "cours",
+   "titre": "Parité sur un intervalle symétrique (notes du prof)",
+   "enonce": "Le but : reconnaître une fonction impaire pour conclure sans calcul.\n\nCalculer $$I = \\int_{-1}^{1}\\frac{e^{x^2}\\sin x}{1 + x^2}\\,dx$$",
+   "guidage": "1. Calculer $f(-x)$.\n2. Comparer à $f(x)$.\n3. Conclure avec la parité.",
+   "duree": 3,
+   "etapes": [
+    {
+     "consigne": "Remplace $x$ par $-x$ : $\\sin(-x) = -\\sin x$, $(-x)^2 = x^2$. Écris $f(-x)$ en fonction de $f(x)$.",
+     "question": "$f(-x)$ = ? (en fonction de $f(x)$)",
+     "verif": {
+      "mode": "exact",
+      "attendu": [
+       "-f(x)",
+       "−f(x)",
+       "- f(x)"
+      ]
+     },
+     "corrige": "$f(-x) = \\frac{e^{x^2}\\cdot(-\\sin x)}{1 + x^2} = -f(x)$ : $f$ est impaire.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Intervalle symétrique et $f$ impaire : conclus.",
+     "question": "$I$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "0"
+     },
+     "corrige": "$f$ impaire sur $[-1, 1]$ : $\\boxed{I = 0}$.",
+     "indices": [
+      "$f(-x) = -f(x)$.",
+      "Les aires de part et d'autre de $0$ se compensent."
+     ],
+     "duree": 1
+    }
+   ]
+  },
+  {
+   "id": "ma4-201",
+   "type": "exo",
+   "notion": "4.5",
+   "origine": "annale",
+   "titre": "Annale · DST 2 (2025-26, variante B), ex. 3",
+   "enonce": "Calculer : $$I_1 = \\int_{-2}^{2}|x + 4|\\,dx$$",
+   "guidage": "Signe de $x + 4$ sur $[-2, 2]$, puis primitive.",
+   "duree": 5,
+   "etapes": [
+    {
+     "consigne": "Où s'annule $x + 4$ ? Est-ce dans $[-2, 2]$ ?",
+     "question": "Zéro ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "-4"
+     },
+     "corrige": "$x = -4$, **hors** de $[-2, 2]$ : sur l'intervalle, $x + 4 > 0$, donc $|x + 4| = x + 4$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Intègre $x + 4$ entre $-2$ et $2$.",
+     "question": "$I_1$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "16"
+     },
+     "corrige": "$\\left[\\frac{x^2}{2} + 4x\\right]_{-2}^{2} = (2 + 8) - (2 - 8) = \\boxed{16}$",
+     "indices": [
+      "$|x + 4| = x + 4$ sur $[-2, 2]$.",
+      "Primitive $\\frac{x^2}{2} + 4x$."
+     ],
+     "duree": 4
+    }
+   ]
+  },
+  {
+   "id": "ma4-202",
+   "type": "exo",
+   "notion": "4.5",
+   "origine": "td",
+   "titre": "Prép CC3 · ID",
+   "enonce": "Calculer : $$I_D = \\int_{-2}^{2}|x + 2|\\,dx$$",
+   "guidage": "Signe de $x + 2$ sur $[-2, 2]$.",
+   "duree": 4,
+   "etapes": [
+    {
+     "consigne": "Où s'annule $x + 2$ ?",
+     "question": "Zéro ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "-2"
+     },
+     "corrige": "$x = -2$ : c'est la borne. Sur $[-2, 2]$, $x + 2 \\geq 0$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Intègre $x + 2$ entre $-2$ et $2$.",
+     "question": "$I_D$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "8"
+     },
+     "corrige": "$\\left[\\frac{x^2}{2} + 2x\\right]_{-2}^{2} = 6 - (-2) = \\boxed{8}$",
+     "indices": [
+      "Pas besoin de couper.",
+      "Primitive $\\frac{x^2}{2} + 2x$."
+     ],
+     "duree": 3
+    }
+   ]
+  }
+ ]
+}

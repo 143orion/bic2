@@ -1,0 +1,2003 @@
+{
+ "id": "ma-2-trigo-expo",
+ "module": "maths-analyse",
+ "titre": "Formes trigonométrique et exponentielle",
+ "ordre": 2,
+ "sources": [
+  "Poly Nombres complexes § 3 à 7",
+  "DST 1 (oct. 2024) ex. 3",
+  "DST 2 variante B ex. 2",
+  "Rattrapage (mars 2026) ex. 1",
+  "Exos prép CC3 (forme trigonométrique / exponentielle et puissances)",
+  "Notes du prof (groupes 3.2 et 3.3)"
+ ],
+ "tldr": [
+  "$r = \\sqrt{a^2 + b^2}$ · $\\cos\\theta = \\frac{a}{r}$ **et** $\\sin\\theta = \\frac{b}{r}$ · argument principal dans $]-\\pi, \\pi]$",
+  "Quadrants : 1er $\\alpha$ · 2e $\\pi - \\alpha$ · 3e $-(\\pi - \\alpha)$ · 4e $-\\alpha$",
+  "$z = r(\\cos\\theta + i\\sin\\theta) = r\\,e^{i\\theta}$ · Euler $e^{i\\theta} = \\cos\\theta + i\\sin\\theta$ · $e^{i\\pi} = -1$",
+  "Produit : modules $\\times$, arguments $+$ · quotient : modules $\\div$, arguments $-$",
+  "De Moivre $(re^{i\\theta})^n = r^n e^{in\\theta}$, puis ramener l'angle (± $2\\pi$)",
+  "Retour : $a = r\\cos\\theta$, $b = r\\sin\\theta$ · piège : $16 + 16i$ a pour module $16\\sqrt2$"
+ ],
+ "notions": [
+  {
+   "id": "2.1",
+   "titre": "Module et argument (quadrants)",
+   "corps": "Le point $z = a + bi$ est à la distance $r = |z|$ de l'origine ({{1.3}}), et la demi-droite $Oz$ fait un angle $\\theta$ avec l'axe réel : c'est un **argument** de $z$.\n\n$$r = |z| = \\sqrt{a^2 + b^2} \\qquad \\cos\\theta = \\frac{a}{r} \\qquad \\sin\\theta = \\frac{b}{r}$$\n\nL'**argument principal** est l'unique $\\theta \\in\\ ]-\\pi, \\pi]$ qui vérifie les **deux** relations. Méthode en 3 temps :\n1. calculer $r$ ;\n2. calculer $\\cos\\theta$ et $\\sin\\theta$ ;\n3. trouver l'angle $\\alpha$ du 1er quadrant qui a ces valeurs **sans les signes** ({{0.2}}), puis placer $\\theta$ grâce aux signes.\n\n| signe de $\\cos\\theta$ | signe de $\\sin\\theta$ | quadrant | $\\theta$ |\n|---|---|---|---|\n| $+$ | $+$ | 1er (haut droite) | $\\alpha$ |\n| $-$ | $+$ | 2e (haut gauche) | $\\pi - \\alpha$ |\n| $-$ | $-$ | 3e (bas gauche) | $-(\\pi - \\alpha)$ |\n| $+$ | $-$ | 4e (bas droite) | $-\\alpha$ |\n\n> **Piège** : avec seulement $\\cos\\theta$ (ou seulement $\\tan\\theta$), il y a deux angles possibles. Il faut les **deux** signes.\n\n> **Exemple** : $z = -1 + i\\sqrt3$ : $r = 2$, $\\cos\\theta = -\\frac12$, $\\sin\\theta = \\frac{\\sqrt3}{2}$ : 2e quadrant, $\\alpha = \\frac{\\pi}{3}$, donc $\\theta = \\frac{2\\pi}{3}$ (et non $-\\frac{\\pi}{3}$).",
+   "labo": "plan",
+   "rec": "Module $\\sqrt{a^2 + b^2}$ ({{1.3}}) et valeurs remarquables ({{0.2}}).",
+   "alt": "Dessine toujours le point. Rien qu'en le plaçant, tu vois le quadrant. Ensuite, l'angle avec l'axe le plus proche se lit dans le tableau des valeurs remarquables.",
+   "pre": [
+    "1.3",
+    "0.2"
+   ],
+   "ecrans": [
+    {
+     "titre": "Le module",
+     "texte": "$r = \\sqrt{a^2 + b^2}$ : la longueur de la flèche $Oz$.",
+     "schema": {
+      "modele": "plan",
+      "vals": {
+       "pts": [
+        [
+         -1,
+         1.732,
+         "−1+i√3"
+        ]
+       ],
+       "vecteur": true,
+       "m": 2.5
+      }
+     }
+    },
+    {
+     "titre": "cos et sin",
+     "texte": "$\\cos\\theta = \\frac{a}{r}$, $\\sin\\theta = \\frac{b}{r}$ : on divise les deux parties par $r$."
+    },
+    {
+     "titre": "Les signes",
+     "texte": "$\\cos < 0$ et $\\sin > 0$ : on est en haut à gauche, 2e quadrant."
+    },
+    {
+     "titre": "L'angle",
+     "texte": "On reconnaît $\\alpha = \\frac{\\pi}{3}$ sans les signes, puis $\\theta = \\pi - \\alpha = \\frac{2\\pi}{3}$."
+    }
+   ],
+   "check": {
+    "enonce": "L'argument principal de $1 - i$ est…",
+    "choix": [
+     "$-\\frac{\\pi}{4}$",
+     "$\\frac{\\pi}{4}$",
+     "$\\frac{3\\pi}{4}$",
+     "$\\frac{7\\pi}{4}$"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$\\cos\\theta = \\frac{\\sqrt2}{2} > 0$ et $\\sin\\theta = -\\frac{\\sqrt2}{2} < 0$ : 4e quadrant, $\\theta = -\\frac{\\pi}{4}$ ($\\frac{7\\pi}{4}$ n'est pas dans $]-\\pi, \\pi]$)."
+   }
+  },
+  {
+   "id": "2.2",
+   "titre": "Forme trigonométrique",
+   "corps": "Une fois $r$ et $\\theta$ connus ({{2.1}}), on écrit\n$$z = r(\\cos\\theta + i\\sin\\theta)$$\nC'est la **forme trigonométrique**. Elle est unique si on prend $r > 0$ et $\\theta$ dans $]-\\pi, \\pi]$.\n\n> **Exemple** (DST 1, ex. 3) : $z = 16 + 16i$. $r = \\sqrt{256 + 256} = 16\\sqrt2$, $\\cos\\theta = \\sin\\theta = \\frac{16}{16\\sqrt2} = \\frac{\\sqrt2}{2}$, donc $\\theta = \\frac{\\pi}{4}$ :\n> $$z = 16\\sqrt2\\left(\\cos\\frac{\\pi}{4} + i\\sin\\frac{\\pi}{4}\\right)$$\n\n> **Piège** : si $a$ et $b$ ont un facteur commun ($16 + 16i$), on simplifie $\\cos$ et $\\sin$, mais $r$ garde le facteur : $16\\sqrt2$, pas $\\sqrt2$.\n\nSi l'angle n'est pas remarquable, on l'écrit avec $\\arctan$ : pour $a > 0$, $\\theta = \\arctan\\frac{b}{a}$ (DST 2 : $z = \\frac{2 - i}{5}$ donne $\\theta = -\\arctan\\frac12$).",
+   "rec": "$r$ et $\\theta$ ({{2.1}}).",
+   "alt": "$r$ dit « à quelle distance », $\\theta$ dit « dans quelle direction ». La forme trigonométrique, c'est l'adresse du point en coordonnées polaires.",
+   "pre": [
+    "2.1"
+   ],
+   "ecrans": [
+    {
+     "titre": "Les deux ingrédients",
+     "texte": "$r = |z|$ et $\\theta$ = argument principal."
+    },
+    {
+     "titre": "L'écriture",
+     "texte": "$z = r(\\cos\\theta + i\\sin\\theta)$.",
+     "schema": {
+      "modele": "plan",
+      "vals": {
+       "pts": [
+        [
+         16,
+         16,
+         "16+16i"
+        ]
+       ],
+       "vecteur": true
+      }
+     }
+    },
+    {
+     "titre": "Le facteur commun",
+     "texte": "$r$ garde le facteur ($16\\sqrt2$), seuls $\\cos$ et $\\sin$ se simplifient."
+    }
+   ],
+   "check": {
+    "enonce": "La forme trigonométrique de $2i$ est…",
+    "choix": [
+     "$2\\left(\\cos\\frac{\\pi}{2} + i\\sin\\frac{\\pi}{2}\\right)$",
+     "$2(\\cos 0 + i\\sin 0)$",
+     "$\\cos 2 + i\\sin 2$",
+     "$2\\left(\\cos\\pi + i\\sin\\pi\\right)$"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$2i$ est sur l'axe imaginaire, en haut : $r = 2$, $\\theta = \\frac{\\pi}{2}$."
+   }
+  },
+  {
+   "id": "2.3",
+   "titre": "Formule d'Euler, forme exponentielle",
+   "corps": "**Formule d'Euler** : pour tout réel $\\theta$,\n$$e^{i\\theta} = \\cos\\theta + i\\sin\\theta$$\n\nD'où la **forme exponentielle** : $z = r\\,e^{i\\theta}$ (même $r$, même $\\theta$ que la forme trigonométrique).\n\nCas à connaître : $e^{i0} = 1$, $e^{i\\pi/2} = i$, $e^{i\\pi} = -1$ (donc $e^{i\\pi} + 1 = 0$), $e^{-i\\pi/2} = -i$.\n\n> **À retenir** : passer de la forme trigonométrique à la forme exponentielle ne demande aucun calcul : $16\\sqrt2\\left(\\cos\\frac{\\pi}{4} + i\\sin\\frac{\\pi}{4}\\right) = 16\\sqrt2\\,e^{i\\pi/4}$.\n\nSur un axe : $5 = 5e^{i0}$, $-5 = 5e^{i\\pi}$, $3i = 3e^{i\\pi/2}$, $-3i = 3e^{-i\\pi/2}$.",
+   "rec": "Forme trigonométrique ({{2.2}}).",
+   "alt": "$e^{i\\theta}$, c'est le point du cercle de rayon $1$ à l'angle $\\theta$. Multiplier par $r$ l'éloigne du centre.",
+   "pre": [
+    "2.2"
+   ],
+   "ecrans": [
+    {
+     "titre": "Euler",
+     "texte": "$e^{i\\theta} = \\cos\\theta + i\\sin\\theta$.",
+     "schema": {
+      "modele": "cercle",
+      "vals": {
+       "k": 3,
+       "lab": "θ"
+      }
+     }
+    },
+    {
+     "titre": "La forme exponentielle",
+     "texte": "$z = r\\,e^{i\\theta}$ : une écriture plus courte de la forme trigonométrique."
+    },
+    {
+     "titre": "Les points des axes",
+     "texte": "$e^{i\\pi} = -1$, $e^{i\\pi/2} = i$, $e^{-i\\pi/2} = -i$."
+    }
+   ],
+   "check": {
+    "enonce": "$e^{i\\pi}$ vaut…",
+    "choix": [
+     "$-1$",
+     "$1$",
+     "$i$",
+     "$0$"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$\\cos\\pi + i\\sin\\pi = -1 + 0i$."
+   }
+  },
+  {
+   "id": "2.4",
+   "titre": "Produits et quotients",
+   "corps": "En forme exponentielle, les modules se **multiplient** et les arguments s'**additionnent** :\n$$r e^{i\\theta} \\cdot \\rho e^{i\\varphi} = r\\rho\\,e^{i(\\theta + \\varphi)} \\qquad \\frac{r e^{i\\theta}}{\\rho e^{i\\varphi}} = \\frac{r}{\\rho}\\,e^{i(\\theta - \\varphi)}$$\n\nDonc $|zw| = |z|\\,|w|$ et $\\arg(zw) \\equiv \\arg z + \\arg w \\pmod{2\\pi}$.\n\n> **Exemple** (poly, ex. 7.6) : $z_1 = 2e^{i\\pi/6}$, $z_2 = 3e^{-i\\pi/3}$. $|z_1 z_2| = 6$, $\\arg(z_1 z_2) = \\frac{\\pi}{6} - \\frac{\\pi}{3} = -\\frac{\\pi}{6}$, donc $z_1 z_2 = 6e^{-i\\pi/6} = 6\\left(\\frac{\\sqrt3}{2} - \\frac12 i\\right) = 3\\sqrt3 - 3i$.\n\nGéométriquement, multiplier par $\\rho e^{i\\varphi}$ = agrandir de $\\rho$ puis tourner de $\\varphi$.\n\nPour un **petit** produit de formes algébriques ($(2 + 2i)^2 \\cdot 3(1 - 2i)$, DST 1 ex. 5), il est plus simple de développer ({{1.2}}).",
+   "rec": "Règles des puissances : $e^a e^b = e^{a+b}$ ({{0.1}}).",
+   "alt": "Ce sont les règles de $e^a e^b = e^{a+b}$ : les exposants $i\\theta$ et $i\\varphi$ s'additionnent, les facteurs devant se multiplient.",
+   "pre": [
+    "2.3",
+    "1.2"
+   ],
+   "ecrans": [
+    {
+     "titre": "Produit",
+     "texte": "Modules multipliés, arguments additionnés."
+    },
+    {
+     "titre": "Quotient",
+     "texte": "Modules divisés, arguments soustraits."
+    },
+    {
+     "titre": "Retour à l'algébrique",
+     "texte": "$6e^{-i\\pi/6} = 6\\cos(-\\frac{\\pi}{6}) + 6i\\sin(-\\frac{\\pi}{6}) = 3\\sqrt3 - 3i$."
+    }
+   ],
+   "check": {
+    "enonce": "$2e^{i\\pi/3} \\times 5e^{i\\pi/6}$ vaut…",
+    "choix": [
+     "$10e^{i\\pi/2}$",
+     "$7e^{i\\pi/2}$",
+     "$10e^{i\\pi/18}$",
+     "$10e^{i\\pi/3}$"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$2 \\times 5 = 10$ et $\\frac{\\pi}{3} + \\frac{\\pi}{6} = \\frac{\\pi}{2}$."
+   }
+  },
+  {
+   "id": "2.5",
+   "titre": "Puissances : De Moivre",
+   "corps": "**Formule de De Moivre** : $\\left(r e^{i\\theta}\\right)^n = r^n e^{in\\theta}$, c'est-à-dire\n$$\\big(r(\\cos\\theta + i\\sin\\theta)\\big)^n = r^n\\big(\\cos n\\theta + i\\sin n\\theta\\big)$$\n\nPour une grande puissance, on passe **toujours** par la forme exponentielle :\n1. écrire $z = r e^{i\\theta}$ ({{2.1}}) ;\n2. calculer $r^n$ et $n\\theta$ ;\n3. **ramener** $n\\theta$ dans $]-\\pi, \\pi]$ en ajoutant ou retirant des $2\\pi$ ;\n4. si demandé, repasser en forme algébrique ({{2.6}}).\n\n> **Exemple** : $(1 - i)^{10}$ avec $1 - i = \\sqrt2\\,e^{-i\\pi/4}$ : $(\\sqrt2)^{10} = 32$ et $-\\frac{10\\pi}{4} = -\\frac{5\\pi}{2} \\equiv -\\frac{\\pi}{2}$, donc $(1 - i)^{10} = 32e^{-i\\pi/2} = -32i$.\n\n> **Exemple** (rattrapage) : $(\\sqrt3 + i)^5 = \\left(2e^{i\\pi/6}\\right)^5 = 32e^{i5\\pi/6} = 32\\left(-\\frac{\\sqrt3}{2} + \\frac12 i\\right) = -16\\sqrt3 + 16i$.\n\nRésultats du cours : $(1 + i)^8 = 16$ et $(\\sqrt3 + i)^6 = -64$.",
+   "rec": "Produit en forme exponentielle ({{2.4}}).",
+   "alt": "$z^n$, c'est $z$ multiplié $n$ fois par lui-même : le module est multiplié $n$ fois ($r^n$) et l'angle ajouté $n$ fois ($n\\theta$).",
+   "pre": [
+    "2.4"
+   ],
+   "ecrans": [
+    {
+     "titre": "La formule",
+     "texte": "$(re^{i\\theta})^n = r^n e^{in\\theta}$."
+    },
+    {
+     "titre": "Ramener l'angle",
+     "texte": "$-\\frac{5\\pi}{2} + 2\\pi = -\\frac{\\pi}{2}$ : on vise $]-\\pi, \\pi]$.",
+     "schema": {
+      "modele": "cercle",
+      "vals": {
+       "k": -6,
+       "lab": "−π/2"
+      }
+     }
+    },
+    {
+     "titre": "Conclure",
+     "texte": "$32e^{-i\\pi/2} = -32i$."
+    }
+   ],
+   "check": {
+    "enonce": "$(1 + i)^8$ vaut…",
+    "choix": [
+     "$16$",
+     "$-16$",
+     "$16i$",
+     "$8$"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$1 + i = \\sqrt2\\,e^{i\\pi/4}$ : $(\\sqrt2)^8 = 16$ et $8 \\times \\frac{\\pi}{4} = 2\\pi \\equiv 0$."
+   }
+  },
+  {
+   "id": "2.6",
+   "titre": "Retour à la forme algébrique",
+   "corps": "De $z = r e^{i\\theta}$ on revient à $z = a + bi$ avec\n$$a = r\\cos\\theta \\qquad b = r\\sin\\theta$$\n\n> **Exemple** : $4e^{i2\\pi/3} = 4\\left(-\\frac12 + \\frac{\\sqrt3}{2}i\\right) = -2 + 2\\sqrt3\\,i$.\n\nC'est la dernière étape d'un calcul de puissance quand l'énoncé demande la forme algébrique ({{2.5}}), et la dernière étape d'un calcul de racine ({{3.1}}).",
+   "rec": "Valeurs remarquables et symétries ({{0.2}}).",
+   "alt": "C'est simplement la formule d'Euler, multipliée par $r$ : $r e^{i\\theta} = r\\cos\\theta + i\\,r\\sin\\theta$.",
+   "pre": [
+    "2.3"
+   ],
+   "ecrans": [
+    {
+     "titre": "La formule",
+     "texte": "$a = r\\cos\\theta$, $b = r\\sin\\theta$."
+    },
+    {
+     "titre": "Exemple",
+     "texte": "$4e^{i2\\pi/3}$ : $\\cos\\frac{2\\pi}{3} = -\\frac12$, $\\sin\\frac{2\\pi}{3} = \\frac{\\sqrt3}{2}$."
+    }
+   ],
+   "check": {
+    "enonce": "$2e^{-i\\pi/2}$ vaut…",
+    "choix": [
+     "$-2i$",
+     "$2i$",
+     "$-2$",
+     "$2$"
+    ],
+    "verif": {
+     "attendu": [
+      0
+     ]
+    },
+    "explication": "$\\cos(-\\frac{\\pi}{2}) = 0$ et $\\sin(-\\frac{\\pi}{2}) = -1$."
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "ma2-001",
+   "type": "saisie",
+   "notion": "2.1",
+   "origine": "cours",
+   "enonce": "Calcule le module de $z = [[Z]]$.",
+   "verif": {
+    "mode": "expr",
+    "attendu": "[[R]]",
+    "interdit": [
+     {
+      "motif": "\\+|i",
+      "msg": "Donne seulement la valeur du module."
+     }
+    ],
+    "exemple": "ex. 2 sqrt(2)"
+   },
+   "duree": 0.67,
+   "explication": "$r = \\sqrt{a^2 + b^2} = [[R_T]]$.",
+   "vals": {
+    "Z": "-3 + 3\\,i",
+    "R": "3 sqrt(2)",
+    "R_T": "3\\sqrt{2}"
+   },
+   "variantes": [
+    {
+     "Z": "-3 + 3\\,i",
+     "R": "3 sqrt(2)",
+     "R_T": "3\\sqrt{2}"
+    },
+    {
+     "Z": "-1 - \\sqrt{3}\\,i",
+     "R": "2",
+     "R_T": "2"
+    },
+    {
+     "Z": "-2 + 2\\sqrt{3}\\,i",
+     "R": "4",
+     "R_T": "4"
+    },
+    {
+     "Z": "-5\\sqrt{3} - 5\\,i",
+     "R": "10",
+     "R_T": "10"
+    },
+    {
+     "Z": "4 + 4\\,i",
+     "R": "4 sqrt(2)",
+     "R_T": "4\\sqrt{2}"
+    },
+    {
+     "Z": "-4 + 4\\,i",
+     "R": "4 sqrt(2)",
+     "R_T": "4\\sqrt{2}"
+    }
+   ]
+  },
+  {
+   "id": "ma2-002",
+   "type": "saisie",
+   "notion": "2.1",
+   "origine": "cours",
+   "enonce": "Donne l'argument principal (dans $]-\\pi, \\pi]$) de $z = [[Z]]$.",
+   "verif": {
+    "mode": "expr",
+    "attendu": "[[TH]]",
+    "interdit": [
+     {
+      "motif": "arctan|arccos|arcsin",
+      "msg": "C'est un angle remarquable : donne-le en multiple de $\\pi$."
+     }
+    ],
+    "exemple": "ex. 2pi/3"
+   },
+   "duree": 1,
+   "explication": "$\\cos\\theta = [[C]]$ et $\\sin\\theta = [[S]]$ : [[Q]] quadrant, donc $\\theta = [[TH_T]]$.",
+   "indices": [
+    "Calcule $r$, puis $\\cos\\theta = \\frac{a}{r}$ et $\\sin\\theta = \\frac{b}{r}$.",
+    "Regarde les signes de $\\cos\\theta$ et $\\sin\\theta$ pour le quadrant."
+   ],
+   "vals": {
+    "Z": "-4\\sqrt{3} - 4\\,i",
+    "TH": "-5 pi/6",
+    "TH_T": "-\\frac{5\\pi}{6}",
+    "C": "-\\frac{\\sqrt{3}}{2}",
+    "S": "-\\frac{1}{2}",
+    "Q": "3e"
+   },
+   "variantes": [
+    {
+     "Z": "-4\\sqrt{3} - 4\\,i",
+     "TH": "-5 pi/6",
+     "TH_T": "-\\frac{5\\pi}{6}",
+     "C": "-\\frac{\\sqrt{3}}{2}",
+     "S": "-\\frac{1}{2}",
+     "Q": "3e"
+    },
+    {
+     "Z": "3\\sqrt{3} - 3\\,i",
+     "TH": "-pi/6",
+     "TH_T": "-\\frac{\\pi}{6}",
+     "C": "\\frac{\\sqrt{3}}{2}",
+     "S": "-\\frac{1}{2}",
+     "Q": "4e"
+    },
+    {
+     "Z": "2 - 2\\sqrt{3}\\,i",
+     "TH": "-pi/3",
+     "TH_T": "-\\frac{\\pi}{3}",
+     "C": "\\frac{1}{2}",
+     "S": "-\\frac{\\sqrt{3}}{2}",
+     "Q": "4e"
+    },
+    {
+     "Z": "-4 - 4\\sqrt{3}\\,i",
+     "TH": "-2 pi/3",
+     "TH_T": "-\\frac{2\\pi}{3}",
+     "C": "-\\frac{1}{2}",
+     "S": "-\\frac{\\sqrt{3}}{2}",
+     "Q": "3e"
+    },
+    {
+     "Z": "2 + 2\\,i",
+     "TH": "pi/4",
+     "TH_T": "\\frac{\\pi}{4}",
+     "C": "\\frac{\\sqrt{2}}{2}",
+     "S": "\\frac{\\sqrt{2}}{2}",
+     "Q": "1er"
+    },
+    {
+     "Z": "4 - 4\\sqrt{3}\\,i",
+     "TH": "-pi/3",
+     "TH_T": "-\\frac{\\pi}{3}",
+     "C": "\\frac{1}{2}",
+     "S": "-\\frac{\\sqrt{3}}{2}",
+     "Q": "4e"
+    },
+    {
+     "Z": "-2 - 2\\sqrt{3}\\,i",
+     "TH": "-2 pi/3",
+     "TH_T": "-\\frac{2\\pi}{3}",
+     "C": "-\\frac{1}{2}",
+     "S": "-\\frac{\\sqrt{3}}{2}",
+     "Q": "3e"
+    },
+    {
+     "Z": "-1 - \\sqrt{3}\\,i",
+     "TH": "-2 pi/3",
+     "TH_T": "-\\frac{2\\pi}{3}",
+     "C": "-\\frac{1}{2}",
+     "S": "-\\frac{\\sqrt{3}}{2}",
+     "Q": "3e"
+    }
+   ]
+  },
+  {
+   "id": "ma2-003",
+   "type": "qcm",
+   "notion": "2.1",
+   "origine": "cours",
+   "enonce": "$\\cos\\theta < 0$ et $\\sin\\theta < 0$ : $z$ est dans le…",
+   "choix": [
+    "3e quadrant",
+    "2e quadrant",
+    "4e quadrant",
+    "1er quadrant"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Partie réelle et partie imaginaire négatives : en bas à gauche."
+  },
+  {
+   "id": "ma2-004",
+   "type": "trous",
+   "notion": "2.1",
+   "origine": "cours",
+   "enonce": "2e quadrant : $\\theta = [_]$ · 4e quadrant : $\\theta = [_]$ (avec $\\alpha$ l'angle du 1er quadrant)",
+   "fragments": [
+    "$\\pi - \\alpha$",
+    "$-\\alpha$",
+    "$\\alpha - \\pi$",
+    "$\\pi + \\alpha$"
+   ],
+   "verif": {
+    "mode": "trous",
+    "attendu": [
+     "$\\pi - \\alpha$",
+     "$-\\alpha$"
+    ]
+   },
+   "duree": 0.5,
+   "explication": "Symétrique par rapport à l'axe vertical : $\\pi - \\alpha$ ; par rapport à l'axe réel : $-\\alpha$."
+  },
+  {
+   "id": "ma2-005",
+   "type": "saisie",
+   "notion": "2.2",
+   "origine": "cours",
+   "enonce": "Écris $z = [[Z]]$ sous forme trigonométrique.",
+   "verif": {
+    "mode": "expr",
+    "attendu": "[[TRI]]",
+    "forme": "trigo"
+   },
+   "duree": 1.5,
+   "explication": "$r = [[R_T]]$, $\\theta = [[TH_T]]$ : $z = [[TRI_T]]$.",
+   "indices": [
+    "Module, puis $\\cos\\theta$ et $\\sin\\theta$.",
+    "$r = [[R_T]]$."
+   ],
+   "vals": {
+    "Z": "-1 + i",
+    "TRI": "sqrt(2) (cos(3 pi/4) + i sin(3 pi/4))",
+    "TRI_T": "\\sqrt{2}\\left(\\cos \\frac{3\\pi}{4} + i\\sin \\frac{3\\pi}{4}\\right)",
+    "R_T": "\\sqrt{2}",
+    "TH_T": "\\frac{3\\pi}{4}"
+   },
+   "variantes": [
+    {
+     "Z": "-1 + i",
+     "TRI": "sqrt(2) (cos(3 pi/4) + i sin(3 pi/4))",
+     "TRI_T": "\\sqrt{2}\\left(\\cos \\frac{3\\pi}{4} + i\\sin \\frac{3\\pi}{4}\\right)",
+     "R_T": "\\sqrt{2}",
+     "TH_T": "\\frac{3\\pi}{4}"
+    },
+    {
+     "Z": "2 + 2\\,i",
+     "TRI": "2 sqrt(2) (cos(pi/4) + i sin(pi/4))",
+     "TRI_T": "2\\sqrt{2}\\left(\\cos \\frac{\\pi}{4} + i\\sin \\frac{\\pi}{4}\\right)",
+     "R_T": "2\\sqrt{2}",
+     "TH_T": "\\frac{\\pi}{4}"
+    },
+    {
+     "Z": "-4\\sqrt{3} - 4\\,i",
+     "TRI": "8 (cos(-5 pi/6) + i sin(-5 pi/6))",
+     "TRI_T": "8\\left(\\cos -\\frac{5\\pi}{6} + i\\sin -\\frac{5\\pi}{6}\\right)",
+     "R_T": "8",
+     "TH_T": "-\\frac{5\\pi}{6}"
+    },
+    {
+     "Z": "\\sqrt{3} - i",
+     "TRI": "2 (cos(-pi/6) + i sin(-pi/6))",
+     "TRI_T": "2\\left(\\cos -\\frac{\\pi}{6} + i\\sin -\\frac{\\pi}{6}\\right)",
+     "R_T": "2",
+     "TH_T": "-\\frac{\\pi}{6}"
+    },
+    {
+     "Z": "3 + 3\\sqrt{3}\\,i",
+     "TRI": "6 (cos(pi/3) + i sin(pi/3))",
+     "TRI_T": "6\\left(\\cos \\frac{\\pi}{3} + i\\sin \\frac{\\pi}{3}\\right)",
+     "R_T": "6",
+     "TH_T": "\\frac{\\pi}{3}"
+    },
+    {
+     "Z": "3\\sqrt{3} - 3\\,i",
+     "TRI": "6 (cos(-pi/6) + i sin(-pi/6))",
+     "TRI_T": "6\\left(\\cos -\\frac{\\pi}{6} + i\\sin -\\frac{\\pi}{6}\\right)",
+     "R_T": "6",
+     "TH_T": "-\\frac{\\pi}{6}"
+    }
+   ]
+  },
+  {
+   "id": "ma2-006",
+   "type": "saisie",
+   "notion": "2.3",
+   "origine": "cours",
+   "enonce": "Écris $z = [[Z]]$ sous forme exponentielle.",
+   "verif": {
+    "mode": "expr",
+    "attendu": "[[EX]]",
+    "forme": "expo"
+   },
+   "duree": 1.5,
+   "explication": "$r = [[R_T]]$ et $\\theta = [[TH_T]]$ : $z = [[EX_T]]$.",
+   "indices": [
+    "Même $r$ et même $\\theta$ qu'en forme trigonométrique.",
+    "$r = [[R_T]]$."
+   ],
+   "vals": {
+    "Z": "-4 + 4\\,i",
+    "EX": "4 sqrt(2) e^(i 3 pi/4)",
+    "EX_T": "4\\sqrt{2}\\,e^{i\\frac{3\\pi}{4}}",
+    "R_T": "4\\sqrt{2}",
+    "TH_T": "\\frac{3\\pi}{4}"
+   },
+   "variantes": [
+    {
+     "Z": "-4 + 4\\,i",
+     "EX": "4 sqrt(2) e^(i 3 pi/4)",
+     "EX_T": "4\\sqrt{2}\\,e^{i\\frac{3\\pi}{4}}",
+     "R_T": "4\\sqrt{2}",
+     "TH_T": "\\frac{3\\pi}{4}"
+    },
+    {
+     "Z": "-3 - 3\\,i",
+     "EX": "3 sqrt(2) e^(-i 3 pi/4)",
+     "EX_T": "3\\sqrt{2}\\,e^{-i\\frac{3\\pi}{4}}",
+     "R_T": "3\\sqrt{2}",
+     "TH_T": "-\\frac{3\\pi}{4}"
+    },
+    {
+     "Z": "1 - i",
+     "EX": "sqrt(2) e^(-i pi/4)",
+     "EX_T": "\\sqrt{2}\\,e^{-i\\frac{\\pi}{4}}",
+     "R_T": "\\sqrt{2}",
+     "TH_T": "-\\frac{\\pi}{4}"
+    },
+    {
+     "Z": "-3 + 3\\sqrt{3}\\,i",
+     "EX": "6 e^(i 2 pi/3)",
+     "EX_T": "6\\,e^{i\\frac{2\\pi}{3}}",
+     "R_T": "6",
+     "TH_T": "\\frac{2\\pi}{3}"
+    },
+    {
+     "Z": "-1 + i",
+     "EX": "sqrt(2) e^(i 3 pi/4)",
+     "EX_T": "\\sqrt{2}\\,e^{i\\frac{3\\pi}{4}}",
+     "R_T": "\\sqrt{2}",
+     "TH_T": "\\frac{3\\pi}{4}"
+    },
+    {
+     "Z": "-3 + 3\\,i",
+     "EX": "3 sqrt(2) e^(i 3 pi/4)",
+     "EX_T": "3\\sqrt{2}\\,e^{i\\frac{3\\pi}{4}}",
+     "R_T": "3\\sqrt{2}",
+     "TH_T": "\\frac{3\\pi}{4}"
+    }
+   ]
+  },
+  {
+   "id": "ma2-007",
+   "type": "qcm",
+   "notion": "2.3",
+   "origine": "cours",
+   "enonce": "$e^{-i\\pi/2}$ vaut…",
+   "choix": [
+    "$-i$",
+    "$i$",
+    "$-1$",
+    "$\\frac{1}{2}$"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "$\\cos(-\\frac{\\pi}{2}) + i\\sin(-\\frac{\\pi}{2}) = 0 - i$."
+  },
+  {
+   "id": "ma2-008",
+   "type": "qcm-multi",
+   "notion": "2.3",
+   "origine": "cours",
+   "enonce": "Lesquelles sont justes ?",
+   "choix": [
+    "$e^{i\\pi} + 1 = 0$",
+    "$-5 = 5e^{i\\pi}$",
+    "$3i = 3e^{i\\pi/2}$",
+    "$-2 = -2e^{i0}$ est une forme exponentielle"
+   ],
+   "verif": {
+    "attendu": [
+     0,
+     1,
+     2
+    ]
+   },
+   "duree": 0.5,
+   "explication": "Dans une forme exponentielle, $r > 0$ : $-2 = 2e^{i\\pi}$."
+  },
+  {
+   "id": "ma2-009",
+   "type": "saisie",
+   "notion": "2.4",
+   "origine": "cours",
+   "enonce": "$z_1 = [[Z1]]$ et $z_2 = [[Z2]]$. Écris $z_1 z_2$ sous forme exponentielle.",
+   "verif": {
+    "mode": "expr",
+    "attendu": "[[EX]]",
+    "forme": "expo"
+   },
+   "duree": 1,
+   "explication": "$[[R1]] \\times [[R2]] = [[RP]]$ et $[[SOM]] = [[AP]]$ : $z_1z_2 = [[EX_T]]$.",
+   "indices": [
+    "Les modules se multiplient, les arguments s'additionnent.",
+    "Ramène l'argument dans $]-\\pi, \\pi]$ si besoin."
+   ],
+   "vals": {
+    "R1": "5",
+    "R2": "3",
+    "Z1": "5\\,e^{i\\frac{\\pi}{3}}",
+    "Z2": "3\\,e^{i\\frac{\\pi}{6}}",
+    "SOM": "\\frac{\\pi}{3} + \\frac{\\pi}{6}",
+    "RP": "15",
+    "AP": "\\frac{\\pi}{2}",
+    "EX": "15 e^(i pi/2)",
+    "EX_T": "15\\,e^{i\\frac{\\pi}{2}}"
+   },
+   "variantes": [
+    {
+     "R1": "5",
+     "R2": "3",
+     "Z1": "5\\,e^{i\\frac{\\pi}{3}}",
+     "Z2": "3\\,e^{i\\frac{\\pi}{6}}",
+     "SOM": "\\frac{\\pi}{3} + \\frac{\\pi}{6}",
+     "RP": "15",
+     "AP": "\\frac{\\pi}{2}",
+     "EX": "15 e^(i pi/2)",
+     "EX_T": "15\\,e^{i\\frac{\\pi}{2}}"
+    },
+    {
+     "R1": "2",
+     "R2": "5",
+     "Z1": "2\\,e^{i\\frac{5\\pi}{6}}",
+     "Z2": "5\\,e^{i\\frac{\\pi}{6}}",
+     "SOM": "\\frac{5\\pi}{6} + \\frac{\\pi}{6}",
+     "RP": "10",
+     "AP": "\\pi",
+     "EX": "10 e^(i pi)",
+     "EX_T": "10\\,e^{i\\pi}"
+    },
+    {
+     "R1": "2",
+     "R2": "3",
+     "Z1": "2\\,e^{i\\frac{5\\pi}{6}}",
+     "Z2": "3\\,e^{i\\frac{2\\pi}{3}}",
+     "SOM": "\\frac{5\\pi}{6} + \\frac{2\\pi}{3}",
+     "RP": "6",
+     "AP": "-\\frac{\\pi}{2}",
+     "EX": "6 e^(-i pi/2)",
+     "EX_T": "6\\,e^{-i\\frac{\\pi}{2}}"
+    },
+    {
+     "R1": "2",
+     "R2": "3",
+     "Z1": "2\\,e^{i\\frac{\\pi}{2}}",
+     "Z2": "3\\,e^{i\\frac{\\pi}{2}}",
+     "SOM": "\\frac{\\pi}{2} + \\frac{\\pi}{2}",
+     "RP": "6",
+     "AP": "\\pi",
+     "EX": "6 e^(i pi)",
+     "EX_T": "6\\,e^{i\\pi}"
+    },
+    {
+     "R1": "4",
+     "R2": "5",
+     "Z1": "4\\,e^{i\\frac{\\pi}{2}}",
+     "Z2": "5\\,e^{i\\frac{\\pi}{2}}",
+     "SOM": "\\frac{\\pi}{2} + \\frac{\\pi}{2}",
+     "RP": "20",
+     "AP": "\\pi",
+     "EX": "20 e^(i pi)",
+     "EX_T": "20\\,e^{i\\pi}"
+    },
+    {
+     "R1": "4",
+     "R2": "3",
+     "Z1": "4\\,e^{-i\\frac{\\pi}{6}}",
+     "Z2": "3\\,e^{i\\frac{\\pi}{3}}",
+     "SOM": "-\\frac{\\pi}{6} + \\frac{\\pi}{3}",
+     "RP": "12",
+     "AP": "\\frac{\\pi}{6}",
+     "EX": "12 e^(i pi/6)",
+     "EX_T": "12\\,e^{i\\frac{\\pi}{6}}"
+    }
+   ]
+  },
+  {
+   "id": "ma2-010",
+   "type": "saisie",
+   "notion": "2.4",
+   "origine": "cours",
+   "enonce": "$z_1 = [[Z1]]$ et $z_2 = [[Z2]]$. Écris $\\dfrac{z_1}{z_2}$ sous forme exponentielle.",
+   "verif": {
+    "mode": "expr",
+    "attendu": "[[EX]]",
+    "forme": "expo"
+   },
+   "duree": 1,
+   "explication": "$\\frac{[[R1]]}{[[R2]]}$ et $[[SOM]] = [[AP]]$ : $\\frac{z_1}{z_2} = [[EX_T]]$.",
+   "indices": [
+    "Les modules se divisent, les arguments se soustraient.",
+    "Ramène l'argument dans $]-\\pi, \\pi]$ si besoin."
+   ],
+   "vals": {
+    "R1": "7",
+    "R2": "3",
+    "Z1": "7\\,e^{-i\\frac{\\pi}{3}}",
+    "Z2": "3\\,e^{i\\frac{2\\pi}{3}}",
+    "SOM": "-\\frac{\\pi}{3} - \\frac{2\\pi}{3}",
+    "AP": "\\pi",
+    "EX": "7/3 e^(i pi)",
+    "EX_T": "\\frac{7}{3}\\,e^{i\\pi}"
+   },
+   "variantes": [
+    {
+     "R1": "7",
+     "R2": "3",
+     "Z1": "7\\,e^{-i\\frac{\\pi}{3}}",
+     "Z2": "3\\,e^{i\\frac{2\\pi}{3}}",
+     "SOM": "-\\frac{\\pi}{3} - \\frac{2\\pi}{3}",
+     "AP": "\\pi",
+     "EX": "7/3 e^(i pi)",
+     "EX_T": "\\frac{7}{3}\\,e^{i\\pi}"
+    },
+    {
+     "R1": "6",
+     "R2": "4",
+     "Z1": "6\\,e^{i\\frac{\\pi}{2}}",
+     "Z2": "4\\,e^{-i\\frac{\\pi}{6}}",
+     "SOM": "\\frac{\\pi}{2} + \\frac{\\pi}{6}",
+     "AP": "\\frac{2\\pi}{3}",
+     "EX": "3/2 e^(i 2 pi/3)",
+     "EX_T": "\\frac{3}{2}\\,e^{i\\frac{2\\pi}{3}}"
+    },
+    {
+     "R1": "4",
+     "R2": "4",
+     "Z1": "4\\,e^{-i\\frac{\\pi}{2}}",
+     "Z2": "4\\,e^{i\\frac{\\pi}{2}}",
+     "SOM": "-\\frac{\\pi}{2} - \\frac{\\pi}{2}",
+     "AP": "\\pi",
+     "EX": "e^(i pi)",
+     "EX_T": "\\,e^{i\\pi}"
+    },
+    {
+     "R1": "5",
+     "R2": "5",
+     "Z1": "5\\,e^{i\\frac{2\\pi}{3}}",
+     "Z2": "5\\,e^{i\\frac{\\pi}{2}}",
+     "SOM": "\\frac{2\\pi}{3} - \\frac{\\pi}{2}",
+     "AP": "\\frac{\\pi}{6}",
+     "EX": "e^(i pi/6)",
+     "EX_T": "\\,e^{i\\frac{\\pi}{6}}"
+    },
+    {
+     "R1": "4",
+     "R2": "5",
+     "Z1": "4\\,e^{-i\\frac{\\pi}{2}}",
+     "Z2": "5\\,e^{-i\\frac{5\\pi}{6}}",
+     "SOM": "-\\frac{\\pi}{2} + \\frac{5\\pi}{6}",
+     "AP": "\\frac{\\pi}{3}",
+     "EX": "4/5 e^(i pi/3)",
+     "EX_T": "\\frac{4}{5}\\,e^{i\\frac{\\pi}{3}}"
+    },
+    {
+     "R1": "5",
+     "R2": "3",
+     "Z1": "5\\,e^{i\\frac{2\\pi}{3}}",
+     "Z2": "3\\,e^{-i\\frac{\\pi}{2}}",
+     "SOM": "\\frac{2\\pi}{3} + \\frac{\\pi}{2}",
+     "AP": "-\\frac{5\\pi}{6}",
+     "EX": "5/3 e^(-i 5 pi/6)",
+     "EX_T": "\\frac{5}{3}\\,e^{-i\\frac{5\\pi}{6}}"
+    }
+   ]
+  },
+  {
+   "id": "ma2-011",
+   "type": "qcm",
+   "notion": "2.5",
+   "origine": "cours",
+   "enonce": "On trouve $n\\theta = -\\frac{5\\pi}{2}$. L'argument principal est…",
+   "choix": [
+    "$-\\frac{\\pi}{2}$",
+    "$\\frac{\\pi}{2}$",
+    "$-\\frac{5\\pi}{2}$",
+    "$\\frac{3\\pi}{2}$"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "$-\\frac{5\\pi}{2} + 2\\pi = -\\frac{\\pi}{2}$, qui est bien dans $]-\\pi, \\pi]$."
+  },
+  {
+   "id": "ma2-012",
+   "type": "saisie",
+   "notion": "2.5",
+   "origine": "cours",
+   "enonce": "Calcule $\\left([[B]]\\right)^{[[N]]}$ sous forme algébrique.",
+   "verif": {
+    "mode": "expr",
+    "attendu": "[[P]]",
+    "forme": "algebrique"
+   },
+   "duree": 2,
+   "explication": "$[[B]] = [[BEX]]$ donc $\\left([[B]]\\right)^{[[N]]} = [[PEX]] = [[P_T]]$.",
+   "indices": [
+    "Passe en forme exponentielle : $[[B]] = [[BEX]]$.",
+    "De Moivre : $r^n e^{in\\theta}$, puis ramène l'angle et repasse en algébrique."
+   ],
+   "vals": {
+    "B": "1 + i\\sqrt3",
+    "N": "3",
+    "BEX": "2\\,e^{i\\frac{\\pi}{3}}",
+    "PEX": "8\\,e^{i\\pi}",
+    "P": "-8",
+    "P_T": "-8"
+   },
+   "variantes": [
+    {
+     "B": "1 + i\\sqrt3",
+     "N": "3",
+     "BEX": "2\\,e^{i\\frac{\\pi}{3}}",
+     "PEX": "8\\,e^{i\\pi}",
+     "P": "-8",
+     "P_T": "-8"
+    },
+    {
+     "B": "-\\sqrt3 - i",
+     "N": "6",
+     "BEX": "2\\,e^{-i\\frac{5\\pi}{6}}",
+     "PEX": "64\\,e^{i\\pi}",
+     "P": "-64",
+     "P_T": "-64"
+    },
+    {
+     "B": "-1 + i\\sqrt3",
+     "N": "5",
+     "BEX": "2\\,e^{i\\frac{2\\pi}{3}}",
+     "PEX": "32\\,e^{-i\\frac{2\\pi}{3}}",
+     "P": "-16 - 16 sqrt(3) i",
+     "P_T": "-16 - 16\\sqrt{3}\\,i"
+    },
+    {
+     "B": "\\sqrt3 - i",
+     "N": "5",
+     "BEX": "2\\,e^{-i\\frac{\\pi}{6}}",
+     "PEX": "32\\,e^{-i\\frac{5\\pi}{6}}",
+     "P": "-16 sqrt(3) - 16 i",
+     "P_T": "-16\\sqrt{3} - 16\\,i"
+    },
+    {
+     "B": "-\\sqrt3 + i",
+     "N": "7",
+     "BEX": "2\\,e^{i\\frac{5\\pi}{6}}",
+     "PEX": "128\\,e^{-i\\frac{\\pi}{6}}",
+     "P": "64 sqrt(3) - 64 i",
+     "P_T": "64\\sqrt{3} - 64\\,i"
+    },
+    {
+     "B": "1 + i",
+     "N": "7",
+     "BEX": "\\sqrt{2}\\,e^{i\\frac{\\pi}{4}}",
+     "PEX": "8\\sqrt{2}\\,e^{-i\\frac{\\pi}{4}}",
+     "P": "8 - 8 i",
+     "P_T": "8 - 8\\,i"
+    },
+    {
+     "B": "1 - i",
+     "N": "3",
+     "BEX": "\\sqrt{2}\\,e^{-i\\frac{\\pi}{4}}",
+     "PEX": "2\\sqrt{2}\\,e^{-i\\frac{3\\pi}{4}}",
+     "P": "-2 - 2 i",
+     "P_T": "-2 - 2\\,i"
+    },
+    {
+     "B": "-1 + i",
+     "N": "6",
+     "BEX": "\\sqrt{2}\\,e^{i\\frac{3\\pi}{4}}",
+     "PEX": "8\\,e^{i\\frac{\\pi}{2}}",
+     "P": "8 i",
+     "P_T": "8\\,i"
+    }
+   ]
+  },
+  {
+   "id": "ma2-013",
+   "type": "saisie",
+   "notion": "2.6",
+   "origine": "cours",
+   "enonce": "Écris $[[EXT]]$ sous forme algébrique.",
+   "verif": {
+    "mode": "expr",
+    "attendu": "[[P]]",
+    "forme": "algebrique"
+   },
+   "duree": 1,
+   "explication": "$a = r\\cos\\theta$, $b = r\\sin\\theta$ : $[[P_T]]$.",
+   "indices": [
+    "$a = r\\cos\\theta$ et $b = r\\sin\\theta$.",
+    "Valeurs remarquables : $\\cos$ et $\\sin$ de $[[TH_T]]$."
+   ],
+   "vals": {
+    "EXT": "3\\,e^{i\\frac{5\\pi}{6}}",
+    "P": "-3 sqrt(3)/2 + 3/2 i",
+    "P_T": "-\\frac{3\\sqrt{3}}{2} + \\frac{3}{2}\\,i",
+    "TH_T": "\\frac{5\\pi}{6}"
+   },
+   "variantes": [
+    {
+     "EXT": "3\\,e^{i\\frac{5\\pi}{6}}",
+     "P": "-3 sqrt(3)/2 + 3/2 i",
+     "P_T": "-\\frac{3\\sqrt{3}}{2} + \\frac{3}{2}\\,i",
+     "TH_T": "\\frac{5\\pi}{6}"
+    },
+    {
+     "EXT": "2\\,e^{i\\frac{2\\pi}{3}}",
+     "P": "-1 + sqrt(3) i",
+     "P_T": "-1 + \\sqrt{3}\\,i",
+     "TH_T": "\\frac{2\\pi}{3}"
+    },
+    {
+     "EXT": "2\\,e^{-i\\frac{\\pi}{2}}",
+     "P": "-2 i",
+     "P_T": "-2\\,i",
+     "TH_T": "-\\frac{\\pi}{2}"
+    },
+    {
+     "EXT": "4\\,e^{i\\frac{5\\pi}{6}}",
+     "P": "-2 sqrt(3) + 2 i",
+     "P_T": "-2\\sqrt{3} + 2\\,i",
+     "TH_T": "\\frac{5\\pi}{6}"
+    },
+    {
+     "EXT": "2\\,e^{-i\\frac{3\\pi}{4}}",
+     "P": "-sqrt(2) - sqrt(2) i",
+     "P_T": "-\\sqrt{2} - \\sqrt{2}\\,i",
+     "TH_T": "-\\frac{3\\pi}{4}"
+    },
+    {
+     "EXT": "4\\,e^{-i\\frac{\\pi}{3}}",
+     "P": "2 - 2 sqrt(3) i",
+     "P_T": "2 - 2\\sqrt{3}\\,i",
+     "TH_T": "-\\frac{\\pi}{3}"
+    }
+   ]
+  },
+  {
+   "id": "ma2-014",
+   "type": "qcm",
+   "notion": "2.6",
+   "origine": "cours",
+   "enonce": "$4e^{i2\\pi/3}$ vaut…",
+   "choix": [
+    "$-2 + 2\\sqrt3\\,i$",
+    "$2 + 2\\sqrt3\\,i$",
+    "$-2\\sqrt3 + 2i$",
+    "$-2 - 2\\sqrt3\\,i$"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "$4\\cos\\frac{2\\pi}{3} = -2$ et $4\\sin\\frac{2\\pi}{3} = 2\\sqrt3$."
+  },
+  {
+   "id": "ma2-101",
+   "type": "exo",
+   "notion": "2.2",
+   "origine": "cours",
+   "titre": "Algébrique → trigonométrique (DST 1, ex. 3)",
+   "enonce": "Le but : passer de la forme algébrique à la forme trigonométrique, comme à l'ex. 3 du DST 1 (où $z = 16 + 16i$).\n\nTransformer le nombre complexe $$z = [[Z]]$$ en forme trigonométrique.",
+   "guidage": "1. Calculer $r = |z|$.\n2. Calculer $\\cos\\theta = \\frac{a}{r}$ et $\\sin\\theta = \\frac{b}{r}$.\n3. Reconnaître l'angle et choisir le quadrant avec les signes.\n4. Écrire $z = r(\\cos\\theta + i\\sin\\theta)$.",
+   "duree": 5,
+   "etapes": [
+    {
+     "consigne": "Le module : $r = \\sqrt{a^2 + b^2}$. Simplifie la racine.",
+     "question": "$r$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[R]]"
+     },
+     "corrige": "$r = [[R_T]]$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Divise la partie réelle par $r$ (et simplifie).",
+     "question": "$\\cos\\theta$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[C]]"
+     },
+     "corrige": "$\\cos\\theta = [[C_T]]$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Divise la partie imaginaire par $r$.",
+     "question": "$\\sin\\theta$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[S]]"
+     },
+     "corrige": "$\\sin\\theta = [[S_T]]$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Les signes donnent le quadrant ([[Q]]), le tableau des valeurs remarquables donne $\\alpha$. Écris $\\theta$ dans $]-\\pi, \\pi]$.",
+     "question": "$\\theta$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[TH]]"
+     },
+     "corrige": "$\\theta = [[TH_T]]$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Assemble : $z = r(\\cos\\theta + i\\sin\\theta)$.",
+     "question": "$z$ en forme trigonométrique ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[TRI]]",
+      "forme": "trigo"
+     },
+     "corrige": "$\\boxed{z = [[TRI_T]]}$",
+     "indices": [
+      "$r = [[R_T]]$ et $\\theta = [[TH_T]]$.",
+      "Écris $[[R_T]]\\left(\\cos\\theta + i\\sin\\theta\\right)$."
+     ],
+     "duree": 1.5
+    }
+   ],
+   "vals": {
+    "Z": "2 - 2\\sqrt{3}\\,i",
+    "R": "4",
+    "R_T": "4",
+    "C": "1/2",
+    "C_T": "\\frac{1}{2}",
+    "S": "-sqrt(3)/2",
+    "S_T": "-\\frac{\\sqrt{3}}{2}",
+    "Q": "4e",
+    "TH": "-pi/3",
+    "TH_T": "-\\frac{\\pi}{3}",
+    "TRI": "4 (cos(-pi/3) + i sin(-pi/3))",
+    "TRI_T": "4\\left(\\cos -\\frac{\\pi}{3} + i\\sin -\\frac{\\pi}{3}\\right)",
+    "EX": "4 e^(-i pi/3)",
+    "EX_T": "4\\,e^{-i\\frac{\\pi}{3}}"
+   },
+   "variantes": [
+    {
+     "Z": "2 - 2\\sqrt{3}\\,i",
+     "R": "4",
+     "R_T": "4",
+     "C": "1/2",
+     "C_T": "\\frac{1}{2}",
+     "S": "-sqrt(3)/2",
+     "S_T": "-\\frac{\\sqrt{3}}{2}",
+     "Q": "4e",
+     "TH": "-pi/3",
+     "TH_T": "-\\frac{\\pi}{3}",
+     "TRI": "4 (cos(-pi/3) + i sin(-pi/3))",
+     "TRI_T": "4\\left(\\cos -\\frac{\\pi}{3} + i\\sin -\\frac{\\pi}{3}\\right)",
+     "EX": "4 e^(-i pi/3)",
+     "EX_T": "4\\,e^{-i\\frac{\\pi}{3}}"
+    },
+    {
+     "Z": "3\\sqrt{3} + 3\\,i",
+     "R": "6",
+     "R_T": "6",
+     "C": "sqrt(3)/2",
+     "C_T": "\\frac{\\sqrt{3}}{2}",
+     "S": "1/2",
+     "S_T": "\\frac{1}{2}",
+     "Q": "1er",
+     "TH": "pi/6",
+     "TH_T": "\\frac{\\pi}{6}",
+     "TRI": "6 (cos(pi/6) + i sin(pi/6))",
+     "TRI_T": "6\\left(\\cos \\frac{\\pi}{6} + i\\sin \\frac{\\pi}{6}\\right)",
+     "EX": "6 e^(i pi/6)",
+     "EX_T": "6\\,e^{i\\frac{\\pi}{6}}"
+    },
+    {
+     "Z": "-2\\sqrt{3} + 2\\,i",
+     "R": "4",
+     "R_T": "4",
+     "C": "-sqrt(3)/2",
+     "C_T": "-\\frac{\\sqrt{3}}{2}",
+     "S": "1/2",
+     "S_T": "\\frac{1}{2}",
+     "Q": "2e",
+     "TH": "5 pi/6",
+     "TH_T": "\\frac{5\\pi}{6}",
+     "TRI": "4 (cos(5 pi/6) + i sin(5 pi/6))",
+     "TRI_T": "4\\left(\\cos \\frac{5\\pi}{6} + i\\sin \\frac{5\\pi}{6}\\right)",
+     "EX": "4 e^(i 5 pi/6)",
+     "EX_T": "4\\,e^{i\\frac{5\\pi}{6}}"
+    },
+    {
+     "Z": "\\sqrt{3} - i",
+     "R": "2",
+     "R_T": "2",
+     "C": "sqrt(3)/2",
+     "C_T": "\\frac{\\sqrt{3}}{2}",
+     "S": "-1/2",
+     "S_T": "-\\frac{1}{2}",
+     "Q": "4e",
+     "TH": "-pi/6",
+     "TH_T": "-\\frac{\\pi}{6}",
+     "TRI": "2 (cos(-pi/6) + i sin(-pi/6))",
+     "TRI_T": "2\\left(\\cos -\\frac{\\pi}{6} + i\\sin -\\frac{\\pi}{6}\\right)",
+     "EX": "2 e^(-i pi/6)",
+     "EX_T": "2\\,e^{-i\\frac{\\pi}{6}}"
+    },
+    {
+     "Z": "2 + 2\\sqrt{3}\\,i",
+     "R": "4",
+     "R_T": "4",
+     "C": "1/2",
+     "C_T": "\\frac{1}{2}",
+     "S": "sqrt(3)/2",
+     "S_T": "\\frac{\\sqrt{3}}{2}",
+     "Q": "1er",
+     "TH": "pi/3",
+     "TH_T": "\\frac{\\pi}{3}",
+     "TRI": "4 (cos(pi/3) + i sin(pi/3))",
+     "TRI_T": "4\\left(\\cos \\frac{\\pi}{3} + i\\sin \\frac{\\pi}{3}\\right)",
+     "EX": "4 e^(i pi/3)",
+     "EX_T": "4\\,e^{i\\frac{\\pi}{3}}"
+    },
+    {
+     "Z": "5 + 5\\,i",
+     "R": "5 sqrt(2)",
+     "R_T": "5\\sqrt{2}",
+     "C": "sqrt(2)/2",
+     "C_T": "\\frac{\\sqrt{2}}{2}",
+     "S": "sqrt(2)/2",
+     "S_T": "\\frac{\\sqrt{2}}{2}",
+     "Q": "1er",
+     "TH": "pi/4",
+     "TH_T": "\\frac{\\pi}{4}",
+     "TRI": "5 sqrt(2) (cos(pi/4) + i sin(pi/4))",
+     "TRI_T": "5\\sqrt{2}\\left(\\cos \\frac{\\pi}{4} + i\\sin \\frac{\\pi}{4}\\right)",
+     "EX": "5 sqrt(2) e^(i pi/4)",
+     "EX_T": "5\\sqrt{2}\\,e^{i\\frac{\\pi}{4}}"
+    },
+    {
+     "Z": "4 + 4\\sqrt{3}\\,i",
+     "R": "8",
+     "R_T": "8",
+     "C": "1/2",
+     "C_T": "\\frac{1}{2}",
+     "S": "sqrt(3)/2",
+     "S_T": "\\frac{\\sqrt{3}}{2}",
+     "Q": "1er",
+     "TH": "pi/3",
+     "TH_T": "\\frac{\\pi}{3}",
+     "TRI": "8 (cos(pi/3) + i sin(pi/3))",
+     "TRI_T": "8\\left(\\cos \\frac{\\pi}{3} + i\\sin \\frac{\\pi}{3}\\right)",
+     "EX": "8 e^(i pi/3)",
+     "EX_T": "8\\,e^{i\\frac{\\pi}{3}}"
+    },
+    {
+     "Z": "1 + \\sqrt{3}\\,i",
+     "R": "2",
+     "R_T": "2",
+     "C": "1/2",
+     "C_T": "\\frac{1}{2}",
+     "S": "sqrt(3)/2",
+     "S_T": "\\frac{\\sqrt{3}}{2}",
+     "Q": "1er",
+     "TH": "pi/3",
+     "TH_T": "\\frac{\\pi}{3}",
+     "TRI": "2 (cos(pi/3) + i sin(pi/3))",
+     "TRI_T": "2\\left(\\cos \\frac{\\pi}{3} + i\\sin \\frac{\\pi}{3}\\right)",
+     "EX": "2 e^(i pi/3)",
+     "EX_T": "2\\,e^{i\\frac{\\pi}{3}}"
+    }
+   ]
+  },
+  {
+   "id": "ma2-102",
+   "type": "exo",
+   "notion": "2.5",
+   "origine": "cours",
+   "titre": "Forme exponentielle puis puissance (DST 2, ex. 2 · prép CC3)",
+   "enonce": "Le but : mettre un complexe sous forme exponentielle, puis s'en servir pour calculer une puissance, comme à l'ex. 2 du DST 2 et dans les exos de prépa du CC3.\n\nSoit $$z = [[ZF]]$$\n1. Écrire $z$ en forme exponentielle.\n2. Calculer $z^{[[N]]}$ en utilisant la forme exponentielle.",
+   "guidage": "1. Module : $|z| = \\frac{|\\text{numérateur}|}{[[D]]}$.\n2. Argument : celui du numérateur (le dénominateur est un réel positif).\n3. $z = r e^{i\\theta}$.\n4. De Moivre : $z^{[[N]]} = r^{[[N]]} e^{i[[N]]\\theta}$, puis ramener l'angle dans $]-\\pi, \\pi]$.",
+   "duree": 8,
+   "etapes": [
+    {
+     "consigne": "Le dénominateur est un réel positif : $|z| = \\frac{|[[B]]|}{[[D]]}$.",
+     "question": "$r$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[R]]"
+     },
+     "corrige": "$|[[B]]| = [[MB_T]]$, donc $r = [[R_T]]$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Divise par un réel positif ne change pas l'angle : $\\theta$ est l'argument de $[[B]]$.",
+     "question": "$\\theta$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[TH]]"
+     },
+     "corrige": "$\\theta = [[TH_T]]$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Écris $z = r e^{i\\theta}$.",
+     "question": "$z$ en forme exponentielle ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[EX]]",
+      "forme": "expo"
+     },
+     "corrige": "$\\boxed{z = [[EX_T]]}$",
+     "indices": [
+      "$r = [[R_T]]$.",
+      "$\\theta = [[TH_T]]$."
+     ],
+     "duree": 1
+    },
+    {
+     "consigne": "De Moivre : le module est élevé à la puissance $[[N]]$. Calcule $r^{[[N]]}$.",
+     "question": "$r^{n}$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[RN]]"
+     },
+     "corrige": "$r^{[[N]]} = [[RN_T]]$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "L'argument est multiplié par $[[N]]$ ; ramène-le dans $]-\\pi, \\pi]$.",
+     "question": "Argument de $z^{n}$ ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[THN]]"
+     },
+     "corrige": "$[[N]] \\times [[TH_T]] = [[NTH_T]] \\equiv [[THN_T]]$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Écris $z^{[[N]]}$ sous forme exponentielle (argument dans $]-\\pi, \\pi]$).",
+     "question": "$z^{n}$ en forme exponentielle ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[PEX]]",
+      "forme": "expo"
+     },
+     "corrige": "$z^{[[N]]} = [[RN_T]]\\,e^{i\\,[[NTH_T]]} = \\boxed{[[PEX_T]]}$",
+     "indices": [
+      "$z^{[[N]]} = r^{[[N]]} e^{i[[N]]\\theta}$.",
+      "$r^{[[N]]} = [[RN_T]]$ et l'angle se ramène à $[[THN_T]]$."
+     ],
+     "duree": 2
+    }
+   ],
+   "vals": {
+    "ZF": "\\frac{1 - i}{4}",
+    "B": "1 - i",
+    "D": "4",
+    "N": "4",
+    "R": "sqrt(2)/4",
+    "R_T": "\\frac{\\sqrt{2}}{4}",
+    "MB_T": "\\sqrt{2}",
+    "TH": "-pi/4",
+    "TH_T": "-\\frac{\\pi}{4}",
+    "EX": "sqrt(2)/4 e^(-i pi/4)",
+    "EX_T": "\\frac{\\sqrt{2}}{4}\\,e^{-i\\frac{\\pi}{4}}",
+    "RN": "1/64",
+    "RN_T": "\\frac{1}{64}",
+    "THN": "pi",
+    "NTH_T": "-\\pi",
+    "THN_T": "\\pi",
+    "PEX": "1/64 e^(i pi)",
+    "PEX_T": "\\frac{1}{64}\\,e^{i\\pi}"
+   },
+   "variantes": [
+    {
+     "ZF": "\\frac{1 - i}{4}",
+     "B": "1 - i",
+     "D": "4",
+     "N": "4",
+     "R": "sqrt(2)/4",
+     "R_T": "\\frac{\\sqrt{2}}{4}",
+     "MB_T": "\\sqrt{2}",
+     "TH": "-pi/4",
+     "TH_T": "-\\frac{\\pi}{4}",
+     "EX": "sqrt(2)/4 e^(-i pi/4)",
+     "EX_T": "\\frac{\\sqrt{2}}{4}\\,e^{-i\\frac{\\pi}{4}}",
+     "RN": "1/64",
+     "RN_T": "\\frac{1}{64}",
+     "THN": "pi",
+     "NTH_T": "-\\pi",
+     "THN_T": "\\pi",
+     "PEX": "1/64 e^(i pi)",
+     "PEX_T": "\\frac{1}{64}\\,e^{i\\pi}"
+    },
+    {
+     "ZF": "\\frac{-1 + i}{5}",
+     "B": "-1 + i",
+     "D": "5",
+     "N": "2",
+     "R": "sqrt(2)/5",
+     "R_T": "\\frac{\\sqrt{2}}{5}",
+     "MB_T": "\\sqrt{2}",
+     "TH": "3 pi/4",
+     "TH_T": "\\frac{3\\pi}{4}",
+     "EX": "sqrt(2)/5 e^(i 3 pi/4)",
+     "EX_T": "\\frac{\\sqrt{2}}{5}\\,e^{i\\frac{3\\pi}{4}}",
+     "RN": "2/25",
+     "RN_T": "\\frac{2}{25}",
+     "THN": "-pi/2",
+     "NTH_T": "\\frac{3\\pi}{2}",
+     "THN_T": "-\\frac{\\pi}{2}",
+     "PEX": "2/25 e^(-i pi/2)",
+     "PEX_T": "\\frac{2}{25}\\,e^{-i\\frac{\\pi}{2}}"
+    },
+    {
+     "ZF": "\\frac{-1 - i\\sqrt3}{3}",
+     "B": "-1 - i\\sqrt3",
+     "D": "3",
+     "N": "5",
+     "R": "2/3",
+     "R_T": "\\frac{2}{3}",
+     "MB_T": "2",
+     "TH": "-2 pi/3",
+     "TH_T": "-\\frac{2\\pi}{3}",
+     "EX": "2/3 e^(-i 2 pi/3)",
+     "EX_T": "\\frac{2}{3}\\,e^{-i\\frac{2\\pi}{3}}",
+     "RN": "32/243",
+     "RN_T": "\\frac{32}{243}",
+     "THN": "2 pi/3",
+     "NTH_T": "-\\frac{10\\pi}{3}",
+     "THN_T": "\\frac{2\\pi}{3}",
+     "PEX": "32/243 e^(i 2 pi/3)",
+     "PEX_T": "\\frac{32}{243}\\,e^{i\\frac{2\\pi}{3}}"
+    },
+    {
+     "ZF": "\\frac{-1 - i}{2}",
+     "B": "-1 - i",
+     "D": "2",
+     "N": "6",
+     "R": "sqrt(2)/2",
+     "R_T": "\\frac{\\sqrt{2}}{2}",
+     "MB_T": "\\sqrt{2}",
+     "TH": "-3 pi/4",
+     "TH_T": "-\\frac{3\\pi}{4}",
+     "EX": "sqrt(2)/2 e^(-i 3 pi/4)",
+     "EX_T": "\\frac{\\sqrt{2}}{2}\\,e^{-i\\frac{3\\pi}{4}}",
+     "RN": "1/8",
+     "RN_T": "\\frac{1}{8}",
+     "THN": "-pi/2",
+     "NTH_T": "-\\frac{9\\pi}{2}",
+     "THN_T": "-\\frac{\\pi}{2}",
+     "PEX": "1/8 e^(-i pi/2)",
+     "PEX_T": "\\frac{1}{8}\\,e^{-i\\frac{\\pi}{2}}"
+    },
+    {
+     "ZF": "\\frac{1 + i\\sqrt3}{3}",
+     "B": "1 + i\\sqrt3",
+     "D": "3",
+     "N": "2",
+     "R": "2/3",
+     "R_T": "\\frac{2}{3}",
+     "MB_T": "2",
+     "TH": "pi/3",
+     "TH_T": "\\frac{\\pi}{3}",
+     "EX": "2/3 e^(i pi/3)",
+     "EX_T": "\\frac{2}{3}\\,e^{i\\frac{\\pi}{3}}",
+     "RN": "4/9",
+     "RN_T": "\\frac{4}{9}",
+     "THN": "2 pi/3",
+     "NTH_T": "\\frac{2\\pi}{3}",
+     "THN_T": "\\frac{2\\pi}{3}",
+     "PEX": "4/9 e^(i 2 pi/3)",
+     "PEX_T": "\\frac{4}{9}\\,e^{i\\frac{2\\pi}{3}}"
+    },
+    {
+     "ZF": "\\frac{\\sqrt3 + i}{4}",
+     "B": "\\sqrt3 + i",
+     "D": "4",
+     "N": "3",
+     "R": "1/2",
+     "R_T": "\\frac{1}{2}",
+     "MB_T": "2",
+     "TH": "pi/6",
+     "TH_T": "\\frac{\\pi}{6}",
+     "EX": "1/2 e^(i pi/6)",
+     "EX_T": "\\frac{1}{2}\\,e^{i\\frac{\\pi}{6}}",
+     "RN": "1/8",
+     "RN_T": "\\frac{1}{8}",
+     "THN": "pi/2",
+     "NTH_T": "\\frac{\\pi}{2}",
+     "THN_T": "\\frac{\\pi}{2}",
+     "PEX": "1/8 e^(i pi/2)",
+     "PEX_T": "\\frac{1}{8}\\,e^{i\\frac{\\pi}{2}}"
+    },
+    {
+     "ZF": "\\frac{-\\sqrt3 - i}{5}",
+     "B": "-\\sqrt3 - i",
+     "D": "5",
+     "N": "6",
+     "R": "2/5",
+     "R_T": "\\frac{2}{5}",
+     "MB_T": "2",
+     "TH": "-5 pi/6",
+     "TH_T": "-\\frac{5\\pi}{6}",
+     "EX": "2/5 e^(-i 5 pi/6)",
+     "EX_T": "\\frac{2}{5}\\,e^{-i\\frac{5\\pi}{6}}",
+     "RN": "64/15625",
+     "RN_T": "\\frac{64}{15625}",
+     "THN": "pi",
+     "NTH_T": "-5\\pi",
+     "THN_T": "\\pi",
+     "PEX": "64/15625 e^(i pi)",
+     "PEX_T": "\\frac{64}{15625}\\,e^{i\\pi}"
+    },
+    {
+     "ZF": "\\frac{-1 + i}{2}",
+     "B": "-1 + i",
+     "D": "2",
+     "N": "6",
+     "R": "sqrt(2)/2",
+     "R_T": "\\frac{\\sqrt{2}}{2}",
+     "MB_T": "\\sqrt{2}",
+     "TH": "3 pi/4",
+     "TH_T": "\\frac{3\\pi}{4}",
+     "EX": "sqrt(2)/2 e^(i 3 pi/4)",
+     "EX_T": "\\frac{\\sqrt{2}}{2}\\,e^{i\\frac{3\\pi}{4}}",
+     "RN": "1/8",
+     "RN_T": "\\frac{1}{8}",
+     "THN": "pi/2",
+     "NTH_T": "\\frac{9\\pi}{2}",
+     "THN_T": "\\frac{\\pi}{2}",
+     "PEX": "1/8 e^(i pi/2)",
+     "PEX_T": "\\frac{1}{8}\\,e^{i\\frac{\\pi}{2}}"
+    }
+   ]
+  },
+  {
+   "id": "ma2-103",
+   "type": "exo",
+   "notion": "2.5",
+   "origine": "cours",
+   "titre": "Puissance en forme algébrique (rattrapage, ex. 1)",
+   "enonce": "Le but : calculer une puissance d'un complexe et la rendre sous forme algébrique, comme à l'ex. 1 du rattrapage (où $z = \\sqrt3 + i$, $n = 5$).\n\nOn donne $z = [[B]]$. Calculer $z^{[[N]]}$. Indication : passer par la forme trigonométrique (ou exponentielle) de $z$.",
+   "guidage": "1. $z = r e^{i\\theta}$.\n2. $z^{[[N]]} = r^{[[N]]} e^{i[[N]]\\theta}$, angle ramené dans $]-\\pi, \\pi]$.\n3. Repasser en forme algébrique : $a = r\\cos$, $b = r\\sin$.",
+   "duree": 7,
+   "etapes": [
+    {
+     "consigne": "Écris $z = [[B]]$ sous forme exponentielle.",
+     "question": "$z$ = ? (forme exponentielle)",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[BEXE]]",
+      "forme": "expo"
+     },
+     "corrige": "$[[B]] = [[BEX]]$.",
+     "duree": 2,
+     "guideSeul": true
+    },
+    {
+     "consigne": "De Moivre : écris $z^{[[N]]}$ sous forme exponentielle, argument dans $]-\\pi, \\pi]$.",
+     "question": "$z^{n}$ = ? (forme exponentielle)",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[PEXE]]",
+      "forme": "expo"
+     },
+     "corrige": "$z^{[[N]]} = [[PEX]]$.",
+     "duree": 2,
+     "guideSeul": true
+    },
+    {
+     "consigne": "Repasse en forme algébrique avec $a = r\\cos\\theta$, $b = r\\sin\\theta$.",
+     "question": "$z^{n}$ = ? (forme algébrique)",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[P]]",
+      "forme": "algebrique"
+     },
+     "corrige": "$z^{[[N]]} = [[PEX]] = \\boxed{[[P_T]]}$",
+     "indices": [
+      "$z = [[BEX]]$.",
+      "$z^{[[N]]} = [[PEX]]$ : calcule $r\\cos$ et $r\\sin$ de cet angle."
+     ],
+     "duree": 3
+    }
+   ],
+   "vals": {
+    "B": "\\sqrt3 - i",
+    "N": "5",
+    "BEXE": "2 e^(-i pi/6)",
+    "BEX": "2\\,e^{-i\\frac{\\pi}{6}}",
+    "PEXE": "32 e^(-i 5 pi/6)",
+    "PEX": "32\\,e^{-i\\frac{5\\pi}{6}}",
+    "P": "-16 sqrt(3) - 16 i",
+    "P_T": "-16\\sqrt{3} - 16\\,i"
+   },
+   "variantes": [
+    {
+     "B": "\\sqrt3 - i",
+     "N": "5",
+     "BEXE": "2 e^(-i pi/6)",
+     "BEX": "2\\,e^{-i\\frac{\\pi}{6}}",
+     "PEXE": "32 e^(-i 5 pi/6)",
+     "PEX": "32\\,e^{-i\\frac{5\\pi}{6}}",
+     "P": "-16 sqrt(3) - 16 i",
+     "P_T": "-16\\sqrt{3} - 16\\,i"
+    },
+    {
+     "B": "-\\sqrt3 - i",
+     "N": "7",
+     "BEXE": "2 e^(-i 5 pi/6)",
+     "BEX": "2\\,e^{-i\\frac{5\\pi}{6}}",
+     "PEXE": "128 e^(i pi/6)",
+     "PEX": "128\\,e^{i\\frac{\\pi}{6}}",
+     "P": "64 sqrt(3) + 64 i",
+     "P_T": "64\\sqrt{3} + 64\\,i"
+    },
+    {
+     "B": "\\sqrt3 + i",
+     "N": "4",
+     "BEXE": "2 e^(i pi/6)",
+     "BEX": "2\\,e^{i\\frac{\\pi}{6}}",
+     "PEXE": "16 e^(i 2 pi/3)",
+     "PEX": "16\\,e^{i\\frac{2\\pi}{3}}",
+     "P": "-8 + 8 sqrt(3) i",
+     "P_T": "-8 + 8\\sqrt{3}\\,i"
+    },
+    {
+     "B": "1 + i",
+     "N": "5",
+     "BEXE": "sqrt(2) e^(i pi/4)",
+     "BEX": "\\sqrt{2}\\,e^{i\\frac{\\pi}{4}}",
+     "PEXE": "4 sqrt(2) e^(-i 3 pi/4)",
+     "PEX": "4\\sqrt{2}\\,e^{-i\\frac{3\\pi}{4}}",
+     "P": "-4 - 4 i",
+     "P_T": "-4 - 4\\,i"
+    },
+    {
+     "B": "\\sqrt3 + i",
+     "N": "7",
+     "BEXE": "2 e^(i pi/6)",
+     "BEX": "2\\,e^{i\\frac{\\pi}{6}}",
+     "PEXE": "128 e^(-i 5 pi/6)",
+     "PEX": "128\\,e^{-i\\frac{5\\pi}{6}}",
+     "P": "-64 sqrt(3) - 64 i",
+     "P_T": "-64\\sqrt{3} - 64\\,i"
+    },
+    {
+     "B": "\\sqrt3 - i",
+     "N": "7",
+     "BEXE": "2 e^(-i pi/6)",
+     "BEX": "2\\,e^{-i\\frac{\\pi}{6}}",
+     "PEXE": "128 e^(i 5 pi/6)",
+     "PEX": "128\\,e^{i\\frac{5\\pi}{6}}",
+     "P": "-64 sqrt(3) + 64 i",
+     "P_T": "-64\\sqrt{3} + 64\\,i"
+    },
+    {
+     "B": "1 - i",
+     "N": "6",
+     "BEXE": "sqrt(2) e^(-i pi/4)",
+     "BEX": "\\sqrt{2}\\,e^{-i\\frac{\\pi}{4}}",
+     "PEXE": "8 e^(i pi/2)",
+     "PEX": "8\\,e^{i\\frac{\\pi}{2}}",
+     "P": "8 i",
+     "P_T": "8\\,i"
+    },
+    {
+     "B": "-1 - i\\sqrt3",
+     "N": "4",
+     "BEXE": "2 e^(-i 2 pi/3)",
+     "BEX": "2\\,e^{-i\\frac{2\\pi}{3}}",
+     "PEXE": "16 e^(-i 2 pi/3)",
+     "PEX": "16\\,e^{-i\\frac{2\\pi}{3}}",
+     "P": "-8 - 8 sqrt(3) i",
+     "P_T": "-8 - 8\\sqrt{3}\\,i"
+    }
+   ]
+  },
+  {
+   "id": "ma2-104",
+   "type": "exo",
+   "notion": "2.4",
+   "origine": "cours",
+   "titre": "Produit en forme exponentielle (poly, ex. 7.6)",
+   "enonce": "Le but : multiplier deux complexes donnés en forme exponentielle, puis revenir à la forme algébrique.\n\nSoient $z_1 = [[Z1]]$ et $z_2 = [[Z2]]$. Trouver $|z_1 z_2|$, $\\arg(z_1 z_2)$ et donner $z_1 z_2$ sous forme algébrique.",
+   "guidage": "1. Modules multipliés.\n2. Arguments additionnés (ramener dans $]-\\pi, \\pi]$).\n3. $a = r\\cos\\theta$, $b = r\\sin\\theta$.",
+   "duree": 5,
+   "etapes": [
+    {
+     "consigne": "Les modules se multiplient.",
+     "question": "$|z_1 z_2|$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[RP]]"
+     },
+     "corrige": "$[[R1]] \\times [[R2]] = [[RP]]$.",
+     "indices": [
+      "$|z_1 z_2| = |z_1|\\,|z_2|$.",
+      "$[[R1]] \\times [[R2]]$."
+     ],
+     "duree": 1
+    },
+    {
+     "consigne": "Les arguments s'additionnent ; ramène dans $]-\\pi, \\pi]$.",
+     "question": "$\\arg(z_1 z_2)$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[AP_E]]"
+     },
+     "corrige": "$[[SOM]] = [[AP]]$.",
+     "indices": [
+      "Additionne les deux angles.",
+      "Mets-les au même dénominateur."
+     ],
+     "duree": 1.5
+    },
+    {
+     "consigne": "Forme algébrique : $a = r\\cos\\theta$, $b = r\\sin\\theta$.",
+     "question": "$z_1 z_2$ = ? (forme algébrique)",
+     "verif": {
+      "mode": "expr",
+      "attendu": "[[P]]",
+      "forme": "algebrique"
+     },
+     "corrige": "$z_1 z_2 = [[EX_T]] = \\boxed{[[P_T]]}$",
+     "indices": [
+      "$r = [[RP]]$, $\\theta = [[AP]]$.",
+      "$\\cos[[AP]]$ et $\\sin[[AP]]$ sont des valeurs remarquables."
+     ],
+     "duree": 2
+    }
+   ],
+   "vals": {
+    "R1": "4",
+    "R2": "2",
+    "Z1": "4\\,e^{-i\\frac{\\pi}{6}}",
+    "Z2": "2\\,e^{i\\frac{\\pi}{3}}",
+    "SOM": "-\\frac{\\pi}{6} + \\frac{\\pi}{3}",
+    "RP": "8",
+    "AP": "\\frac{\\pi}{6}",
+    "AP_E": "pi/6",
+    "EX_T": "8\\,e^{i\\frac{\\pi}{6}}",
+    "P": "4 sqrt(3) + 4 i",
+    "P_T": "4\\sqrt{3} + 4\\,i"
+   },
+   "variantes": [
+    {
+     "R1": "4",
+     "R2": "2",
+     "Z1": "4\\,e^{-i\\frac{\\pi}{6}}",
+     "Z2": "2\\,e^{i\\frac{\\pi}{3}}",
+     "SOM": "-\\frac{\\pi}{6} + \\frac{\\pi}{3}",
+     "RP": "8",
+     "AP": "\\frac{\\pi}{6}",
+     "AP_E": "pi/6",
+     "EX_T": "8\\,e^{i\\frac{\\pi}{6}}",
+     "P": "4 sqrt(3) + 4 i",
+     "P_T": "4\\sqrt{3} + 4\\,i"
+    },
+    {
+     "R1": "3",
+     "R2": "4",
+     "Z1": "3\\,e^{-i\\frac{2\\pi}{3}}",
+     "Z2": "4\\,e^{-i\\frac{2\\pi}{3}}",
+     "SOM": "-\\frac{2\\pi}{3} - \\frac{2\\pi}{3}",
+     "RP": "12",
+     "AP": "\\frac{2\\pi}{3}",
+     "AP_E": "2 pi/3",
+     "EX_T": "12\\,e^{i\\frac{2\\pi}{3}}",
+     "P": "-6 + 6 sqrt(3) i",
+     "P_T": "-6 + 6\\sqrt{3}\\,i"
+    },
+    {
+     "R1": "4",
+     "R2": "2",
+     "Z1": "4\\,e^{i\\frac{2\\pi}{3}}",
+     "Z2": "2\\,e^{-i\\frac{\\pi}{3}}",
+     "SOM": "\\frac{2\\pi}{3} - \\frac{\\pi}{3}",
+     "RP": "8",
+     "AP": "\\frac{\\pi}{3}",
+     "AP_E": "pi/3",
+     "EX_T": "8\\,e^{i\\frac{\\pi}{3}}",
+     "P": "4 + 4 sqrt(3) i",
+     "P_T": "4 + 4\\sqrt{3}\\,i"
+    },
+    {
+     "R1": "4",
+     "R2": "2",
+     "Z1": "4\\,e^{-i\\frac{5\\pi}{6}}",
+     "Z2": "2\\,e^{i\\frac{\\pi}{2}}",
+     "SOM": "-\\frac{5\\pi}{6} + \\frac{\\pi}{2}",
+     "RP": "8",
+     "AP": "-\\frac{\\pi}{3}",
+     "AP_E": "-pi/3",
+     "EX_T": "8\\,e^{-i\\frac{\\pi}{3}}",
+     "P": "4 - 4 sqrt(3) i",
+     "P_T": "4 - 4\\sqrt{3}\\,i"
+    },
+    {
+     "R1": "4",
+     "R2": "3",
+     "Z1": "4\\,e^{-i\\frac{5\\pi}{6}}",
+     "Z2": "3\\,e^{i\\frac{\\pi}{6}}",
+     "SOM": "-\\frac{5\\pi}{6} + \\frac{\\pi}{6}",
+     "RP": "12",
+     "AP": "-\\frac{2\\pi}{3}",
+     "AP_E": "-2 pi/3",
+     "EX_T": "12\\,e^{-i\\frac{2\\pi}{3}}",
+     "P": "-6 - 6 sqrt(3) i",
+     "P_T": "-6 - 6\\sqrt{3}\\,i"
+    },
+    {
+     "R1": "3",
+     "R2": "3",
+     "Z1": "3\\,e^{-i\\frac{\\pi}{2}}",
+     "Z2": "3\\,e^{-i\\frac{5\\pi}{6}}",
+     "SOM": "-\\frac{\\pi}{2} - \\frac{5\\pi}{6}",
+     "RP": "9",
+     "AP": "\\frac{2\\pi}{3}",
+     "AP_E": "2 pi/3",
+     "EX_T": "9\\,e^{i\\frac{2\\pi}{3}}",
+     "P": "-9/2 + 9 sqrt(3)/2 i",
+     "P_T": "-\\frac{9}{2} + \\frac{9\\sqrt{3}}{2}\\,i"
+    }
+   ]
+  },
+  {
+   "id": "ma2-201",
+   "type": "exo",
+   "notion": "2.2",
+   "origine": "annale",
+   "titre": "Annale · DST 1 (oct. 2024), ex. 3",
+   "enonce": "Transformer le nombre complexe $z = 16 + 16i$ en forme trigonométrique.",
+   "guidage": "1. $r = |z|$. 2. $\\cos\\theta$, $\\sin\\theta$. 3. Angle et quadrant. 4. $r(\\cos\\theta + i\\sin\\theta)$.",
+   "duree": 5,
+   "etapes": [
+    {
+     "consigne": "Module : $\\sqrt{16^2 + 16^2}$.",
+     "question": "$r$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "16 sqrt(2)"
+     },
+     "corrige": "$r = \\sqrt{512} = 16\\sqrt2$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "$\\cos\\theta = \\frac{16}{16\\sqrt2}$ et $\\sin\\theta = \\frac{16}{16\\sqrt2}$ : reconnais l'angle.",
+     "question": "$\\theta$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "pi/4"
+     },
+     "corrige": "$\\cos\\theta = \\sin\\theta = \\frac{\\sqrt2}{2}$ : $\\theta = \\frac{\\pi}{4}$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Assemble la forme trigonométrique.",
+     "question": "$z$ en forme trigonométrique ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "16 sqrt(2)(cos(pi/4) + i sin(pi/4))",
+      "forme": "trigo"
+     },
+     "corrige": "$\\boxed{z = 16\\sqrt2\\left(\\cos\\frac{\\pi}{4} + i\\sin\\frac{\\pi}{4}\\right)}$",
+     "indices": [
+      "$r = 16\\sqrt2$.",
+      "$\\theta = \\frac{\\pi}{4}$."
+     ],
+     "duree": 2
+    }
+   ]
+  },
+  {
+   "id": "ma2-202",
+   "type": "exo",
+   "notion": "2.5",
+   "origine": "annale",
+   "titre": "Annale · DST 2 (2025-26, variante B), ex. 2",
+   "enonce": "Soit $z = \\dfrac{2 - i}{b}$ avec $b = 5$.\n1. Écrire $z$ en forme trigonométrique et exponentielle.\n2. Calculer $z^2$ en utilisant la forme exponentielle.",
+   "guidage": "1. $|z| = \\frac{|2 - i|}{5}$. 2. L'angle n'est pas remarquable : $\\theta = -\\arctan\\frac12$ (point du 4e quadrant, partie réelle positive). 3. $z^2 = r^2 e^{2i\\theta}$.",
+   "duree": 10,
+   "etapes": [
+    {
+     "consigne": "Module : $\\frac{\\sqrt{2^2 + 1^2}}{5}$.",
+     "question": "$r$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "sqrt(5)/5"
+     },
+     "corrige": "$r = \\frac{\\sqrt5}{5}$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Partie réelle $> 0$ : $\\theta = \\arctan\\frac{b}{a}$ avec $a = 2$, $b = -1$.",
+     "question": "$\\theta$ = ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "-arctan(1/2)"
+     },
+     "corrige": "$\\theta = \\arctan\\left(-\\frac12\\right) = -\\arctan\\frac12$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Forme trigonométrique.",
+     "question": "$z$ en forme trigonométrique ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "sqrt(5)/5 (cos(-arctan(1/2)) + i sin(-arctan(1/2)))",
+      "forme": "trigo"
+     },
+     "corrige": "$z = \\frac{\\sqrt5}{5}\\left(\\cos\\left(-\\arctan\\frac12\\right) + i\\sin\\left(-\\arctan\\frac12\\right)\\right)$",
+     "indices": [
+      "$r = \\frac{\\sqrt5}{5}$.",
+      "$\\theta = -\\arctan\\frac12$."
+     ],
+     "duree": 2
+    },
+    {
+     "consigne": "Forme exponentielle.",
+     "question": "$z$ en forme exponentielle ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "sqrt(5)/5 e^(-i arctan(1/2))",
+      "forme": "expo"
+     },
+     "corrige": "$z = \\frac{\\sqrt5}{5}\\,e^{-i\\arctan(1/2)}$",
+     "indices": [
+      "Même $r$, même $\\theta$.",
+      "$r\\,e^{i\\theta}$."
+     ],
+     "duree": 1
+    },
+    {
+     "consigne": "$z^2 = r^2 e^{2i\\theta}$.",
+     "question": "$z^2$ en forme exponentielle ?",
+     "verif": {
+      "mode": "expr",
+      "attendu": "1/5 e^(-2i arctan(1/2))",
+      "forme": "expo"
+     },
+     "corrige": "$z^2 = \\frac{5}{25}\\,e^{-2i\\arctan(1/2)} = \\boxed{\\frac15\\,e^{-2i\\arctan(1/2)}}$ (soit $\\frac{3 - 4i}{25}$).",
+     "indices": [
+      "$r^2 = \\frac{5}{25}$.",
+      "L'argument double : $-2\\arctan\\frac12$."
+     ],
+     "duree": 2
+    }
+   ]
+  },
+  {
+   "id": "ma2-203",
+   "type": "exo",
+   "notion": "2.5",
+   "origine": "annale",
+   "titre": "Annale · Rattrapage (mars 2026), ex. 1",
+   "enonce": "On donne le nombre complexe $z = \\sqrt3 + i$. Calculer $z^5$. Indication : il est conseillé d'utiliser la forme trigonométrique de $z$.",
+   "guidage": "1. $z = 2e^{i\\pi/6}$. 2. De Moivre. 3. Forme algébrique.",
+   "duree": 8,
+   "etapes": [
+    {
+     "consigne": "Écris $z$ sous forme exponentielle.",
+     "question": "$z$ = ? (forme exponentielle)",
+     "verif": {
+      "mode": "expr",
+      "attendu": "2 e^(i pi/6)",
+      "forme": "expo"
+     },
+     "corrige": "$r = 2$, $\\cos\\theta = \\frac{\\sqrt3}{2}$, $\\sin\\theta = \\frac12$ : $z = 2e^{i\\pi/6}$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "De Moivre : $z^5 = 2^5 e^{i5\\pi/6}$.",
+     "question": "$z^5$ = ? (forme exponentielle)",
+     "verif": {
+      "mode": "expr",
+      "attendu": "32 e^(i 5pi/6)",
+      "forme": "expo"
+     },
+     "corrige": "$z^5 = 32e^{i5\\pi/6}$.",
+     "guideSeul": true
+    },
+    {
+     "consigne": "Repasse en forme algébrique.",
+     "question": "$z^5$ = ? (forme algébrique)",
+     "verif": {
+      "mode": "expr",
+      "attendu": "-16 sqrt(3) + 16 i",
+      "forme": "algebrique"
+     },
+     "corrige": "$32\\left(-\\frac{\\sqrt3}{2} + \\frac12 i\\right) = \\boxed{-16\\sqrt3 + 16i}$",
+     "indices": [
+      "$z = 2e^{i\\pi/6}$.",
+      "$z^5 = 32e^{i5\\pi/6}$."
+     ],
+     "duree": 4
+    }
+   ]
+  }
+ ]
+}

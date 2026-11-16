@@ -43,6 +43,7 @@
 <script src="firebase-config.js"></script>
 <script src="firebase-adapter.js"></script>
 <script src="xp.js"></script>
+<script src="expr.js"></script>
 <script>
 /* =====================================================================
    BIC2.exe — module.html : LECTEUR UNIVERSEL (module.html#<module>)
@@ -194,6 +195,7 @@ function appliquerTheme(t = {}){
               ["a",x1,y1,x2,y2,"label",lx,ly] flèche de tension/courant
               ["AO",x,y,{id,haut:"-"|"+"}] ampli op (entrées en (x,y∓20), sortie en (x+80,y)) · ["C",x1,y1,x2,y2,{id,label,val,lp}] condensateur
               ["g",x,y] masse · ["B",x,y,w,h,"texte",{id}] bloc · ["c",[[x,y]…],{cls:"tr"|"tr2"|"gr"|"ax"|"pt"}] courbe (graphes)
+              ["p",[[x,y]…],{cls:"aire"|"aire2"}] surface pleine · ["o",cx,cy,r,{cls:"cercle"|"pz"|"pz2"}] cercle ou point
    ===================================================================== */
 const EXT = {schemas:{}, generateurs:{}, labos:{}};
 const SV = {
@@ -251,6 +253,8 @@ const SV = {
       if(t === "a") return SV.arrow(...a);
       if(t === "g") return `<g class="gnd"><line class="w" x1="${a[0]}" y1="${a[1]}" x2="${a[0]}" y2="${a[1]+6}"/><line class="w" x1="${a[0]-11}" y1="${a[1]+6}" x2="${a[0]+11}" y2="${a[1]+6}"/><line class="w" x1="${a[0]-6}" y1="${a[1]+11}" x2="${a[0]+6}" y2="${a[1]+11}"/></g>`;
       if(t === "c") return `<polyline class="${esc((a[1] && a[1].cls) || "tr")}" points="${a[0].map(p => p.join(",")).join(" ")}"/>`;
+      if(t === "p") return `<polygon class="${esc((a[1] && a[1].cls) || "aire")}" points="${a[0].map(p => p.join(",")).join(" ")}"/>`;
+      if(t === "o") return `<circle class="${esc((a[3] && a[3].cls) || "cercle")}" cx="${a[0]}" cy="${a[1]}" r="${a[2]}"/>`;
       if(t === "B"){ const ob = a[5] || {}, s = `<g class="comp" data-id="${esc(ob.id || "")}"><rect class="body" x="${a[0]}" y="${a[1]}" width="${a[2]}" height="${a[3]}" rx="4"/><text x="${a[0]+a[2]/2}" y="${a[1]+a[3]/2+4}" text-anchor="middle">${esc(a[4])}</text></g>`; return inL(st.surligne, ob.id) ? s.replace('class="comp', 'class="comp hl') : s; }
       if(t === "AO"){ const [x, y, oa = {}] = a, h = oa.haut === "+" ? ["+","−"] : ["−","+"];
         const s = `<g class="comp ao" data-id="${esc(oa.id || "")}"><path class="body" d="M${x},${y-40} L${x},${y+40} L${x+80},${y} Z"/><text class="sg" x="${x+12}" y="${y-15}" text-anchor="middle">${h[0]}</text><text class="sg" x="${x+12}" y="${y+26}" text-anchor="middle">${h[1]}</text></g>`;
@@ -354,7 +358,7 @@ function evalsDuModule(){
 }
 
 /* =====================================================================
-   VÉRIFICATIONS : exact · numerique · regex · sql · dom · auto
+   VÉRIFICATIONS : exact · numerique · regex · sql · dom · c · expr · auto
    ===================================================================== */
 /* fraction écrite x/y (ex. 1/200) : acceptée seulement si elle ne se simplifie pas en entier */
 function fraction(s){
@@ -415,6 +419,7 @@ async function verifier(v, rep, ctx, champ){
     case "sql": return verifSQL(v, rep, ctx);
     case "dom": return verifDOM(v, rep, champ);
     case "c": return verifC(v, rep);
+    case "expr": return window.EXPR ? EXPR.verifier(v, rep) : {ok:false, msg:"Le correcteur d'expressions n'a pas pu se charger : recharge la page."};
     default: return {auto:true};
   }
 }
@@ -624,11 +629,12 @@ function creerChamp(cont, v, x){
   const unite = mode === "numerique" && !multi && v.unite ? String(v.unite) : "";
   const PREF = unite === "Ω" ? ["", "k", "M", "m"] : ["", "m", "µ", "k", "M"];
   let ip = 0;
-  const champHtml = `<input class="entree" spellcheck="false" autocapitalize="off" autocomplete="off" placeholder="${esc(ph)}" aria-label="Ta réponse"${mode === "numerique" ? ' inputmode="decimal"' : ""}>`;
+  const champHtml = `<input class="entree" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" placeholder="${esc(mode === "expr" ? (v.exemple || "ta réponse") : ph)}" aria-label="Ta réponse"${mode === "numerique" ? ' inputmode="decimal"' : ""}>`;
   cont.innerHTML = (multi
       ? (mode === "c"
         ? `<div class="code-wrap"><pre class="code-hl" aria-hidden="true"><code></code></pre><textarea class="entree code-entree code-c" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" wrap="off" placeholder="${esc(ph)}" aria-label="Ton programme C">${esc(x.depart || SQUELETTE_C)}</textarea></div>`
         : `<textarea class="entree code-entree" spellcheck="false" autocapitalize="off" autocomplete="off" placeholder="${esc(ph)}" aria-label="Ta réponse">${esc(x.depart || "")}</textarea>`)
+      : mode === "expr" ? `<div class="ex-symb" role="toolbar" aria-label="Symboles">${SYMB_EXPR.map(([t, ins]) => `<button type="button" tabindex="-1" data-ins="${esc(ins)}">${esc(t)}</button>`).join("")}</div>${champHtml}<div class="ex-apercu" aria-live="polite"><small>aperçu</small><span class="ex-rendu"></span></div>`
       : unite ? `<span class="entree-unite">${champHtml}<button type="button" class="btn-unite" title="Changer l'unité" aria-label="Unité de la réponse : ${esc(unite)}. Cliquer pour changer"></button></span>` : champHtml)
     + (mode === "auto" ? `<small class="aide">Brouillon libre : tu compareras avec la correction et tu t'auto-évalues.</small>` : "")
     + (mode === "sql" ? `<div class="actions mini"><button type="button" class="btn" data-a="executer">Exécuter</button><small class="aide">Ctrl + Entrée pour valider</small></div><div class="sql-zone"></div>` : "")
@@ -648,6 +654,7 @@ function creerChamp(cont, v, x){
     return bU && s.trim() && /^[\d\s.,+\-−eE×x*^\/]+$/.test(s) ? s.trim() + " " + PREF[ip] + unite : s;
   };
   const o = {el:champ, multi, lire, focus:() => { if(!petitEcran()) champ.focus(); }, iframe:cont.querySelector("iframe")};
+  if(mode === "expr") brancherExpr(cont, champ);
   if(mode === "dom"){
     let t = 0; const maj = () => majApercu(o.iframe, champ.value);
     champ.addEventListener("input", () => { clearTimeout(t); t = setTimeout(maj, 300); }); maj();
@@ -705,6 +712,29 @@ function creerChamp(cont, v, x){
   });
   return o;
 }
+/* saisie d'expressions (mode expr) : barre de symboles + aperçu LaTeX de ce qui est compris */
+const SYMB_EXPR = [["i","i"],["π","π"],["√","√("],["e^","e^("],["^","^"],["( )","("],["/","/"],["| |","|"],["ln","ln("],["sin","sin("],["cos","cos("],["arctan","arctan("],["+ C"," + C"]];
+function brancherExpr(cont, champ){
+  const rendu = cont.querySelector(".ex-rendu"); let t = 0;
+  const maj = () => {
+    clearTimeout(t);
+    t = setTimeout(() => {
+      const s = champ.value.trim();
+      if(!s || !window.EXPR){ rendu.innerHTML = ""; return; }
+      const r = EXPR.apercu(s);
+      if(r.err){ rendu.innerHTML = `<span class="ex-err">${esc(r.err)}</span>`; return; }
+      try{ katex.render(r.tex, rendu, {throwOnError:false}); }catch(e){ rendu.textContent = r.tex; }
+    }, 120);
+  };
+  champ.addEventListener("input", maj);
+  cont.querySelector(".ex-symb").addEventListener("click", e => {
+    const b = e.target.closest("button[data-ins]"); if(!b || champ.readOnly) return;
+    const ins = b.dataset.ins, a = champ.selectionStart ?? champ.value.length, z = champ.selectionEnd ?? a;
+    const fermer = ins.endsWith("(") ? ")" : ins === "|" ? "|" : "";
+    champ.setRangeText(ins + champ.value.slice(a, z) + fermer, a, z, "end");
+    const pos = a + ins.length + (z - a); champ.setSelectionRange(pos, pos); champ.focus(); maj();
+  });
+}
 /* indices : −30 % d'XP chacun, max réglable (2 par défaut) */
 function brancherIndices(cont, liste, onUse){
   liste = (liste || []).filter(Boolean);
@@ -730,6 +760,7 @@ function corrigeDe(x, v){
     case "regex": return v.exemple ? `<code>${esc(v.exemple)}</code>` : "";
     case "sql": return `<pre class="code"><code>${esc(v.attendu || "")}</code></pre>`;
     case "c": return v.exemple ? `<pre class="code"><code>${esc(v.exemple)}</code></pre>` : "";
+    case "expr": { const r = window.EXPR ? EXPR.apercu(v.attendu) : {}; return r.tex ? `<p>$${r.tex}${v.constante ? " + C" : ""}$</p>` : `<code>${esc(v.attendu)}</code>`; }
     default: return "";
   }
 }
@@ -1104,7 +1135,24 @@ function vue(nom, rendu){
 const estCourt = it => it.type === "qcm" || it.type === "qcm-multi" || it.type === "trous" || (it.type === "saisie" && (it.duree == null || +it.duree <= 1));
 const S2 = {tab:"cours", sub:"expl", cur:0, eng:null, chkV:{}, ord:{}, fa:null, fs:0, ffoc:null, fch:null,
   fl:{etape:1, pick:new Set(), mode:"express", guide:false, annale:null}, sess:null,
-  pan:{tab:"fiche", code:null, note:"", vu:null}};
+  pan:{tab:"fiche", code:null, note:"", vu:null}, partie:"tout"};
+/* parties du module (liste.json : parties = [{id, nom, icone, couleur, chapitres}]) : filtre Cours + Exos ; un chapitre hors partie est commun */
+const parties = () => Array.isArray(S.mod.parties) ? S.mod.parties.filter(p => p && p.id && Array.isArray(p.chapitres)) : [];
+const partieDe = c => parties().find(p => p.chapitres.includes(c.id)) || null;
+const chapsVis = () => S2.partie === "tout" || !parties().some(p => p.id === S2.partie) ? S.chapitres : S.chapitres.filter(c => { const p = partieDe(c); return !p || p.id === S2.partie; });
+const visibleNotion = n => chapsVis().some(c => c.id === n.ch);
+/* bandeau de partie quand on change de partie en parcourant les chapitres (vue « Tout » comprise) */
+function bandePartie(c, etat){
+  if(!parties().length) return "";
+  const p = partieDe(c), id = p ? p.id : "";
+  if(etat.der === id) return ""; etat.der = id;
+  const nb = S.chapitres.filter(x => (partieDe(x) || {id:""}).id === id).reduce((a, x) => a + x.notions.length, 0);
+  return `<div class="partie-bandeau"${p && p.couleur ? ` style="--pc:${esc(p.couleur)}"` : ""}><span class="pb-ic" aria-hidden="true">${esc(p ? p.icone || "" : "·")}</span><b>${p ? "Partie · " + esc(p.nom) : "Commun aux parties"}</b><small>${nb} notion${nb > 1 ? "s" : ""}</small></div>`;
+}
+function selecteurParties(){
+  const ps = parties(); if(!ps.length) return "";
+  return `<div class="m-parties" role="group" aria-label="Partie du module"><button type="button" aria-pressed="${S2.partie === "tout"}" data-m="partie" data-v="tout">Tout</button>${ps.map(p => `<button type="button" aria-pressed="${S2.partie === p.id}" data-m="partie" data-v="${esc(p.id)}"${p.couleur ? ` style="--pc:${esc(p.couleur)}"` : ""}>${p.icone ? `<span aria-hidden="true">${esc(p.icone)}</span>` : ""}${esc(p.nom)}</button>`).join("")}</div>`;
+}
 
 function vueModule(){ vue("module", rendreModule); }
 function rendreModule(){
@@ -1119,6 +1167,7 @@ function rendreModule(){
           ${S2.tab === "cours" ? `<span class="m-sous">${sous.map(([k, t]) => `<button type="button" aria-selected="${S2.sub === k}" data-m="sub" data-v="${k}">${t}</button>`).join("")}</span>` : ""}</div>
         <div class="m-ong${S2.tab === "exos" ? " on" : ""}"><button type="button" role="tab" aria-selected="${S2.tab === "exos"}" data-m="tab" data-v="exos">${ic("wrench")} Exos${ne ? `<span class="m-badge" title="${ne} à rattraper">${ne}</span>` : ""}</button></div>
       </div>
+      ${selecteurParties()}
       <div class="m-droite"><span class="m-anneau" style="--p:${pr.pct}" title="${pr.lues}/${pr.total} notions validées"><b>${pr.pct}</b></span>
         ${S2.tab === "cours" && pr.suivante ? `<button type="button" class="btn plein" data-m="reprendre">Reprendre · ${esc(pr.suivante.id)}</button>` : ""}</div>
     </div>
@@ -1184,8 +1233,10 @@ function notionHtml(n){
 /* compteur d'exos réussis d'une notion dans le sommaire (rien si la notion n'a pas d'item) */
 const somX = s => s.tot ? `${s.faits}/${s.tot}` : "";
 function rendreExplicatif(box){
-  const ctl = controles(), st = etats(), ee = erreursExos(); let som = "", flux = "";
-  S.chapitres.forEach(c => {
+  const ctl = controles(), st = etats(), ee = erreursExos(), bp = {der:null}; let som = "", flux = "";
+  chapsVis().forEach(c => {
+    const bande = bandePartie(c, bp);
+    if(bande){ const p = partieDe(c); som += `<p class="som-partie"${p && p.couleur ? ` style="--pc:${esc(p.couleur)}"` : ""} title="${esc(p ? p.nom : "Commun")}">${esc(p ? p.icone || "" : "·")}<span class="sp-nom">${esc(p ? p.nom : "Commun")}</span></p>`; flux += bande; }
     som += `<p class="som-ch" title="${esc(c.titre || c.id)}">Ch. ${esc(String(c.ordre ?? 0))} · ${esc(c.titre || c.id)}</p>`;
     flux += `<div class="ch-bandeau"><span>Chapitre ${esc(String(c.ordre ?? 0))}</span><b>${esc(c.titre || c.id)}</b></div>`;
     c.notions.forEach(n => {
@@ -1272,8 +1323,10 @@ function essayer(b){
 function monterLabos(box){ box.querySelectorAll("[data-labo]").forEach(el => { const f = EXT.labos[el.dataset.labo]; if(f) try{ f(el, {SV, esc, fmt, ic}); }catch(e){ el.textContent = "(labo indisponible)"; } }); }
 function allerNotion(id){
   const n = S.notionParId[id]; if(!n) return;
+  let bascule = false;
+  if(!visibleNotion(n)){ const p = partieDe(S.chapitres.find(c => c.id === n.ch) || {}); S2.partie = p ? p.id : "tout"; bascule = true; }
   if(S2.tab === "cours" && S2.sub === "follow"){ S2.fa = S.notions.indexOf(n); S2.fs = 0; vueModule(); return; }
-  const dedans = S.vue === "module" && S2.tab === "cours" && S2.sub === "expl";
+  const dedans = !bascule && S.vue === "module" && S2.tab === "cours" && S2.sub === "expl";
   S2.tab = "cours"; S2.sub = "expl"; S2.cur = S.notions.indexOf(n);
   if(!dedans) vueModule();
   const el = document.getElementById("n-" + id); if(el) el.scrollIntoView({behavior:dedans && !reduit ? "smooth" : "auto", block:"start"});
@@ -1329,13 +1382,13 @@ function faFiche(n, I){
     ${n.ecrans.length ? `<button type="button" class="btn plein" data-m="fa" data-id="${esc(n.id)}">Lancer</button>` : ""}</div></section>`;
 }
 function rendreCarteFa(box){
-  const I = faInfos();
-  if(!S2.ffoc || !I.byId(S2.ffoc)) S2.ffoc = (I.suiv || S.notions[0]).id;
+  const I = faInfos(), CH = chapsVis(), vis = CH.flatMap(c => c.notions);
+  if(!S2.ffoc || !I.byId(S2.ffoc) || !vis.includes(I.byId(S2.ffoc))) S2.ffoc = ((I.suiv && vis.includes(I.suiv)) ? I.suiv : vis[0] || S.notions[0]).id;
   const tete = `<p class="fl-k">Follow-along</p><h2 class="fl-h2">Quelle notion veux-tu comprendre ?</h2>
     <p class="fa3-leg"><span><i class="l-pre"></i>prérequis</span><span><i class="l-post"></i>ce que ça prépare</span><span><i class="l-ok"></i>validée</span></p>`;
   if(petitEcran()){ rendreCarteFaTel(box, I, tete); return; }
   box.innerHTML = `<div class="fa3">${tete}<div class="fa3-rail"><button type="button" class="fa3-r" data-fr="-1" aria-label="Chapitres précédents"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button><div class="fa3-piste"><span class="fa3-pilule" title="Glisse pour parcourir les chapitres"><i></i><i></i><i></i></span></div><button type="button" class="fa3-r" data-fr="1" aria-label="Chapitres suivants"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button></div>
-    <div class="fa3-wrap" id="fa3-wrap"><div class="fa3-grille">${S.chapitres.map(c => `<div class="fa3-col"><h4>Chapitre ${esc(String(c.ordre ?? 0))}<br><span>${esc(c.titre || c.id)}</span></h4>${c.notions.map(n => `<button type="button" class="fa3-n${faCls(n, I)}" data-m="ffoc" data-id="${esc(n.id)}"><span class="id">${esc(n.id)}</span> ${mdInline(n.titre)}</button>`).join("")}</div>`).join("")}</div><svg class="fa3-liens" aria-hidden="true"></svg></div>
+    <div class="fa3-wrap" id="fa3-wrap"><div class="fa3-grille">${CH.map(c => `<div class="fa3-col"><h4>${partieDe(c) ? `<em class="fa3-partie"${partieDe(c).couleur ? ` style="--pc:${esc(partieDe(c).couleur)}"` : ""}>${esc(partieDe(c).icone || partieDe(c).nom)}</em> ` : ""}Chapitre ${esc(String(c.ordre ?? 0))}<br><span>${esc(c.titre || c.id)}</span></h4>${c.notions.map(n => `<button type="button" class="fa3-n${faCls(n, I)}" data-m="ffoc" data-id="${esc(n.id)}"><span class="id">${esc(n.id)}</span> ${mdInline(n.titre)}</button>`).join("")}</div>`).join("")}</div><svg class="fa3-liens" aria-hidden="true"></svg></div>
     <div id="fa3-fiche"></div><p class="vide-txt fa3-aide">Survole une notion pour voir ses liens · clic pour la garder affichée.</p></div>`;
   const w = box.querySelector("#fa3-wrap");
   w.addEventListener("mouseover", e => { const b = e.target.closest(".fa3-n"); if(b) faFocus(b.dataset.id, false); });
@@ -1383,13 +1436,14 @@ function faFocus(id, garder){
   $("fa3-fiche").innerHTML = faFiche(n, I);
 }
 function rendreCarteFaTel(box, I, tete){
+  const CH = chapsVis();
   const cour = I.byId(S2.ffoc);
-  if(S2.fch == null || !S.chapitres[S2.fch]) S2.fch = Math.max(0, S.chapitres.findIndex(c => c.id === cour.ch));
-  const ci = S2.fch, c = S.chapitres[ci], nb = x => x.notions.filter(n => I.ok(n)).length;
+  if(S2.fch == null || !CH[S2.fch]) S2.fch = Math.max(0, CH.findIndex(c => c.id === cour.ch));
+  const ci = S2.fch, c = CH[ci], nb = x => x.notions.filter(n => I.ok(n)).length;
   const lien = (id, cls) => `<button type="button" class="fa3-lien ${cls}" data-m="fsaut" data-id="${esc(id)}">${esc(id)}</button>`;
   box.innerHTML = `<div class="fa3 tel">${tete}
-    <nav class="fa3-nav">${S.chapitres.map((x, i) => `<button type="button" class="${i === ci ? "cur" : ""}${nb(x) === x.notions.length ? " fini" : ""}${I.suiv && x.notions.includes(I.suiv) ? " ici" : ""}" data-m="fch" data-v="${i}" aria-label="Chapitre ${esc(String(x.ordre ?? 0))}"><b>${esc(String(x.ordre ?? 0))}</b><i style="width:${x.notions.length ? nb(x) / x.notions.length * 100 : 0}%"></i></button>`).join("")}</nav>
-    <div class="fa3-tete"><button type="button" class="fa3-fl" data-m="fch" data-v="${ci - 1}" ${ci ? "" : "disabled"} aria-label="Chapitre précédent">‹</button><div><span>Chapitre ${esc(String(c.ordre ?? 0))} · ${nb(c)}/${c.notions.length}</span><b>${esc(c.titre || c.id)}</b></div><button type="button" class="fa3-fl" data-m="fch" data-v="${ci + 1}" ${ci < S.chapitres.length - 1 ? "" : "disabled"} aria-label="Chapitre suivant">›</button></div>
+    <nav class="fa3-nav">${CH.map((x, i) => `<button type="button" class="${i === ci ? "cur" : ""}${nb(x) === x.notions.length ? " fini" : ""}${I.suiv && x.notions.includes(I.suiv) ? " ici" : ""}" data-m="fch" data-v="${i}" aria-label="Chapitre ${esc(String(x.ordre ?? 0))}"><b>${esc(String(x.ordre ?? 0))}</b><i style="width:${x.notions.length ? nb(x) / x.notions.length * 100 : 0}%"></i></button>`).join("")}</nav>
+    <div class="fa3-tete"><button type="button" class="fa3-fl" data-m="fch" data-v="${ci - 1}" ${ci ? "" : "disabled"} aria-label="Chapitre précédent">‹</button><div><span>Chapitre ${esc(String(c.ordre ?? 0))} · ${nb(c)}/${c.notions.length}</span><b>${esc(c.titre || c.id)}</b></div><button type="button" class="fa3-fl" data-m="fch" data-v="${ci + 1}" ${ci < CH.length - 1 ? "" : "disabled"} aria-label="Chapitre suivant">›</button></div>
     <div class="fa3-liste">${c.notions.map(n => { const pre = I.pre(n), post = I.post(n.id);
       return `<div class="fa3-c${faCls(n, I)}${n.id === S2.ffoc ? " on" : ""}" id="fa3-${esc(n.id)}">
         <button type="button" class="fa3-h" data-m="ffoc" data-id="${esc(n.id)}"><span class="id">${esc(n.id)}</span><span class="t">${mdInline(n.titre)}</span>${faEtat(n, I)}</button>
@@ -1401,7 +1455,7 @@ function rendreCarteFaTel(box, I, tete){
   const l = box.querySelector(".fa3-liste"); let x0 = null, y0 = 0;
   l.addEventListener("touchstart", e => { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, {passive:true});
   l.addEventListener("touchend", e => { if(x0 === null) return; const dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0; x0 = null;
-    if(Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5){ const k = ci + (dx < 0 ? 1 : -1); if(k >= 0 && k < S.chapitres.length){ S2.fch = k; vueModule(); } } });
+    if(Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5){ const k = ci + (dx < 0 ? 1 : -1); if(k >= 0 && k < CH.length){ S2.fch = k; vueModule(); } } });
 }
 addEventListener("resize", () => { if($("fa3-wrap")) faFocus(S2.ffoc, false); });
 
@@ -1427,9 +1481,10 @@ function rendreFollow(box){
 
 /* ---------- Cours · TL;DR (liste, ou tableau comparatif {titres, schemas, lignes, pieges}) ---------- */
 function rendreTldr(box){
-  box.innerHTML = S.chapitres.filter(c => c.tldr && (c.tldr.length || c.tldr.lignes)).map(c => {
+  const bp = {der:null};
+  box.innerHTML = chapsVis().filter(c => c.tldr && (c.tldr.length || c.tldr.lignes)).map(c => {
     const t = c.tldr;
-    let h = `<div class="ch-bandeau" id="t-${esc(c.id)}"><span>Chapitre ${esc(String(c.ordre ?? 0))}</span><b>${esc(c.titre || c.id)}</b></div><section class="fenetre tldr" data-titre="tldr.txt">`;
+    let h = bandePartie(c, bp) + `<div class="ch-bandeau" id="t-${esc(c.id)}"><span>Chapitre ${esc(String(c.ordre ?? 0))}</span><b>${esc(c.titre || c.id)}</b></div><section class="fenetre tldr" data-titre="tldr.txt">`;
     if(Array.isArray(t)) h += `<ul class="tldr-liste">${t.map(x => `<li>${xref(mdInline(x))}</li>`).join("")}</ul>`;
     else {
       const n = (t.titres || []).length;
@@ -1448,9 +1503,9 @@ function exoEtape1(){
   const f = S2.fl, st = etats(), ee = erreursExos(), ne = nbErreurs();
   return `<div class="ex-flux"><p class="fl-k">Étape 1 sur 2</p><h2 class="fl-h2">Qu'est-ce que tu veux réviser ?</h2><p class="vide-txt">Coche une ou plusieurs notions.</p>
     <div class="actions"><button type="button" class="btn" data-m="pall">Tout cocher</button><button type="button" class="btn" data-m="pnone">Tout décocher</button>${ne ? `<button type="button" class="btn" data-m="perr">Mes erreurs (${ne})</button>` : ""}</div>
-    <div class="ex-liste">${S.chapitres.map(c => { const tout = c.notions.length && c.notions.every(n => f.pick.has(n.id));
+    <div class="ex-liste">${(bp => chapsVis().map(c => bandePartie(c, bp) + (() => { const tout = c.notions.length && c.notions.every(n => f.pick.has(n.id));
       return `<div class="ex-ch fenetre" data-titre="ch${esc(String(c.ordre ?? 0))}.txt"><button type="button" class="ex-chb" data-m="pch" data-id="${esc(c.id)}"><i class="case${tout ? " on" : ""}"></i><b>Chapitre ${esc(String(c.ordre ?? 0))} · ${esc(c.titre || c.id)}</b></button>
-      ${c.notions.map(n => { const s = statNotion(n, st, ee); return `<button type="button" class="ex-n${f.pick.has(n.id) ? " on" : ""}" data-m="pk" data-id="${esc(n.id)}"><i class="case"></i><span><b>${esc(n.id)}</b> ${mdInline(n.titre)}</span><small>${s.faits}/${s.tot} faits${s.err ? ` · <u>${s.err} ✗</u>` : ""}</small></button>`; }).join("")}</div>`; }).join("")}</div>
+      ${c.notions.map(n => { const s = statNotion(n, st, ee); return `<button type="button" class="ex-n${f.pick.has(n.id) ? " on" : ""}" data-m="pk" data-id="${esc(n.id)}"><i class="case"></i><span><b>${esc(n.id)}</b> ${mdInline(n.titre)}</span><small>${s.faits}/${s.tot} faits${s.err ? ` · <u>${s.err} ✗</u>` : ""}</small></button>`; }).join("")}</div>`; })()).join(""))({der:null})}</div>
     <div class="ex-pied"><span class="vide-txt">${f.pick.size} notion${f.pick.size > 1 ? "s" : ""} cochée${f.pick.size > 1 ? "s" : ""}</span><button type="button" class="btn plein" data-m="exsuiv" ${f.pick.size ? "" : "disabled"}>Suivant ›</button></div></div>`;
 }
 function selection(){
@@ -1636,7 +1691,8 @@ const ACT = {
     const el = $("fa3-" + n.id); if(el){ el.scrollIntoView({block:"center", behavior:reduit ? "auto" : "smooth"}); el.classList.add("flash"); } },
   pk: b => { const p = S2.fl.pick, id = b.dataset.id; p.has(id) ? p.delete(id) : p.add(id); rendreExos($("m-corps")); },
   pch: b => { const c = S.chapitres.find(x => x.id === b.dataset.id), ids = c.notions.map(n => n.id), tout = ids.every(i => S2.fl.pick.has(i)); ids.forEach(i => tout ? S2.fl.pick.delete(i) : S2.fl.pick.add(i)); rendreExos($("m-corps")); },
-  pall: () => { S.notions.forEach(n => S2.fl.pick.add(n.id)); rendreExos($("m-corps")); },
+  pall: () => { chapsVis().forEach(c => c.notions.forEach(n => S2.fl.pick.add(n.id))); rendreExos($("m-corps")); },
+  partie: b => { S2.partie = b.dataset.v; S2.fch = null; S2.ffoc = null; vueModule(); },
   pnone: () => { S2.fl.pick.clear(); rendreExos($("m-corps")); },
   perr: () => { const st = etats(), ee = erreursExos(); S2.fl.pick = new Set(S.notions.filter(n => statNotion(n, st, ee).err).map(n => n.id)); rendreExos($("m-corps")); },
   exsuiv: () => { if(!S2.fl.pick.size) return; S2.fl.etape = 2; rendreExos($("m-corps")); scrollTo(0, 0); },
