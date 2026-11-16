@@ -322,6 +322,15 @@ const generateurs = {
       `$q = \\dfrac{${nt(Vmax,1)} - ${nt(Vmin,1)}}{2^{10}} = \\dfrac{${nt(Vmax-Vmin,1)}}{1024} = \\mathbf{${t(q,"V")}}$`,
       `$${c} \\times q = ${c} \\times ${nt(q*1000,3)}\\ \\text{mV} = \\mathbf{${t(c*q,"V")}}$ : c'est l'écart au-dessus de $V_{min}$`,
       `$U_e = V_{min} + ${c}\\,q = ${nt(Vmin,1)} + ${nt(c*q,3)} = \\mathbf{${t(U,"V")}}$`]}; },
+  /* TD1 ex. 2 et ex. 6 : valeurs exactes du TD sans « Faisable de tête », même exercice à valeurs rondes avec */
+  "td1-ex2"(o = {}){
+    if(o.tete === false) return {vals:{SRC:"TD1 ex. 2", VM:"10", QT:"39{,}06\\ \\text{m}\\text{V}", UT:"2{,}3", RT:"58{,}9", CF:"58", CR:"59", ARR:" ou 59 (arrondi)"}};
+    const {q, Vm} = canRond([8], [0.01,0.02,0.04]), U = +((ent(10, 245) + rnd([0.2,0.4,0.6,0.8]))*q).toFixed(4), r = +(U/q).toFixed(6), cf = Math.floor(r), cr = Math.round(r);
+    return {vals:{SRC:"D'après le TD1 ex. 2", VM:nt(Vm,3), QT:t(q,"V"), UT:nt(U,3), RT:nt(r,2), CF:String(cf), CR:String(cr), ARR:cr !== cf ? ` ou ${cr} (arrondi)` : ""}}; },
+  "td1-ex6"(o = {}){
+    if(o.tete === false) return {vals:{SRC:"TD1 ex. 6", VMAX:"4", VMIN:"1", C:"900", QT:"2{,}93\\ \\text{m}\\text{V}", CQT:"2{,}637\\ \\text{V}", UT:"3{,}637\\ \\text{V}", UN:"3.637"}};
+    const q = rnd([0.001,0.002,0.004,0.005]), Vmin = rnd([0.5,1]), Vmax = +(Vmin + q*1024).toFixed(4), c = 50*ent(2, 20), U = +(Vmin + c*q).toFixed(4);
+    return {vals:{SRC:"D'après le TD1 ex. 6", VMAX:nt(Vmax,3), VMIN:nt(Vmin,1), C:String(c), QT:t(q,"V"), CQT:t(c*q,"V"), UT:t(U,"V"), UN:String(U)}}; },
   /* code multiple de 128 : 128 × 5/1024 = 0,625 V, calculable de tête */
   "ard-volts"(o = {}){ const c = o.tete === false ? ent(50, 1000) : 128*ent(1, 7), v = c*5/1024; return {vals:{C:String(c), V:String(Math.round(v*1000)/1000), VT:nt(v,3)}}; },
   /* AOP */

@@ -472,16 +472,27 @@
    "notion": "3.4",
    "quiz": "Quiz 1 · partie B",
    "origine": "td",
-   "enonce": "TD1 ex. 2 · CAN 8 bits, pleine échelle $U_{ref} = 10\\ \\text{V}$. Code obtenu pour $U_e = 2{,}3\\ \\text{V}$ ? (un nombre **entier**, écrit en base 10)",
+   "enonce": "[[SRC]] · CAN 8 bits, pleine échelle $U_{ref} = [[VM]]\\ \\text{V}$. Code obtenu pour $U_e = [[UT]]\\ \\text{V}$ ? (un nombre **entier**, écrit en base 10)",
    "verif": {
     "mode": "exact",
     "attendu": [
-     "58",
-     "59"
+     "[[CF]]",
+     "[[CR]]"
     ]
    },
    "duree": 1,
-   "explication": "$q = 10/256 = 39{,}06\\ \\text{mV}$ ; $2{,}3/0{,}03906 = 58{,}9$ → **58** (partie entière) ou 59 (arrondi). Un code est toujours un **entier** : 58,9 n'est qu'une étape du calcul."
+   "explication": "$q = \\dfrac{[[VM]]}{256} = [[QT]]$ ; $\\dfrac{[[UT]]}{q} = [[RT]]$ → **[[CF]]** (partie entière)[[ARR]]. Un code est toujours un **entier** : $[[RT]]$ n'est qu'une étape du calcul.",
+   "generateur": "td1-ex2",
+   "vals": {
+    "SRC": "TD1 ex. 2",
+    "VM": "10",
+    "QT": "39{,}06\\ \\text{m}\\text{V}",
+    "UT": "2{,}3",
+    "RT": "58{,}9",
+    "CF": "58",
+    "CR": "59",
+    "ARR": " ou 59 (arrondi)"
+   }
   },
   {
    "id": "ca3-011",
@@ -489,15 +500,26 @@
    "notion": "3.5",
    "quiz": "Quiz 1 · partie B",
    "origine": "td",
-   "enonce": "TD1 ex. 6 · CAN 10 bits, $V_{max} = 4\\ \\text{V}$, $V_{min} = 1\\ \\text{V}$. Tension d'entrée qui donne le code 900 ?",
+   "enonce": "[[SRC]] · CAN 10 bits, $V_{max} = [[VMAX]]\\ \\text{V}$, $V_{min} = [[VMIN]]\\ \\text{V}$. Tension d'entrée qui donne le code [[C]] ?",
    "verif": {
     "mode": "numerique",
-    "attendu": 3.637,
+    "attendu": "[[UN]]",
     "unite": "V",
     "tol": 0.005
    },
    "duree": 1,
-   "explication": "$q = 3/1024 = 2{,}93\\ \\text{mV}$ ; $900 q = 2{,}637\\ \\text{V}$ ; $U = 1 + 2{,}637 = 3{,}637\\ \\text{V}$."
+   "explication": "$q = \\dfrac{[[VMAX]] - [[VMIN]]}{1024} = [[QT]]$ ; $[[C]]\\,q = [[CQT]]$ ; $U = [[VMIN]] + [[CQT]] = [[UT]]$.",
+   "generateur": "td1-ex6",
+   "vals": {
+    "SRC": "TD1 ex. 6",
+    "VMAX": "4",
+    "VMIN": "1",
+    "C": "900",
+    "QT": "2{,}93\\ \\text{m}\\text{V}",
+    "CQT": "2{,}637\\ \\text{V}",
+    "UT": "3{,}637\\ \\text{V}",
+    "UN": "3.637"
+   }
   },
   {
    "id": "ca3-012",
