@@ -1492,7 +1492,7 @@ body.en-session .lecteur{background:radial-gradient(ellipse at top,color-mix(in 
 
 /* code à trous */
 .trou{display:inline-block;min-width:72px;text-align:center;padding:0 8px;margin:0 4px;border-bottom:3px dashed var(--m-ac);border-radius:4px 4px 0 0;cursor:pointer;color:var(--blanc)}
-.trou.ok{border-bottom-style:solid;border-color:var(--ok);color:var(--ok)}.trou.ko{border-bottom-style:solid;border-color:var(--erreur);color:var(--erreur)}
+.katex .trou{min-width:2.6em;padding:0 4px;margin:0 2px}.trou.ok{border-bottom-style:solid;border-color:var(--ok);color:var(--ok)}.trou.ko{border-bottom-style:solid;border-color:var(--erreur);color:var(--erreur)}
 .banque{display:flex;gap:8px;flex-wrap:wrap}
 .frag{all:unset;box-sizing:border-box;cursor:grab;padding:8px 16px;border:1px solid var(--verre-bord);border-radius:8px;background:rgba(255,255,255,.06);color:var(--blanc);font-weight:700;touch-action:none;user-select:none}
 .frag:hover:not(:disabled){border-color:var(--m-ac)}.frag.sel{background:var(--m-ac);border-color:var(--m-ac);color:var(--m-on-ac)}.frag:disabled{cursor:default;opacity:.6}

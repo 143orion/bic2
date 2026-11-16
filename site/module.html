@@ -304,6 +304,26 @@ function maths(){
 }
 new MutationObserver(ms => { if(ms.every(m => m.target.closest && m.target.closest(".code-hl, .c-zone"))) return; clearTimeout(tMaths); tMaths = setTimeout(maths, 30); }).observe(L, {childList:true, subtree:true});
 
+/* ---------- code à trous : un [_] dans une formule ($…$) casse le rendu (le $ se retrouve coupé en deux).
+   On numérote les trous, on rend ici chaque formule qui en contient avec KaTeX (trou = \htmlData{t=i}), le reste passe par md().
+   trou(i) → {html (trou hors formule), tex (contenu du trou dans une formule), cls (classes du trou)} ---------- */
+const texTrou = v => { v = String(v ?? "").trim(); if(!v) return "\\phantom{000}"; if(/^\$[^$]+\$$/.test(v)) return v.slice(1, -1);
+  return /[A-Za-zÀ-ÿ…\\{}$&#^_%~]/.test(v) ? `\\text{${v.replace(/[\\{}$&#^_%~]/g, "")}}` : v; };
+function mdTrous(enonce, trou){
+  let n = 0; const fs = [];
+  const s = String(enonce ?? "").replace(/\[_\]/g, () => `\u0005${n++}\u0005`)
+    .replace(/\$\$[\s\S]+?\$\$|\$[^$]+?\$/g, m => {
+      if(!m.includes("\u0005") || !window.katex) return m;
+      const d = m.startsWith("$$"), tex = m.slice(d ? 2 : 1, d ? -2 : -1).replace(/\u0005(\d+)\u0005/g, (_, i) => `\\htmlData{t=${i}}{${trou(+i).tex}}`);
+      try{ fs.push(katex.renderToString(tex, {displayMode:d, throwOnError:false, strict:"ignore", trust:c => c.command === "\\htmlData"})); }catch(e){ return m; }
+      return `\u0004${fs.length - 1}\u0004`;
+    });
+  const box = document.createElement("div");
+  box.innerHTML = md(s).replace(/\u0004(\d+)\u0004/g, (_, k) => fs[k]).replace(/\u0005(\d+)\u0005/g, (_, i) => trou(+i).html);
+  box.querySelectorAll(".katex [data-t]").forEach(el => el.className += " " + trou(+el.dataset.t).cls);
+  return box.innerHTML;
+}
+
 /* ---------- variantes (générateurs ou « variantes » de la banque) : [[CLE]] remplacé par la valeur ; réponses/corrigés remplacés par étape ---------- */
 function variante(it, g){
   const x = JSON.parse(JSON.stringify(it));
@@ -877,8 +897,8 @@ function jouerQuestion(it, zone, opts = {}){
       const att = [].concat((it.verif && it.verif.attendu) ?? []), nb = (String(it.enonce).match(/\[_\]/g) || []).length, vals = Array(nb).fill(null);
       let sel = null;
       const rendreT = fb => {
-        let k = 0;
-        art.querySelector(".q-enonce").innerHTML = md(it.enonce).replace(/\[_\]/g, () => { const i = k++, v = vals[i]; return `<span class="trou${fb ? (norm(v) === norm(att[i]) ? " ok" : " ko") : ""}" data-t="${i}">${v ? mdInline(v) : "&nbsp;&nbsp;&nbsp;&nbsp;"}</span>`; });
+        art.querySelector(".q-enonce").innerHTML = mdTrous(it.enonce, i => { const v = vals[i], cls = `trou${fb ? (norm(v) === norm(att[i]) ? " ok" : " ko") : ""}`;
+          return {cls, tex:texTrou(v), html:`<span class="${cls}" data-t="${i}">${v ? mdInline(v) : "&nbsp;&nbsp;&nbsp;&nbsp;"}</span>`}; });
         corps.innerHTML = `<div class="banque">${(it.fragments || []).map((f2, j) => `<button type="button" class="frag${sel === f2 ? " sel" : ""}" ${fb ? "disabled" : ""} data-f="${j}">${mdInline(f2)}</button>`).join("")}</div>${fb ? "" : `<small class="aide">Glisse un fragment dans un trou (ou touche le fragment, puis le trou).</small>`}`;
         if(fb) return;
         act.innerHTML = `<button type="button" class="btn plein" data-a="valider" ${vals.every(Boolean) ? "" : "disabled"}>Valider ⏎</button>${lienSignaler(it.id)}`;
@@ -1624,7 +1644,7 @@ const ordreLog = log => log.filter(l => !l.nt);
 function donneeTxt(l){ return l.donnee ? esc(l.donnee) : "—"; }
 function enonceLog(l){
   const it = l.it, e = l.etape != null && it.etapes ? it.etapes[l.etape] : null;
-  if(it.type === "trous"){ let k = 0; return md(it.enonce).replace(/\[_\]/g, () => `<span class="trou-fin">${esc((String(l.donnee || "").split(" · ")[k++]) || "…")}</span>`); }
+  if(it.type === "trous"){ const v = String(l.donnee || "").split(" · "); return mdTrous(it.enonce, i => ({cls:"trou-fin", tex:texTrou(v[i] || "…"), html:`<span class="trou-fin">${esc(v[i] || "…")}</span>`})); }
   return e ? `<p class="rv-ctx">${riche(it.titre ? it.titre + " — " : "")}${md(it.enonce).replace(/^<p>|<\/p>$/g, "")}</p>${md(e.question || e.consigne || "")}` : md(it.enonce);
 }
 function attenduLog(l){
