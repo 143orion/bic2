@@ -337,7 +337,7 @@
     "tol": 0.005
    },
    "duree": 0.67,
-   "explication": "$v = [[C]] \\times \\dfrac{5}{1024} = [[VT]]\\ \\text{V}$.",
+   "explication": "$v = [[C]] \\times \\dfrac{5}{1024} = [[VT]]\\ \\text{V}$. Astuce : $128 \\times \\dfrac{5}{1024} = 0{,}625\\ \\text{V}$.",
    "generateur": "ard-volts",
    "vals": {
     "C": "159",

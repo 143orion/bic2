@@ -238,7 +238,7 @@
     "unite": "Hz"
    },
    "duree": 1,
-   "explication": "$f_c = \\dfrac{1}{2\\pi R'C} = [[FCT]]$.",
+   "explication": "$f_c = \\dfrac{1}{2\\pi R'C} \\approx \\dfrac{0{,}16}{R'C} = [[FCT]]$ (avec $\\dfrac{1}{2\\pi} \\approx 0{,}16$).",
    "generateur": "fc",
    "vals": {
     "R": "2,2",
