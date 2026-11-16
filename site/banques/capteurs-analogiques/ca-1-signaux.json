@@ -644,6 +644,115 @@
    }
   },
   {
+   "id": "ca1-018",
+   "type": "qcm",
+   "notion": "1.5",
+   "origine": "annale",
+   "enonce": "Quiz 1 · Quelle est la différence entre un **bit** et un **byte** (octet) ?",
+   "choix": [
+    "un bit est un chiffre binaire (0 ou 1) ; un byte (octet) est un groupe de 8 bits",
+    "un byte est un groupe de 2 bits",
+    "aucune : ce sont deux noms pour la même chose",
+    "un bit est un groupe de 8 bytes"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "Le **bit** (*binary digit*) est la plus petite information : 0 ou 1. Un **byte** = un **octet** = **8 bits** (valeurs de 0 à 255)."
+  },
+  {
+   "id": "ca1-019",
+   "type": "qcm",
+   "notion": "1.5",
+   "origine": "cours",
+   "enonce": "[[Q]]",
+   "choix": [
+    "[[C0]]",
+    "[[C1]]",
+    "[[C2]]",
+    "[[C3]]"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "explication": "[[EXP]]",
+   "generateur": "oct-bits",
+   "vals": {
+    "C0": "8 octets",
+    "C1": "64 octets",
+    "C2": "16 octets",
+    "C3": "32 octets",
+    "Q": "64 bits, c'est combien d'octets ?",
+    "EXP": "1 octet = 8 bits, donc 64 bits = 64 ÷ 8 = 8 octets."
+   }
+  },
+  {
+   "id": "ca1-020",
+   "type": "qcm",
+   "notion": "1.6",
+   "origine": "annale",
+   "enonce": "Quiz 1 · En binaire, $([[N]])_{10}$ s'écrit :",
+   "choix": [
+    "[[C0]]",
+    "[[C1]]",
+    "[[C2]]",
+    "[[C3]]"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.5,
+   "explication": "On décompose en puissances de 2 : $[[N]] = [[PUIS]]$ ($= [[SOMME]]$). On met un 1 à ces rangs et 0 ailleurs, sur 8 bits : `[[C0]]`. Les autres choix ont un ou deux bits faux : vérifie toujours en refaisant la somme.",
+   "generateur": "bin-qcm",
+   "vals": {
+    "C0": "0011 0111",
+    "C1": "1011 0111",
+    "C2": "0001 0111",
+    "C3": "0011 1110",
+    "N": "55",
+    "PUIS": "2^{5} + 2^{4} + 2^{2} + 2^{1} + 2^{0}",
+    "SOMME": "32 + 16 + 4 + 2 + 1"
+   }
+  },
+  {
+   "id": "ca1-021",
+   "type": "qcm",
+   "notion": "1.6",
+   "origine": "cours",
+   "enonce": "Que vaut l'octet `[[B]]` en décimal ?",
+   "choix": [
+    "[[C0]]",
+    "[[C1]]",
+    "[[C2]]",
+    "[[C3]]"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.5,
+   "explication": "Les bits à 1 sont aux rangs $[[PUIS]]$ (le bit de droite est le rang 0) : $[[SOMME]] = \\mathbf{[[C0]]}$. Piège : lire l'octet à l'envers (de droite à gauche).",
+   "generateur": "bin-qcm-inv",
+   "vals": {
+    "C0": "36",
+    "C1": "37",
+    "C2": "4",
+    "C3": "35",
+    "B": "0010 0100",
+    "PUIS": "2^{5} + 2^{2}",
+    "SOMME": "32 + 4"
+   }
+  },
+  {
    "id": "ca1-101",
    "type": "exo",
    "titre": "Signal PWM",

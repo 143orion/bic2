@@ -7,14 +7,14 @@ Cours ESILV « Capteurs analogiques » : cours 1 (signaux, capteurs, CAN/CNA, pa
 |---|---|---|---|
 | 0 | `ca-0-rappels` | Rappels d'électricité | cours 2 · rappels (renvoi vers Complément électronique) |
 | 1 | `ca-1-signaux` | Les signaux | cours 1 §1 · DM (binaire) |
-| 2 | `ca-2-capteurs` | Les capteurs | cours 1 §2 et §4 · TD1 ex. 1, 3, 4, 5 · corrigé DM ex. 5 |
-| 3 | `ca-3-can` | Convertisseurs CAN et CNA | cours 1 §3 · TD1 ex. 2, 6 |
+| 2 | `ca-2-capteurs` | Les capteurs | cours 1 §2 et §4 · TD1 ex. 1, 3, 4, 5 · corrigé DM ex. 5 · Quiz 1 partie B (Q1-3) |
+| 3 | `ca-3-can` | Convertisseurs CAN et CNA | cours 1 §3 · TD1 ex. 2, 6 · Quiz 1 partie B (Q5, Q7) |
 | 4 | `ca-4-aop` | L'amplificateur opérationnel | cours 2 I.1 à I.3.1 · TD AOP ex. 1 |
 | 5 | `ca-5-montages` | Montages linéaires à AOP | cours 2 I.3.2 · TD AOP ex. 2, 3 |
 | 6 | `ca-6-filtres` | Filtres actifs d'ordre 1 | cours 2 II |
 | 7 | `ca-7-arduino` | Prise en main d'Arduino | TP0 |
 
-43 notions (0.1-0.4 · 1.1-1.6 · 2.1-2.7 · 3.1-3.6 · 4.1-4.5 · 5.1-5.8 · 6.1-6.3 · 7.1-7.4), 117 items (41 saisies, 39 QCM, 16 trous, 7 QCM multi, 14 exos). Ids : `ca<chapitre>-0xx` (questions courtes), `ca<chapitre>-1xx` (exos). Checks : id par défaut `<chapitre>-ctl-<n° de notion>`. Ne jamais réutiliser un id.
+43 notions (0.1-0.4 · 1.1-1.6 · 2.1-2.7 · 3.1-3.6 · 4.1-4.5 · 5.1-5.8 · 6.1-6.3 · 7.1-7.4), 133 items (45 saisies, 49 QCM, 16 trous, 9 QCM multi, 14 exos). Ids : `ca<chapitre>-0xx` (questions courtes), `ca<chapitre>-1xx` (exos). Checks : id par défaut `<chapitre>-ctl-<n° de notion>`. Ne jamais réutiliser un id.
 
 ## D.A. retenue : « Datasheet » (14/11/2026)
 - Fiche technique de composant : graphite, orange « pointe de sonde », typo mono technique, aucun effet.
@@ -41,3 +41,5 @@ Cours ESILV « Capteurs analogiques » : cours 1 (signaux, capteurs, CAN/CNA, pa
 - **TD1 ex. 4** : figures non reproduites, décrites dans l'énoncé (`ca2-007`).
 - **Arduino** : chapitre léger (QCM, saisies, code à trous), sans exécution de code.
 - Durées théoriques à vérifier dans le panel après les premiers passages.
+
+**Quiz 1 partie B** (sujet d'entraînement) : QCM et saisies à valeurs tirées (`ca1-018`…`021`, `ca2-021`…`028`, `ca3-015`…`018`), générateurs `cap-*`, `oct-bits`, `bin-qcm*`, `can-*-qcm` et graphe `caract-lin` dans `capteurs-analogiques.js`. Leurres des QCM = erreurs typiques (unité inversée, offset oublié, bit faux, $2^{N-1}$…).

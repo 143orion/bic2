@@ -684,6 +684,284 @@
    "explication": "Facteur d'échelle de la datasheet : 10 mV/°C."
   },
   {
+   "id": "ca2-021",
+   "type": "qcm-multi",
+   "notion": "2.1",
+   "origine": "annale",
+   "enonce": "Quiz 1 · Coche les exemples de signaux d'**entrée** d'un capteur.",
+   "choix": [
+    "[[C0]]",
+    "[[C1]]",
+    "[[C2]]",
+    "[[C3]]",
+    "[[C4]]",
+    "[[C5]]"
+   ],
+   "verif": {
+    "attendu": [
+     0,
+     1,
+     2
+    ]
+   },
+   "duree": 0.5,
+   "explication": "En **entrée**, un capteur reçoit une **grandeur physique** (le mesurande) : ici [[C0]], [[C1]], [[C2]]. [[C3]], [[C4]], [[C5]] sont des grandeurs électriques : ce sont des signaux de **sortie**.",
+   "generateur": "cap-entrees",
+   "vals": {
+    "C0": "une présence",
+    "C1": "la température",
+    "C2": "l'humidité",
+    "C3": "une tension",
+    "C4": "un niveau logique (0/1)",
+    "C5": "une charge électrique"
+   }
+  },
+  {
+   "id": "ca2-022",
+   "type": "qcm-multi",
+   "notion": "2.1",
+   "origine": "annale",
+   "enonce": "Quiz 1 · Coche les exemples de signaux de **sortie** d'un capteur.",
+   "choix": [
+    "[[C0]]",
+    "[[C1]]",
+    "[[C2]]",
+    "[[C3]]",
+    "[[C4]]",
+    "[[C5]]"
+   ],
+   "verif": {
+    "attendu": [
+     0,
+     1,
+     2
+    ]
+   },
+   "duree": 0.5,
+   "explication": "En **sortie**, un capteur donne un **signal électrique** : ici [[C0]], [[C1]], [[C2]]. [[C3]], [[C4]], [[C5]] sont des grandeurs physiques : ce sont des **entrées** (mesurandes).",
+   "generateur": "cap-sorties",
+   "vals": {
+    "C0": "une résistance (impédance)",
+    "C1": "une fréquence",
+    "C2": "un courant",
+    "C3": "une présence",
+    "C4": "une vitesse",
+    "C5": "la luminosité"
+   }
+  },
+  {
+   "id": "ca2-023",
+   "type": "qcm",
+   "notion": "2.3",
+   "origine": "annale",
+   "enonce": "Quiz 1 · Voici la caractéristique d'un capteur donnée par le constructeur. Quel est le **mesurande** ?",
+   "choix": [
+    "[[C0]]",
+    "[[C1]]",
+    "[[C2]]",
+    "[[C3]]"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.33,
+   "schema": {
+    "modele": "caract-lin",
+    "vals": {
+     "X1": "[[X1]]",
+     "Y0": "[[Y0]]",
+     "Y1": "[[Y1]]",
+     "LX": "[[LX]]",
+     "LY": "[[LY]]"
+    }
+   },
+   "explication": "Le mesurande est la grandeur physique mesurée, sur l'**axe horizontal** ($[[SYM]]$) : **[[C0]]**. L'axe vertical ([[SORT]]) est la **sortie** du capteur.",
+   "generateur": "cap-mesurande",
+   "vals": {
+    "C0": "l'humidité relative",
+    "C1": "le courant I",
+    "C2": "la sensibilité du capteur",
+    "C3": "la force",
+    "SORT": "le courant I",
+    "SYM": "HR",
+    "X1": "100",
+    "Y1": "400",
+    "Y0": "100",
+    "LX": "HR (%)",
+    "LY": "I (µA)"
+   }
+  },
+  {
+   "id": "ca2-024",
+   "type": "qcm",
+   "notion": "2.3",
+   "origine": "annale",
+   "enonce": "Quiz 1 · Voici la caractéristique d'un capteur donnée par le constructeur. Quelle est sa **sensibilité** ?",
+   "choix": [
+    "[[C0]]",
+    "[[C1]]",
+    "[[C2]]",
+    "[[C3]]"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.5,
+   "schema": {
+    "modele": "caract-lin",
+    "vals": {
+     "X1": "[[X1]]",
+     "Y0": "[[Y0]]",
+     "Y1": "[[Y1]]",
+     "LX": "[[LX]]",
+     "LY": "[[LY]]"
+    }
+   },
+   "explication": "La sensibilité est la **pente** : sortie (axe vertical) sur mesurande (axe horizontal), entre deux points éloignés : $S = [[CALC]] = \\mathbf{[[ST]]}$ [[US]].[[PIEGE]] L'unité est « unité de sortie / unité du mesurande ».",
+   "generateur": "cap-sensib",
+   "vals": {
+    "C0": "4,17 µA/°C",
+    "C1": "4,17 °C/µA",
+    "C2": "0,24 °C/µA",
+    "C3": "0,24 µA/°C",
+    "CALC": "\\dfrac{500 - 0}{120 - 0}",
+    "SN": "4.167",
+    "ST": "4{,}17",
+    "US": "µA/°C",
+    "DY": "500",
+    "PIEGE": "",
+    "X1": "120",
+    "Y1": "500",
+    "Y0": "",
+    "LX": "T (°C)",
+    "LY": "I (µA)"
+   }
+  },
+  {
+   "id": "ca2-025",
+   "type": "qcm",
+   "notion": "2.3",
+   "origine": "cours",
+   "enonce": "Voici la caractéristique d'un capteur. Que donne-t-il en sortie pour $[[SYM]] = [[XQT]]$ [[UM]] ?",
+   "choix": [
+    "[[C0]]",
+    "[[C1]]",
+    "[[C2]]",
+    "[[C3]]"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.5,
+   "schema": {
+    "modele": "caract-lin",
+    "vals": {
+     "X1": "[[X1]]",
+     "Y0": "[[Y0]]",
+     "Y1": "[[Y1]]",
+     "LX": "[[LX]]",
+     "LY": "[[LY]]"
+    }
+   },
+   "explication": "Fonction de transfert : $[[SS]] = S \\cdot [[SYM]] + [[SS]]_0$ avec la pente $S = [[ST]]$ [[US]] et l'offset $[[Y0T]]$ [[US]]. Donc $[[SS]] = [[ST]] \\times [[XQT]] + [[Y0T]] = \\mathbf{[[YT]]}$ [[US]].",
+   "generateur": "cap-valeur",
+   "vals": {
+    "C0": "92 µA",
+    "C1": "72 µA",
+    "C2": "0,889 µA",
+    "C3": "128 µA",
+    "XQ": "8",
+    "XQT": "8",
+    "ST": "9",
+    "Y0T": "20",
+    "YT": "92",
+    "UM": "bar",
+    "US": "µA",
+    "SYM": "P",
+    "SS": "I",
+    "X1": "20",
+    "Y1": "200",
+    "Y0": "20",
+    "LX": "P (bar)",
+    "LY": "I (µA)"
+   }
+  },
+  {
+   "id": "ca2-026",
+   "type": "saisie",
+   "notion": "2.1",
+   "origine": "annale",
+   "enonce": "Quiz 1 · Donne **un** exemple de signal d'**entrée** d'un capteur (un ou deux mots).",
+   "verif": {
+    "mode": "regex",
+    "motif": "(la |le |l'|l’|une |un |des |les )?(temp[ée]rature|pression|lumi[èe]re|luminosit[ée]|[ée]clairement|humidit[ée]|position|d[ée]placement|distance|vitesse|force|d[ée]bit|niveau( de liquide)?|vibrations?|couple|pr[ée]sence|acc[ée]l[ée]ration|son|bruit|gaz|poids|masse|proximit[ée]|choc)",
+    "exemple": "la température"
+   },
+   "duree": 0.33,
+   "explication": "En entrée : une **grandeur physique** (mesurande) : température, pression, luminosité, humidité, position, vitesse, force, débit, niveau, vibrations, présence… Au quiz, donnes-en trois."
+  },
+  {
+   "id": "ca2-027",
+   "type": "saisie",
+   "notion": "2.1",
+   "origine": "annale",
+   "enonce": "Quiz 1 · Donne **un** exemple de signal de **sortie** d'un capteur (un ou deux mots).",
+   "verif": {
+    "mode": "regex",
+    "motif": "(une |un |la |le )?(tension|courant|fr[ée]quence|niveau logique|signal (logique|num[ée]rique|analogique|[ée]lectrique)|nombre binaire|r[ée]sistance|imp[ée]dance|charge( [ée]lectrique)?|capacit[ée])",
+    "exemple": "une tension"
+   },
+   "duree": 0.33,
+   "explication": "En sortie : un **signal électrique** : tension, courant, fréquence, niveau logique, nombre binaire, résistance (impédance), charge… Au quiz, donnes-en trois."
+  },
+  {
+   "id": "ca2-028",
+   "type": "saisie",
+   "notion": "2.3",
+   "origine": "annale",
+   "enonce": "Quiz 1 · Voici la caractéristique d'un capteur donnée par le constructeur. Calcule sa **sensibilité** (en [[US]], nombre seul).",
+   "verif": {
+    "mode": "numerique",
+    "attendu": "[[SN]]"
+   },
+   "duree": 0.75,
+   "schema": {
+    "modele": "caract-lin",
+    "vals": {
+     "X1": "[[X1]]",
+     "Y0": "[[Y0]]",
+     "Y1": "[[Y1]]",
+     "LX": "[[LX]]",
+     "LY": "[[LY]]"
+    }
+   },
+   "explication": "Pente = sortie sur mesurande : $S = [[CALC]] = \\mathbf{[[ST]]}$ [[US]].[[PIEGE]] Sur la copie, écris toujours l'unité.",
+   "generateur": "cap-sensib",
+   "vals": {
+    "C0": "4,17 µA/°C",
+    "C1": "4,17 °C/µA",
+    "C2": "0,24 °C/µA",
+    "C3": "0,24 µA/°C",
+    "CALC": "\\dfrac{500 - 0}{120 - 0}",
+    "SN": "4.167",
+    "ST": "4{,}17",
+    "US": "µA/°C",
+    "DY": "500",
+    "PIEGE": "",
+    "X1": "120",
+    "Y1": "500",
+    "Y0": "",
+    "LX": "T (°C)",
+    "LY": "I (µA)"
+   }
+  },
+  {
    "id": "ca2-101",
    "type": "exo",
    "titre": "TD1 ex. 5 · Caractéristique d'un capteur de pression",

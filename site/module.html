@@ -827,7 +827,7 @@ function jouerQuestion(it, zone, opts = {}){
     const t0 = Date.now(); let fini = false, nIndices = () => 0, donnee = "";
     zone.innerHTML = `<article class="q" data-type="${esc(it.type)}">
       ${teteItem(it, opts)}
-      <div class="q-enonce">${md(it.enonce)}</div>
+      <div class="q-enonce">${md(it.enonce)}</div>${it.schema ? SV.rendre(it.schema) : ""}
       <div class="q-corps"></div>
       <div class="q-indices"></div>
       <div class="q-retour" hidden></div>

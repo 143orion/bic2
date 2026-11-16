@@ -522,7 +522,7 @@
     "mode": "numerique",
     "attendu": 0.00488,
     "unite": "V",
-    "tol": 0.00005
+    "tol": 5e-05
    },
    "duree": 0.67,
    "explication": "$q = 5/1024 \\approx 4{,}88\\ \\text{mV}$."
@@ -548,6 +548,145 @@
    },
    "duree": 0.5,
    "explication": "CAN 10 bits (0 à 1023), 0 – 5 V, entrées A0 à A5."
+  },
+  {
+   "id": "ca3-015",
+   "type": "qcm",
+   "notion": "3.2",
+   "origine": "annale",
+   "enonce": "Quiz 1 · Un CAN $[[N]]$ bits auquel on applique une tension qui varie entre 0 et $[[VM]]\\ \\text{V}$ a pour quantum :",
+   "choix": [
+    "[[C0]]",
+    "[[C1]]",
+    "[[C2]]",
+    "[[C3]]"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.5,
+   "explication": "$q = \\dfrac{V_{max} - V_{min}}{2^N} = \\dfrac{[[VM]]}{2^{[[N]]}} = \\dfrac{[[VM]]}{[[NC]]} = \\mathbf{[[QT]]}$. Pièges : diviser par $2^{N-1}$, ou inverser la fraction.",
+   "generateur": "can-q-qcm",
+   "vals": {
+    "C0": "62,5 mV",
+    "C1": "125 mV",
+    "C2": "16 V",
+    "C3": "32 V",
+    "N": "5",
+    "VM": "2",
+    "NC": "32",
+    "QT": "62{,}5\\ \\text{m}\\text{V}"
+   }
+  },
+  {
+   "id": "ca3-016",
+   "type": "qcm",
+   "notion": "3.5",
+   "origine": "annale",
+   "enonce": "Quiz 1 · Un CAN $[[N]]$ bits de pleine échelle [[ECH]] donne en sortie le nombre binaire `[[BC]]`. Quelle était sa tension d'entrée ?",
+   "choix": [
+    "[[C0]]",
+    "[[C1]]",
+    "[[C2]]",
+    "[[C3]]"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.67,
+   "explication": "1. Quantum : $q = \\dfrac{V_{max} - V_{min}}{2^{[[N]]}} = \\mathbf{[[QT]]}$. 2. Code en décimal : `[[BC]]` $= [[C]]$. 3. $U_e = V_{min} + [[C]] \\times q = [[VMINT]] + [[C]] \\times q = \\mathbf{[[UT]]}$.",
+   "generateur": "can-tension-qcm",
+   "vals": {
+    "C0": "1,88 V",
+    "C1": "2,5 V",
+    "C2": "2,14 V",
+    "C3": "3,75 V",
+    "N": "3",
+    "VM": "5",
+    "VMIN": "0",
+    "BC": "011",
+    "C": "3",
+    "NC": "8",
+    "QT": "625\\ \\text{m}\\text{V}",
+    "UT": "1{,}88\\ \\text{V}",
+    "UN": "1.875",
+    "VMINT": "0",
+    "ECH": "0 – 5 V"
+   }
+  },
+  {
+   "id": "ca3-017",
+   "type": "qcm",
+   "notion": "3.4",
+   "origine": "cours",
+   "enonce": "Un CAN $[[N]]$ bits, pleine échelle 0 – $[[VM]]\\ \\text{V}$, reçoit $U_e = [[U]]\\ \\text{V}$. Quel code binaire donne-t-il ?",
+   "choix": [
+    "[[C0]]",
+    "[[C1]]",
+    "[[C2]]",
+    "[[C3]]"
+   ],
+   "verif": {
+    "attendu": [
+     0
+    ]
+   },
+   "duree": 0.67,
+   "explication": "$q = \\dfrac{[[VM]]}{2^{[[N]]}} = [[QT]]$, puis $\\dfrac{U_e}{q} = \\dfrac{[[UT]]}{q} = [[RT]]$ → code **[[C]]** (partie entière), soit `[[C0]]` sur $[[N]]$ bits.",
+   "generateur": "can-code-qcm",
+   "vals": {
+    "C0": "0110",
+    "C1": "0111",
+    "C2": "0101",
+    "C3": "1000",
+    "N": "4",
+    "VM": "4",
+    "U": "1,59",
+    "UT": "1{,}59",
+    "QT": "250\\ \\text{m}\\text{V}",
+    "RT": "6{,}36",
+    "C": "6"
+   }
+  },
+  {
+   "id": "ca3-018",
+   "type": "saisie",
+   "notion": "3.5",
+   "origine": "annale",
+   "enonce": "Quiz 1 · Un CAN $[[N]]$ bits de pleine échelle [[ECH]] donne en sortie le nombre binaire `[[BC]]`. Quelle était sa tension d'entrée ?",
+   "verif": {
+    "mode": "numerique",
+    "attendu": "[[UN]]",
+    "unite": "V"
+   },
+   "duree": 1,
+   "indices": [
+    "Commence par le quantum $q = (V_{max} - V_{min}) / 2^N$.",
+    "Convertis `[[BC]]` en décimal, multiplie par $q$, ajoute $V_{min}$."
+   ],
+   "explication": "1. $q = \\dfrac{V_{max} - V_{min}}{2^{[[N]]}} = [[QT]]$. 2. `[[BC]]` $= [[C]]$. 3. $U_e = [[VMINT]] + [[C]] \\times q = \\mathbf{[[UT]]}$.",
+   "generateur": "can-tension-qcm",
+   "vals": {
+    "C0": "1,88 V",
+    "C1": "2,5 V",
+    "C2": "2,14 V",
+    "C3": "3,75 V",
+    "N": "3",
+    "VM": "5",
+    "VMIN": "0",
+    "BC": "011",
+    "C": "3",
+    "NC": "8",
+    "QT": "625\\ \\text{m}\\text{V}",
+    "UT": "1{,}88\\ \\text{V}",
+    "UN": "1.875",
+    "VMINT": "0",
+    "ECH": "0 – 5 V"
+   }
   },
   {
    "id": "ca3-101",

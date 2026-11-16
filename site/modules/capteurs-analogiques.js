@@ -127,6 +127,17 @@ const schemas = {
     for(let x = 1; x <= xmax; x++) el.push(["n",R.X(x),R.Y(b + a*x)]);
     return {vb:"0 0 500 250", el};
   },
+  /* graphe façon « quiz » : caractéristique linéaire de (0 ; Y0) à (X1 ; Y1), valeurs repérées en pointillés */
+  "caract-lin": v => {
+    const X1 = num(v.X1), Y0 = num(v.Y0) || 0, Y1 = num(v.Y1);
+    const R = repere({xmax:X1*1.18, ymax:Y1*1.2, lx:v.LX || "x", ly:v.LY || "y"});
+    const el = R.el.concat([
+      ["c",[[R.X(0),R.Y(Y1)],[R.X(X1),R.Y(Y1)]],{cls:"pt"}], ["c",[[R.X(X1),R.Y(Y1)],[R.X(X1),R.Y(0)]],{cls:"pt"}],
+      ["c",[[R.X(0),R.Y(Y0)],[R.X(X1),R.Y(Y1)]],{cls:"tr"}], ["n",R.X(X1),R.Y(Y1)],
+      ["t",R.X(0)-6,R.Y(Y1)+4,String(v.Y1),{a:"end",cls:"val"}], ["t",R.X(X1),R.Y(0)+16,String(v.X1),{cls:"val"}], ["t",R.X(0)-6,R.Y(0)+16,"0",{a:"end",cls:"val"}]]);
+    if(Y0) el.push(["n",R.X(0),R.Y(Y0)], ["t",R.X(0)-6,R.Y(Y0)+4,String(v.Y0),{a:"end",cls:"val"}]);
+    return {vb:"0 0 500 250", el};
+  },
   /* graphe : signal périodique (forme sin|tri|carre|scie, U, O offset, T en ms, A rapport cyclique) */
   "signal": v => {
     const fo = v.forme || "sin", U = num(v.U) || 2, O = num(v.O) || 0, T = num(v.T) || 4, a = num(v.A) || .5, tmax = 3*T;
@@ -162,7 +173,89 @@ const schemas = {
 const binCorr = n => { const b = n.toString(2), p = pw2(n);
   return {B:b, PUIS:p.map(k => `2^{${k}}`).join(" + "), SOMME:p.map(k => 2**k).join(" + ")}; };
 const divs = n => { const r = []; while(n >= 1){ r.push(`| ${n} ÷ 2 | ${Math.floor(n/2)} | **${n%2}** |`); n = Math.floor(n/2); } return "| division | quotient | reste |\n|---|---|---|\n" + r.join("\n"); };
+/* QCM « quiz » : la bonne réponse est toujours le choix 0 (les choix sont mélangés à l'affichage) ;
+   leurres = erreurs typiques, tous différents de la bonne réponse et entre eux */
+const s3 = x => String(+(+x).toPrecision(3)).replace(".", ",");
+const leurres = (bon, cands, n = 3) => { const r = [], vus = new Set([bon]); for(const c of cands){ if(c == null || /NaN|Infinity/.test(c) || vus.has(c)) continue; vus.add(c); r.push(c); if(r.length === n) break; } return r; };
+const qcmVals = (bon, ls, extra = {}) => Object.assign({C0:bon, C1:ls[0], C2:ls[1], C3:ls[2]}, extra);
+const nib = b => b.replace(/(.{4})(?=.)/g, "$1 ");   /* 01110100 → 0111 0100 */
+const flip = (b, k) => b.slice(0, k) + (b[k] === "1" ? "0" : "1") + b.slice(k + 1);
+const melange = a => { a = a.slice(); for(let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random()*(i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const MESURANDES = [
+  {nom:"l'éclairement (la luminosité)", court:"éclairement", sym:"E", u:"klux", xs:[40,50,55,60,80,100]},
+  {nom:"la température", court:"température", sym:"T", u:"°C", xs:[50,100,120,150,200]},
+  {nom:"la pression", court:"pression", sym:"P", u:"bar", xs:[5,6,8,10,20]},
+  {nom:"l'humidité relative", court:"humidité", sym:"HR", u:"%", xs:[100]},
+  {nom:"la distance", court:"distance", sym:"d", u:"cm", xs:[20,30,40,50,80]},
+  {nom:"la force", court:"force", sym:"F", u:"N", xs:[10,20,50,100,200]}];
+const SORTIES = [
+  {nom:"le courant", sym:"I", u:"µA", ys:[100,150,200,250,400,500]},
+  {nom:"la tension", sym:"U", u:"mV", ys:[200,250,500,750,800,1000]},
+  {nom:"la tension", sym:"U", u:"V", ys:[2,2.5,4,5,8,10]},
+  {nom:"la résistance", sym:"R", u:"Ω", ys:[120,150,200,500,1000]}];
+const ENTREES_P = ["la température", "la pression", "la luminosité", "l'humidité", "une position", "une vitesse", "une force", "un débit", "un niveau de liquide", "des vibrations", "un couple", "une présence"];
+const SORTIES_E = ["une tension", "un courant", "une fréquence", "un niveau logique (0/1)", "un nombre binaire", "une résistance (impédance)", "une charge électrique"];
+/* tirage d'une caractéristique : (0 ; y0) → (x1 ; y1) */
+function caracTirage(){
+  const m = rnd(MESURANDES), s = rnd(SORTIES), x1 = rnd(m.xs), y1 = rnd(s.ys), y0 = Math.random() < 0.5 ? 0 : +(y1*rnd([0.1,0.2,0.25])).toPrecision(2), S = (y1 - y0)/x1;
+  return {m, s, x1, y1, y0, S, us:`${s.u}/${m.u}`, ui:`${m.u}/${s.u}`,
+    sch:{X1:String(x1), Y1:nb(y1,2), Y0:y0 ? nb(y0,2) : "", LX:`${m.sym} (${m.u})`, LY:`${s.sym} (${s.u})`}};
+}
 const generateurs = {
+  /* Quiz 1 · Q1 / Q2 : exemples de signaux d'entrée / de sortie */
+  "cap-entrees"(){ const b = melange(ENTREES_P).slice(0, 3), l = melange(SORTIES_E).slice(0, 3);
+    return {vals:{C0:b[0], C1:b[1], C2:b[2], C3:l[0], C4:l[1], C5:l[2]}}; },
+  "cap-sorties"(){ const b = melange(SORTIES_E).slice(0, 3), l = melange(ENTREES_P).slice(0, 3);
+    return {vals:{C0:b[0], C1:b[1], C2:b[2], C3:l[0], C4:l[1], C5:l[2]}}; },
+  /* Quiz 1 · Q3a : mesurande lu sur la caractéristique */
+  "cap-mesurande"(){ const c = caracTirage(), autre = rnd(MESURANDES.filter(x => x !== c.m));
+    return {vals:qcmVals(c.m.nom, [`${c.s.nom} ${c.s.sym}`, "la sensibilité du capteur", autre.nom], Object.assign({SORT:`${c.s.nom} ${c.s.sym}`, SYM:c.m.sym}, c.sch))}; },
+  /* Quiz 1 · Q3b : sensibilité = pente, avec unités */
+  "cap-sensib"(){ let c, bon, ls;
+    do { c = caracTirage(); bon = `${s3(c.S)} ${c.us}`;
+      ls = leurres(bon, [`${s3(c.S)} ${c.ui}`, `${s3(1/c.S)} ${c.ui}`, c.y0 ? `${s3(c.y1/c.x1)} ${c.us}` : `${s3(1/c.S)} ${c.us}`, `${s3(c.S*10)} ${c.us}`]);
+    } while(ls.length < 3);
+    const DY = nb(c.y1 - c.y0, 2), calc = c.y0 ? `\\dfrac{${nt(c.y1,2)} - ${nt(c.y0,2)}}{${c.x1} - 0}` : `\\dfrac{${nt(c.y1,2)} - 0}{${c.x1} - 0}`;
+    return {vals:qcmVals(bon, ls, Object.assign({CALC:calc, SN:String(+c.S.toPrecision(4)), ST:s3(c.S).replace(",", "{,}"), US:c.us, DY, PIEGE:c.y0 ? ` Attention à l'offset : la droite part de ${nb(c.y0,2)} ${c.s.u}, pas de 0.` : ""}, c.sch))}; },
+  /* sortie pour un mesurande donné (fonction de transfert lue sur le graphe) */
+  "cap-valeur"(){ let c, xq, bon, ls, y;
+    do { c = caracTirage(); xq = c.x1*rnd([0.2,0.4,0.5,0.6,0.8]); y = c.y0 + c.S*xq; bon = `${s3(y)} ${c.s.u}`;
+      ls = leurres(bon, [c.y0 ? `${s3(c.S*xq)} ${c.s.u}` : null, `${s3(xq/c.S)} ${c.s.u}`, `${s3(c.y1 - c.S*xq)} ${c.s.u}`, `${s3(c.y0 + c.S*xq*2)} ${c.s.u}`, `${s3(y*10)} ${c.s.u}`]);
+    } while(ls.length < 3);
+    return {vals:qcmVals(bon, ls, Object.assign({XQ:s3(xq), XQT:s3(xq).replace(",", "{,}"), ST:s3(c.S).replace(",", "{,}"), Y0T:nt(c.y0,2), YT:s3(y).replace(",", "{,}"), UM:c.m.u, US:c.s.u, SYM:c.m.sym, SS:c.s.sym}, c.sch))}; },
+  /* Quiz 1 · Q4 bis : octets ↔ bits */
+  "oct-bits"(){ if(Math.random() < 0.5){ const k = rnd([2,3,4,6,8,16,32]); return {vals:Object.assign(qcmVals(`${8*k} bits`, leurres(`${8*k} bits`, [`${4*k} bits`, `${16*k} bits`, `${2**k} bits`, `${10*k} bits`])), {Q:`${k} octets, c'est combien de bits ?`, EXP:`1 octet = 8 bits, donc ${k} octets = ${k} × 8 = ${8*k} bits.`})}; }
+    const k = rnd([2,3,4,8]), n = 8*k; return {vals:Object.assign(qcmVals(`${k} octets`, leurres(`${k} octets`, [`${n} octets`, `${2*k} octets`, `${n/4} octets`, `${k*4} octets`])), {Q:`${n} bits, c'est combien d'octets ?`, EXP:`1 octet = 8 bits, donc ${n} bits = ${n} ÷ 8 = ${k} octets.`})}; },
+  /* Quiz 1 · Q6 : décimal → binaire, leurres = un ou deux bits faux */
+  "bin-qcm"(){ const n = ent(20, 255), b = n.toString(2).padStart(8, "0");
+    const ks = melange([0,1,2,3,4,5,6,7]), c = [flip(b, ks[0]), flip(b, ks[1]), flip(flip(b, ks[2]), ks[3]), flip(b, ks[4])].map(nib);
+    const p = pw2(n); return {vals:qcmVals(nib(b), leurres(nib(b), c), {N:String(n), PUIS:p.map(k => `2^{${k}}`).join(" + "), SOMME:p.map(k => 2**k).join(" + ")})}; },
+  /* binaire → décimal */
+  "bin-qcm-inv"(){ const n = ent(20, 255), b = n.toString(2).padStart(8, "0"), rv = parseInt(b.split("").reverse().join(""), 2);
+    const ks = melange([0,1,2,3,4,5,6,7]), c = [rv, parseInt(flip(b, ks[0]), 2), parseInt(flip(b, ks[1]), 2), n + 1, n - 1].map(String);
+    const p = pw2(n); return {vals:qcmVals(String(n), leurres(String(n), c), {B:nib(b), PUIS:p.map(k => `2^{${k}}`).join(" + "), SOMME:p.map(k => 2**k).join(" + ")})}; },
+  /* Quiz 1 · Q7 : quantum */
+  "can-q-qcm"(){ let N, Vm, q, bon, ls;
+    do { N = rnd([3,4,5,8,10]); Vm = rnd([2,4,5,8,10]); q = Vm/2**N; bon = f(q, "V");
+      ls = leurres(bon, [f(Vm/2**(N-1), "V"), f(2**N/Vm, "V"), f(2**(N+1)/Vm, "V"), f(Vm/N, "V"), f(Vm/2**(N+1), "V")]);
+    } while(ls.length < 3);
+    return {vals:qcmVals(bon, ls, {N:String(N), VM:String(Vm), NC:String(2**N), QT:t(q, "V")})}; },
+  /* Quiz 1 · Q5 : code binaire → tension d'entrée */
+  "can-tension-qcm"(){ let N, Vmin, Vm, c, q, bon, ls;
+    do { N = rnd([3,4]); Vmin = Math.random() < 0.7 ? 0 : rnd([0.5,1]); Vm = rnd([4,5,8,10]); c = ent(1, 2**N - 2); q = (Vm - Vmin)/2**N;
+      const b = c.toString(2).padStart(N, "0"), rv = parseInt(b.split("").reverse().join(""), 2); bon = f(Vmin + c*q, "V");
+      ls = leurres(bon, [f(Vmin + (c+1)*q, "V"), f(c*q, "V"), f(Vmin + c*(Vm - Vmin)/(2**N - 1), "V"), f(Vmin + rv*q, "V"), f(Vmin + (c-1)*q, "V")]);
+    } while(ls.length < 3);
+    const b = c.toString(2).padStart(N, "0");
+    return {vals:qcmVals(bon, ls, {N:String(N), VM:nb(Vm,1), VMIN:nb(Vmin,1), BC:b, C:String(c), NC:String(2**N), QT:t(q, "V"), UT:t(Vmin + c*q, "V"), UN:String(Math.round((Vmin + c*q)*1e4)/1e4), VMINT:nt(Vmin,1), ECH:Vmin ? `${nb(Vmin,1)} V – ${nb(Vm,1)} V` : `0 – ${nb(Vm,1)} V`})}; },
+  /* tension d'entrée → code binaire (partie entière nettement sous ,5 : troncature et arrondi donnent le même code) */
+  "can-code-qcm"(){ let N, Vm, q, c, U, r, b, ls;
+    do { N = rnd([3,4,4,8]); Vm = rnd([4,5,8,10]); q = Vm/2**N; c = ent(1, 2**N - 2); U = Math.round((c + 0.1 + Math.random()*0.3)*q*100)/100; r = U/q;
+      b = Math.floor(r).toString(2).padStart(N, "0");
+    } while(Math.floor(r) !== c || r - c > 0.45);
+    const rv = b.split("").reverse().join(""), cb = k => k >= 0 && k < 2**N ? k.toString(2).padStart(N, "0") : null;
+    ls = leurres(b, [cb(c + 1), rv, cb(c - 1), cb(c ^ 1), cb(c + 2), cb(c ^ 2), cb(c ^ 4)]);
+    return {vals:qcmVals(b, ls, {N:String(N), VM:nb(Vm,1), U:nb(U,2), UT:nt(U,2), QT:t(q, "V"), RT:nt(r,2), C:String(c)})}; },
   "bin-tete"(){ let n; do { n = ent(5, 63); } while(pw2(n).length > 4); const c = binCorr(n); return {vals:Object.assign({N:String(n)}, c)}; },
   "bin-dm"(){ const n = ent(100, 2000), c = binCorr(n); return {vals:Object.assign({N:String(n), DIV:divs(n)}, c)}; },
   "bin-dec"(){ let n; do { n = ent(5, 63); } while(pw2(n).length > 4); const c = binCorr(n); return {vals:Object.assign({N:String(n)}, c)}; },
