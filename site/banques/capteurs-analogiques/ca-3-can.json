@@ -500,18 +500,20 @@
    "notion": "3.5",
    "quiz": "Quiz 1 · partie B",
    "origine": "td",
-   "enonce": "[[SRC]] · CAN 10 bits, $V_{max} = [[VMAX]]\\ \\text{V}$, $V_{min} = [[VMIN]]\\ \\text{V}$. Tension d'entrée qui donne le code [[C]] ?",
+   "enonce": "[[SRC]] · CAN $[[N]]$ bits, $V_{max} = [[VMAX]]\\ \\text{V}$, $V_{min} = [[VMIN]]\\ \\text{V}$. Tension d'entrée qui donne le code [[C]] ?",
    "verif": {
     "mode": "numerique",
     "attendu": "[[UN]]",
     "unite": "V",
-    "tol": 0.005
+    "tol": 0.01
    },
    "duree": 1,
-   "explication": "$q = \\dfrac{[[VMAX]] - [[VMIN]]}{1024} = [[QT]]$ ; $[[C]]\\,q = [[CQT]]$ ; $U = [[VMIN]] + [[CQT]] = [[UT]]$.",
+   "explication": "$q = \\dfrac{[[VMAX]] - [[VMIN]]}{2^{[[N]]}} = \\dfrac{[[VMAX]] - [[VMIN]]}{[[NC]]} = [[QT]]$ ; $[[C]]\\,q = [[CQT]]$ ; $U = [[VMIN]] + [[CQT]] = [[UT]]$.",
    "generateur": "td1-ex6",
    "vals": {
     "SRC": "TD1 ex. 6",
+    "N": "10",
+    "NC": "1024",
     "VMAX": "4",
     "VMIN": "1",
     "C": "900",

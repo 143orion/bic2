@@ -328,9 +328,10 @@ const generateurs = {
     const {q, Vm} = canRond([8], [0.01,0.02,0.04]), U = +((ent(10, 245) + rnd([0.2,0.4,0.6,0.8]))*q).toFixed(4), r = +(U/q).toFixed(6), cf = Math.floor(r), cr = Math.round(r);
     return {vals:{SRC:"D'après le TD1 ex. 2", VM:nt(Vm,3), QT:t(q,"V"), UT:nt(U,3), RT:nt(r,2), CF:String(cf), CR:String(cr), ARR:cr !== cf ? ` ou ${cr} (arrondi)` : ""}}; },
   "td1-ex6"(o = {}){
-    if(o.tete === false) return {vals:{SRC:"TD1 ex. 6", VMAX:"4", VMIN:"1", C:"900", QT:"2{,}93\\ \\text{m}\\text{V}", CQT:"2{,}637\\ \\text{V}", UT:"3{,}637\\ \\text{V}", UN:"3.637"}};
-    const q = rnd([0.001,0.002,0.004,0.005]), Vmin = rnd([0.5,1]), Vmax = +(Vmin + q*1024).toFixed(4), c = 50*ent(2, 20), U = +(Vmin + c*q).toFixed(4);
-    return {vals:{SRC:"D'après le TD1 ex. 6", VMAX:nt(Vmax,3), VMIN:nt(Vmin,1), C:String(c), QT:t(q,"V"), CQT:t(c*q,"V"), UT:t(U,"V"), UN:String(U)}}; },
+    if(o.tete === false) return {vals:{SRC:"TD1 ex. 6", N:"10", NC:"1024", VMAX:"4", VMIN:"1", C:"900", QT:"2{,}93\\ \\text{m}\\text{V}", CQT:"2{,}637\\ \\text{V}", UT:"3{,}637\\ \\text{V}", UN:"3.637"}};
+    /* de tête : niveau Quiz 1 (3 ou 4 bits, V_max et V_min ronds, q = 0,25 / 0,5 / 1 V) ; un V_max « fabriqué » (6,12 V sur 10 bits) ne se voit pas de tête */
+    const N = rnd([3,4]), q = rnd(N === 3 ? [0.25,0.5,1] : [0.25,0.5]), Vmin = rnd([0.5,1,2]), Vmax = Vmin + q*2**N, c = ent(1, 2**N - 1), U = Vmin + c*q;
+    return {vals:{SRC:"D'après le TD1 ex. 6", N:String(N), NC:String(2**N), VMAX:nt(Vmax,2), VMIN:nt(Vmin,1), C:String(c), QT:t(q,"V"), CQT:t(c*q,"V"), UT:t(U,"V"), UN:String(U)}}; },
   /* code multiple de 128 : 128 × 5/1024 = 0,625 V, calculable de tête */
   "ard-volts"(o = {}){ const c = o.tete === false ? ent(50, 1000) : 128*ent(1, 7), v = c*5/1024; return {vals:{C:String(c), V:String(Math.round(v*1000)/1000), VT:nt(v,3)}}; },
   /* AOP */
