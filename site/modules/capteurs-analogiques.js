@@ -171,7 +171,7 @@ const schemas = {
 
 /* ---------- générateurs ---------- */
 const binCorr = n => { const b = n.toString(2), p = pw2(n);
-  return {B:b, PUIS:p.map(k => `2^{${k}}`).join(" + "), SOMME:p.map(k => 2**k).join(" + ")}; };
+  return {B:b, BRX:b.split("").join(" ?"), PUIS:p.map(k => `2^{${k}}`).join(" + "), SOMME:p.map(k => 2**k).join(" + ")}; };
 const divs = n => { const r = []; while(n >= 1){ r.push(`| ${n} ÷ 2 | ${Math.floor(n/2)} | **${n%2}** |`); n = Math.floor(n/2); } return "| division | quotient | reste |\n|---|---|---|\n" + r.join("\n"); };
 /* QCM « quiz » : la bonne réponse est toujours le choix 0 (les choix sont mélangés à l'affichage) ;
    leurres = erreurs typiques, tous différents de la bonne réponse et entre eux */

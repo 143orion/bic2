@@ -585,10 +585,10 @@
    "notion": "1.6",
    "quiz": "Quiz 1 · partie B",
    "origine": "cours",
-   "enonce": "Écris $([[N]])_{10}$ en binaire (sans espace ; les zéros devant sont acceptés). *De tête : au plus 4 bits à 1.*",
+   "enonce": "Écris $([[N]])_{10}$ en binaire (les zéros devant et les espaces entre groupes de bits sont acceptés). *De tête : au plus 4 bits à 1.*",
    "verif": {
     "mode": "regex",
-    "motif": "0*[[B]]",
+    "motif": "(?:0 ?)*[[BRX]]",
     "exemple": "[[B]]"
    },
    "duree": 0.67,
@@ -597,6 +597,7 @@
    "vals": {
     "N": "7",
     "B": "111",
+    "BRX": "1 ?1 ?1",
     "PUIS": "2^{2} + 2^{1} + 2^{0}",
     "SOMME": "4 + 2 + 1"
    }
